@@ -1,0 +1,55 @@
+/* Localized versions of Info.plist keys */
+
+/*
+com.valvesoftware.source.vtf = "Source VTF Image";
+com.microsoft.dds = "Microsoft DDS Image";
+com.valvesoftware.source.gcf = "Steam Cache file";
+com.valvesoftware.source.vpk = "Source Addon file";
+com.valvesoftware.source.ncf = "Steam Non-Cache file";
+com.valvesoftware.source.bsp = "Source Level";
+com.valvesoftware.source.pak = "Source Package file";
+com.valvesoftware.source.wad = "Source Texture Package file";
+com.valvesoftware.source.xzp = "Source Xbox Package file";
+com.valvesoftware.source.ain = "Source Non-Player Character Nodegraph";
+com.valvesoftware.source.ani = "Source Animation";
+com.valvesoftware.source.cfg = "Source Configuration file";
+com.valvesoftware.source.dat = "Source Data file";
+com.valvesoftware.source.image = "Source Combined Choreography Data";
+com.valvesoftware.source.inf = "Source Setup Information file";
+com.valvesoftware.source.lst = "Source List";
+com.valvesoftware.source.lmp = "Source Level Patch file";
+com.valvesoftware.source.snd = "Source Sound List";
+com.valvesoftware.source.res = "Source Resource List";
+com.valvesoftware.source.fgd = "Source Game Data file";
+com.valvesoftware.source.mdl = "Source Model";
+com.valvesoftware.source.nav = "Source Navigation Mesh";
+org.squirrel-lang.nut = "Squirrel Source Code";
+com.valvesoftware.source.nuc = "Source Encrypted Squirrel Source Code";
+com.valvesoftware.source.raw = "Source Color Correction file";
+com.valvesoftware.source.rad = "Source Radiosity file";
+com.valvesoftware.source.vas = "Source Animation Script file";
+com.valvesoftware.source.phy = "Source Collision Model";
+com.valvesoftware.source.scr = "Source Configuration Script file";
+com.valvesoftware.source.pcf = "Source Particle file";
+com.valvesoftware.source.qc = "Source Quake Compile Script";
+com.valvesoftware.source.smd = "Source Studio Model Data";
+com.valvesoftware.source.vta = "Source Vertex Animation Data";
+com.valvesoftware.source.vcd = "Source Choreography Data";
+com.valvesoftware.source.vdm = "Source Demo Editor file";
+com.valvesoftware.source.vfe = "Source Expression file";
+com.valvesoftware.source.vdf = "Source Preference file";
+com.valvesoftware.source.vmf = "Source Map file";
+com.valvesoftware.source.vmt = "Source Material Type";
+com.valvesoftware.source.vbsp = "Source Detail Prop";
+com.valvesoftware.source.vtx = "Source Mesh Strip file";
+com.valvesoftware.source.vvd = "Source Vertex Data file";
+public.linux-so = "Linux dynamic library";
+
+*/
+
+
+
+
+
+
+

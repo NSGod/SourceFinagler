@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Source Addon Finagler 2.0.2, © 2010-2011 Mark Douma. All rights reserved.</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.markdouma.SourceAddonFinagler</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.valvesoftware.source.vpk</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>VPK</string>
+			<key>CFBundleTypeName</key>
+			<string>Source Addon file</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+	</array>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleIconFile</key>
+	<string>sourceFinagler</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0.2</string>
+	<key>CFBundleSignature</key>
+	<string>SAFƒ</string>
+	<key>CFBundleVersion</key>
+	<string>202</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
+	<key>NSMainNibFile</key>
+	<string>VSSourceAddonFinaglerMainMenu</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2010-2011 Mark Douma. All rights reserved.</string>
+	<key>NSSupportsSuddenTermination</key>
+	<string>NO</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>LSUIElement</key>
+	<false/>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>com.valvesoftware.source.vpk</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive </string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Source Addon file</string>
+			<key>UTTypeIconFile</key>
+			<string>VPK</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>vpk</string>
+				</array>
+			</dict>
+			<key>UTTypeReferenceURL</key>
+			<string>http://developer.valvesoftware.com/wiki/VPK_File_Format</string>
+		</dict>
+	</array>
+</dict>
+</plist>

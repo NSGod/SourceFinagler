@@ -1,0 +1,9 @@
+//
+// Prefix header for all source files of the 'SteamKit' target in the 'SteamKit' project.
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
+
+#import <ApplicationServices/ApplicationServices.h>

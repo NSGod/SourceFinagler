@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleGetInfoString</key>
+	<string>HL.framework 2.4.2, © 2010-2011 Mark Douma. HLLib 2.4.2 © 2006-2011 Ryan Gregg.</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.markdouma.HL.framework</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>FMWK</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.4.2</string>
+	<key>CFBundleSignature</key>
+	<string>HLFƒ</string>
+	<key>CFBundleVersion</key>
+	<string>242</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2010-2011 Mark Douma. HLLib 2.4.2 © 2006-2011 Ryan Gregg.</string>
+</dict>
+</plist>
