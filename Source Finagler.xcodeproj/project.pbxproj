@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -116,7 +116,6 @@
 		C12D37DF12E269C000397411 /* MDFoundationAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C11B274F11BDE7AD004D4CC0 /* MDFoundationAdditions.h */; };
 		C12D37E012E269C000397411 /* MDFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C11B275011BDE7AD004D4CC0 /* MDFoundationAdditions.m */; };
 		C12D37E912E269DD00397411 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1A112E511D66720008BBABD /* CoreServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		C12DBF64125FE9780051A751 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = C12DBF11125FE3C90051A751 /* Growl Registration Ticket.growlRegDict */; };
 		C12E5E2712E6ADBC00A3A3A2 /* MDFileHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = C12E5E2612E6ADBC00A3A3A2 /* MDFileHandle.m */; };
 		C12F35F612D7E24B00D28F26 /* TKDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C1249E123A0967004674B4 /* TKDocumentController.m */; };
 		C12F362212D7E45000D28F26 /* TKImageDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C169D9D0128A0A4A00653B05 /* TKImageDocument.m */; };
@@ -989,8 +988,6 @@
 		C12D372C12E14CD200397411 /* MDScopeBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDScopeBarView.m; sourceTree = "<group>"; };
 		C12DB4B3125FADE00051A751 /* TKDDSImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKDDSImageRep.h; sourceTree = "<group>"; };
 		C12DB4B4125FADE00051A751 /* TKDDSImageRep.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKDDSImageRep.mm; sourceTree = "<group>"; };
-		C12DB5E1125FCC000051A751 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
-		C12DBF11125FE3C90051A751 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		C12E5E2512E6ADBC00A3A3A2 /* MDFileHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDFileHandle.h; sourceTree = "<group>"; };
 		C12E5E2612E6ADBC00A3A3A2 /* MDFileHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDFileHandle.m; sourceTree = "<group>"; };
 		C1305B6312F08DD700D68170 /* SimdVector_SSE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimdVector_SSE.h; path = NVTextureTools/nvmath/SimdVector_SSE.h; sourceTree = "<group>"; };
@@ -1080,7 +1077,6 @@
 		C153014C11C8788C0041BEC8 /* mouse.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = mouse.icns; sourceTree = "<group>"; };
 		C153017E11C8866E0041BEC8 /* sourceFinagler.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = sourceFinagler.icns; sourceTree = "<group>"; };
 		C1537AC21294F80E0056DDE1 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		C1537AC41294F80E0056DDE1 /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = Library/Frameworks/Cg.framework; sourceTree = SDKROOT; };
 		C1537AC71294F80E0056DDE1 /* vecLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vecLib.framework; path = System/Library/Frameworks/vecLib.framework; sourceTree = SDKROOT; };
 		C1537AC91294F80E0056DDE1 /* VideoDecodeAcceleration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoDecodeAcceleration.framework; path = System/Library/Frameworks/VideoDecodeAcceleration.framework; sourceTree = SDKROOT; };
 		C1537CA512956BA50056DDE1 /* IOSurface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOSurface.framework; path = /System/Library/Frameworks/IOSurface.framework; sourceTree = "<absolute>"; };
@@ -1180,7 +1176,6 @@
 		C187BC0D125539FF0082095E /* MDFolderAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDFolderAdditions.m; sourceTree = "<group>"; };
 		C190888613932B2800656A78 /* VSGameAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSGameAdditions.h; sourceTree = "<group>"; };
 		C190888713932B2800656A78 /* VSGameAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSGameAdditions.m; sourceTree = "<group>"; };
-		C1908B08139352DB00656A78 /* SteamKit64.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; path = SteamKit64.exp; sourceTree = "<group>"; };
 		C1908B5613935CD000656A78 /* MDImageTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDImageTextCell.h; sourceTree = "<group>"; };
 		C1908B5713935CD000656A78 /* MDImageTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDImageTextCell.m; sourceTree = "<group>"; };
 		C1908B5D13935F1000656A78 /* isRunning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = isRunning.png; sourceTree = "<group>"; };
@@ -1705,7 +1700,6 @@
 		C1FEA9AE125E766800CA78FF /* weightedclusterfit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = weightedclusterfit.h; path = NVTextureTools/nvtt/squish/weightedclusterfit.h; sourceTree = "<group>"; };
 		C1FEAB31125F633100CA78FF /* Source Addon Finagler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Source Addon Finagler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1FEAB33125F633100CA78FF /* Source Addon Finagler-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Source Addon Finagler-Info.plist"; sourceTree = "<group>"; };
-		C1FEAB3E125F643800CA78FF /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SourceAddonFinaglerMainMenu.xib; sourceTree = "<group>"; };
 		C1FEAB43125F64A900CA78FF /* VSSourceAddonController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSSourceAddonController.h; sourceTree = "<group>"; };
 		C1FEAB44125F64A900CA78FF /* VSSourceAddonController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSSourceAddonController.m; sourceTree = "<group>"; };
 		C1FEAB91125F66BC00CA78FF /* VSSourceAddonFinaglerMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSSourceAddonFinaglerMain.m; sourceTree = "<group>"; };
@@ -2274,7 +2268,6 @@
 			isa = PBXGroup;
 			children = (
 				C140E73D13889C4E00027DD6 /* SteamKit.exp */,
-				C1908B08139352DB00656A78 /* SteamKit64.exp */,
 			);
 			name = auxilliary;
 			sourceTree = "<group>";
@@ -3308,7 +3301,6 @@
 				C17A6EEA120A0BC40062CBC6 /* Collaboration.framework */,
 				C1CE51C112203985006410E3 /* IOKit.framework */,
 				C17025D612847FA70056A23D /* SystemConfiguration.framework */,
-				C1537AC41294F80E0056DDE1 /* Cg.framework */,
 				C1537AC91294F80E0056DDE1 /* VideoDecodeAcceleration.framework */,
 				C1537CA512956BA50056DDE1 /* IOSurface.framework */,
 				C1CBE6FA124E2622006526C1 /* QuickTime.framework */,
@@ -3750,11 +3742,8 @@
 				C1275F60129182C40041ACD7 /* VSSourceAddon.h */,
 				C1275F61129182C40041ACD7 /* VSSourceAddon.m */,
 				C15DD651126B205500E44BDB /* VSSourceAddonFinaglerMainMenu.xib */,
-				C1FEAB40125F643C00CA78FF /* SourceAddonFinaglerMainMenu.xib */,
 				C1FEAB33125F633100CA78FF /* Source Addon Finagler-Info.plist */,
-				C12DBF11125FE3C90051A751 /* Growl Registration Ticket.growlRegDict */,
 				C1E6DE9712BCA0E6009D8AD6 /* addoninfo.txt */,
-				C12DB5E1125FCC000051A751 /* Growl.framework */,
 			);
 			name = "Source Addon Finagler";
 			sourceTree = "<group>";
@@ -4355,7 +4344,7 @@
 				BuildIndependentTargetsInParallel = YES;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Source Finagler" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -4625,7 +4614,6 @@
 				C1FEAB80125F660B00CA78FF /* VPK.icns in Resources */,
 				C1FEABB1125F68B700CA78FF /* Localizable.strings in Resources */,
 				C1FEABFE125F69BA00CA78FF /* copy.m4a in Resources */,
-				C12DBF64125FE9780051A751 /* Growl Registration Ticket.growlRegDict in Resources */,
 				C15DD653126B205500E44BDB /* VSSourceAddonFinaglerMainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5350,14 +5338,6 @@
 				C1CE524012204090006410E3 /* English */,
 			);
 			name = MDMouseAccelerationHelperView.xib;
-			sourceTree = "<group>";
-		};
-		C1FEAB40125F643C00CA78FF /* SourceAddonFinaglerMainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C1FEAB3E125F643800CA78FF /* English */,
-			);
-			name = SourceAddonFinaglerMainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
