@@ -22,6 +22,8 @@
 #import <HLKit/HKFile.h>
 #import <HLKit/HKFileAdditions.h>
 #import <HLKit/HKFolder.h>
-#import <HLKit/HKFileHandle.h>
+#import <HLKit/HKFolderAdditions.h>
 
 #import <HLKit/HKFoundationAdditions.h>
+#import <HLKit/HKFileHandle.h>
+
