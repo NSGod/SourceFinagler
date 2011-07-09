@@ -116,7 +116,6 @@
 		C12D37DF12E269C000397411 /* MDFoundationAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C11B274F11BDE7AD004D4CC0 /* MDFoundationAdditions.h */; };
 		C12D37E012E269C000397411 /* MDFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C11B275011BDE7AD004D4CC0 /* MDFoundationAdditions.m */; };
 		C12D37E912E269DD00397411 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1A112E511D66720008BBABD /* CoreServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		C12E5E2712E6ADBC00A3A3A2 /* MDFileHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = C12E5E2612E6ADBC00A3A3A2 /* MDFileHandle.m */; };
 		C12F35F612D7E24B00D28F26 /* TKDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C1249E123A0967004674B4 /* TKDocumentController.m */; };
 		C12F362212D7E45000D28F26 /* TKImageDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C169D9D0128A0A4A00653B05 /* TKImageDocument.m */; };
 		C12F362312D7E45100D28F26 /* TKImageDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = C101A6D6125281C700BD8091 /* TKImageDocument.xib */; };
@@ -151,6 +150,8 @@
 		C1305C0212F0919500D68170 /* SimdVector.h in Headers */ = {isa = PBXBuildFile; fileRef = C1305B6512F08DD700D68170 /* SimdVector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1305C3012F092FD00D68170 /* CompressorDX11.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FEA962125E75C000CA78FF /* CompressorDX11.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1305CB112F095DB00D68170 /* fastclusterfit.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FEA99C125E766800CA78FF /* fastclusterfit.h */; };
+		C134AB1A13C33F18002EF318 /* TextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
+		C134AB2013C33F2D002EF318 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA269613A2E1B900235C98 /* QTKit.framework */; };
 		C1351912139479C40074B5EA /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C1351911139479C40074B5EA /* Acknowledgments.rtf */; };
 		C135198B13947C730074B5EA /* LGPL.txt in Resources */ = {isa = PBXBuildFile; fileRef = C135198813947C190074B5EA /* LGPL.txt */; };
 		C13519A113947CB00074B5EA /* LGPL.txt in Resources */ = {isa = PBXBuildFile; fileRef = C135199F13947CA40074B5EA /* LGPL.txt */; };
@@ -186,13 +187,14 @@
 		C140EA3B1388CE9400027DD6 /* noteIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C140EA3A1388CE9400027DD6 /* noteIcon.icns */; };
 		C145AF1712BD8F22005D7E21 /* TextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C145AF5F12BD8F6A005D7E21 /* TextureKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
-		C1495DDF12BA9F8A0039822C /* MDHLPrivateInterfaces.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1495DDE12BA9F8A0039822C /* MDHLPrivateInterfaces.mm */; };
 		C14D700712F9E5C000A2FD7E /* MDTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124D5123A0A8A004674B4 /* MDTextFieldCell.m */; };
 		C15590CA12B6E04200FD0684 /* SFTI.icns in Resources */ = {isa = PBXBuildFile; fileRef = C15590C912B6E04200FD0684 /* SFTI.icns */; };
 		C155C9C813A06907008151E7 /* HLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; };
 		C155C9DC13A06931008151E7 /* HLKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; };
 		C1580E891396262F00D5D4D8 /* VSPrivateInterfaces.h in Headers */ = {isa = PBXBuildFile; fileRef = C1580E871396262F00D5D4D8 /* VSPrivateInterfaces.h */; settings = {ATTRIBUTES = (); }; };
 		C1594EA21384F247009CE606 /* usbOverdriveNote.png in Resources */ = {isa = PBXBuildFile; fileRef = C1594EA11384F247009CE606 /* usbOverdriveNote.png */; };
+		C159969B13C7919200849C73 /* HKFolderAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153CD1396699600E32057 /* HKFolderAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C159969C13C7919300849C73 /* HKFolderAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F153CE1396699600E32057 /* HKFolderAdditions.m */; };
 		C15A76431399DC1200B4F485 /* MDAppKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C11B275511BDE826004D4CC0 /* MDAppKitAdditions.m */; };
 		C15A76441399DC1300B4F485 /* MDFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C11B275011BDE7AD004D4CC0 /* MDFoundationAdditions.m */; };
 		C15BCEAE11DA232D00C6E770 /* VSAuthorizationHelperToolLib.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1126211D615E9008BBABD /* VSAuthorizationHelperToolLib.c */; };
@@ -440,11 +442,6 @@
 		C1C2C552127CBCA0003B24F6 /* MDTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1A117DD11D695EA008BBABD /* MDTableView.m */; };
 		C1C2C554127CBCA0003B24F6 /* MDUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BB6F5D11FCA90300B88BBE /* MDUserDefaults.m */; };
 		C1C2C556127CBCA0003B24F6 /* MDHLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124A2123A0990004674B4 /* MDHLDocument.m */; };
-		C1C2C557127CBCA0003B24F6 /* MDHLFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1C124A4123A0990004674B4 /* MDHLFile.mm */; };
-		C1C2C558127CBCA0003B24F6 /* MDNode.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124C8123A0A76004674B4 /* MDNode.m */; };
-		C1C2C559127CBCA0003B24F6 /* MDItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124CA123A0A76004674B4 /* MDItem.m */; };
-		C1C2C55A127CBCA0003B24F6 /* MDFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1C124CC123A0A76004674B4 /* MDFile.mm */; };
-		C1C2C55B127CBCA0003B24F6 /* MDFolder.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1C124CE123A0A76004674B4 /* MDFolder.mm */; };
 		C1C2C55C127CBCA0003B24F6 /* MDTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124D5123A0A8A004674B4 /* MDTextFieldCell.m */; };
 		C1C2C55D127CBCA0003B24F6 /* MDBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124D9123A0AEC004674B4 /* MDBrowser.m */; };
 		C1C2C55E127CBCA0003B24F6 /* MDBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124DB123A0AEC004674B4 /* MDBrowserCell.m */; };
@@ -479,17 +476,8 @@
 		C1C2C57C127CBCA0003B24F6 /* MDPrefsGeneralController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14DB243123D8EF5002D87FE /* MDPrefsGeneralController.m */; };
 		C1C2C57D127CBCA0003B24F6 /* MDTransparentView.m in Sources */ = {isa = PBXBuildFile; fileRef = C164771E124E8C470062B943 /* MDTransparentView.m */; };
 		C1C2C581127CBCA0003B24F6 /* MDPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C15B07C41254F46800F722B7 /* MDPreviewViewController.m */; };
-		C1C2C582127CBCA0003B24F6 /* MDFileAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C15B089D1255043800F722B7 /* MDFileAdditions.m */; };
-		C1C2C583127CBCA0003B24F6 /* MDFolderAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C187BC0D125539FF0082095E /* MDFolderAdditions.m */; };
 		C1C2C584127CBCA0003B24F6 /* MDQuickLookPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = C1ABAB6812563BD800CAAFEB /* MDQuickLookPanel.m */; };
 		C1C2C585127CBCA0003B24F6 /* MDImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C18250AE1262859600D3F663 /* MDImageView.m */; };
-		C1C2C58E127CBCA0003B24F6 /* MDGCFFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C17D34FD1279269300962584 /* MDGCFFile.mm */; };
-		C1C2C58F127CBCA0003B24F6 /* MDVPKFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C17D35041279270300962584 /* MDVPKFile.mm */; };
-		C1C2C590127CBCA0003B24F6 /* MDNCFFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1970763127C1C0F00EFE051 /* MDNCFFile.mm */; };
-		C1C2C591127CBCA0003B24F6 /* MDBSPFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C16374F2127C89E10013ABAF /* MDBSPFile.mm */; };
-		C1C2C592127CBCA0003B24F6 /* MDPAKFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C16374F5127C8A6E0013ABAF /* MDPAKFile.mm */; };
-		C1C2C593127CBCA0003B24F6 /* MDWADFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C16374F8127C8AC00013ABAF /* MDWADFile.mm */; };
-		C1C2C594127CBCA0003B24F6 /* MDXZPFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C16374FB127C8AFE0013ABAF /* MDXZPFile.mm */; };
 		C1C2C597127CBCA0003B24F6 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C11B279211BDFBB8004D4CC0 /* ApplicationServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1C2C598127CBCA0003B24F6 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C15520FE11D9939D00CCEDD3 /* Sparkle.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1C2C59A127CBCA0003B24F6 /* libcrypto.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C14D2214121B638E00AB4F96 /* libcrypto.0.9.7.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -682,6 +670,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = C1224BEB13B06B9A009AA0F4;
 			remoteInfo = SourceFinaglerAgent;
+		};
+		C134AB7D13C33FF2002EF318 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C17319B11298D11400C29732;
+			remoteInfo = TextureKit;
 		};
 		C140E90F1388B75800027DD6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -988,8 +983,6 @@
 		C12D372C12E14CD200397411 /* MDScopeBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDScopeBarView.m; sourceTree = "<group>"; };
 		C12DB4B3125FADE00051A751 /* TKDDSImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKDDSImageRep.h; sourceTree = "<group>"; };
 		C12DB4B4125FADE00051A751 /* TKDDSImageRep.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKDDSImageRep.mm; sourceTree = "<group>"; };
-		C12E5E2512E6ADBC00A3A3A2 /* MDFileHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDFileHandle.h; sourceTree = "<group>"; };
-		C12E5E2612E6ADBC00A3A3A2 /* MDFileHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDFileHandle.m; sourceTree = "<group>"; };
 		C1305B6312F08DD700D68170 /* SimdVector_SSE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimdVector_SSE.h; path = NVTextureTools/nvmath/SimdVector_SSE.h; sourceTree = "<group>"; };
 		C1305B6412F08DD700D68170 /* SimdVector_VE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimdVector_VE.h; path = NVTextureTools/nvmath/SimdVector_VE.h; sourceTree = "<group>"; };
 		C1305B6512F08DD700D68170 /* SimdVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimdVector.h; path = NVTextureTools/nvmath/SimdVector.h; sourceTree = "<group>"; };
@@ -1039,8 +1032,6 @@
 		C145E8B51248D6CC00AF2D35 /* SND.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = SND.icns; sourceTree = "<group>"; };
 		C145E9691248DD3D00AF2D35 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		C145EDC51268D7BA00C34A08 /* DDS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = DDS.icns; sourceTree = "<group>"; };
-		C1495DDD12BA9F8A0039822C /* MDHLPrivateInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDHLPrivateInterfaces.h; sourceTree = "<group>"; };
-		C1495DDE12BA9F8A0039822C /* MDHLPrivateInterfaces.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDHLPrivateInterfaces.mm; sourceTree = "<group>"; };
 		C14CAABA1275E80100BD0CCA /* dxtlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dxtlib.h; path = NVTextureTools/dxtlib.h; sourceTree = "<group>"; };
 		C14CAAF51275E90F00BD0CCA /* ConvertColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConvertColor.h; path = NVTextureTools/dds/ConvertColor.h; sourceTree = "<group>"; };
 		C14CAAF61275E90F00BD0CCA /* ddsTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ddsTypes.h; path = NVTextureTools/dds/ddsTypes.h; sourceTree = "<group>"; };
@@ -1100,10 +1091,9 @@
 		C1583BBF12B3ABA700A4AE2F /* TKImageExportPreset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKImageExportPreset.h; sourceTree = "<group>"; };
 		C1583BC012B3ABA700A4AE2F /* TKImageExportPreset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKImageExportPreset.m; sourceTree = "<group>"; };
 		C1594EA11384F247009CE606 /* usbOverdriveNote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usbOverdriveNote.png; sourceTree = "<group>"; };
+		C15997DF13C793D500849C73 /* HLKit.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; name = HLKit.exp; path = ../HLKit.exp; sourceTree = "<group>"; };
 		C15B07C31254F46800F722B7 /* MDPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPreviewViewController.h; sourceTree = "<group>"; };
 		C15B07C41254F46800F722B7 /* MDPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPreviewViewController.m; sourceTree = "<group>"; };
-		C15B089C1255043800F722B7 /* MDFileAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDFileAdditions.h; sourceTree = "<group>"; };
-		C15B089D1255043800F722B7 /* MDFileAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDFileAdditions.m; sourceTree = "<group>"; };
 		C15DD10A126952FD00E44BDB /* SMD.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = SMD.icns; sourceTree = "<group>"; };
 		C15DD21012697F0B00E44BDB /* LMP.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = LMP.icns; sourceTree = "<group>"; };
 		C15DD37D126A476300E44BDB /* MDCGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCGImage.h; sourceTree = "<group>"; };
@@ -1111,14 +1101,6 @@
 		C15DD47B126AB93000E44BDB /* NUT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = NUT.icns; sourceTree = "<group>"; };
 		C15DD47C126AB93000E44BDB /* NUC.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = NUC.icns; sourceTree = "<group>"; };
 		C15DD652126B205500E44BDB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/VSSourceAddonFinaglerMainMenu.xib; sourceTree = "<group>"; };
-		C16374F1127C89E10013ABAF /* MDBSPFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDBSPFile.h; sourceTree = "<group>"; };
-		C16374F2127C89E10013ABAF /* MDBSPFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDBSPFile.mm; sourceTree = "<group>"; };
-		C16374F4127C8A6E0013ABAF /* MDPAKFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPAKFile.h; sourceTree = "<group>"; };
-		C16374F5127C8A6E0013ABAF /* MDPAKFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDPAKFile.mm; sourceTree = "<group>"; };
-		C16374F7127C8AC00013ABAF /* MDWADFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWADFile.h; sourceTree = "<group>"; };
-		C16374F8127C8AC00013ABAF /* MDWADFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDWADFile.mm; sourceTree = "<group>"; };
-		C16374FA127C8AFE0013ABAF /* MDXZPFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDXZPFile.h; sourceTree = "<group>"; };
-		C16374FB127C8AFE0013ABAF /* MDXZPFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDXZPFile.mm; sourceTree = "<group>"; };
 		C16476EA124E896A0062B943 /* sound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound.png; sourceTree = "<group>"; };
 		C16476ED124E8BA30062B943 /* exitFullScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exitFullScreen.png; sourceTree = "<group>"; };
 		C16476EE124E8BA30062B943 /* fitToScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fitToScreen.png; sourceTree = "<group>"; };
@@ -1153,17 +1135,11 @@
 		C17319B31298D11400C29732 /* TextureKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TextureKit-Info.plist"; sourceTree = "<group>"; };
 		C1731B6E12993EE700C29732 /* MDPSDImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPSDImageRep.h; sourceTree = "<group>"; };
 		C1731B6F12993EE700C29732 /* MDPSDImageRep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPSDImageRep.m; sourceTree = "<group>"; };
-		C174F05E128A5E6D00817F81 /* MDVolumeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDVolumeFormatter.h; sourceTree = "<group>"; };
-		C174F05F128A5E6D00817F81 /* MDVolumeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDVolumeFormatter.m; sourceTree = "<group>"; };
 		C1758D62124833D1001B5A46 /* RAD.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = RAD.icns; sourceTree = "<group>"; };
 		C1758D6412483642001B5A46 /* VDM.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VDM.icns; sourceTree = "<group>"; };
 		C17A6EEA120A0BC40062CBC6 /* Collaboration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Collaboration.framework; path = System/Library/Frameworks/Collaboration.framework; sourceTree = SDKROOT; };
 		C17D34F212791CCA00962584 /* HLPackageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLPackageManager.h; sourceTree = "<group>"; };
 		C17D34F312791CCA00962584 /* HLPackageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLPackageManager.m; sourceTree = "<group>"; };
-		C17D34FC1279269300962584 /* MDGCFFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDGCFFile.h; sourceTree = "<group>"; };
-		C17D34FD1279269300962584 /* MDGCFFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDGCFFile.mm; sourceTree = "<group>"; };
-		C17D35031279270300962584 /* MDVPKFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDVPKFile.h; sourceTree = "<group>"; };
-		C17D35041279270300962584 /* MDVPKFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDVPKFile.mm; sourceTree = "<group>"; };
 		C181AC9912557677006810AB /* Source-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Source-Info.plist"; sourceTree = "<group>"; };
 		C181AD951255793B006810AB /* GetMetadataForFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GetMetadataForFile.mm; sourceTree = "<group>"; };
 		C181AD971255796E006810AB /* HLSpotlightMain.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = HLSpotlightMain.c; sourceTree = "<group>"; };
@@ -1172,16 +1148,12 @@
 		C181ADCC12557F28006810AB /* SCR.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = SCR.icns; sourceTree = "<group>"; };
 		C18250AD1262859600D3F663 /* MDImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDImageView.h; sourceTree = "<group>"; };
 		C18250AE1262859600D3F663 /* MDImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDImageView.m; sourceTree = "<group>"; };
-		C187BC0C125539FF0082095E /* MDFolderAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDFolderAdditions.h; sourceTree = "<group>"; };
-		C187BC0D125539FF0082095E /* MDFolderAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDFolderAdditions.m; sourceTree = "<group>"; };
 		C190888613932B2800656A78 /* VSGameAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSGameAdditions.h; sourceTree = "<group>"; };
 		C190888713932B2800656A78 /* VSGameAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSGameAdditions.m; sourceTree = "<group>"; };
 		C1908B5613935CD000656A78 /* MDImageTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDImageTextCell.h; sourceTree = "<group>"; };
 		C1908B5713935CD000656A78 /* MDImageTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDImageTextCell.m; sourceTree = "<group>"; };
 		C1908B5D13935F1000656A78 /* isRunning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = isRunning.png; sourceTree = "<group>"; };
 		C1967B8F125C327900037CDA /* VFE.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VFE.icns; sourceTree = "<group>"; };
-		C1970762127C1C0F00EFE051 /* MDNCFFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDNCFFile.h; sourceTree = "<group>"; };
-		C1970763127C1C0F00EFE051 /* MDNCFFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDNCFFile.mm; sourceTree = "<group>"; };
 		C1A1096C11D4F149008BBABD /* com.valvesoftware.games.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = com.valvesoftware.games.plist; sourceTree = "<group>"; };
 		C1A10A2911D5124F008BBABD /* MDFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDFileManager.h; sourceTree = "<group>"; };
 		C1A10A2A11D5124F008BBABD /* MDFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDFileManager.m; sourceTree = "<group>"; };
@@ -1299,8 +1271,6 @@
 		C1C1249E123A0967004674B4 /* TKDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TKDocumentController.m; sourceTree = "<group>"; };
 		C1C124A1123A0990004674B4 /* MDHLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDHLDocument.h; sourceTree = "<group>"; };
 		C1C124A2123A0990004674B4 /* MDHLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MDHLDocument.m; sourceTree = "<group>"; };
-		C1C124A3123A0990004674B4 /* MDHLFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDHLFile.h; sourceTree = "<group>"; };
-		C1C124A4123A0990004674B4 /* MDHLFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = MDHLFile.mm; sourceTree = "<group>"; };
 		C1C124A8123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDAboutWindow.xib; sourceTree = "<group>"; };
 		C1C124AA123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDCopyOperationView.xib; sourceTree = "<group>"; };
 		C1C124AC123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDCopyOperationWindow.xib; sourceTree = "<group>"; };
@@ -1310,14 +1280,6 @@
 		C1C124B6123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDInspector.xib; sourceTree = "<group>"; };
 		C1C124B8123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDQuickLook.xib; sourceTree = "<group>"; };
 		C1C124BA123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDViewOptions.xib; sourceTree = "<group>"; };
-		C1C124C7123A0A76004674B4 /* MDNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDNode.h; sourceTree = "<group>"; };
-		C1C124C8123A0A76004674B4 /* MDNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MDNode.m; sourceTree = "<group>"; };
-		C1C124C9123A0A76004674B4 /* MDItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDItem.h; sourceTree = "<group>"; };
-		C1C124CA123A0A76004674B4 /* MDItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MDItem.m; sourceTree = "<group>"; };
-		C1C124CB123A0A76004674B4 /* MDFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDFile.h; sourceTree = "<group>"; };
-		C1C124CC123A0A76004674B4 /* MDFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = MDFile.mm; sourceTree = "<group>"; };
-		C1C124CD123A0A76004674B4 /* MDFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDFolder.h; sourceTree = "<group>"; };
-		C1C124CE123A0A76004674B4 /* MDFolder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = MDFolder.mm; sourceTree = "<group>"; };
 		C1C124D4123A0A8A004674B4 /* MDTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDTextFieldCell.h; sourceTree = "<group>"; };
 		C1C124D5123A0A8A004674B4 /* MDTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MDTextFieldCell.m; sourceTree = "<group>"; };
 		C1C124D8123A0AEC004674B4 /* MDBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDBrowser.h; sourceTree = "<group>"; };
@@ -1740,6 +1702,8 @@
 				C1F1579413969E3D00E32057 /* HL.framework in Frameworks */,
 				C1F1579F13969EAB00E32057 /* CoreServices.framework in Frameworks */,
 				C1CA27F113A2E28900235C98 /* Cocoa.framework in Frameworks */,
+				C134AB1A13C33F18002EF318 /* TextureKit.framework in Frameworks */,
+				C134AB2013C33F2D002EF318 /* QTKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1963,7 +1927,6 @@
 				C1FEA8DE125E5DC300CA78FF /* NVMath.framework */,
 				C1FEA8FD125E71A200CA78FF /* NVImage.framework */,
 				C1FEA930125E72E300CA78FF /* NVTextureTools.framework */,
-				C1D4494B12602E5100A027EF /* decompress */,
 				C1C2C613127CBE86003B24F6 /* unimplemented */,
 			);
 			name = Products;
@@ -2522,15 +2485,6 @@
 			name = PSD;
 			sourceTree = "<group>";
 		};
-		C17D34FB127924E300962584 /* HLFile */ = {
-			isa = PBXGroup;
-			children = (
-				C197075F127C1B7200EFE051 /* Abstract superclass */,
-				C1970760127C1B8200EFE051 /* Concrete subclasses */,
-			);
-			name = HLFile;
-			sourceTree = "<group>";
-		};
 		C181AD6E125578C3006810AB /* Source.mdimporter */ = {
 			isa = PBXGroup;
 			children = (
@@ -2541,58 +2495,6 @@
 				C181ADAF125579A0006810AB /* schema.strings */,
 			);
 			name = Source.mdimporter;
-			sourceTree = "<group>";
-		};
-		C181AE5912558E2C006810AB /* MDFile */ = {
-			isa = PBXGroup;
-			children = (
-				C1C124CB123A0A76004674B4 /* MDFile.h */,
-				C1C124CC123A0A76004674B4 /* MDFile.mm */,
-				C15B089C1255043800F722B7 /* MDFileAdditions.h */,
-				C15B089D1255043800F722B7 /* MDFileAdditions.m */,
-			);
-			name = MDFile;
-			sourceTree = "<group>";
-		};
-		C181AE5A12558E43006810AB /* MDFolder */ = {
-			isa = PBXGroup;
-			children = (
-				C1C124CD123A0A76004674B4 /* MDFolder.h */,
-				C1C124CE123A0A76004674B4 /* MDFolder.mm */,
-				C187BC0C125539FF0082095E /* MDFolderAdditions.h */,
-				C187BC0D125539FF0082095E /* MDFolderAdditions.m */,
-			);
-			name = MDFolder;
-			sourceTree = "<group>";
-		};
-		C197075F127C1B7200EFE051 /* Abstract superclass */ = {
-			isa = PBXGroup;
-			children = (
-				C1C124A3123A0990004674B4 /* MDHLFile.h */,
-				C1C124A4123A0990004674B4 /* MDHLFile.mm */,
-			);
-			name = "Abstract superclass";
-			sourceTree = "<group>";
-		};
-		C1970760127C1B8200EFE051 /* Concrete subclasses */ = {
-			isa = PBXGroup;
-			children = (
-				C17D34FC1279269300962584 /* MDGCFFile.h */,
-				C17D34FD1279269300962584 /* MDGCFFile.mm */,
-				C17D35031279270300962584 /* MDVPKFile.h */,
-				C17D35041279270300962584 /* MDVPKFile.mm */,
-				C1970762127C1C0F00EFE051 /* MDNCFFile.h */,
-				C1970763127C1C0F00EFE051 /* MDNCFFile.mm */,
-				C16374F1127C89E10013ABAF /* MDBSPFile.h */,
-				C16374F2127C89E10013ABAF /* MDBSPFile.mm */,
-				C16374F4127C8A6E0013ABAF /* MDPAKFile.h */,
-				C16374F5127C8A6E0013ABAF /* MDPAKFile.mm */,
-				C16374F7127C8AC00013ABAF /* MDWADFile.h */,
-				C16374F8127C8AC00013ABAF /* MDWADFile.mm */,
-				C16374FA127C8AFE0013ABAF /* MDXZPFile.h */,
-				C16374FB127C8AFE0013ABAF /* MDXZPFile.mm */,
-			);
-			name = "Concrete subclasses";
 			sourceTree = "<group>";
 		};
 		C1A1123011D60191008BBABD /* VSAuthorization */ = {
@@ -2841,8 +2743,6 @@
 				C1C124B1123A0A0C004674B4 /* MDHLDocumentLeopard.xib */,
 				C1C124B3123A0A0C004674B4 /* MDHLDocumentSnowLeopard.xib */,
 				C1580F68139634F900D5D4D8 /* HLKit framework */,
-				C17D34FB127924E300962584 /* HLFile */,
-				C1C124C6123A0A4E004674B4 /* Model */,
 				C1C124D3123A0A7C004674B4 /* Views */,
 				C1C12512123A0BEA004674B4 /* MDCopyOperation */,
 				C129D5711255C7CB004C6EDA /* MDPreviewViewController */,
@@ -2856,23 +2756,6 @@
 				C1C12521123A0C5D004674B4 /* MDAboutWindow */,
 			);
 			name = Document;
-			sourceTree = "<group>";
-		};
-		C1C124C6123A0A4E004674B4 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				C1C124C7123A0A76004674B4 /* MDNode.h */,
-				C1C124C8123A0A76004674B4 /* MDNode.m */,
-				C1C124C9123A0A76004674B4 /* MDItem.h */,
-				C1C124CA123A0A76004674B4 /* MDItem.m */,
-				C181AE5912558E2C006810AB /* MDFile */,
-				C181AE5A12558E43006810AB /* MDFolder */,
-				C1495DDD12BA9F8A0039822C /* MDHLPrivateInterfaces.h */,
-				C1495DDE12BA9F8A0039822C /* MDHLPrivateInterfaces.mm */,
-				C12E5E2512E6ADBC00A3A3A2 /* MDFileHandle.h */,
-				C12E5E2612E6ADBC00A3A3A2 /* MDFileHandle.m */,
-			);
-			name = Model;
 			sourceTree = "<group>";
 		};
 		C1C124D3123A0A7C004674B4 /* Views */ = {
@@ -2924,8 +2807,6 @@
 		C1C124F1123A0B2F004674B4 /* Formatters & Transformers */ = {
 			isa = PBXGroup;
 			children = (
-				C174F05E128A5E6D00817F81 /* MDVolumeFormatter.h */,
-				C174F05F128A5E6D00817F81 /* MDVolumeFormatter.m */,
 				C1C124F2123A0B49004674B4 /* MDFileSizeFormatter.h */,
 				C1C124F3123A0B49004674B4 /* MDFileSizeFormatter.m */,
 				C1C124F4123A0B49004674B4 /* MDDateFormatter.h */,
@@ -3190,6 +3071,7 @@
 		C1C2C613127CBE86003B24F6 /* unimplemented */ = {
 			isa = PBXGroup;
 			children = (
+				C1D4494B12602E5100A027EF /* decompress */,
 				C1A112B211D66369008BBABD /* sourceFinaglerInstaller */,
 				C1A112D411D66676008BBABD /* sourcefinaglerd */,
 			);
@@ -3336,6 +3218,7 @@
 				C1F153931396638A00E32057 /* HLKit.h */,
 				C1F153B2139663D300E32057 /* HLKitDefines.h */,
 				C1580F11139634DA00D5D4D8 /* HLKit-Info.plist */,
+				C15997DF13C793D500849C73 /* HLKit.exp */,
 				C1F15405139669D100E32057 /* Abstract superclass */,
 				C1F15406139669D500E32057 /* Concrete subclasses */,
 				C1F15404139669A600E32057 /* Model */,
@@ -3791,6 +3674,7 @@
 				C1F154011396699600E32057 /* HKXZPFile.h in Headers */,
 				C1F157DE1396B05700E32057 /* HKFoundationAdditions.h in Headers */,
 				C16143CA1399975C0042B91B /* HKFileAdditions.h in Headers */,
+				C159969B13C7919200849C73 /* HKFolderAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4061,6 +3945,7 @@
 			);
 			dependencies = (
 				C1F1579313969E3100E32057 /* PBXTargetDependency */,
+				C134AB7E13C33FF2002EF318 /* PBXTargetDependency */,
 			);
 			name = HLKit;
 			productName = HLKit;
@@ -4693,6 +4578,7 @@
 				C1F154021396699600E32057 /* HKXZPFile.mm in Sources */,
 				C1F157DF1396B05700E32057 /* HKFoundationAdditions.m in Sources */,
 				C16143D11399975C0042B91B /* HKFileAdditions.m in Sources */,
+				C159969C13C7919300849C73 /* HKFolderAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4809,11 +4695,6 @@
 				C1C2C552127CBCA0003B24F6 /* MDTableView.m in Sources */,
 				C1C2C554127CBCA0003B24F6 /* MDUserDefaults.m in Sources */,
 				C1C2C556127CBCA0003B24F6 /* MDHLDocument.m in Sources */,
-				C1C2C557127CBCA0003B24F6 /* MDHLFile.mm in Sources */,
-				C1C2C558127CBCA0003B24F6 /* MDNode.m in Sources */,
-				C1C2C559127CBCA0003B24F6 /* MDItem.m in Sources */,
-				C1C2C55A127CBCA0003B24F6 /* MDFile.mm in Sources */,
-				C1C2C55B127CBCA0003B24F6 /* MDFolder.mm in Sources */,
 				C1C2C55C127CBCA0003B24F6 /* MDTextFieldCell.m in Sources */,
 				C1C2C55D127CBCA0003B24F6 /* MDBrowser.m in Sources */,
 				C1C2C55E127CBCA0003B24F6 /* MDBrowserCell.m in Sources */,
@@ -4848,20 +4729,10 @@
 				C1C2C57C127CBCA0003B24F6 /* MDPrefsGeneralController.m in Sources */,
 				C1C2C57D127CBCA0003B24F6 /* MDTransparentView.m in Sources */,
 				C1C2C581127CBCA0003B24F6 /* MDPreviewViewController.m in Sources */,
-				C1C2C582127CBCA0003B24F6 /* MDFileAdditions.m in Sources */,
-				C1C2C583127CBCA0003B24F6 /* MDFolderAdditions.m in Sources */,
 				C1C2C584127CBCA0003B24F6 /* MDQuickLookPanel.m in Sources */,
 				C1C2C585127CBCA0003B24F6 /* MDImageView.m in Sources */,
-				C1C2C58E127CBCA0003B24F6 /* MDGCFFile.mm in Sources */,
-				C1C2C58F127CBCA0003B24F6 /* MDVPKFile.mm in Sources */,
-				C1C2C590127CBCA0003B24F6 /* MDNCFFile.mm in Sources */,
-				C1C2C591127CBCA0003B24F6 /* MDBSPFile.mm in Sources */,
-				C1C2C592127CBCA0003B24F6 /* MDPAKFile.mm in Sources */,
-				C1C2C593127CBCA0003B24F6 /* MDWADFile.mm in Sources */,
-				C1C2C594127CBCA0003B24F6 /* MDXZPFile.mm in Sources */,
 				C169D929128A045C00653B05 /* MDCGImage.m in Sources */,
 				C174EED0128A49C000817F81 /* MDCopyOperationViewController.m in Sources */,
-				C1495DDF12BA9F8A0039822C /* MDHLPrivateInterfaces.mm in Sources */,
 				C116FA0512D5549900551787 /* TKImageDocumentAccessoryViewController.m in Sources */,
 				C12F35F612D7E24B00D28F26 /* TKDocumentController.m in Sources */,
 				C12F362212D7E45000D28F26 /* TKImageDocument.m in Sources */,
@@ -4872,7 +4743,6 @@
 				C12F363512D7E46B00D28F26 /* TKImageExportPreset.m in Sources */,
 				C12F363712D7E46D00D28F26 /* TKImageExportController.m in Sources */,
 				C12D372D12E14CD200397411 /* MDScopeBarView.m in Sources */,
-				C12E5E2712E6ADBC00A3A3A2 /* MDFileHandle.m in Sources */,
 				C190888813932B2800656A78 /* VSGameAdditions.m in Sources */,
 				C1908B5813935CD000656A78 /* MDImageTextCell.m in Sources */,
 				C11CA5E713A4E84D006CC348 /* MDCopyOperationSeparatorView.m in Sources */,
@@ -5011,6 +4881,11 @@
 			isa = PBXTargetDependency;
 			target = C1224BEB13B06B9A009AA0F4 /* SourceFinaglerAgent */;
 			targetProxy = C1224D8013B09338009AA0F4 /* PBXContainerItemProxy */;
+		};
+		C134AB7E13C33FF2002EF318 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C17319B11298D11400C29732 /* TextureKit */;
+			targetProxy = C134AB7D13C33FF2002EF318 /* PBXContainerItemProxy */;
 		};
 		C140E9101388B75800027DD6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5369,6 +5244,8 @@
 					i386,
 					x86_64,
 				);
+				COPY_PHASE_STRIP = NO;
+				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_MODEL_TUNING = G5;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -5376,6 +5253,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
+				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5405,9 +5283,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -5417,7 +5293,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PREBINDING = NO;
 				PRODUCT_NAME = SourceFinaglerAgent;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5453,7 +5328,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
@@ -5471,6 +5345,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = SteamKit;
+				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5522,10 +5397,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
+				EXPORTED_SYMBOLS_FILE = HLKit.exp;
 				FRAMEWORK_VERSION = A;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -5565,9 +5440,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				EXPORTED_SYMBOLS_FILE = TextureKit.exp;
@@ -5580,7 +5453,6 @@
 				INSTALL_PATH = "@rpath/";
 				PREBINDING = NO;
 				PRODUCT_NAME = TextureKit;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5680,9 +5552,7 @@
 					x86_64,
 				);
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
@@ -5695,7 +5565,6 @@
 				INSTALL_PATH = "@rpath/";
 				PREBINDING = NO;
 				PRODUCT_NAME = VTF;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5727,9 +5596,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
@@ -5742,7 +5609,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = HL;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5779,9 +5645,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(BUILD_DIR)\"/**",
 					"\"$(SRCROOT)\"",
@@ -5798,7 +5662,6 @@
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "Source Finagler";
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5834,9 +5697,7 @@
 					x86_64,
 				);
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "Source-Info.plist";
@@ -5844,7 +5705,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
 				PREBINDING = NO;
 				PRODUCT_NAME = Source;
-				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Release;
@@ -5883,9 +5743,7 @@
 					x86_64,
 				);
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -5895,7 +5753,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
 				PREBINDING = NO;
 				PRODUCT_NAME = SourceImage;
-				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = qlgenerator;
 			};
 			name = Release;
@@ -5971,9 +5828,7 @@
 					x86_64,
 				);
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
@@ -5983,7 +5838,6 @@
 				INSTALL_PATH = "@rpath/";
 				PREBINDING = NO;
 				PRODUCT_NAME = NVCore;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -6020,9 +5874,7 @@
 					x86_64,
 				);
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
@@ -6032,7 +5884,6 @@
 				INSTALL_PATH = "@rpath/";
 				PREBINDING = NO;
 				PRODUCT_NAME = NVMath;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -6070,9 +5921,7 @@
 					x86_64,
 				);
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
@@ -6083,7 +5932,6 @@
 				INSTALL_PATH = "@rpath/";
 				PREBINDING = NO;
 				PRODUCT_NAME = NVImage;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -6124,9 +5972,7 @@
 					x86_64,
 				);
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
@@ -6140,7 +5986,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = NVTextureTools;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -6178,9 +6023,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -6199,7 +6042,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "Source Addon Finagler";
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
