@@ -8,33 +8,7 @@
 
 
 .objc_class_name_VSGame
-#_OBJC_IVAR_$_VSGame.path
-#_OBJC_IVAR_$_VSGame.image
-#_OBJC_IVAR_$_VSGame.iconPath
-#_OBJC_IVAR_$_VSGame.name
-#_OBJC_IVAR_$_VSGame.infoPlist
-#_OBJC_IVAR_$_VSGame.addonsFolderPath
-#_OBJC_IVAR_$_VSGame.gameID
-#_OBJC_IVAR_$_VSGame.creatorCode
-#_OBJC_IVAR_$_VSGame.isHelped
-
-
-
 .objc_class_name_VSSteamManager
-#_OBJC_IVAR_$_VSSteamManager.defaultSteamAppsPath
-#_OBJC_IVAR_$_VSSteamManager.steamAppsPath
-#_OBJC_IVAR_$_VSSteamManager.steamAppsRelocationType
-#_OBJC_IVAR_$_VSSteamManager.gameBundleIdentifiersAndGames
-#_OBJC_IVAR_$_VSSteamManager.gameIDsAndGames
-#_OBJC_IVAR_$_VSSteamManager.gamePaths
-#_OBJC_IVAR_$_VSSteamManager.delegate
-#_OBJC_IVAR_$_VSSteamManager.steamLaunchAgentStatus
-#_OBJC_IVAR_$_VSSteamManager.steamLaunchAgentPath
-#_OBJC_IVAR_$_VSSteamManager.timeToLocateSteamApps
-#_OBJC_IVAR_$_VSSteamManager.runningGames
-#_OBJC_IVAR_$_VSSteamManager.exposePreferences
-#_OBJC_IVAR_$_VSSteamManager.workspacesEnabled
-
 
 
 _VSGameIDKey
@@ -63,8 +37,9 @@ _VSSteamAppsDirectoryNameKey
 _VSSourceFinaglerAgentNameKey
 _VSSourceFinaglerAgentBundleIdentifierKey
 
-_VSSourceAddonsFolderNameKey
+_VSSourceAddonFolderNameKey
 _VSSourceAddonErrorDomain
 _VSSourceAddonGameIDKey
-
+_VSSourceAddonInfoNameKey
+_VSSourceAddonSteamAppIDKey
 

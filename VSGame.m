@@ -55,7 +55,7 @@
 		if ([[anInfoPlist objectForKey:VSGameSupportsAddonsKey] boolValue]) {
 			NSString *addonsFolder = [[[executablePath stringByDeletingLastPathComponent]
 									   stringByAppendingPathComponent:shortFolderName]
-									  stringByAppendingPathComponent:VSSourceAddonsFolderNameKey];
+									  stringByAppendingPathComponent:VSSourceAddonFolderNameKey];
 			if ([fileManager fileExistsAtPath:addonsFolder isDirectory:&isDir] && isDir) {
 				[self setAddonsFolderPath:addonsFolder];
 			}

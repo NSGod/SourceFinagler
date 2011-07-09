@@ -9,10 +9,6 @@
 #import <HLKit/HKArchiveFile.h>
 
 
-extern NSString * const VSAddonInfoNameKey;
-extern NSString * const VSAddonSteamAppIDKey;
-
-
 @interface HKVPKFile : HKArchiveFile {
 
 	NSUInteger		archiveCount;

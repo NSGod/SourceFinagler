@@ -148,9 +148,6 @@ enum {
 typedef NSUInteger VSSourceAddonInstallMethod;
 
 
-STEAMKIT_EXTERN NSString * const VSSourceAddonErrorDomain;
-
-STEAMKIT_EXTERN NSString * const VSSourceAddonGameIDKey;
 
 enum {
 	VSSourceAddonNotAValidAddonFileError				= 6000,
@@ -199,7 +196,17 @@ STEAMKIT_EXTERN NSString * const VSGameIconNameKey;
 
 STEAMKIT_EXTERN NSString * const VSSteamAppsDirectoryNameKey;
 
-STEAMKIT_EXTERN NSString * const VSSourceAddonsFolderNameKey;
+
+STEAMKIT_EXTERN NSString * const VSSourceAddonErrorDomain;
+
+STEAMKIT_EXTERN NSString * const VSSourceAddonGameIDKey;
+
+
+STEAMKIT_EXTERN NSString * const VSSourceAddonInfoNameKey;
+STEAMKIT_EXTERN NSString * const VSSourceAddonSteamAppIDKey;
+
+
+STEAMKIT_EXTERN NSString * const VSSourceAddonFolderNameKey;
 
 // SourceFinaglerAgent
 

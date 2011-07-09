@@ -55,9 +55,6 @@ NSString * const VSSourceFinaglerAgentBundleIdentifierKey		= @"com.markdouma.Sou
 
 NSString * const VSTimeMachineDatabaseNameKey				= @"Backups.backupdb";
 
-NSString * const VSSourceAddonsFolderNameKey						= @"addons";
-
-
 
 NSString * const VSSteamLaunchGameURL						= @"steam://run/";
 
@@ -72,6 +69,12 @@ NSString * const VSDashboardDisabledKey						= @"mcx-disabled";
 
 NSString * const VSSourceAddonErrorDomain					= @"com.markdouma.SourceFinagler.SourceAddonErrorDomain";
 NSString * const VSSourceAddonGameIDKey						= @"VSSourceAddonGameID";
+
+NSString * const VSSourceAddonFolderNameKey				= @"addons";
+
+NSString * const VSSourceAddonInfoNameKey					= @"addoninfo.txt";
+NSString * const VSSourceAddonSteamAppIDKey					= @"addonSteamAppID";
+
 
 
 static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *programArguments, NSString *aWatchPath);
@@ -1177,7 +1180,7 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 	}
 	
 	HKVPKFile *file = [[[HKVPKFile alloc] initWithContentsOfFile:sourceFilePath showInvisibleItems:YES sortDescriptors:nil error:outError] autorelease];
-	HKItem *addonInfoItem = [file itemAtPath:VSAddonInfoNameKey];
+	HKItem *addonInfoItem = [file itemAtPath:VSSourceAddonInfoNameKey];
 	
 #if VS_DEBUG
 //	NSLog(@"[%@ %@] addonInfoItem == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), addonInfoItem);
@@ -1225,14 +1228,14 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 	
 	
 	NSUInteger count = [revisedWords count];
-	NSUInteger keyIndex = [revisedWords indexOfObject:VSAddonSteamAppIDKey];
+	NSUInteger keyIndex = [revisedWords indexOfObject:VSSourceAddonSteamAppIDKey];
 	
 #if VS_DEBUG
 //	NSLog(@"revisedWords == %@, count == %lu, keyIndex == %lu", revisedWords, count, keyIndex);
 #endif
 	
 	if (keyIndex == NSNotFound || !(keyIndex + 1 < count)) {
-		NSLog(@"[%@ %@] failed to find %@ key and/or value in addoninfo.txt in (%@)!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), VSAddonSteamAppIDKey, sourceFilePath);
+		NSLog(@"[%@ %@] failed to find %@ key and/or value in addoninfo.txt in (%@)!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), VSSourceAddonSteamAppIDKey, sourceFilePath);
 		NSLog(@"[%@ %@] stringValue == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), stringValue);
 		if (outError) *outError = [NSError errorWithDomain:VSSourceAddonErrorDomain code:VSSourceAddonNoGameIDFoundInAddonInfoError userInfo:nil];
 		return NO;

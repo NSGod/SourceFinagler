@@ -15,9 +15,6 @@
 using namespace HLLib;
 
 
-NSString * const VSAddonInfoNameKey = @"addoninfo.txt";
-NSString * const VSAddonSteamAppIDKey = @"addonSteamAppID";
-
 #define HK_DEBUG 0
 
 
