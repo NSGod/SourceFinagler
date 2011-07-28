@@ -9,7 +9,7 @@
 #import "TKImageDocumentAccessoryViewController.h"
 #import "TKImageDocument.h"
 
-#import <TextureKit/TKImage.h>
+#import <TextureKit/TextureKit.h>
 
 #import "MDAppKitAdditions.h"
 
