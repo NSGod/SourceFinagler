@@ -11,8 +11,10 @@
 @class NSImage, QTMovie;
 
 @interface HKFolder (HKAdditions)
+
 - (NSImage *)image;
 - (QTMovie *)movie;
+
 @end
 
 

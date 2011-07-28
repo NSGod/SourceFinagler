@@ -21,12 +21,72 @@
 
 #define HK_DEBUG 0
 
-NSString * const HKErrorDomain			= @"HKErrorDomain";
-NSString * const HKErrorMessageKey		= @"HKErrorMessage";
+NSString * const HKErrorDomain				= @"HKErrorDomain";
+NSString * const HKErrorMessageKey			= @"HKErrorMessage";
 NSString * const HKSystemErrorMessageKey	= @"HKSystemErrorMessage";
+
+static BOOL iconsInitialized = NO;
+static NSImage *folderImage = nil;
+static NSImage *fileImage = nil;
+static NSMutableDictionary *icons = nil;
+
+static void HKInitializeIcons() {
+	if (iconsInitialized == NO) {
+		icons = [[NSMutableDictionary alloc] init];
+		if (folderImage == nil) {
+			folderImage = [[[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)] retain];
+		}
+		if (fileImage == nil) {
+			fileImage = [[[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericDocumentIcon)] retain];
+		}
+		iconsInitialized = YES;
+	}
+}
 
 
 @implementation HKItem
+
+
++ (void)initialize {
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	if (iconsInitialized == NO) HKInitializeIcons();
+}
+
+
++ (NSImage *)iconForItem:(HKItem *)item {
+#if HK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	NSImage *image = nil;
+	if ([item isLeaf]) {
+		NSString *fileNameExtension = [item nameExtension];
+		if ([fileNameExtension isEqualToString:@""]) {
+			image = fileImage;
+		} else {
+			image = [icons objectForKey:fileNameExtension];
+			if (image == nil) {
+				image = [[NSWorkspace sharedWorkspace] iconForFileType:fileNameExtension];
+				if (image) [icons setObject:image forKey:fileNameExtension];
+			}
+		}
+	} else {
+		return folderImage;
+	}
+	return image;
+}
+
+
+
++ (NSImage *)copiedImageForItem:(HKItem *)anItem {
+#if HK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	NSImage *image = [[self class] iconForItem:anItem];
+	NSImage *copiedImage = [[image copy] autorelease];
+	return copiedImage;
+}
+
+
 
 @synthesize name, nameExtension, kind, size,
 		type, isExtractable, isEncrypted,
@@ -39,7 +99,6 @@ NSString * const HKSystemErrorMessageKey	= @"HKSystemErrorMessage";
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	
 	return [self initWithParent:nil children:nil sortDescriptors:nil container:nil];
 }
 
@@ -121,9 +180,11 @@ NSString * const HKSystemErrorMessageKey	= @"HKSystemErrorMessage";
 
 
 - (BOOL)writeToFile:(NSString *)aPath assureUniqueFilename:(BOOL)assureUniqueFilename resultingPath:(NSString **)resultingPath error:(NSError **)outError {
-#if HK_DEBUG
-	NSLog(@"[%@ %@] subclasses must implement!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
+	NSLog(@"[%@ %@] (HKItem) subclasses must implement!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSException *exception = [NSException exceptionWithName:NSInternalInconsistencyException
+													 reason:[NSString stringWithFormat:@"[%@ %@] (HKItem) subclasses must implement!", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]
+												   userInfo:nil];
+	[exception raise];
 	return NO;
 }
 
@@ -151,16 +212,20 @@ NSString * const HKSystemErrorMessageKey	= @"HKSystemErrorMessage";
 //	Generates an array of all descendants.
 // -------------------------------------------------------------------------------
 - (NSArray *)descendants {
-#if HK_DEBUG
-	NSLog(@"[%@ %@] subclasses must override!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
+	NSLog(@"[%@ %@] (HKItem) subclasses must override!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSException *exception = [NSException exceptionWithName:NSInternalInconsistencyException
+													 reason:[NSString stringWithFormat:@"[%@ %@] (HKItem) subclasses must implement!", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]
+												   userInfo:nil];
+	[exception raise];
 	return nil;
 }
 
 - (NSArray *)visibleDescendants {
-#if HK_DEBUG
 	NSLog(@"[%@ %@] subclasses must override!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
+	NSException *exception = [NSException exceptionWithName:NSInternalInconsistencyException
+													 reason:[NSString stringWithFormat:@"[%@ %@] (HKItem) subclasses must implement!", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]
+												   userInfo:nil];
+	[exception raise];
 	return nil;
 }
 
@@ -176,13 +241,20 @@ static NSString * const HKFileTypeDescription[] = {
 };
 
 - (NSString *)description {
-	NSMutableString *description = [NSMutableString stringWithString:@"{\n"];
-//	[description appendFormat:@"%@\n\t", [super description]];
-	[description appendFormat:@"\tname == %@\n", name];
-	[description appendFormat:@"\tpath == %@\n", [self path]];
-	if (!isLeaf) [description appendFormat:@"\tshowInvisibleItems == %@\n", (showInvisibleItems ? @"YES" : @"NO")];
-	if (!isLeaf) [description appendFormat:@"\tsortDescriptors == %@\n", sortDescriptors];
-	[description appendFormat:@"}\n"];
+//	NSMutableString *description = [NSMutableString stringWithString:[super description]];
+	NSMutableString *description = [NSMutableString stringWithFormat:@"<%@> %@", NSStringFromClass([self class]), name];
+//	[description appendFormat:@", %@", name];
+//	[description appendFormat:@", %@", [self path]];
+	
+//	NSMutableString *description = [NSMutableString stringWithString:@"{\n"];
+////	[description appendFormat:@"%@\n\t", [super description]];
+//	[description appendFormat:@"\tname == %@\n", name];
+//	[description appendFormat:@"\tpath == %@\n", [self path]];
+////	if (!isLeaf) [description appendFormat:@"\tshowInvisibleItems == %@\n", (showInvisibleItems ? @"YES" : @"NO")];
+////	if (!isLeaf) [description appendFormat:@"\tsortDescriptors == %@\n", sortDescriptors];
+//	[description appendFormat:@"}\n"];
+	
+	
 //	[description appendFormat:@"\n\tnameExtension == %@", nameExtension];
 //	[description appendFormat:@"\n\tkind == %@", kind];
 //	[description appendFormat:@"\n\tsize == %@", size];

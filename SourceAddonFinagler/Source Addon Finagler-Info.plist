@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Source Addon Finagler 2.0.2, © 2010-2011 Mark Douma. All rights reserved.</string>
+	<string>Source Addon Finagler 2.0.3, © 2010-2011 Mark Douma. All rights reserved.</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.markdouma.SourceAddonFinagler</string>
 	<key>CFBundleDocumentTypes</key>
@@ -34,11 +34,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.2</string>
+	<string>2.0.3</string>
 	<key>CFBundleSignature</key>
 	<string>SAFƒ</string>
 	<key>CFBundleVersion</key>
-	<string>202</string>
+	<string>203</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSMainNibFile</key>

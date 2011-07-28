@@ -8,11 +8,18 @@
 
 #import <HLKit/HKFile.h>
 
+@class NSImage, NSSound, QTMovie;
 
 @interface HKFile (HKAdditions)
 
 - (NSString *)stringValue;
 - (NSString *)stringValueByExtractingToTempFile:(BOOL)shouldExtractToTempFile;
+
+- (NSImage *)image;
+
+- (NSSound *)sound;
+
+- (QTMovie *)movie;
 
 @end
 

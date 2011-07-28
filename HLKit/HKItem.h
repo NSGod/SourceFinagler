@@ -7,6 +7,8 @@
 //
 
 #import <HLKit/HKNode.h>
+#import <HLKit/HLKitDefines.h>
+
 
 enum {
 	HKErrorNotExtractable = 1
@@ -25,9 +27,9 @@ enum {
 typedef NSUInteger HKFileType;
 
 
-extern NSString * const HKErrorDomain;
-extern NSString * const HKErrorMessageKey;
-extern NSString * const HKSystemErrorMessageKey;
+HLKIT_EXTERN NSString * const HKErrorDomain;
+HLKIT_EXTERN NSString * const HKErrorMessageKey;
+HLKIT_EXTERN NSString * const HKSystemErrorMessageKey;
 
 
 @interface HKItem : HKNode {
@@ -53,6 +55,9 @@ extern NSString * const HKSystemErrorMessageKey;
 	BOOL				isEncrypted;
 	
 }
+
++ (NSImage *)iconForItem:(HKItem *)anItem;
++ (NSImage *)copiedImageForItem:(HKItem *)anItem;
 
 - (BOOL)writeToFile:(NSString *)aPath assureUniqueFilename:(BOOL)assureUniqueFilename resultingPath:(NSString **)resultingPath error:(NSError **)outError;
 

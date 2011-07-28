@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import <HL/HL.h>
 
+#import <HLKit/HLKitDefines.h>
 #import <HLKit/HKFolder.h>
 #import <HLKit/HKFile.h>
 #import <HLKit/HKArchiveFile.h>
+
 
 using namespace HLLib;
 
@@ -42,6 +45,8 @@ static inline HLPackageType HLPackageTypeFromHKArchiveFileType(HKArchiveFileType
 	}
 	return HL_PACKAGE_NONE;
 }
+
+
 
 
 @interface HKFolder (HKPrivateInterfaces)
