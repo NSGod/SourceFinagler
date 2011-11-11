@@ -175,7 +175,7 @@ static SInt32 MDSystemVersion = MDUndeterminedVersion;
 	NSShadow *shadow = [[[NSShadow alloc] init] autorelease];
 	[shadow setShadowOffset:NSMakeSize(0.0, -1.0)];
 	
-		[shadow setShadowColor:[NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:0.41]];
+	[shadow setShadowColor:[NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:0.41]];
 	
 	NSColor *textColor = nil;
 	
