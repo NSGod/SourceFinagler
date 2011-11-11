@@ -46,8 +46,10 @@ static MDCopyOperationController *sharedController = nil;
 @synthesize tag, colorType;
 
 + (MDCopyOperationController *)sharedController {
-	if (sharedController == nil) {
-		sharedController = [[super allocWithZone:NULL] init];
+	@synchronized(self) {
+		if (sharedController == nil) {
+			sharedController = [[super allocWithZone:NULL] init];
+		}
 	}
 	return sharedController;
 }
