@@ -308,6 +308,11 @@ using namespace HLLib::Streams;
 					
 					if (currentBytesRead == 0) {
 						bResult = (totalBytesExtracted == pInput->GetStreamSize());
+						
+						if (bResult == NO) {
+							
+						}
+						
 						break;
 					}
 					[mData appendBytes:buffer length:currentBytesRead];
