@@ -9,7 +9,7 @@
 
 #import <SteamKit/VSSteamManager.h>
 #import <SteamKit/VSGame.h>
-#import <SteamKit/VSPrivateInterfaces.h>
+#import "VSPrivateInterfaces.h"
 
 #import <HLKit/HLKit.h>
 
@@ -192,7 +192,7 @@ static VSSteamManager *sharedManager = nil;
 		
 		if (options & VSGameLaunchHelpingGame && ![game isHelped]) {
 			NSError *outError = nil;
-			if (![self helpGame:game forUSBOverdrive:YES error:&outError]) {
+			if (![self helpGame:game forUSBOverdrive:YES updateLaunchAgent:NO error:&outError]) {
 				NSLog(@"[%@ %@] failed to help game!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 			}
 		}
@@ -668,9 +668,13 @@ static inline NSString *VSMakeLabelFromBundleIdentifier(NSString *bundleIdentifi
 
 - (BOOL)setPersistentOptions:(VSGameLaunchOptions)options forGame:(VSGame *)game error:(NSError **)outError {
 #if VS_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"[%@ %@] options == %lu, game == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)options, game);
 #endif
-	if (game == nil) return NO;
+	if (game == nil) {
+		NSLog(@"[%@ %@] *** ERROR: game == nil!, returning NO", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+		return NO;
+	}
+	
 	if (outError) *outError = nil;
 	
 	if (!locatedSteamApps) [self locateSteamApps];
@@ -680,8 +684,12 @@ static inline NSString *VSMakeLabelFromBundleIdentifier(NSString *bundleIdentifi
 	}
 	
 	@synchronized(self) {
+		
 		NSString *bundleIdentifier = [[game infoDictionary] objectForKey:(NSString *)kCFBundleIdentifierKey];
-		if (bundleIdentifier == nil) return NO;
+		if (bundleIdentifier == nil) {
+			NSLog(@"[%@ %@] *** NOTICE: game.infoDictionary.kCFBundleIdentifierKey == nil!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+			return NO;
+		}
 		
 		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedInteger:options] forKey:bundleIdentifier];
 		
@@ -691,6 +699,7 @@ static inline NSString *VSMakeLabelFromBundleIdentifier(NSString *bundleIdentifi
 			
 			NSDictionary *existingJob = [launchManager jobWithLabel:jobLabel inDomain:MDLaunchUserDomain];
 			if (existingJob) {
+				
 				if (![launchManager removeJobWithLabel:jobLabel inDomain:MDLaunchUserDomain error:outError]) {
 					NSLog(@"[%@ %@] failed to remove existing job!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 					return NO;
@@ -698,17 +707,31 @@ static inline NSString *VSMakeLabelFromBundleIdentifier(NSString *bundleIdentifi
 			}
 			
 			if (options & VSGameLaunchHelpingGame) {
+				
 				NSBundle *sourceFinaglerAgentBundle = [NSBundle bundleWithPath:sourceFinaglerLaunchAgentPath];
-				NSString *launchAgentExecutablePath = [sourceFinaglerAgentBundle executablePath];
-				if (launchAgentExecutablePath) {
-					NSDictionary *launchPlist = VSMakeLaunchAgentPlist(jobLabel, [NSArray arrayWithObjects:launchAgentExecutablePath, [game executablePath], nil], [game executablePath]);
-					if (launchPlist == nil) return NO;
-					
-					if (![launchManager submitJobWithDictionary:launchPlist inDomain:MDLaunchUserDomain error:outError]) {
-						NSLog(@"[%@ %@] failed to submit job!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-						return NO;
-					}
+				if (sourceFinaglerAgentBundle == nil) {
+					NSLog(@"[%@ %@] *** ERROR: [NSBundle bundleWithPath:sourceFinaglerLaunchAgentPath] return nil! (sourceFinaglerLaunchAgentPath == %@)", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sourceFinaglerLaunchAgentPath);
+					return NO;
 				}
+				
+				NSString *launchAgentExecutablePath = [sourceFinaglerAgentBundle executablePath];
+				if (launchAgentExecutablePath == nil) {
+					NSLog(@"[%@ %@] *** ERROR: [sourceFinaglerAgentBundle executablePath] return nil!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+					return NO;
+				}
+				
+				
+				NSDictionary *launchPlist = VSMakeLaunchAgentPlist(jobLabel, [NSArray arrayWithObjects:launchAgentExecutablePath, [game executablePath], nil], [game executablePath]);
+				if (launchPlist == nil) {
+					NSLog(@"[%@ %@] *** ERROR: VSMakeLaunchAgentPlist() returned nil!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+					return NO;
+				}
+				
+				if (![launchManager submitJobWithDictionary:launchPlist inDomain:MDLaunchUserDomain error:outError]) {
+					NSLog(@"[%@ %@] failed to submit job!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+					return NO;
+				}
+				
 			}
 		}
 	}
@@ -892,7 +915,7 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 
 
 
-- (BOOL)helpGame:(VSGame *)game forUSBOverdrive:(BOOL)helpForUSBOverdrive error:(NSError **)outError {
+- (BOOL)helpGame:(VSGame *)game forUSBOverdrive:(BOOL)helpForUSBOverdrive updateLaunchAgent:(BOOL)updateLaunchAgent error:(NSError **)outError {
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
@@ -970,6 +993,7 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 	if (![mdFileManager setAttributes:attributes ofItemAtPath:path error:outError]) {
 		success = NO;
 	}
+	
 	
 	if (helpForUSBOverdrive) {
 		NSString *executableName = [path lastPathComponent];
@@ -1050,9 +1074,11 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 		}
 	}
 	
-	@synchronized(self) {
-		if (sourceFinaglerLaunchAgentStatus == VSSourceFinaglerLaunchAgentInstalled) {
-			[self setPersistentOptions:VSGameLaunchDefault forGame:game error:outError];
+	if (updateLaunchAgent) {
+		@synchronized(self) {
+			if (sourceFinaglerLaunchAgentStatus == VSSourceFinaglerLaunchAgentInstalled) {
+				[self setPersistentOptions:VSGameLaunchDefault forGame:game error:outError];
+			}
 		}
 	}
 	
@@ -1124,7 +1150,7 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 	if (outError) *outError = nil;
 	
 	if (options & VSGameLaunchHelpingGame && ![game isHelped]) {
-		if (![self helpGame:game forUSBOverdrive:YES error:outError]) return NO;
+		if (![self helpGame:game forUSBOverdrive:YES updateLaunchAgent:NO error:outError]) return NO;
 	}
 	
 	SBSystemEventsApplication *systemEvents = [SBApplication applicationWithBundleIdentifier:VSSystemEventsBundleIdentifierKey];

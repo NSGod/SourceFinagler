@@ -118,7 +118,7 @@ typedef NSUInteger VSSourceFinaglerLaunchAgentStatus;
 - (BOOL)setPersistentOptions:(VSGameLaunchOptions)options forGame:(VSGame *)game error:(NSError **)outError;
 
 
-- (BOOL)helpGame:(VSGame *)game forUSBOverdrive:(BOOL)yorn error:(NSError **)outError;
+- (BOOL)helpGame:(VSGame *)game forUSBOverdrive:(BOOL)yorn updateLaunchAgent:(BOOL)updateLaunchAgent error:(NSError **)outError;
 - (BOOL)unhelpGame:(VSGame *)game error:(NSError **)outError;
 
 - (BOOL)launchGame:(VSGame *)game options:(VSGameLaunchOptions)options error:(NSError **)outError;
