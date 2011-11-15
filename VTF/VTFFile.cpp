@@ -1,6 +1,6 @@
 /*
  * VTFLib
- * Copyright (C) 2005-2010 Neil Jedrzejewski & Ryan Gregg
+ * Copyright (C) 2005-2011 Neil Jedrzejewski & Ryan Gregg
 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -9,14 +9,11 @@
  * version.
  */
 
-#import <Foundation/Foundation.h>
-#import "MDFoundationAdditions.h"
-
-#include <VTF/VTFLib.h>
-#include <VTF/VTFFile.h>
-#include <VTF/VTFFormat.h>
-#include <VTF/VTFDXTn.h>
-#include <VTF/VTFMathlib.h>
+#include "VTFLib.h"
+#include "VTFFile.h"
+#include "VTFFormat.h"
+#include "VTFDXTn.h"
+#include "VTFMathlib.h"
 
 #define MD_DEBUG 0
 
@@ -24,11 +21,6 @@
 // Note: VTF creation requires nvDXTLib and has been
 //       tested with version 8.31.1127.1645, availible here:
 //       http://developer.nvidia.com/object/dds_utilities_legacy.html
-
-
-#	undef USE_NVDXT
-#	define USE_NVTT
-
 
 #ifdef USE_NVDXT
 	// Disable all the warnings in the nvDXTLib.
@@ -70,10 +62,13 @@
 
 
 #ifdef USE_NVTT
+
 #	include <NVTextureTools/NVTextureTools.h>
-#include <NVMath/NVMath.h>
+#	include <NVMath/NVMath.h>
+
 using namespace nv;
 using namespace nvtt;
+
 #endif
 
 
@@ -82,10 +77,12 @@ using namespace VTFLib;
 
 #if defined(USE_NVDXT) || defined(USE_NVTT)
 
-struct SNVCompressionUserData {
+struct SNVCompressionUserData
+{
+	
 public:
 	vlVoid *lpData;
-	NSData *mutableData;
+	
 public:
 	CVTFFile *pVTFFile;
 
@@ -113,8 +110,10 @@ public:
 
 #ifdef USE_NVDXT
 
-NV_ERROR_CODE NVWriteCallback(const void *buffer, size_t count, const MIPMapData *mipMapData, void *userData) {
-	if (!mipMapData) {
+NV_ERROR_CODE NVWriteCallback(const void *buffer, size_t count, const MIPMapData *mipMapData, void *userData)
+{
+	if (!mipMapData)
+{
 		return NV_OK;
 	}
 
@@ -241,12 +240,7 @@ public:
 
 			if (this->currentOffset == this->currentLength) {
 				if (this->userData->pVTFFile != 0) {
-//					vlUInt computedImageSize = CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, this->userData->uiSlice, this->userData->ImageFormat);
-//					printf("*** COMPUTING: CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, this->userData->uiSlice, this->userData->ImageFormat) == %u\n", computedImageSize);
-//					
-//					computedImageSize = CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, aDepth, this->userData->ImageFormat);
-//					printf("*** COMPUTING: CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, aDepth, this->userData->ImageFormat) === %u\n", computedImageSize);
-					
+
 #if MD_DEBUG
 					vlUInt computedImageSize = CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, 1, this->userData->ImageFormat);
 					
@@ -274,12 +268,7 @@ public:
 					
 					
 				} else if (userData->lpData != 0) {
-//					computedImageSize = CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, this->userData->uiSlice, this->userData->ImageFormat);
-//					printf("*** COMPUTING: CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, this->userData->uiSlice, this->userData->ImageFormat) == %u\n", computedImageSize);
-					
-//					computedImageSize = CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, aDepth, this->userData->ImageFormat);
-//					printf("*** COMPUTING: CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, aDepth, this->userData->ImageFormat) == %u\n", computedImageSize);
-					
+
 #if MD_DEBUG
 					vlUInt computedImageSize = CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, 1, this->userData->ImageFormat);
 					
@@ -390,7 +379,7 @@ CVTFFile::CVTFFile(const CVTFFile &VTFFile, VTFImageFormat ImageFormat)
 		this->Header->ImageFormat = ImageFormat;
 
 		// Check flags.
-		//if(this->Header->Version[0] < 7 || (this->Header->Version[0] == 7 && this->Header->Version[1] <= 3))
+		//if(this->Header->Version[0] < VTF_MAJOR_VERSION || (this->Header->Version[0] == VTF_MAJOR_VERSION && this->Header->Version[1] <= VTF_MINOR_VERSION_MIN_RESOURCE))
 		//{
 		//	if(!this->GetImageFormatInfo(ImageFormat).bIsCompressed)
 		//	{
@@ -482,7 +471,7 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 {
 	this->Destroy();
 #if MD_DEBUG
-	NSLog(@"\nCVTFFile::Create()\n");
+//	NSLog(@"\nCVTFFile::Create()\n");
 #endif
 	//
 	// Check options.
@@ -557,6 +546,12 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 		return vlFalse;
 	}
 
+	if(uiFaces != 1 && uiFaces != 6 && VTF_MINOR_VERSION_DEFAULT >= VTF_MINOR_VERSION_MIN_NO_SPHERE_MAP)
+	{
+		LastError.SetFormatted("Invalid image face count %u for version %d.%d.", uiFaces, VTF_MAJOR_VERSION, VTF_MINOR_VERSION_DEFAULT);
+		return vlFalse;
+	}
+
 	// Note: Valve informs us that animated enviroment maps ARE possible.
 
 	// A image cannot have multiple frames and faces.
@@ -576,7 +571,7 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 
 	strcpy(this->Header->TypeString, "VTF");
 	this->Header->Version[0] = VTF_MAJOR_VERSION;
-	this->Header->Version[1] = VTF_MINOR_VERSION;
+	this->Header->Version[1] = VTF_MINOR_VERSION_DEFAULT;
 	this->Header->HeaderSize = 0;
 	this->Header->Width = (vlShort)uiWidth;
 	this->Header->Height = (vlShort)uiHeight;
@@ -585,7 +580,7 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 							| (uiFaces == 1 ? 0 : TEXTUREFLAGS_ENVMAP)
 							| (bMipmaps ? 0 : TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD);
 	this->Header->Frames = (vlShort)uiFrames;
-	this->Header->StartFrame = uiFaces != 6 ? 0 : 0xffff;
+	this->Header->StartFrame = uiFaces != 6 || VTF_MINOR_VERSION_DEFAULT >= VTF_MINOR_VERSION_MIN_NO_SPHERE_MAP ? 0 : 0xffff;
 	this->Header->Reflectivity[0] = 1.0f;
 	this->Header->Reflectivity[1] = 1.0f;
 	this->Header->Reflectivity[2] = 1.0f;
@@ -706,21 +701,21 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 		return vlFalse;
 	}
 
-	if(VTFCreateOptions.uiVersion[0] != 7 || (VTFCreateOptions.uiVersion[1] < 0 || VTFCreateOptions.uiVersion[1] > 5))
+	if(VTFCreateOptions.uiVersion[0] != VTF_MAJOR_VERSION || (VTFCreateOptions.uiVersion[1] < 0 || VTFCreateOptions.uiVersion[1] > VTF_MINOR_VERSION))
 	{
-		LastError.SetFormatted("File version %u.%u does not match 7.0 to 7.5.", VTFCreateOptions.uiVersion[0], VTFCreateOptions.uiVersion[1]);
+		LastError.SetFormatted("File version %u.%u does not match %d.%d to %d.%d.", VTFCreateOptions.uiVersion[0], VTFCreateOptions.uiVersion[1], VTF_MAJOR_VERSION, 0, VTF_MAJOR_VERSION, VTF_MINOR_VERSION);
 		return vlFalse;
 	}
 
-	if(VTFCreateOptions.uiVersion[0] == 7 && VTFCreateOptions.uiVersion[1] < 2 && uiSlices > 1)
+	if(VTFCreateOptions.uiVersion[0] == VTF_MAJOR_VERSION && VTFCreateOptions.uiVersion[1] < VTF_MINOR_VERSION_MIN_VOLUME && uiSlices > 1)
 	{
-		LastError.Set("Volume textures are only supported in version 7.2 and up.");
+		LastError.SetFormatted("Volume textures are only supported in version %d.%d and up.", VTF_MAJOR_VERSION, VTF_MINOR_VERSION_MIN_VOLUME);
 		return vlFalse;
 	}
 
-	if(VTFCreateOptions.uiVersion[0] == 7 && VTFCreateOptions.uiVersion[1] < 1 && uiFaces == 7)
+	if(VTFCreateOptions.uiVersion[0] == VTF_MAJOR_VERSION && VTFCreateOptions.uiVersion[1] < VTF_MINOR_VERSION_MIN_SPHERE_MAP && uiFaces == 7)
 	{
-		LastError.Set("Sphere maps are only supported in version 7.1 and up.");
+		LastError.SetFormatted("Sphere maps are only supported in version %d.%d and up.", VTF_MAJOR_VERSION, VTF_MINOR_VERSION_MIN_SPHERE_MAP);
 		return vlFalse;
 	}
 
@@ -871,14 +866,18 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 		if(VTFCreateOptions.bNormalMap && uiFaces == 1)
 		{
 			// Guess some flags the user probably wants...
-//			if (VTFCreateOptions.KernelFilter == KERNEL_FILTER_DUDV) {
-//				//if(this->Header->Version[0] < 7 || (this->Header->Version[0] == 7 && this->Header->Version[1] <= 3))
-//				//{
-//				//	this->Header->Flags |= TEXTUREFLAGS_DEPRECATED_PREMULTCOLORBYONEOVERMIPLEVEL | TEXTUREFLAGS_DEPRECATED_NORMALTODUDV;
-//				//}
-//			} else {
-				this->Header->Flags |= TEXTUREFLAGS_NORMAL;
+//			if(VTFCreateOptions.KernelFilter == KERNEL_FILTER_DUDV)
+//			{
+				//if(this->Header->Version[0] < VTF_MAJOR_VERSION || (this->Header->Version[0] == VTF_MAJOR_VERSION && this->Header->Version[1] <= VTF_MINOR_VERSION_MIN_RESOURCE))
+				//{
+				//	this->Header->Flags |= TEXTUREFLAGS_DEPRECATED_PREMULTCOLORBYONEOVERMIPLEVEL | TEXTUREFLAGS_DEPRECATED_NORMALTODUDV;
 				//}
+//			}
+//			else
+//			{
+				this->Header->Flags |= TEXTUREFLAGS_NORMAL;
+//			}
+
 			// Note: used to use a destination buffer, now just modifies the input data.
 
 			//vlByte *lpImageDataNormalMap = new vlByte[this->ComputeImageSize(this->Header->Width, this->Header->Height, IMAGE_FORMAT_RGBA8888)];
@@ -1293,14 +1292,12 @@ vlBool CVTFFile::IsLoaded() const
 	return this->Header != 0;
 }
 
-
 vlBool CVTFFile::Load(const vlChar *cFileName, vlBool bHeaderOnly)
 {
 	IO::Readers::CFileReader reader = IO::Readers::CFileReader(cFileName);
 	vlBool bResult = this->Load(&reader, bHeaderOnly);
 	return bResult;
 }
-
 
 vlBool CVTFFile::Load(const vlVoid *lpData, vlUInt uiBufferSize, vlBool bHeaderOnly)
 {
@@ -1309,14 +1306,12 @@ vlBool CVTFFile::Load(const vlVoid *lpData, vlUInt uiBufferSize, vlBool bHeaderO
 	return bResult;
 }
 
-
 vlBool CVTFFile::Load(vlVoid *pUserData, vlBool bHeaderOnly)
 {
 	IO::Readers::CProcReader reader = IO::Readers::CProcReader(pUserData);
 	vlBool bResult = this->Load(&reader, bHeaderOnly);
 	return bResult;
 }
-
 
 vlBool CVTFFile::Save(const vlChar *cFileName) const
 {
@@ -1337,7 +1332,6 @@ vlBool CVTFFile::Save(vlVoid *lpData, vlUInt uiBufferSize, vlUInt &uiSize) const
 
 	return bResult;
 }
-
 
 vlBool CVTFFile::Save(vlVoid *pUserData) const
 {
@@ -1387,9 +1381,9 @@ vlBool CVTFFile::Load(IO::Readers::IReader *Reader, vlBool bHeaderOnly)
 			throw 0;
 		}
 
-		if(FileHeader.Version[0] != 7 || (FileHeader.Version[1] < 0 || FileHeader.Version[1] > 5))
+		if(FileHeader.Version[0] != VTF_MAJOR_VERSION || (FileHeader.Version[1] < 0 || FileHeader.Version[1] > VTF_MINOR_VERSION))
 		{
-			LastError.SetFormatted("File version %u.%u does not match 7.0 to 7.5.", FileHeader.Version[0], FileHeader.Version[1]);
+			LastError.SetFormatted("File version %u.%u does not match %d.%d to %d.%d.", FileHeader.Version[0], FileHeader.Version[1], VTF_MAJOR_VERSION, 0, VTF_MAJOR_VERSION, VTF_MINOR_VERSION);
 			throw 0;
 		}
 
@@ -1400,13 +1394,12 @@ vlBool CVTFFile::Load(IO::Readers::IReader *Reader, vlBool bHeaderOnly)
 		}
 
 
-		Reader->Seek(0, SEEK_MODE_BEGIN);
 		
-//#ifdef _WIN32
-//		Reader->Seek(0, FILE_BEGIN);
-//#else
-//		
-//#endif
+#ifdef _WIN32
+		Reader->Seek(0, FILE_BEGIN);
+#else
+		Reader->Seek(0, SEEK_MODE_BEGIN);
+#endif
 		this->Header = new SVTFHeader;
 		memset(this->Header, 0, sizeof(SVTFHeader));
 
@@ -1416,7 +1409,7 @@ vlBool CVTFFile::Load(IO::Readers::IReader *Reader, vlBool bHeaderOnly)
 			throw 0;
 		}
 
-		if(this->Header->Version[0] < 7 || (this->Header->Version[0] == 7 && this->Header->Version[1] < 2))
+		if(this->Header->Version[0] < VTF_MAJOR_VERSION || (this->Header->Version[0] == VTF_MAJOR_VERSION && this->Header->Version[1] < VTF_MINOR_VERSION_MIN_VOLUME))
 		{
 			// set depth if version is lower than 7.2
 			this->Header->Depth = 1;
@@ -1492,9 +1485,13 @@ vlBool CVTFFile::Load(IO::Readers::IReader *Reader, vlBool bHeaderOnly)
 						}
 
 						vlUInt uiSize = 0;
-//							Reader->Seek(this->Header->Resources[i].Data, FILE_BEGIN);
+#ifdef _WIN32
+							Reader->Seek(this->Header->Resources[i].Data, FILE_BEGIN);
+#else
 							Reader->Seek(this->Header->Resources[i].Data, SEEK_MODE_BEGIN);
-							if (Reader->Read(&uiSize, sizeof(vlUInt)) != sizeof(vlUInt)) {
+#endif
+							if (Reader->Read(&uiSize, sizeof(vlUInt)) != sizeof(vlUInt))
+						{
 							throw 0;
 						}
 
@@ -1523,7 +1520,7 @@ vlBool CVTFFile::Load(IO::Readers::IReader *Reader, vlBool bHeaderOnly)
 		
 		// sanity check
 		// headersize + lowbuffersize + buffersize *should* equal the filesize
-		if(this->Header->HeaderSize > uiFileSize || uiThumbnailBufferOffset + this->uiThumbnailBufferSize  > uiFileSize || uiImageDataOffset + this->uiImageBufferSize > uiFileSize)
+		if(this->Header->HeaderSize > uiFileSize || uiThumbnailBufferOffset + this->uiThumbnailBufferSize > uiFileSize || uiImageDataOffset + this->uiImageBufferSize > uiFileSize)
 		{
 			LastError.Set("File may be corrupt; file too small for its image data.");
 			throw 0;
@@ -1727,6 +1724,8 @@ vlVoid CVTFFile::ComputeResources()
 	}
 
 	// Correct header size.
+	STATIC_ASSERT(VTF_MAJOR_VERSION == 7, "HeaderSize needs calculation for new major version.");
+	STATIC_ASSERT(VTF_MINOR_VERSION == 5, "HeaderSize needs calculation for new minor version.");
 	switch(this->Header->Version[0])
 	{
 	case 7:
@@ -1746,6 +1745,9 @@ vlVoid CVTFFile::ComputeResources()
 			break;
 		case 4:
 			this->Header->HeaderSize = sizeof(SVTFHeader_74_A) + this->Header->ResourceCount * sizeof(SVTFResource);
+			break;
+		case 5:
+			this->Header->HeaderSize = sizeof(SVTFHeader_75_A) + this->Header->ResourceCount * sizeof(SVTFResource);
 			break;
 		}
 		break;
@@ -1867,7 +1869,7 @@ vlUInt CVTFFile::GetFaceCount() const
 	if(!this->IsLoaded())
 		return 0;
 
-	return this->Header->Flags & TEXTUREFLAGS_ENVMAP ? (this->Header->StartFrame != 0xffff ? CUBEMAP_FACE_COUNT : CUBEMAP_FACE_COUNT - 1) : 1;
+	return this->Header->Flags & TEXTUREFLAGS_ENVMAP ? (this->Header->StartFrame != 0xffff && this->Header->Version[1] < VTF_MINOR_VERSION_MIN_NO_SPHERE_MAP ? CUBEMAP_FACE_COUNT : CUBEMAP_FACE_COUNT - 1) : 1;
 }
 
 //
@@ -1946,7 +1948,7 @@ vlVoid CVTFFile::SetFlags(vlUInt uiFlags)
 		return;
 
 	// Don't let the user set flags critical to the image's format.
-	//if(this->Header->Version[0] < 7 || (this->Header->Version[0] == 7 && this->Header->Version[1] <= 3))
+	//if(this->Header->Version[0] < VTF_MAJOR_VERSION || (this->Header->Version[0] == VTF_MAJOR_VERSION && this->Header->Version[1] <= VTF_MINOR_VERSION_MIN_RESOURCE))
 	//{
 	//	if(this->Header->Flags & TEXTUREFLAGS_DEPRECATED_NOCOMPRESS)
 	//		uiFlags |= TEXTUREFLAGS_DEPRECATED_NOCOMPRESS;
@@ -1994,7 +1996,7 @@ vlVoid CVTFFile::SetFlag(VTFImageFlag ImageFlag, vlBool bState)
 	if(!this->IsLoaded())
 		return;
 
-	//if(this->Header->Version[0] < 7 || (this->Header->Version[0] == 7 && this->Header->Version[1] <= 3))
+	//if(this->Header->Version[0] < VTF_MAJOR_VERSION || (this->Header->Version[0] == VTF_MAJOR_VERSION && this->Header->Version[1] <= VTF_MINOR_VERSION_MIN_RESOURCE))
 	//{
 	//	if(ImageFlag == TEXTUREFLAGS_DEPRECATED_NOCOMPRESS)
 	//	{
@@ -2188,7 +2190,7 @@ vlBool CVTFFile::GetSupportsResources() const
 	if(!this->IsLoaded())
 		return vlFalse;
 
-	return this->Header->Version[0] > 7 || (this->Header->Version[0] == 7 && this->Header->Version[1] >= 3);
+	return this->Header->Version[0] > VTF_MAJOR_VERSION || (this->Header->Version[0] == VTF_MAJOR_VERSION && this->Header->Version[1] >= VTF_MINOR_VERSION_MIN_RESOURCE);
 }
 
 vlUInt CVTFFile::GetResourceCount() const
@@ -2458,6 +2460,7 @@ vlBool CVTFFile::GenerateMipmaps(vlUInt uiFace, vlUInt uiFrame, VTFMipmapFilter 
 #endif
 	if(!this->IsLoaded())
 		return vlFalse;
+#if defined(USE_NVDXT) || defined(USE_NVTT)
 
 	if(this->lpImageData == 0)
 	{
@@ -2479,6 +2482,7 @@ vlBool CVTFFile::GenerateMipmaps(vlUInt uiFace, vlUInt uiFrame, VTFMipmapFilter 
 	{
 		return vlTrue;
 	}
+#endif
 
 #if defined(USE_NVDXT)
 	
@@ -2601,6 +2605,7 @@ vlBool CVTFFile::GenerateMipmaps(vlUInt uiFace, vlUInt uiFrame, VTFMipmapFilter 
 	if(!nvDXTCompressWrapper(lpImageData, this->Header->Width, this->Header->Height, &Options, NVWriteCallback))
 	{
 		delete []lpImageData;
+
 		return vlFalse;
 	}
 
@@ -2635,49 +2640,12 @@ vlBool CVTFFile::GenerateMipmaps(vlUInt uiFace, vlUInt uiFrame, VTFMipmapFilter 
 	vlByte *theImageData = new vlByte[this->ComputeImageSize(this->Header->Width, this->Header->Height, 1, IMAGE_FORMAT_RGBA8888)];
 	
 	if (!this->ConvertToRGBA8888(this->GetData(uiFace, uiFrame, 0, 0), theImageData, this->Header->Width, this->Header->Height, this->Header->ImageFormat)) {
-//	if (!this->ConvertToRGBA8888(this->GetData(uiFrame, uiFace, 0, 0), imageData, this->Header->Width, this->Header->Height, this->Header->ImageFormat)) {
 		delete [] theImageData;
 		return vlFalse;
 	}
 	
 	
-#if MD_DEBUG
-	NSData *tempData = [NSData dataWithBytes:(const void *)theImageData length:(this->Header->Width * this->Header->Height * 4)];
-	
-	if ([tempData length] > 1024) {
-		NSLog(@"RGBAData == < DISABLED--data length exceeds 1KB >\n");
-	} else {
-		NSLog(@"RGBAData == %@\n", [tempData enhancedDescription]);
-	}
-#endif
-	
-	vlUInt byteLength = this->Header->Width * this->Header->Height * 4;
-	vlByte *bgraBytes = new vlByte[byteLength];
-
-	if (bgraBytes == 0) {
-		delete [] theImageData;
-		return vlFalse;
-	}
-	
-	if (!ConvertRGBA8888toBGRA8888(theImageData, bgraBytes, this->Header->Width * this->Header->Height)) {
-		printf("ConvertRGBA8888toBGRA8888() failed!\n");
-		delete [] theImageData;
-		delete [] bgraBytes;
-		return vlFalse;
-	}
-	
-	
-#if MD_DEBUG
-	NSData *bgraData = [NSData dataWithBytes:(const void *)bgraBytes length:byteLength];
-	
-	if ([tempData length] > 1024) {
-		NSLog(@"BRRAData == < DISABLED--data length exceeds 1KB >\n");
-	} else {
-		NSLog(@"BRRAData == %@\n", [bgraData enhancedDescription]);
-	}
-#endif
-	
-	inputOptions.setMipmapData(bgraBytes, this->Header->Width, this->Header->Height);
+	inputOptions.setMipmapData(theImageData, this->Header->Width, this->Header->Height);
 	
 	
 	inputOptions.setWrapMode(WrapMode_Clamp);
@@ -2726,20 +2694,16 @@ vlBool CVTFFile::GenerateMipmaps(vlUInt uiFace, vlUInt uiFrame, VTFMipmapFilter 
 	
 	if (!context.process(inputOptions, compressionOptions, outputOptions)) {
 		delete [] theImageData;
-		delete [] bgraBytes;
 		return vlFalse;
 	}
 	
 	delete [] theImageData;
-	delete [] bgraBytes;
 	return vlTrue;
 #else
 	LastError.Set("NVDXT or NVTT support required for CVTFFile::GenerateMipmaps().");
 	return vlFalse;
 #endif
 }
-
-#pragma mark -
 
 //
 // GenerateThumbnail()
@@ -2911,8 +2875,6 @@ vlBool CVTFFile::GenerateNormalMap(vlUInt uiFrame, VTFKernelFilter KernelFilter,
 
 	return vlTrue;
 }
-
-#pragma mark -
 
 // Simple struct for holding face data for SphereMap rendering
 // -----------------------------------------------------------
@@ -3417,10 +3379,6 @@ vlUInt CVTFFile::ComputeMipmapSize(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiDep
 	return CVTFFile::ComputeImageSize(uiMipmapWidth, uiMipmapHeight, uiMipmapDepth, ImageFormat);
 }
 
-
-#pragma mark -
-#pragma mark ComputeDataOffset()
-
 //---------------------------------------------------------------------------------
 // ComputeDataOffset(vlUInt uiFrame, vlUInt uiFace, vlUInt uiMipLevel, VTFImageFormat ImageFormat)
 //
@@ -3473,8 +3431,6 @@ vlUInt CVTFFile::ComputeDataOffset(vlUInt uiFrame, vlUInt uiFace, vlUInt uiSlice
 	uiOffset += uiTemp2 * uiSlice;
 
 	assert(uiOffset < this->uiImageBufferSize);
-	
-//	printf("\nCVTFFile::ComputeDataOffset() uiFrame == %u, uiFace == %u, uiSlice == %u, uiMipLevel == %u, ** uiOffset == %u\n\n", uiFrame, uiFace, uiSlice, uiMipLevel, uiOffset);
 	
 	return uiOffset;
 }
@@ -3929,7 +3885,7 @@ vlBool CVTFFile::CompressDXTn(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, 
 	vlByte *bgraBytes = new vlByte[byteLength];
 	
 	if (bgraBytes == 0) {
-		return vlFalse;
+	return vlFalse;
 	}
 	
 	if (!ConvertRGBA8888toBGRA8888(rgbaBytes, bgraBytes, uiWidth * uiHeight)) {
@@ -4000,10 +3956,10 @@ vlBool CVTFFile::CompressDXTn(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, 
 #pragma pack(1)
 
 typedef struct TKColor32 {
-	UInt8	x;
-	UInt8	y;
-	UInt8	z;
-	UInt8	w;
+	vlUInt8	x;
+	vlUInt8	y;
+	vlUInt8	z;
+	vlUInt8	w;
 } TKColor32;
 
 #pragma pack()
@@ -4615,7 +4571,7 @@ vlBool CVTFFile::ConvertToNormalMap(vlByte *lpSourceRGBA8888, vlByte *lpDestRGBA
 	assert(HeightConversionMethod >= 0 && HeightConversionMethod < HEIGHT_CONVERSION_METHOD_COUNT);
 	assert(NormalAlphaResult >= 0 && NormalAlphaResult < NORMAL_ALPHA_RESULT_COUNT);
 
-#if defined(USE_NVDXT)
+#ifdef USE_NVDXT
 	nvCompressionOptions Options = nvCompressionOptions();
 
 	SNVCompressionUserData UserData = SNVCompressionUserData(lpDestRGBA8888 != 0 ? lpDestRGBA8888 : lpSourceRGBA8888, IMAGE_FORMAT_RGBA8888);
@@ -4692,7 +4648,7 @@ vlBool CVTFFile::Resize(vlByte *lpSourceRGBA8888, vlByte *lpDestRGBA8888, vlUInt
 	assert(ResizeFilter >= 0 && ResizeFilter < MIPMAP_FILTER_COUNT);
 	assert(SharpenFilter >= 0 && SharpenFilter < SHARPEN_FILTER_COUNT);
 
-#if defined(USE_NVDXT)
+#ifdef USE_NVDXT
 	nvCompressionOptions Options = nvCompressionOptions();
 
 	SNVCompressionUserData UserData = SNVCompressionUserData(lpDestRGBA8888, IMAGE_FORMAT_RGBA8888);

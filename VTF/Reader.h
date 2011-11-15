@@ -12,16 +12,16 @@
 #ifndef READER_H
 #define READER_H
 
-#include <VTF/stdafx.h>
+#include "stdafx.h"
 
-
-namespace VTFLib {
-	
-	namespace IO {
-		
-		namespace Readers {
-			
-			class IReader {
+namespace VTFLib
+{
+	namespace IO
+	{
+		namespace Readers
+		{
+			class IReader
+			{
 			public:
 				virtual vlBool Opened() const = 0;
 

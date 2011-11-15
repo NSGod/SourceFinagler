@@ -1,6 +1,6 @@
 /*
  * VTFLib
- * Copyright (C) 2005-2010 Neil Jedrzejewski & Ryan Gregg
+ * Copyright (C) 2005-2011 Neil Jedrzejewski & Ryan Gregg
 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -34,23 +34,24 @@
 #ifndef VTFFORMAT_H
 #define VTFFORMAT_H
 
-#include <VTF/stdafx.h>
+#include "stdafx.h"
 
+#include "VTFMathlib.h"
 
-//#if MD_BUILD_VTF_WITH_NVTT
-//#	undef USE_NVDXT
-//#	define USE_NVTT
-//#endif
-//
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-// VTF version numbers (current version is 7.3)
+// VTF version numbers (current version is 7.5)
 //---------------------------------------------
-#define VTF_MAJOR_VERSION	7		//!< VTF major version number
-#define VTF_MINOR_VERSION	4		//!< VTF minor version number
+#define VTF_MAJOR_VERSION					7		//!< VTF major version number
+#define VTF_MINOR_VERSION					5		//!< VTF minor version number
+#define VTF_MINOR_VERSION_DEFAULT			3
 
+#define VTF_MINOR_VERSION_MIN_SPHERE_MAP	1
+#define VTF_MINOR_VERSION_MIN_VOLUME		2
+#define VTF_MINOR_VERSION_MIN_RESOURCE		3
+#define VTF_MINOR_VERSION_MIN_NO_SPHERE_MAP	5
 
 //! Image data formats VTFLib supports.
 /*!
@@ -58,7 +59,8 @@ extern "C" {
 	of bits per-pixel.
 	\note "Bluescreen" alpha uses any pixel with an pixel of R0, G0, B255 as transparent.
 */
-typedef enum tagVTFImageFormat {
+typedef enum tagVTFImageFormat
+{
 	IMAGE_FORMAT_RGBA8888 = 0,				//!<  = Red, Green, Blue, Alpha - 32 bpp
 	IMAGE_FORMAT_ABGR8888,					//!<  = Alpha, Blue, Green, Red - 32 bpp
 	IMAGE_FORMAT_RGB888,					//!<  = Red, Green, Blue - 24 bpp
@@ -122,7 +124,8 @@ typedef enum tagVTFImageFormat {
 
 
 //! VTF image header flags.
-typedef enum tagVTFImageFlag {
+typedef enum tagVTFImageFlag
+{
 	TEXTUREFLAGS_POINTSAMPLE								= 0x00000001,
 	TEXTUREFLAGS_TRILINEAR									= 0x00000002,
 	TEXTUREFLAGS_CLAMPS										= 0x00000004,
@@ -166,9 +169,9 @@ typedef enum tagVTFImageFlag {
 	TEXTUREFLAGS_COUNT										= 30
 } VTFImageFlag;
 
-	
 //! VTF image cubemap face indices.
-typedef enum tagVTFCubeMapFace {
+typedef enum tagVTFCubeMapFace
+{
 	CUBEMAP_FACE_RIGHT = 0,		// +x
 	CUBEMAP_FACE_LEFT,			// -x
 	CUBEMAP_FACE_BACK,			// +y
@@ -179,25 +182,25 @@ typedef enum tagVTFCubeMapFace {
 	CUBEMAP_FACE_COUNT
 } VTFCubeMapFace;
 
-	
 //! MIP map reduction filter indices.
-typedef enum tagVTFMipmapFilter {
+typedef enum tagVTFMipmapFilter
+{
 #if defined(USE_NVDXT)
-	MIPMAP_FILTER_POINT = 0,
-	MIPMAP_FILTER_BOX,
-	MIPMAP_FILTER_TRIANGLE, 
-	MIPMAP_FILTER_QUADRATIC,
-	MIPMAP_FILTER_CUBIC,
-	MIPMAP_FILTER_CATROM, 
-	MIPMAP_FILTER_MITCHELL,
-	MIPMAP_FILTER_GAUSSIAN,
-	MIPMAP_FILTER_SINC,
-	MIPMAP_FILTER_BESSEL,
-	MIPMAP_FILTER_HANNING,
-	MIPMAP_FILTER_HAMMING,
-	MIPMAP_FILTER_BLACKMAN,
-	MIPMAP_FILTER_KAISER,
-	MIPMAP_FILTER_COUNT
+    MIPMAP_FILTER_POINT = 0,
+    MIPMAP_FILTER_BOX,
+    MIPMAP_FILTER_TRIANGLE, 
+    MIPMAP_FILTER_QUADRATIC,
+    MIPMAP_FILTER_CUBIC,
+    MIPMAP_FILTER_CATROM, 
+    MIPMAP_FILTER_MITCHELL,
+    MIPMAP_FILTER_GAUSSIAN,
+    MIPMAP_FILTER_SINC,
+    MIPMAP_FILTER_BESSEL,
+    MIPMAP_FILTER_HANNING,
+    MIPMAP_FILTER_HAMMING,
+    MIPMAP_FILTER_BLACKMAN,
+    MIPMAP_FILTER_KAISER,
+    MIPMAP_FILTER_COUNT
 #else
 	MIPMAP_FILTER_BOX,
 	MIPMAP_FILTER_TRIANGLE, 
@@ -206,9 +209,9 @@ typedef enum tagVTFMipmapFilter {
 #endif
 } VTFMipmapFilter;
 
-	
 //! MIP map sharpen filter indices.
-typedef enum tagVTFSharpenFilter {
+typedef enum tagVTFSharpenFilter
+{
 #if defined(USE_NVDXT)
 	SHARPEN_FILTER_NONE = 0,
 	SHARPEN_FILTER_NEGATIVE,
@@ -226,9 +229,9 @@ typedef enum tagVTFSharpenFilter {
 	SHARPEN_FILTER_EDGEDETECTSOFT,
 	SHARPEN_FILTER_EMBOSS,
 	SHARPEN_FILTER_MEANREMOVAL,
-	SHARPEN_FILTER_UNSHARP,
-	SHARPEN_FILTER_XSHARPEN,
-	SHARPEN_FILTER_WARPSHARP,
+    SHARPEN_FILTER_UNSHARP,
+    SHARPEN_FILTER_XSHARPEN,
+    SHARPEN_FILTER_WARPSHARP,
 	SHARPEN_FILTER_DEFAULT = SHARPEN_FILTER_NONE,
 	SHARPEN_FILTER_COUNT
 #else
@@ -236,23 +239,23 @@ typedef enum tagVTFSharpenFilter {
 	SHARPEN_FILTER_COUNT
 #endif
 } VTFSharpenFilter;
-	
-	
+
 #define DXT_QUALITY_BASE 68
-	
-typedef enum tagDXTQuality {
+
+typedef enum tagDXTQuality
+{
 	DXT_QUALITY_LOW,
 	DXT_QUALITY_MEDIUM,
 	DXT_QUALITY_HIGH,
 	DXT_QUALITY_HIGHEST,
 	DXT_QUALITY_COUNT
 } VTFDXTQuality;
-	
 
 #define KERNEL_FILTER_BASE 1040
 
-	//! Normal map creation kernel size indices.
-typedef enum tagVTFKernelFilter {
+//! Normal map creation kernel size indices.
+typedef enum tagVTFKernelFilter
+{
 #if defined(USE_NVDXT)
 	KERNEL_FILTER_4X = 0,
 	KERNEL_FILTER_3X3,
@@ -270,20 +273,21 @@ typedef enum tagVTFKernelFilter {
 #endif
 } VTFKernelFilter;
 
-	
-#	define HEIGHT_CONVERSION_METHOD_BASE 1009
+#define HEIGHT_CONVERSION_METHOD_BASE 1009
+
 //! Normal map height conversion method indices.
-typedef enum tagVTFHeightConversionMethod {
+typedef enum tagVTFHeightConversionMethod
+{
 #if defined(USE_NVDXT)
-	HEIGHT_CONVERSION_METHOD_ALPHA = 0,
-	HEIGHT_CONVERSION_METHOD_AVERAGE_RGB,
-	HEIGHT_CONVERSION_METHOD_BIASED_RGB,
-	HEIGHT_CONVERSION_METHOD_RED,
-	HEIGHT_CONVERSION_METHOD_GREEN,
-	HEIGHT_CONVERSION_METHOD_BLUE,
-	HEIGHT_CONVERSION_METHOD_MAX_RGB,
-	HEIGHT_CONVERSION_METHOD_COLORSPACE,
-	//HEIGHT_CONVERSION_METHOD_NORMALIZE,
+    HEIGHT_CONVERSION_METHOD_ALPHA = 0,
+    HEIGHT_CONVERSION_METHOD_AVERAGE_RGB,
+    HEIGHT_CONVERSION_METHOD_BIASED_RGB,
+    HEIGHT_CONVERSION_METHOD_RED,
+    HEIGHT_CONVERSION_METHOD_GREEN,
+    HEIGHT_CONVERSION_METHOD_BLUE,
+    HEIGHT_CONVERSION_METHOD_MAX_RGB,
+    HEIGHT_CONVERSION_METHOD_COLORSPACE,
+    //HEIGHT_CONVERSION_METHOD_NORMALIZE,
 	HEIGHT_CONVERSION_METHOD_DEFAULT = HEIGHT_CONVERSION_METHOD_AVERAGE_RGB,
 	HEIGHT_CONVERSION_METHOD_COUNT
 #else
@@ -291,16 +295,17 @@ typedef enum tagVTFHeightConversionMethod {
 	HEIGHT_CONVERSION_METHOD_COUNT
 #endif
 } VTFHeightConversionMethod;
-	
-	
-#	define NORMAL_ALPHA_RESULT_BASE 1033
+
+#define NORMAL_ALPHA_RESULT_BASE 1033
+
 //! Normal map alpha channel handling indices.
-typedef enum tagVTFNormalAlphaResult {
+typedef enum tagVTFNormalAlphaResult
+{
 #if defined(USE_NVDXT)
 	NORMAL_ALPHA_RESULT_NOCHANGE = 0,
-	NORMAL_ALPHA_RESULT_HEIGHT,
-	NORMAL_ALPHA_RESULT_BLACK,
-	NORMAL_ALPHA_RESULT_WHITE,
+    NORMAL_ALPHA_RESULT_HEIGHT,
+    NORMAL_ALPHA_RESULT_BLACK,
+    NORMAL_ALPHA_RESULT_WHITE,
 	NORMAL_ALPHA_RESULT_DEFAULT = NORMAL_ALPHA_RESULT_NOCHANGE,
 	NORMAL_ALPHA_RESULT_COUNT
 #else
@@ -309,14 +314,14 @@ typedef enum tagVTFNormalAlphaResult {
 #endif
 } VTFNormalAlphaResult;
 
-	
 //! Image re-size handling method indices.
-typedef enum tagVTFResizeMethod {
+typedef enum tagVTFResizeMethod
+{
 #if defined(USE_NVDXT)
-	RESIZE_NEAREST_POWER2 = 0,
-	RESIZE_BIGGEST_POWER2,
-	RESIZE_SMALLEST_POWER2,
-	RESIZE_SET,
+    RESIZE_NEAREST_POWER2 = 0,
+    RESIZE_BIGGEST_POWER2,
+    RESIZE_SMALLEST_POWER2,
+    RESIZE_SET,
 	RESIZE_COUNT
 #else
 	RESIZE_NEAREST_POWER2 = 0,
@@ -326,11 +331,11 @@ typedef enum tagVTFResizeMethod {
 	RESIZE_COUNT
 #endif
 } VTFResizeMethod;
-	
-	
+
 //! Spheremap creation look direction indices.
 //--------------------------------------------
-typedef enum tagVTFLookDir {
+typedef enum tagVTFLookDir
+{
 	LOOK_DOWN_X = 0,
 	LOOK_DOWN_NEGX,
 	LOOK_DOWN_Y,
@@ -342,17 +347,17 @@ typedef enum tagVTFLookDir {
 #define MAKE_VTF_RSRC_ID(a, b, c) ((vlUInt)(((vlByte)a) | ((vlByte)b << 8) | ((vlByte)c << 16)))
 #define MAKE_VTF_RSRC_IDF(a, b, c, d) ((vlUInt)(((vlByte)a) | ((vlByte)b << 8) | ((vlByte)c << 16) | ((vlByte)d << 24)))
 
-	
 //! Resource entry type flags.
 //--------------------------------------------
-typedef enum tagVTFResourceEntryTypeFlag {
+typedef enum tagVTFResourceEntryTypeFlag
+{
 	RSRCF_HAS_NO_DATA_CHUNK = 0x02
 } VTFResourceEntryTypeFlag;
 
-	
 //! Resource entry type idendifiers.
 //--------------------------------------------
-typedef enum tagVTFResourceEntryType {
+typedef enum tagVTFResourceEntryType
+{
 	VTF_LEGACY_RSRC_LOW_RES_IMAGE = MAKE_VTF_RSRC_ID(0x01, 0, 0),
 	VTF_LEGACY_RSRC_IMAGE = MAKE_VTF_RSRC_ID(0x30, 0, 0),
 	VTF_RSRC_SHEET = MAKE_VTF_RSRC_ID(0x10, 0, 0),
@@ -363,7 +368,6 @@ typedef enum tagVTFResourceEntryType {
 	VTF_RSRC_MAX_DICTIONARY_ENTRIES = 32
 } VTFResourceEntryType;
 
-	
 #pragma pack(1)
 
 //! VTFFileHeader struct.
@@ -372,8 +376,8 @@ typedef enum tagVTFResourceEntryType {
 	The VTF file header sits at the start of a VTF file and is used to
 	determine which version of the file is being loaded.
 */
-	
-struct SVTFFileHeader {
+struct SVTFFileHeader
+{
 	vlChar			TypeString[4];					//!< "Magic number" identifier- "VTF\0".
 	vlUInt			Version[2];						//!< Version[0].version[1] (currently 7.2)
 	vlUInt			HeaderSize;						//!< Size of the header struct (currently 80 bytes)				
@@ -384,7 +388,8 @@ struct SVTFFileHeader {
 
 	The complete header for v7.0 of the VTF file format.
 */
-struct SVTFHeader_70 : public SVTFFileHeader {
+struct SVTFHeader_70 : public SVTFFileHeader
+{
 	vlUShort		Width;							//!< Width of the largest image
 	vlUShort		Height;							//!< Height of the largest image
 	vlUInt			Flags;							//!< Flags for the image
@@ -401,17 +406,16 @@ struct SVTFHeader_70 : public SVTFFileHeader {
 	vlByte			LowResImageHeight;				//!< Thumbnail image height
 };
 
-	
 //! VTFHeader_70_A struct.
 /*!
+
 	The complete header for v7.0 of the VTF file format aligned to 16 bytes.
 */
-struct __attribute__((aligned(16))) SVTFHeader_70_A : public SVTFHeader_70 {};
+struct CACHE_ALIGN SVTFHeader_70_A : public SVTFHeader_70 {};
 
-	
-	
 //! VTFHeader_71 struct.
 /*!
+
 	The complete header for v7.1 of the VTF file format.
 */
 struct SVTFHeader_71 : public SVTFHeader_70
@@ -419,69 +423,89 @@ struct SVTFHeader_71 : public SVTFHeader_70
 
 };
 
-	
 //! VTFHeader_71_A struct.
 /*!
+
 	The complete header for v7.1 of the VTF file format aligned to 16 bytes.
 */
-struct __attribute__((aligned(16))) SVTFHeader_71_A : public SVTFHeader_71 {};
-	
-	
-	
+struct CACHE_ALIGN SVTFHeader_71_A : public SVTFHeader_71 {};
+
 //! VTFHeader_72 struct.
 /*!
+
 	The complete header for v7.2 of the VTF file format.
 */
-struct SVTFHeader_72 : public SVTFHeader_71 {
+struct SVTFHeader_72 : public SVTFHeader_71
+{
 	vlUShort		Depth;							//!< Depth of the largest image
 };
 
 //! VTFHeader_72_A struct.
 /*!
+
 	The complete header for v7.2 of the VTF file format aligned to 16 bytes.
 */
-struct __attribute__((aligned(16))) SVTFHeader_72_A : public SVTFHeader_72 {};
+struct CACHE_ALIGN SVTFHeader_72_A : public SVTFHeader_72 {};
 
-	
-	
 //! VTFHeader_73 struct.
 /*!
+
 	The complete header for v7.3 of the VTF file format.
 */
-struct SVTFHeader_73 : public SVTFHeader_72 {
+struct SVTFHeader_73 : public SVTFHeader_72
+{
 	vlByte		Padding2[3];
 	vlUInt		ResourceCount;							//!< Number of image resources
 };
 
-	
 //! VTFHeader_72_A struct.
 /*!
+
 	The complete header for v7.3 of the VTF file format aligned to 16 bytes.
 */
-struct __attribute__((aligned(16))) SVTFHeader_73_A : public SVTFHeader_73 {};
+struct CACHE_ALIGN SVTFHeader_73_A : public SVTFHeader_73 {};
 
-	
 //! VTFHeader_74 struct.
 /*!
+
 	The complete header for v7.4 of the VTF file format.
 */
-struct SVTFHeader_74 : public SVTFHeader_73 {
+struct SVTFHeader_74 : public SVTFHeader_73
+{
 
 };
 
-	
 //! VTFHeader_74_A struct.
 /*!
-	The complete header for v7.3 of the VTF file format aligned to 16 bytes.
-*/
-struct __attribute__((aligned(16))) SVTFHeader_74_A : public SVTFHeader_74 {};
-	
 
-	
-struct SVTFResource {
-	union {
+	The complete header for v7.4 of the VTF file format aligned to 16 bytes.
+*/
+struct CACHE_ALIGN SVTFHeader_74_A : public SVTFHeader_74 {};
+
+//! VTFHeader_75 struct.
+/*!
+
+	The complete header for v7.5 of the VTF file format.
+*/
+struct SVTFHeader_75 : public SVTFHeader_74
+{
+
+};
+
+//! VTFHeader_75_A struct.
+/*!
+
+	The complete header for v7.5 of the VTF file format aligned to 16 bytes.
+*/
+struct CACHE_ALIGN SVTFHeader_75_A : public SVTFHeader_75 {};
+
+struct SVTFResource
+{
+	union
+	{ 
 		vlUInt Type;
-		struct {
+		struct
+		{
 			vlByte ID[3];	//!< Unique resource ID
 			vlByte Flags;	//!< Resource flags
 		};
@@ -489,28 +513,29 @@ struct SVTFResource {
 	vlUInt Data;	//!< Resource data (e.g. for a  CRC) or offset from start of the file
 };
 
-	
-struct SVTFResourceData {
+struct SVTFResourceData
+{
 	vlUInt Size;	//!< Resource data buffer size
 	vlByte *Data;	//!< Resource data bufffer
 };
 
-typedef struct tagSVTFTextureLODControlResource {
+typedef struct tagSVTFTextureLODControlResource
+{
 	vlByte ResolutionClampU;
 	vlByte ResolutionClampV;
 	vlByte Padding[2];
 } SVTFTextureLODControlResource;
 
-	
-typedef struct tagSVTFTextureSettingsExResource {
+typedef struct tagSVTFTextureSettingsExResource
+{
 	vlByte Flags0;
 	vlByte Flags1;
 	vlByte Flags2;
 	vlByte Flags3;
 } SVTFTextureSettingsExResource;
 
-	
-struct SVTFHeader : public SVTFHeader_74_A {
+struct SVTFHeader : public SVTFHeader_74_A
+{
 	vlByte				Padding3[8];
 	SVTFResource		Resources[VTF_RSRC_MAX_DICTIONARY_ENTRIES];
 	SVTFResourceData	Data[VTF_RSRC_MAX_DICTIONARY_ENTRIES];
@@ -523,4 +548,3 @@ struct SVTFHeader : public SVTFHeader_74_A {
 #endif
 
 #endif // VTFFORMAT_H
-

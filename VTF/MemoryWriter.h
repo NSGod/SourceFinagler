@@ -12,17 +12,17 @@
 #ifndef MEMORYWRITER_H
 #define MEMORYWRITER_H
 
-#include <VTF/stdafx.h>
-#include <VTF/Writer.h>
+#include "stdafx.h"
+#include "Writer.h"
 
-
-namespace VTFLib {
-	
-	namespace IO {
-		
-		namespace Writers {
-			
-			class CMemoryWriter : public IWriter {
+namespace VTFLib
+{
+	namespace IO
+	{
+		namespace Writers
+		{
+			class CMemoryWriter : public IWriter
+			{
 			private:
 				vlBool bOpened;
 

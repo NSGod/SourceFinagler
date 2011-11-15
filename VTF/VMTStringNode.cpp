@@ -9,44 +9,51 @@
  * version.
  */
 
-#include <VTF/VMTStringNode.h>
-
+#include "VMTStringNode.h"
 
 using namespace VTFLib::Nodes;
 
-CVMTStringNode::CVMTStringNode(const vlChar *cName) : CVMTValueNode(cName) {
+CVMTStringNode::CVMTStringNode(const vlChar *cName) : CVMTValueNode(cName)
+{
 	this->cValue = new vlChar[1];
 	*this->cValue = '\0';
 }
 
-CVMTStringNode::CVMTStringNode(const vlChar *cName, const vlChar *cValue) : CVMTValueNode(cName) {
+CVMTStringNode::CVMTStringNode(const vlChar *cName, const vlChar *cValue) : CVMTValueNode(cName)
+{
 	this->cValue = new vlChar[strlen(cValue) + 1];
 	strcpy(this->cValue, cValue);
 }
 
-CVMTStringNode::CVMTStringNode(const CVMTStringNode &StringNode) : CVMTValueNode(StringNode.GetName()) {
+CVMTStringNode::CVMTStringNode(const CVMTStringNode &StringNode) : CVMTValueNode(StringNode.GetName())
+{
 	this->cValue = new vlChar[strlen(StringNode.cValue) + 1];
 	strcpy(this->cValue, StringNode.cValue);
 }
 
-CVMTStringNode::~CVMTStringNode() {
+CVMTStringNode::~CVMTStringNode()
+{
 	delete this->cValue;
 }
 
-vlVoid CVMTStringNode::SetValue(const vlChar *cValue) {
+vlVoid CVMTStringNode::SetValue(const vlChar *cValue)
+{
 	delete this->cValue;
 	this->cValue = new vlChar[strlen(cValue) + 1];
 	strcpy(this->cValue, cValue);
 }
 
-const vlChar *CVMTStringNode::GetValue() const {
+const vlChar *CVMTStringNode::GetValue() const
+{
 	return this->cValue;
 }
 
-VMTNodeType CVMTStringNode::GetType() const {
+VMTNodeType CVMTStringNode::GetType() const
+{
 	return NODE_TYPE_STRING;
 }
 
-CVMTNode *CVMTStringNode::Clone() const {
+CVMTNode *CVMTStringNode::Clone() const
+{
 	return new CVMTStringNode(*this);
 }

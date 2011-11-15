@@ -12,17 +12,17 @@
 #ifndef PROCWRITER_H
 #define PROCWRITER_H
 
-#include <VTF/stdafx.h>
-#include <VTF/Writer.h>
+#include "stdafx.h"
+#include "Writer.h"
 
-
-namespace VTFLib {
-	
-	namespace IO {
-		
-		namespace Writers {
-			
-			class CProcWriter : public IWriter {
+namespace VTFLib
+{
+	namespace IO
+	{
+		namespace Writers
+		{
+			class CProcWriter : public IWriter
+			{
 			private:
 				vlBool bOpened;
 				vlVoid *pUserData;

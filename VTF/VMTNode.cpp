@@ -9,36 +9,36 @@
  * version.
  */
 
-#include <VTF/VMTNode.h>
-
+#include "VMTNode.h"
 
 using namespace VTFLib::Nodes;
 
-CVMTNode::CVMTNode(const vlChar *cName) {
+CVMTNode::CVMTNode(const vlChar *cName)
+{
 	this->cName = new vlChar[strlen(cName) + 1];
 	strcpy(this->cName, cName);
 
 	this->Parent = 0;
 }
 
-
-CVMTNode::~CVMTNode() {
+CVMTNode::~CVMTNode()
+{
 	delete []this->cName;
 }
 
-
-vlVoid CVMTNode::SetName(const vlChar *cName) {
+vlVoid CVMTNode::SetName(const vlChar *cName)
+{
 	delete []this->cName;
 	this->cName = new vlChar[strlen(cName) + 1];
 	strcpy(this->cName, cName);
 }
 
-
-const vlChar *CVMTNode::GetName() const {
+const vlChar *CVMTNode::GetName() const
+{
 	return this->cName;
 }
 
-
-CVMTGroupNode *CVMTNode::GetParent() {
+CVMTGroupNode *CVMTNode::GetParent()
+{
 	return this->Parent;
 }
