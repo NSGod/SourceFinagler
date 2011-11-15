@@ -93,6 +93,8 @@ static FloatImage * createNormalMap(const FloatImage * img, FloatImage::WrapMode
 			const float du = img->applyKernel(kdu, x, y, 3, wm);
 			const float dv = img->applyKernel(kdv, x, y, 3, wm);
 			
+			printf("(%u, %u) du == %.3f, dv == %.3f\n", x, y, du, dv);
+			
 			Vector3 n = normalize(Vector3(du, dv, heightScale));
 			
 			img_out->pixel(x, y, 0) = n.x;

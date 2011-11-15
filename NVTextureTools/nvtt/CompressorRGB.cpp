@@ -180,7 +180,7 @@ void PixelFormatConverter::compress(nvtt::AlphaMode /*alphaMode*/, uint w, uint 
         }
     }
 
-    const uint pitch = computePitch(w, bitCount, compressionOptions.pitchAlignment);
+    const uint pitch = computeBytePitch(w, bitCount, compressionOptions.pitchAlignment);
     const uint wh = w * h;
 
     // Allocate output scanline.
@@ -250,6 +250,7 @@ void PixelFormatConverter::compress(nvtt::AlphaMode /*alphaMode*/, uint w, uint 
                 *(dst + x) = 0;
         }*/
 
+        // @@ This code does not truly support less than byte-aligned textures.
         outputOptions.writeData(dst, pitch);
     }
 

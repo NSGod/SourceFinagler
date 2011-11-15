@@ -20,10 +20,6 @@
 #include <NVCore/ForEach.h>
 #endif
 
-//#ifndef NV_CORE_HASHMAP_H
-//#include <NVCore/HashMap.h>
-//#endif
-
 #ifndef NV_CORE_LIBRARY_H
 #include <NVCore/Library.h>
 #endif
@@ -54,10 +50,6 @@
 
 #ifndef NV_CORE_STRING_H
 #include <NVCore/StrLib.h>
-#endif
-
-#ifndef NVCORE_TEXTREADER_H
-#include <NVCore/TextReader.h>
 #endif
 
 #ifndef NVCORE_TEXTWRITER_H

@@ -765,7 +765,9 @@ float FloatImage::applyKernel(const Kernel2 * k, int x, int y, uint c, WrapMode 
         for (uint e = 0; e < kernelWindow; e++)
         {
             const int src_x = int(x + e) - kernelOffset;
-
+			
+			// what pixel index am I going to feed into the kernel?
+			
             int idx = this->index(src_x, src_y, wm);
 
             sum += k->valueAt(e, i) * channel[idx];
