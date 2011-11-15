@@ -28,6 +28,31 @@
      
             
     <types>
+        <type name="com.markdouma.texture-image">  <!-- add one <type>...</type> entry for each UTI that you need to define. -->
+         
+            <!-- 'allattrs' is a whitespace separated list of all of the attributes that this UTI type normally has.
+                 It does not have to be exhaustive. -->
+            <allattrs>
+            com_markdouma_image_mipmaps
+            com_markdouma_image_animated
+            </allattrs>
+            
+            <previewattrs>
+            kMDItemPixelHeight
+            kMDItemPixelWidth
+            </previewattrs>
+            <!-- 'displayattrs' is a whitespace separated list of the attributes that should normally be displayed when previewing files of this UTI type. -->
+            <displayattrs>
+            kMDItemLastUsedDate
+            kMDItemPixelHeight
+            kMDItemPixelWidth
+            kMDItemHasAlphaChannel
+            com_markdouma_image_mipmaps
+            com_markdouma_image_animated
+            com_markdouma_image_environment_map
+            </displayattrs>
+            
+        </type>
         <type name="com.valvesoftware.source.vtf">  <!-- add one <type>...</type> entry for each UTI that you need to define. -->
          
             <!-- 'allattrs' is a whitespace separated list of all of the attributes that this UTI type normally has.

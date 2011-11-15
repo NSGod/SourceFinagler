@@ -1,7 +1,9 @@
 #include <CoreServices/CoreServices.h>
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 #import <NVImage/NVImage.h>
 #import <VTF/VTF.h>
+#import <TextureKit/TextureKit.h>
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -11,17 +13,12 @@ extern "C" {
 #define MD_DEBUG 0
 	
 	
-NSString * const TKVTFType			= @"com.valvesoftware.source.vtf";
 	
-const OSType TKVTFMagic				= 0x56544600;	// 'VTF\0'
-const OSType TKHTMLErrorMagic	= '<!DO';
-	
-NSString * const TKDDSType			= @"com.microsoft.dds";
-const OSType TKDDSMagic				='DDS ';
-	
-BOOL MDGetMetadataFromCGImageWithContentsOfFile(NSString *filePath, NSString *contentTypeUTI, NSMutableDictionary *attributes, NSError **error);
+BOOL MDGetMetadataFromImageWithContentsOfFile(NSString *filePath, NSString *contentTypeUTI, NSMutableDictionary *attributes, NSError **error);
 
-Boolean GetMetadataForURL(void *thisInterface, CFMutableDictionaryRef attributes, CFStringRef contentTypeUTI, CFURLRef url) {
+//	Boolean GetMetadataForURL(void *thisInterface, CFMutableDictionaryRef attributes, CFStringRef contentTypeUTI, CFURLRef url);
+	
+Boolean GetMetadataForFile(void *thisInterface, CFMutableDictionaryRef attributes, CFStringRef contentTypeUTI, CFStringRef pathToFile) {
     /* Pull any available metadata from the file at the specified path */
     /* Return the attribute keys and attribute values in the dict */
     /* Return TRUE if successful, FALSE if there was no data provided */
@@ -29,17 +26,18 @@ Boolean GetMetadataForURL(void *thisInterface, CFMutableDictionaryRef attributes
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	if (![(NSString *)contentTypeUTI isEqualToString:TKVTFType] &&
-		![(NSString *)contentTypeUTI isEqualToString:TKDDSType]) {
-		NSLog(@"Source.mdimporter; GetMetadataForURL(): contentTypeUTI != vtf or dds; (contentTypeUTI == %@)", contentTypeUTI);
+		![(NSString *)contentTypeUTI isEqualToString:TKDDSType] &&
+		![(NSString *)contentTypeUTI isEqualToString:TKSFTextureImageType]) {
+		NSLog(@"Source.mdimporter; GetMetadataForFile(): contentTypeUTI != vtf or dds or sfti; (contentTypeUTI == %@)", contentTypeUTI);
 		[pool release];
 		return FALSE;
 	}
 	
 #if MD_DEBUG
-	NSLog(@"Source.mdimporter; GetMetadataForURL() file == %@", [(NSURL *)url path]);
+	NSLog(@"Source.mdimporter; GetMetadataForFile() file == %@", pathToFile);
 #endif
 	
-	BOOL result = MDGetMetadataFromCGImageWithContentsOfFile([(NSURL *)url path], (NSString *)contentTypeUTI, (NSMutableDictionary *)attributes, NULL);
+	BOOL result = MDGetMetadataFromImageWithContentsOfFile((NSString *)pathToFile, (NSString *)contentTypeUTI, (NSMutableDictionary *)attributes, NULL);
 	
 	[pool release];
 	return (Boolean)result;
@@ -49,7 +47,7 @@ Boolean GetMetadataForURL(void *thisInterface, CFMutableDictionaryRef attributes
 using namespace VTFLib;
 using namespace nv;
 	
-BOOL MDGetMetadataFromCGImageWithContentsOfFile(NSString *filePath, NSString *contentTypeUTI, NSMutableDictionary *attributes, NSError **error) {
+BOOL MDGetMetadataFromImageWithContentsOfFile(NSString *filePath, NSString *contentTypeUTI, NSMutableDictionary *attributes, NSError **error) {
 	if (attributes == nil || filePath == nil || contentTypeUTI == nil) return NO;
 	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -57,13 +55,13 @@ BOOL MDGetMetadataFromCGImageWithContentsOfFile(NSString *filePath, NSString *co
 	NSData *data = [[NSData alloc] initWithContentsOfFile:filePath];
 	
 	if (data == nil) {
-		NSLog(@"MDGetMetadataFromCGImageWithContentsOfFile(): data == nil for file == %@", filePath);
+		NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): data == nil for filePath == %@", filePath);
 		[pool release];
 		return NO;
 	}
 	
 	if ([data length] < sizeof(OSType)) {
-		NSLog(@"MDGetMetadataFromCGImageWithContentsOfFile(): [data length] < 4 for file == %@", filePath);
+		NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): [data length] < 4 for filePath == %@", filePath);
 		[data release];
 		[pool release];
 		return NO;
@@ -73,10 +71,39 @@ BOOL MDGetMetadataFromCGImageWithContentsOfFile(NSString *filePath, NSString *co
 	[data getBytes:&magic length:sizeof(magic)];
 	magic = NSSwapBigIntToHost(magic);
 	
-	if ([contentTypeUTI isEqualToString:TKVTFType]) {
+	if ([contentTypeUTI isEqualToString:TKSFTextureImageType]) {
+		
+		TKImage *sfti = [[TKImage alloc] initWithData:data firstRepresentationOnly:NO];
+		
+		if (sfti == nil) {
+			NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): failed to create a TKImage for file at %@!", filePath);
+			[data release];
+			[pool release];
+			return NO;
+		}
+		
+		NSSize imageSize = [sfti size];
+		
+		[attributes setObject:[NSNumber numberWithBool:[sfti hasAlpha]] forKey:(id)kMDItemHasAlphaChannel];
+		[attributes setObject:[NSNumber numberWithBool:[sfti hasMipmaps]] forKey:@"com_markdouma_image_mipmaps"];
+		[attributes setObject:[NSNumber numberWithBool:[sfti isAnimated]] forKey:@"com_markdouma_image_animated"];
+		
+		[attributes setObject:[NSNumber numberWithBool:([sfti isCubemap] || [sfti isSpheremap])] forKey:@"com_markdouma_image_environment_map"];
+		[attributes setObject:[NSNumber numberWithUnsignedInteger:imageSize.width] forKey:(id)kMDItemPixelWidth];
+		[attributes setObject:[NSNumber numberWithUnsignedInteger:imageSize.height] forKey:(id)kMDItemPixelHeight];
+		[attributes setObject:[NSNumber numberWithUnsignedInteger:imageSize.width * imageSize.height] forKey:(id)kMDItemPixelCount];
+		
+		[sfti release];
+		[data release];
+		[pool release];
+		
+		return YES;
+		
+	
+	} else if ([contentTypeUTI isEqualToString:TKVTFType]) {
 		
 		if (magic == TKHTMLErrorMagic) {
-			NSLog(@"MDGetMetadataFromCGImageWithContentsOfFile(): file at path \"%@\" appears to be an ERROR 404 HTML file rather than a valid VTF", filePath);
+			NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): file at fileURL \"%@\" appears to be an ERROR 404 HTML file rather than a valid VTF", filePath);
 			[data release];
 			[pool release];
 			return NO;
@@ -85,7 +112,7 @@ BOOL MDGetMetadataFromCGImageWithContentsOfFile(NSString *filePath, NSString *co
 		CVTFFile *file = new CVTFFile();
 		
 		if (file == 0) {
-			NSLog(@"MDGetMetadataFromCGImageWithContentsOfFile(): CVTFFile() returned NULL (for %@)", filePath);
+			NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): CVTFFile() returned NULL (for %@)", filePath);
 			[data release];
 			[pool release];
 			return NO;
@@ -93,9 +120,9 @@ BOOL MDGetMetadataFromCGImageWithContentsOfFile(NSString *filePath, NSString *co
 		
 		if ( file->Load([data bytes], [data length], vlTrue) == NO) {
 			if (magic == TKVTFMagic) {
-				NSLog(@"MDGetMetadataFromCGImageWithContentsOfFile(): file->Load() (for %@) failed!", filePath);
+				NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): file->Load() (for %@) failed!", filePath);
 			} else {
-				NSLog(@"MDGetMetadataFromCGImageWithContentsOfFile(): file->Load() (for %@) failed! (does not appear to be a valid VTF; magic == 0x%x, %@)", filePath, (unsigned int)magic, NSFileTypeForHFSTypeCode(magic));
+				NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): file->Load() (for %@) failed! (does not appear to be a valid VTF; magic == 0x%x, %@)", filePath, (unsigned int)magic, NSFileTypeForHFSTypeCode(magic));
 			}
 			delete file;
 			[data release];
@@ -138,45 +165,45 @@ BOOL MDGetMetadataFromCGImageWithContentsOfFile(NSString *filePath, NSString *co
 	} else if ([contentTypeUTI isEqualToString:TKDDSType]) {
 		
 		if (magic != TKDDSMagic) {
-			NSLog(@"MDGetMetadataFromCGImageWithContentsOfFile(): file at path \"%@\" does not appear to be a valid DDS; magic == 0x%x, %@", filePath, (unsigned int)magic, NSFileTypeForHFSTypeCode(magic));
+			NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): file at filePath \"%@\" does not appear to be a valid DDS; magic == 0x%x, %@", filePath, (unsigned int)magic, NSFileTypeForHFSTypeCode(magic));
 			[data release];
 			[pool release];
 			return NO;
 		}
 		
-		DirectDrawSurface dds((unsigned char *)[data bytes], [data length]);
-		
-		if (!dds.isValid() || !dds.isSupported() || (dds.width() > 65535) || (dds.height() > 65535) ) {
-			if (!dds.isValid()) {
-				NSLog(@"MDGetMetadataFromCGImageWithContentsOfFile(): file at path \"%@\": dds image is not valid, info follows:", filePath);
-			} else if (!dds.isSupported()) {
-				NSLog(@"MDGetMetadataFromCGImageWithContentsOfFile(): file at path \"%@\": dds image format is not supported, info follows:", filePath);
+		DirectDrawSurface *dds = new DirectDrawSurface((unsigned char *)[data bytes], [data length]);
+		if (!dds->isValid() || !dds->isSupported() || (dds->width() > 65535 || (dds->height() > 65535))) {
+			if (!dds->isValid()) {
+				NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): file at filePath \"%@\": dds image is not valid, info follows:", filePath);
+			} else if (!dds->isSupported()) {
+				NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): file at filePath \"%@\": dds image format is not supported, info follows:", filePath);
 			} else {
-				NSLog(@"MDGetMetadataFromCGImageWithContentsOfFile(): file at path \"%@\": dds image dimensions are too large, info follows:", filePath);
+				NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): file at filePath \"%@\": dds image dimensions are too large, info follows:", filePath);
 			}
-			dds.printInfo();
+			dds->printInfo();
+			delete dds;
 			[data release];
 			[pool release];
 			return NO;
 		}
 		
 #if MD_DEBUG
-		dds.printInfo();
+		dds->printInfo();
 #endif
 		
-		BOOL hasAlphaChannel = dds.hasAlpha();
-		BOOL hasMipmaps = (dds.mipmapCount() > 1);
-		BOOL isEnvironmentMap = dds.isTextureCube();
+		BOOL hasAlphaChannel = dds->hasAlpha();
+		BOOL hasMipmaps = (dds->mipmapCount() > 1);
+		BOOL isEnvironmentMap = dds->isTextureCube();
 		
 		NSString *theCompression = nil;
 		const char *compression = NULL;
-		compression = dds.d3d9FormatString();
+		compression = dds->header.d3d9FormatString();
 		if (compression) {
 			theCompression = [NSString stringWithFormat:@"%s", compression];
 		}
 		
-		NSUInteger theWidth = dds.width();
-		NSUInteger theHeight = dds.height();
+		NSUInteger theWidth = dds->width();
+		NSUInteger theHeight = dds->height();
 		
 		[attributes setObject:[NSNumber numberWithBool:hasAlphaChannel] forKey:(NSString *)kMDItemHasAlphaChannel];
 		[attributes setObject:[NSNumber numberWithBool:hasMipmaps] forKey:@"com_markdouma_image_mipmaps"];
@@ -186,6 +213,7 @@ BOOL MDGetMetadataFromCGImageWithContentsOfFile(NSString *filePath, NSString *co
 		
 		[attributes setObject:[NSNumber numberWithUnsignedInteger:theWidth] forKey:(NSString *)kMDItemPixelWidth];
 		[attributes setObject:[NSNumber numberWithUnsignedInteger:theHeight] forKey:(NSString *)kMDItemPixelHeight];
+		[attributes setObject:[NSNumber numberWithUnsignedInteger:theWidth * theHeight] forKey:(id)kMDItemPixelCount];
 		if (theCompression) [attributes setObject:theCompression forKey:@"com_markdouma_image_compression"];
 		
 		[data release];
@@ -200,12 +228,12 @@ BOOL MDGetMetadataFromCGImageWithContentsOfFile(NSString *filePath, NSString *co
 	
 	
 	
-
+	
 #ifdef __cplusplus
 }
 #endif
 
-
+		
 /* -----------------------------------------------------------------------------
  Step 1
  Set the UTI types the importer supports
