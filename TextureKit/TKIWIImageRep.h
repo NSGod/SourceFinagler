@@ -12,11 +12,13 @@
 #pragma pack(1)
 
 struct TKIWIHeader {
-	UInt32		signature;
-	UInt8		format;
-	UInt8		flags;
-	UInt16		width;
-	UInt16		height;
+	UInt8		magic[3];		// 3 bytes - 'IWi'
+	UInt8		version;		// 1 byte
+	UInt8		format;			// 1 
+	UInt8		flags;			// 1
+	UInt16		width;			// 2
+	UInt16		height;			// 2
+	UInt16		unknown[4];		// 8
 } TKIWIHeader;
 
 #pragma pack()
@@ -25,12 +27,12 @@ typedef TKIWIHeader TKIWIHeader;
 
 
 enum {
-	TKIWIFormatARGB				= 0x01,	// 32 bpp
-	TKIWIFormatRGB				= 0x02,	// 24 bpp
+	TKIWIFormatARGB8			= 0x01,	// 32 bpp
+	TKIWIFormatRGB8				= 0x02,	// 24 bpp
 	
 	TKIWIFormatARGB4			= 0x03,	// 24 bpp
 	
-	TKIWIFormatA				= 0x04,	// 8  bpp - Alpha
+	TKIWIFormatA8				= 0x04,	// 8  bpp - Alpha
 	
 	TKIWIFormatJPG				= 0x07,	// 24 bpp 
 	
@@ -45,21 +47,36 @@ enum {
 };
 typedef NSUInteger TKIWIFormat;
 
-//TEXTUREKIT_EXTERN NSString *NSStringFromVTFFormat(TKVTFFormat aFormat);
 
-TEXTUREKIT_EXTERN NSString * const TKIWIType;
-TEXTUREKIT_EXTERN NSString * const TKIWIFileType;
-TEXTUREKIT_EXTERN NSString * const TKIWIPboardType;
+enum {
+	TKIWIFlagsNoMipmaps			= 0x03,
+	TKIWIFlagsDoNotTile			= 0xc0
+};
 
-extern const OSType TKIWIMagic;	// 'IWi\r'
+
+
+//TEXTUREKIT_EXTERN NSString *NSStringFromIWIFormat(TKIWIFormat aFormat);
+//TEXTUREKIT_EXTERN TKIWIFormat TKIWIFormatFromString(NSString *aFormat);
+
+
+
+TEXTUREKIT_EXTERN NSString * const TKIWIType;			//	com.infinityward.iwi
+TEXTUREKIT_EXTERN NSString * const TKIWIFileType;		//	iwi
+TEXTUREKIT_EXTERN NSString * const TKIWIPboardType;		
+
+enum {
+	TKIWIMagic					= 'IWi'
+};
+
 
 
 @interface TKIWIImageRep : TKImageRep <NSCoding, NSCopying> {
-	TKIWIHeader			header;
+//	TKIWIHeader			header;
 	
 }
 
 + (NSArray *)imageRepsWithData:(NSData *)aData;
+
 + (id)imageRepWithData:(NSData *)aData;
 - (id)initWithData:(NSData *)aData;
 
@@ -67,8 +84,8 @@ extern const OSType TKIWIMagic;	// 'IWi\r'
 + (void)setDefaultFormat:(TKIWIFormat)aFormat;
 
 
-+ (NSData *)IWIRepresentationOfImageRepsInArray:(NSArray *)tkImageReps;
-+ (NSData *)IWIRepresentationOfImageRepsInArray:(NSArray *)tkImageReps usingFormat:(TKIWIFormat)aFormat quality:(TKDXTCompressionQuality)aQuality createMipmaps:(BOOL)createMipmaps;
++ (NSData *)IWIRepresentationOfImageRepsInArray:(NSArray *)tkImageReps options:(NSDictionary *)options;
++ (NSData *)IWIRepresentationOfImageRepsInArray:(NSArray *)tkImageReps usingFormat:(TKIWIFormat)aFormat quality:(TKDXTCompressionQuality)aQuality options:(NSDictionary *)options;
 
 @end
 
