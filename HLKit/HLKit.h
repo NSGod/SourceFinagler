@@ -3,7 +3,7 @@
 //  HLKit
 //
 //  Created by Mark Douma on 6/1/2011
-//  Copyright (c) 2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HLKitDefines.h>

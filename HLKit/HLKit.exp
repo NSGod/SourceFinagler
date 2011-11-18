@@ -1,8 +1,8 @@
 # HLKit.exp
-# Source Finagler
+# HLKit
 #
 # Created by Mark Douma on 7/8/2011.
-# Copyright 2011 Mark Douma LLC. All rights reserved.
+# Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
 
 .objc_class_name_HKArchiveFile
 .objc_class_name_HKBSPFile

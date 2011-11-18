@@ -1,9 +1,9 @@
 //
 //  HKFolder.mm
-//  Source Finagler
+//  HLKit
 //
 //  Created by Mark Douma on 9/1/2010.
-//  Copyright 2010 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKFolder.h>

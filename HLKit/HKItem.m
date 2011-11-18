@@ -1,18 +1,23 @@
-/*
-    HKItem.m
-    Copyright (c) 2001-2006, Apple Computer, Inc., all rights reserved.
-    Author: Chuck Pisula
-
-    Milestones:
-    * 03-01-2001: Initial creation by Chuck Pisula
-    * 02-17-2006: Cleaned up the code. Corbin Dunn.
-
-    Generic Tree node structure (TreeNode).
-    
-    TreeNode is a node in a doubly linked tree data structure.  TreeNode's have weak references to their parent (to avoid retain 
-    cycles since parents retain their children).  Each node has 0 or more children and a reference to a piece of node data. The TreeNode provides method to manipulate and extract structural information about a tree.  For instance, TreeNode implements: insertChild:atIndex:, removeChild:, isDescendantOfNode:, and other useful operations on tree nodes.
-    TreeNode provides the structure and common functionality of trees and is expected to be subclassed.
-*/
+//  HKItem.m
+//  HLKit
+//
+//  Created by Mark Douma on 11/20/2009.
+//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
+//
+//  Based, in part, on "TreeNode":
+//
+//  Copyright (c) 2001-2006, Apple Computer, Inc., all rights reserved.
+//  Author: Chuck Pisula
+//
+//  Milestones:
+//  * 03-01-2001: Initial creation by Chuck Pisula
+//  * 02-17-2006: Cleaned up the code. Corbin Dunn.
+//
+//  Generic Tree node structure (TreeNode).
+//
+//  TreeNode is a node in a doubly linked tree data structure.  TreeNode's have weak references to their parent (to avoid retain 
+//  cycles since parents retain their children).  Each node has 0 or more children and a reference to a piece of node data. The TreeNode provides method to manipulate and extract structural information about a tree.  For instance, TreeNode implements: insertChild:atIndex:, removeChild:, isDescendantOfNode:, and other useful operations on tree nodes.
+//  TreeNode provides the structure and common functionality of trees and is expected to be subclassed.
 
 
 #import <HLKit/HKItem.h>
