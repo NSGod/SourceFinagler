@@ -1,9 +1,9 @@
 //
 //  HKFolder.mm
-//  HLKit
+//  Source Finagler
 //
 //  Created by Mark Douma on 9/1/2010.
-//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
+//  Copyright 2010 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKFolder.h>
@@ -242,7 +242,7 @@ using namespace HLLib;
 }
 
 
-- (BOOL)writeToFile:(NSString *)aPath assureUniqueFilename:(BOOL)assureUniqueFilename resultingPath:(NSString **)resultingPath error:(NSError **)outError {
+- (BOOL)writeToFile:(NSString *)aPath assureUniqueFilename:(BOOL)assureUniqueFilename tag:(NSInteger)tag  resultingPath:(NSString **)resultingPath error:(NSError **)outError {
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif

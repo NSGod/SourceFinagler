@@ -12,9 +12,9 @@ Image::Image() : m_width(0), m_height(0), m_format(Format_RGB), m_data(NULL)
 
 Image::Image(const Image & img) : m_data(NULL)
 {
-	allocate(img.m_width, img.m_height, img.m_depth);
+    allocate(img.m_width, img.m_height);
     m_format = img.m_format;
-    memcpy(m_data, img.m_data, sizeof(Color32) * m_width * m_height * m_depth);
+    memcpy(m_data, img.m_data, sizeof(Color32) * m_width * m_height);
 }
 
 Image::~Image()
@@ -24,20 +24,19 @@ Image::~Image()
 
 const Image & Image::operator=(const Image & img)
 {
-    allocate(img.m_width, img.m_height, m_depth);
+    allocate(img.m_width, img.m_height);
     m_format = img.m_format;
-    memcpy(m_data, img.m_data, sizeof(Color32) * m_width * m_height * m_depth);
+    memcpy(m_data, img.m_data, sizeof(Color32) * m_width * m_height);
     return *this;
 }
 
 
-void Image::allocate(uint w, uint h, uint d)
+void Image::allocate(uint w, uint h)
 {
     free();
     m_width = w;
     m_height = h;
-	m_depth = d;
-    m_data = realloc<Color32>(m_data, w * h * d);
+    m_data = realloc<Color32>(m_data, w * h);
 }
 
 bool Image::load(const char * name)
@@ -51,20 +50,18 @@ bool Image::load(const char * name)
 
     swap(m_width, img->m_width);
     swap(m_height, img->m_height);
-	swap(m_depth, img->m_depth);
     swap(m_format, img->m_format);
     swap(m_data, img->m_data);
 
     return true;
 }
 
-void Image::wrap(void * data, uint w, uint h, uint d)
+void Image::wrap(void * data, uint w, uint h)
 {
     free();
     m_data = (Color32 *)data;
     m_width = w;
     m_height = h;
-	m_depth = d;
 }
 
 void Image::unwrap()
@@ -72,7 +69,6 @@ void Image::unwrap()
     m_data = NULL;
     m_width = 0;
     m_height = 0;
-	m_depth = 0;
 }
 
 
@@ -91,11 +87,6 @@ uint Image::width() const
 uint Image::height() const
 {
     return m_height;
-}
-
-uint Image::depth() const
-{
-	return m_depth;
 }
 
 const Color32 * Image::scanline(uint h) const
@@ -122,13 +113,13 @@ Color32 * Image::pixels()
 
 const Color32 & Image::pixel(uint idx) const
 {
-    nvDebugCheck(idx < m_width * m_height * m_depth);
+    nvDebugCheck(idx < m_width * m_height);
     return m_data[idx];
 }
 
 Color32 & Image::pixel(uint idx)
 {
-    nvDebugCheck(idx < m_width * m_height * m_depth);
+    nvDebugCheck(idx < m_width * m_height);
     return m_data[idx];
 }
 
@@ -145,7 +136,7 @@ void Image::setFormat(Image::Format f)
 
 void Image::fill(Color32 c)
 {
-    const uint size = m_width * m_height * m_depth;
+    const uint size = m_width * m_height;
     for (uint i = 0; i < size; ++i)
     {
         m_data[i] = c;

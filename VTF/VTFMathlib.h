@@ -22,14 +22,14 @@
 #ifndef VTFMATHLIB_H
 #define VTFMATHLIB_H
 
-#include "stdafx.h"
+#include <VTF/stdafx.h>
 
 // Defines for data alignment
 //---------------------------
 #define CACHE_LINE  16								//!< Alignment size.
 
 #ifdef _MSC_VER
-#define CACHE_ALIGN __declspec(align(CACHE_LINE))	//!< Storage-class information alignment.
+#	define CACHE_ALIGN __declspec(align(CACHE_LINE))	//!< Storage-class information alignment.
 #else
 #	if defined(HAVE_GCCVISIBILITYPATCH) || __GNUC__ >= 4
 #		define CACHE_ALIGN __attribute__((aligned(CACHE_LINE)))	//!< Storage-class information alignment.
@@ -37,6 +37,7 @@
 #		define CACHE_ALIGN
 #	endif
 #endif
+
 
 // Macros
 //-------
@@ -48,30 +49,28 @@
 /*!
 	A simple 3D Vector class.
 */
-class Vector
-{
-	public:
-
-		vlSingle x;		//!< Vector value in the X axis.
-		vlSingle y;		//!< Vector value in the Y axis.
-		vlSingle z;		//!< Vector value in the Z axis.
+class Vector {
+public:
+	
+	vlSingle x;		//!< Vector value in the X axis.
+	vlSingle y;		//!< Vector value in the Y axis.
+	vlSingle z;		//!< Vector value in the Z axis.
 	
 	//! Initialise the vector with the three given values.
-	inline void Init(vlSingle vX, vlSingle vY, vlSingle vZ)
-	{
+	inline void Init(vlSingle vX, vlSingle vY, vlSingle vZ) {
 		x = vX;
 		y = vY;
 		z = vZ;
 	}
-
+	
 	//! Initialise the vector defaulting all values to zero.
-	inline void Init(void)
-	{
+	inline void Init(void) {
 		x = 0.0f;
 		y = 0.0f;
 		z = 0.0f;
 	}
 };
+
 
 // VectorAligned class
 //--------------------
@@ -81,29 +80,26 @@ class Vector
 	Can be initialized with a value or set to zero by default.
 	\see CACHE_ALIGN
 */
-class CACHE_ALIGN VectorAligned
-{
-	public:
-		
+class CACHE_ALIGN VectorAligned {
+public:
+	
 	vlSingle x;		//!< Vector value in the X axis.
-		vlSingle y;		//!< Vector value in the Y axis.
-		vlSingle z;		//!< Vector value in the Z axis.
-
-		//! Initialise the vector with the three given values.
-		inline VectorAligned(vlSingle vX, vlSingle vY, vlSingle vZ) 
-		{
-			x = vX;
-			y = vY;
-			z = vZ;
-		}
-
-		//! Initialise the vector defaulting all values to zero.
-		inline VectorAligned(void)
-		{
-			x = 0.0f;
-			y = 0.0f;
-			z = 0.0f;
-		};
+	vlSingle y;		//!< Vector value in the Y axis.
+	vlSingle z;		//!< Vector value in the Z axis.
+	
+	//! Initialise the vector with the three given values.
+	inline VectorAligned(vlSingle vX, vlSingle vY, vlSingle vZ) {
+		x = vX;
+		y = vY;
+		z = vZ;
+	}
+	
+	//! Initialise the vector defaulting all values to zero.
+	inline VectorAligned(void) {
+		x = 0.0f;
+		y = 0.0f;
+		z = 0.0f;
+	};
 };
 
 void VecAdd(Vector *a, Vector *b, Vector *sum);			//!< Vector addition function.
@@ -114,3 +110,4 @@ void VecReflect(Vector *axis, Vector *v, Vector *r);	//!< Vector reflect functio
 vlInt Intersect(Vector *v);								//!< Vector intersect function.
 
 #endif //VTF_MATHLIB
+

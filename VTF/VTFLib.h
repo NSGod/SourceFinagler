@@ -1,6 +1,6 @@
 /*
  * VTFLib
- * Copyright (C) 2005-2011 Neil Jedrzejewski & Ryan Gregg
+ * Copyright (C) 2005-2010 Neil Jedrzejewski & Ryan Gregg
 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -99,26 +99,27 @@
 #ifndef VTFLIB_H
 #define VTFLIB_H
 
-#include "stdafx.h"
-#include "Error.h"
-#include "VTFFile.h"
-#include "VMTFile.h"
+#include <VTF/stdafx.h>
+#include <VTF/Error.h>
+#include <VTF/VTFFile.h>
+#include <VTF/VMTFile.h>
 
 #include <vector>
 
-namespace VTFLib
-{
+namespace VTFLib {
+	
 	typedef std::vector<VTFLib::CVTFFile *> CImageVector;
 	typedef std::vector<VTFLib::CVMTFile *> CMaterialVector;
 
 	extern vlBool bInitialized;
 	extern Diagnostics::CError LastError;
 
-	extern CVTFFile *Image;
-	extern CImageVector *ImageVector;
+//	extern CVTFFile *image;
+	extern CVTFFile *lpImage;
+	extern CImageVector *lpImageVector;
 
-	extern CVMTFile *Material;
-	extern CMaterialVector *MaterialVector;
+	extern CVMTFile *lpMaterial;
+	extern CMaterialVector *lpMaterialVector;
 
 	extern vlUInt uiDXTQuality;
 
@@ -148,15 +149,14 @@ namespace VTFLib
 	extern vlUInt uiVMTParseMode;
 }
 
-#define VL_VERSION			132			//!< VTFLib version as integer
-#define VL_VERSION_STRING	"1.3.2"		//!< VTFLib version as string
+#define VL_VERSION			131			//!< VTFLib version as integer
+#define VL_VERSION_STRING	"1.3.1"		//!< VTFLib version as string
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef enum tagVTFLibOption
-{
+typedef enum tagVTFLibOption {
 	VTFLIB_DXT_QUALITY,
 
 	VTFLIB_LUMINANCE_WEIGHT_R,

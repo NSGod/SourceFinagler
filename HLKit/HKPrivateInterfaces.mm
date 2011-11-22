@@ -1,9 +1,9 @@
 //
 //  HKPrivateInterfaces.m
-//  HLKit
+//  Source Finagler
 //
 //  Created by Mark Douma on 12/16/2010.
-//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
+//  Copyright 2010 Mark Douma LLC. All rights reserved.
 //
 
 #import "HKPrivateInterfaces.h"

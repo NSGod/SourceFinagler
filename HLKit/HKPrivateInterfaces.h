@@ -1,20 +1,17 @@
 //
 //  HKPrivateInterfaces.h
-//  HLKit
+//  Source Finagler
 //
 //  Created by Mark Douma on 12/16/2010.
-//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
+//  Copyright 2010 Mark Douma LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-
 #import <HL/HL.h>
 
-#import <HLKit/HLKitDefines.h>
 #import <HLKit/HKFolder.h>
 #import <HLKit/HKFile.h>
 #import <HLKit/HKArchiveFile.h>
-
 
 using namespace HLLib;
 
@@ -45,8 +42,6 @@ static inline HLPackageType HLPackageTypeFromHKArchiveFileType(HKArchiveFileType
 	}
 	return HL_PACKAGE_NONE;
 }
-
-
 
 
 @interface HKFolder (HKPrivateInterfaces)

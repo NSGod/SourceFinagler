@@ -1,14 +1,12 @@
 //
 //  HKItem.h
-//  HLKit
+//  Source Finagler
 //
 //  Created by Mark Douma on 11/20/2009.
-//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
+//  Copyright 2009 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKNode.h>
-#import <HLKit/HLKitDefines.h>
-
 
 enum {
 	HKErrorNotExtractable = 1
@@ -27,9 +25,9 @@ enum {
 typedef NSUInteger HKFileType;
 
 
-HLKIT_EXTERN NSString * const HKErrorDomain;
-HLKIT_EXTERN NSString * const HKErrorMessageKey;
-HLKIT_EXTERN NSString * const HKSystemErrorMessageKey;
+extern NSString * const HKErrorDomain;
+extern NSString * const HKErrorMessageKey;
+extern NSString * const HKSystemErrorMessageKey;
 
 
 @interface HKItem : HKNode {
@@ -55,9 +53,6 @@ HLKIT_EXTERN NSString * const HKSystemErrorMessageKey;
 	BOOL				isEncrypted;
 	
 }
-
-+ (NSImage *)iconForItem:(HKItem *)anItem;
-+ (NSImage *)copiedImageForItem:(HKItem *)anItem;
 
 - (BOOL)writeToFile:(NSString *)aPath assureUniqueFilename:(BOOL)assureUniqueFilename resultingPath:(NSString **)resultingPath error:(NSError **)outError;
 

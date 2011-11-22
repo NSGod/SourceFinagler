@@ -6,7 +6,8 @@
  * version.
  */
 
-#include "Writer.h"
-#include "FileWriter.h"
-#include "MemoryWriter.h"
-#include "ProcWriter.h"
+
+#include <VTF/Writer.h>
+#include <VTF/FileWriter.h>
+#include <VTF/MemoryWriter.h>
+#include <VTF/ProcWriter.h>

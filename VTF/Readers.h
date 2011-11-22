@@ -6,7 +6,7 @@
  * version.
  */
 
-#include "Reader.h"
-#include "FileReader.h"
-#include "MemoryReader.h"
-#include "ProcReader.h"
+#include <VTF/Reader.h>
+#include <VTF/FileReader.h>
+#include <VTF/MemoryReader.h>
+#include <VTF/ProcReader.h>

@@ -12,17 +12,17 @@
 #ifndef PROCREADER_H
 #define PROCREADER_H
 
-#include "stdafx.h"
-#include "Reader.h"
+#include <VTF/stdafx.h>
+#include <VTF/Reader.h>
 
-namespace VTFLib
-{
-	namespace IO
-	{
-		namespace Readers
-		{
-			class CProcReader : public IReader
-			{
+
+namespace VTFLib {
+	
+	namespace IO {
+		
+		namespace Readers {
+			
+			class CProcReader : public IReader {
 			private:
 				vlBool bOpened;
 				vlVoid *pUserData;

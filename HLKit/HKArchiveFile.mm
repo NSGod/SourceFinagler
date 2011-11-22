@@ -1,9 +1,9 @@
 //
 //  HKArchiveFile.m
-//  HLKit
+//  Source Finagler
 //
 //  Created by Mark Douma on 4/27/2010.
-//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
+//  Copyright 2010 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKArchiveFile.h>
@@ -15,7 +15,11 @@
 
 using namespace HLLib;
 
+
 #define HK_DEBUG 0
+
+
+NSDate *startDate = nil;
 
 #define HK_DEFAULT_PACKAGE_TEST_LENGTH 8
 
@@ -133,7 +137,7 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 	
 	if (!haveGatheredAllItems) {
 		
-		NSDate *startDate = [[NSDate date] retain];
+		startDate = [[NSDate date] retain];
 		
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 

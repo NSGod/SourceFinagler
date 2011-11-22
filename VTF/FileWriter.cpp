@@ -9,19 +9,17 @@
  * version.
  */
 
-#include "VTFLib.h"
-#include "FileWriter.h"
+#include <VTF/VTFLib.h>
+#include <VTF/FileWriter.h>
 
-#ifndef _WIN32
-#	include <fcntl.h>
-#endif
+#include <fcntl.h>
+
 
 using namespace VTFLib;
 using namespace VTFLib::IO::Writers;
 
 
-CFileWriter::CFileWriter(const vlChar *cFileName)
-{
+CFileWriter::CFileWriter(const vlChar *cFileName) {
 #ifdef _WIN32
 	this->hFile = NULL;
 #else
@@ -31,16 +29,14 @@ CFileWriter::CFileWriter(const vlChar *cFileName)
 	strcpy(this->cFileName, cFileName);
 }
 
-CFileWriter::~CFileWriter()
-{
-	this->Close();
 
-	delete []this->cFileName;
+CFileWriter::~CFileWriter() {
+	this->Close();
+	delete [] this->cFileName;
 }
 
 
-vlBool CFileWriter::Opened() const
-{
+vlBool CFileWriter::Opened() const {
 #ifdef _WIN32
 	return this->hFile != NULL;
 #else
@@ -48,15 +44,14 @@ vlBool CFileWriter::Opened() const
 #endif
 }
 
-vlBool CFileWriter::Open()
-{
+
+vlBool CFileWriter::Open() {
 	this->Close();
 
 #ifdef _WIN32
 	this->hFile = CreateFile(this->cFileName, GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
-	if(this->hFile == INVALID_HANDLE_VALUE)
-	{
+	if (this->hFile == INVALID_HANDLE_VALUE) {
 		this->hFile = NULL;
 
 		LastError.Set("Error opening file.", vlTrue);
@@ -65,8 +60,7 @@ vlBool CFileWriter::Open()
 	}
 #else
 	this->iFile = open(this->cFileName, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	if (this->iFile < 0)
-	{
+	if (this->iFile < 0) {
 		LastError.Set("Error opening file.", vlTrue);
 		this->iFile = -1;
 		return vlFalse;
@@ -76,17 +70,14 @@ vlBool CFileWriter::Open()
 }
 
 
-vlVoid CFileWriter::Close()
-{
+vlVoid CFileWriter::Close() {
 #ifdef _WIN32
-	if (this->hFile != NULL)
-	{
+	if (this->hFile != NULL) {
 		CloseHandle(this->hFile);
 		this->hFile = NULL;
 	}
 #else
-	if (this->iFile >= 0)
-	{
+	if (this->iFile >= 0) {
 		close(this->iFile);
 		this->iFile = -1;
 	}
@@ -94,13 +85,14 @@ vlVoid CFileWriter::Close()
 }
 
 
-vlUInt CFileWriter::GetStreamSize() const
-{
-	if (!this->Opened())
-	{
+vlUInt CFileWriter::GetStreamSize() const {
+	if (!this->Opened()) {
 		return 0;
 	}
 #ifdef _WIN32
+//	if (this->hFile == NULL) {
+//		return 0;
+//	}
 	return GetFileSize(this->hFile, NULL);
 #else
 	struct stat Stat;
@@ -109,28 +101,31 @@ vlUInt CFileWriter::GetStreamSize() const
 }
 
 
-vlUInt CFileWriter::GetStreamPointer() const
-{
-	if (!this->Opened())
-	{
+vlUInt CFileWriter::GetStreamPointer() const {
+	if (!this->Opened()) {
 		return 0;
 	}
 #ifdef _WIN32
+//	if (this->hFile == NULL) {
+//		return 0;
+//	}
 	return (vlUInt)SetFilePointer(this->hFile, 0, NULL, FILE_CURRENT);
 #else
 	return (vlUInt)lseek(this->iFile, 0, SEEK_CUR);
+	
 #endif
 }
 
 
-vlUInt CFileWriter::Seek(vlLong lOffset, VLSeekMode uiMode)
-{
-	if (!this->Opened())
-	{
+vlUInt CFileWriter::Seek(vlLong lOffset, VLSeekMode uiMode) {
+	if (!this->Opened()) {
 		return 0;
 	}
 #ifdef _WIN32
-
+//	if (this->hFile == NULL) {
+//		return 0;
+//	}
+	
 	DWORD dwMode = FILE_BEGIN;
 	switch (uiMode) {
 //		case SEEK_MODE_BEGIN:
@@ -142,8 +137,8 @@ vlUInt CFileWriter::Seek(vlLong lOffset, VLSeekMode uiMode)
 		case SEEK_MODE_END:
 			dwMode = FILE_END;
 			break;
-}
-
+	}
+	
 	
 	return (vlUInt)SetFilePointer(this->hFile, lOffset, NULL, dwMode);
 #else
@@ -165,50 +160,50 @@ vlUInt CFileWriter::Seek(vlLong lOffset, VLSeekMode uiMode)
 }
 
 
-vlBool CFileWriter::Write(vlChar cChar)
-{
+vlBool CFileWriter::Write(vlChar cChar) {
 	if (!this->Opened()) {
 		return vlFalse;
 	}
 #ifdef _WIN32
+//	if (this->hFile == NULL) {
+//		return vlFalse;
+//	}
 	vlULong ulBytesWritten = 0;
-	
-	if (!WriteFile(this->hFile, &cChar, 1, &ulBytesWritten, NULL))
-	{
+
+	if (!WriteFile(this->hFile, &cChar, 1, &ulBytesWritten, NULL)) {
 		LastError.Set("WriteFile() failed.", vlTrue);
 	}
 	return ulBytesWritten == 1;
 #else
 	vlLong lBytesWritten = write(this->iFile, &cChar, 1);
-	if (lBytesWritten < 0)
-	{
+	if (lBytesWritten < 0) {
 		LastError.Set("write() failed", vlTrue);
 	}
 	return lBytesWritten == 1;
+	
 #endif
 }
 
 
-vlUInt CFileWriter::Write(vlVoid *vData, vlUInt uiBytes)
-{
-	if (!this->Opened())
-	{
+vlUInt CFileWriter::Write(vlVoid *vData, vlUInt uiBytes) {
+	if (!this->Opened()) {
 		return 0;
 	}
 #ifdef _WIN32
+//	if (this->hFile == NULL) {
+//		return 0;
+//	}
 	vlULong ulBytesWritten = 0;
-	
-	if (!WriteFile(this->hFile, vData, uiBytes, &ulBytesWritten, NULL))
-	{
+
+	if (!WriteFile(this->hFile, vData, uiBytes, &ulBytesWritten, NULL)) {
 		LastError.Set("WriteFile() failed.", vlTrue);
 	}
 	return (vlUInt)ulBytesWritten;
 #else
 	vlLong lBytesWritten = write(this->iFile, vData, uiBytes);
-	if (lBytesWritten < 0)
-	{
+	if (lBytesWritten < 0) {
 		LastError.Set("write() failed", vlTrue);
-	}	
+	}
 	return (vlUInt)lBytesWritten;
 #endif
 }

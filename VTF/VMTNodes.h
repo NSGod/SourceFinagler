@@ -12,11 +12,13 @@
 #ifndef VMTNODES_H
 #define VMTNODES_H
 
-#include "VMTNode.h"
-#include "VMTGroupNode.h"
-#include "VMTValueNode.h"
-#include "VMTStringNode.h"
-#include "VMTIntegerNode.h"
-#include "VMTSingleNode.h"
+#include <VTF/VMTNode.h>
+#include <VTF/VMTGroupNode.h>
+#include <VTF/VMTValueNode.h>
+#include <VTF/VMTStringNode.h>
+#include <VTF/VMTIntegerNode.h>
+#include <VTF/VMTSingleNode.h>
+
+
 
 #endif

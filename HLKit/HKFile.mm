@@ -1,9 +1,9 @@
 //
 //  HKFile.mm
-//  HLKit
+//  Source Finagler
 //
 //  Created by Mark Douma on 9/1/2010.
-//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
+//  Copyright 2010 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKFile.h>
@@ -17,13 +17,6 @@
 #import <CoreServices/CoreServices.h>
 
 #define HK_DEBUG 0
-
-
-//#define HK_COPY_BUFFER_SIZE 524288
-
-//#define HK_COPY_BUFFER_SIZE 262144
-
-#define HK_COPY_BUFFER_SIZE 262144
 
 
 using namespace HLLib;
@@ -93,7 +86,7 @@ using namespace HLLib::Streams;
 
 
 - (BOOL)beginWritingToFile:(NSString *)aPath assureUniqueFilename:(BOOL)assureUniqueFilename resultingPath:(NSString **)resultingPath error:(NSError **)outError {
-#if HK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if (outError) *outError = nil;
@@ -123,17 +116,11 @@ using namespace HLLib::Streams;
 	
 	if (!static_cast<const CDirectoryFile *>(_privateData)->GetPackage()->CreateStream(static_cast<const CDirectoryFile *>(_privateData), pInput)) {
 		NSLog(@"[%@ %@] file->GetPackage()-CreateStream() failed!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-		[(HKFileHandle *)_fH release];
-		_fH = nil;
 		return NO;
 	}
-	_iS = pInput;
-	
 	if (!static_cast<IStream *>(_iS)->Open(HL_MODE_READ)) {
 		NSLog(@"[%@ %@] pInput->Open(HL_MODE_READ) failed for item == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), self);
 		static_cast<const CDirectoryFile *>(_privateData)->GetPackage()->ReleaseStream(static_cast<IStream *>(_iS));
-		[(HKFileHandle *)_fH release];
-		_fH = nil;
 		return NO;
 	}
 	
@@ -142,13 +129,12 @@ using namespace HLLib::Streams;
 
 
 - (BOOL)continueWritingPartialBytesOfLength:(NSUInteger *)partialBytesLength error:(NSError **)outError {
-#if HK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if (outError) *outError = nil;
 	
-//	hlByte buffer[HL_DEFAULT_COPY_BUFFER_SIZE];
-	hlByte buffer[HK_COPY_BUFFER_SIZE];
+	hlByte buffer[HL_DEFAULT_COPY_BUFFER_SIZE];
 	
 	unsigned long long currentBytesRead = static_cast<IStream *>(_iS)->Read(buffer, sizeof(buffer));
 	
@@ -169,7 +155,7 @@ using namespace HLLib::Streams;
 
 
 - (BOOL)finishWritingWithError:(NSError **)outError {
-#if HK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -188,7 +174,7 @@ using namespace HLLib::Streams;
 
 
 - (BOOL)cancelWritingAndRemovePartialFileWithError:(NSError **)outError {
-#if HK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -237,7 +223,7 @@ using namespace HLLib::Streams;
 	if (assureUniqueFilename) aPath = [aPath stringByAssuringUniqueFilename];
 	
 	HKFileHandle *fileHandle = [HKFileHandle fileHandleForWritingAtPath:aPath];
-	if (fileHandle == nil) {
+	if (!fileHandle) {
 		NSLog(@"[%@ %@] failed to create fileHandle at path == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), aPath);
 		return NO;
 	}
@@ -255,8 +241,7 @@ using namespace HLLib::Streams;
 	
 	unsigned long long totalBytesWritten = 0;
 	
-//	hlByte buffer[HL_DEFAULT_COPY_BUFFER_SIZE];
-	hlByte buffer[HK_COPY_BUFFER_SIZE];
+	hlByte buffer[HL_DEFAULT_COPY_BUFFER_SIZE];
 	
 	while (hlTrue) {
 		unsigned long long currentBytesRead = pInput->Read(buffer, sizeof(buffer));
@@ -300,19 +285,13 @@ using namespace HLLib::Streams;
 			if (pInput->Open(HL_MODE_READ)) {
 				
 				hlUInt totalBytesExtracted = 0;
-//				hlByte buffer[HL_DEFAULT_COPY_BUFFER_SIZE];
-				hlByte buffer[HK_COPY_BUFFER_SIZE];
+				hlByte buffer[HL_DEFAULT_COPY_BUFFER_SIZE];
 				
 				while (hlTrue) {
 					hlUInt currentBytesRead = pInput->Read(buffer, sizeof(buffer));
 					
 					if (currentBytesRead == 0) {
 						bResult = (totalBytesExtracted == pInput->GetStreamSize());
-						
-						if (bResult == NO) {
-							
-						}
-						
 						break;
 					}
 					[mData appendBytes:buffer length:currentBytesRead];

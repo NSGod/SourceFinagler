@@ -12,15 +12,14 @@
 #ifndef VMTSTRINGNODE_H
 #define VMTSTRINGNODE_H
 
-#include "stdafx.h"
-#include "VMTValueNode.h"
+#include <VTF/stdafx.h>
+#include <VTF/VMTValueNode.h>
 
-namespace VTFLib
-{
-	namespace Nodes
-	{
-		class VTFLIB_API CVMTStringNode : public CVMTValueNode
-		{
+namespace VTFLib {
+	
+	namespace Nodes {
+		
+		class VTFLIB_API CVMTStringNode : public CVMTValueNode {
 		private:
 			vlChar *cValue;
 
