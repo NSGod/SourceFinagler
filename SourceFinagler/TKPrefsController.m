@@ -1,13 +1,13 @@
 //
-//  MDPrefsController.m
+//  TKPrefsController.m
 //  Source Finagler
 //
 //  Created by Mark Douma on 9/12/2010.
 //  Copyright 2010 Mark Douma LLC. All rights reserved.
 //
 
-#import "MDPrefsController.h"
-#import "MDPrefsGeneralController.h"
+#import "TKPrefsController.h"
+#import "TKPrefsGeneralController.h"
 #import "MDAppKitAdditions.h"
 
 enum {
@@ -16,13 +16,13 @@ enum {
 
 
 
-@implementation MDPrefsController
+@implementation TKPrefsController
 
 - (id)init {
-	if ((self = [super initWithWindowNibName:@"MDPrefs"])) {
+	if ((self = [super initWithWindowNibName:@"TKPrefs"])) {
 
 	} else {
-		[NSBundle runFailedNibLoadAlert:@"MDPrefs"];
+		[NSBundle runFailedNibLoadAlert:@"TKPrefs"];
 	}
 	return self;
 }
@@ -41,9 +41,9 @@ enum {
 - (void)windowDidLoad {
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 	if (generalController == nil) {
-		generalController = [[MDPrefsGeneralController alloc] init];
-		if (![NSBundle loadNibNamed:@"MDPrefsGeneral" owner:generalController]) {
-			NSLog(@"[%@ %@] failed to load MDPrefsGeneral.nib!!!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+		generalController = [[TKPrefsGeneralController alloc] init];
+		if (![NSBundle loadNibNamed:@"TKPrefsGeneral" owner:generalController]) {
+			NSLog(@"[%@ %@] failed to load TKPrefsGeneral.nib!!!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 		}
 	}
 	[[[self window] toolbar] setSelectedItemIdentifier:@"general"];

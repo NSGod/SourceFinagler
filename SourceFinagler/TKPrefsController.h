@@ -1,5 +1,5 @@
 //
-//  MDPrefsController.h
+//  TKPrefsController.h
 //  Source Finagler
 //
 //  Created by Mark Douma on 9/12/2010.
@@ -9,12 +9,12 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class MDPrefsGeneralController;
+@class TKPrefsGeneralController;
 
 
 
-@interface MDPrefsController : NSWindowController <NSToolbarDelegate> {
-	MDPrefsGeneralController	*generalController;
+@interface TKPrefsController : NSWindowController <NSToolbarDelegate> {
+	TKPrefsGeneralController	*generalController;
 	
 }
 

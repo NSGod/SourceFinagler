@@ -1,5 +1,5 @@
 //
-//  MDAboutWindowController.m
+//  TKAboutWindowController.m
 //  Source Finagler
 //
 //  Created by Mark Douma on 6/28/2005.
@@ -7,20 +7,20 @@
 //
 
 
-#import "MDAboutWindowController.h"
+#import "TKAboutWindowController.h"
 #import "MDAppKitAdditions.h"
 
 
-#define MD_DEBUG 0
+#define TK_DEBUG 0
 
 
-@implementation MDAboutWindowController
+@implementation TKAboutWindowController
 
 - (id)init {
-	if ((self = [super initWithWindowNibName:@"MDAboutWindow"])) {
+	if ((self = [super initWithWindowNibName:@"TKAboutWindow"])) {
 		
 	} else {
-		[NSBundle runFailedNibLoadAlert:@"MDAboutWindow"];
+		[NSBundle runFailedNibLoadAlert:@"TKAboutWindow"];
 	}
 	return self;
 }
@@ -47,7 +47,7 @@
 
 
 - (IBAction)showAcknowledgements:(id)sender {
-#if MD_DEBUG
+#if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSString *rtfPath = [[NSBundle mainBundle] pathForResource:@"Acknowledgments" ofType:@"rtf"];

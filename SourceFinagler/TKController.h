@@ -1,5 +1,5 @@
 //
-//  MDController.h
+//  TKController.h
 //  Source Finagler
 //
 //  Created by Mark Douma on 3/02/2006.
@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface MDController : NSObject {
+@interface TKController : NSObject {
 	IBOutlet NSView		*view;
 	
 	BOOL				resizable;

@@ -1,5 +1,5 @@
 //
-//  MDController.m
+//  TKController.m
 //  Source Finagler
 //
 //  Created by Mark Douma on 3/02/2006.
@@ -7,11 +7,11 @@
 //  
 
 
-#import "MDController.h"
+#import "TKController.h"
 
-#define VS_DEBUG 0
+#define TK_DEBUG 0
 
-@implementation MDController
+@implementation TKController
 
 
 - (id)init {
@@ -31,14 +31,14 @@
 }
 
 - (void)appControllerDidLoadNib:(id)sender {
-#if VS_DEBUG
+#if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
 }
 
 - (void)didSwitchToView:(id)sender {
-#if VS_DEBUG
+#if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	

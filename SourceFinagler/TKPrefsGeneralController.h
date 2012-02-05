@@ -1,15 +1,15 @@
 //
-//  MDPrefsGeneralController.h
+//  TKPrefsGeneralController.h
 //  Source Finagler
 //
 //  Created by Mark Douma on 9/12/2010.
 //  Copyright 2010 Mark Douma LLC. All rights reserved.
 //
 
-#import "MDController.h"
+#import "TKController.h"
 
 
-@interface MDPrefsGeneralController : MDController {
+@interface TKPrefsGeneralController : TKController {
 	IBOutlet NSButton		*openMainWindowCheckbox;
 	IBOutlet NSButton		*openDocumentCheckbox;
 	
