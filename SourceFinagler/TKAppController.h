@@ -1,5 +1,5 @@
 //
-//  MDAppController.h
+//  TKAppController.h
 //  Source Finagler
 //
 //  Created by Mark Douma on 5/12/2010.
@@ -8,11 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class MDAboutWindowController, MDViewOptionsController, MDInspectorController, MDQuickLookController;
-@class MDPrefsController;
-@class MDSteamAppsRelocatorController, MDOtherAppsHelperController;
-
+@class TKAboutWindowController;
+@class TKPrefsController;
 @class TKImageInspectorController;
+
+@class MDViewOptionsController;
+@class MDInspectorController;
+@class MDQuickLookController;
+@class MDSteamAppsRelocatorController;
+@class MDOtherAppsHelperController;
 
 
 enum {
@@ -23,11 +27,11 @@ enum {
 
 extern NSString * const MDCurrentViewKey;
 
-extern NSString * const MDLastVersionRunKey;
+extern NSString * const TKLastVersionRunKey;
 
-extern NSString * const MDLastSpotlightImporterVersionKey;
-extern NSString * const MDLastSourceAddonFinaglerVersionKey;
-extern NSString * const MDSpotlightImporterBundleIdentifierKey;
+extern NSString * const TKLastSpotlightImporterVersionKey;
+extern NSString * const TKLastSourceAddonFinaglerVersionKey;
+extern NSString * const TKSpotlightImporterBundleIdentifierKey;
 
 
 extern NSString * const MDSteamAppsRelocatorIdentifierKey;
@@ -36,28 +40,28 @@ extern NSString * const MDConfigCopyIdentifierKey;
 
 
 enum {
-	MDLaunchTimeActionNone				= 0,
-	MDLaunchTimeActionOpenMainWindow	= 1,
-	MDLaunchTimeActionOpenNewDocument	= 2
+	TKLaunchTimeActionNone				= 0,
+	TKLaunchTimeActionOpenMainWindow	= 1,
+	TKLaunchTimeActionOpenNewDocument	= 2
 };
-typedef NSUInteger MDLaunchTimeActionType;
+typedef NSUInteger TKLaunchTimeActionType;
 
-extern NSString * const MDLaunchTimeActionKey;
+extern NSString * const TKLaunchTimeActionKey;
 
 
-extern NSString * const MDQuitAfterAllWindowsClosedKey;
-extern NSString * const MDLastWindowDidCloseNotification;
+extern NSString * const TKQuitAfterAllWindowsClosedKey;
+extern NSString * const TKLastWindowDidCloseNotification;
 
-extern NSString * const MDFinderBundleIdentifierKey;
+extern NSString * const TKFinderBundleIdentifierKey;
 
 
 /*************		websites & email addresses	*************/
 
-extern NSString * const MDWebpage;
-extern NSString * const MDEmailStaticURLString;
-extern NSString * const MDEmailDynamicURLString;
-extern NSString * const MDEmailAddress;
-extern NSString * const MDiChatURLString;
+extern NSString * const TKWebpage;
+extern NSString * const TKEmailStaticURLString;
+extern NSString * const TKEmailDynamicURLString;
+extern NSString * const TKEmailAddress;
+extern NSString * const TKiChatURLString;
 
 
 extern BOOL			MDShouldShowViewOptions;
@@ -73,7 +77,7 @@ extern BOOL			MDPlaySoundEffects;
 extern BOOL			MDPerformingBatchOperation;
 
 
-extern SInt32 MDSystemVersion;
+extern SInt32		TKSystemVersion;
 
 
 @interface TKAppController : NSObject <NSApplicationDelegate, NSOpenSavePanelDelegate, NSToolbarDelegate, NSSoundDelegate> {
@@ -99,12 +103,12 @@ extern SInt32 MDSystemVersion;
 	IBOutlet NSMenuItem					*chatMenuItem;
 	IBOutlet NSMenuItem					*webpageMenuItem;
 	
-	MDAboutWindowController				*aboutWindowController;
+	TKAboutWindowController				*aboutWindowController;
 	MDInspectorController				*inspectorController;
 	MDViewOptionsController				*viewOptionsController;
 	MDQuickLookController				*quickLookController;
 	
-	MDPrefsController					*prefsController;
+	TKPrefsController					*prefsController;
 	
 	
 	NSUndoManager						*globalUndoManager;
@@ -113,7 +117,7 @@ extern SInt32 MDSystemVersion;
 	MDSteamAppsRelocatorController		*steamAppsRelocatorController;
 	MDOtherAppsHelperController			*otherAppsHelperController;
 
-	NSInteger currentView;
+	NSInteger							currentView;
 	
 	TKImageInspectorController			*imageInspectorController;
 	
