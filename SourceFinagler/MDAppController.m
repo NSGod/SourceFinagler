@@ -27,6 +27,11 @@
 #import "MDBrowser.h"
 #import "MDOutlineView.h"
 
+#import "TKImageDocument.h"
+#import "TKImageInspectorController.h"
+
+
+
 
 NSString * const MDCurrentViewKey							= @"MDCurrentView";
 
@@ -64,6 +69,8 @@ NSString * const MDiChatURLString				= @"aim:goim?screenname=MarkDouma46&message
 BOOL	MDShouldShowViewOptions = NO;
 BOOL	MDShouldShowInspector = NO;
 BOOL	MDShouldShowQuickLook = NO;
+
+BOOL	TKShouldShowImageInspector = NO;
 
 BOOL	MDShouldShowPathBar = NO;
 
@@ -164,6 +171,8 @@ BOOL needSourceAddonFinaglerRegister = NO;
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowInspectorKey];
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowQuickLookKey];
 	
+	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:TKShouldShowImageInspectorKey];
+	
 	[defaultValues setObject:[NSNumber numberWithUnsignedInteger:MDLaunchTimeActionOpenMainWindow] forKey:MDLaunchTimeActionKey];
 	
 	[defaultValues setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:MDLastVersionRunKey];
@@ -198,6 +207,7 @@ BOOL needSourceAddonFinaglerRegister = NO;
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowInspectorDidChange:) name:MDShouldShowInspectorDidChangeNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowQuickLookDidChange:) name:MDShouldShowQuickLookDidChangeNotification object:nil];
 		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowImageInspectorDidChange:) name:TKShouldShowImageInspectorDidChangeNotification object:nil];
 	}
 	return self;
 }
@@ -208,6 +218,8 @@ BOOL needSourceAddonFinaglerRegister = NO;
 	[inspectorController release];
 	[viewOptionsController release];
 	[quickLookController release];
+	
+	[imageInspectorController release];
 	
 	[prefsController release];
 		
@@ -295,6 +307,8 @@ BOOL needSourceAddonFinaglerRegister = NO;
 	MDShouldShowViewOptions = [[userDefaults objectForKey:MDShouldShowViewOptionsKey] boolValue];
 	MDShouldShowQuickLook = [[userDefaults objectForKey:MDShouldShowQuickLookKey] boolValue];
 	
+	TKShouldShowImageInspector = [[userDefaults objectForKey:TKShouldShowImageInspectorKey] boolValue];
+	
 	
 	if (MDShouldShowViewOptions) {
 		if (viewOptionsController == nil) viewOptionsController = [[MDViewOptionsController alloc] init];
@@ -309,6 +323,11 @@ BOOL needSourceAddonFinaglerRegister = NO;
 	if (MDShouldShowQuickLook) {
 		if (quickLookController == nil) quickLookController = [[MDQuickLookController alloc] init];
 		[quickLookController showWindow:self];
+	}
+	
+	if (TKShouldShowImageInspector) {
+		if (imageInspectorController == nil) imageInspectorController = [[TKImageInspectorController alloc] init];
+		[imageInspectorController showWindow:self];
 	}
 	
 	currentView = [[userDefaults objectForKey:MDCurrentViewKey] unsignedIntegerValue];
@@ -573,6 +592,34 @@ BOOL needSourceAddonFinaglerRegister = NO;
 	}
 }
 
+
+- (IBAction)toggleShowImageInspector:(id)sender {
+#if MD_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	
+	TKShouldShowImageInspector = !TKShouldShowImageInspector;
+	
+	if (TKShouldShowImageInspector) {
+		if (imageInspectorController == nil) imageInspectorController = [[TKImageInspectorController sharedController] retain];
+		[imageInspectorController showWindow:self];
+	} else {
+		if (imageInspectorController) [[imageInspectorController window] performClose:self];
+	}
+}
+
+
+- (void)shouldShowImageInspectorDidChange:(NSNotification *)notification {
+	if (TKShouldShowImageInspector == NO) {
+#if MD_DEBUG
+		NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+//		[imageInspectorController release]; imageInspectorController = nil;
+	}
+}
+
+
+
 - (IBAction)showMainWindow:(id)sender {
 	if (![window isVisible]) [window makeKeyAndOrderFront:nil];
 }
@@ -613,6 +660,11 @@ BOOL needSourceAddonFinaglerRegister = NO;
 		return YES;
 	} else if (action == @selector(toggleShowInspector:)) {
 		[menuItem setTitle:(MDShouldShowInspector ? NSLocalizedString(@"Hide Inspector", @"") : NSLocalizedString(@"Show Inspector", @""))];
+		
+		return YES;
+		
+	} else if (action == @selector(toggleShowImageInspector:)) {
+		[menuItem setTitle:(TKShouldShowImageInspector ? NSLocalizedString(@"Hide Image Inspector", @"") : NSLocalizedString(@"Show Image Inspector", @""))];
 		
 		return YES;
 		

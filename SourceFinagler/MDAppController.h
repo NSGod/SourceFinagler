@@ -12,6 +12,8 @@
 @class MDPrefsController;
 @class MDSteamAppsRelocatorController, MDOtherAppsHelperController;
 
+@class TKImageInspectorController;
+
 
 enum {
 	MDSteamAppsRelocatorView			= 1,
@@ -62,6 +64,8 @@ extern BOOL			MDShouldShowViewOptions;
 extern BOOL			MDShouldShowInspector;
 extern BOOL			MDShouldShowQuickLook;
 
+extern BOOL			TKShouldShowImageInspector;
+
 extern BOOL			MDShouldShowPathBar;
 
 extern BOOL			MDPlaySoundEffects;
@@ -111,6 +115,8 @@ extern SInt32 MDSystemVersion;
 
 	NSInteger currentView;
 	
+	TKImageInspectorController			*imageInspectorController;
+	
 	
 }
 
@@ -119,6 +125,8 @@ extern SInt32 MDSystemVersion;
 - (IBAction)toggleShowInspector:(id)sender;
 - (IBAction)toggleShowViewOptions:(id)sender;
 - (IBAction)toggleShowQuickLook:(id)sender;
+
+- (IBAction)toggleShowImageInspector:(id)sender;
 
 
 - (IBAction)showAboutWindow:(id)sender;
