@@ -191,7 +191,7 @@ hlULongLong CFileStream::GetStreamPointer() const
 	LARGE_INTEGER liPointer;
 	return SetFilePointerEx(this->hFile, liOffset, &liPointer, FILE_CURRENT) ? static_cast<hlULongLong>(liPointer.QuadPart) : 0;
 #else
-	 return (hlUInt)lseek(this->iFile, 0, SEEK_CUR);
+	return (hlULongLong)lseek(this->iFile, 0, SEEK_CUR);
 #endif
 }
 
@@ -237,7 +237,7 @@ hlULongLong CFileStream::Seek(hlLongLong iOffset, HLSeekMode eSeekMode)
 		break;
 	}
 
-	return (hlUInt)lseek(this->iFile, iOffset, iMode);
+	return (hlULongLong)lseek(this->iFile, iOffset, iMode);
 #endif
 }
 
