@@ -1,9 +1,9 @@
 //
 //  HKNode.h
-//  Source Finagler
+//  HLKit
 //
 //  Created by Mark Douma on 9/2/2010.
-//  Copyright 2010 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -27,15 +27,15 @@
 }
 - (id)initWithParent:(HKNode *)aParent children:(NSArray *)theChildren sortDescriptors:(NSArray *)aSortDescriptors container:(id)aContainer;
 
-@property (assign) id container;
-@property (assign) HKNode *parent;
-@property (assign, setter=setVisible:) BOOL isVisible;
-@property (assign) BOOL showInvisibleItems;
-@property (assign, setter=setLeaf:) BOOL isLeaf;
+@property (nonatomic, assign) id container;
+@property (nonatomic, assign) HKNode *parent;
+@property (nonatomic, assign, setter=setVisible:) BOOL isVisible;
+@property (nonatomic, assign) BOOL showInvisibleItems;
+@property (nonatomic, assign, setter=setLeaf:) BOOL isLeaf;
 
 @property (nonatomic, retain) NSArray *sortDescriptors;
 
-@property (assign, readonly) BOOL isRootNode;
+@property (nonatomic, assign, readonly) BOOL isRootNode;
 
 
 - (void)insertChild:(HKNode *)child atIndex:(NSUInteger)index;

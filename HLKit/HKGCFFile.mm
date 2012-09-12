@@ -1,9 +1,9 @@
 //
 //  HKGCFFile.mm
-//  Source Finagler
+//  HLKit
 //
 //  Created by Mark Douma on 10/27/2010.
-//  Copyright 2010 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKGCFFile.h>
@@ -43,7 +43,7 @@
 					
 					
 					if (static_cast<CGCFFile *>(_privateData)->GetAttribute(HL_GCF_PACKAGE_VERSION, versionAttr)) {
-						version = [[NSString stringWithFormat:@"1.%lu", versionAttr.Value.UnsignedInteger.uiValue] retain];
+						version = [[NSString stringWithFormat:@"1.%lu", (unsigned long)versionAttr.Value.UnsignedInteger.uiValue] retain];
 					}
 					if (static_cast<CGCFFile *>(_privateData)->GetAttribute(HL_GCF_PACKAGE_ID, packageIDAttr)) {
 						packageID = (NSUInteger)packageIDAttr.Value.UnsignedInteger.uiValue;
