@@ -9,47 +9,52 @@
  * version.
  */
 
-#include <VTF/VTFLib.h>
-#include <VTF/FileReader.h>
-
+#include "VTFLib.h"
+#include "FileReader.h"
 
 using namespace VTFLib;
 using namespace VTFLib::IO::Readers;
 
-CFileReader::CFileReader(const vlChar *cFileName) {
+CFileReader::CFileReader(const vlChar *cFileName)
+{
 #ifdef _WIN32
 	this->hFile = NULL;
 #else
 	this->iFile = -1;
 #endif
+
 	this->cFileName = new vlChar[strlen(cFileName) + 1];
 	strcpy(this->cFileName, cFileName);
 }
 
 
-CFileReader::~CFileReader() {
+CFileReader::~CFileReader()
+{
 	this->Close();
-
-	delete [] this->cFileName;
+	delete []this->cFileName;
 }
 
 
-vlBool CFileReader::Opened() const {
+vlBool CFileReader::Opened() const
+{
 #ifdef _WIN32
 	return this->hFile != NULL;
 #else
 	return this->iFile >= 0;
-	
 #endif
 }
 
-vlBool CFileReader::Open() {
+
+vlBool CFileReader::Open()
+{
 	this->Close();
-
+	
 #ifdef _WIN32
-	this->hFile = CreateFile(this->cFileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
-	if (this->hFile == INVALID_HANDLE_VALUE) {
+	this->hFile = CreateFile(this->cFileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	
+	if (this->hFile == INVALID_HANDLE_VALUE)
+	{
 		this->hFile = NULL;
 
 		LastError.Set("Error opening file.", vlTrue);
@@ -58,39 +63,46 @@ vlBool CFileReader::Open() {
 	}
 #else
 	this->iFile = open(this->cFileName, O_RDONLY);
-	if (this->iFile < 0) {
+	
+	if (this->iFile < 0)
+	{
 		LastError.Set("Error opening file.", vlTrue);
 		this->iFile = -1;
 		return vlFalse;
 	}
-	
 #endif
+
 	return vlTrue;
 }
 
 
-vlVoid CFileReader::Close() {
+vlVoid CFileReader::Close()
+{
+	
 #ifdef _WIN32
-	if (this->hFile != NULL) {
+	if (this->hFile != NULL)
+	{
 		CloseHandle(this->hFile);
 		this->hFile = NULL;
 	}
 #else
-	if (this->iFile >= 0) {
+	if (this->iFile >= 0)
+	{
 		close(this->iFile);
 		this->iFile = -1;
 	}
 #endif
 }
 
-vlUInt CFileReader::GetStreamSize() const {
-	if (!this->Opened()) {
+
+vlUInt CFileReader::GetStreamSize() const
+{
+	if (!this->Opened())
+	{
 		return 0;
 	}
+	
 #ifdef _WIN32
-//	if (this->hFile == NULL) {
-//		return 0;
-//	}
 	return GetFileSize(this->hFile, NULL);
 #else
 	struct stat Stat;
@@ -99,14 +111,14 @@ vlUInt CFileReader::GetStreamSize() const {
 }
 
 
-vlUInt CFileReader::GetStreamPointer() const {
-	if (!this->Opened()) {
+vlUInt CFileReader::GetStreamPointer() const
+{
+	if (!this->Opened())
+	{
 		return 0;
 	}
+	
 #ifdef _WIN32
-//	if (this->hFile == NULL) {
-//		return 0;
-//	}
 	return (vlUInt)SetFilePointer(this->hFile, 0, NULL, FILE_CURRENT);
 #else
 	return (vlUInt)lseek(this->iFile, 0, SEEK_CUR);
@@ -114,16 +126,17 @@ vlUInt CFileReader::GetStreamPointer() const {
 }
 
 
-vlUInt CFileReader::Seek(vlLong lOffset, VLSeekMode uiMode) {
-	if (!this->Opened()) {
+vlUInt CFileReader::Seek(vlLong lOffset, VLSeekMode uiMode)
+{
+	if (!this->Opened())
+	{
 		return 0;
 	}
+	
 #ifdef _WIN32
-//	if (this->hFile == NULL) {
-//		return 0;
-//	}
 	DWORD dwMode = FILE_BEGIN;
-	switch (uiMode) {
+	switch (uiMode)
+	{
 //		case SEEK_MODE_BEGIN:
 //			dwMode = FILE_BEGIN;
 //			break;
@@ -134,13 +147,12 @@ vlUInt CFileReader::Seek(vlLong lOffset, VLSeekMode uiMode) {
 			dwMode = FILE_END;
 			break;
 	}
-	
 	return (vlUInt)SetFilePointer(this->hFile, lOffset, NULL, dwMode);
-	
 #else
 	
 	vlInt iMode = SEEK_SET;
-	switch (uiMode) {
+	switch (uiMode)
+	{
 //		case SEEK_MODE_BEGIN:
 //			iMode = SEEK_SET;
 //			break;
@@ -156,24 +168,26 @@ vlUInt CFileReader::Seek(vlLong lOffset, VLSeekMode uiMode) {
 }
 
 
-vlBool CFileReader::Read(vlChar &cChar) {
-	if (!this->Opened()) {
+vlBool CFileReader::Read(vlChar &cChar)
+{
+	if (!this->Opened())
+	{
 		return vlFalse;
 	}
+	
 #ifdef _WIN32
-//	if (this->hFile == NULL) {
-//		return vlFalse;
-//	}
-	vlULong ulBytesRead = 0;
 
-	if (!ReadFile(this->hFile, &cChar, 1, &ulBytesRead, NULL)) {
+	vlULong ulBytesRead = 0;
+	if (!ReadFile(this->hFile, &cChar, 1, &ulBytesRead, NULL))
+	{
 		LastError.Set("ReadFile() failed.", vlTrue);
 	}
 	return ulBytesRead == 1;
 #else
 	vlLong lBytesRead = read(this->iFile, &cChar, 1);
 	
-	if (lBytesRead < 0) {
+	if (lBytesRead < 0)
+	{
 		LastError.Set("read() failed.", vlTrue);
 	}
 	return lBytesRead == 1;
@@ -181,31 +195,30 @@ vlBool CFileReader::Read(vlChar &cChar) {
 }
 
 
-vlUInt CFileReader::Read(vlVoid *vData, vlUInt uiBytes) {
-	if (!this->Opened()) {
+vlUInt CFileReader::Read(vlVoid *vData, vlUInt uiBytes)
+{
+	if (!this->Opened())
+	{
 		return 0;
 	}
-	
+		
 #ifdef _WIN32
-//	if (this->hFile == NULL) {
-//		return 0;
-//	}
-	vlULong ulBytesRead = 0;
 
-	if (!ReadFile(this->hFile, vData, uiBytes, &ulBytesRead, NULL)) {
+	vlULong ulBytesRead = 0;
+	if (!ReadFile(this->hFile, vData, uiBytes, &ulBytesRead, NULL))
+	{
 		LastError.Set("ReadFile() failed.", vlTrue);
 	}
 	return (vlUInt)ulBytesRead;
 #else
 	vlLong lBytesRead = read(this->iFile, vData, uiBytes);
-	
-	if (lBytesRead < 0) {
+		
+	if (lBytesRead < 0)
+	{
 		LastError.Set("read() failed.", vlTrue);
 	}
 	return (vlUInt)lBytesRead;
 #endif
 }
-
-
 
 

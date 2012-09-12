@@ -12,13 +12,14 @@
 #ifndef VMTNODE_H
 #define VMTNODE_H
 
-#include <VTF/stdafx.h>
+#include "stdafx.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef enum tagVMTNodeType {
+typedef enum tagVMTNodeType
+{
 	NODE_TYPE_GROUP = 0,
 	NODE_TYPE_GROUP_END,
 	NODE_TYPE_STRING,
@@ -31,29 +32,30 @@ typedef enum tagVMTNodeType {
 }
 #endif
 
-namespace VTFLib {
-	
-	namespace Nodes {
-		
+namespace VTFLib
+{
+	namespace Nodes
+	{
 		class CVMTGroupNode;
-		
-		class VTFLIB_API CVMTNode {
+
+		class VTFLIB_API CVMTNode
+		{
 		private:
-			friend class CVMTGroupNode;			// For direct parent setting.
-			
+			friend class CVMTGroupNode;	// For direct parent setting.
+
 		private:
 			vlChar *cName;
 			CVMTGroupNode *Parent;
-			
+
 		public:
-			CVMTNode(const vlChar * cName);
+			CVMTNode(const vlChar *cName);
 			virtual ~CVMTNode();
-			
+
 			const vlChar *GetName() const;
 			vlVoid SetName(const vlChar *cName);
-			
+
 			CVMTGroupNode *GetParent();
-			
+
 			virtual VMTNodeType GetType() const = 0;
 			virtual CVMTNode *Clone() const = 0;
 		};

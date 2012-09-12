@@ -9,5 +9,4 @@
  * version.
  */
 
-
-#include <VTF/Float16.h>
+#include "Float16.h"

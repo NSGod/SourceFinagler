@@ -17,21 +17,22 @@
 	\brief Error handling class header.
 */
 
-#ifndef VTF_ERROR_H
-#define VTF_ERROR_H
+#ifndef ERROR_H
+#define ERROR_H
 
-#include <VTF/stdafx.h>
+#include "stdafx.h"
 
-namespace VTFLib {
-	
-	namespace Diagnostics {
-		
+namespace VTFLib
+{
+	namespace Diagnostics
+	{
 		//! VTFLib Error handling class
 		/*!
 			The Error handling class allows you to aceess a text description 
 			for the last error encountered.
 		*/
-		class CError {
+		class CError
+		{
 		private:
 			vlChar *cErrorMessage;
 

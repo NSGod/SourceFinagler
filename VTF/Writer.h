@@ -12,15 +12,16 @@
 #ifndef WRITER_H
 #define WRITER_H
 
-#include <VTF/stdafx.h>
+#include "stdafx.h"
 
-namespace VTFLib {
-	
-	namespace IO {
-		
-		namespace Writers {
-			
-			class IWriter {
+namespace VTFLib
+{
+	namespace IO
+	{
+		namespace Writers
+		{
+			class IWriter
+			{
 			public:
 				virtual vlBool Opened() const = 0;
 

@@ -12,17 +12,17 @@
 #ifndef FILEREADER_H
 #define FILEREADER_H
 
-#include <VTF/stdafx.h>
-#include <VTF/Reader.h>
+#include "stdafx.h"
+#include "Reader.h"
 
-
-namespace VTFLib {
-	
-	namespace IO {
-		
-		namespace Readers {
-			
-			class CFileReader : public IReader {
+namespace VTFLib
+{
+	namespace IO
+	{
+		namespace Readers
+		{
+			class CFileReader : public IReader
+			{
 			private:
 #ifdef _WIN32
 				HANDLE hFile;
@@ -43,7 +43,7 @@ namespace VTFLib {
 
 				virtual vlUInt GetStreamSize() const;
 				virtual vlUInt GetStreamPointer() const;
-
+				
 				virtual vlUInt Seek(vlLong lOffset, VLSeekMode uiMode);
 
 				virtual vlBool Read(vlChar &cChar);
