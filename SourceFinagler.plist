@@ -636,7 +636,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Source Finagler 2.0.2, © 2010-2011 Mark Douma. All rights reserved.</string>
+	<string>Source Finagler 2.0.3, © 2010-2012 Mark Douma. All rights reserved.</string>
 	<key>CFBundleIconFile</key>
 	<string>sourceFinagler</string>
 	<key>CFBundleIdentifier</key>
@@ -648,13 +648,13 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.2</string>
+	<string>2.0.3</string>
 	<key>CFBundleSignature</key>
 	<string>H2Oƒ</string>
 	<key>CFBundleVersion</key>
-	<string>202</string>
+	<string>203</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2010-2011 Mark Douma. All rights reserved.</string>
+	<string>Copyright © 2010-2012 Mark Douma. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
