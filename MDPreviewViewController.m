@@ -11,9 +11,8 @@
 #import <QTKit/QTKit.h>
 #import "MDTransparentView.h"
 #import "MDHLDocument.h"
-#import "MDFileAdditions.h"
-#import "MDFolderAdditions.h"
 
+#import <HLKit/HLKit.h>
 
 //#define MD_DEBUG 1
 #define MD_DEBUG 0
@@ -55,31 +54,32 @@
 	// representedObject can be:
 	//		nil
 	//		an MDHLDocument
-	//		an MDFile or MDFolder
+	//		an HKFile or HKFolder
+	
 	if (!isQuickLookPanel) {
 		if (representedObject) {
 			if ([representedObject isKindOfClass:[MDHLDocument class]]) {
 				[box setContentView:imageViewView];
 				
-			} else if ([representedObject isKindOfClass:[MDItem class]]) {
+			} else if ([representedObject isKindOfClass:[HKItem class]]) {
 				if ([representedObject respondsToSelector:@selector(fileType)]) {
-					MDFileType fileType = MDFileTypeNone;
-					fileType = [(MDFile *)representedObject fileType];
+					HKFileType fileType = HKFileTypeNone;
+					fileType = [(HKFile *)representedObject fileType];
 					switch (fileType) {
-						case MDFileTypeHTML :
-						case MDFileTypeText :
-						case MDFileTypeOther :
-						case MDFileTypeImage :
+						case HKFileTypeHTML :
+						case HKFileTypeText :
+						case HKFileTypeOther :
+						case HKFileTypeImage :
 							[box setContentView:imageViewView];
 							break;
 							
-						case MDFileTypeSound :
+						case HKFileTypeSound :
 							[box setContentView:soundViewView];
-							[self setSound:[(MDFile *)representedObject sound]];
+							[self setSound:[(HKFile *)representedObject sound]];
 							[sound setDelegate:self];
 							break;
 							
-						case MDFileTypeMovie :
+						case HKFileTypeMovie :
 							[box setContentView:movieViewView];
 							break;
 							

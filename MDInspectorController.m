@@ -10,12 +10,12 @@
 
 #import "MDInspectorController.h"
 #import "MDAppController.h"
-#import "MDFile.h"
-#import "MDItem.h"
-#import "MDFolder.h"
+
 #import "MDHLDocument.h"
-#import "MDHLFile.h"
+
 #import "MDAppKitAdditions.h"
+
+#import <HLKit/HLKit.h>
 
 
 //#define MD_DEBUG 1
@@ -83,7 +83,7 @@
 			
 		} else if ([newSelectedItems count] == 1) {
 			
-			MDItem *item = [newSelectedItems objectAtIndex:0];
+			HKItem *item = [newSelectedItems objectAtIndex:0];
 			
 			[[self window] setRepresentedFilename:@""];
 			[[self window] setTitle:[[item name] stringByAppendingString:NSLocalizedString(@" Info", @"")]];
@@ -91,7 +91,9 @@
 			[previewViewController setRepresentedObject:item];
 			
 			[kindField setStringValue:[item kind]];
-			NSImage *image = MDCopiedImageForItem(item);
+			
+			NSImage *image = [HKItem copiedImageForItem:item];
+
 			[image setSize:NSMakeSize(32.0, 32.0)];
 			[iconImageView setImage:image];
 			
@@ -116,7 +118,7 @@
 			
 			unsigned long long totalSize = 0;
 			
-			for (MDItem *item in newSelectedItems) {
+			for (HKItem *item in newSelectedItems) {
 				if ([item isLeaf]) {
 					totalSize += [[item size] unsignedLongLongValue];
 				}

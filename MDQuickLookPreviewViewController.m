@@ -8,10 +8,9 @@
 
 #import "MDQuickLookPreviewViewController.h"
 #import "MDHLDocument.h"
-#import "MDFile.h"
-#import "MDFolder.h"
-#import "MDFileAdditions.h"
-#import "MDFolderAdditions.h"
+
+#import <HLKit/HLKit.h>
+
 #import "MDTransparentView.h"
 #import <WebKit/WebKit.h>
 
@@ -51,7 +50,7 @@
 	// representedObject can be:
 	//		nil
 	//		an MDHLDocument
-	//		an MDFile or MDFolder
+	//		an HKFile or HKFolder
 	
 	if (isPlayingSound) {
 		[sound stop];
@@ -60,37 +59,37 @@
 	if (representedObject) {
 		if ([representedObject isKindOfClass:[MDHLDocument class]]) {
 			[box setContentView:imageViewView];
-			
-		} else if ([representedObject isKindOfClass:[MDItem class]]) {
+
+		} else if ([representedObject isKindOfClass:[HKItem class]]) {
 			if ([representedObject respondsToSelector:@selector(fileType)]) {
-				MDFileType fileType = MDFileTypeNone;
-				fileType = [(MDFile *)representedObject fileType];
+				HKFileType fileType = HKFileTypeNone;
+				fileType = [(HKFile *)representedObject fileType];
 				switch (fileType) {
-					case MDFileTypeHTML :
-						[[webView mainFrame] loadHTMLString:[(MDFile *)representedObject stringValue] baseURL:nil];
+					case HKFileTypeHTML :
+						[[webView mainFrame] loadHTMLString:[(HKFile *)representedObject stringValue] baseURL:nil];
 						[box setContentView:webViewView];
 						break;
 						
-					case MDFileTypeText :
-						[textView setString:[(MDFile *)representedObject stringValue]];
+					case HKFileTypeText :
+						[textView setString:[(HKFile *)representedObject stringValue]];
 						[box setContentView:textViewView];
 						break;
 						
-					case MDFileTypeImage :
+					case HKFileTypeImage :
 						[box setContentView:imageViewView];
 						break;
 						
-					case MDFileTypeSound :
+					case HKFileTypeSound :
 						[box setContentView:soundViewView];
-						[self setSound:[(MDFile *)representedObject sound]];
+						[self setSound:[(HKFile *)representedObject sound]];
 						[sound setDelegate:self];
 						break;
 						
-					case MDFileTypeMovie :
+					case HKFileTypeMovie :
 						[box setContentView:movieViewView];
 						break;
 						
-					case MDFileTypeOther :
+					case HKFileTypeOther :
 						[box setContentView:imageViewView];
 						break;
 						

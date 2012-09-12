@@ -1,9 +1,9 @@
 //
 //  HKFolder.mm
-//  Source Finagler
+//  HLKit
 //
 //  Created by Mark Douma on 9/1/2010.
-//  Copyright 2010 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKFolder.h>
@@ -17,10 +17,19 @@ using namespace HLLib;
 
 #define HK_DEBUG 0
 
+#define HK_LAZY_INIT 1
+
+#define HK_USE_BLOCKS 1
+
+#if HK_USE_BLOCKS
+#else
+#endif
+
+
+
 @interface HKFolder (Private)
 - (void)populateChildrenIfNeeded;
 @end
-
 
 
 @implementation HKFolder
@@ -32,22 +41,73 @@ using namespace HLLib;
 #endif
 	if ((self = [super initWithParent:aParent children:nil sortDescriptors:aSortDescriptors container:aContainer])) {
 		_privateData = aFolder;
-		const hlChar *cName = static_cast<const CDirectoryFolder *>(_privateData)->GetName();
-		if (cName) name = [[NSString stringWithCString:cName encoding:NSUTF8StringEncoding] retain];
-		nameExtension = [[name pathExtension] retain];
-		kind = [NSLocalizedString(@"Folder", @"") retain];
 		isLeaf = NO;
 		isExtractable = YES;
 		isVisible = YES;
 		size = [[NSNumber numberWithLongLong:-1] retain];
 		countOfVisibleChildren = NSNotFound;
-		fileType = HKFileTypeOther;
 		[self setShowInvisibleItems:showInvisibles];
 		
+#if !(HK_LAZY_INIT)
+		const hlChar *cName = static_cast<const CDirectoryFolder *>(_privateData)->GetName();
+		if (cName) name = [[NSString stringWithCString:cName encoding:NSUTF8StringEncoding] retain];
+		nameExtension = [[name pathExtension] retain];
+		kind = [NSLocalizedString(@"Folder", @"") retain];
+		fileType = HKFileTypeOther;
+#endif
 	}
 	return self;
 }
 
+#if (HK_LAZY_INIT)
+
+- (NSString *)name {
+#if HK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (name == nil) {
+		const hlChar *cName = static_cast<const CDirectoryFile *>(_privateData)->GetName();
+		if (cName) name = [[NSString stringWithCString:cName encoding:NSUTF8StringEncoding] retain];
+	}
+	return name;
+}
+
+- (NSString *)nameExtension {
+#if HK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (nameExtension == nil) nameExtension = [[[self name] pathExtension] retain];
+	return nameExtension;
+}
+
+//- (NSString *)type {
+//#if HK_DEBUG
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//#endif
+//	if (type == nil) {
+//		type = (NSString *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (CFStringRef)[self nameExtension], NULL);
+//	}
+//	return type;
+//}
+
+- (NSString *)kind {
+#if HK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (kind == nil) kind = [NSLocalizedString(@"Folder", @"") retain];
+	return kind;
+}
+
+
+- (HKFileType)fileType {
+#if HK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (fileType == HKFileTypeNone) fileType = HKFileTypeOther;
+	return fileType;
+}
+
+#endif
 
 
 - (NSUInteger)countOfChildren {
@@ -242,7 +302,7 @@ using namespace HLLib;
 }
 
 
-- (BOOL)writeToFile:(NSString *)aPath assureUniqueFilename:(BOOL)assureUniqueFilename tag:(NSInteger)tag  resultingPath:(NSString **)resultingPath error:(NSError **)outError {
+- (BOOL)writeToFile:(NSString *)aPath assureUniqueFilename:(BOOL)assureUniqueFilename resultingPath:(NSString **)resultingPath error:(NSError **)outError {
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif

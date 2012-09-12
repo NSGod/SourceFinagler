@@ -11,14 +11,13 @@
 
 
 @class MDOutlineView, MDBrowser, MDMetalBevelView, MDStatusImageView, MDInspectorController, MDBottomBar,
-MDPreviewViewController, MDPathControlView, MDInspectorView, MDItem, MDFile, MDHLFile;
+MDPreviewViewController, MDPathControlView, MDInspectorView;
+
+@class HKItem, HKFile, HKArchiveFile;
 
 
 extern int CoreDockSetTrashFull(int full) __attribute__((weak_import));
 
-extern NSImage *MDImageForItem(MDItem *item);
-extern NSImage *MDCopiedImageForItem(MDItem *item);
-	
 
 enum {
 	MDListViewMode		= 1,
@@ -90,7 +89,7 @@ extern NSString * const MDHLDocumentURLKey;
 	NSToolTipTag									statusImageViewTag1;
 	NSToolTipTag									statusImageViewTag2;
 	
-	MDHLFile										*file;
+	HKArchiveFile									*file;
 	
 	NSMutableDictionary								*copyOperationsAndTags;
 	
@@ -121,7 +120,8 @@ extern NSString * const MDHLDocumentURLKey;
 @property (assign) BOOL shouldShowInvisibleItems;
 
 
-- (MDHLFile *)file;
+- (HKArchiveFile *)file;
+
 
 @property (retain) NSImage *image;
 @property (assign) BOOL outlineViewIsReloadingData;

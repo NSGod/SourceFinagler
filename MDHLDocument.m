@@ -7,25 +7,16 @@
 //
 
 
+#import "MDHLDocument.h"
 
 #import <CoreServices/CoreServices.h>
 #import <QTKit/QTKit.h>
-#import "MDHLDocument.h"
-#import "MDGCFFile.h"
-#import "MDVPKFile.h"
-#import "MDNCFFile.h"
-#import "MDBSPFile.h"
-#import "MDPAKFile.h"
-#import "MDWADFile.h"
-#import "MDXZPFile.h"
 
-#import "MDFile.h"
-#import "MDItem.h"
-#import "MDFolder.h"
+#import <HLKit/HLKit.h>
+
 #import "MDAppController.h"
 #import "MDViewOptionsController.h"
 
-//#import "MDHelpWindowController.h"
 #import "MDMetalBevelView.h"
 #import "MDOutlineView.h"
 
@@ -50,8 +41,6 @@
 #import "MDFileSizeFormatter.h"
 
 
-#import "MDHLFile.h"
-#import "MDFile.h"
 
 //#define MD_DEBUG 1
 #define MD_DEBUG 0
@@ -105,53 +94,6 @@ NSString * const MDViewKey											= @"MDView";
 
 NSString * const MDWillSwitchViewNotification						= @"MDWillSwitchView";
 NSString * const MDViewNameKey										= @"MDViewName";
-
-
-
-static BOOL iconsInitialized = NO;
-static NSImage *folderImage = nil;
-static NSImage *fileImage = nil;
-static NSMutableDictionary *icons = nil;
-
-static void MDInitializeIcons() {
-	if (iconsInitialized == NO) {
-		if (folderImage == nil) {
-			folderImage = [[[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)] retain];
-		}
-		if (fileImage == nil) {
-			fileImage = [[[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericDocumentIcon)] retain];
-		}
-		iconsInitialized = YES;
-	}
-}
-
-
-NSImage *MDImageForItem(MDItem *item) {
-	NSImage *image = nil;
-	if ([item isLeaf]) {
-		NSString *fileNameExtension = [item nameExtension];
-		if ([fileNameExtension isEqualToString:@""]) {
-			image = fileImage;
-		} else {
-			image = [icons objectForKey:fileNameExtension];
-			if (image == nil) {
-				image = [[NSWorkspace sharedWorkspace] iconForFileType:fileNameExtension];
-				if (image) {
-					[icons setObject:image forKey:fileNameExtension];
-				}
-			}
-		}
-	} else {
-		return folderImage;
-	}
-	return image;
-}
-
-NSImage *MDCopiedImageForItem(MDItem *item) {
-	NSImage *image = MDImageForItem(item);
-	NSImage *copiedImage = [[image copy] autorelease];
-	return copiedImage;
-}
 
 
 
@@ -211,8 +153,6 @@ static NSInteger copyTag = 0;
 		
 		searchResults = [[NSMutableArray alloc] init];
 				
-		if (icons == nil) icons = [[NSMutableDictionary alloc] init];
-		
 		copyOperationsAndTags = [[NSMutableDictionary alloc] init];
 		
 		if (MDSystemVersion >= MDLeopard) {
@@ -229,39 +169,12 @@ static NSInteger copyTag = 0;
 			}
 		}
 		
-		
-        // Add your subclass-specific initialization here.
-        // If an error occurs here, send a [self release] message and return nil.
     } else {
 		[self release];
-		self = nil;
+		return nil;
 	}
     return self;
 }
-
-
-//- (id)initWithType:(NSString *)typeName error:(NSError **)outError {
-//#if MD_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	
-//	/* important to set the following to at least nil! */
-//	if (outError) *outError = nil;
-//	
-//	if (self = [self init]) {
-//
-//	}
-//	return self;
-//}
-
-
-
-//- (id)initWithContentsOfURL:(NSURL *)aURL ofType:(NSString *)type error:(NSError **)outError {
-//#if MD_DEBUG
-//	NSLog(@"[%@ %@] *** OS X 10.4+ *** type == \"%@\"", NSStringFromClass([self class]), NSStringFromSelector(_cmd), type);
-//#endif
-//	return [super initWithContentsOfURL:aURL ofType:type error:outError];
-//}
 
 
 - (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)type error:(NSError **)outError {
@@ -270,7 +183,6 @@ static NSInteger copyTag = 0;
 #endif
 	
 	if (outError) *outError = nil;
-
 		
 	NSData *dataForMagic = [[[NSData alloc] initWithContentsOfFile:[url path] options:NSDataReadingMapped | NSDataReadingUncached error:outError] autorelease];
 	if ([dataForMagic length] < 8) {
@@ -278,60 +190,63 @@ static NSInteger copyTag = 0;
 		return NO;
 	}
 	NSData *magicData = [dataForMagic subdataWithRange:NSMakeRange(0, 8)];
-	MDHLFileType fileType = [MDHLFile fileTypeForData:magicData];
+	
+	HKArchiveFileType fileType = [HKArchiveFile fileTypeForData:magicData];
 	
 	
 	switch (fileType) {
 			
-		case (MDHLFileGCFType) : {
+		case (HKArchiveFileGCFType) : {
 			[self setKind:NSLocalizedString(@"Steam Cache file", @"")];
-			file = [[MDGCFFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
+			file = [[HKGCFFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 			
-		case (MDHLFileVPKType) : {
+		case (HKArchiveFileVPKType) : {
 			[self setKind:NSLocalizedString(@"Source Addon file", @"")];
-			file = [[MDVPKFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
+			file = [[HKVPKFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 			
-		case (MDHLFileNCFType) : {
+		case (HKArchiveFileNCFType) : {
 			[self setKind:NSLocalizedString(@"Steam Non-Cache file", @"")];
-			file = [[MDNCFFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
+			file = [[HKNCFFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 			
-		case (MDHLFileBSPType) : {
+		case (HKArchiveFileBSPType) : {
 			[self setKind:NSLocalizedString(@"Source Level", @"")];
-			file = [[MDBSPFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
+			file = [[HKBSPFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
-		case (MDHLFilePAKType) : {
+		case (HKArchiveFilePAKType) : {
 			[self setKind:NSLocalizedString(@"Source Package file", @"")];
-			file = [[MDPAKFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
+			file = [[HKPAKFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 			
-		case (MDHLFileWADType) : {
+		case (HKArchiveFileWADType) : {
 			[self setKind:NSLocalizedString(@"Source Texture Package file", @"")];
-			file = [[MDWADFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
+			file = [[HKWADFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 			
-		case (MDHLFileXZPType) : {
+		case (HKArchiveFileXZPType) : {
 			[self setKind:NSLocalizedString(@"Source Xbox Package file", @"")];
-			file = [[MDXZPFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
+			file = [[HKXZPFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 			
 		default : {
 			[self setKind:NSLocalizedString(@"Steam Cache file", @"")];
-			file = [[MDGCFFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
+			file = [[HKGCFFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 	}
 	
+#if MD_DEBUG
 	NSLog(@"[%@ %@] file == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), file);
+#endif
 	
 	if (file) {
 //		[file setDocument:self];
@@ -549,7 +464,7 @@ static NSInteger copyTag = 0;
 
 - (void)setShouldShowInvisibleItems:(BOOL)value {
 #if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	shouldShowInvisibleItems = value;
 	[[file items] setShowInvisibleItems:shouldShowInvisibleItems];
@@ -565,7 +480,7 @@ static NSInteger copyTag = 0;
 
 - (BOOL)shouldShowInvisibleItems {
 #if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return shouldShowInvisibleItems;
 }
@@ -573,7 +488,7 @@ static NSInteger copyTag = 0;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 #if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ([keyPath isEqualToString:NSStringFromDefaultsKeyPath(MDShouldShowInvisibleItemsKey)]) {
 		[self setShouldShowInvisibleItems:[[[NSUserDefaults standardUserDefaults] objectForKey:MDShouldShowInvisibleItemsKey] boolValue]];
@@ -697,7 +612,7 @@ static NSInteger copyTag = 0;
 			selectedIndexes = [browser selectedRowIndexesInColumn:selectedColumn];
 			NSUInteger selectedCount = [selectedIndexes count];
 			if (selectedCount == 1) {
-				MDItem *item = [browser itemAtRow:[selectedIndexes firstIndex] inColumn:selectedColumn];
+				HKItem *item = [browser itemAtRow:[selectedIndexes firstIndex] inColumn:selectedColumn];
 				if ([item isLeaf]) {
 					targetColumn = selectedColumn;
 				} else {
@@ -708,7 +623,8 @@ static NSInteger copyTag = 0;
 				targetColumn = selectedColumn;
 			}
 			
-			MDItem *parent = [browser parentForItemsInColumn:targetColumn];
+			HKItem *parent = [browser parentForItemsInColumn:targetColumn];
+			
 			if (parent) {
 				totalCount = [NSNumber numberWithUnsignedInteger:(NSUInteger) (shouldShowInvisibleItems ? [parent countOfChildren] : [parent countOfVisibleChildren])];
 			} else {
@@ -1021,7 +937,7 @@ static NSInteger copyTag = 0;
 #if MD_DEBUG
 //	NSLog(@" \"%@\" [%@ %@] item == %@", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), item);
 #endif
-	MDItem *node = (item == nil ? [file items] : item);
+	HKItem *node = (item == nil ? [file items] : item);
 	if (node) return (shouldShowInvisibleItems ? [node countOfChildren] : [node countOfVisibleChildren]);
 	return 0;
 }
@@ -1032,7 +948,7 @@ static NSInteger copyTag = 0;
 #if MD_DEBUG
 //	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	MDItem *node = (item == nil ? [file items] : item);
+	HKItem *node = (item == nil ? [file items] : item);
 	if (node) return (shouldShowInvisibleItems ? [node childAtIndex:index] : [node visibleChildAtIndex:index]);
 	return nil;
 }
@@ -1043,7 +959,7 @@ static NSInteger copyTag = 0;
 #if MD_DEBUG
 //	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	return [(MDItem *)item isLeaf];
+	return [(HKItem *)item isLeaf];
 }
 
 
@@ -1051,7 +967,7 @@ static NSInteger copyTag = 0;
 #if MD_DEBUG
 //	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	return [(MDItem *)item name];
+	return [(HKItem *)item name];
 }
 
 - (void)browser:(NSBrowser *)sender willDisplayCell:(id)cell atRow:(NSInteger)row column:(NSInteger)columnIndex {
@@ -1059,14 +975,14 @@ static NSInteger copyTag = 0;
 //	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	MDItem *item = [browser itemAtRow:row inColumn:columnIndex];
+	HKItem *item = [browser itemAtRow:row inColumn:columnIndex];
 	if (item) {
-		if (!iconsInitialized) MDInitializeIcons();
+		
 		BOOL shouldShowIcons = [browser shouldShowIcons];
 		
 		NSInteger fontAndIconSize = [browser fontAndIconSize];
 		if (shouldShowIcons) {
-			NSImage *cellImage = MDImageForItem(item);
+			NSImage *cellImage = [HKItem iconForItem:item];
 			[cellImage setSize:NSMakeSize((CGFloat)(fontAndIconSize + 4.0), (CGFloat)(fontAndIconSize + 4.0))];
 			[cell setImage:cellImage];
 		} else {
@@ -1100,9 +1016,7 @@ static NSInteger copyTag = 0;
 	NSArray *selectedItems = [browser itemsAtRowIndexes:rowIndexes inColumn:columnIndex];
 	return [self writeItems:selectedItems toPasteboard:pboard];
 }
-	
 
-/* this method will iterate through the items and use the items's write to file method to save the individual items */
 
 - (NSArray *)browser:(NSBrowser *)aBrowser namesOfPromisedFilesDroppedAtDestination:(NSURL *)dropDestination forDraggedRowsWithIndexes:(NSIndexSet *)rowIndexes inColumn:(NSInteger)columnIndex {
 #if MD_DEBUG
@@ -1120,7 +1034,7 @@ static NSInteger copyTag = 0;
 
 - (NSInteger)outlineView:(NSOutlineView *)anOutlineView numberOfChildrenOfItem:(id)item {
 //	NSLog(@"[%@ %@] item == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), item);
-	MDItem *node = nil;
+	HKItem *node = nil;
 	
 	if (item == nil) {
 		
@@ -1149,7 +1063,8 @@ static NSInteger copyTag = 0;
 
 - (id)outlineView:(NSOutlineView *)anOutlineView child:(NSInteger)index ofItem:(id)item {
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-	MDItem *node = nil;
+	
+	HKItem *node = nil;
 	
 	if (item == nil) {
 		if (isSearching) {
@@ -1170,7 +1085,7 @@ static NSInteger copyTag = 0;
 - (BOOL)outlineView:(NSOutlineView *)anOutlineView isItemExpandable:(id)item {
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 	
-	MDItem *node = nil;
+	HKItem *node = nil;
 	
 	if (item == nil) {
 		if (isSearching) {
@@ -1191,7 +1106,6 @@ static NSInteger copyTag = 0;
 
 - (id)outlineView:(NSOutlineView *)anOutlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item {
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-	
 	id objectValue = nil;
 	objectValue = [item valueForKey:[tableColumn identifier]];
 	return objectValue;
@@ -1211,20 +1125,16 @@ static NSInteger copyTag = 0;
 - (void)outlineView:(NSOutlineView *)anOutlineView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn item:(id)item {
 	
 	if (aTableColumn == nameColumn) {
-		if (!iconsInitialized) MDInitializeIcons();
 		
-		NSImage *cellImage = MDImageForItem(item);
+		NSImage *cellImage = [HKItem iconForItem:item];
 		
 		NSInteger iconSize = [(MDOutlineView *)outlineView iconSize];
-		NSSize imageSize;
-		
-		imageSize = [cellImage size];
+		NSSize imageSize = [cellImage size];
 		if (imageSize.width != iconSize) {
 			[cellImage setSize:NSMakeSize(iconSize, iconSize)];
 		}
 		[(MDTextFieldCell *)aCell setImage:cellImage];
 		[aCell setEnabled:[item isExtractable]];
-		
 	}
 }
 	
@@ -1325,7 +1235,7 @@ static NSInteger copyTag = 0;
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSDictionary *userInfo = [notification userInfo];
-	MDItem *item = [userInfo objectForKey:@"NSObject"];
+	HKItem *item = [userInfo objectForKey:@"NSObject"];
 	outlineViewItemCount += (shouldShowInvisibleItems ? [item countOfChildren] : [item countOfVisibleChildren]);
 	[self updateCount];
 }
@@ -1336,7 +1246,7 @@ static NSInteger copyTag = 0;
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSDictionary *userInfo = [notification userInfo];
-	MDItem *item = [userInfo objectForKey:@"NSObject"];
+	HKItem *item = [userInfo objectForKey:@"NSObject"];
 	outlineViewItemCount -= (shouldShowInvisibleItems ? [item countOfChildren] : [item countOfVisibleChildren]);
 	[self updateCount];
 }
@@ -1384,7 +1294,6 @@ static NSInteger copyTag = 0;
 //	}
 	
 #if MD_DEBUG
-	
 	NSLog(@" \"%@\" [%@ %@] ************************************** END of drag operation **************************************", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -1397,14 +1306,13 @@ static NSInteger copyTag = 0;
 	[pboard declareTypes:[NSArray arrayWithObjects:NSFilesPromisePboardType, nil] owner:self];
 	
 	NSMutableArray *types = [NSMutableArray array];
-	
-	for (MDItem *item in items) {
-		if ([item isKindOfClass:[MDFile class]]) {
+	for (HKItem *item in items) {
+		if ([item isKindOfClass:[HKFile class]]) {
 			NSString *filenameExtension = [[item name] pathExtension];
 			if (![types containsObject:filenameExtension]) {
 				[types addObject:filenameExtension];
 			}
-		} else if ([item isKindOfClass:[MDFolder class]]) {
+		} else if ([item isKindOfClass:[HKFolder class]]) {
 			NSString *folderType = NSFileTypeForHFSTypeCode(kGenericFolderIcon);
 			if (![types containsObject:folderType]) {
 				[types addObject:folderType];
@@ -1463,23 +1371,38 @@ static NSInteger copyTag = 0;
 
 
 - (void)beginCopyOperationWithTag:(NSNumber *)aTag {
+#if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	[NSThread detachNewThreadSelector:@selector(performCopyOperationWithTagInBackground:) toTarget:self withObject:aTag];
 }
 
-
-
-//#define MD_PROGRESS_UPDATE_TIME_INTERVAL 1.0
 #define MD_PROGRESS_UPDATE_TIME_INTERVAL 0.5
+
+#define MD_BUILD_HLDOCUMENT_WITH_COPY_OPERATION_2_0 0
+
+#if MD_BUILD_HLDOCUMENT_WITH_COPY_OPERATION_2_0
+#else // MD_BUILD_HLDOCUMENT_WITH_COPY_OPERATION_2_0
+#endif // MD_BUILD_HLDOCUMENT_WITH_COPY_OPERATION_2_0
+
+
+#if MD_BUILD_HLDOCUMENT_WITH_COPY_OPERATION_2_0
 
 - (void)performCopyOperationWithTagInBackground:(id)sender {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 	
 	NSThread *currentThread = [NSThread currentThread];
 	[currentThread setName:[NSString stringWithFormat:@"copyThread %@", sender]];
 	
-	MDCopyOperation *copyOperation = [copyOperationsAndTags objectForKey:sender];
+#if MD_DEBUG
+	NSLog(@" \"%@\" [%@ %@] - %@", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), [currentThread name]);
+#endif
+	MDCopyOperation *copyOperation = nil;
+	
+	@synchronized(copyOperationsAndTags) {
+		copyOperation = [[[copyOperationsAndTags objectForKey:sender] retain] autorelease];
+	}
 	
 	if (copyOperation) {
 		id destination = [copyOperation destination];
@@ -1492,7 +1415,7 @@ static NSInteger copyTag = 0;
 			unsigned long long totalBytes = 0;
 			unsigned long long currentBytes = 0;
 			
-			for (MDItem *item in allItems) {
+			for (HKItem *item in allItems) {
 				if ([item isLeaf]) {
 					totalBytes += [[item size] unsignedLongLongValue];
 				}
@@ -1506,9 +1429,7 @@ static NSInteger copyTag = 0;
 										
 			[self performSelectorOnMainThread:@selector(updateProgressWithDictionary:) withObject:dictionary waitUntilDone:NO];
 			
-			
 			NSDate *progressDate = [[NSDate date] retain];
-			
 			
 			NSUInteger totalItemCount = [allItems count];
 			NSUInteger currentItemIndex = 0;
@@ -1518,6 +1439,9 @@ static NSInteger copyTag = 0;
 			for (NSString *relativeDestinationPath in relativeDestinationPaths) {
 				
 				if ([copyOperation isCancelled]) {
+					
+					[progressDate release];
+
 					NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
 												copyOperation,MDCopyOperationKey,
 												[NSNumber numberWithUnsignedLongLong:totalBytes],MDCopyOperationTotalBytesKey,
@@ -1528,8 +1452,6 @@ static NSInteger copyTag = 0;
 					
 					return;
 				}
-				
-//				NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
 				
 				
 				if (ABS([progressDate timeIntervalSinceNow]) > MD_PROGRESS_UPDATE_TIME_INTERVAL) {
@@ -1551,10 +1473,9 @@ static NSInteger copyTag = 0;
 				}
 				
 				
-				MDItem *item = [itemsAndPaths objectForKey:relativeDestinationPath];
+				HKItem *item = [itemsAndPaths objectForKey:relativeDestinationPath];
 				
 				NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
-				
 				
 				NSString *destinationPath = [(NSString *)destination stringByAppendingPathComponent:relativeDestinationPath];
 				
@@ -1564,16 +1485,19 @@ static NSInteger copyTag = 0;
 				
 				if ([item isLeaf]) {
 					
-					if (![(MDFile *)item beginWritingToFile:destinationPath assureUniqueFilename:YES resultingPath:NULL error:&outError]) {
+					if (![(HKFile *)item beginWritingToFile:destinationPath assureUniqueFilename:YES resultingPath:NULL error:&outError]) {
+						NSLog(@" \"%@\" [%@ %@] - (%@) beginWritingToFile: for %@ failed!", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), [currentThread name], destinationPath);
 						continue;
 					}
 					
 					while (1) {
 						
 						if ([copyOperation isCancelled]) {
-							if (![(MDFile *)item cancelWritingAndRemovePartialFileWithError:&outError]) {
+							if (![(HKFile *)item cancelWritingAndRemovePartialFileWithError:&outError]) {
 								
 							}
+							
+							[progressDate release];
 							
 							NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
 														copyOperation,MDCopyOperationKey,
@@ -1590,12 +1514,11 @@ static NSInteger copyTag = 0;
 						
 						NSUInteger partialBytesLength = 0;
 						
-						if (![(MDFile *)item continueWritingPartialBytesOfLength:&partialBytesLength error:&outError]) {
+						if (![(HKFile *)item continueWritingPartialBytesOfLength:&partialBytesLength error:&outError]) {
 							break;
 						}
 						
 						currentBytes += partialBytesLength;
-						
 						
 						if (ABS([progressDate timeIntervalSinceNow]) > MD_PROGRESS_UPDATE_TIME_INTERVAL) {
 							
@@ -1615,13 +1538,13 @@ static NSInteger copyTag = 0;
 						}
 					}
 					
-					if (![(MDFile *)item finishWritingWithError:&outError]) {
-						
+					if (![(HKFile *)item finishWritingWithError:&outError]) {
+						NSLog(@" \"%@\" [%@ %@] - (%@) finishWritingWithError: for %@ failed!", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), [currentThread name], destinationPath);
 					}
 					
 				} else {
 					if (![item writeToFile:destinationPath assureUniqueFilename:YES resultingPath:NULL error:&outError]) {
-						
+						NSLog(@" \"%@\" [%@ %@] - (%@) writeToFile: for %@ failed!", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), [currentThread name], destinationPath);
 					}
 				}
 				
@@ -1630,6 +1553,8 @@ static NSInteger copyTag = 0;
 				[localPool release];
 				
 			}
+			
+			[progressDate release];
 			
 			dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
 										copyOperation,MDCopyOperationKey,
@@ -1643,6 +1568,194 @@ static NSInteger copyTag = 0;
 	}
 	[pool release];
 }
+
+
+#else // MD_BUILD_HLDOCUMENT_WITH_COPY_OPERATION_2_0
+
+- (void)performCopyOperationWithTagInBackground:(id)sender {
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+//	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	
+	NSThread *currentThread = [NSThread currentThread];
+	[currentThread setName:[NSString stringWithFormat:@"copyThread %@", sender]];
+	
+#if MD_DEBUG
+	NSLog(@" \"%@\" [%@ %@] - %@", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), [currentThread name]);
+#endif
+	MDCopyOperation *copyOperation = nil;
+	
+	@synchronized(copyOperationsAndTags) {
+		copyOperation = [[[copyOperationsAndTags objectForKey:sender] retain] autorelease];
+	}
+	
+	if (copyOperation) {
+		id destination = [copyOperation destination];
+		if ([destination isKindOfClass:[NSString class]]) {
+			destination = (NSString *)destination;
+			
+			NSDictionary *itemsAndPaths = [copyOperation itemsAndPaths];
+			NSArray *allItems = [itemsAndPaths allValues];
+			
+			unsigned long long totalBytes = 0;
+			unsigned long long currentBytes = 0;
+			
+			for (HKItem *item in allItems) {
+				if ([item isLeaf]) {
+					totalBytes += [[item size] unsignedLongLongValue];
+				}
+			}
+			
+			NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+										copyOperation,MDCopyOperationKey,
+										[NSNumber numberWithUnsignedInteger:MDCopyOperationPreparingStage],MDCopyOperationStageKey,
+										destination,MDCopyOperationDestinationKey,
+										 [NSNumber numberWithUnsignedInteger:[allItems count]],MDCopyOperationTotalItemCountKey, nil];
+										
+			[self performSelectorOnMainThread:@selector(updateProgressWithDictionary:) withObject:dictionary waitUntilDone:NO];
+			
+			NSDate *progressDate = [[NSDate date] retain];
+			
+			NSUInteger totalItemCount = [allItems count];
+			NSUInteger currentItemIndex = 0;
+			
+			NSArray *relativeDestinationPaths = [itemsAndPaths allKeys];
+			
+			for (NSString *relativeDestinationPath in relativeDestinationPaths) {
+				
+				if ([copyOperation isCancelled]) {
+					
+					[progressDate release];
+
+					NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+												copyOperation,MDCopyOperationKey,
+												[NSNumber numberWithUnsignedLongLong:totalBytes],MDCopyOperationTotalBytesKey,
+												[NSNumber numberWithUnsignedLongLong:currentBytes],MDCopyOperationCurrentBytesKey,
+												[NSNumber numberWithUnsignedInteger:MDCopyOperationCancelledStage],MDCopyOperationStageKey, nil];
+					
+					[self performSelectorOnMainThread:@selector(updateProgressWithDictionary:) withObject:dictionary waitUntilDone:NO];
+					
+					return;
+				}
+				
+				
+				if (ABS([progressDate timeIntervalSinceNow]) > MD_PROGRESS_UPDATE_TIME_INTERVAL) {
+					
+					NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+												copyOperation,MDCopyOperationKey,
+												[NSNumber numberWithUnsignedInteger:MDCopyOperationCopyingStage],MDCopyOperationStageKey,
+												destination,MDCopyOperationDestinationKey,
+												[NSNumber numberWithUnsignedLongLong:totalBytes],MDCopyOperationTotalBytesKey,
+												[NSNumber numberWithUnsignedLongLong:currentBytes],MDCopyOperationCurrentBytesKey,
+												[NSNumber numberWithUnsignedInteger:totalItemCount],MDCopyOperationTotalItemCountKey,
+												[NSNumber numberWithUnsignedInteger:currentItemIndex],MDCopyOperationCurrentItemIndexKey, nil];
+					
+					[self performSelectorOnMainThread:@selector(updateProgressWithDictionary:) withObject:dictionary waitUntilDone:NO];
+					
+					
+					[progressDate release];
+					progressDate = [[NSDate date] retain];
+				}
+				
+				
+				HKItem *item = [itemsAndPaths objectForKey:relativeDestinationPath];
+				
+				NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
+				
+				NSString *destinationPath = [(NSString *)destination stringByAppendingPathComponent:relativeDestinationPath];
+				
+//				NSLog(@" \"%@\" [%@ %@] destinationPath == %@", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), destinationPath);
+				
+				NSError *outError = nil;
+				
+				if ([item isLeaf]) {
+					
+					if (![(HKFile *)item beginWritingToFile:destinationPath assureUniqueFilename:YES resultingPath:NULL error:&outError]) {
+						NSLog(@" \"%@\" [%@ %@] - (%@) beginWritingToFile: for %@ failed!", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), [currentThread name], destinationPath);
+						continue;
+					}
+					
+					while (1) {
+						
+						if ([copyOperation isCancelled]) {
+							if (![(HKFile *)item cancelWritingAndRemovePartialFileWithError:&outError]) {
+								
+							}
+							
+							[progressDate release];
+							
+							NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+														copyOperation,MDCopyOperationKey,
+														[NSNumber numberWithUnsignedLongLong:totalBytes],MDCopyOperationTotalBytesKey,
+														[NSNumber numberWithUnsignedLongLong:currentBytes],MDCopyOperationCurrentBytesKey,
+														[NSNumber numberWithUnsignedInteger:MDCopyOperationCancelledStage],MDCopyOperationStageKey, nil];
+							
+							[self performSelectorOnMainThread:@selector(updateProgressWithDictionary:) withObject:dictionary waitUntilDone:NO];
+							
+							[localPool release];
+							
+							return;
+						}
+						
+						NSUInteger partialBytesLength = 0;
+						
+						if (![(HKFile *)item continueWritingPartialBytesOfLength:&partialBytesLength error:&outError]) {
+							break;
+						}
+						
+						currentBytes += partialBytesLength;
+						
+						if (ABS([progressDate timeIntervalSinceNow]) > MD_PROGRESS_UPDATE_TIME_INTERVAL) {
+							
+							NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+														copyOperation,MDCopyOperationKey,
+														[NSNumber numberWithUnsignedInteger:MDCopyOperationCopyingStage],MDCopyOperationStageKey,
+														destination,MDCopyOperationDestinationKey,
+														[NSNumber numberWithUnsignedLongLong:totalBytes],MDCopyOperationTotalBytesKey,
+														[NSNumber numberWithUnsignedLongLong:currentBytes],MDCopyOperationCurrentBytesKey,
+														[NSNumber numberWithUnsignedInteger:totalItemCount],MDCopyOperationTotalItemCountKey,
+														[NSNumber numberWithUnsignedInteger:currentItemIndex],MDCopyOperationCurrentItemIndexKey, nil];
+							
+							[self performSelectorOnMainThread:@selector(updateProgressWithDictionary:) withObject:dictionary waitUntilDone:NO];
+							
+							[progressDate release];
+							progressDate = [[NSDate date] retain];
+						}
+					}
+					
+					if (![(HKFile *)item finishWritingWithError:&outError]) {
+						NSLog(@" \"%@\" [%@ %@] - (%@) finishWritingWithError: for %@ failed!", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), [currentThread name], destinationPath);
+					}
+					
+				} else {
+					if (![item writeToFile:destinationPath assureUniqueFilename:YES resultingPath:NULL error:&outError]) {
+						NSLog(@" \"%@\" [%@ %@] - (%@) writeToFile: for %@ failed!", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), [currentThread name], destinationPath);
+					}
+				}
+				
+				currentItemIndex++;
+				
+				[localPool release];
+				
+			}
+			
+			[progressDate release];
+			
+			dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+										copyOperation,MDCopyOperationKey,
+										[NSNumber numberWithUnsignedLongLong:totalBytes],MDCopyOperationTotalBytesKey,
+										[NSNumber numberWithUnsignedLongLong:currentBytes],MDCopyOperationCurrentBytesKey,
+										[NSNumber numberWithUnsignedInteger:MDCopyOperationFinishingStage],MDCopyOperationStageKey, nil];
+			
+			[self performSelectorOnMainThread:@selector(updateProgressWithDictionary:) withObject:dictionary waitUntilDone:NO];
+			
+		}
+	}
+	[pool release];
+}
+
+
+#endif // MD_BUILD_HLDOCUMENT_WITH_COPY_OPERATION_2_0
+
 
 
 - (void)updateProgressWithDictionary:(NSDictionary *)dictionary {
@@ -1729,6 +1842,7 @@ static NSInteger copyTag = 0;
 	}
 }
 
+#if MD_BUILD_HLDOCUMENT_WITH_COPY_OPERATION_2_0
 
 - (NSDictionary *)simplifiedItemsAndPathsForItems:(NSArray *)items resultingNames:(NSArray **)resultingNames {
 #if MD_DEBUG
@@ -1745,8 +1859,8 @@ static NSInteger copyTag = 0;
 	
 	[rootItems addObjectsFromArray:items];
 	
-	for (MDItem *item in items) {
-		for (MDItem *innerItem in items) {
+	for (HKItem *item in items) {
+		for (HKItem *innerItem in items) {
 			if (item != innerItem) {
 				if ([innerItem isDescendantOfNode:item]) {
 					[rootItems removeObject:innerItem];
@@ -1759,12 +1873,12 @@ static NSInteger copyTag = 0;
 //	NSLog(@"[%@ %@] rootItems == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), rootItems);
 #endif
 	
-	for (MDItem *item in rootItems) {
+	for (HKItem *item in rootItems) {
 		
-		[allItemsAndPaths setObject:item forKey:[item pathRelativeToItem:(MDItem *)[item parent]]];
+		[allItemsAndPaths setObject:item forKey:[item pathRelativeToItem:(HKItem *)[item parent]]];
 		
 		if (![item isLeaf]) {
-			NSDictionary *descendentsAndPaths = [(MDFolder *)item visibleDescendantsAndPathsRelativeToItem:(MDItem *)[item parent]];
+			NSDictionary *descendentsAndPaths = [(HKFolder *)item visibleDescendantsAndPathsRelativeToItem:(HKItem *)[item parent]];
 			if (descendentsAndPaths) [allItemsAndPaths addEntriesFromDictionary:descendentsAndPaths];
 		}
 	}
@@ -1775,6 +1889,8 @@ static NSInteger copyTag = 0;
 	
 //	NSLog(@"[%@ %@] allItemsAndPaths == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), descrip);
 #endif
+	
+//	NSLog(@"[%@ %@] allItemsAndPaths == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), allItemsAndPaths);
 	
 	if (resultingNames) {
 		NSArray *relativeDestinationPaths = [allItemsAndPaths allKeys];
@@ -1788,6 +1904,73 @@ static NSInteger copyTag = 0;
 	}
 	return [[allItemsAndPaths copy] autorelease];
 }
+
+
+#else // MD_BUILD_HLDOCUMENT_WITH_COPY_OPERATION_2_0
+
+- (NSDictionary *)simplifiedItemsAndPathsForItems:(NSArray *)items resultingNames:(NSArray **)resultingNames {
+#if MD_DEBUG
+//	NSLog(@" \"%@\" [%@ %@] items == %@", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), items);
+#endif
+	if (resultingNames) *resultingNames = nil;
+	if (items == nil) return nil;
+	
+	NSMutableArray *resultingFilenames = [NSMutableArray array];
+	
+	NSMutableArray *rootItems = [NSMutableArray array];
+	
+	NSMutableDictionary *allItemsAndPaths = [NSMutableDictionary dictionary];
+	
+	[rootItems addObjectsFromArray:items];
+	
+	for (HKItem *item in items) {
+		for (HKItem *innerItem in items) {
+			if (item != innerItem) {
+				if ([innerItem isDescendantOfNode:item]) {
+					[rootItems removeObject:innerItem];
+				}
+			}
+		}
+	}
+	
+#if MD_DEBUG
+//	NSLog(@"[%@ %@] rootItems == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), rootItems);
+#endif
+	
+	for (HKItem *item in rootItems) {
+		
+		[allItemsAndPaths setObject:item forKey:[item pathRelativeToItem:(HKItem *)[item parent]]];
+		
+		if (![item isLeaf]) {
+			NSDictionary *descendentsAndPaths = [(HKFolder *)item visibleDescendantsAndPathsRelativeToItem:(HKItem *)[item parent]];
+			if (descendentsAndPaths) [allItemsAndPaths addEntriesFromDictionary:descendentsAndPaths];
+		}
+	}
+	
+#if MD_DEBUG
+//	NSMutableString *descrip = [NSMutableString stringWithString:@""];
+//	[descrip appendFormat:@"%@", allItemsAndPaths];
+	
+//	NSLog(@"[%@ %@] allItemsAndPaths == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), descrip);
+#endif
+	
+//	NSLog(@"[%@ %@] allItemsAndPaths == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), allItemsAndPaths);
+	
+	if (resultingNames) {
+		NSArray *relativeDestinationPaths = [allItemsAndPaths allKeys];
+		
+		for (NSString *relativeDestinationPath in relativeDestinationPaths) {
+			if ([[relativeDestinationPath pathComponents] count] == 1) {
+				[resultingFilenames addObject:[relativeDestinationPath lastPathComponent]];
+			}
+		}
+		*resultingNames = [[resultingFilenames copy] autorelease];
+	}
+	return [[allItemsAndPaths copy] autorelease];
+}
+
+#endif // MD_BUILD_HLDOCUMENT_WITH_COPY_OPERATION_2_0
+
 
 
 #pragma mark -
@@ -1824,7 +2007,7 @@ static NSInteger copyTag = 0;
 }
 
 
-- (MDHLFile *)file {
+- (HKArchiveFile *)file {
 	return file;
 }
 
@@ -1944,7 +2127,7 @@ static NSInteger copyTag = 0;
 //				if ([selectedFonts count] > 0) {
 //					NSMutableIndexSet *newSelectedRowIndexes = [NSMutableIndexSet indexSet];
 //					NSEnumerator *enumerator = [selectedFonts objectEnumerator];
-//					MDFile *font;
+//					HKFile *font;
 //					
 //					while (font = [enumerator nextObject]) {
 //						[newSelectedRowIndexes addIndex:[[self filteredItems] indexOfObject:font]];
@@ -1986,7 +2169,7 @@ static NSInteger copyTag = 0;
 //				if ([selectedFonts count] > 0) {
 //					NSMutableIndexSet *newSelectedRowIndexes = [NSMutableIndexSet indexSet];
 //					NSEnumerator *enumerator = [selectedFonts objectEnumerator];
-//					MDFile *font;
+//					HKFile *font;
 //					
 //					while (font = [enumerator nextObject]) {
 //						[newSelectedRowIndexes addIndex:[[self filteredItems] indexOfObject:font]];
@@ -2028,7 +2211,7 @@ static NSInteger copyTag = 0;
 	
 	NSUInteger modifierFlags = [currentEvent modifierFlags];
 	
-	MDHLFileType fileType = [file fileType];
+	HKArchiveFileType fileType = [file fileType];
 	
 	
 	if (modifierFlags & NSCommandKeyMask) {
@@ -2040,28 +2223,28 @@ static NSInteger copyTag = 0;
 		if (tag == statusImageViewTag1) {
 			
 			switch (fileType) {
-				case MDHLFileBSPType :
+				case HKArchiveFileBSPType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that the items in this window are inside a %@", @""), NSLocalizedString(@"Source Level", @"")];
 					break;
-				case MDHLFileGCFType :
+				case HKArchiveFileGCFType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that the items in this window are inside a %@", @""), NSLocalizedString(@"Steam Cache file", @"")];
 					break;
-				case MDHLFilePAKType :
+				case HKArchiveFilePAKType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that the items in this window are inside a %@", @""), NSLocalizedString(@"Source Package file", @"")];
 					break;
-				case MDHLFileVBSPType :
+				case HKArchiveFileVBSPType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that the items in this window are inside a %@", @""), NSLocalizedString(@"Source Level", @"")];
 					break;
-				case MDHLFileWADType :
+				case HKArchiveFileWADType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that the items in this window are inside a %@", @""), NSLocalizedString(@"Source Texture Package file", @"")];
 					break;
-				case MDHLFileXZPType :
+				case HKArchiveFileXZPType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that the items in this window are inside a %@", @""), NSLocalizedString(@"Source Xbox Package file", @"")];
 					break;
-				case MDHLFileNCFType :
+				case HKArchiveFileNCFType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that the items in this window are inside a %@", @""), NSLocalizedString(@"Steam Non-Cache file", @"")];
 					break;
-				case MDHLFileVPKType :
+				case HKArchiveFileVPKType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that the items in this window are inside a %@", @""), NSLocalizedString(@"Source Addon file", @"")];
 					break;
 					
@@ -2073,28 +2256,28 @@ static NSInteger copyTag = 0;
 		} else if (tag == statusImageViewTag2) {
 			
 			switch (fileType) {
-				case MDHLFileBSPType :
+				case HKArchiveFileBSPType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that you cannot add or change the contents of this %@", @""), NSLocalizedString(@"Source Level", @"")];
 					break;
-				case MDHLFileGCFType :
+				case HKArchiveFileGCFType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that you cannot add or change the contents of this %@", @""), NSLocalizedString(@"Steam Cache file", @"")];
 					break;
-				case MDHLFilePAKType :
+				case HKArchiveFilePAKType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that you cannot add or change the contents of this %@", @""), NSLocalizedString(@"Source Package file", @"")];
 					break;
-				case MDHLFileVBSPType :
+				case HKArchiveFileVBSPType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that you cannot add or change the contents of this %@", @""), NSLocalizedString(@"Source Level", @"")];
 					break;
-				case MDHLFileWADType :
+				case HKArchiveFileWADType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that you cannot add or change the contents of this %@", @""), NSLocalizedString(@"Source Texture Package file", @"")];
 					break;
-				case MDHLFileXZPType :
+				case HKArchiveFileXZPType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that you cannot add or change the contents of this %@", @""), NSLocalizedString(@"Source Xbox Package file", @"")];
 					break;
-				case MDHLFileNCFType :
+				case HKArchiveFileNCFType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that you cannot add or change the contents of this %@", @""), NSLocalizedString(@"Steam Non-Cache file", @"")];
 					break;
-				case MDHLFileVPKType :
+				case HKArchiveFileVPKType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that you cannot add or change the contents of this %@", @""), NSLocalizedString(@"Source Addon file", @"")];
 					break;
 					
@@ -2108,28 +2291,28 @@ static NSInteger copyTag = 0;
 		if (tag == statusImageViewTag1) {
 			
 			switch (fileType) {
-				case MDHLFileBSPType :
+				case HKArchiveFileBSPType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Inside %@", @""), NSLocalizedString(@"Source Level", @"")];
 					break;
-				case MDHLFileGCFType :
+				case HKArchiveFileGCFType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Inside %@", @""), NSLocalizedString(@"Steam Cache file", @"")];
 					break;
-				case MDHLFilePAKType :
+				case HKArchiveFilePAKType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Inside %@", @""), NSLocalizedString(@"Source Package file", @"")];
 					break;
-				case MDHLFileVBSPType :
+				case HKArchiveFileVBSPType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Inside %@", @""), NSLocalizedString(@"Source Level", @"")];
 					break;
-				case MDHLFileWADType :
+				case HKArchiveFileWADType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Inside %@", @""), NSLocalizedString(@"Source Texture Package file", @"")];
 					break;
-				case MDHLFileXZPType :
+				case HKArchiveFileXZPType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Inside %@", @""), NSLocalizedString(@"Source Xbox Package file", @"")];
 					break;
-				case MDHLFileNCFType :
+				case HKArchiveFileNCFType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Inside %@", @""), NSLocalizedString(@"Steam Non-Cache file", @"")];
 					break;
-				case MDHLFileVPKType :
+				case HKArchiveFileVPKType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Inside %@", @""), NSLocalizedString(@"Source Addon file", @"")];
 					break;
 					
@@ -2143,6 +2326,7 @@ static NSInteger copyTag = 0;
 			toolTip = NSLocalizedString(@"No Changes", @"");
 		}
 	}
+	
 	return toolTip;
 }
 
@@ -2174,8 +2358,6 @@ static NSInteger copyTag = 0;
 	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowPathBar] forKey:MDShouldShowPathBarKey];
 	[[NSNotificationCenter defaultCenter] postNotificationName:MDShouldShowPathBarDidChangeNotification object:self userInfo:nil];
 }
-
-
 
 
 - (void)menuNeedsUpdate:(NSMenu *)menu {
@@ -2344,7 +2526,7 @@ static NSInteger copyTag = 0;
 				[menuItem setTitle:NSLocalizedString(@"Quick Look", @"")];
 				return YES;
 			} else if (numberOfSelectedRows == 1) {
-				MDItem *selectedItem = nil;
+				HKItem *selectedItem = nil;
 				
 				if (viewMode == MDListViewMode) {
 					

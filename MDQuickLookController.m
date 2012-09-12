@@ -9,10 +9,9 @@
 #import "MDQuickLookController.h"
 #import "MDAppController.h"
 #import "MDHLDocument.h"
-#import "MDItem.h"
-#import "MDFolder.h"
-#import "MDFile.h"
-#import "MDHLFile.h"
+
+#import <HLKit/HLKit.h>
+
 #import <CoreServices/CoreServices.h>
 #import "MDQuickLookPreviewViewController.h"
 #import "MDAppKitAdditions.h"
@@ -273,19 +272,18 @@ static MDQuickLookController *sharedQuickLookController = nil;
 				
 				
 			} else if ([items count] == 1) {
-				MDItem *item = [items objectAtIndex:anIndex];
+				HKItem *item = [items objectAtIndex:anIndex];
 				[[self window] setTitle:[item name]];
 				[previewViewController setRepresentedObject:item];
 				[controlsView setHidden:YES];
 				
 			} else if ([items count] > 1) {
-				MDItem *item = [items objectAtIndex:anIndex];
+				HKItem *item = [items objectAtIndex:anIndex];
 				[[self window] setTitle:[item name]];
 				[previewViewController setRepresentedObject:item];
 				[controlsView setHidden:NO];
 
 			}
-		
 		}
 	}
 }
