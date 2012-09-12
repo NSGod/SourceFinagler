@@ -88,7 +88,7 @@ NSString *NSStringFromDefaultsKeyPath(NSString *defaultsKey) {
 		NSInteger greenInt = green * 255.99999f;
 		NSInteger blueInt = blue * 255.99999f;
 		
-		hexValue = [NSString stringWithFormat:@"#%02x%02x%02x", redInt, greenInt, blueInt];
+		hexValue = [NSString stringWithFormat:@"#%02x%02x%02x", (unsigned int)redInt, (unsigned int)greenInt, (unsigned int)blueInt];
 		
 	}
 	

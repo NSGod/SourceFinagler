@@ -14,18 +14,22 @@
 #define MD_DEBUG 0
 
 enum {
-	MDJaguar			= 0x1020,
-	MDPanther			= 0x1030,
-	MDTiger				= 0x1040,
-	MDLeopard			= 0x1050,
-	MDSnowLeopard		= 0x1060,
-	MDLion				= 0x1070,
-	MDUnknownKitty		= 0x1080,
-	MDUnknownVersion	= 0x1090
+	MDUndeterminedVersion	= -1,
+	MDCheetah				= 0x1000,
+	MDPuma					= 0x1010,
+	MDJaguar				= 0x1020,
+	MDPanther				= 0x1030,
+	MDTiger					= 0x1040,
+	MDLeopard				= 0x1050,
+	MDSnowLeopard			= 0x1060,
+	MDLion					= 0x1070,
+	MDMountainLion			= 0x1080,
+	MDUnknownKitty			= 0x1090,
+	MDUnknownVersion		= 0x1100
 };
 
 
-SInt32 MDMetalBevelViewSystemVersion = 0;
+static SInt32 MDMetalBevelViewSystemVersion = 0;
 
 @implementation MDMetalBevelView
 
