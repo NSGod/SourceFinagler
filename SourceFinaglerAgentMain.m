@@ -47,7 +47,7 @@ int main (int argc, const char * argv[]) {
 	NSError *outError = nil;
 	
 	if (game && ![game isHelped]) {
-		if (![steamManager helpGame:game forUSBOverdrive:YES error:&outError]) {
+		if (![steamManager helpGame:game forUSBOverdrive:YES updateLaunchAgent:NO error:&outError]) {
 			NSLog(@"failed to help game!");
 			
 		}

@@ -9,7 +9,7 @@
 
 #import <SteamKit/VSSteamManager.h>
 #import <SteamKit/VSGame.h>
-#import <SteamKit/VSPrivateInterfaces.h>
+#import "VSPrivateInterfaces.h"
 
 #import <HLKit/HLKit.h>
 
@@ -21,57 +21,65 @@
 #import "MDResourceFile.h"
 #import "SBSystemEvents.h"
 
-	
-NSString * const VSGameIDKey				= @"VSGameID";
-NSString * const VSGameSupportsAddonsKey	= @"VSGameSupportsAddons";
-NSString * const VSGameNameKey				= @"VSGameName";
-NSString * const VSGameShortNameKey			= @"VSGameShortName";
-NSString * const VSGameLongNameKey			= @"VSGameLongName";
-NSString * const VSGameCreatorCodeKey		= @"VSGameCreatorCode";
-NSString * const VSGameBundleIdentifierKey	= @"VSGameBundleIdentifier";
-NSString * const VSGameInfoPlistKey			= @"VSGameInfoPlist";
+static NSString * const VSGameBundleIdentifiersAndGamesKey						= @"VSGameBundleIdentifiersAndGames";
+static NSString * const VSExecutableNamesKey									= @"VSExecutableNames";
+
+NSString * const VSGameIDKey											= @"VSGameID";
+NSString * const VSGameSupportsAddonsKey								= @"VSGameSupportsAddons";
+NSString * const VSGameNameKey											= @"VSGameName";
+NSString * const VSGameShortNameKey										= @"VSGameShortName";
+NSString * const VSGameLongNameKey										= @"VSGameLongName";
+NSString * const VSGameCreatorCodeKey									= @"VSGameCreatorCode";
+NSString * const VSGameBundleIdentifierKey								= @"VSGameBundleIdentifier";
+NSString * const VSGameInfoPlistKey										= @"VSGameInfoPlist";
 
 
-NSString * const VSHalfLife2ExecutableNameKey				= @"hl2_osx";
-NSString * const VSPortal2ExecutableNameKey					= @"portal2_osx";
+static NSString * const VSHalfLife2ExecutableNameKey							= @"hl2_osx";
+static NSString * const VSPortal2ExecutableNameKey								= @"portal2_osx";
+static NSString * const VSCounterStrikeGlobalOffensiveExecutableNameKey		= @"csgo_osx";
 
-NSString * const VSHalfLife2USBOverdriveExecutableNameKey	= @"hl2_osx (for USB Overdrive)";
-NSString * const VSPortal2USBOverdriveExecutableNameKey		= @"portal2_osx (for USB Overdrive)";
+
+static NSString * const VSHalfLife2USBOverdriveExecutableNameKey							= @"hl2_osx (for USB Overdrive)";
+static NSString * const VSPortal2USBOverdriveExecutableNameKey								= @"portal2_osx (for USB Overdrive)";
+static NSString * const VSCounterStrikeGlobalOffensiveUSBOverdriveExecutableNameKey		= @"csgo_osx (for USB Overdrive)";
 
 
 NSString * const VSResourceNameKey							= @"resource";
 NSString * const VSGameIconNameKey							= @"game.icns";
 
 
-NSString * const VSSteamAppsDirectoryNameKey				= @"SteamApps";
+NSString * const VSSteamAppsDirectoryNameKey					= @"SteamApps";
 
-NSString * const VSSourceFinaglerBundleIdentifierKey			= @"com.markdouma.SourceFinagler";
-
-
-NSString * const VSSourceFinaglerAgentNameKey					= @"SourceFinaglerAgent.app";
-
-NSString * const VSSourceFinaglerAgentBundleIdentifierKey		= @"com.markdouma.SourceFinaglerAgent";
+static NSString * const VSSourceFinaglerBundleIdentifierKey			= @"com.markdouma.SourceFinagler";
 
 
-NSString * const VSTimeMachineDatabaseNameKey				= @"Backups.backupdb";
+static NSString * const VSSourceFinaglerAgentNameKey					= @"SourceFinaglerAgent.app";
 
-NSString * const VSSourceAddonsFolderNameKey						= @"addons";
+static NSString * const VSSourceFinaglerAgentBundleIdentifierKey		= @"com.markdouma.SourceFinaglerAgent";
 
 
+static NSString * const VSTimeMachineDatabaseNameKey				= @"Backups.backupdb";
 
-NSString * const VSSteamLaunchGameURL						= @"steam://run/";
 
-NSString * const VSDockBundleIdentifierKey					= @"com.apple.dock";
-NSString * const VSDashboardBundleIdentifierKey				= @"com.apple.dashboard";
-NSString * const VSSystemEventsBundleIdentifierKey			= @"com.apple.systemevents";
+static NSString * const VSSteamLaunchGameURL						= @"steam://run/";
 
-NSString * const VSDockWorkspacesKey						= @"workspaces";
-NSString * const VSDockExposeDisabledKey					= @"mcx-expose-disabled";
-NSString * const VSDashboardDisabledKey						= @"mcx-disabled";
+static NSString * const VSDockBundleIdentifierKey					= @"com.apple.dock";
+static NSString * const VSDashboardBundleIdentifierKey				= @"com.apple.dashboard";
+static NSString * const VSSystemEventsBundleIdentifierKey			= @"com.apple.systemevents";
+
+static NSString * const VSDockWorkspacesKey							= @"workspaces";
+static NSString * const VSDockExposeDisabledKey						= @"mcx-expose-disabled";
+static NSString * const VSDashboardDisabledKey						= @"mcx-disabled";
 
 
 NSString * const VSSourceAddonErrorDomain					= @"com.markdouma.SourceFinagler.SourceAddonErrorDomain";
 NSString * const VSSourceAddonGameIDKey						= @"VSSourceAddonGameID";
+
+NSString * const VSSourceAddonFolderNameKey					= @"addons";
+
+static NSString * const VSSourceAddonInfoNameKey					= @"addoninfo.txt";
+static NSString * const VSSourceAddonSteamAppIDKey					= @"addonSteamAppID";
+
 
 
 static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *programArguments, NSString *aWatchPath);
@@ -92,6 +100,7 @@ static inline NSString *VSMakeGamePathKey(NSString *gamePath) {
 static BOOL locatedSteamApps = NO;
 
 static VSGameLaunchOptions defaultPersistentOptions = VSGameLaunchDefault;
+
 
 // Creating a Singleton Instance
 //
@@ -132,7 +141,10 @@ static VSSteamManager *sharedManager = nil;
 		
 		NSString *gamesPlist = [[NSBundle bundleForClass:[self class]] pathForResource:@"com.valvesoftware.games" ofType:@"plist"];
 		if (gamesPlist) {
-			gameBundleIdentifiersAndGames = [[NSDictionary alloc] initWithContentsOfFile:gamesPlist];
+			NSDictionary *gamesDic = [NSDictionary dictionaryWithContentsOfFile:gamesPlist];
+			gameBundleIdentifiersAndGames = [[gamesDic objectForKey:VSGameBundleIdentifiersAndGamesKey] retain];
+			executableNames = [[gamesDic objectForKey:VSExecutableNamesKey] retain];
+			
 		}
 		
 		steamAppsRelocationType = VSSteamAppsUnknownRelocation;
@@ -170,8 +182,7 @@ static VSSteamManager *sharedManager = nil;
 	NSString *appPath = [[notification userInfo] objectForKey:@"NSApplicationPath"];
 	
 	if ([gamePathsAndGames objectForKey:VSMakeGamePathKey(appPath)] != nil ||
-		[[VSMakeGamePathKey(appPath) lastPathComponent] isEqualToString:VSHalfLife2ExecutableNameKey] ||
-		[[VSMakeGamePathKey(appPath) lastPathComponent] isEqualToString:VSPortal2ExecutableNameKey]) {
+		[executableNames containsObject:[VSMakeGamePathKey(appPath) lastPathComponent]]) {
 		
 		[self locateSteamApps];
 	}
@@ -189,7 +200,7 @@ static VSSteamManager *sharedManager = nil;
 		
 		if (options & VSGameLaunchHelpingGame && ![game isHelped]) {
 			NSError *outError = nil;
-			if (![self helpGame:game forUSBOverdrive:YES error:&outError]) {
+			if (![self helpGame:game forUSBOverdrive:YES updateLaunchAgent:NO error:&outError]) {
 				NSLog(@"[%@ %@] failed to help game!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 			}
 		}
@@ -204,8 +215,7 @@ static VSSteamManager *sharedManager = nil;
 	NSString *appPath = [[notification userInfo] objectForKey:@"NSApplicationPath"];
 	
 	if ([gamePathsAndGames objectForKey:VSMakeGamePathKey(appPath)] != nil ||
-		[[VSMakeGamePathKey(appPath) lastPathComponent] isEqualToString:VSHalfLife2ExecutableNameKey] ||
-		[[VSMakeGamePathKey(appPath) lastPathComponent] isEqualToString:VSPortal2ExecutableNameKey]) {
+		[executableNames containsObject:[VSMakeGamePathKey(appPath) lastPathComponent]]) {
 		
 		[self locateSteamApps];
 	}
@@ -219,8 +229,7 @@ static VSSteamManager *sharedManager = nil;
 	NSString *appPath = [[notification userInfo] objectForKey:@"NSApplicationPath"];
 	
 	if ([gamePathsAndGames objectForKey:VSMakeGamePathKey(appPath)] != nil ||
-		[[VSMakeGamePathKey(appPath) lastPathComponent] isEqualToString:VSHalfLife2ExecutableNameKey] ||
-		[[VSMakeGamePathKey(appPath) lastPathComponent] isEqualToString:VSPortal2ExecutableNameKey]) {
+		[executableNames containsObject:[VSMakeGamePathKey(appPath) lastPathComponent]]) {
 		
 		[self locateSteamApps];
 	}
@@ -360,7 +369,7 @@ static NSUInteger locateSteamAppsCount = 0;
 					continue;
 				}
 				
-				// inside the game folder, look for "hl2_osx" or "portal2_osx"
+				// inside the game folder, look for "hl2_osx", "csgo_osx", or "portal2_osx"
 				
 				NSArray *rootContents = [fileManager contentsOfDirectoryAtPath:gameFolderFullPath error:&outError];
 				
@@ -369,9 +378,7 @@ static NSUInteger locateSteamAppsCount = 0;
 				}
 				
 				for (NSString *rootItemName in rootContents) {
-					
-					if ([rootItemName isEqualToString:VSHalfLife2ExecutableNameKey] ||
-						[rootItemName isEqualToString:VSPortal2ExecutableNameKey]) {
+					if ([executableNames containsObject:rootItemName]) {
 						
 						NSString *fullGamePath = [gameFolderFullPath stringByAppendingPathComponent:rootItemName];
 						
@@ -665,9 +672,13 @@ static inline NSString *VSMakeLabelFromBundleIdentifier(NSString *bundleIdentifi
 
 - (BOOL)setPersistentOptions:(VSGameLaunchOptions)options forGame:(VSGame *)game error:(NSError **)outError {
 #if VS_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"[%@ %@] options == %lu, game == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)options, game);
 #endif
-	if (game == nil) return NO;
+	if (game == nil) {
+		NSLog(@"[%@ %@] *** ERROR: game == nil!, returning NO", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+		return NO;
+	}
+	
 	if (outError) *outError = nil;
 	
 	if (!locatedSteamApps) [self locateSteamApps];
@@ -677,8 +688,12 @@ static inline NSString *VSMakeLabelFromBundleIdentifier(NSString *bundleIdentifi
 	}
 	
 	@synchronized(self) {
+		
 		NSString *bundleIdentifier = [[game infoDictionary] objectForKey:(NSString *)kCFBundleIdentifierKey];
-		if (bundleIdentifier == nil) return NO;
+		if (bundleIdentifier == nil) {
+			NSLog(@"[%@ %@] *** NOTICE: game.infoDictionary.kCFBundleIdentifierKey == nil!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+			return NO;
+		}
 		
 		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedInteger:options] forKey:bundleIdentifier];
 		
@@ -688,6 +703,7 @@ static inline NSString *VSMakeLabelFromBundleIdentifier(NSString *bundleIdentifi
 			
 			NSDictionary *existingJob = [launchManager jobWithLabel:jobLabel inDomain:MDLaunchUserDomain];
 			if (existingJob) {
+				
 				if (![launchManager removeJobWithLabel:jobLabel inDomain:MDLaunchUserDomain error:outError]) {
 					NSLog(@"[%@ %@] failed to remove existing job!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 					return NO;
@@ -695,17 +711,31 @@ static inline NSString *VSMakeLabelFromBundleIdentifier(NSString *bundleIdentifi
 			}
 			
 			if (options & VSGameLaunchHelpingGame) {
+				
 				NSBundle *sourceFinaglerAgentBundle = [NSBundle bundleWithPath:sourceFinaglerLaunchAgentPath];
-				NSString *launchAgentExecutablePath = [sourceFinaglerAgentBundle executablePath];
-				if (launchAgentExecutablePath) {
-					NSDictionary *launchPlist = VSMakeLaunchAgentPlist(jobLabel, [NSArray arrayWithObjects:launchAgentExecutablePath, [game executablePath], nil], [game executablePath]);
-					if (launchPlist == nil) return NO;
-					
-					if (![launchManager submitJobWithDictionary:launchPlist inDomain:MDLaunchUserDomain error:outError]) {
-						NSLog(@"[%@ %@] failed to submit job!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-						return NO;
-					}
+				if (sourceFinaglerAgentBundle == nil) {
+					NSLog(@"[%@ %@] *** ERROR: [NSBundle bundleWithPath:sourceFinaglerLaunchAgentPath] return nil! (sourceFinaglerLaunchAgentPath == %@)", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sourceFinaglerLaunchAgentPath);
+					return NO;
 				}
+				
+				NSString *launchAgentExecutablePath = [sourceFinaglerAgentBundle executablePath];
+				if (launchAgentExecutablePath == nil) {
+					NSLog(@"[%@ %@] *** ERROR: [sourceFinaglerAgentBundle executablePath] return nil!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+					return NO;
+				}
+				
+				
+				NSDictionary *launchPlist = VSMakeLaunchAgentPlist(jobLabel, [NSArray arrayWithObjects:launchAgentExecutablePath, [game executablePath], nil], [game executablePath]);
+				if (launchPlist == nil) {
+					NSLog(@"[%@ %@] *** ERROR: VSMakeLaunchAgentPlist() returned nil!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+					return NO;
+				}
+				
+				if (![launchManager submitJobWithDictionary:launchPlist inDomain:MDLaunchUserDomain error:outError]) {
+					NSLog(@"[%@ %@] failed to submit job!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+					return NO;
+				}
+				
 			}
 		}
 	}
@@ -889,7 +919,7 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 
 
 
-- (BOOL)helpGame:(VSGame *)game forUSBOverdrive:(BOOL)helpForUSBOverdrive error:(NSError **)outError {
+- (BOOL)helpGame:(VSGame *)game forUSBOverdrive:(BOOL)helpForUSBOverdrive updateLaunchAgent:(BOOL)updateLaunchAgent error:(NSError **)outError {
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
@@ -968,9 +998,24 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 		success = NO;
 	}
 	
+	
 	if (helpForUSBOverdrive) {
+		
 		NSString *executableName = [path lastPathComponent];
-		NSString *executableBundleName = [([executableName isEqualToString:VSHalfLife2ExecutableNameKey] ? VSHalfLife2USBOverdriveExecutableNameKey : VSPortal2USBOverdriveExecutableNameKey) stringByAppendingPathExtension:@"app"];
+		
+		NSString *executableBundleName = nil;
+		
+		if ([executableName isEqual:VSHalfLife2ExecutableNameKey]) {
+			executableBundleName = VSHalfLife2USBOverdriveExecutableNameKey;
+			
+		} else if ([executableName isEqual:VSPortal2ExecutableNameKey]) {
+			executableBundleName = VSPortal2USBOverdriveExecutableNameKey;
+			
+		} else if ([executableName isEqual:VSCounterStrikeGlobalOffensiveExecutableNameKey]) {
+			executableBundleName = VSCounterStrikeGlobalOffensiveUSBOverdriveExecutableNameKey;
+			
+		}
+		if (executableBundleName) executableBundleName = [executableBundleName stringByAppendingPathExtension:@"app"];
 		
 		NSString *destUSBPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:executableBundleName];
 		
@@ -1000,6 +1045,14 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 							   handler:nil]) {
 				
 				NSLog(@"[%@ %@] failed to delete unneeded hl2_osx inside 'portal2_osx (for USB Overdrive).app'!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+				return NO;
+			}
+		} else if ([executableName isEqualToString:VSCounterStrikeGlobalOffensiveExecutableNameKey]) {
+			if (![fileManager movePath:[[[destUSBPath stringByAppendingPathComponent:@"Contents"] stringByAppendingPathComponent:@"MacOS"] stringByAppendingPathComponent:VSHalfLife2ExecutableNameKey]
+								toPath:[[[destUSBPath stringByAppendingPathComponent:@"Contents"] stringByAppendingPathComponent:@"MacOS"] stringByAppendingPathComponent:VSCounterStrikeGlobalOffensiveExecutableNameKey]
+							   handler:nil]) {
+				
+				NSLog(@"[%@ %@] failed to delete unneeded hl2_osx inside 'csgo_osx (for USB Overdrive).app'!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 				return NO;
 			}
 		}
@@ -1047,9 +1100,11 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 		}
 	}
 	
-	@synchronized(self) {
-		if (sourceFinaglerLaunchAgentStatus == VSSourceFinaglerLaunchAgentInstalled) {
-			[self setPersistentOptions:VSGameLaunchDefault forGame:game error:outError];
+	if (updateLaunchAgent) {
+		@synchronized(self) {
+			if (sourceFinaglerLaunchAgentStatus == VSSourceFinaglerLaunchAgentInstalled) {
+				[self setPersistentOptions:VSGameLaunchDefault forGame:game error:outError];
+			}
 		}
 	}
 	
@@ -1096,7 +1151,21 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 	}
 	
 	NSString *executableName = [path lastPathComponent];
-	NSString *executableBundleName = [([executableName isEqualToString:VSHalfLife2ExecutableNameKey] ? VSHalfLife2USBOverdriveExecutableNameKey : VSPortal2USBOverdriveExecutableNameKey) stringByAppendingPathExtension:@"app"];
+	
+	NSString *executableBundleName = nil;
+	
+	if ([executableName isEqual:VSHalfLife2ExecutableNameKey]) {
+		executableBundleName = VSHalfLife2USBOverdriveExecutableNameKey;
+		
+	} else if ([executableName isEqual:VSPortal2ExecutableNameKey]) {
+		executableBundleName = VSPortal2USBOverdriveExecutableNameKey;
+		
+	} else if ([executableName isEqual:VSCounterStrikeGlobalOffensiveExecutableNameKey]) {
+		executableBundleName = VSCounterStrikeGlobalOffensiveUSBOverdriveExecutableNameKey;
+		
+	}
+	if (executableBundleName) executableBundleName = [executableBundleName stringByAppendingPathExtension:@"app"];
+	
 	NSString *bundledAppPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:executableBundleName];
 	
 	@synchronized(self) {
@@ -1121,7 +1190,7 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 	if (outError) *outError = nil;
 	
 	if (options & VSGameLaunchHelpingGame && ![game isHelped]) {
-		if (![self helpGame:game forUSBOverdrive:YES error:outError]) return NO;
+		if (![self helpGame:game forUSBOverdrive:YES updateLaunchAgent:NO error:outError]) return NO;
 	}
 	
 	SBSystemEventsApplication *systemEvents = [SBApplication applicationWithBundleIdentifier:VSSystemEventsBundleIdentifierKey];
@@ -1177,7 +1246,7 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 	}
 	
 	HKVPKFile *file = [[[HKVPKFile alloc] initWithContentsOfFile:sourceFilePath showInvisibleItems:YES sortDescriptors:nil error:outError] autorelease];
-	HKItem *addonInfoItem = [file itemAtPath:VSAddonInfoNameKey];
+	HKItem *addonInfoItem = [file itemAtPath:VSSourceAddonInfoNameKey];
 	
 #if VS_DEBUG
 //	NSLog(@"[%@ %@] addonInfoItem == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), addonInfoItem);
@@ -1225,14 +1294,14 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 	
 	
 	NSUInteger count = [revisedWords count];
-	NSUInteger keyIndex = [revisedWords indexOfObject:VSAddonSteamAppIDKey];
+	NSUInteger keyIndex = [revisedWords indexOfObject:VSSourceAddonSteamAppIDKey];
 	
 #if VS_DEBUG
 //	NSLog(@"revisedWords == %@, count == %lu, keyIndex == %lu", revisedWords, count, keyIndex);
 #endif
 	
 	if (keyIndex == NSNotFound || !(keyIndex + 1 < count)) {
-		NSLog(@"[%@ %@] failed to find %@ key and/or value in addoninfo.txt in (%@)!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), VSAddonSteamAppIDKey, sourceFilePath);
+		NSLog(@"[%@ %@] failed to find %@ key and/or value in addoninfo.txt in (%@)!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), VSSourceAddonSteamAppIDKey, sourceFilePath);
 		NSLog(@"[%@ %@] stringValue == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), stringValue);
 		if (outError) *outError = [NSError errorWithDomain:VSSourceAddonErrorDomain code:VSSourceAddonNoGameIDFoundInAddonInfoError userInfo:nil];
 		return NO;

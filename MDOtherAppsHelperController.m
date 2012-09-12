@@ -269,7 +269,7 @@ NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Cent
 				NSLog(@"[%@ %@] failed to unhelp game == %@, error = %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), game, error);
 			}
 		} else {
-			if (![steamManager helpGame:game forUSBOverdrive:(mouseSoftware & MDUSBOverdrive) error:&error]) {
+			if (![steamManager helpGame:game forUSBOverdrive:(mouseSoftware & MDUSBOverdrive) updateLaunchAgent:YES error:&error]) {
 				NSLog(@"[%@ %@] failed to help game == %@, error = %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), game, error);
 			}
 		}
@@ -287,7 +287,7 @@ NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Cent
 	NSError *error = nil;
 	
 	for (VSGame *game in selectedGames) {
-		if (![steamManager helpGame:game forUSBOverdrive:(mouseSoftware & MDUSBOverdrive) error:&error]) {
+		if (![steamManager helpGame:game forUSBOverdrive:(mouseSoftware & MDUSBOverdrive) updateLaunchAgent:YES error:&error]) {
 			NSLog(@"[%@ %@] failed to help game == %@, error = %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), game, error);
 		}
 	}

@@ -61,6 +61,7 @@ typedef NSUInteger VSSourceFinaglerLaunchAgentStatus;
 	VSSteamAppsRelocationType					steamAppsRelocationType;
 	
 	NSDictionary								*gameBundleIdentifiersAndGames;
+	NSArray										*executableNames;
 	
 	NSMutableDictionary							*gamePathsAndGames;
 	NSMutableDictionary							*runningGamePathsAndGames;
@@ -118,7 +119,7 @@ typedef NSUInteger VSSourceFinaglerLaunchAgentStatus;
 - (BOOL)setPersistentOptions:(VSGameLaunchOptions)options forGame:(VSGame *)game error:(NSError **)outError;
 
 
-- (BOOL)helpGame:(VSGame *)game forUSBOverdrive:(BOOL)yorn error:(NSError **)outError;
+- (BOOL)helpGame:(VSGame *)game forUSBOverdrive:(BOOL)yorn updateLaunchAgent:(BOOL)updateLaunchAgent error:(NSError **)outError;
 - (BOOL)unhelpGame:(VSGame *)game error:(NSError **)outError;
 
 - (BOOL)launchGame:(VSGame *)game options:(VSGameLaunchOptions)options error:(NSError **)outError;
@@ -148,9 +149,6 @@ enum {
 typedef NSUInteger VSSourceAddonInstallMethod;
 
 
-STEAMKIT_EXTERN NSString * const VSSourceAddonErrorDomain;
-
-STEAMKIT_EXTERN NSString * const VSSourceAddonGameIDKey;
 
 enum {
 	VSSourceAddonNotAValidAddonFileError				= 6000,
@@ -187,22 +185,20 @@ STEAMKIT_EXTERN NSString * const VSGameBundleIdentifierKey;
 STEAMKIT_EXTERN NSString * const VSGameInfoPlistKey;
 
 
-STEAMKIT_EXTERN NSString * const VSHalfLife2ExecutableNameKey;
-STEAMKIT_EXTERN NSString * const VSPortal2ExecutableNameKey;
-
-STEAMKIT_EXTERN NSString * const VSHalfLife2USBOverdriveExecutableNameKey;
-STEAMKIT_EXTERN NSString * const VSPortal2USBOverdriveExecutableNameKey;
-
-
 STEAMKIT_EXTERN NSString * const VSResourceNameKey;
 STEAMKIT_EXTERN NSString * const VSGameIconNameKey;
 
 STEAMKIT_EXTERN NSString * const VSSteamAppsDirectoryNameKey;
 
-STEAMKIT_EXTERN NSString * const VSSourceAddonsFolderNameKey;
+
+STEAMKIT_EXTERN NSString * const VSSourceAddonErrorDomain;
+
+STEAMKIT_EXTERN NSString * const VSSourceAddonGameIDKey;
+
+
+
+STEAMKIT_EXTERN NSString * const VSSourceAddonFolderNameKey;
 
 // SourceFinaglerAgent
 
-STEAMKIT_EXTERN NSString * const VSSourceFinaglerAgentNameKey;
-STEAMKIT_EXTERN NSString * const VSSourceFinaglerAgentBundleIdentifierKey;
 
