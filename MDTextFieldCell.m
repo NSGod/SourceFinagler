@@ -7,18 +7,31 @@
 //  
 
 
-#define MD_LEFT_EDGE_PADDING 16.0
-
-
 #import "MDTextFieldCell.h"
 
 
+#define MD_LEFT_EDGE_PADDING 16.0
+#define MD_INSET_HORIZ		16.0		/* Distance image icon is inset from the left edge */
+#define MD_INTER_SPACE		6.0		/* Distance between right edge of icon image and left edge of text */
+
 #define MD_DEBUG 0
+
+
+@interface MDTextFieldCell (MDPrivate)
+
+- (NSPoint)calculatedImagePointForFrame:(NSRect)cellFrame imageSize:(NSSize)imageSize isFlipped:(BOOL)isFlipped;
+
+- (NSRect)calculatedRichTextRectForFrame:(NSRect)cellFrame richText:(NSAttributedString *)richText fontSize:(CGFloat)fontSize imageSize:(NSSize)imageSize isFlipped:(BOOL)isFlipped;
+
+@end
+
 
 @implementation MDTextFieldCell
 
 - (id)copyWithZone:(NSZone *)zone {
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#if MD_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	MDTextFieldCell *cell = (MDTextFieldCell *)[super copyWithZone:zone];
 	cell->image = nil;
 	[cell setImage:image];
@@ -26,36 +39,34 @@
 }
 
 
-
 - (id)initTextCell:(NSString *)value {
+#if MD_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	if  ((self = [super initTextCell:value])) {
-		image = nil;
-		debug = NO;
-		centerImageVertically = NO;
 		leftEdgePadding = MD_LEFT_EDGE_PADDING;
 	}
 	return self;
 }
-
 
 
 - (id)initImageCell:(NSImage *)value {
+#if MD_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	if ((self = [super initImageCell:value])) {
 		image = [value retain];
-		debug = NO;
-		centerImageVertically = NO;
 		leftEdgePadding = MD_LEFT_EDGE_PADDING;
 	}
 	return self;
 }
 
 
-
 - (id)init {
+#if MD_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	if ((self = [super initTextCell:@""])) {
-		image = nil;
-		debug = NO;
-		centerImageVertically = NO;
 		leftEdgePadding = MD_LEFT_EDGE_PADDING;
 	}
 	return self;
@@ -63,12 +74,12 @@
 
 
 - (id)initWithCoder:(NSCoder *)coder {
+#if MD_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	if ((self = [super initWithCoder:coder])) {
-		image = nil;
-		debug = NO;
-		leftEdgePadding = MD_LEFT_EDGE_PADDING;
-		centerImageVertically = NO;
 		
+		leftEdgePadding = MD_LEFT_EDGE_PADDING;
 	}
 	return self;
 }
@@ -118,44 +129,118 @@
 }
 
 
+- (NSPoint)calculatedImagePointForFrame:(NSRect)cellFrame imageSize:(NSSize)imageSize isFlipped:(BOOL)isFlipped {
+#if MD_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	NSPoint imagePoint = cellFrame.origin;
+	imagePoint.x += leftEdgePadding;
+	
+	if (isFlipped) {
+		if (imageSize.height == 16.0) {
+			if (centerImageVertically) {
+				imagePoint.y += (imageSize.height + ceil((cellFrame.size.height - imageSize.height)/2.0));
+				
+			} else {
+				if (cellFrame.size.height >= 17.0 && cellFrame.size.height <= 18.0) {
+					// in other words, if the font size is 15 pt or 16 pt
+					imagePoint.y += imageSize.height;
+				} else {
+					imagePoint.y += (imageSize.height - 1.0);
+				}
+			}
+		} else if (imageSize.height == 32.0) {
+			imagePoint.y += imageSize.height;
+		}
+	} else {
+		if (imageSize.height == 16.0) {
+			if (cellFrame.size.height == 18.0) {
+				imagePoint.y += 1.0;
+			} else {
+				
+			}
+		} else if (imageSize.height == 32.0) {
+
+		}
+	}
+	return imagePoint;
+}
+
+
+- (NSRect)calculatedRichTextRectForFrame:(NSRect)cellFrame richText:(NSAttributedString *)richText fontSize:(CGFloat)fontSize imageSize:(NSSize)imageSize isFlipped:(BOOL)isFlipped {
+#if MD_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	NSRect richTextRect = NSZeroRect;
+	
+	CGFloat fontBaselineFudge = 0.0;
+	
+	if (isFlipped) {
+		if (fontSize >= 12.0 && fontSize <= 14.0) {
+			fontBaselineFudge = -1.0;
+		} else if (fontSize == 16.0) {
+			fontBaselineFudge = 1.0;
+		}
+	} else {
+		if (fontSize >= 12.0 && fontSize <= 14.0) {
+			fontBaselineFudge = 1.0;
+		} else if (fontSize == 16.0) {
+			fontBaselineFudge = -1.0;
+		}
+	}
+	
+	CGFloat textMarginFudge = 0.0;
+	CGFloat textWidthFudge = 0.0;
+	
+	if (image == nil) {
+		if ([self alignment] == NSLeftTextAlignment) {
+			textMarginFudge = 15.0;
+			textWidthFudge = -30.0;
+		} else {
+			textMarginFudge = 15.0;
+			textWidthFudge = -30.0;
+		}
+	} else {
+		if ([self alignment] == NSLeftTextAlignment) {
+//			textMarginFudge = 15.0;
+			textWidthFudge = -15.0;
+		} else {
+			textMarginFudge = -15.0;
+		}
+	}
+	
+	richTextRect.size = [richText size];
+	
+	richTextRect.origin.x = cellFrame.origin.x + textMarginFudge;
+	
+	if (isFlipped) {
+		richTextRect.origin.y = cellFrame.origin.y + fontBaselineFudge + floor((cellFrame.size.height - richTextRect.size.height)/2.0);
+	} else {
+		richTextRect.origin.y = cellFrame.origin.y - 1.0 + fontBaselineFudge + ceil((cellFrame.size.height - richTextRect.size.height)/2.0);
+	}
+	
+	richTextRect.size.width = cellFrame.size.width + textWidthFudge;
+	
+	if (image) {
+		richTextRect.origin.x += (leftEdgePadding + imageSize.width + MD_INTER_SPACE);
+		richTextRect.size.width -= (leftEdgePadding + imageSize.width + MD_INTER_SPACE);
+	}
+	return richTextRect;
+}
+
+
+
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView {
+#if MD_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	
 	NSSize	imageSize = NSZeroSize;
 	NSPoint	imagePoint = NSZeroPoint;
 	
-	if ([self image]) {
-		imageSize = [[self image] size];
-		imagePoint = cellFrame.origin;
-		imagePoint.x += leftEdgePadding;
-		
-		if ([controlView isFlipped]) {
-			if (imageSize.height == 16.0) {
-				if (centerImageVertically) {
-					imagePoint.y += (imageSize.height + ceil((cellFrame.size.height - imageSize.height)/2.0));
-					
-				} else {
-					if (cellFrame.size.height >= 17.0 && cellFrame.size.height <= 18.0) {
-						// in other words, if the font size is 15 pt or 16 pt
-						imagePoint.y += imageSize.height;
-					} else {
-						imagePoint.y += (imageSize.height - 1.0);
-					}
-				}
-			} else if (imageSize.height == 32.0) {
-				imagePoint.y += imageSize.height;
-			}
-		} else {
-			if (imageSize.height == 16.0) {
-				if (cellFrame.size.height == 18.0) {
-					imagePoint.y += 1.0;
-				} else {
-					
-				}
-			} else if (imageSize.height == 32.0) {
-//				imagePoint.y += imageSize.height;
-			}
-		}
-		
+	if (image) {
+		imageSize = [image size];
+		imagePoint = [self calculatedImagePointForFrame:cellFrame imageSize:imageSize isFlipped:[controlView isFlipped]];
 	}
 	
 	NSMutableParagraphStyle *style = [[[NSParagraphStyle defaultParagraphStyle] mutableCopy] autorelease];
@@ -168,13 +253,8 @@
 	
 	if ([self isHighlighted]) {
 		
-		NSImage *tempImage = [self image];
-		id tempObject = [self objectValue];
-		
-#if MD_DEBUG
-		NSLog(@"[%@ %@] tempImage == %@, tempObject == %@, stringValue == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), tempImage, tempObject, [self stringValue]);
-#endif
-	
+		NSImage *tempImage = [image retain];
+		id tempObject = [[self objectValue] retain];
 		
 		[self setImage:nil];
 		[self setStringValue:@""];
@@ -184,6 +264,8 @@
 		[self setImage:tempImage];
 		[self setObjectValue:tempObject];
 		
+		[tempImage release];
+		[tempObject release];
 		
 		if ([[controlView window] isKeyWindow]) {
 			attributes = [NSDictionary dictionaryWithObjectsAndKeys:[self font],NSFontAttributeName,
@@ -202,67 +284,13 @@
 					  (isEnabled ? [self textColor] : [[NSColor controlTextColor] colorWithAlphaComponent:0.5]),NSForegroundColorAttributeName, nil];
 	}
 	
-	if ([self image]) {
-		
-		[[self image] compositeToPoint:imagePoint operation:NSCompositeSourceOver fraction:(isEnabled ? 1.0 : 0.5)];
+	if (image) {
+		[image compositeToPoint:imagePoint operation:NSCompositeSourceOver fraction:(isEnabled ? 1.0 : 0.5)];
 	}
 	
 	NSAttributedString *richText = [[[NSAttributedString alloc] initWithString:[self stringValue] attributes:attributes] autorelease];
 	
-	CGFloat fontSize = [[self font] pointSize];
-	CGFloat fontBaselineFudge = 0.0;
-	
-	if ([controlView isFlipped]) {
-		if (fontSize >= 12.0 && fontSize <= 14.0) {
-			fontBaselineFudge = -1.0;
-		} else if (fontSize == 16.0) {
-			fontBaselineFudge = 1.0;
-		}
-	} else {
-		if (fontSize >= 12.0 && fontSize <= 14.0) {
-			fontBaselineFudge = 1.0;
-		} else if (fontSize == 16.0) {
-			fontBaselineFudge = -1.0;
-		}
-	}
-	
-	CGFloat textMarginFudge = 0.0;
-	CGFloat textWidthFudge = 0.0;
-	
-	if ([self image] == nil) {
-		if ([self alignment] == NSLeftTextAlignment) {
-			textMarginFudge = 15.0;
-			textWidthFudge = -30.0;
-		} else {
-			textMarginFudge = 15.0;
-			textWidthFudge = -30.0;
-		}
-	} else {
-		if ([self alignment] == NSLeftTextAlignment) {
-//			textMarginFudge = 15.0;
-			textWidthFudge = -15.0;
-		} else {
-			textMarginFudge = -15.0;
-		}
-	}
-	
-	NSRect richTextRect;
-	richTextRect.size = [richText size];
-	
-	richTextRect.origin.x = cellFrame.origin.x + textMarginFudge;
-	
-	if ([controlView isFlipped]) {
-		richTextRect.origin.y = cellFrame.origin.y + fontBaselineFudge + floor((cellFrame.size.height - richTextRect.size.height)/2.0);
-	} else {
-		richTextRect.origin.y = cellFrame.origin.y - 1.0 + fontBaselineFudge + ceil((cellFrame.size.height - richTextRect.size.height)/2.0);
-	}
-	
-	richTextRect.size.width = cellFrame.size.width + textWidthFudge;
-	
-	if ([self image]) {
-		richTextRect.origin.x += (leftEdgePadding + imageSize.width + 6.0);
-		richTextRect.size.width -= (leftEdgePadding + imageSize.width + 6.0);
-	}
+	NSRect richTextRect = [self calculatedRichTextRectForFrame:cellFrame richText:richText fontSize:[[self font] pointSize] imageSize:imageSize isFlipped:[controlView isFlipped]];
 	
 	[richText drawInRect:richTextRect];
 	
@@ -283,69 +311,46 @@
 }
 
 
+
 - (NSSize)cellSize {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-		
+	
 	NSSize cellSize = [super cellSize];
 	
-	if ([self image] == nil) {
-		cellSize.width -= 30.0;
+	if (image == nil) {
+		cellSize.width += 30.0;
 	} else {
-		cellSize.width -= 31.0;
+		NSSize imageSize = [image size];
+		cellSize.width += (31.0 + imageSize.width + MD_INTER_SPACE);
 	}
 	return cellSize;
 }
 
 
 - (void)drawWithFrame:(NSRect)cellFrame inImage:(NSImage *)dragImage {
-//	NSLog(@"[MDTextFieldCell drawWithFrame:inImage:] %f,%f",cellFrame.origin.x,cellFrame.origin.y);
+#if MD_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	
-	if (debug) {
-		[dragImage lockFocus];
-//		[[[NSColor grayColor] colorWithAlphaComponent:0.37] set];
-		[[[NSColor redColor] colorWithAlphaComponent:0.37] set];
-		[NSBezierPath fillRect:cellFrame];
-		[dragImage unlockFocus];
-	}
+#if MD_DEBUG
+	[dragImage lockFocus];
+//	[[[NSColor grayColor] colorWithAlphaComponent:0.37] set];
+	[[[NSColor redColor] colorWithAlphaComponent:0.37] set];
+	[NSBezierPath fillRect:cellFrame];
+	[dragImage unlockFocus];
+#endif
 	
 	NSSize	imageSize = NSZeroSize;
 	NSPoint imagePoint = NSZeroPoint;
 	
-	if ([self image]) {
-		imageSize = [[self image] size];
-		imagePoint = cellFrame.origin;
-		imagePoint.x += leftEdgePadding;
-		
-		if ([dragImage isFlipped]) {
-//			NSLog(@"[MDTextFieldCell drawWithFrame:inImage:] dragImage isFlipped");
-			if (imageSize.height == 16.0) {
-				if (cellFrame.size.height >= 17.0 && cellFrame.size.height <= 18.0) {
-					// in other words, if the font size is 15 pt or 16 pt
-					imagePoint.y += imageSize.height;
-				} else {
-					imagePoint.y += (imageSize.height - 1.0);
-				}
-			} else if (imageSize.height == 32.0) {
-				imagePoint.y += imageSize.height;
-			}
-		} else {
-//			NSLog(@"[MDTextFieldCell drawWithFrame:inImage:] dragImage is NOT isFlipped");
-			if (imageSize.height == 16.0) {
-//				NSLog(@"[MDTextFieldCell drawWithFrame:inImage:] cellFrame.size.height == %f", cellFrame.size.height);
-				if (cellFrame.size.height == 18.0) {
-					imagePoint.y += 1.0;
-				} else {
-					
-				}
-			} else if (imageSize.height == 32.0) {
-				
-			}
-		}
+	if (image) {
+		imageSize = [image size];
+		imagePoint = [self calculatedImagePointForFrame:cellFrame imageSize:imageSize isFlipped:[dragImage isFlipped]];
 		
 		[dragImage lockFocus];
-		[[self image] compositeToPoint:imagePoint operation:NSCompositeSourceOver fraction:0.37];
+		[image compositeToPoint:imagePoint operation:NSCompositeSourceOver fraction:0.37];
 		[dragImage unlockFocus];
 	}
 	
@@ -353,74 +358,19 @@
 	
 	NSAttributedString *richText = [[[NSAttributedString alloc] initWithString:[self stringValue] attributes:attributes] autorelease];
 	
-	CGFloat fontSize = [[self font] pointSize];
-	CGFloat fontBaselineFudge = 0.0;
-	
-	if ([dragImage isFlipped]) {
-		if (fontSize >= 12.0 && fontSize <= 14.0) {
-			fontBaselineFudge = -1.0;
-		} else if (fontSize == 16.0) {
-			fontBaselineFudge = 1.0;
-		}
-	} else {
-		if (fontSize >= 12.0 && fontSize <= 14.0) {
-			fontBaselineFudge = 1.0;
-		} else if (fontSize == 16.0) {
-			fontBaselineFudge = -1.0;
-		}
-	}
-	
-	CGFloat textMarginFudge = 0.0;
-	CGFloat textWidthFudge = 0.0;
-	
-	
-	if ([self image] == nil) {
-		if ([self alignment] == NSLeftTextAlignment) {
-			textMarginFudge = 15.0;
-			textWidthFudge = -30.0;
-		} else {
-			textMarginFudge = 15.0;
-			textWidthFudge = -30.0;
-		}
-	} else {
-		if ([self alignment] == NSLeftTextAlignment) {
-//			textMarginFudge = 15.0;
-			textWidthFudge = -15.0;
-		} else {
-			textMarginFudge = -15.0;
-		}
-	}
-	
-	NSRect richTextRect;
-	
-	richTextRect.size = [richText size];
-	
-	richTextRect.origin.x = cellFrame.origin.x + textMarginFudge;
-	
-	if ([dragImage isFlipped]) {
-		richTextRect.origin.y = cellFrame.origin.y + fontBaselineFudge + floor((cellFrame.size.height - richTextRect.size.height)/2.0);
-	} else {
-		
-		richTextRect.origin.y = cellFrame.origin.y - 1.0 + fontBaselineFudge + ceil((cellFrame.size.height - richTextRect.size.height)/2.0);
-	}
-	
-	richTextRect.size.width = cellFrame.size.width + textWidthFudge;
-	
-	if ([self image]) {
-		richTextRect.origin.x += (leftEdgePadding + imageSize.width + 6.0);
-		richTextRect.size.width -= (leftEdgePadding + imageSize.width + 6.0);
-	}
+	NSRect richTextRect = [self calculatedRichTextRectForFrame:cellFrame richText:richText fontSize:[[self font] pointSize] imageSize:imageSize isFlipped:[dragImage isFlipped]];
 	
 	[dragImage lockFocus];
 	[richText drawInRect:richTextRect];
 	[dragImage unlockFocus];
-	
 }
 
 
 	
 - (NSArray *)hitRectsForFrame:(NSRect)cellFrame isFlipped:(BOOL)isFlipped {
-//	NSLog(@"[MDTextFieldCell hitRectsForFrame:isFlipped:] isFlipped == %@", (isFlipped ? @"YES" : @"NO"));
+#if MD_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	
 	NSMutableArray *hitRects = [NSMutableArray array];
 	
@@ -428,33 +378,9 @@
 	NSPoint imagePoint = NSZeroPoint;
 	NSRect	imageFrame = NSZeroRect;
 	
-	if ([self image]) {
-		imageSize = [[self image] size];
-		imagePoint = cellFrame.origin;
-		imagePoint.x += leftEdgePadding;
-		
-		if (isFlipped) {
-			if (imageSize.height == 16.0) {
-				if (cellFrame.size.height >= 17.0 && cellFrame.size.height <= 18.0) {
-					// in other words, if the font size is 15 pt or 16 pt
-//					imagePoint.y += imageSize.height;
-				} else {
-					imagePoint.y -= 1.0;
-				}
-			} else if (imageSize.height == 32.0) {
-//				imagePoint.y += imageSize.height;
-			}
-		} else {
-			if (imageSize.height == 16.0) {
-				if (cellFrame.size.height == 18.0) {
-					imagePoint.y += 1.0;
-				} else {
-					
-				}
-			} else if (imageSize.height == 32.0) {
-				
-			}
-		}
+	if (image) {
+		imageSize = [image size];
+		imagePoint = [self calculatedImagePointForFrame:cellFrame imageSize:imageSize isFlipped:isFlipped];
 		
 		imageFrame = NSMakeRect(imagePoint.x, imagePoint.y, imageSize.width, imageSize.height);
 		
@@ -469,62 +395,7 @@
 	
 	NSAttributedString *richText = [[[NSAttributedString alloc] initWithString:[self stringValue] attributes:attributes] autorelease];
 	
-	CGFloat fontSize = [[self font] pointSize];
-	CGFloat fontBaselineFudge = 0.0;
-	
-	if (isFlipped) {
-		if (fontSize >= 12.0 && fontSize <= 14.0) {
-			fontBaselineFudge = -1.0;
-		} else if (fontSize == 16.0) {
-			fontBaselineFudge = 1.0;
-		}
-	} else {
-		if (fontSize >= 12.0 && fontSize <= 14.0) {
-			fontBaselineFudge = 1.0;
-		} else if (fontSize == 16.0) {
-			fontBaselineFudge = -1.0;
-		}
-	}
-	
-	CGFloat textMarginFudge = 0.0;
-	CGFloat textWidthFudge = 0.0;
-	
-	if ([self image] == nil) {
-		if ([self alignment] == NSLeftTextAlignment) {
-			textMarginFudge = 15.0;
-			textWidthFudge = -30.0;
-		} else {
-			textMarginFudge = 15.0;
-			textWidthFudge = -30.0;
-		}
-	} else {
-		if ([self alignment] == NSLeftTextAlignment) {
-//			textMarginFudge = 15.0;
-			textWidthFudge = -15.0;
-		} else {
-			textMarginFudge = -15.0;
-		}
-	}
-	
-	NSRect richTextRect = NSZeroRect;
-	richTextRect.size = [richText size];
-	
-	if ([self alignment] == NSLeftTextAlignment) {
-		richTextRect.origin.x = cellFrame.origin.x + textMarginFudge;
-	} else {
-		richTextRect.origin.x = ((cellFrame.origin.x + cellFrame.size.width + textMarginFudge + textWidthFudge) - richTextRect.size.width);
-	}
-	
-	if (isFlipped) {
-		richTextRect.origin.y = cellFrame.origin.y + fontBaselineFudge + floor((cellFrame.size.height - richTextRect.size.height)/2.0);
-	} else {
-		richTextRect.origin.y = cellFrame.origin.y - 1.0 + fontBaselineFudge + ceil((cellFrame.size.height - richTextRect.size.height)/2.0);
-	}
-	
-	
-	if ([self image]) {
-		richTextRect.origin.x += (leftEdgePadding + imageSize.width + 6.0);
-	}
+	NSRect richTextRect = [self calculatedRichTextRectForFrame:cellFrame richText:richText fontSize:[[self font] pointSize] imageSize:imageSize isFlipped:isFlipped];
 	
 	[hitRects addObject:[NSValue valueWithRect:richTextRect]];
 	
@@ -533,7 +404,4 @@
 
 
 @end
-
-
-
 

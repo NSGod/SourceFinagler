@@ -7,22 +7,25 @@
 //  
 
 
-
 #import <Cocoa/Cocoa.h>
 
 
 @interface MDTextFieldCell : NSTextFieldCell <NSCoding, NSCopying> {
 	NSImage			*image;
-	BOOL			debug;
 	CGFloat			leftEdgePadding;
 	BOOL			centerImageVertically;
+
 }
 
 - (void)drawWithFrame:(NSRect)cellFrame inImage:(NSImage *)dragImage;
+
 - (NSArray *)hitRectsForFrame:(NSRect)cellFrame isFlipped:(BOOL)isFlipped;
+
 - (void)setLeftEdgePadding:(CGFloat)aPadding;
 - (CGFloat)leftEdgePadding;
+
 - (BOOL)centerImageVertically;
 - (void)setCenterImageVertically:(BOOL)value;
+
 @end
 
