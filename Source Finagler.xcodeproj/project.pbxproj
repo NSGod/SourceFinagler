@@ -116,7 +116,21 @@
 		C12D37DF12E269C000397411 /* MDFoundationAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C11B274F11BDE7AD004D4CC0 /* MDFoundationAdditions.h */; };
 		C12D37E012E269C000397411 /* MDFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C11B275011BDE7AD004D4CC0 /* MDFoundationAdditions.m */; };
 		C12D37E912E269DD00397411 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1A112E511D66720008BBABD /* CoreServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		C12E5E2712E6ADBC00A3A3A2 /* MDFileHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = C12E5E2612E6ADBC00A3A3A2 /* MDFileHandle.m */; };
+		C12F1022147B6B0300F398DE /* TextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
+		C12F102C147B6B2400F398DE /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA269613A2E1B900235C98 /* QTKit.framework */; };
+		C12F104C147B719100F398DE /* VTFFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C12F104A147B716C00F398DE /* VTFFile.cpp */; };
+		C12F10CB147B75A900F398DE /* TextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
+		C12F10D8147B75AA00F398DE /* VTF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1B95275124E73B200E83451 /* VTF.framework */; };
+		C12F10DD147B75AC00F398DE /* NVCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA7EA125E5C9600CA78FF /* NVCore.framework */; };
+		C12F10E2147B75AD00F398DE /* NVMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA8DE125E5DC300CA78FF /* NVMath.framework */; };
+		C12F10F5147B75AE00F398DE /* NVImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA8FD125E71A200CA78FF /* NVImage.framework */; };
+		C12F110A147B75AF00F398DE /* NVTextureTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA930125E72E300CA78FF /* NVTextureTools.framework */; };
+		C12F1125147B75D500F398DE /* TextureKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
+		C12F1140147B75DA00F398DE /* VTF.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1B95275124E73B200E83451 /* VTF.framework */; };
+		C12F116E147B75DF00F398DE /* NVCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA7EA125E5C9600CA78FF /* NVCore.framework */; };
+		C12F1190147B75E300F398DE /* NVMath.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA8DE125E5DC300CA78FF /* NVMath.framework */; };
+		C12F11AF147B75E700F398DE /* NVImage.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA8FD125E71A200CA78FF /* NVImage.framework */; };
+		C12F11D5147B75ED00F398DE /* NVTextureTools.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA930125E72E300CA78FF /* NVTextureTools.framework */; };
 		C12F35F612D7E24B00D28F26 /* TKDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C1249E123A0967004674B4 /* TKDocumentController.m */; };
 		C12F362212D7E45000D28F26 /* TKImageDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C169D9D0128A0A4A00653B05 /* TKImageDocument.m */; };
 		C12F362312D7E45100D28F26 /* TKImageDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = C101A6D6125281C700BD8091 /* TKImageDocument.xib */; };
@@ -186,7 +200,6 @@
 		C140EA3B1388CE9400027DD6 /* noteIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C140EA3A1388CE9400027DD6 /* noteIcon.icns */; };
 		C145AF1712BD8F22005D7E21 /* TextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C145AF5F12BD8F6A005D7E21 /* TextureKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
-		C1495DDF12BA9F8A0039822C /* MDHLPrivateInterfaces.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1495DDE12BA9F8A0039822C /* MDHLPrivateInterfaces.mm */; };
 		C14D700712F9E5C000A2FD7E /* MDTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124D5123A0A8A004674B4 /* MDTextFieldCell.m */; };
 		C15590CA12B6E04200FD0684 /* SFTI.icns in Resources */ = {isa = PBXBuildFile; fileRef = C15590C912B6E04200FD0684 /* SFTI.icns */; };
 		C155C9C813A06907008151E7 /* HLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; };
@@ -202,6 +215,8 @@
 		C16143CA1399975C0042B91B /* HKFileAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153C71396699600E32057 /* HKFileAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C16143D11399975C0042B91B /* HKFileAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F153C81396699600E32057 /* HKFileAdditions.m */; };
 		C169D929128A045C00653B05 /* MDCGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C15DD37E126A476300E44BDB /* MDCGImage.m */; };
+		C16A68F41600B62B0038A8B1 /* HLKitDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = C16A68F21600B6170038A8B1 /* HLKitDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C16A68F51600B62C0038A8B1 /* HLKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C16A68F11600B6170038A8B1 /* HLKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C16D5DAC136D39C400453365 /* VTF.h in Headers */ = {isa = PBXBuildFile; fileRef = C1B95367124E73EC00E83451 /* VTF.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C174299412A39CA200C54F08 /* NVTextureTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA930125E72E300CA78FF /* NVTextureTools.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C17429B812A39D9200C54F08 /* NVImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA8FD125E71A200CA78FF /* NVImage.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -260,7 +275,6 @@
 		C1B95399124E73EC00E83451 /* VMTWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1B95365124E73EC00E83451 /* VMTWrapper.cpp */; };
 		C1B9539A124E73EC00E83451 /* VMTWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = C1B95366124E73EC00E83451 /* VMTWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1B9539C124E73EC00E83451 /* VTFDXTn.h in Headers */ = {isa = PBXBuildFile; fileRef = C1B95368124E73EC00E83451 /* VTFDXTn.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C1B9539D124E73EC00E83451 /* VTFFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1B95369124E73EC00E83451 /* VTFFile.mm */; };
 		C1B9539E124E73EC00E83451 /* VTFFile.h in Headers */ = {isa = PBXBuildFile; fileRef = C1B9536A124E73EC00E83451 /* VTFFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1B9539F124E73EC00E83451 /* VTFFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = C1B9536B124E73EC00E83451 /* VTFFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1B953A0124E73EC00E83451 /* VTFLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1B9536C124E73EC00E83451 /* VTFLib.cpp */; };
@@ -440,11 +454,6 @@
 		C1C2C552127CBCA0003B24F6 /* MDTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1A117DD11D695EA008BBABD /* MDTableView.m */; };
 		C1C2C554127CBCA0003B24F6 /* MDUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BB6F5D11FCA90300B88BBE /* MDUserDefaults.m */; };
 		C1C2C556127CBCA0003B24F6 /* MDHLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124A2123A0990004674B4 /* MDHLDocument.m */; };
-		C1C2C557127CBCA0003B24F6 /* MDHLFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1C124A4123A0990004674B4 /* MDHLFile.mm */; };
-		C1C2C558127CBCA0003B24F6 /* MDNode.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124C8123A0A76004674B4 /* MDNode.m */; };
-		C1C2C559127CBCA0003B24F6 /* MDItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124CA123A0A76004674B4 /* MDItem.m */; };
-		C1C2C55A127CBCA0003B24F6 /* MDFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1C124CC123A0A76004674B4 /* MDFile.mm */; };
-		C1C2C55B127CBCA0003B24F6 /* MDFolder.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1C124CE123A0A76004674B4 /* MDFolder.mm */; };
 		C1C2C55C127CBCA0003B24F6 /* MDTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124D5123A0A8A004674B4 /* MDTextFieldCell.m */; };
 		C1C2C55D127CBCA0003B24F6 /* MDBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124D9123A0AEC004674B4 /* MDBrowser.m */; };
 		C1C2C55E127CBCA0003B24F6 /* MDBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124DB123A0AEC004674B4 /* MDBrowserCell.m */; };
@@ -479,17 +488,8 @@
 		C1C2C57C127CBCA0003B24F6 /* MDPrefsGeneralController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14DB243123D8EF5002D87FE /* MDPrefsGeneralController.m */; };
 		C1C2C57D127CBCA0003B24F6 /* MDTransparentView.m in Sources */ = {isa = PBXBuildFile; fileRef = C164771E124E8C470062B943 /* MDTransparentView.m */; };
 		C1C2C581127CBCA0003B24F6 /* MDPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C15B07C41254F46800F722B7 /* MDPreviewViewController.m */; };
-		C1C2C582127CBCA0003B24F6 /* MDFileAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C15B089D1255043800F722B7 /* MDFileAdditions.m */; };
-		C1C2C583127CBCA0003B24F6 /* MDFolderAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C187BC0D125539FF0082095E /* MDFolderAdditions.m */; };
 		C1C2C584127CBCA0003B24F6 /* MDQuickLookPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = C1ABAB6812563BD800CAAFEB /* MDQuickLookPanel.m */; };
 		C1C2C585127CBCA0003B24F6 /* MDImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C18250AE1262859600D3F663 /* MDImageView.m */; };
-		C1C2C58E127CBCA0003B24F6 /* MDGCFFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C17D34FD1279269300962584 /* MDGCFFile.mm */; };
-		C1C2C58F127CBCA0003B24F6 /* MDVPKFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C17D35041279270300962584 /* MDVPKFile.mm */; };
-		C1C2C590127CBCA0003B24F6 /* MDNCFFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1970763127C1C0F00EFE051 /* MDNCFFile.mm */; };
-		C1C2C591127CBCA0003B24F6 /* MDBSPFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C16374F2127C89E10013ABAF /* MDBSPFile.mm */; };
-		C1C2C592127CBCA0003B24F6 /* MDPAKFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C16374F5127C8A6E0013ABAF /* MDPAKFile.mm */; };
-		C1C2C593127CBCA0003B24F6 /* MDWADFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C16374F8127C8AC00013ABAF /* MDWADFile.mm */; };
-		C1C2C594127CBCA0003B24F6 /* MDXZPFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C16374FB127C8AFE0013ABAF /* MDXZPFile.mm */; };
 		C1C2C597127CBCA0003B24F6 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C11B279211BDFBB8004D4CC0 /* ApplicationServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1C2C598127CBCA0003B24F6 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C15520FE11D9939D00CCEDD3 /* Sparkle.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1C2C59A127CBCA0003B24F6 /* libcrypto.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C14D2214121B638E00AB4F96 /* libcrypto.0.9.7.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -561,8 +561,6 @@
 		C1E6E13E12BD50DF009D8AD6 /* NVImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA8FD125E71A200CA78FF /* NVImage.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1E6E13F12BD50E0009D8AD6 /* NVMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA8DE125E5DC300CA78FF /* NVMath.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1E6E14012BD50E1009D8AD6 /* NVCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA7EA125E5C9600CA78FF /* NVCore.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		C1F153941396638A00E32057 /* HLKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153931396638A00E32057 /* HLKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C1F153B3139663D300E32057 /* HLKitDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153B2139663D300E32057 /* HLKitDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1F153E31396699600E32057 /* HKBSPFile.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153C31396699600E32057 /* HKBSPFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1F153E41396699600E32057 /* HKBSPFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1F153C41396699600E32057 /* HKBSPFile.mm */; };
 		C1F153E51396699600E32057 /* HKFile.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153C51396699600E32057 /* HKFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -682,6 +680,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = C1224BEB13B06B9A009AA0F4;
 			remoteInfo = SourceFinaglerAgent;
+		};
+		C12F102A147B6B0F00F398DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C17319B11298D11400C29732;
+			remoteInfo = TextureKit;
+		};
+		C12F10B6147B756200F398DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C1580F0F139634DA00D5D4D8;
+			remoteInfo = HLKit;
 		};
 		C140E90F1388B75800027DD6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -870,6 +882,12 @@
 				C1224CD513B06EB1009AA0F4 /* HL.framework in Copy Frameworks */,
 				C1224CB213B06EAD009AA0F4 /* HLKit.framework in Copy Frameworks */,
 				C1224C9213B06EA7009AA0F4 /* SteamKit.framework in Copy Frameworks */,
+				C12F1125147B75D500F398DE /* TextureKit.framework in Copy Frameworks */,
+				C12F1140147B75DA00F398DE /* VTF.framework in Copy Frameworks */,
+				C12F116E147B75DF00F398DE /* NVCore.framework in Copy Frameworks */,
+				C12F1190147B75E300F398DE /* NVMath.framework in Copy Frameworks */,
+				C12F11AF147B75E700F398DE /* NVImage.framework in Copy Frameworks */,
+				C12F11D5147B75ED00F398DE /* NVTextureTools.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -988,8 +1006,8 @@
 		C12D372C12E14CD200397411 /* MDScopeBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDScopeBarView.m; sourceTree = "<group>"; };
 		C12DB4B3125FADE00051A751 /* TKDDSImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKDDSImageRep.h; sourceTree = "<group>"; };
 		C12DB4B4125FADE00051A751 /* TKDDSImageRep.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKDDSImageRep.mm; sourceTree = "<group>"; };
-		C12E5E2512E6ADBC00A3A3A2 /* MDFileHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDFileHandle.h; sourceTree = "<group>"; };
-		C12E5E2612E6ADBC00A3A3A2 /* MDFileHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDFileHandle.m; sourceTree = "<group>"; };
+		C12F104A147B716C00F398DE /* VTFFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VTFFile.cpp; path = VTF/VTFFile.cpp; sourceTree = "<group>"; };
+		C12F1056147B724400F398DE /* HLKit.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; path = HLKit.exp; sourceTree = "<group>"; };
 		C1305B6312F08DD700D68170 /* SimdVector_SSE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimdVector_SSE.h; path = NVTextureTools/nvmath/SimdVector_SSE.h; sourceTree = "<group>"; };
 		C1305B6412F08DD700D68170 /* SimdVector_VE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimdVector_VE.h; path = NVTextureTools/nvmath/SimdVector_VE.h; sourceTree = "<group>"; };
 		C1305B6512F08DD700D68170 /* SimdVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimdVector.h; path = NVTextureTools/nvmath/SimdVector.h; sourceTree = "<group>"; };
@@ -1039,8 +1057,6 @@
 		C145E8B51248D6CC00AF2D35 /* SND.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = SND.icns; sourceTree = "<group>"; };
 		C145E9691248DD3D00AF2D35 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		C145EDC51268D7BA00C34A08 /* DDS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = DDS.icns; sourceTree = "<group>"; };
-		C1495DDD12BA9F8A0039822C /* MDHLPrivateInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDHLPrivateInterfaces.h; sourceTree = "<group>"; };
-		C1495DDE12BA9F8A0039822C /* MDHLPrivateInterfaces.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDHLPrivateInterfaces.mm; sourceTree = "<group>"; };
 		C14CAABA1275E80100BD0CCA /* dxtlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dxtlib.h; path = NVTextureTools/dxtlib.h; sourceTree = "<group>"; };
 		C14CAAF51275E90F00BD0CCA /* ConvertColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConvertColor.h; path = NVTextureTools/dds/ConvertColor.h; sourceTree = "<group>"; };
 		C14CAAF61275E90F00BD0CCA /* ddsTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ddsTypes.h; path = NVTextureTools/dds/ddsTypes.h; sourceTree = "<group>"; };
@@ -1102,8 +1118,6 @@
 		C1594EA11384F247009CE606 /* usbOverdriveNote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usbOverdriveNote.png; sourceTree = "<group>"; };
 		C15B07C31254F46800F722B7 /* MDPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPreviewViewController.h; sourceTree = "<group>"; };
 		C15B07C41254F46800F722B7 /* MDPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPreviewViewController.m; sourceTree = "<group>"; };
-		C15B089C1255043800F722B7 /* MDFileAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDFileAdditions.h; sourceTree = "<group>"; };
-		C15B089D1255043800F722B7 /* MDFileAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDFileAdditions.m; sourceTree = "<group>"; };
 		C15DD10A126952FD00E44BDB /* SMD.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = SMD.icns; sourceTree = "<group>"; };
 		C15DD21012697F0B00E44BDB /* LMP.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = LMP.icns; sourceTree = "<group>"; };
 		C15DD37D126A476300E44BDB /* MDCGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCGImage.h; sourceTree = "<group>"; };
@@ -1111,14 +1125,6 @@
 		C15DD47B126AB93000E44BDB /* NUT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = NUT.icns; sourceTree = "<group>"; };
 		C15DD47C126AB93000E44BDB /* NUC.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = NUC.icns; sourceTree = "<group>"; };
 		C15DD652126B205500E44BDB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/VSSourceAddonFinaglerMainMenu.xib; sourceTree = "<group>"; };
-		C16374F1127C89E10013ABAF /* MDBSPFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDBSPFile.h; sourceTree = "<group>"; };
-		C16374F2127C89E10013ABAF /* MDBSPFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDBSPFile.mm; sourceTree = "<group>"; };
-		C16374F4127C8A6E0013ABAF /* MDPAKFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPAKFile.h; sourceTree = "<group>"; };
-		C16374F5127C8A6E0013ABAF /* MDPAKFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDPAKFile.mm; sourceTree = "<group>"; };
-		C16374F7127C8AC00013ABAF /* MDWADFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWADFile.h; sourceTree = "<group>"; };
-		C16374F8127C8AC00013ABAF /* MDWADFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDWADFile.mm; sourceTree = "<group>"; };
-		C16374FA127C8AFE0013ABAF /* MDXZPFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDXZPFile.h; sourceTree = "<group>"; };
-		C16374FB127C8AFE0013ABAF /* MDXZPFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDXZPFile.mm; sourceTree = "<group>"; };
 		C16476EA124E896A0062B943 /* sound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound.png; sourceTree = "<group>"; };
 		C16476ED124E8BA30062B943 /* exitFullScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exitFullScreen.png; sourceTree = "<group>"; };
 		C16476EE124E8BA30062B943 /* fitToScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fitToScreen.png; sourceTree = "<group>"; };
@@ -1140,6 +1146,8 @@
 		C16478F7124E988C0062B943 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		C169D9D0128A0A4A00653B05 /* TKImageDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKImageDocument.m; sourceTree = "<group>"; };
 		C169E27B1243825A0009C66E /* VDF.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VDF.icns; sourceTree = "<group>"; };
+		C16A68F11600B6170038A8B1 /* HLKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLKit.h; sourceTree = "<group>"; };
+		C16A68F21600B6170038A8B1 /* HLKitDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLKitDefines.h; sourceTree = "<group>"; };
 		C16C63DB12D75E5200D6F254 /* TKTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTexture.h; sourceTree = "<group>"; };
 		C16C63DC12D75E5200D6F254 /* TKTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTexture.m; sourceTree = "<group>"; };
 		C16D5E38136D3D9900453365 /* TextureKit.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; path = TextureKit.exp; sourceTree = "<group>"; };
@@ -1160,10 +1168,6 @@
 		C17A6EEA120A0BC40062CBC6 /* Collaboration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Collaboration.framework; path = System/Library/Frameworks/Collaboration.framework; sourceTree = SDKROOT; };
 		C17D34F212791CCA00962584 /* HLPackageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLPackageManager.h; sourceTree = "<group>"; };
 		C17D34F312791CCA00962584 /* HLPackageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLPackageManager.m; sourceTree = "<group>"; };
-		C17D34FC1279269300962584 /* MDGCFFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDGCFFile.h; sourceTree = "<group>"; };
-		C17D34FD1279269300962584 /* MDGCFFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDGCFFile.mm; sourceTree = "<group>"; };
-		C17D35031279270300962584 /* MDVPKFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDVPKFile.h; sourceTree = "<group>"; };
-		C17D35041279270300962584 /* MDVPKFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDVPKFile.mm; sourceTree = "<group>"; };
 		C181AC9912557677006810AB /* Source-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Source-Info.plist"; sourceTree = "<group>"; };
 		C181AD951255793B006810AB /* GetMetadataForFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GetMetadataForFile.mm; sourceTree = "<group>"; };
 		C181AD971255796E006810AB /* HLSpotlightMain.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = HLSpotlightMain.c; sourceTree = "<group>"; };
@@ -1172,16 +1176,12 @@
 		C181ADCC12557F28006810AB /* SCR.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = SCR.icns; sourceTree = "<group>"; };
 		C18250AD1262859600D3F663 /* MDImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDImageView.h; sourceTree = "<group>"; };
 		C18250AE1262859600D3F663 /* MDImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDImageView.m; sourceTree = "<group>"; };
-		C187BC0C125539FF0082095E /* MDFolderAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDFolderAdditions.h; sourceTree = "<group>"; };
-		C187BC0D125539FF0082095E /* MDFolderAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDFolderAdditions.m; sourceTree = "<group>"; };
 		C190888613932B2800656A78 /* VSGameAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSGameAdditions.h; sourceTree = "<group>"; };
 		C190888713932B2800656A78 /* VSGameAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSGameAdditions.m; sourceTree = "<group>"; };
 		C1908B5613935CD000656A78 /* MDImageTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDImageTextCell.h; sourceTree = "<group>"; };
 		C1908B5713935CD000656A78 /* MDImageTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDImageTextCell.m; sourceTree = "<group>"; };
 		C1908B5D13935F1000656A78 /* isRunning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = isRunning.png; sourceTree = "<group>"; };
 		C1967B8F125C327900037CDA /* VFE.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VFE.icns; sourceTree = "<group>"; };
-		C1970762127C1C0F00EFE051 /* MDNCFFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDNCFFile.h; sourceTree = "<group>"; };
-		C1970763127C1C0F00EFE051 /* MDNCFFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MDNCFFile.mm; sourceTree = "<group>"; };
 		C1A1096C11D4F149008BBABD /* com.valvesoftware.games.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = com.valvesoftware.games.plist; sourceTree = "<group>"; };
 		C1A10A2911D5124F008BBABD /* MDFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDFileManager.h; sourceTree = "<group>"; };
 		C1A10A2A11D5124F008BBABD /* MDFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDFileManager.m; sourceTree = "<group>"; };
@@ -1299,8 +1299,6 @@
 		C1C1249E123A0967004674B4 /* TKDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TKDocumentController.m; sourceTree = "<group>"; };
 		C1C124A1123A0990004674B4 /* MDHLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDHLDocument.h; sourceTree = "<group>"; };
 		C1C124A2123A0990004674B4 /* MDHLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MDHLDocument.m; sourceTree = "<group>"; };
-		C1C124A3123A0990004674B4 /* MDHLFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDHLFile.h; sourceTree = "<group>"; };
-		C1C124A4123A0990004674B4 /* MDHLFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = MDHLFile.mm; sourceTree = "<group>"; };
 		C1C124A8123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDAboutWindow.xib; sourceTree = "<group>"; };
 		C1C124AA123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDCopyOperationView.xib; sourceTree = "<group>"; };
 		C1C124AC123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDCopyOperationWindow.xib; sourceTree = "<group>"; };
@@ -1310,14 +1308,6 @@
 		C1C124B6123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDInspector.xib; sourceTree = "<group>"; };
 		C1C124B8123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDQuickLook.xib; sourceTree = "<group>"; };
 		C1C124BA123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDViewOptions.xib; sourceTree = "<group>"; };
-		C1C124C7123A0A76004674B4 /* MDNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDNode.h; sourceTree = "<group>"; };
-		C1C124C8123A0A76004674B4 /* MDNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MDNode.m; sourceTree = "<group>"; };
-		C1C124C9123A0A76004674B4 /* MDItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDItem.h; sourceTree = "<group>"; };
-		C1C124CA123A0A76004674B4 /* MDItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MDItem.m; sourceTree = "<group>"; };
-		C1C124CB123A0A76004674B4 /* MDFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDFile.h; sourceTree = "<group>"; };
-		C1C124CC123A0A76004674B4 /* MDFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = MDFile.mm; sourceTree = "<group>"; };
-		C1C124CD123A0A76004674B4 /* MDFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDFolder.h; sourceTree = "<group>"; };
-		C1C124CE123A0A76004674B4 /* MDFolder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = MDFolder.mm; sourceTree = "<group>"; };
 		C1C124D4123A0A8A004674B4 /* MDTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDTextFieldCell.h; sourceTree = "<group>"; };
 		C1C124D5123A0A8A004674B4 /* MDTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MDTextFieldCell.m; sourceTree = "<group>"; };
 		C1C124D8123A0AEC004674B4 /* MDBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MDBrowser.h; sourceTree = "<group>"; };
@@ -1498,8 +1488,6 @@
 		C1E6DFC512BD06E1009D8AD6 /* TKSFTIImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKSFTIImageRep.h; sourceTree = "<group>"; };
 		C1E6DFC612BD06E1009D8AD6 /* TKSFTIImageRep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKSFTIImageRep.m; sourceTree = "<group>"; };
 		C1E6DFCC12BD0B00009D8AD6 /* TextureKitDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureKitDefines.h; sourceTree = "<group>"; };
-		C1F153931396638A00E32057 /* HLKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLKit.h; sourceTree = SOURCE_ROOT; };
-		C1F153B2139663D300E32057 /* HLKitDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLKitDefines.h; sourceTree = SOURCE_ROOT; };
 		C1F153C31396699600E32057 /* HKBSPFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKBSPFile.h; sourceTree = "<group>"; };
 		C1F153C41396699600E32057 /* HKBSPFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HKBSPFile.mm; sourceTree = "<group>"; };
 		C1F153C51396699600E32057 /* HKFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKFile.h; sourceTree = "<group>"; };
@@ -1717,6 +1705,12 @@
 				C1224C3013B06C9F009AA0F4 /* HLKit.framework in Frameworks */,
 				C1224C3613B06CA0009AA0F4 /* HL.framework in Frameworks */,
 				C1224C4513B06CA6009AA0F4 /* Cocoa.framework in Frameworks */,
+				C12F10CB147B75A900F398DE /* TextureKit.framework in Frameworks */,
+				C12F10D8147B75AA00F398DE /* VTF.framework in Frameworks */,
+				C12F10DD147B75AC00F398DE /* NVCore.framework in Frameworks */,
+				C12F10E2147B75AD00F398DE /* NVMath.framework in Frameworks */,
+				C12F10F5147B75AE00F398DE /* NVImage.framework in Frameworks */,
+				C12F110A147B75AF00F398DE /* NVTextureTools.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1740,6 +1734,8 @@
 				C1F1579413969E3D00E32057 /* HL.framework in Frameworks */,
 				C1F1579F13969EAB00E32057 /* CoreServices.framework in Frameworks */,
 				C1CA27F113A2E28900235C98 /* Cocoa.framework in Frameworks */,
+				C12F1022147B6B0300F398DE /* TextureKit.framework in Frameworks */,
+				C12F102C147B6B2400F398DE /* QTKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2522,15 +2518,6 @@
 			name = PSD;
 			sourceTree = "<group>";
 		};
-		C17D34FB127924E300962584 /* HLFile */ = {
-			isa = PBXGroup;
-			children = (
-				C197075F127C1B7200EFE051 /* Abstract superclass */,
-				C1970760127C1B8200EFE051 /* Concrete subclasses */,
-			);
-			name = HLFile;
-			sourceTree = "<group>";
-		};
 		C181AD6E125578C3006810AB /* Source.mdimporter */ = {
 			isa = PBXGroup;
 			children = (
@@ -2541,58 +2528,6 @@
 				C181ADAF125579A0006810AB /* schema.strings */,
 			);
 			name = Source.mdimporter;
-			sourceTree = "<group>";
-		};
-		C181AE5912558E2C006810AB /* MDFile */ = {
-			isa = PBXGroup;
-			children = (
-				C1C124CB123A0A76004674B4 /* MDFile.h */,
-				C1C124CC123A0A76004674B4 /* MDFile.mm */,
-				C15B089C1255043800F722B7 /* MDFileAdditions.h */,
-				C15B089D1255043800F722B7 /* MDFileAdditions.m */,
-			);
-			name = MDFile;
-			sourceTree = "<group>";
-		};
-		C181AE5A12558E43006810AB /* MDFolder */ = {
-			isa = PBXGroup;
-			children = (
-				C1C124CD123A0A76004674B4 /* MDFolder.h */,
-				C1C124CE123A0A76004674B4 /* MDFolder.mm */,
-				C187BC0C125539FF0082095E /* MDFolderAdditions.h */,
-				C187BC0D125539FF0082095E /* MDFolderAdditions.m */,
-			);
-			name = MDFolder;
-			sourceTree = "<group>";
-		};
-		C197075F127C1B7200EFE051 /* Abstract superclass */ = {
-			isa = PBXGroup;
-			children = (
-				C1C124A3123A0990004674B4 /* MDHLFile.h */,
-				C1C124A4123A0990004674B4 /* MDHLFile.mm */,
-			);
-			name = "Abstract superclass";
-			sourceTree = "<group>";
-		};
-		C1970760127C1B8200EFE051 /* Concrete subclasses */ = {
-			isa = PBXGroup;
-			children = (
-				C17D34FC1279269300962584 /* MDGCFFile.h */,
-				C17D34FD1279269300962584 /* MDGCFFile.mm */,
-				C17D35031279270300962584 /* MDVPKFile.h */,
-				C17D35041279270300962584 /* MDVPKFile.mm */,
-				C1970762127C1C0F00EFE051 /* MDNCFFile.h */,
-				C1970763127C1C0F00EFE051 /* MDNCFFile.mm */,
-				C16374F1127C89E10013ABAF /* MDBSPFile.h */,
-				C16374F2127C89E10013ABAF /* MDBSPFile.mm */,
-				C16374F4127C8A6E0013ABAF /* MDPAKFile.h */,
-				C16374F5127C8A6E0013ABAF /* MDPAKFile.mm */,
-				C16374F7127C8AC00013ABAF /* MDWADFile.h */,
-				C16374F8127C8AC00013ABAF /* MDWADFile.mm */,
-				C16374FA127C8AFE0013ABAF /* MDXZPFile.h */,
-				C16374FB127C8AFE0013ABAF /* MDXZPFile.mm */,
-			);
-			name = "Concrete subclasses";
 			sourceTree = "<group>";
 		};
 		C1A1123011D60191008BBABD /* VSAuthorization */ = {
@@ -2730,6 +2665,7 @@
 				C1B9536B124E73EC00E83451 /* VTFFormat.h */,
 				C1B95368124E73EC00E83451 /* VTFDXTn.h */,
 				C1B9536A124E73EC00E83451 /* VTFFile.h */,
+				C12F104A147B716C00F398DE /* VTFFile.cpp */,
 				C1B95369124E73EC00E83451 /* VTFFile.mm */,
 				C1B9536F124E73EC00E83451 /* VTFMathlib.h */,
 				C1B9536E124E73EC00E83451 /* VTFMathlib.cpp */,
@@ -2841,8 +2777,6 @@
 				C1C124B1123A0A0C004674B4 /* MDHLDocumentLeopard.xib */,
 				C1C124B3123A0A0C004674B4 /* MDHLDocumentSnowLeopard.xib */,
 				C1580F68139634F900D5D4D8 /* HLKit framework */,
-				C17D34FB127924E300962584 /* HLFile */,
-				C1C124C6123A0A4E004674B4 /* Model */,
 				C1C124D3123A0A7C004674B4 /* Views */,
 				C1C12512123A0BEA004674B4 /* MDCopyOperation */,
 				C129D5711255C7CB004C6EDA /* MDPreviewViewController */,
@@ -2856,23 +2790,6 @@
 				C1C12521123A0C5D004674B4 /* MDAboutWindow */,
 			);
 			name = Document;
-			sourceTree = "<group>";
-		};
-		C1C124C6123A0A4E004674B4 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				C1C124C7123A0A76004674B4 /* MDNode.h */,
-				C1C124C8123A0A76004674B4 /* MDNode.m */,
-				C1C124C9123A0A76004674B4 /* MDItem.h */,
-				C1C124CA123A0A76004674B4 /* MDItem.m */,
-				C181AE5912558E2C006810AB /* MDFile */,
-				C181AE5A12558E43006810AB /* MDFolder */,
-				C1495DDD12BA9F8A0039822C /* MDHLPrivateInterfaces.h */,
-				C1495DDE12BA9F8A0039822C /* MDHLPrivateInterfaces.mm */,
-				C12E5E2512E6ADBC00A3A3A2 /* MDFileHandle.h */,
-				C12E5E2612E6ADBC00A3A3A2 /* MDFileHandle.m */,
-			);
-			name = Model;
 			sourceTree = "<group>";
 		};
 		C1C124D3123A0A7C004674B4 /* Views */ = {
@@ -3333,8 +3250,9 @@
 		C1F153C21396699600E32057 /* HLKit */ = {
 			isa = PBXGroup;
 			children = (
-				C1F153931396638A00E32057 /* HLKit.h */,
-				C1F153B2139663D300E32057 /* HLKitDefines.h */,
+				C16A68F11600B6170038A8B1 /* HLKit.h */,
+				C16A68F21600B6170038A8B1 /* HLKitDefines.h */,
+				C12F1056147B724400F398DE /* HLKit.exp */,
 				C1580F11139634DA00D5D4D8 /* HLKit-Info.plist */,
 				C1F15405139669D100E32057 /* Abstract superclass */,
 				C1F15406139669D500E32057 /* Concrete subclasses */,
@@ -3773,8 +3691,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1F153941396638A00E32057 /* HLKit.h in Headers */,
-				C1F153B3139663D300E32057 /* HLKitDefines.h in Headers */,
 				C1F153E31396699600E32057 /* HKBSPFile.h in Headers */,
 				C1F153E51396699600E32057 /* HKFile.h in Headers */,
 				C1F153E91396699600E32057 /* HKFileHandle.h in Headers */,
@@ -3791,6 +3707,8 @@
 				C1F154011396699600E32057 /* HKXZPFile.h in Headers */,
 				C1F157DE1396B05700E32057 /* HKFoundationAdditions.h in Headers */,
 				C16143CA1399975C0042B91B /* HKFileAdditions.h in Headers */,
+				C16A68F41600B62B0038A8B1 /* HLKitDefines.h in Headers */,
+				C16A68F51600B62C0038A8B1 /* HLKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4023,6 +3941,7 @@
 			);
 			dependencies = (
 				C1224C0C13B06C15009AA0F4 /* PBXTargetDependency */,
+				C12F10B7147B756200F398DE /* PBXTargetDependency */,
 			);
 			name = SourceFinaglerAgent;
 			productName = SourceFinaglerAgent;
@@ -4061,6 +3980,7 @@
 			);
 			dependencies = (
 				C1F1579313969E3100E32057 /* PBXTargetDependency */,
+				C12F102B147B6B0F00F398DE /* PBXTargetDependency */,
 			);
 			name = HLKit;
 			productName = HLKit;
@@ -4342,6 +4262,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 0440;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Source Finagler" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -4749,11 +4670,11 @@
 				C1B95395124E73EC00E83451 /* VMTStringNode.cpp in Sources */,
 				C1B95397124E73EC00E83451 /* VMTValueNode.cpp in Sources */,
 				C1B95399124E73EC00E83451 /* VMTWrapper.cpp in Sources */,
-				C1B9539D124E73EC00E83451 /* VTFFile.mm in Sources */,
 				C1B953A0124E73EC00E83451 /* VTFLib.cpp in Sources */,
 				C1B953A2124E73EC00E83451 /* VTFMathlib.cpp in Sources */,
 				C1B953A4124E73EC00E83451 /* VTFWrapper.cpp in Sources */,
 				C12D37E012E269C000397411 /* MDFoundationAdditions.m in Sources */,
+				C12F104C147B719100F398DE /* VTFFile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4809,11 +4730,6 @@
 				C1C2C552127CBCA0003B24F6 /* MDTableView.m in Sources */,
 				C1C2C554127CBCA0003B24F6 /* MDUserDefaults.m in Sources */,
 				C1C2C556127CBCA0003B24F6 /* MDHLDocument.m in Sources */,
-				C1C2C557127CBCA0003B24F6 /* MDHLFile.mm in Sources */,
-				C1C2C558127CBCA0003B24F6 /* MDNode.m in Sources */,
-				C1C2C559127CBCA0003B24F6 /* MDItem.m in Sources */,
-				C1C2C55A127CBCA0003B24F6 /* MDFile.mm in Sources */,
-				C1C2C55B127CBCA0003B24F6 /* MDFolder.mm in Sources */,
 				C1C2C55C127CBCA0003B24F6 /* MDTextFieldCell.m in Sources */,
 				C1C2C55D127CBCA0003B24F6 /* MDBrowser.m in Sources */,
 				C1C2C55E127CBCA0003B24F6 /* MDBrowserCell.m in Sources */,
@@ -4848,20 +4764,10 @@
 				C1C2C57C127CBCA0003B24F6 /* MDPrefsGeneralController.m in Sources */,
 				C1C2C57D127CBCA0003B24F6 /* MDTransparentView.m in Sources */,
 				C1C2C581127CBCA0003B24F6 /* MDPreviewViewController.m in Sources */,
-				C1C2C582127CBCA0003B24F6 /* MDFileAdditions.m in Sources */,
-				C1C2C583127CBCA0003B24F6 /* MDFolderAdditions.m in Sources */,
 				C1C2C584127CBCA0003B24F6 /* MDQuickLookPanel.m in Sources */,
 				C1C2C585127CBCA0003B24F6 /* MDImageView.m in Sources */,
-				C1C2C58E127CBCA0003B24F6 /* MDGCFFile.mm in Sources */,
-				C1C2C58F127CBCA0003B24F6 /* MDVPKFile.mm in Sources */,
-				C1C2C590127CBCA0003B24F6 /* MDNCFFile.mm in Sources */,
-				C1C2C591127CBCA0003B24F6 /* MDBSPFile.mm in Sources */,
-				C1C2C592127CBCA0003B24F6 /* MDPAKFile.mm in Sources */,
-				C1C2C593127CBCA0003B24F6 /* MDWADFile.mm in Sources */,
-				C1C2C594127CBCA0003B24F6 /* MDXZPFile.mm in Sources */,
 				C169D929128A045C00653B05 /* MDCGImage.m in Sources */,
 				C174EED0128A49C000817F81 /* MDCopyOperationViewController.m in Sources */,
-				C1495DDF12BA9F8A0039822C /* MDHLPrivateInterfaces.mm in Sources */,
 				C116FA0512D5549900551787 /* TKImageDocumentAccessoryViewController.m in Sources */,
 				C12F35F612D7E24B00D28F26 /* TKDocumentController.m in Sources */,
 				C12F362212D7E45000D28F26 /* TKImageDocument.m in Sources */,
@@ -4872,7 +4778,6 @@
 				C12F363512D7E46B00D28F26 /* TKImageExportPreset.m in Sources */,
 				C12F363712D7E46D00D28F26 /* TKImageExportController.m in Sources */,
 				C12D372D12E14CD200397411 /* MDScopeBarView.m in Sources */,
-				C12E5E2712E6ADBC00A3A3A2 /* MDFileHandle.m in Sources */,
 				C190888813932B2800656A78 /* VSGameAdditions.m in Sources */,
 				C1908B5813935CD000656A78 /* MDImageTextCell.m in Sources */,
 				C11CA5E713A4E84D006CC348 /* MDCopyOperationSeparatorView.m in Sources */,
@@ -5011,6 +4916,16 @@
 			isa = PBXTargetDependency;
 			target = C1224BEB13B06B9A009AA0F4 /* SourceFinaglerAgent */;
 			targetProxy = C1224D8013B09338009AA0F4 /* PBXContainerItemProxy */;
+		};
+		C12F102B147B6B0F00F398DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C17319B11298D11400C29732 /* TextureKit */;
+			targetProxy = C12F102A147B6B0F00F398DE /* PBXContainerItemProxy */;
+		};
+		C12F10B7147B756200F398DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C1580F0F139634DA00D5D4D8 /* HLKit */;
+			targetProxy = C12F10B6147B756200F398DE /* PBXContainerItemProxy */;
 		};
 		C140E9101388B75800027DD6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5350,15 +5265,18 @@
 					i386,
 					x86_64,
 				);
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
+				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
 		};
@@ -5369,13 +5287,16 @@
 					i386,
 					x86_64,
 				);
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_MODEL_TUNING = G5;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -5383,20 +5304,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "SourceFinaglerAgent-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				PREBINDING = NO;
 				PRODUCT_NAME = SourceFinaglerAgent;
-				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
 		};
@@ -5404,18 +5320,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_MODEL_TUNING = G5;
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "SourceFinaglerAgent-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				PREBINDING = NO;
 				PRODUCT_NAME = SourceFinaglerAgent;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
@@ -5425,15 +5335,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				EXPORTED_SYMBOLS_FILE = SteamKit.exp;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SteamKit_Prefix.pch;
@@ -5443,7 +5350,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = SteamKit;
 			};
 			name = Debug;
@@ -5452,15 +5358,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				EXPORTED_SYMBOLS_FILE = SteamKit.exp;
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SteamKit_Prefix.pch;
 				INFOPLIST_FILE = "SteamKit-Info.plist";
@@ -5469,14 +5371,15 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = SteamKit;
+				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		C155218111D9954B00CCEDD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -5487,9 +5390,9 @@
 		C155218211D9954B00CCEDD3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = Distribution;
 				ZERO_LINK = NO;
 			};
@@ -5499,20 +5402,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
+				EXPORTED_SYMBOLS_FILE = HLKit/HLKit.exp;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "HLKit-Info.plist";
 				INSTALL_PATH = "@rpath/";
-				PREBINDING = NO;
 				PRODUCT_NAME = HLKit;
 			};
 			name = Debug;
@@ -5521,20 +5422,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
+				EXPORTED_SYMBOLS_FILE = HLKit/HLKit.exp;
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "HLKit-Info.plist";
 				INSTALL_PATH = "@rpath/";
-				PREBINDING = NO;
 				PRODUCT_NAME = HLKit;
+				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5542,20 +5441,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "TextureKit-Info.plist";
 				INSTALL_PATH = "@rpath/";
-				PREBINDING = NO;
 				PRODUCT_NAME = TextureKit;
 			};
 			name = Debug;
@@ -5564,21 +5460,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				EXPORTED_SYMBOLS_FILE = TextureKit.exp;
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "TextureKit-Info.plist";
 				INSTALL_PATH = "@rpath/";
-				PREBINDING = NO;
 				PRODUCT_NAME = TextureKit;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
@@ -5590,11 +5481,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INSTALL_PATH = /usr/local/bin;
-				PREBINDING = NO;
 				PRODUCT_NAME = sourceFinaglerInstaller;
 			};
 			name = Debug;
@@ -5605,10 +5494,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
-				PREBINDING = NO;
 				PRODUCT_NAME = sourceFinaglerInstaller;
 				ZERO_LINK = NO;
 			};
@@ -5620,12 +5507,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INSTALL_PATH = /Library/PrivilegedHelperTools;
-				PREBINDING = NO;
 				PRODUCT_NAME = sourcefinaglerd;
 			};
 			name = Debug;
@@ -5637,10 +5522,8 @@
 				CODE_SIGN_IDENTITY = "Mark Douma";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /Library/PrivilegedHelperTools;
-				PREBINDING = NO;
 				PRODUCT_NAME = sourcefinaglerd;
 				ZERO_LINK = NO;
 			};
@@ -5650,23 +5533,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = "VTF/**";
 				INFOPLIST_FILE = VTF/Info.plist;
 				INSTALL_PATH = "@rpath/";
-				PREBINDING = NO;
 				PRODUCT_NAME = VTF;
 			};
 			name = Debug;
@@ -5675,25 +5550,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = NO;
 				GCC_WARN_SHADOW = NO;
 				HEADER_SEARCH_PATHS = "VTF/**";
 				INFOPLIST_FILE = VTF/Info.plist;
 				INSTALL_PATH = "@rpath/";
-				PREBINDING = NO;
 				PRODUCT_NAME = VTF;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
@@ -5703,21 +5569,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				HEADER_SEARCH_PATHS = "HL/**";
 				INFOPLIST_FILE = HL/HLInfo.plist;
 				INSTALL_PATH = "@rpath/";
 				LD_RUNPATH_SEARCH_PATHS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = HL;
 			};
 			name = Debug;
@@ -5726,21 +5588,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				HEADER_SEARCH_PATHS = "HL/**";
 				INFOPLIST_FILE = HL/HLInfo.plist;
 				INSTALL_PATH = "@rpath/";
 				LD_RUNPATH_SEARCH_PATHS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = HL;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
@@ -5750,16 +5607,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(BUILD_DIR)\"/**",
 					"\"$(SRCROOT)\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
 				GCC_WARN_SHADOW = NO;
@@ -5778,15 +5631,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(BUILD_DIR)\"/**",
 					"\"$(SRCROOT)\"",
 				);
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
 				GCC_WARN_SHADOW = NO;
@@ -5806,20 +5655,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Source-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				INSTALL_PATH = /Library/Spotlight;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
-				PREBINDING = NO;
 				PRODUCT_NAME = Source;
 				WRAPPER_EXTENSION = mdimporter;
 			};
@@ -5829,20 +5671,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "Source-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				INSTALL_PATH = /Library/Spotlight;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
-				PREBINDING = NO;
 				PRODUCT_NAME = Source;
 				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = mdimporter;
@@ -5853,14 +5686,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -5868,7 +5695,6 @@
 				INFOPLIST_FILE = "SourceImage-Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
-				PREBINDING = NO;
 				PRODUCT_NAME = SourceImage;
 				WRAPPER_EXTENSION = qlgenerator;
 			};
@@ -5878,22 +5704,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "SourceImage-Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
-				PREBINDING = NO;
 				PRODUCT_NAME = SourceImage;
 				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = qlgenerator;
@@ -5910,11 +5727,9 @@
 				);
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INSTALL_PATH = /usr/local/bin;
-				PREBINDING = NO;
 				PRODUCT_NAME = decompress;
 			};
 			name = Debug;
@@ -5929,10 +5744,8 @@
 				);
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
-				PREBINDING = NO;
 				PRODUCT_NAME = decompress;
 				ZERO_LINK = NO;
 			};
@@ -5942,22 +5755,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "NVTextureTools/NVCore-Info.plist";
 				INSTALL_PATH = "@rpath/";
-				PREBINDING = NO;
 				PRODUCT_NAME = NVCore;
 			};
 			name = Debug;
@@ -5966,22 +5772,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "NVTextureTools/NVCore-Info.plist";
 				INSTALL_PATH = "@rpath/";
-				PREBINDING = NO;
 				PRODUCT_NAME = NVCore;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
@@ -5991,22 +5788,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "NVTextureTools/NVMath-Info.plist";
 				INSTALL_PATH = "@rpath/";
-				PREBINDING = NO;
 				PRODUCT_NAME = NVMath;
 			};
 			name = Debug;
@@ -6015,22 +5805,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "NVTextureTools/NVMath-Info.plist";
 				INSTALL_PATH = "@rpath/";
-				PREBINDING = NO;
 				PRODUCT_NAME = NVMath;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
@@ -6040,23 +5821,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = "$(TARGET_BUILD_DIR)";
 				INFOPLIST_FILE = "NVTextureTools/NVImage-Info.plist";
 				INSTALL_PATH = "@rpath/";
-				PREBINDING = NO;
 				PRODUCT_NAME = NVImage;
 			};
 			name = Debug;
@@ -6065,23 +5839,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = "$(TARGET_BUILD_DIR)";
 				INFOPLIST_FILE = "NVTextureTools/NVImage-Info.plist";
 				INSTALL_PATH = "@rpath/";
-				PREBINDING = NO;
 				PRODUCT_NAME = NVImage;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
@@ -6091,17 +5856,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "NVTextureTools/NVTextureTools-Info.plist";
@@ -6110,7 +5869,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/NVTextureTools\"",
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = NVTextureTools;
 			};
 			name = Debug;
@@ -6119,18 +5877,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "NVTextureTools/NVTextureTools-Info.plist";
 				INSTALL_PATH = "@rpath/";
@@ -6138,7 +5888,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/NVTextureTools\"",
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = NVTextureTools;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
@@ -6148,14 +5897,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -6168,7 +5915,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = "Source Addon Finagler";
 			};
 			name = Debug;
@@ -6177,15 +5923,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
@@ -6197,7 +5939,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = "Source Addon Finagler";
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
