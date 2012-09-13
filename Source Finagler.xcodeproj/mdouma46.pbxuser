@@ -254,8 +254,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 369264484;
-			PBXWorkspaceStateSaveDate = 369264484;
+			PBXPerProjectTemplateStateSaveDate = 369264785;
+			PBXWorkspaceStateSaveDate = 369264785;
 		};
 		perUserProjectItems = {
 			C12F370512D8127800D28F26 /* PBXTextBookmark */ = C12F370512D8127800D28F26 /* PBXTextBookmark */;
@@ -919,117 +919,6 @@
 		modificationTime = 331146952.584328;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
-	};
-	C12A7E8712E6369800F79385 /* BodyPart.cpp */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {922, 1008}}";
-			sepNavSelRange = "{258, 0}";
-			sepNavVisRange = "{0, 701}";
-			sepNavWindowFrame = "{{287, 58}, {981, 1112}}";
-		};
-	};
-	C12A7E8812E6369800F79385 /* BodyPart.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {922, 1008}}";
-			sepNavSelRange = "{125, 0}";
-			sepNavVisRange = "{0, 640}";
-			sepNavWindowFrame = "{{410, 66}, {981, 1112}}";
-		};
-	};
-	C12A7E8912E6369800F79385 /* CMakeLists.txt */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {922, 1008}}";
-			sepNavSelRange = "{13, 0}";
-			sepNavVisRange = "{0, 353}";
-			sepNavWindowFrame = "{{479, 66}, {981, 1112}}";
-		};
-	};
-	C12A7E8A12E6369800F79385 /* MDL_README.txt */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {874, 1078}}";
-			sepNavSelRange = "{1334, 0}";
-			sepNavVisRange = "{0, 2578}";
-			sepNavWindowFrame = "{{730, 171}, {933, 887}}";
-		};
-	};
-	C12A7E8B12E6369800F79385 /* MDLLimits.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {661, 769}}";
-			sepNavSelRange = "{7, 0}";
-			sepNavVisRange = "{0, 219}";
-			sepNavWindowFrame = "{{682, 35}, {720, 873}}";
-		};
-	};
-	C12A7E8D12E6369800F79385 /* MDLReader.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1370, 2134}}";
-			sepNavSelRange = "{292, 0}";
-			sepNavVisRange = "{0, 1338}";
-			sepNavWindowFrame = "{{391, 123}, {952, 982}}";
-		};
-	};
-	C12A7E8F12E6369800F79385 /* MDLRoot.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1370, 680}}";
-			sepNavSelRange = "{108, 14}";
-			sepNavVisRange = "{0, 424}";
-			sepNavWindowFrame = "{{-1128, 180}, {933, 887}}";
-		};
-	};
-	C12A7E9012E6369800F79385 /* Mesh.cpp */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {922, 1008}}";
-			sepNavSelRange = "{68, 0}";
-			sepNavVisRange = "{0, 578}";
-			sepNavWindowFrame = "{{38, 40}, {981, 1112}}";
-		};
-	};
-	C12A7E9112E6369800F79385 /* Mesh.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {874, 847}}";
-			sepNavSelRange = "{1154, 0}";
-			sepNavVisRange = "{39, 1260}";
-			sepNavWindowFrame = "{{-966, 245}, {933, 887}}";
-		};
-	};
-	C12A7E9312E6369800F79385 /* Model.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {874, 847}}";
-			sepNavSelRange = "{1243, 0}";
-			sepNavVisRange = "{58, 1300}";
-			sepNavWindowFrame = "{{-1173, 223}, {933, 887}}";
-		};
-	};
-	C12A7E9412E6369800F79385 /* ReaderWriterMDL.cpp */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {868, 803}}";
-			sepNavSelRange = "{618, 0}";
-			sepNavVisRange = "{42, 1832}";
-			sepNavWindowFrame = "{{672, 316}, {927, 862}}";
-		};
-	};
-	C12A7E9512E6369800F79385 /* ReaderWriterMDL.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {868, 758}}";
-			sepNavSelRange = "{280, 0}";
-			sepNavVisRange = "{0, 468}";
-		};
-	};
-	C12A7E9712E6369800F79385 /* VTXReader.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {661, 2794}}";
-			sepNavSelRange = "{1445, 0}";
-			sepNavVisRange = "{1153, 1330}";
-			sepNavWindowFrame = "{{832, 305}, {720, 873}}";
-		};
-	};
-	C12A7E9912E6369800F79385 /* VVDReader.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {874, 1122}}";
-			sepNavSelRange = "{269, 0}";
-			sepNavVisRange = "{0, 1163}";
-			sepNavWindowFrame = "{{-1196, 245}, {933, 887}}";
-		};
 	};
 	C12A93E211C9A3D9001D8E90 /* MDProcessManager.h */ = {
 		uiCtxt = {

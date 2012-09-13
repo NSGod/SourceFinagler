@@ -961,25 +961,6 @@
 		C1279D3512DCB0EA0065F5D7 /* defaultPresets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = defaultPresets.plist; path = TextureFinagler/defaultPresets.plist; sourceTree = "<group>"; };
 		C129181F12E4F27C008E1878 /* TKMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKMaterial.h; path = TextureKit/TKMaterial.h; sourceTree = "<group>"; };
 		C129182012E4F27C008E1878 /* TKMaterial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKMaterial.m; path = TextureKit/TKMaterial.m; sourceTree = "<group>"; };
-		C12A7E8712E6369800F79385 /* BodyPart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BodyPart.cpp; sourceTree = "<group>"; };
-		C12A7E8812E6369800F79385 /* BodyPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BodyPart.h; sourceTree = "<group>"; };
-		C12A7E8912E6369800F79385 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		C12A7E8A12E6369800F79385 /* MDL_README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MDL_README.txt; sourceTree = "<group>"; };
-		C12A7E8B12E6369800F79385 /* MDLLimits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDLLimits.h; sourceTree = "<group>"; };
-		C12A7E8C12E6369800F79385 /* MDLReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MDLReader.cpp; sourceTree = "<group>"; };
-		C12A7E8D12E6369800F79385 /* MDLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDLReader.h; sourceTree = "<group>"; };
-		C12A7E8E12E6369800F79385 /* MDLRoot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MDLRoot.cpp; sourceTree = "<group>"; };
-		C12A7E8F12E6369800F79385 /* MDLRoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDLRoot.h; sourceTree = "<group>"; };
-		C12A7E9012E6369800F79385 /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
-		C12A7E9112E6369800F79385 /* Mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
-		C12A7E9212E6369800F79385 /* Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Model.cpp; sourceTree = "<group>"; };
-		C12A7E9312E6369800F79385 /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
-		C12A7E9412E6369800F79385 /* ReaderWriterMDL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReaderWriterMDL.cpp; sourceTree = "<group>"; };
-		C12A7E9512E6369800F79385 /* ReaderWriterMDL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderWriterMDL.h; sourceTree = "<group>"; };
-		C12A7E9612E6369800F79385 /* VTXReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VTXReader.cpp; sourceTree = "<group>"; };
-		C12A7E9712E6369800F79385 /* VTXReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTXReader.h; sourceTree = "<group>"; };
-		C12A7E9812E6369800F79385 /* VVDReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VVDReader.cpp; sourceTree = "<group>"; };
-		C12A7E9912E6369800F79385 /* VVDReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVDReader.h; sourceTree = "<group>"; };
 		C12A93E211C9A3D9001D8E90 /* MDProcessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDProcessManager.h; path = SourceFinagler/MDProcessManager.h; sourceTree = "<group>"; };
 		C12A93E311C9A3D9001D8E90 /* MDProcessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDProcessManager.m; path = SourceFinagler/MDProcessManager.m; sourceTree = "<group>"; };
 		C12A944811C9CDED001D8E90 /* MDResourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDResourceFile.h; path = SteamKit/MDResourceFile.h; sourceTree = "<group>"; };
@@ -2176,41 +2157,6 @@
 			name = MDPreviewViewController;
 			sourceTree = "<group>";
 		};
-		C12A7E6E12E6364500F79385 /* MDL (from OSG) */ = {
-			isa = PBXGroup;
-			children = (
-				C12A7E8612E6369800F79385 /* MDL */,
-			);
-			name = "MDL (from OSG)";
-			sourceTree = "<group>";
-		};
-		C12A7E8612E6369800F79385 /* MDL */ = {
-			isa = PBXGroup;
-			children = (
-				C12A7E8912E6369800F79385 /* CMakeLists.txt */,
-				C12A7E8A12E6369800F79385 /* MDL_README.txt */,
-				C12A7E8812E6369800F79385 /* BodyPart.h */,
-				C12A7E8712E6369800F79385 /* BodyPart.cpp */,
-				C12A7E8B12E6369800F79385 /* MDLLimits.h */,
-				C12A7E8D12E6369800F79385 /* MDLReader.h */,
-				C12A7E8C12E6369800F79385 /* MDLReader.cpp */,
-				C12A7E8F12E6369800F79385 /* MDLRoot.h */,
-				C12A7E8E12E6369800F79385 /* MDLRoot.cpp */,
-				C12A7E9112E6369800F79385 /* Mesh.h */,
-				C12A7E9012E6369800F79385 /* Mesh.cpp */,
-				C12A7E9312E6369800F79385 /* Model.h */,
-				C12A7E9212E6369800F79385 /* Model.cpp */,
-				C12A7E9512E6369800F79385 /* ReaderWriterMDL.h */,
-				C12A7E9412E6369800F79385 /* ReaderWriterMDL.cpp */,
-				C12A7E9712E6369800F79385 /* VTXReader.h */,
-				C12A7E9612E6369800F79385 /* VTXReader.cpp */,
-				C12A7E9912E6369800F79385 /* VVDReader.h */,
-				C12A7E9812E6369800F79385 /* VVDReader.cpp */,
-			);
-			name = MDL;
-			path = SourceFinagler/MDL;
-			sourceTree = "<group>";
-		};
 		C12F364312D7E5C500D28F26 /* TK Application stuff */ = {
 			isa = PBXGroup;
 			children = (
@@ -2467,7 +2413,6 @@
 			children = (
 				C16C63DB12D75E5200D6F254 /* TKTexture.h */,
 				C16C63DC12D75E5200D6F254 /* TKTexture.m */,
-				C12A7E6E12E6364500F79385 /* MDL (from OSG) */,
 			);
 			name = OpenGL;
 			sourceTree = "<group>";
