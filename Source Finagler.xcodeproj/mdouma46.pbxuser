@@ -163,7 +163,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					225,
+					182,
 					20,
 					48,
 					43,
@@ -237,7 +237,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXTargetDataSource_PrimaryAttribute;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					185,
+					142,
 					60,
 					20,
 					48,
@@ -254,8 +254,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 369259626;
-			PBXWorkspaceStateSaveDate = 369259626;
+			PBXPerProjectTemplateStateSaveDate = 369261368;
+			PBXWorkspaceStateSaveDate = 369261368;
 		};
 		perUserProjectItems = {
 			C12F365712D7E82400D28F26 /* PBXTextBookmark */ = C12F365712D7E82400D28F26 /* PBXTextBookmark */;
@@ -269,11 +269,8 @@
 			C12F370812D8127800D28F26 /* PBXTextBookmark */ = C12F370812D8127800D28F26 /* PBXTextBookmark */;
 			C12F370A12D8127800D28F26 /* PBXTextBookmark */ = C12F370A12D8127800D28F26 /* PBXTextBookmark */;
 			C14D705712F9F11E00A2FD7E /* PBXTextBookmark */ = C14D705712F9F11E00A2FD7E /* PBXTextBookmark */;
-			C150BCD4160273DC0020C015 /* PBXTextBookmark */ = C150BCD4160273DC0020C015 /* PBXTextBookmark */;
 			C150BD52160275090020C015 /* PBXTextBookmark */ = C150BD52160275090020C015 /* PBXTextBookmark */;
-			C16142A2139794FD0042B91B /* PBXTextBookmark */ = C16142A2139794FD0042B91B /* PBXTextBookmark */;
-			C16142A4139794FD0042B91B /* PBXTextBookmark */ = C16142A4139794FD0042B91B /* PBXTextBookmark */;
-			C163351B13B668D000D8F57B /* PBXTextBookmark */ = C163351B13B668D000D8F57B /* PBXTextBookmark */;
+			C150BE3D16027CFB0020C015 /* PBXTextBookmark */ = C150BE3D16027CFB0020C015 /* PBXTextBookmark */;
 			C163351C13B668D000D8F57B /* PBXTextBookmark */ = C163351C13B668D000D8F57B /* PBXTextBookmark */;
 			C163351E13B668D000D8F57B /* PBXTextBookmark */ = C163351E13B668D000D8F57B /* PBXTextBookmark */;
 			C163351F13B668D000D8F57B /* PBXTextBookmark */ = C163351F13B668D000D8F57B /* PBXTextBookmark */;
@@ -360,8 +357,8 @@
 	C1034A9111C5619C0054740E /* VSSteamManager.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1202, 2277}}";
-			sepNavSelRange = "{5622, 0}";
-			sepNavVisRange = "{3213, 2411}";
+			sepNavSelRange = "{442, 0}";
+			sepNavVisRange = "{0, 2091}";
 			sepNavWindowFrame = "{{287, 35}, {1261, 1023}}";
 		};
 	};
@@ -383,9 +380,9 @@
 	};
 	C103563711C5AF930054740E /* VSGame.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1145, 1716}}";
-			sepNavSelRange = "{1025, 11}";
-			sepNavVisRange = "{0, 1602}";
+			sepNavIntBoundsRect = "{{0, 0}, {1111, 1782}}";
+			sepNavSelRange = "{222, 0}";
+			sepNavVisRange = "{0, 776}";
 			sepNavWindowFrame = "{{209, 55}, {1070, 1003}}";
 		};
 	};
@@ -1944,7 +1941,7 @@
 			sepNavWindowFrame = "{{334, 73}, {1212, 1105}}";
 		};
 	};
-	C150BCD4160273DC0020C015 /* PBXTextBookmark */ = {
+	C150BD52160275090020C015 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = C1C1251B123A0C32004674B4 /* MDCopyOperationView.m */;
 		name = "MDCopyOperationView.m: 13";
@@ -1954,7 +1951,7 @@
 		vrLen = 0;
 		vrLoc = 0;
 	};
-	C150BD52160275090020C015 /* PBXTextBookmark */ = {
+	C150BE3D16027CFB0020C015 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = C1C1251B123A0C32004674B4 /* MDCopyOperationView.m */;
 		name = "MDCopyOperationView.m: 13";
@@ -2249,36 +2246,6 @@
 			sepNavVisRange = "{888, 987}";
 			sepNavWindowFrame = "{{262, 31}, {1241, 1027}}";
 		};
-	};
-	C16142A2139794FD0042B91B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = C140E76D13889E6B00027DD6 /* SteamKitDefines.h */;
-		name = "SteamKitDefines.h: 35";
-		rLen = 0;
-		rLoc = 698;
-		rType = 0;
-		vrLen = 986;
-		vrLoc = 0;
-	};
-	C16142A4139794FD0042B91B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = C1580E871396262F00D5D4D8 /* VSPrivateInterfaces.h */;
-		name = "VSPrivateInterfaces.h: 34";
-		rLen = 14;
-		rLoc = 760;
-		rType = 0;
-		vrLen = 1289;
-		vrLoc = 0;
-	};
-	C163351B13B668D000D8F57B /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = C103563611C5AF930054740E /* VSGame.h */;
-		name = "VSGame.h: 13";
-		rLen = 0;
-		rLoc = 227;
-		rType = 0;
-		vrLen = 1509;
-		vrLoc = 16;
 	};
 	C163351C13B668D000D8F57B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -3804,7 +3771,7 @@
 	};
 	C1C1251B123A0C32004674B4 /* MDCopyOperationView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {403, 1276}}";
+			sepNavIntBoundsRect = "{{0, 0}, {360, 1265}}";
 			sepNavSelRange = "{209, 0}";
 			sepNavVisRange = "{0, 0}";
 			sepNavWindowFrame = "{{926, 38}, {930, 1020}}";
