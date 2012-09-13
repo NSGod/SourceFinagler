@@ -1143,10 +1143,10 @@
 		C164771E124E8C470062B943 /* MDTransparentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTransparentView.m; sourceTree = "<group>"; };
 		C1647768124E91DB0062B943 /* TKVTFImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKVTFImageRep.h; path = TextureKit/TKVTFImageRep.h; sourceTree = "<group>"; };
 		C1647769124E91DB0062B943 /* TKVTFImageRep.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TKVTFImageRep.mm; path = TextureKit/TKVTFImageRep.mm; sourceTree = "<group>"; };
-		C1647893124E96FD0062B943 /* SourceImage-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SourceImage-Info.plist"; sourceTree = "<group>"; };
-		C16478F5124E988C0062B943 /* GenerateThumbnailForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenerateThumbnailForURL.m; sourceTree = "<group>"; };
-		C16478F6124E988C0062B943 /* GeneratePreviewForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratePreviewForURL.m; sourceTree = "<group>"; };
-		C16478F7124E988C0062B943 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		C1647893124E96FD0062B943 /* SourceImage-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "SourceImage-Info.plist"; path = "SourceImageQuickLook/SourceImage-Info.plist"; sourceTree = "<group>"; };
+		C16478F5124E988C0062B943 /* GenerateThumbnailForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenerateThumbnailForURL.m; path = SourceImageQuickLook/GenerateThumbnailForURL.m; sourceTree = "<group>"; };
+		C16478F6124E988C0062B943 /* GeneratePreviewForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GeneratePreviewForURL.m; path = SourceImageQuickLook/GeneratePreviewForURL.m; sourceTree = "<group>"; };
+		C16478F7124E988C0062B943 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = SourceImageQuickLook/main.c; sourceTree = "<group>"; };
 		C169D9D0128A0A4A00653B05 /* TKImageDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKImageDocument.m; sourceTree = "<group>"; };
 		C169E27B1243825A0009C66E /* VDF.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VDF.icns; path = Resources/VDF.icns; sourceTree = "<group>"; };
 		C16A68F11600B6170038A8B1 /* HLKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLKit.h; sourceTree = "<group>"; };
@@ -5692,11 +5692,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
-				INFOPLIST_FILE = "SourceImage-Info.plist";
+				INFOPLIST_FILE = "SourceImageQuickLook/SourceImage-Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
 				PRODUCT_NAME = SourceImage;
@@ -5709,10 +5708,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
-				INFOPLIST_FILE = "SourceImage-Info.plist";
+				INFOPLIST_FILE = "SourceImageQuickLook/SourceImage-Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
 				PRODUCT_NAME = SourceImage;
