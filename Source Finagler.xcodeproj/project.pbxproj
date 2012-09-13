@@ -1112,7 +1112,7 @@
 		C15594F612B75C8600FD0684 /* TKImageExportPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKImageExportPreview.m; sourceTree = "<group>"; };
 		C1580E871396262F00D5D4D8 /* VSPrivateInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSPrivateInterfaces.h; sourceTree = "<group>"; };
 		C1580F10139634DA00D5D4D8 /* HLKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HLKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C1580F11139634DA00D5D4D8 /* HLKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HLKit-Info.plist"; sourceTree = SOURCE_ROOT; };
+		C1580F11139634DA00D5D4D8 /* HLKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HLKit-Info.plist"; sourceTree = "<group>"; };
 		C1583BB512B3A51300A4AE2F /* TKImageExportController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKImageExportController.h; sourceTree = "<group>"; };
 		C1583BB612B3A51300A4AE2F /* TKImageExportController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKImageExportController.m; sourceTree = "<group>"; };
 		C1583BB812B3A55900A4AE2F /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TKImageExportPanel.xib; sourceTree = "<group>"; };
@@ -5416,7 +5416,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
-				INFOPLIST_FILE = "HLKit-Info.plist";
+				INFOPLIST_FILE = "HLKit/HLKit-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = HLKit;
 			};
@@ -5434,7 +5434,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
-				INFOPLIST_FILE = "HLKit-Info.plist";
+				INFOPLIST_FILE = "HLKit/HLKit-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = HLKit;
 				STRIP_INSTALLED_PRODUCT = YES;
