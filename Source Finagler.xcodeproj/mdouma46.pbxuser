@@ -254,11 +254,10 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 369258859;
-			PBXWorkspaceStateSaveDate = 369258859;
+			PBXPerProjectTemplateStateSaveDate = 369259076;
+			PBXWorkspaceStateSaveDate = 369259076;
 		};
 		perUserProjectItems = {
-			C10A8A381602713400791BEC /* PBXTextBookmark */ = C10A8A381602713400791BEC /* PBXTextBookmark */;
 			C12F365712D7E82400D28F26 /* PBXTextBookmark */ = C12F365712D7E82400D28F26 /* PBXTextBookmark */;
 			C12F365812D7E82400D28F26 /* PBXTextBookmark */ = C12F365812D7E82400D28F26 /* PBXTextBookmark */;
 			C12F36A012D7EA0C00D28F26 /* PBXTextBookmark */ = C12F36A012D7EA0C00D28F26 /* PBXTextBookmark */;
@@ -271,6 +270,7 @@
 			C12F370A12D8127800D28F26 /* PBXTextBookmark */ = C12F370A12D8127800D28F26 /* PBXTextBookmark */;
 			C14D705712F9F11E00A2FD7E /* PBXTextBookmark */ = C14D705712F9F11E00A2FD7E /* PBXTextBookmark */;
 			C150BC481602721D0020C015 /* PBXTextBookmark */ = C150BC481602721D0020C015 /* PBXTextBookmark */;
+			C150BCD4160273DC0020C015 /* PBXTextBookmark */ = C150BCD4160273DC0020C015 /* PBXTextBookmark */;
 			C16142A2139794FD0042B91B /* PBXTextBookmark */ = C16142A2139794FD0042B91B /* PBXTextBookmark */;
 			C16142A4139794FD0042B91B /* PBXTextBookmark */ = C16142A4139794FD0042B91B /* PBXTextBookmark */;
 			C163351B13B668D000D8F57B /* PBXTextBookmark */ = C163351B13B668D000D8F57B /* PBXTextBookmark */;
@@ -406,16 +406,6 @@
 		modificationTime = 331146952.504444;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
-	};
-	C10A8A381602713400791BEC /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = C1C1251B123A0C32004674B4 /* MDCopyOperationView.m */;
-		name = "MDCopyOperationView.m: 13";
-		rLen = 0;
-		rLoc = 209;
-		rType = 0;
-		vrLen = 0;
-		vrLoc = 0;
 	};
 	C10E24BB129C5DD900376192 /* TKVTFImageRep.mm:168 */ = {
 		isa = PBXFileBreakpoint;
@@ -1955,6 +1945,16 @@
 		};
 	};
 	C150BC481602721D0020C015 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C1C1251B123A0C32004674B4 /* MDCopyOperationView.m */;
+		name = "MDCopyOperationView.m: 13";
+		rLen = 0;
+		rLoc = 209;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	C150BCD4160273DC0020C015 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = C1C1251B123A0C32004674B4 /* MDCopyOperationView.m */;
 		name = "MDCopyOperationView.m: 13";
