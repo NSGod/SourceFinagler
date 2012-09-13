@@ -433,12 +433,12 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>453</integer>
+									<integer>446</integer>
 									<integer>444</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 7075}, {458, 915}}</string>
+							<string>{{0, 4480}, {458, 915}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -461,7 +461,7 @@
 							<real>414</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>62 84 901 974 0 0 1920 1058 </string>
+						<string>108 84 901 974 0 0 1920 1058 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -489,7 +489,7 @@
 										<key>_historyCapacity</key>
 										<integer>40</integer>
 										<key>bookmark</key>
-										<string>C150BEFD16027EFA0020C015</string>
+										<string>C150BFD016027FA40020C015</string>
 										<key>history</key>
 										<array>
 											<string>C12F365712D7E82400D28F26</string>
@@ -512,7 +512,7 @@
 											<string>C163352113B668D000D8F57B</string>
 											<string>C163352213B668D000D8F57B</string>
 											<string>C163352413B668D000D8F57B</string>
-											<string>C150BEA516027E200020C015</string>
+											<string>C150BEFD16027EFA0020C015</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -526,7 +526,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {421, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>62 84 901 974 0 0 1920 1058 </string>
+								<string>108 84 901 974 0 0 1920 1058 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -546,7 +546,7 @@
 								<key>Frame</key>
 								<string>{{0, 5}, {421, 928}}</string>
 								<key>RubberWindowFrame</key>
-								<string>62 84 901 974 0 0 1920 1058 </string>
+								<string>108 84 901 974 0 0 1920 1058 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -570,9 +570,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>C150BEFE16027EFA0020C015</string>
+				<string>C150BFD116027FA40020C015</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>C150BEFF16027EFA0020C015</string>
+				<string>C150BFD216027FA40020C015</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -726,7 +726,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>369262330.399593</real>
+	<real>369262500.80459702</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -747,7 +747,7 @@
 		<string>/Users/mdouma46/Developer/Source Finagler 2.0.3/Source Finagler.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>62 84 901 974 0 0 1920 1058 </string>
+	<string>108 84 901 974 0 0 1920 1058 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -777,7 +777,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1172, 339}}</string>
 								<key>RubberWindowFrame</key>
-								<string>601 108 1172 950 0 0 1920 1058 </string>
+								<string>630 108 1172 950 0 0 1920 1058 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -803,7 +803,7 @@
 								<key>Frame</key>
 								<string>{{0, 344}, {1172, 565}}</string>
 								<key>RubberWindowFrame</key>
-								<string>601 108 1172 950 0 0 1920 1058 </string>
+								<string>630 108 1172 950 0 0 1920 1058 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXBuildResultsModule</string>
@@ -826,7 +826,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>C17697860FECDBDA0095D05A</string>
-				<string>C150BEFC16027EF90020C015</string>
+				<string>C150BFCF16027FA30020C015</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -835,7 +835,7 @@
 			<key>WindowContentMinSize</key>
 			<string>486 300</string>
 			<key>WindowString</key>
-			<string>601 108 1172 950 0 0 1920 1058 </string>
+			<string>630 108 1172 950 0 0 1920 1058 </string>
 			<key>WindowToolGUID</key>
 			<string>C17697860FECDBDA0095D05A</string>
 			<key>WindowToolIsVisible</key>

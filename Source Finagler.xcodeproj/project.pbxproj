@@ -1445,8 +1445,8 @@
 		C1C2C63D127CBED1003B24F6 /* Source.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Source.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C2C661127CBEF7003B24F6 /* SourceImage.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SourceImage.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C8E9EA1279A0CE00DAAF7C /* VTA.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VTA.icns; path = Resources/VTA.icns; sourceTree = "<group>"; };
-		C1C9AE1E139A708800C32D8A /* SourceFinaglerAgent-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SourceFinaglerAgent-Info.plist"; sourceTree = "<group>"; };
-		C1C9AE21139A70E600C32D8A /* SourceFinaglerAgentMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SourceFinaglerAgentMain.m; sourceTree = "<group>"; };
+		C1C9AE1E139A708800C32D8A /* SourceFinaglerAgent-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "SourceFinaglerAgent-Info.plist"; path = "SourceFinaglerAgent/SourceFinaglerAgent-Info.plist"; sourceTree = "<group>"; };
+		C1C9AE21139A70E600C32D8A /* SourceFinaglerAgentMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SourceFinaglerAgentMain.m; path = SourceFinaglerAgent/SourceFinaglerAgentMain.m; sourceTree = "<group>"; };
 		C1CA269613A2E1B900235C98 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		C1CA27D913A2E1F900235C98 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C1CA284F13A2E2C100235C98 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
@@ -5313,7 +5313,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
-				INFOPLIST_FILE = "SourceFinaglerAgent-Info.plist";
+				INFOPLIST_FILE = "SourceFinaglerAgent/SourceFinaglerAgent-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = SourceFinaglerAgent;
@@ -5327,7 +5327,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
-				INFOPLIST_FILE = "SourceFinaglerAgent-Info.plist";
+				INFOPLIST_FILE = "SourceFinaglerAgent/SourceFinaglerAgent-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = SourceFinaglerAgent;
