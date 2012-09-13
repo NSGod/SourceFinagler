@@ -363,6 +363,9 @@
 								<string>C170261B1284BCBE0056A23D</string>
 								<string>C116F85C12D5302500551787</string>
 								<string>C1583BBE12B3AB7700A4AE2F</string>
+								<string>C155936A12B71D0E00FD0684</string>
+								<string>C1D541C5129B4B3300504D66</string>
+								<string>C1731B6C12993EB400C29732</string>
 								<string>C15DD37C126A471E00E44BDB</string>
 								<string>C1C1243F1239F3DD004674B4</string>
 								<string>C1C124A0123A097C004674B4</string>
@@ -436,12 +439,17 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>484</integer>
-									<integer>473</integer>
+									<integer>204</integer>
+									<integer>203</integer>
+									<integer>189</integer>
+									<integer>103</integer>
+									<integer>102</integer>
+									<integer>2</integer>
+									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 7568}, {458, 915}}</string>
+							<string>{{0, 7606}, {458, 915}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -464,7 +472,7 @@
 							<real>414</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>12 84 1085 974 0 0 1920 1058 </string>
+						<string>73 84 1085 974 0 0 1920 1058 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -491,16 +499,9 @@
 										<string>MDCopyOperationView.m</string>
 										<key>history</key>
 										<array>
-											<string>C12F365712D7E82400D28F26</string>
-											<string>C12F365812D7E82400D28F26</string>
-											<string>C12F36A012D7EA0C00D28F26</string>
-											<string>C12F36A612D7EA0C00D28F26</string>
-											<string>C12F36A712D7EA0C00D28F26</string>
-											<string>C12F36A812D7EA0C00D28F26</string>
 											<string>C12F370512D8127800D28F26</string>
 											<string>C12F370612D8127800D28F26</string>
 											<string>C12F370812D8127800D28F26</string>
-											<string>C12F370A12D8127800D28F26</string>
 											<string>C1F1581B1396B81500E32057</string>
 										</array>
 									</dict>
@@ -515,7 +516,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {605, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>12 84 1085 974 0 0 1920 1058 </string>
+								<string>73 84 1085 974 0 0 1920 1058 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -535,7 +536,7 @@
 								<key>Frame</key>
 								<string>{{0, 5}, {605, 928}}</string>
 								<key>RubberWindowFrame</key>
-								<string>12 84 1085 974 0 0 1920 1058 </string>
+								<string>73 84 1085 974 0 0 1920 1058 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -559,9 +560,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>C150C137160286BD0020C015</string>
+				<string>C150C17B160288310020C015</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>C150C138160286BD0020C015</string>
+				<string>C150C17C160288310020C015</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -715,7 +716,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>369264317.04303402</real>
+	<real>369264689.52472597</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -736,7 +737,7 @@
 		<string>/Users/mdouma46/Developer/Source Finagler 2.0.3/Source Finagler.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>12 84 1085 974 0 0 1920 1058 </string>
+	<string>73 84 1085 974 0 0 1920 1058 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -815,7 +816,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>C17697860FECDBDA0095D05A</string>
-				<string>C150C136160286BB0020C015</string>
+				<string>C150C17A1602882A0020C015</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>

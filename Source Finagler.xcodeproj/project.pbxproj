@@ -939,8 +939,8 @@
 		C1137866128072C500C87072 /* MDCopyOperationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCopyOperationViewController.h; path = SourceFinagler/MDCopyOperationViewController.h; sourceTree = "<group>"; };
 		C1137867128072C500C87072 /* MDCopyOperationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCopyOperationViewController.m; path = SourceFinagler/MDCopyOperationViewController.m; sourceTree = "<group>"; };
 		C116F6EB12CFE71D00551787 /* viewMipmapBrowserCapsuleStyle.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = viewMipmapBrowserCapsuleStyle.pdf; path = Resources/viewMipmapBrowserCapsuleStyle.pdf; sourceTree = "<group>"; };
-		C116F85812D5301400551787 /* TKImageDocumentAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKImageDocumentAccessoryViewController.h; sourceTree = "<group>"; };
-		C116F85912D5301400551787 /* TKImageDocumentAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKImageDocumentAccessoryViewController.m; sourceTree = "<group>"; };
+		C116F85812D5301400551787 /* TKImageDocumentAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageDocumentAccessoryViewController.h; path = TextureFinagler/TKImageDocumentAccessoryViewController.h; sourceTree = "<group>"; };
+		C116F85912D5301400551787 /* TKImageDocumentAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageDocumentAccessoryViewController.m; path = TextureFinagler/TKImageDocumentAccessoryViewController.m; sourceTree = "<group>"; };
 		C116FAFB12D588A400551787 /* viewFrameBrowserCapsuleStyle.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = viewFrameBrowserCapsuleStyle.pdf; path = Resources/viewFrameBrowserCapsuleStyle.pdf; sourceTree = "<group>"; };
 		C11B274B11BDE755004D4CC0 /* MDFolderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDFolderManager.h; path = SteamKit/MDFolderManager.h; sourceTree = "<group>"; };
 		C11B274C11BDE755004D4CC0 /* MDFolderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDFolderManager.m; path = SteamKit/MDFolderManager.m; sourceTree = "<group>"; };
@@ -949,7 +949,7 @@
 		C11B275411BDE826004D4CC0 /* MDAppKitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDAppKitAdditions.h; path = SourceFinagler/MDAppKitAdditions.h; sourceTree = "<group>"; };
 		C11B275511BDE826004D4CC0 /* MDAppKitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDAppKitAdditions.m; path = SourceFinagler/MDAppKitAdditions.m; sourceTree = "<group>"; };
 		C11B279211BDFBB8004D4CC0 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
-		C11C5AC4126844E400B7E51E /* TKImageDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKImageDocument.h; sourceTree = "<group>"; };
+		C11C5AC4126844E400B7E51E /* TKImageDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageDocument.h; path = TextureFinagler/TKImageDocument.h; sourceTree = "<group>"; };
 		C11CA5E513A4E84D006CC348 /* MDCopyOperationSeparatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCopyOperationSeparatorView.h; path = SourceFinagler/MDCopyOperationSeparatorView.h; sourceTree = "<group>"; };
 		C11CA5E613A4E84D006CC348 /* MDCopyOperationSeparatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCopyOperationSeparatorView.m; path = SourceFinagler/MDCopyOperationSeparatorView.m; sourceTree = "<group>"; };
 		C11CA69613A4F9FB006CC348 /* MDCopyOperationContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCopyOperationContentView.h; path = SourceFinagler/MDCopyOperationContentView.h; sourceTree = "<group>"; };
@@ -958,28 +958,28 @@
 		C1267035125D1A0B00725F14 /* VAS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VAS.icns; path = Resources/VAS.icns; sourceTree = "<group>"; };
 		C1275F60129182C40041ACD7 /* VSSourceAddon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSSourceAddon.h; path = SourceAddonFinagler/VSSourceAddon.h; sourceTree = "<group>"; };
 		C1275F61129182C40041ACD7 /* VSSourceAddon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSSourceAddon.m; path = SourceAddonFinagler/VSSourceAddon.m; sourceTree = "<group>"; };
-		C1279D3512DCB0EA0065F5D7 /* defaultPresets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = defaultPresets.plist; sourceTree = "<group>"; };
+		C1279D3512DCB0EA0065F5D7 /* defaultPresets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = defaultPresets.plist; path = TextureFinagler/defaultPresets.plist; sourceTree = "<group>"; };
 		C129181F12E4F27C008E1878 /* TKMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKMaterial.h; path = TextureKit/TKMaterial.h; sourceTree = "<group>"; };
 		C129182012E4F27C008E1878 /* TKMaterial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKMaterial.m; path = TextureKit/TKMaterial.m; sourceTree = "<group>"; };
-		C12A7E8712E6369800F79385 /* BodyPart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BodyPart.cpp; path = ../SourceFinagler/MDL/BodyPart.cpp; sourceTree = "<group>"; };
-		C12A7E8812E6369800F79385 /* BodyPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BodyPart.h; path = ../SourceFinagler/MDL/BodyPart.h; sourceTree = "<group>"; };
-		C12A7E8912E6369800F79385 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CMakeLists.txt; path = ../SourceFinagler/MDL/CMakeLists.txt; sourceTree = "<group>"; };
-		C12A7E8A12E6369800F79385 /* MDL_README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = MDL_README.txt; path = ../SourceFinagler/MDL/MDL_README.txt; sourceTree = "<group>"; };
-		C12A7E8B12E6369800F79385 /* MDLLimits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDLLimits.h; path = ../SourceFinagler/MDL/MDLLimits.h; sourceTree = "<group>"; };
-		C12A7E8C12E6369800F79385 /* MDLReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MDLReader.cpp; path = ../SourceFinagler/MDL/MDLReader.cpp; sourceTree = "<group>"; };
-		C12A7E8D12E6369800F79385 /* MDLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDLReader.h; path = ../SourceFinagler/MDL/MDLReader.h; sourceTree = "<group>"; };
-		C12A7E8E12E6369800F79385 /* MDLRoot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MDLRoot.cpp; path = ../SourceFinagler/MDL/MDLRoot.cpp; sourceTree = "<group>"; };
-		C12A7E8F12E6369800F79385 /* MDLRoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDLRoot.h; path = ../SourceFinagler/MDL/MDLRoot.h; sourceTree = "<group>"; };
-		C12A7E9012E6369800F79385 /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Mesh.cpp; path = ../SourceFinagler/MDL/Mesh.cpp; sourceTree = "<group>"; };
-		C12A7E9112E6369800F79385 /* Mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mesh.h; path = ../SourceFinagler/MDL/Mesh.h; sourceTree = "<group>"; };
-		C12A7E9212E6369800F79385 /* Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Model.cpp; path = ../SourceFinagler/MDL/Model.cpp; sourceTree = "<group>"; };
-		C12A7E9312E6369800F79385 /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Model.h; path = ../SourceFinagler/MDL/Model.h; sourceTree = "<group>"; };
-		C12A7E9412E6369800F79385 /* ReaderWriterMDL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ReaderWriterMDL.cpp; path = ../SourceFinagler/MDL/ReaderWriterMDL.cpp; sourceTree = "<group>"; };
-		C12A7E9512E6369800F79385 /* ReaderWriterMDL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReaderWriterMDL.h; path = ../SourceFinagler/MDL/ReaderWriterMDL.h; sourceTree = "<group>"; };
-		C12A7E9612E6369800F79385 /* VTXReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VTXReader.cpp; path = ../SourceFinagler/MDL/VTXReader.cpp; sourceTree = "<group>"; };
-		C12A7E9712E6369800F79385 /* VTXReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VTXReader.h; path = ../SourceFinagler/MDL/VTXReader.h; sourceTree = "<group>"; };
-		C12A7E9812E6369800F79385 /* VVDReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VVDReader.cpp; path = ../SourceFinagler/MDL/VVDReader.cpp; sourceTree = "<group>"; };
-		C12A7E9912E6369800F79385 /* VVDReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VVDReader.h; path = ../SourceFinagler/MDL/VVDReader.h; sourceTree = "<group>"; };
+		C12A7E8712E6369800F79385 /* BodyPart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BodyPart.cpp; sourceTree = "<group>"; };
+		C12A7E8812E6369800F79385 /* BodyPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BodyPart.h; sourceTree = "<group>"; };
+		C12A7E8912E6369800F79385 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		C12A7E8A12E6369800F79385 /* MDL_README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MDL_README.txt; sourceTree = "<group>"; };
+		C12A7E8B12E6369800F79385 /* MDLLimits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDLLimits.h; sourceTree = "<group>"; };
+		C12A7E8C12E6369800F79385 /* MDLReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MDLReader.cpp; sourceTree = "<group>"; };
+		C12A7E8D12E6369800F79385 /* MDLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDLReader.h; sourceTree = "<group>"; };
+		C12A7E8E12E6369800F79385 /* MDLRoot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MDLRoot.cpp; sourceTree = "<group>"; };
+		C12A7E8F12E6369800F79385 /* MDLRoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDLRoot.h; sourceTree = "<group>"; };
+		C12A7E9012E6369800F79385 /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		C12A7E9112E6369800F79385 /* Mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
+		C12A7E9212E6369800F79385 /* Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Model.cpp; sourceTree = "<group>"; };
+		C12A7E9312E6369800F79385 /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
+		C12A7E9412E6369800F79385 /* ReaderWriterMDL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReaderWriterMDL.cpp; sourceTree = "<group>"; };
+		C12A7E9512E6369800F79385 /* ReaderWriterMDL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderWriterMDL.h; sourceTree = "<group>"; };
+		C12A7E9612E6369800F79385 /* VTXReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VTXReader.cpp; sourceTree = "<group>"; };
+		C12A7E9712E6369800F79385 /* VTXReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTXReader.h; sourceTree = "<group>"; };
+		C12A7E9812E6369800F79385 /* VVDReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VVDReader.cpp; sourceTree = "<group>"; };
+		C12A7E9912E6369800F79385 /* VVDReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVDReader.h; sourceTree = "<group>"; };
 		C12A93E211C9A3D9001D8E90 /* MDProcessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDProcessManager.h; path = SourceFinagler/MDProcessManager.h; sourceTree = "<group>"; };
 		C12A93E311C9A3D9001D8E90 /* MDProcessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDProcessManager.m; path = SourceFinagler/MDProcessManager.m; sourceTree = "<group>"; };
 		C12A944811C9CDED001D8E90 /* MDResourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDResourceFile.h; path = SteamKit/MDResourceFile.h; sourceTree = "<group>"; };
@@ -987,8 +987,8 @@
 		C12B4DA913B7179B0096FC0E /* ForEach.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForEach.h; path = NVTextureTools/nvcore/ForEach.h; sourceTree = "<group>"; };
 		C12B4DBE13B717EA0096FC0E /* KtxFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = KtxFile.cpp; path = NVTextureTools/nvimage/KtxFile.cpp; sourceTree = "<group>"; };
 		C12B4DBF13B717EA0096FC0E /* KtxFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KtxFile.h; path = NVTextureTools/nvimage/KtxFile.h; sourceTree = "<group>"; };
-		C12C8DF2129226E000C8E667 /* TKImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKImageView.h; sourceTree = "<group>"; };
-		C12C8DF3129226E000C8E667 /* TKImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKImageView.m; sourceTree = "<group>"; };
+		C12C8DF2129226E000C8E667 /* TKImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageView.h; path = TextureFinagler/TKImageView.h; sourceTree = "<group>"; };
+		C12C8DF3129226E000C8E667 /* TKImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageView.m; path = TextureFinagler/TKImageView.m; sourceTree = "<group>"; };
 		C12C8E2D12922C7600C8E667 /* actualSize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = actualSize.png; path = Resources/actualSize.png; sourceTree = "<group>"; };
 		C12C8E2E12922C7600C8E667 /* hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hand.png; path = Resources/hand.png; sourceTree = "<group>"; };
 		C12C8E2F12922C7600C8E667 /* inspector.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = inspector.png; path = Resources/inspector.png; sourceTree = "<group>"; };
@@ -1046,7 +1046,7 @@
 		C145AC6412BD69D1005D7E21 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		C145AC6612BD69D1005D7E21 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		C145AD0812BD6DF0005D7E21 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		C145B29F12C034AC005D7E21 /* allDefaultPresets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = allDefaultPresets.plist; sourceTree = "<group>"; };
+		C145B29F12C034AC005D7E21 /* allDefaultPresets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = allDefaultPresets.plist; path = TextureFinagler/allDefaultPresets.plist; sourceTree = "<group>"; };
 		C145B3AD12C05BCB005D7E21 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TKImageDocumentAccessoryView.xib; sourceTree = "<group>"; };
 		C145E564124843B500AF2D35 /* DAT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = DAT.icns; path = Resources/DAT.icns; sourceTree = "<group>"; };
 		C145E7FE1248B56800AF2D35 /* AIN.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AIN.icns; path = Resources/AIN.icns; sourceTree = "<group>"; };
@@ -1100,19 +1100,19 @@
 		C15590C912B6E04200FD0684 /* SFTI.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = SFTI.icns; path = Resources/SFTI.icns; sourceTree = "<group>"; };
 		C155939012B71D1B00FD0684 /* 2upTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = 2upTemplate.pdf; path = Resources/2upTemplate.pdf; sourceTree = "<group>"; };
 		C155939112B71D1B00FD0684 /* 4upTemplate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = 4upTemplate.pdf; path = Resources/4upTemplate.pdf; sourceTree = "<group>"; };
-		C155939412B71E9400FD0684 /* TKImageExportPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKImageExportPreviewViewController.h; sourceTree = "<group>"; };
-		C155939512B71E9400FD0684 /* TKImageExportPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKImageExportPreviewViewController.m; sourceTree = "<group>"; };
+		C155939412B71E9400FD0684 /* TKImageExportPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageExportPreviewViewController.h; path = TextureFinagler/TKImageExportPreviewViewController.h; sourceTree = "<group>"; };
+		C155939512B71E9400FD0684 /* TKImageExportPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageExportPreviewViewController.m; path = TextureFinagler/TKImageExportPreviewViewController.m; sourceTree = "<group>"; };
 		C155939712B71F1700FD0684 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TKImageExportPreviewView.xib; sourceTree = "<group>"; };
-		C15594F512B75C8600FD0684 /* TKImageExportPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKImageExportPreview.h; sourceTree = "<group>"; };
-		C15594F612B75C8600FD0684 /* TKImageExportPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKImageExportPreview.m; sourceTree = "<group>"; };
+		C15594F512B75C8600FD0684 /* TKImageExportPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageExportPreview.h; path = TextureFinagler/TKImageExportPreview.h; sourceTree = "<group>"; };
+		C15594F612B75C8600FD0684 /* TKImageExportPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageExportPreview.m; path = TextureFinagler/TKImageExportPreview.m; sourceTree = "<group>"; };
 		C1580E871396262F00D5D4D8 /* VSPrivateInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSPrivateInterfaces.h; path = SteamKit/VSPrivateInterfaces.h; sourceTree = "<group>"; };
 		C1580F10139634DA00D5D4D8 /* HLKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HLKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1580F11139634DA00D5D4D8 /* HLKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HLKit-Info.plist"; sourceTree = "<group>"; };
-		C1583BB512B3A51300A4AE2F /* TKImageExportController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKImageExportController.h; sourceTree = "<group>"; };
-		C1583BB612B3A51300A4AE2F /* TKImageExportController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKImageExportController.m; sourceTree = "<group>"; };
+		C1583BB512B3A51300A4AE2F /* TKImageExportController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageExportController.h; path = TextureFinagler/TKImageExportController.h; sourceTree = "<group>"; };
+		C1583BB612B3A51300A4AE2F /* TKImageExportController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageExportController.m; path = TextureFinagler/TKImageExportController.m; sourceTree = "<group>"; };
 		C1583BB812B3A55900A4AE2F /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TKImageExportPanel.xib; sourceTree = "<group>"; };
-		C1583BBF12B3ABA700A4AE2F /* TKImageExportPreset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKImageExportPreset.h; sourceTree = "<group>"; };
-		C1583BC012B3ABA700A4AE2F /* TKImageExportPreset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKImageExportPreset.m; sourceTree = "<group>"; };
+		C1583BBF12B3ABA700A4AE2F /* TKImageExportPreset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageExportPreset.h; path = TextureFinagler/TKImageExportPreset.h; sourceTree = "<group>"; };
+		C1583BC012B3ABA700A4AE2F /* TKImageExportPreset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageExportPreset.m; path = TextureFinagler/TKImageExportPreset.m; sourceTree = "<group>"; };
 		C1594EA11384F247009CE606 /* usbOverdriveNote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = usbOverdriveNote.png; path = Resources/usbOverdriveNote.png; sourceTree = "<group>"; };
 		C15B07C31254F46800F722B7 /* MDPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPreviewViewController.h; path = SourceFinagler/MDPreviewViewController.h; sourceTree = "<group>"; };
 		C15B07C41254F46800F722B7 /* MDPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPreviewViewController.m; path = SourceFinagler/MDPreviewViewController.m; sourceTree = "<group>"; };
@@ -1142,7 +1142,7 @@
 		C16478F5124E988C0062B943 /* GenerateThumbnailForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenerateThumbnailForURL.m; path = SourceImageQuickLook/GenerateThumbnailForURL.m; sourceTree = "<group>"; };
 		C16478F6124E988C0062B943 /* GeneratePreviewForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GeneratePreviewForURL.m; path = SourceImageQuickLook/GeneratePreviewForURL.m; sourceTree = "<group>"; };
 		C16478F7124E988C0062B943 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = SourceImageQuickLook/main.c; sourceTree = "<group>"; };
-		C169D9D0128A0A4A00653B05 /* TKImageDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKImageDocument.m; sourceTree = "<group>"; };
+		C169D9D0128A0A4A00653B05 /* TKImageDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageDocument.m; path = TextureFinagler/TKImageDocument.m; sourceTree = "<group>"; };
 		C169E27B1243825A0009C66E /* VDF.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VDF.icns; path = Resources/VDF.icns; sourceTree = "<group>"; };
 		C16A68F11600B6170038A8B1 /* HLKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLKit.h; sourceTree = "<group>"; };
 		C16A68F21600B6170038A8B1 /* HLKitDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLKitDefines.h; sourceTree = "<group>"; };
@@ -1157,8 +1157,8 @@
 		C170261A1284BC6F0056A23D /* TKImageRep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageRep.m; path = TextureKit/TKImageRep.m; sourceTree = "<group>"; };
 		C17319B21298D11400C29732 /* TextureKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextureKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C17319B31298D11400C29732 /* TextureKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "TextureKit-Info.plist"; path = "TextureKit/TextureKit-Info.plist"; sourceTree = "<group>"; };
-		C1731B6E12993EE700C29732 /* MDPSDImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPSDImageRep.h; sourceTree = "<group>"; };
-		C1731B6F12993EE700C29732 /* MDPSDImageRep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPSDImageRep.m; sourceTree = "<group>"; };
+		C1731B6E12993EE700C29732 /* MDPSDImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPSDImageRep.h; path = SourceFinagler/MDPSDImageRep.h; sourceTree = "<group>"; };
+		C1731B6F12993EE700C29732 /* MDPSDImageRep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPSDImageRep.m; path = SourceFinagler/MDPSDImageRep.m; sourceTree = "<group>"; };
 		C174F05E128A5E6D00817F81 /* MDVolumeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDVolumeFormatter.h; sourceTree = "<group>"; };
 		C174F05F128A5E6D00817F81 /* MDVolumeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDVolumeFormatter.m; sourceTree = "<group>"; };
 		C1758D62124833D1001B5A46 /* RAD.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = RAD.icns; path = Resources/RAD.icns; sourceTree = "<group>"; };
@@ -1292,8 +1292,8 @@
 		C1C12479123A0840004674B4 /* VPK.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VPK.icns; path = Resources/VPK.icns; sourceTree = "<group>"; };
 		C1C1247A123A0840004674B4 /* WAD.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = WAD.icns; path = Resources/WAD.icns; sourceTree = "<group>"; };
 		C1C1247B123A0840004674B4 /* XZP.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = XZP.icns; path = Resources/XZP.icns; sourceTree = "<group>"; };
-		C1C1249D123A0967004674B4 /* TKDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TKDocumentController.h; sourceTree = "<group>"; };
-		C1C1249E123A0967004674B4 /* TKDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TKDocumentController.m; sourceTree = "<group>"; };
+		C1C1249D123A0967004674B4 /* TKDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = TKDocumentController.h; path = TextureFinagler/TKDocumentController.h; sourceTree = "<group>"; };
+		C1C1249E123A0967004674B4 /* TKDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = TKDocumentController.m; path = TextureFinagler/TKDocumentController.m; sourceTree = "<group>"; };
 		C1C124A1123A0990004674B4 /* MDHLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MDHLDocument.h; path = SourceFinagler/MDHLDocument.h; sourceTree = "<group>"; };
 		C1C124A2123A0990004674B4 /* MDHLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MDHLDocument.m; path = SourceFinagler/MDHLDocument.m; sourceTree = "<group>"; };
 		C1C124A8123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDAboutWindow.xib; sourceTree = "<group>"; };
@@ -1687,8 +1687,8 @@
 		C1FEAB44125F64A900CA78FF /* VSSourceAddonController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSSourceAddonController.m; path = SourceAddonFinagler/VSSourceAddonController.m; sourceTree = "<group>"; };
 		C1FEAB91125F66BC00CA78FF /* VSSourceAddonFinaglerMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSSourceAddonFinaglerMain.m; path = SourceAddonFinagler/VSSourceAddonFinaglerMain.m; sourceTree = "<group>"; };
 		C1FF5068129332F1002DE317 /* splitterHandle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splitterHandle.png; path = Resources/splitterHandle.png; sourceTree = "<group>"; };
-		C1FF506A12935247002DE317 /* TKSplitterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKSplitterView.h; sourceTree = "<group>"; };
-		C1FF506B12935247002DE317 /* TKSplitterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKSplitterView.m; sourceTree = "<group>"; };
+		C1FF506A12935247002DE317 /* TKSplitterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKSplitterView.h; path = TextureFinagler/TKSplitterView.h; sourceTree = "<group>"; };
+		C1FF506B12935247002DE317 /* TKSplitterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKSplitterView.m; path = TextureFinagler/TKSplitterView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2207,7 +2207,8 @@
 				C12A7E9912E6369800F79385 /* VVDReader.h */,
 				C12A7E9812E6369800F79385 /* VVDReader.cpp */,
 			);
-			path = MDL;
+			name = MDL;
+			path = SourceFinagler/MDL;
 			sourceTree = "<group>";
 		};
 		C12F364312D7E5C500D28F26 /* TK Application stuff */ = {
