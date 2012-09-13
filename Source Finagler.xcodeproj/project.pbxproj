@@ -961,8 +961,8 @@
 		C11CA69713A4F9FB006CC348 /* MDCopyOperationContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCopyOperationContentView.m; sourceTree = "<group>"; };
 		C1224BEC13B06B9A009AA0F4 /* SourceFinaglerAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SourceFinaglerAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1267035125D1A0B00725F14 /* VAS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VAS.icns; path = Resources/VAS.icns; sourceTree = "<group>"; };
-		C1275F60129182C40041ACD7 /* VSSourceAddon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSSourceAddon.h; sourceTree = "<group>"; };
-		C1275F61129182C40041ACD7 /* VSSourceAddon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSSourceAddon.m; sourceTree = "<group>"; };
+		C1275F60129182C40041ACD7 /* VSSourceAddon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSSourceAddon.h; path = SourceAddonFinagler/VSSourceAddon.h; sourceTree = "<group>"; };
+		C1275F61129182C40041ACD7 /* VSSourceAddon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSSourceAddon.m; path = SourceAddonFinagler/VSSourceAddon.m; sourceTree = "<group>"; };
 		C1279D3512DCB0EA0065F5D7 /* defaultPresets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = defaultPresets.plist; sourceTree = "<group>"; };
 		C129181F12E4F27C008E1878 /* TKMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKMaterial.h; path = TextureKit/TKMaterial.h; sourceTree = "<group>"; };
 		C129182012E4F27C008E1878 /* TKMaterial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKMaterial.m; path = TextureKit/TKMaterial.m; sourceTree = "<group>"; };
@@ -1482,7 +1482,7 @@
 		C1E6DB0812BC2408009D8AD6 /* TextureKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextureKit.h; path = TextureKit/TextureKit.h; sourceTree = "<group>"; };
 		C1E6DB6712BC3441009D8AD6 /* MDEnumNamingStudy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDEnumNamingStudy.h; sourceTree = "<group>"; };
 		C1E6DE6F12BC8CA1009D8AD6 /* packageIDs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = packageIDs.txt; sourceTree = "<group>"; };
-		C1E6DE9712BCA0E6009D8AD6 /* addoninfo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = addoninfo.txt; sourceTree = "<group>"; };
+		C1E6DE9712BCA0E6009D8AD6 /* addoninfo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = addoninfo.txt; path = SourceAddonFinagler/addoninfo.txt; sourceTree = "<group>"; };
 		C1E6DFAD12BCEF08009D8AD6 /* MENU.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = MENU.icns; path = Resources/MENU.icns; sourceTree = "<group>"; };
 		C1E6DFAE12BCEF08009D8AD6 /* STYLES.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = STYLES.icns; path = Resources/STYLES.icns; sourceTree = "<group>"; };
 		C1E6DFAF12BCEF08009D8AD6 /* LAYOUT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = LAYOUT.icns; path = Resources/LAYOUT.icns; sourceTree = "<group>"; };
@@ -1689,10 +1689,10 @@
 		C1FEA9AD125E766800CA78FF /* weightedclusterfit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = weightedclusterfit.cpp; path = NVTextureTools/nvtt/squish/weightedclusterfit.cpp; sourceTree = "<group>"; };
 		C1FEA9AE125E766800CA78FF /* weightedclusterfit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = weightedclusterfit.h; path = NVTextureTools/nvtt/squish/weightedclusterfit.h; sourceTree = "<group>"; };
 		C1FEAB31125F633100CA78FF /* Source Addon Finagler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Source Addon Finagler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C1FEAB33125F633100CA78FF /* Source Addon Finagler-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Source Addon Finagler-Info.plist"; sourceTree = "<group>"; };
-		C1FEAB43125F64A900CA78FF /* VSSourceAddonController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSSourceAddonController.h; sourceTree = "<group>"; };
-		C1FEAB44125F64A900CA78FF /* VSSourceAddonController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSSourceAddonController.m; sourceTree = "<group>"; };
-		C1FEAB91125F66BC00CA78FF /* VSSourceAddonFinaglerMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSSourceAddonFinaglerMain.m; sourceTree = "<group>"; };
+		C1FEAB33125F633100CA78FF /* Source Addon Finagler-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Source Addon Finagler-Info.plist"; path = "SourceAddonFinagler/Source Addon Finagler-Info.plist"; sourceTree = "<group>"; };
+		C1FEAB43125F64A900CA78FF /* VSSourceAddonController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSSourceAddonController.h; path = SourceAddonFinagler/VSSourceAddonController.h; sourceTree = "<group>"; };
+		C1FEAB44125F64A900CA78FF /* VSSourceAddonController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSSourceAddonController.m; path = SourceAddonFinagler/VSSourceAddonController.m; sourceTree = "<group>"; };
+		C1FEAB91125F66BC00CA78FF /* VSSourceAddonFinaglerMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSSourceAddonFinaglerMain.m; path = SourceAddonFinagler/VSSourceAddonFinaglerMain.m; sourceTree = "<group>"; };
 		C1FF5068129332F1002DE317 /* splitterHandle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splitterHandle.png; path = Resources/splitterHandle.png; sourceTree = "<group>"; };
 		C1FF506A12935247002DE317 /* TKSplitterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKSplitterView.h; sourceTree = "<group>"; };
 		C1FF506B12935247002DE317 /* TKSplitterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKSplitterView.m; sourceTree = "<group>"; };
@@ -5912,7 +5912,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "MD_BUILDING_FOR_SOURCE_ADDON_FINAGLER=1";
-				INFOPLIST_FILE = "Source Addon Finagler-Info.plist";
+				INFOPLIST_FILE = "SourceAddonFinagler/Source Addon Finagler-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -5936,7 +5936,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "MD_BUILDING_FOR_SOURCE_ADDON_FINAGLER=1";
-				INFOPLIST_FILE = "Source Addon Finagler-Info.plist";
+				INFOPLIST_FILE = "SourceAddonFinagler/Source Addon Finagler-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
