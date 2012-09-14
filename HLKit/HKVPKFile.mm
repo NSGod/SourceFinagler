@@ -3,7 +3,7 @@
 //  HLKit
 //
 //  Created by Mark Douma on 10/27/2010.
-//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import "HKVPKFile.h"
@@ -65,7 +65,7 @@ using namespace HLLib;
 - (NSString *)description {
 	NSMutableString *description = [NSMutableString stringWithString:@""];
 	[description appendFormat:@"\tfilePath == %@\n", filePath];
-	[description appendFormat:@"\tarchiveCount== %lu\n", archiveCount];
+	[description appendFormat:@"\tarchiveCount== %lu\n", (unsigned long)archiveCount];
 	return [NSString stringWithFormat:@"%@", description];
 }
 

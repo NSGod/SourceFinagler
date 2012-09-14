@@ -3,7 +3,7 @@
 //  HLKit
 //
 //  Created by Mark Douma on 4/27/2010.
-//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKArchiveFile.h>
@@ -18,6 +18,13 @@ using namespace HLLib;
 #define HK_DEBUG 0
 
 #define HK_DEFAULT_PACKAGE_TEST_LENGTH 8
+
+#define HK_USE_BLOCKS 0
+
+#if HK_USE_BLOCKS
+#else
+#endif
+
 
 typedef struct HKArchiveFileTest {
 	HKArchiveFileType	fileType;
@@ -143,6 +150,12 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 		
 		NSArray *children = [items children];
 		
+#if HK_USE_BLOCKS
+		[children enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(HKItem *item, NSUInteger idx, BOOL *stop) {
+			[gatheredItems addObject:item];
+			if (![item isLeaf]) [gatheredItems addObjectsFromArray:[item descendants]];
+		}];
+#else
 		for (HKItem *item in children) {
 			
 			[gatheredItems addObject:item];
@@ -151,6 +164,8 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 				[gatheredItems addObjectsFromArray:[item descendants]];
 			}
 		}
+#endif
+		
 		allItems = [gatheredItems copy];
 		
 		[pool release];
