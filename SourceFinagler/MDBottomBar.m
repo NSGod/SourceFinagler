@@ -25,8 +25,9 @@ enum {
 	MDLeopard				= 0x1050,
 	MDSnowLeopard			= 0x1060,
 	MDLion					= 0x1070,
-	MDUnknownKitty			= 0x1080,
-	MDUnknownVersion		= 0x1090
+	MDMountainLion			= 0x1080,
+	MDUnknownKitty			= 0x1090,
+	MDUnknownVersion		= 0x1100
 };
 
 static SInt32 MDSystemVersion = MDUndeterminedVersion;
