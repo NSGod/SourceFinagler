@@ -1,8 +1,8 @@
 # SteamKit.exp
 # Source Finagler
 #
-# Created by Mark Douma on 3/9/2011.
-# Copyright 2011 Mark Douma LLC. All rights reserved.
+# Created by Mark Douma on 3/9/2012.
+# Copyright 2012 Mark Douma LLC. All rights reserved.
 
 
 
@@ -20,26 +20,13 @@ _VSGameCreatorCodeKey
 _VSGameBundleIdentifierKey
 _VSGameInfoPlistKey
 
-
-_VSHalfLife2ExecutableNameKey
-_VSPortal2ExecutableNameKey
-
-_VSHalfLife2USBOverdriveExecutableNameKey
-_VSPortal2USBOverdriveExecutableNameKey
-
 _VSResourceNameKey
 _VSGameIconNameKey
 
 _VSSteamAppsDirectoryNameKey
 
 
-
-_VSSourceFinaglerAgentNameKey
-_VSSourceFinaglerAgentBundleIdentifierKey
-
 _VSSourceAddonFolderNameKey
 _VSSourceAddonErrorDomain
 _VSSourceAddonGameIDKey
-_VSSourceAddonInfoNameKey
-_VSSourceAddonSteamAppIDKey
 

@@ -3,7 +3,7 @@
 //  Source Finagler
 //
 //  Created by Mark Douma on 6/13/2010.
-//  Copyright © 2010-2011 Mark Douma LLC. All rights reserved.
+//  Copyright © 2010-2012 Mark Douma LLC. All rights reserved.
 //
 
 
@@ -61,6 +61,7 @@ typedef NSUInteger VSSourceFinaglerLaunchAgentStatus;
 	VSSteamAppsRelocationType					steamAppsRelocationType;
 	
 	NSDictionary								*gameBundleIdentifiersAndGames;
+	NSArray										*executableNames;
 	
 	NSMutableDictionary							*gamePathsAndGames;
 	NSMutableDictionary							*runningGamePathsAndGames;
@@ -184,13 +185,6 @@ STEAMKIT_EXTERN NSString * const VSGameBundleIdentifierKey;
 STEAMKIT_EXTERN NSString * const VSGameInfoPlistKey;
 
 
-STEAMKIT_EXTERN NSString * const VSHalfLife2ExecutableNameKey;
-STEAMKIT_EXTERN NSString * const VSPortal2ExecutableNameKey;
-
-STEAMKIT_EXTERN NSString * const VSHalfLife2USBOverdriveExecutableNameKey;
-STEAMKIT_EXTERN NSString * const VSPortal2USBOverdriveExecutableNameKey;
-
-
 STEAMKIT_EXTERN NSString * const VSResourceNameKey;
 STEAMKIT_EXTERN NSString * const VSGameIconNameKey;
 
@@ -202,14 +196,9 @@ STEAMKIT_EXTERN NSString * const VSSourceAddonErrorDomain;
 STEAMKIT_EXTERN NSString * const VSSourceAddonGameIDKey;
 
 
-STEAMKIT_EXTERN NSString * const VSSourceAddonInfoNameKey;
-STEAMKIT_EXTERN NSString * const VSSourceAddonSteamAppIDKey;
-
 
 STEAMKIT_EXTERN NSString * const VSSourceAddonFolderNameKey;
 
 // SourceFinaglerAgent
 
-STEAMKIT_EXTERN NSString * const VSSourceFinaglerAgentNameKey;
-STEAMKIT_EXTERN NSString * const VSSourceFinaglerAgentBundleIdentifierKey;
 
