@@ -10,7 +10,7 @@
 
 #import "MDBrowser.h"
 #import "MDBrowserCell.h"
-#import "MDAppKitAdditions.h"
+#import "TKAppKitAdditions.h"
 #import "MDHLDocument.h"
 
 #pragma mark view

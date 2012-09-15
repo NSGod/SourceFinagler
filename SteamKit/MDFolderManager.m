@@ -8,7 +8,7 @@
 
 
 #import "MDFolderManager.h"
-#import "MDFoundationAdditions.h"
+#import "TKFoundationAdditions.h"
 #import <sys/syslimits.h>
 
 #define MD_DEBUG 0

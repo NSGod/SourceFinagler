@@ -9,7 +9,7 @@
 #import "MDOutlineView.h"
 #import "MDHLDocument.h"
 #import "MDTextFieldCell.h"
-#import "MDAppKitAdditions.h"
+#import "TKAppKitAdditions.h"
 
 
 NSString * const MDShouldShowKindColumnKey							= @"MDShouldShowKindColumn";

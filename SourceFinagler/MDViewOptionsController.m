@@ -8,11 +8,11 @@
 
 
 #import "MDViewOptionsController.h"
-#import "MDAppController.h"
+#import "TKAppController.h"
 #import "MDHLDocument.h"
 #import "MDOutlineView.h"
 #import "MDBrowser.h"
-#import "MDAppKitAdditions.h"
+#import "TKAppKitAdditions.h"
 
 
 #pragma mark controller

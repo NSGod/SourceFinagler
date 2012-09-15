@@ -9,7 +9,7 @@
 
 
 #import "MDAlias.h"
-#import "MDFoundationAdditions.h"
+#import "TKFoundationAdditions.h"
 
 
 @implementation MDAlias

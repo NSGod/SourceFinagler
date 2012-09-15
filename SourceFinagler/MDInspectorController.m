@@ -9,11 +9,11 @@
 
 
 #import "MDInspectorController.h"
-#import "MDAppController.h"
+#import "TKAppController.h"
 
 #import "MDHLDocument.h"
 
-#import "MDAppKitAdditions.h"
+#import "TKAppKitAdditions.h"
 
 #import <HLKit/HLKit.h>
 
