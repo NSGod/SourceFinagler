@@ -11,6 +11,14 @@
 			<string>QLGenerator</string>
 			<key>LSItemContentTypes</key>
 			<array>
+				<string>com.markdouma.texture-image</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>QLGenerator</string>
+			<key>LSItemContentTypes</key>
+			<array>
 				<string>com.valvesoftware.source.vtf</string>
 			</array>
 		</dict>
@@ -26,7 +34,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>SourceImage QuickLook Plugin 2.0.3, © 2010-2011 Mark Douma. VTFLib 1.3.1 © 2005-2011 Neil Jedrzejewski &amp; Ryan Gregg.</string>
+	<string>SourceImage QuickLook Plugin 2.5, © 2010-2012 Mark Douma. VTFLib 1.3.2 © 2005-2012 Neil Jedrzejewski &amp; Ryan Gregg.</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.markdouma.qlgenerator.SourceImage</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -34,9 +42,9 @@
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.3</string>
+	<string>2.5</string>
 	<key>CFBundleVersion</key>
-	<string>203</string>
+	<string>250</string>
 	<key>CFPlugInDynamicRegisterFunction</key>
 	<string></string>
 	<key>CFPlugInDynamicRegistration</key>
@@ -56,7 +64,7 @@
 	<key>CFPlugInUnloadFunction</key>
 	<string></string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2010-2011 Mark Douma. VTFLib 1.3.1 © 2005-2011 Neil Jedrzejewski &amp; Ryan Gregg.</string>
+	<string>Copyright © 2010-2012 Mark Douma. VTFLib 1.3.2 © 2005-2012 Neil Jedrzejewski &amp; Ryan Gregg.</string>
 	<key>QLNeedsToBeRunInMainThread</key>
 	<true/>
 	<key>QLPreviewHeight</key>
