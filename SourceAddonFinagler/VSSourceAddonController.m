@@ -8,7 +8,7 @@
 
 #import "VSSourceAddonController.h"
 #import <SteamKit/SteamKit.h>
-#import "MDAppKitAdditions.h"
+#import "TKAppKitAdditions.h"
 #import "VSSourceAddon.h"
 #import "MDTextFieldCell.h"
 
