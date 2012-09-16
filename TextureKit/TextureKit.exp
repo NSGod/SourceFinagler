@@ -6,13 +6,26 @@
 
 .objc_class_name_TKImage
 
-
 .objc_class_name_TKImageRep
-
 
 .objc_class_name_TKDDSImageRep
 .objc_class_name_TKVTFImageRep
-.objc_class_name_TKSFTIImageRep
+
+.objc_class_name_TKOpenGLObject
+
+.objc_class_name_TKModel
+.objc_class_name_TKVMTMaterial
+.objc_class_name_TKVMTNode
+
+.objc_class_name_TKTexture
+.objc_class_name_TKDDSTexture
+.objc_class_name_TKVTFTexture
+
+.objc_class_name_TKOpenGLView
+.objc_class_name_TKOpenGLRenderer
+
+.objc_class_name_TKShader
+.objc_class_name_TKShaderProgram
 
 
 _TKSFTextureImageType
@@ -41,9 +54,25 @@ _TKVTFFileType
 _TKVTFPboardType
 
 
+_TKImageMipmapGenerationKey
+_TKImageWrapModeKey
+_TKImageRoundModeKey
+
+
+_TKYES
+_TKNO
 
 
 
+_TKMatrix3Identity
+_TKMatrix3Invert
+
+
+_TKMatrix4Identity
+_TKMatrix4Invert
+
+
+_TKQuaternionIdentity
 
 
 
