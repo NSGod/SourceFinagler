@@ -3,7 +3,7 @@
 //  HLKit
 //
 //  Created by Mark Douma on 9/1/2010.
-//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKFile.h>
@@ -41,7 +41,7 @@ using namespace HLLib::Streams;
 #endif
 	if ((self = [super initWithParent:aParent children:nil sortDescriptors:nil container:aContainer])) {
 		_privateData = aFile;
-
+		
 		isExtractable = static_cast<const CDirectoryFile *>(_privateData)->GetExtractable();
 		isVisible = isExtractable;
 		
@@ -133,7 +133,7 @@ using namespace HLLib::Streams;
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (kind == nil) {
+		if (kind == nil) {
 		kind = [[[NSWorkspace sharedWorkspace] localizedDescriptionForType:[self type]] retain];
 		if (kind == nil) {
 			LSCopyKindStringForTypeInfo(kLSUnknownType, kLSUnknownCreator, (CFStringRef)[self nameExtension], (CFStringRef *)&kind);
@@ -141,7 +141,7 @@ using namespace HLLib::Streams;
 	}
 	return kind;
 }
-
+		
 - (NSNumber *)size {
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));

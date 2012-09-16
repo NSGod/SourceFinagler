@@ -3,7 +3,7 @@
 //  HLKit
 //
 //  Created by Mark Douma on 10/27/2010.
-//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKGCFFile.h>
@@ -85,11 +85,11 @@
 - (NSString *)description {
 	NSMutableString *description = [NSMutableString stringWithString:@""];
 	[description appendFormat:@"\tfilePath == %@\n", filePath];
-	[description appendFormat:@"\tpackageID == %lu\n", packageID];
-	[description appendFormat:@"\tblockSize == %lu\n", blockSize];
-	[description appendFormat:@"\ttotalBlockCount == %lu\n", totalBlockCount];
-	[description appendFormat:@"\tusedBlockCount == %lu\n", usedBlockCount];
-	[description appendFormat:@"\tlastVersionPlayed == %lu\n", lastVersionPlayed];
+	[description appendFormat:@"\tpackageID == %lu\n", (unsigned long)packageID];
+	[description appendFormat:@"\tblockSize == %lu\n", (unsigned long)blockSize];
+	[description appendFormat:@"\ttotalBlockCount == %lu\n", (unsigned long)totalBlockCount];
+	[description appendFormat:@"\tusedBlockCount == %lu\n", (unsigned long)usedBlockCount];
+	[description appendFormat:@"\tlastVersionPlayed == %lu\n", (unsigned long)lastVersionPlayed];
 	return [NSString stringWithFormat:@"%@", description];
 }
 

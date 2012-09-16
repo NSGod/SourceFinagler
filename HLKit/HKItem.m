@@ -2,7 +2,7 @@
 //  HLKit
 //
 //  Created by Mark Douma on 11/20/2009.
-//  Copyright (c) 2009-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
 //
 //  Based, in part, on "TreeNode":
 //
