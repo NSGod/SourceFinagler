@@ -22,13 +22,13 @@
 }
 
 
-@property (assign, readonly) NSUInteger packageID;
+@property (nonatomic, readonly, assign) NSUInteger packageID;
 
-@property (assign, readonly) NSUInteger blockSize;
-@property (assign, readonly) NSUInteger totalBlockCount;
-@property (assign, readonly) NSUInteger usedBlockCount;
-@property (assign, readonly) NSUInteger freeBlockCount;
+@property (nonatomic, readonly, assign) NSUInteger blockSize;
+@property (nonatomic, readonly, assign) NSUInteger totalBlockCount;
+@property (nonatomic, readonly, assign) NSUInteger usedBlockCount;
+@property (nonatomic, readonly, assign) NSUInteger freeBlockCount;
 
-@property (assign, readonly) NSUInteger lastVersionPlayed;
+@property (nonatomic, readonly, assign) NSUInteger lastVersionPlayed;
 
 @end

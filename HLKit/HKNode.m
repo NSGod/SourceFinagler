@@ -16,11 +16,6 @@
 - (BOOL)isDescendantOfNodeOrIsEqualToNode:(HKNode *)node;
 @end
 
-#define HK_USE_BLOCKS 0
-
-#if HK_USE_BLOCKS
-#else
-#endif
 
 
 @implementation HKNode
@@ -28,7 +23,7 @@
 @synthesize container, parent, isVisible, isLeaf, sortDescriptors;
 @dynamic showInvisibleItems;
 
-- (id)initWithParent:(HKNode *)aParent children:(NSArray *)theChildren sortDescriptors:(NSArray *)aSortDescriptors container:(id)aContainer {
+- (id)initWithParent:(HKNode *)aParent childNodes:(NSArray *)theChildren sortDescriptors:(NSArray *)aSortDescriptors container:(id)aContainer {
 	if ((self = [super init])) {
 		parent = aParent;
 		container = aContainer;
@@ -38,23 +33,16 @@
 		sortDescriptors = [aSortDescriptors retain];
 		
 		if (theChildren) {
-			children = [[NSMutableArray arrayWithArray:theChildren] retain];
-			visibleChildren = [[NSMutableArray alloc] init];
+			childNodes = [[NSMutableArray arrayWithArray:theChildren] retain];
+			visibleChildNodes = [[NSMutableArray alloc] init];
 			
-#if HK_USE_BLOCKS
-			[children enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(HKNode *child, NSUInteger idx, BOOL *stop) {
-				[child setParent:self];
-				if ([child isVisible]) [visibleChildren addObject:child];
-			}];
-#else
-			for (HKNode *child in children) {
-				if ([child isVisible]) [visibleChildren addObject:child];
+			for (HKNode *child in childNodes) {
+				if ([child isVisible]) [visibleChildNodes addObject:child];
 			}
-			[children makeObjectsPerformSelector:@selector(setParent:) withObject:self];
-#endif
+			[childNodes makeObjectsPerformSelector:@selector(setParent:) withObject:self];
 			
-			[children sortUsingDescriptors:sortDescriptors];
-			[visibleChildren sortUsingDescriptors:sortDescriptors];
+			[childNodes sortUsingDescriptors:sortDescriptors];
+			[visibleChildNodes sortUsingDescriptors:sortDescriptors];
 		}
 	}
 	return self;
@@ -64,8 +52,8 @@
 - (void)dealloc {
 	container = nil;
 	parent = nil;
-    [children release];
-	[visibleChildren release];
+    [childNodes release];
+	[visibleChildNodes release];
 	[sortDescriptors release];
     [super dealloc];
 }
@@ -92,57 +80,45 @@
 
 
 - (void)initializeChildrenIfNeeded {
-	if (children == nil && visibleChildren == nil) {
-		children = [[NSMutableArray alloc] init];
-		visibleChildren = [[NSMutableArray alloc] init];
+	if (childNodes == nil && visibleChildNodes == nil) {
+		childNodes = [[NSMutableArray alloc] init];
+		visibleChildNodes = [[NSMutableArray alloc] init];
 	}
 }
 
 
-- (void)insertChild:(HKNode *)child atIndex:(NSUInteger)index {
+- (void)insertChildNode:(HKNode *)child atIndex:(NSUInteger)index {
 	[self initializeChildrenIfNeeded];
 	
 	[child setParent:self];
 	
-    [children insertObject:child atIndex:index];
-	[children sortUsingDescriptors:sortDescriptors];
+    [childNodes insertObject:child atIndex:index];
+	[childNodes sortUsingDescriptors:sortDescriptors];
 	
 	if ([child isVisible]) {
-		[visibleChildren addObject:child];
-		[visibleChildren sortUsingDescriptors:sortDescriptors];
+		[visibleChildNodes addObject:child];
+		[visibleChildNodes sortUsingDescriptors:sortDescriptors];
 	}
 }
 
 
 
-- (void)insertChildren:(NSArray *)newChildren atIndex:(NSUInteger)theIndex {
+- (void)insertChildNodes:(NSArray *)newChildren atIndex:(NSUInteger)theIndex {
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[self initializeChildrenIfNeeded];
 	
-//#if HK_USE_BLOCKS
-//	[newChildren enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(HKNode *node, NSUInteger anIndex, BOOL *stop) {
-//		[node setParent:self];
-//	}];
-//#else
 	[newChildren makeObjectsPerformSelector:@selector(setParent:) withObject:self];
-//#endif
 	
-    [children insertObjectsFromArray:newChildren atIndex:theIndex];
+    [childNodes insertObjectsFromArray:newChildren atIndex:theIndex];
 	
-//#if HK_USE_BLOCKS
-//	[children enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(HKNode *node, NSUInteger idx, BOOL *stop) {
-//		if ([node isVisible]) [visibleChildren addObject:node];
-//	}];
-//#else
-	for (HKNode *child in children) {
-		if ([child isVisible]) [visibleChildren addObject:child];
+	for (HKNode *child in childNodes) {
+		if ([child isVisible]) [visibleChildNodes addObject:child];
 	}
-//#endif
 	
-	[children sortUsingDescriptors:sortDescriptors];
-	[visibleChildren sortUsingDescriptors:sortDescriptors];
+	[childNodes sortUsingDescriptors:sortDescriptors];
+	[visibleChildNodes sortUsingDescriptors:sortDescriptors];
 	
 }
 
@@ -150,67 +126,59 @@
 - (void)_removeChildrenIdenticalTo:(NSArray *)theChildren {
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 	
-#if HK_USE_BLOCKS
-	[theChildren enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(HKNode *node, NSUInteger idx, BOOL *stop) {
-		[node setParent:nil];
-		[children removeObjectIdenticalTo:node];
-		[visibleChildren removeObjectIdenticalTo:node];
-	}];
-#else
 	[theChildren makeObjectsPerformSelector:@selector(setParent:) withObject:nil];
 	for (HKNode *child in theChildren) {
-		[children removeObjectIdenticalTo:child];
-		[visibleChildren removeObjectIdenticalTo:child];
+		[childNodes removeObjectIdenticalTo:child];
+		[visibleChildNodes removeObjectIdenticalTo:child];
 	}
-#endif
 
 }
 
 
-- (void)removeChild:(HKNode *)child {
+- (void)removeChildNode:(HKNode *)child {
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-    NSUInteger index = [self indexOfChild:child];
+    NSUInteger index = [self indexOfChildNode:child];
     if (index != NSNotFound) {
-        [self _removeChildrenIdenticalTo:[NSArray arrayWithObject:[self childAtIndex:index]]];
+        [self _removeChildrenIdenticalTo:[NSArray arrayWithObject:[self childNodeAtIndex:index]]];
     }
 }
 
 - (void)removeFromParent {
-    [parent removeChild:self];
+    [parent removeChildNode:self];
 }
 
-- (NSUInteger)indexOfChild:(HKNode *)child {
-    return [children indexOfObject:child];
+- (NSUInteger)indexOfChildNode:(HKNode *)child {
+    return [childNodes indexOfObject:child];
 }
 
-- (NSUInteger)indexOfChildIdenticalTo:(HKNode *)child {
-    return [children indexOfObjectIdenticalTo:child];
+- (NSUInteger)indexOfChildNodeIdenticalTo:(HKNode *)child {
+    return [childNodes indexOfObjectIdenticalTo:child];
 }
 
-- (NSUInteger)countOfChildren {
-    return [children count];
+- (NSUInteger)countOfChildNodes {
+    return [childNodes count];
 }
 
-- (NSArray *)children {
-	return [[children copy] autorelease];
+- (NSArray *)childNodes {
+	return [[childNodes copy] autorelease];
 }
 
-- (HKNode *)childAtIndex:(NSUInteger)index {
-    return [children objectAtIndex:index];
-}
-
-
-- (NSUInteger)countOfVisibleChildren {
-	return [visibleChildren count];
-}
-
-- (NSArray *)visibleChildren {
-	return [[visibleChildren copy] autorelease];
+- (HKNode *)childNodeAtIndex:(NSUInteger)index {
+    return [childNodes objectAtIndex:index];
 }
 
 
-- (HKNode *)visibleChildAtIndex:(NSUInteger)index {
-	return [visibleChildren objectAtIndex:index];
+- (NSUInteger)countOfVisibleChildNodes {
+	return [visibleChildNodes count];
+}
+
+- (NSArray *)visibleChildNodes {
+	return [[visibleChildNodes copy] autorelease];
+}
+
+
+- (HKNode *)visibleChildNodeAtIndex:(NSUInteger)index {
+	return [visibleChildNodes objectAtIndex:index];
 }
 
 
@@ -225,39 +193,18 @@
 #endif
 	// returns YES if we are contained anywhere inside the array passed in, including inside sub-nodes
 	
-#if HK_USE_BLOCKS
-	__block BOOL isContained = NO;
-	
-	[nodes enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(HKNode *node, NSUInteger idx, BOOL *stop) {
-		if (node == self) isContained = YES;
-		if (isContained) {
-			if (stop) *stop = YES;
-		}
-		
-		if (![node isLeaf]) {
-			isContained = [self isContainedInNodes:[node children]];
-			if (isContained) {
-				if (stop) *stop = YES;
-			}
-		}
-	}];
-	
-	return isContained;
-	
-#else
 	for (HKNode *node in nodes) {
 		if (node == self) {
 			return YES;             // we found ourselves
 		}
 		// check all the sub-nodes
 		if (![node isLeaf]) {
-			if ([self isContainedInNodes:[node children]]) {
+			if ([self isContainedInNodes:[node childNodes]]) {
 				return YES;
 			}
 		}
 	}
 	return NO;
-#endif
 	
 }
 
@@ -269,28 +216,15 @@
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-#if HK_USE_BLOCKS
-	__block BOOL isDescendant = NO;
-	
-	[nodes enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(HKNode *node, NSUInteger idx, BOOL *stop) {
-		// check all the sub-nodes
-		if (![node isLeaf]) {
-			isDescendant = [self isContainedInNodes:[node children]];
-		}
-	}];
-	return isDescendant;
-	
-#else
 	for (HKNode *node in nodes) {
 		// check all the sub-nodes
 		if (![node isLeaf]) {
-			if ([self isContainedInNodes:[node children]]) {
+			if ([self isContainedInNodes:[node childNodes]]) {
 				return YES;
 			}
 		}
 	}
 	return NO;
-#endif
 	
 }
 
@@ -329,16 +263,10 @@
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	showInvisibleItems = value;
-	if (!isLeaf && children) {
-#if HK_USE_BLOCKS
-		[children enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(HKNode *child, NSUInteger idx, BOOL *stop) {
-			if (![child isLeaf]) [child setShowInvisibleItems:showInvisibleItems];
-		}];
-#else
-		for (HKNode *child in children) {
+	if (!isLeaf && childNodes) {
+		for (HKNode *child in childNodes) {
 			if (![child isLeaf]) [child setShowInvisibleItems:showInvisibleItems];
 		}
-#endif
 	}
 }
 
@@ -369,15 +297,9 @@
 		[sortDescriptors release];
 		sortDescriptors = aSortDescriptors;
 		
-#if HK_USE_BLOCKS
-		[children enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(HKNode *child, NSUInteger idx, BOOL *stop) {
-			[child setSortDescriptors:sortDescriptors recursively:YES];
-		}];
-#else
-		if (children && recursively) {
-			[children makeObjectsPerformSelector:@selector(setSortDescriptors:) withObject:sortDescriptors];
+		if (childNodes && recursively) {
+			[childNodes makeObjectsPerformSelector:@selector(setSortDescriptors:) withObject:sortDescriptors];
 		}
-#endif
 	}
 }
 
@@ -385,25 +307,19 @@
 - (void)recursiveSortChildren {
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 	if (!isLeaf) {
-		if (children) {
+		if (childNodes) {
 #if HK_DEBUG
-//		NSLog(@"[%@ %@] children (before) == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), children);
+//		NSLog(@"[%@ %@] childNodes (before) == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), childNodes);
 #endif
 			
-			[children sortUsingDescriptors:sortDescriptors];
-			[visibleChildren sortUsingDescriptors:sortDescriptors];
+			[childNodes sortUsingDescriptors:sortDescriptors];
+			[visibleChildNodes sortUsingDescriptors:sortDescriptors];
 			
 #if HK_DEBUG
-//			NSLog(@"[%@ %@] children (after) == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), children);
+//			NSLog(@"[%@ %@] childNodes (after) == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), childNodes);
 #endif
 			
-#if HK_USE_BLOCKS
-			[children enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(HKNode *child, NSUInteger idx, BOOL *stop) {
-				[child recursiveSortChildren];
-			}];
-#else
-			[children makeObjectsPerformSelector:@selector(recursiveSortChildren)];
-#endif
+			[childNodes makeObjectsPerformSelector:@selector(recursiveSortChildren)];
 		}
 	}
 }

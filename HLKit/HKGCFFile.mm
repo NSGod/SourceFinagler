@@ -16,7 +16,12 @@
 
 @implementation HKGCFFile
 
-@synthesize packageID, blockSize, totalBlockCount, usedBlockCount, freeBlockCount, lastVersionPlayed;
+@synthesize packageID;
+@synthesize blockSize;
+@synthesize totalBlockCount;
+@synthesize usedBlockCount;
+@synthesize freeBlockCount;
+@synthesize lastVersionPlayed;
 
 
 - (id)initWithContentsOfFile:(NSString *)aPath mode:(HLFileMode)permission showInvisibleItems:(BOOL)showInvisibleItems sortDescriptors:(NSArray *)sortDescriptors error:(NSError **)outError {

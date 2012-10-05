@@ -16,7 +16,7 @@
 //  Generic Tree node structure (TreeNode).
 //
 //  TreeNode is a node in a doubly linked tree data structure.  TreeNode's have weak references to their parent (to avoid retain 
-//  cycles since parents retain their children).  Each node has 0 or more children and a reference to a piece of node data. The TreeNode provides method to manipulate and extract structural information about a tree.  For instance, TreeNode implements: insertChild:atIndex:, removeChild:, isDescendantOfNode:, and other useful operations on tree nodes.
+//  cycles since parents retain their children).  Each node has 0 or more children and a reference to a piece of node data. The TreeNode provides method to manipulate and extract structural information about a tree.  For instance, TreeNode implements: insertChildNode:atIndex:, removeChildNode:, isDescendantOfNode:, and other useful operations on tree nodes.
 //  TreeNode provides the structure and common functionality of trees and is expected to be subclassed.
 
 
@@ -104,12 +104,12 @@ static void HKInitializeIcons() {
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	return [self initWithParent:nil children:nil sortDescriptors:nil container:nil];
+	return [self initWithParent:nil childNodes:nil sortDescriptors:nil container:nil];
 }
 
 
-- (id)initWithParent:(HKNode *)aParent children:(NSArray *)theChildren sortDescriptors:(NSArray *)aSortDescriptors container:(id)aContainer {
-	if ((self = [super initWithParent:aParent children:theChildren sortDescriptors:aSortDescriptors container:aContainer])) {
+- (id)initWithParent:(HKNode *)aParent childNodes:(NSArray *)theChildren sortDescriptors:(NSArray *)aSortDescriptors container:(id)aContainer {
+	if ((self = [super initWithParent:aParent childNodes:theChildren sortDescriptors:aSortDescriptors container:aContainer])) {
 		fileType = HKFileTypeNone;
 	}
 	return self;
@@ -287,12 +287,12 @@ static NSString * const HKFileTypeDescription[] = {
 //		if (node == self) {     // If we are in the root array, return nil
 //			break;
 //		}
-//		if ([[node children] containsObjectIdenticalTo:self]) {
+//		if ([[node childNodes] containsObjectIdenticalTo:self]) {
 //			result = node;
 //			break;
 //		}
 //		if (![node isLeaf]) {
-//			HKItem *innerNode = [self parentFromArray:[node children]];
+//			HKItem *innerNode = [self parentFromArray:[node childNodes]];
 //			if (innerNode) {
 //				result = innerNode;
 //				break;
@@ -319,7 +319,7 @@ static NSString * const HKFileTypeDescription[] = {
 //	NSInteger index;
 //
 //	while (aParent = [doc parentFromArray:array]) {
-//		index = [[aParent children] indexOfObjectIdenticalTo:doc];
+//		index = [[aParent childNodes] indexOfObjectIdenticalTo:doc];
 //		if (index == NSNotFound) {
 //			return nil;
 //		}

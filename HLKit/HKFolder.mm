@@ -19,12 +19,6 @@ using namespace HLLib;
 
 #define HK_LAZY_INIT 1
 
-#define HK_USE_BLOCKS 0
-
-#if HK_USE_BLOCKS
-#else
-#endif
-
 
 
 @interface HKFolder (Private)
@@ -39,13 +33,13 @@ using namespace HLLib;
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if ((self = [super initWithParent:aParent children:nil sortDescriptors:aSortDescriptors container:aContainer])) {
+	if ((self = [super initWithParent:aParent childNodes:nil sortDescriptors:aSortDescriptors container:aContainer])) {
 		_privateData = aFolder;
 		isLeaf = NO;
 		isExtractable = YES;
 		isVisible = YES;
 		size = [[NSNumber numberWithLongLong:-1] retain];
-		countOfVisibleChildren = NSNotFound;
+		countOfVisibleChildNodes = NSNotFound;
 		[self setShowInvisibleItems:showInvisibles];
 		
 #if !(HK_LAZY_INIT)
@@ -110,34 +104,34 @@ using namespace HLLib;
 #endif
 
 
-- (NSUInteger)countOfChildren {
+- (NSUInteger)countOfChildNodes {
 	return (NSUInteger)static_cast<const CDirectoryFolder *>(_privateData)->GetCount();
 }
 
-- (NSUInteger)countOfVisibleChildren {
-	if (countOfVisibleChildren == NSNotFound) {
-		countOfVisibleChildren = 0;
+- (NSUInteger)countOfVisibleChildNodes {
+	if (countOfVisibleChildNodes == NSNotFound) {
+		countOfVisibleChildNodes = 0;
 		NSUInteger numChildren = static_cast<const CDirectoryFolder *>(_privateData)->GetCount();
 		for (NSUInteger i = 0; i < numChildren; i++) {
 			CDirectoryItem *item = static_cast<CDirectoryFolder *>(_privateData)->GetItem(i);
 			HLDirectoryItemType itemType = item->GetType();
 			if (itemType == HL_ITEM_FOLDER) {
-				countOfVisibleChildren++;
+				countOfVisibleChildNodes++;
 			} else if (itemType == HL_ITEM_FILE) {
 				if (static_cast<const CDirectoryFile *>(item)->GetExtractable()) {
-					countOfVisibleChildren++;
+					countOfVisibleChildNodes++;
 				}
 			}
 		}
 	}
-	return countOfVisibleChildren;
+	return countOfVisibleChildNodes;
 }
 
 - (void)populateChildrenIfNeeded {
 #if HK_DEBUG
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (children == nil && visibleChildren == nil) {
+	if (childNodes == nil && visibleChildNodes == nil) {
 		[self initializeChildrenIfNeeded];
 		
 		NSMutableArray *tempChildren = [[NSMutableArray alloc] init];
@@ -160,7 +154,7 @@ using namespace HLLib;
 				[child release];
 			}
 		}
-		[self insertChildren:tempChildren atIndex:0];
+		[self insertChildNodes:tempChildren atIndex:0];
 		[tempChildren release];
 	}
 }
@@ -199,28 +193,7 @@ using namespace HLLib;
 	
 	if (count > 1) remainingPath = [NSString pathWithComponents:[revisedPathComponents subarrayWithRange:NSMakeRange(1, (count - 1))]];
 	
-#if HK_USE_BLOCKS
-	__block HKItem *descendant = nil;
-	
-	[children enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(HKItem *child, NSUInteger idx, BOOL *stop) {
-		if ([[child name] isEqualToString:targetName]) {
-			if (remainingPath == nil) {
-				descendant = child;
-				if (stop) *stop = YES;
-			}
-			// if there's remaining path left, and the child isn't a folder, then bail
-			if ([child isLeaf]) {
-				if (stop) *stop = YES;
-			}
-			
-			descendant = [(HKFolder *)child descendantAtPath:remainingPath];
-		}
-	}];
-	
-	return descendant;
-	
-#else
-	for (HKItem *child in children) {
+	for (HKItem *child in childNodes) {
 		if ([[child name] isEqualToString:targetName]) {
 			if (remainingPath == nil) {
 				return child;
@@ -231,7 +204,7 @@ using namespace HLLib;
 			return [(HKFolder *)child descendantAtPath:remainingPath];
 		}
 	}
-#endif
+	
 	return nil;
 }
 
@@ -244,22 +217,14 @@ using namespace HLLib;
 	
 	NSMutableArray  *descendants = [[NSMutableArray alloc] init];
 	
-//#if HK_USE_BLOCKS
-//	[children enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(HKItem *node, NSUInteger idx, BOOL *stop) {
-//		if (node) {
-//			[descendants addObject:node];
-//			if (![node isLeaf]) [descendants addObjectsFromArray:[node descendants]];
-//		}
-//	}];
-//#else
-	for (HKItem *node in children) {
+	for (HKItem *node in childNodes) {
 		[descendants addObject:node];
 		
 		if (![node isLeaf]) {
 			[descendants addObjectsFromArray:[node descendants]];   // Recursive - will go down the chain to get all
 		}
 	}
-//#endif
+
 	return [descendants autorelease];
 }
 
@@ -272,29 +237,13 @@ using namespace HLLib;
 	
 	NSMutableArray *visibleDescendants = [[NSMutableArray alloc] init];
 	
-//#if HK_USE_BLOCKS
-//	
-//#if HK_DEBUG
-////	NSLog(@"[%@ %@] path == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [self path]);
-//#endif
-//	
-//	[visibleChildren enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(HKItem *visibleChild, NSUInteger idx, BOOL *stop) {
-//#if HK_DEBUG
-////		NSLog(@"[%@ %@] path == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [self path]);
-//#endif
-//		if (visibleChild) {
-//			[visibleDescendants addObject:visibleChild];
-//			if (![visibleChild isLeaf]) [visibleDescendants addObjectsFromArray:[visibleChild visibleDescendants]]; // Recursive - will go down the chain to get all
-//		}
-//	}];
-//#else
-	for (HKItem *node in visibleChildren) {
+	for (HKItem *node in visibleChildNodes) {
 		[visibleDescendants addObject:node];
 		if (![node isLeaf]) {
 			[visibleDescendants addObjectsFromArray:[node visibleDescendants]];	// Recursive - will go down the chain to get all
 		}
 	}
-//#endif
+	
 	return [visibleDescendants autorelease];
 }
 
@@ -307,53 +256,44 @@ using namespace HLLib;
 	
 	NSArray *visibleDescendants = [self visibleDescendants];
 	
-//#if HK_USE_BLOCKS
-//	[visibleDescendants enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(HKItem *item, NSUInteger idx, BOOL *stop) {
-//		if (item) {
-//			NSString *itemPath = [item pathRelativeToItem:parentItem];
-//			if (itemPath) [visibleDescendantsAndPaths setObject:item forKey:itemPath];
-//		}
-//	}];
-//#else
 	for (HKItem *item in visibleDescendants) {
 		NSString *itemPath = [item pathRelativeToItem:parentItem];
 		if (itemPath) {
 			[visibleDescendantsAndPaths setObject:item forKey:itemPath];
 		}
 	}
-//#endif
 	return [visibleDescendantsAndPaths autorelease];
 }
 
 
-- (HKNode *)childAtIndex:(NSUInteger)index {
+- (HKNode *)childNodeAtIndex:(NSUInteger)index {
 	[self populateChildrenIfNeeded];
-	return [super childAtIndex:index];
+	return [super childNodeAtIndex:index];
 }
 
-- (HKNode *)visibleChildAtIndex:(NSUInteger)index {
+- (HKNode *)visibleChildNodeAtIndex:(NSUInteger)index {
 #if HK_DEBUG
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[self populateChildrenIfNeeded];
-	return [super visibleChildAtIndex:index];
+	return [super visibleChildNodeAtIndex:index];
 }
 
-- (NSArray *)children {
+- (NSArray *)childNodes {
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[self populateChildrenIfNeeded];
-    return [[children copy] autorelease];
+    return [[childNodes copy] autorelease];
 }
 
 
-- (NSArray *)visibleChildren {
+- (NSArray *)visibleChildNodes {
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[self populateChildrenIfNeeded];
-	return [[visibleChildren copy] autorelease];
+	return [[visibleChildNodes copy] autorelease];
 }
 
 
