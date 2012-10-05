@@ -512,6 +512,7 @@ static TKVTFFormat defaultVTFFormat = TKVTFFormatDefault;
 					
 					if (existingBytes == 0) {
 						NSLog(@"[%@ %@] failed to get existing data for slice == %u, face == %u, frame == %u, mipmap == %u", NSStringFromClass([self class]), NSStringFromSelector(_cmd), slice, faceIndex, frame, mipmapNumber);
+						delete [] bytes;
 						continue;
 					}
 					
@@ -595,7 +596,6 @@ static TKVTFFormat defaultVTFFormat = TKVTFFormatDefault;
 	}
 	delete file;
 	return [[bitmapImageReps copy] autorelease];
-
 }
 
 
