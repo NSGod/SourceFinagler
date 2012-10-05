@@ -90,6 +90,20 @@
 		</dict>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
+			<string>SGA</string>
+			<key>CFBundleTypeName</key>
+			<string>Source Game Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.valvesoftware.source.sga</string>
+			</array>
+			<key>NSDocumentClass</key>
+			<string>MDSGADocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
 			<string>VPK</string>
 			<key>CFBundleTypeName</key>
 			<string>Source Addon file</string>
@@ -325,12 +339,12 @@
 			<string>Source VGUI Menu file</string>
 			<key>CFBundleTypeRole</key>
 			<string>None</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.valvesoftware.source.menu</string>
 			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
 		</dict>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
@@ -498,6 +512,30 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.valvesoftware.source.smd</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
+			<string>MMT</string>
+			<key>CFBundleTypeName</key>
+			<string>Source Motion Mapping Template</string>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.valvesoftware.source.mmt</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
+			<string>PRT</string>
+			<key>CFBundleTypeName</key>
+			<string>Source Portal file</string>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.valvesoftware.source.prt</string>
 			</array>
 		</dict>
 		<dict>
@@ -697,7 +735,7 @@
 			<key>UTTypeDescription</key>
 			<string>Steam Cache file</string>
 			<key>UTTypeIconFile</key>
-			<string>gcf</string>
+			<string>GCF</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.valvesoftware.source.gcf</string>
 			<key>UTTypeReferenceURL</key>
@@ -771,6 +809,28 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>pak</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive </string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Source Game Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>SGA</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.valvesoftware.source.sga</string>
+			<key>UTTypeReferenceURL</key>
+			<string></string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>sga</string>
 				</array>
 			</dict>
 		</dict>
@@ -1244,6 +1304,48 @@
 				<string>public.plain-text</string>
 			</array>
 			<key>UTTypeDescription</key>
+			<string>Source Motion Mapping Template</string>
+			<key>UTTypeIconFile</key>
+			<string>MMT</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.valvesoftware.source.mmt</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://developer.valvesoftware.com/wiki/Skeleton_motion_mapping#Using_Template_Files</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mmt</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.plain-text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Source Portal file</string>
+			<key>UTTypeIconFile</key>
+			<string>PRT</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.valvesoftware.source.prt</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://developer.valvesoftware.com/wiki/PRT</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>prt</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.plain-text</string>
+			</array>
+			<key>UTTypeDescription</key>
 			<string>Source VGUI Layout file</string>
 			<key>UTTypeIconFile</key>
 			<string>LAYOUT</string>
@@ -1678,6 +1780,6 @@
 				</array>
 			</dict>
 		</dict>
-	</array>
-</dict>
+			</array>
+			</dict>
 </plist>
