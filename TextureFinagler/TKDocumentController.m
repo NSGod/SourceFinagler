@@ -3,18 +3,18 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 3/16/2009.
-//  Copyright (c) 2009-2011 Mark Douma. All rights reserved.
+//  Copyright (c) 2009-2012 Mark Douma. All rights reserved.
 //
 
 #import "TKDocumentController.h"
+#import <TextureKit/TextureKit.h>
+
 #import "TKImageDocument.h"
 
-#import <TextureKit/TKImage.h>
-#import <TextureKit/TKVTFImageRep.h>
-#import <TextureKit/TKDDSImageRep.h>
-#import <TextureKit/TKFoundationAdditions.h>
-
 #import <CoreServices/CoreServices.h>
+
+#import "TKFoundationAdditions.h"
+
 
 
 #define TK_DEBUG 1
@@ -61,7 +61,16 @@ NSString * const TKApplicationBundleIdentifier = @"com.markdouma.SourceFinagler"
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 	static NSArray *documentClassNames = nil;
 	if (documentClassNames == nil) {
-		documentClassNames = [[NSArray arrayWithObjects:@"TKImageDocument", @"MDGCFDocument", @"MDBSPDocument", @"MDNCFDocument", @"MDPAKDocument", @"MDVPKDocument", @"MDWADDocument", @"MDXZPDocument", nil] retain];
+		documentClassNames = [[NSArray arrayWithObjects:
+							   @"TKImageDocument",
+							   @"MDGCFDocument",
+							   @"MDBSPDocument",
+							   @"MDNCFDocument",
+							   @"MDPAKDocument",
+							   @"MDVPKDocument",
+							   @"MDWADDocument",
+							   @"MDSGADocument",
+							   @"MDXZPDocument", nil] retain];
 	}
 	return documentClassNames;
 }
