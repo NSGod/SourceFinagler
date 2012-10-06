@@ -186,7 +186,7 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 		if (archiveData) {
 			image = [[NSKeyedUnarchiver unarchiveObjectWithData:archiveData] retain];
 			if (image) {
-				[self setDimensions:[NSString stringWithFormat:@"%lu x %lu", [image size].width, [image size].height]];
+				[self setDimensions:[NSString stringWithFormat:@"%lu x %lu", (unsigned long)[image size].width, (unsigned long)[image size].height]];
 			}
 			return (image != nil);
 		}
@@ -194,7 +194,7 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 	} else {
 		image = [[TKImage alloc] initWithContentsOfURL:absURL];
 		
-		[self setDimensions:[NSString stringWithFormat:@"%lu x %lu", [image size].width, [image size].height]];
+		[self setDimensions:[NSString stringWithFormat:@"%lu x %lu", (unsigned long)[image size].width, (unsigned long)[image size].height]];
 		
 		if (image != nil) status = YES;
 		

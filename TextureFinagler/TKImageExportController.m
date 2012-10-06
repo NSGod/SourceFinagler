@@ -89,7 +89,7 @@ enum {
 	if ((self = [super initWithWindowNibName:[self windowNibName]])) {
 		operationQueue = [[NSOperationQueue alloc] init];
 		previewMode = [[[NSUserDefaults standardUserDefaults] objectForKey:TKImageExportSelectedPreviewModeKey] integerValue];
-		presets = [[TKImageExportPreset imageExportPresetsWithContentsOfArrayAtPath:[[NSBundle mainBundle] pathForResource:@"allDefaultPresets" ofType:@"plist"]] retain];;
+		presets = [[TKImageExportPreset imageExportPresetsWithContentsOfArrayAtPath:[[NSBundle mainBundle] pathForResource:@"allDefaultPresets" ofType:@"plist"]] mutableCopy];;
 		[self setDocument:aDocument];
 	} else {
 		[NSBundle runFailedNibLoadAlert:[NSString stringWithFormat:@"%@", [self windowNibName]]];

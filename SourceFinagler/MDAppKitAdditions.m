@@ -347,7 +347,7 @@ NSString *NSStringFromDefaultsKeyPath(NSString *defaultsKey) {
 #endif
 	NSRect frameRect = [self frame];
 	
-	NSString *dimensionString = [NSString stringWithFormat:@"%ld %ld %ld %ld", (NSInteger)frameRect.origin.x, (NSInteger)frameRect.origin.y, (NSInteger)frameRect.size.width, (NSInteger)frameRect.size.height];
+	NSString *dimensionString = [NSString stringWithFormat:@"%ld %ld %ld %ld", (long)frameRect.origin.x, (long)frameRect.origin.y, (long)frameRect.size.width, (long)frameRect.size.height];
 	
 	return dimensionString;
 }

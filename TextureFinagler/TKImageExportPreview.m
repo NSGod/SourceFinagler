@@ -73,8 +73,8 @@
 	[description appendFormat:@"imageRep == %@", imageRep];
 	[description appendFormat:@"imageType == %@", imageType];
 	[description appendFormat:@"imageFormat == %@", imageFormat];
-	[description appendFormat:@"imageFileSize == %lu", imageFileSize];
-	[description appendFormat:@"tag == %ld", tag];
+	[description appendFormat:@"imageFileSize == %lu", (unsigned long)imageFileSize];
+	[description appendFormat:@"tag == %ld", (long)tag];
 	return description;
 }
 
