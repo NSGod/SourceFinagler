@@ -652,7 +652,7 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 
 
 - (NSString *)imageUID {
-	return [NSString stringWithFormat:@"%lu", [self hash]];
+	return [NSString stringWithFormat:@"%lu", (unsigned long)[self hash]];
 }
 
 
@@ -665,7 +665,7 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 }
 
 - (NSString *)imageTitle {
-	return [NSString stringWithFormat:@"%lupx x %lupx", (NSUInteger)[self size].width, (NSUInteger)[self size].height];
+	return [NSString stringWithFormat:@"%lupx x %lupx", (unsigned long)[self size].width, (unsigned long)[self size].height];
 }
 
 
@@ -694,10 +694,10 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 //	NSMutableString *description = [NSMutableString stringWithString:[super description]];
 //	[description appendFormat:@"\n"];
 	NSMutableString *description = [NSMutableString string];
-	[description appendFormat:@"<%@> sliceIndex == %lu\t", NSStringFromClass([self class]), sliceIndex];
-	[description appendFormat:@"face == %lu\t\t", face];
-	[description appendFormat:@"frameIndex == %lu\t", frameIndex];
-	[description appendFormat:@"mipmapIndex == %lu", mipmapIndex];
+	[description appendFormat:@"<%@> sliceIndex == %lu\t", NSStringFromClass([self class]), (unsigned long)sliceIndex];
+	[description appendFormat:@"face == %lu\t\t", (unsigned long)face];
+	[description appendFormat:@"frameIndex == %lu\t", (unsigned long)frameIndex];
+	[description appendFormat:@"mipmapIndex == %lu", (unsigned long)mipmapIndex];
 	return description;
 }
 

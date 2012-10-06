@@ -22,7 +22,7 @@
 #define TK_DEBUG 0
 
 TEXTUREKIT_STATIC_INLINE NSString *TKImageKey(NSUInteger anUInteger) {
-	return [NSString stringWithFormat:@"%lu", anUInteger];
+	return [NSString stringWithFormat:@"%lu", (unsigned long)anUInteger];
 }
 
 
@@ -1073,10 +1073,10 @@ static inline NSString *NSStringFromImageType(TKImageType aType) {
 	NSMutableString *description = [NSMutableString stringWithString:[super description]];
 	[description appendFormat:@"\n"];
 	[description appendFormat:@"imageType == %@\n", NSStringFromImageType(type)];
-	[description appendFormat:@"sliceCount == %lu\n", sliceCount];
-	[description appendFormat:@"faceCount == %lu\n", faceCount];
-	[description appendFormat:@"frameCount == %lu\n", frameCount];
-	[description appendFormat:@"mipmapCount == %lu\n", mipmapCount];
+	[description appendFormat:@"sliceCount == %lu\n", (unsigned long)sliceCount];
+	[description appendFormat:@"faceCount == %lu\n", (unsigned long)faceCount];
+	[description appendFormat:@"frameCount == %lu\n", (unsigned long)frameCount];
+	[description appendFormat:@"mipmapCount == %lu\n", (unsigned long)mipmapCount];
 	[description appendFormat:@"reps == %@", reps];
 	return description;
 }

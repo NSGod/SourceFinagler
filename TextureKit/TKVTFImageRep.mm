@@ -11,7 +11,7 @@
 #import <ApplicationServices/ApplicationServices.h>
 #import <VTF/VTF.h>
 
-#define TK_DEBUG 1
+#define TK_DEBUG 0
 
 #if TK_DEBUG
 #import "MDFoundationAdditions.h"
@@ -149,7 +149,9 @@ static TKVTFFormat defaultVTFFormat = TKVTFFormatDefault;
 	
 	if (imageUnfilteredPasteboardTypes == nil) {
 		NSArray *types = [super imageUnfilteredPasteboardTypes];
+#if TK_DEBUG
 		NSLog(@"[%@ %@] super's imageUnfilteredPasteboardTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), types);
+#endif
 		imageUnfilteredPasteboardTypes = [[types arrayByAddingObject:TKVTFPboardType] retain];
 	}
 	return imageUnfilteredPasteboardTypes;
