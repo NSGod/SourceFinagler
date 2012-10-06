@@ -288,6 +288,14 @@
 		C1B953A5124E73EC00E83451 /* VTFWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = C1B95371124E73EC00E83451 /* VTFWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1B953A6124E73EC00E83451 /* Writer.h in Headers */ = {isa = PBXBuildFile; fileRef = C1B95372124E73EC00E83451 /* Writer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1B953A7124E73EC00E83451 /* Writers.h in Headers */ = {isa = PBXBuildFile; fileRef = C1B95373124E73EC00E83451 /* Writers.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C1BEA1F0161B777700464170 /* SGAFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1BEA1EE161B777700464170 /* SGAFile.cpp */; };
+		C1BEA1F1161B777700464170 /* SGAFile.h in Headers */ = {isa = PBXBuildFile; fileRef = C1BEA1EF161B777700464170 /* SGAFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C1BEA1F7161B77DE00464170 /* HKSGAFile.h in Headers */ = {isa = PBXBuildFile; fileRef = C1BEA1F5161B77DE00464170 /* HKSGAFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C1BEA1F8161B77DE00464170 /* HKSGAFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1BEA1F6161B77DE00464170 /* HKSGAFile.mm */; };
+		C1BEA1FC161B781900464170 /* MDSGADocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BEA1FB161B781900464170 /* MDSGADocument.m */; };
+		C1BEA200161B788F00464170 /* MMT.icns in Resources */ = {isa = PBXBuildFile; fileRef = C1BEA1FF161B788F00464170 /* MMT.icns */; };
+		C1BEA202161B789A00464170 /* PRT.icns in Resources */ = {isa = PBXBuildFile; fileRef = C1BEA201161B789A00464170 /* PRT.icns */; };
+		C1BEA204161B78A400464170 /* SGA.icns in Resources */ = {isa = PBXBuildFile; fileRef = C1BEA203161B78A400464170 /* SGA.icns */; };
 		C1C126D2123A979C004674B4 /* HL.h in Headers */ = {isa = PBXBuildFile; fileRef = C1C126D1123A979C004674B4 /* HL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1C126D6123A97A9004674B4 /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = C1C126D3123A97A9004674B4 /* stdafx.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1C126D7123A97A9004674B4 /* HLLib.h in Headers */ = {isa = PBXBuildFile; fileRef = C1C126D4123A97A9004674B4 /* HLLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1253,6 +1261,15 @@
 		C1BB6F5C11FCA90300B88BBE /* MDUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDUserDefaults.h; path = SourceFinagler/MDUserDefaults.h; sourceTree = "<group>"; };
 		C1BB6F5D11FCA90300B88BBE /* MDUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDUserDefaults.m; path = SourceFinagler/MDUserDefaults.m; sourceTree = "<group>"; };
 		C1BB6F6211FCA91B00B88BBE /* Finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Finder.h; path = SourceFinagler/Finder.h; sourceTree = "<group>"; };
+		C1BEA1EE161B777700464170 /* SGAFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SGAFile.cpp; path = HL/SGAFile.cpp; sourceTree = "<group>"; };
+		C1BEA1EF161B777700464170 /* SGAFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGAFile.h; path = HL/SGAFile.h; sourceTree = "<group>"; };
+		C1BEA1F5161B77DE00464170 /* HKSGAFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKSGAFile.h; sourceTree = "<group>"; };
+		C1BEA1F6161B77DE00464170 /* HKSGAFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HKSGAFile.mm; sourceTree = "<group>"; };
+		C1BEA1FA161B781900464170 /* MDSGADocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDSGADocument.h; path = SourceFinagler/MDSGADocument.h; sourceTree = "<group>"; };
+		C1BEA1FB161B781900464170 /* MDSGADocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDSGADocument.m; path = SourceFinagler/MDSGADocument.m; sourceTree = "<group>"; };
+		C1BEA1FF161B788F00464170 /* MMT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = MMT.icns; path = Resources/MMT.icns; sourceTree = "<group>"; };
+		C1BEA201161B789A00464170 /* PRT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = PRT.icns; path = Resources/PRT.icns; sourceTree = "<group>"; };
+		C1BEA203161B78A400464170 /* SGA.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = SGA.icns; path = Resources/SGA.icns; sourceTree = "<group>"; };
 		C1C12465123A0840004674B4 /* BSP.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = BSP.icns; path = Resources/BSP.icns; sourceTree = "<group>"; };
 		C1C12466123A0840004674B4 /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cancel.png; path = Resources/cancel.png; sourceTree = "<group>"; };
 		C1C12467123A0840004674B4 /* cancelPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cancelPressed.png; path = Resources/cancelPressed.png; sourceTree = "<group>"; };
@@ -2256,11 +2273,13 @@
 				C1ABAACC12562D8400CAAFEB /* INF.icns */,
 				C14CCEEE123D14CD00610DA6 /* LST.icns */,
 				C15DD21012697F0B00E44BDB /* LMP.icns */,
+				C1BEA1FF161B788F00464170 /* MMT.icns */,
 				C10BBA65124303EE00994CA0 /* NAV.icns */,
 				C15DD47B126AB93000E44BDB /* NUT.icns */,
 				C15DD47C126AB93000E44BDB /* NUC.icns */,
 				C14CCEEF123D14CD00610DA6 /* MDL.icns */,
 				C145E8B21248D60B00AF2D35 /* PCF.icns */,
+				C1BEA201161B789A00464170 /* PRT.icns */,
 				C14CCEF0123D14CD00610DA6 /* PHY.icns */,
 				C1758D62124833D1001B5A46 /* RAD.icns */,
 				C14CCEF1123D14CD00610DA6 /* RAW.icns */,
@@ -2655,6 +2674,7 @@
 				C1C1246D123A0840004674B4 /* GCF.icns */,
 				C1C12474123A0840004674B4 /* NCF.icns */,
 				C1C12475123A0840004674B4 /* PAK.icns */,
+				C1BEA203161B78A400464170 /* SGA.icns */,
 				C1C12479123A0840004674B4 /* VPK.icns */,
 				C1C1247A123A0840004674B4 /* WAD.icns */,
 				C1C1247B123A0840004674B4 /* XZP.icns */,
@@ -2938,6 +2958,8 @@
 				C1C126B7123A80BB004674B4 /* MDNCFDocument.m */,
 				C1C126BA123A80F5004674B4 /* MDPAKDocument.h */,
 				C1C126BB123A80F5004674B4 /* MDPAKDocument.m */,
+				C1BEA1FA161B781900464170 /* MDSGADocument.h */,
+				C1BEA1FB161B781900464170 /* MDSGADocument.m */,
 				C1C126BE123A8155004674B4 /* MDVPKDocument.h */,
 				C1C126BF123A8155004674B4 /* MDVPKDocument.m */,
 				C1C126C2123A8217004674B4 /* MDWADDocument.h */,
@@ -3010,6 +3032,8 @@
 				C1C12718123A97D8004674B4 /* NCFFile.cpp */,
 				C1C12719123A97D8004674B4 /* PAKFile.h */,
 				C1C1271A123A97D8004674B4 /* PAKFile.cpp */,
+				C1BEA1EF161B777700464170 /* SGAFile.h */,
+				C1BEA1EE161B777700464170 /* SGAFile.cpp */,
 				C1C1271B123A97D8004674B4 /* VBSPFile.h */,
 				C1C1271C123A97D8004674B4 /* VBSPFile.cpp */,
 				C1C1271D123A97D8004674B4 /* VPKFile.h */,
@@ -3226,6 +3250,8 @@
 				C1F153D81396699600E32057 /* HKNCFFile.mm */,
 				C1F153DB1396699600E32057 /* HKPAKFile.h */,
 				C1F153DC1396699600E32057 /* HKPAKFile.mm */,
+				C1BEA1F5161B77DE00464170 /* HKSGAFile.h */,
+				C1BEA1F6161B77DE00464170 /* HKSGAFile.mm */,
 				C1F153DD1396699600E32057 /* HKVPKFile.h */,
 				C1F153DE1396699600E32057 /* HKVPKFile.mm */,
 				C1F153DF1396699600E32057 /* HKWADFile.h */,
@@ -3636,6 +3662,7 @@
 				C16A68F41600B62B0038A8B1 /* HLKitDefines.h in Headers */,
 				C16A68F51600B62C0038A8B1 /* HLKit.h in Headers */,
 				C10A898D16026EB200791BEC /* HKFolderAdditions.h in Headers */,
+				C1BEA1F7161B77DE00464170 /* HKSGAFile.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3732,6 +3759,7 @@
 				C1C1274F123A97FB004674B4 /* MemoryStream.h in Headers */,
 				C1C12751123A97FB004674B4 /* NullStream.h in Headers */,
 				C1C12753123A97FB004674B4 /* ProcStream.h in Headers */,
+				C1BEA1F1161B777700464170 /* SGAFile.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4404,6 +4432,9 @@
 				C1351912139479C40074B5EA /* Acknowledgments.rtf in Resources */,
 				C1224DAA13B09351009AA0F4 /* SourceFinaglerAgent.app in Resources */,
 				C10A8A2616026F6F00791BEC /* delete.png in Resources */,
+				C1BEA200161B788F00464170 /* MMT.icns in Resources */,
+				C1BEA202161B789A00464170 /* PRT.icns in Resources */,
+				C1BEA204161B78A400464170 /* SGA.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4480,7 +4511,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "set -o errexit\n\n[ $BUILD_STYLE = Release ] || { echo Distribution target requires \"'Release'\" build style; false; }\n\nVERSION=$(defaults read \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info\" CFBundleVersion)\nSHORT_VERSION=$(defaults read \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info\" CFBundleShortVersionString)\nDOWNLOAD_BASE_URL=\"http://www.markdouma.com/sourcefinagler\"\nRELEASENOTES_URL=\"http://www.markdouma.com/sourcefinagler/rnotes.html#version-$VERSION\"\n\nARCHIVE_FILENAME=$(echo \"$PROJECT_NAME.zip\" | sed s/\\ //g)\n\nDOWNLOAD_URL=\"$DOWNLOAD_BASE_URL/$ARCHIVE_FILENAME\"\nKEYCHAIN_PRIVKEY_NAME=\"dsa_priv.pem\"\n\nWD=$PWD\ncd \"$BUILT_PRODUCTS_DIR\"\nrm -f \"$ARCHIVE_FILENAME\"\nditto -ck --keepParent --sequesterRsrc \"$PROJECT_NAME.app\" \"$ARCHIVE_FILENAME\"\n\nSIZE=$(stat -f %z \"$ARCHIVE_FILENAME\")\nPUBDATE=$(date +\"%a, %d %b %G %T %z\")\n\n\nSIGNATURE=$(\n\topenssl dgst -sha1 -binary < \"$ARCHIVE_FILENAME\" \\\n\t| openssl dgst -dss1 -sign <(security find-generic-password -g -s \"$KEYCHAIN_PRIVKEY_NAME\" 2>&1 1>/dev/null | perl -pe '($_) = /\"(.+)\"/; s/\\\\012/\\n/g' | perl -MXML::LibXML -e 'print XML::LibXML->new()->parse_file(\"-\")->findvalue(q(//string[preceding-sibling::key[1] = \"NOTE\"]))') \\\n\t| openssl enc -base64\n)\n\n[ $SIGNATURE ] || { echo Unable to load signing private key with name \"'$KEYCHAIN_PRIVKEY_NAME'\" from keychain; false; }\n\ncat <<EOF\n\t\t<item>\n\t\t\t<title>Version $SHORT_VERSION ($VERSION)</title>\n\t\t\t<sparkle:releaseNotesLink>$RELEASENOTES_URL</sparkle:releaseNotesLink>\n\t\t\t<pubDate>$PUBDATE</pubDate>\n\t\t\t<enclosure\n\t\t\t\turl=\"$DOWNLOAD_URL\"\n\t\t\t\tsparkle:version=\"$VERSION\"\n\t\t\t\tsparkle:shortVersionString=\"$SHORT_VERSION\"\n\t\t\t\ttype=\"application/octet-stream\"\n\t\t\t\tlength=\"$SIZE\"\n\t\t\t\tsparkle:dsaSignature=\"$SIGNATURE\"\n\t\t\t/>\n\t\t</item>\nEOF\n\necho scp \"'$HOME/svn/my-cool-app/build/Release/$ARCHIVE_FILENAME'\" www.example.com:download/\necho scp \"'$WD/appcast.xml'\" www.example.com:web/software/my-cool-app/appcast.xml\n";
+			shellScript = "set -o errexit\n\n[ $CONFIGURATION = Release ] || { echo Distribution target requires \"'Release'\" build style; false; }\n\nVERSION=$(defaults read \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info\" CFBundleVersion)\nSHORT_VERSION=$(defaults read \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info\" CFBundleShortVersionString)\nDOWNLOAD_BASE_URL=\"http://www.markdouma.com/sourcefinagler\"\nRELEASENOTES_URL=\"http://www.markdouma.com/sourcefinagler/rnotes.html#version-$VERSION\"\n\nARCHIVE_FILENAME=$(echo \"$PROJECT_NAME.zip\" | sed s/\\ //g)\n\nDOWNLOAD_URL=\"$DOWNLOAD_BASE_URL/$ARCHIVE_FILENAME\"\nKEYCHAIN_PRIVKEY_NAME=\"dsa_priv.pem\"\n\nWD=$PWD\ncd \"$BUILT_PRODUCTS_DIR\"\nrm -f \"$ARCHIVE_FILENAME\"\nditto -ck --keepParent --sequesterRsrc \"$PROJECT_NAME.app\" \"$ARCHIVE_FILENAME\"\n\nSIZE=$(stat -f %z \"$ARCHIVE_FILENAME\")\nPUBDATE=$(date +\"%a, %d %b %G %T %z\")\n\n\nSIGNATURE=$(\n\topenssl dgst -sha1 -binary < \"$ARCHIVE_FILENAME\" \\\n\t| openssl dgst -dss1 -sign <(security find-generic-password -g -s \"$KEYCHAIN_PRIVKEY_NAME\" 2>&1 1>/dev/null | perl -pe '($_) = /\"(.+)\"/; s/\\\\012/\\n/g' | perl -MXML::LibXML -e 'print XML::LibXML->new()->parse_file(\"-\")->findvalue(q(//string[preceding-sibling::key[1] = \"NOTE\"]))') \\\n\t| openssl enc -base64\n)\n\n[ $SIGNATURE ] || { echo Unable to load signing private key with name \"'$KEYCHAIN_PRIVKEY_NAME'\" from keychain; false; }\n\ncat <<EOF\n\t\t<item>\n\t\t\t<title>Version $SHORT_VERSION ($VERSION)</title>\n\t\t\t<sparkle:releaseNotesLink>$RELEASENOTES_URL</sparkle:releaseNotesLink>\n\t\t\t<pubDate>$PUBDATE</pubDate>\n\t\t\t<enclosure\n\t\t\t\turl=\"$DOWNLOAD_URL\"\n\t\t\t\tsparkle:version=\"$VERSION\"\n\t\t\t\tsparkle:shortVersionString=\"$SHORT_VERSION\"\n\t\t\t\ttype=\"application/octet-stream\"\n\t\t\t\tlength=\"$SIZE\"\n\t\t\t\tsparkle:dsaSignature=\"$SIGNATURE\"\n\t\t\t/>\n\t\t</item>\nEOF\n\necho scp \"'$HOME/svn/my-cool-app/build/Release/$ARCHIVE_FILENAME'\" www.example.com:download/\necho scp \"'$WD/appcast.xml'\" www.example.com:web/software/my-cool-app/appcast.xml\n";
 		};
 		C1C2C5A4127CBCA0003B24F6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4542,6 +4573,7 @@
 				C1F157DF1396B05700E32057 /* HKFoundationAdditions.m in Sources */,
 				C16143D11399975C0042B91B /* HKFileAdditions.m in Sources */,
 				C10A898E16026EB300791BEC /* HKFolderAdditions.m in Sources */,
+				C1BEA1F8161B77DE00464170 /* HKSGAFile.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4640,6 +4672,7 @@
 				C1C12750123A97FB004674B4 /* MemoryStream.cpp in Sources */,
 				C1C12752123A97FB004674B4 /* NullStream.cpp in Sources */,
 				C1C12754123A97FB004674B4 /* ProcStream.cpp in Sources */,
+				C1BEA1F0161B777700464170 /* SGAFile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4710,6 +4743,7 @@
 				C1908B5813935CD000656A78 /* MDImageTextCell.m in Sources */,
 				C11CA5E713A4E84D006CC348 /* MDCopyOperationSeparatorView.m in Sources */,
 				C11CA69813A4F9FB006CC348 /* MDCopyOperationContentView.m in Sources */,
+				C1BEA1FC161B781900464170 /* MDSGADocument.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5193,17 +5227,16 @@
 					i386,
 					x86_64,
 				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
+				CODE_SIGN_IDENTITY = "Developer ID Application: Mark Douma";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
@@ -5215,16 +5248,15 @@
 					i386,
 					x86_64,
 				);
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Mark Douma";
+				CODE_SIGN_IDENTITY = "Developer ID Application: Mark Douma";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 			};
 			name = Release;
 		};
@@ -5238,7 +5270,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "SourceFinaglerAgent/SourceFinaglerAgent-Info.plist";
-				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = SourceFinaglerAgent;
 			};
@@ -5252,9 +5283,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "SourceFinaglerAgent/SourceFinaglerAgent-Info.plist";
-				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = SourceFinaglerAgent;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
@@ -5300,6 +5331,7 @@
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = SteamKit;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
@@ -5309,8 +5341,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = Distribution;
 			};
 			name = Debug;
@@ -5322,7 +5352,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				PRODUCT_NAME = Distribution;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -5361,6 +5390,7 @@
 				INFOPLIST_FILE = "HLKit/HLKit-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = HLKit;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
@@ -5399,6 +5429,7 @@
 				INFOPLIST_FILE = "TextureKit/TextureKit-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = TextureKit;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
@@ -5489,6 +5520,7 @@
 				INFOPLIST_FILE = VTF/Info.plist;
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = VTF;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
@@ -5527,6 +5559,7 @@
 				INSTALL_PATH = "@rpath/";
 				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_NAME = HL;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
@@ -5545,7 +5578,6 @@
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
 				GCC_WARN_SHADOW = NO;
 				INFOPLIST_FILE = SourceFinagler/SourceFinagler.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5568,7 +5600,6 @@
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
 				GCC_WARN_SHADOW = NO;
 				INFOPLIST_FILE = SourceFinagler/SourceFinagler.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5588,7 +5619,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "SourceSpotlightImporter/Source-Info.plist";
-				INSTALL_PATH = /Library/Spotlight;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
 				PRODUCT_NAME = Source;
 				WRAPPER_EXTENSION = mdimporter;
@@ -5602,7 +5632,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "SourceSpotlightImporter/Source-Info.plist";
-				INSTALL_PATH = /Library/Spotlight;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
 				PRODUCT_NAME = Source;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -5620,7 +5649,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "SourceImageQuickLook/SourceImage-Info.plist";
-				INSTALL_PATH = /Library/QuickLook;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
 				PRODUCT_NAME = SourceImage;
 				WRAPPER_EXTENSION = qlgenerator;
@@ -5635,7 +5663,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "SourceImageQuickLook/SourceImage-Info.plist";
-				INSTALL_PATH = /Library/QuickLook;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
 				PRODUCT_NAME = SourceImage;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -5706,6 +5733,7 @@
 				INFOPLIST_FILE = "NVTextureTools/NVCore-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = NVCore;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
@@ -5739,6 +5767,7 @@
 				INFOPLIST_FILE = "NVTextureTools/NVMath-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = NVMath;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
@@ -5774,6 +5803,7 @@
 				INFOPLIST_FILE = "NVTextureTools/NVImage-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = NVImage;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
@@ -5815,6 +5845,7 @@
 					"\"$(SRCROOT)/NVTextureTools\"",
 				);
 				PRODUCT_NAME = NVTextureTools;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
@@ -5834,7 +5865,6 @@
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "MD_BUILDING_FOR_SOURCE_ADDON_FINAGLER=1";
 				INFOPLIST_FILE = "SourceAddonFinagler/Source Addon Finagler-Info.plist";
-				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5857,13 +5887,13 @@
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "MD_BUILDING_FOR_SOURCE_ADDON_FINAGLER=1";
 				INFOPLIST_FILE = "SourceAddonFinagler/Source Addon Finagler-Info.plist";
-				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = "Source Addon Finagler";
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
