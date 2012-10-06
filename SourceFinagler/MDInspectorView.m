@@ -619,22 +619,22 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 }
 
 
-- (NSString *)identifier {
-	NSLog(@"[%@ %@] is deprecated; you should use [%@ %@] instead...", NSStringFromClass([self class]),
-		  NSStringFromSelector(_cmd),
-		  NSStringFromClass([self class]),
-		  NSStringFromSelector(@selector(autosaveName)));
-	return [self autosaveName];
-}
-
-
-- (void)setIdentifier:(NSString *)anIdentifier {
-	NSLog(@"[%@ %@] is deprecated; you should use [%@ %@] instead...", NSStringFromClass([self class]),
-		  NSStringFromSelector(_cmd),
-		  NSStringFromClass([self class]),
-		  NSStringFromSelector(@selector(setAutosaveName:)));
-	return [self setAutosaveName:anIdentifier];
-}
+//- (NSString *)identifier {
+//	NSLog(@"[%@ %@] is deprecated; you should use [%@ %@] instead...", NSStringFromClass([self class]),
+//		  NSStringFromSelector(_cmd),
+//		  NSStringFromClass([self class]),
+//		  NSStringFromSelector(@selector(autosaveName)));
+//	return [self autosaveName];
+//}
+//
+//
+//- (void)setIdentifier:(NSString *)anIdentifier {
+//	NSLog(@"[%@ %@] is deprecated; you should use [%@ %@] instead...", NSStringFromClass([self class]),
+//		  NSStringFromSelector(_cmd),
+//		  NSStringFromClass([self class]),
+//		  NSStringFromSelector(@selector(setAutosaveName:)));
+//	return [self setAutosaveName:anIdentifier];
+//}
 
 
 
