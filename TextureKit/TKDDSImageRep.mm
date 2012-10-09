@@ -234,7 +234,7 @@ static TKDDSFormat defaultDDSFormat = TKDDSFormatDefault;
 		[ddsData release];
 		return [copiedData autorelease];
 	}
-	
+	[ddsData release];
 	return nil;
 }
 
