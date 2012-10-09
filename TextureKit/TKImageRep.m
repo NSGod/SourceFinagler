@@ -8,7 +8,6 @@
 
 #import <TextureKit/TKImageRep.h>
 #import <CoreServices/CoreServices.h>
-#import <Quartz/Quartz.h>
 
 #import <TextureKit/TKDDSImageRep.h>
 #import <TextureKit/TKVTFImageRep.h>
@@ -649,46 +648,6 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 	return NO;
 }
 
-
-
-- (NSString *)imageUID {
-	return [NSString stringWithFormat:@"%lu", (unsigned long)[self hash]];
-}
-
-
-- (NSString *)imageRepresentationType {
-	return IKImageBrowserNSBitmapImageRepresentationType;
-}
-
-- (id)imageRepresentation {
-	return self;
-}
-
-- (NSString *)imageTitle {
-	return [NSString stringWithFormat:@"%lupx x %lupx", (unsigned long)[self size].width, (unsigned long)[self size].height];
-}
-
-
-- (NSDictionary *)imageProperties {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	CGImageRef imageRef = [self CGImage];
-	CGDataProviderRef provider = CGImageGetDataProvider(imageRef);
-	CGImageSourceRef imageSource = CGImageSourceCreateWithDataProvider(provider, NULL);
-	
-	NSDictionary *imageProperties = [(NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL) autorelease];
-	NSLog(@"[%@ %@] imageProperties == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), imageProperties);
-	CFRelease(imageSource);
-	
-//	NSMutableDictionary *imageProperties = [NSMutableDictionary dictionary];
-//	[imageProperties setObject:[NSNumber numberWithInteger:(NSInteger)[self size].width] forKey:(NSString *)kCGImagePropertyPixelWidth];
-//	[imageProperties setObject:[NSNumber numberWithInteger:(NSInteger)[self size].height] forKey:(NSString *)kCGImagePropertyPixelHeight];
-//	[imageProperties setObject:[NSNumber numberWithBool:[self hasAlpha]] forKey:(NSString *)kCGImagePropertyHasAlpha];
-//	[imageProperties setObject:(NSString *)kCGImagePropertyColorModelRGB forKey:(NSString *)kCGImagePropertyColorModel];
-	
-	return imageProperties;
-}
 
 - (NSString *)description {
 //	NSMutableString *description = [NSMutableString stringWithString:[super description]];

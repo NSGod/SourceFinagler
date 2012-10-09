@@ -110,25 +110,6 @@ typedef NSUInteger TKImageRepCompareOptions;
 @end
 
 
-@interface TKImageRep (IKImageBrowserItem)
-
-- (NSString *)imageUID;					/* required */
-- (NSString *)imageRepresentationType;	/* required */
-- (id)imageRepresentation;				/* required */
-
-- (NSString *)imageTitle;
-
-//- (NSUInteger)imageVersion;
-//- (NSString *)imageSubtitle;
-//- (BOOL)isSelectable;
-
-@end
-
-
-@interface TKImageRep (IKImageProperties)
-- (NSDictionary *)imageProperties;
-@end
-
 
 @interface TKImageRep (TKLargestRepresentationAdditions)
 + (TKImageRep *)largestRepresentationInArray:(NSArray *)tkImageReps;
