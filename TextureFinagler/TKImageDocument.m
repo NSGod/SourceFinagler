@@ -20,6 +20,9 @@
 
 #import <Quartz/Quartz.h>
 
+#import "TKImageRepAdditions.h"
+
+
 
 
 NSString * const TKImageDocumentShowFrameBrowserViewKey		= @"TKImageDocumentShowFrameBrowserView";
@@ -904,13 +907,6 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 	
 
 }
-
-//- (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	
-//}
 
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem {
