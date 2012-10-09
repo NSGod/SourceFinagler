@@ -193,7 +193,7 @@ BOOL MDGetMetadataFromCGImageWithContentsOfFile(NSString *filePath, NSString *co
 		return YES;
 		
 	}
-	
+	[data release];
 	[pool release];
 	return NO;
 }
