@@ -17,17 +17,18 @@
 	IBOutlet NSTextField		*newPathField;
 	
 	NSURL						*currentURL;
-	NSString					*newPath;
+	NSString					*proposedNewPath;
+	
+	VSSteamManager				*steamManager;
+	
 	BOOL						canCreate;
 	
 	BOOL						steamIsRunning;
-	
-	VSSteamManager				*steamManager;
 }
 
 @property (assign) BOOL canCreate;
 @property (retain) NSURL *currentURL;
-@property (retain) NSString *newPath;
+@property (retain) NSString *proposedNewPath;
 @property (assign) BOOL steamIsRunning;
 
 - (IBAction)browse:(id)sender;
