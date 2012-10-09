@@ -11,7 +11,7 @@
 @class MDAboutWindowController, MDViewOptionsController, MDInspectorController, MDQuickLookController;
 @class MDPrefsController;
 @class MDSteamAppsRelocatorController, MDOtherAppsHelperController;
-
+@class SUUpdater;
 
 enum {
 	MDSteamAppsRelocatorView			= 1,
@@ -101,7 +101,8 @@ extern SInt32 MDSystemVersion;
 	MDQuickLookController				*quickLookController;
 	
 	MDPrefsController					*prefsController;
-	
+		
+	IBOutlet SUUpdater					*sparkleUpdater;
 	
 	NSUndoManager						*globalUndoManager;
 	

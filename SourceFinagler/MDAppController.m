@@ -27,6 +27,9 @@
 #import "MDBrowser.h"
 #import "MDOutlineView.h"
 
+#import <Sparkle/Sparkle.h>
+
+
 
 NSString * const MDCurrentViewKey							= @"MDCurrentView";
 
@@ -59,6 +62,9 @@ NSString * const MDEmailDynamicURLString		= @"mailto:mark@markdouma.com?subject=
 
 NSString * const MDEmailAddress					= @"mark@markdouma.com";
 NSString * const MDiChatURLString				= @"aim:goim?screenname=MarkDouma46&message=Type+your+message+here.";
+
+static NSString * const MDSUFeedURLLeopard		= @"http://www.markdouma.com/sourcefinagler/versionLeopard.xml";
+
 
 
 BOOL	MDShouldShowViewOptions = NO;
@@ -230,7 +236,9 @@ BOOL needSourceAddonFinaglerRegister = NO;
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	
+	if (MDSystemVersion <= MDLeopard) {
+		[sparkleUpdater setFeedURL:[NSURL URLWithString:MDSUFeedURLLeopard]];
+	}
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
@@ -239,18 +247,6 @@ BOOL needSourceAddonFinaglerRegister = NO;
 #endif
 	
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	
-//	if ([[userDefaults objectForKey:MDSourceAddonFinaglerIsRegisteredKey] boolValue] == NO) {
-//		NSString *sourceAddonFinaglerPath = [[NSBundle mainBundle] pathForResource:@"Source Addon Finagler" ofType:@"app"];
-//		if (sourceAddonFinaglerPath) {
-//			OSStatus status = LSRegisterURL((CFURLRef)[NSURL fileURLWithPath:sourceAddonFinaglerPath], true);
-//			if (status) {
-//				NSLog(@"[%@ %@] LSRegisterURL() returned %d", NSStringFromClass([self class]), NSStringFromSelector(_cmd), status);
-//			} else {
-//				[userDefaults setObject:[NSNumber numberWithBool:YES] forKey:MDSourceAddonFinaglerIsRegisteredKey];
-//			}
-//		}
-//	}
 	
 	[viewModeAsListMenuItem retain];
 	
