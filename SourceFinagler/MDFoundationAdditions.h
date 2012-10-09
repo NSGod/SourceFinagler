@@ -127,6 +127,27 @@ typedef NSUInteger MDBookmarkResolutionOptions;
 @end
 
 
+@interface NSUserDefaults (MDSortDescriptorAdditions)
+
+- (void)setSortDescriptors:(NSArray *)sortDescriptors forKey:(NSString *)key;
+- (NSArray *)sortDescriptorsForKey:(NSString *)key;
+
+@end
+
+@interface NSDictionary (MDSortDescriptorAdditions)
+
+- (NSArray *)sortDescriptorsForKey:(NSString *)key;
+
+@end
+
+@interface NSMutableDictionary (MDSortDescriptorAdditions)
+
+- (void)setSortDescriptors:(NSArray *)sortDescriptors forKey:(NSString *)key;
+
+@end
+
+
+
 @interface NSData (MDDescriptionAdditions)
 
 - (NSString *)stringRepresentation;
@@ -177,7 +198,7 @@ typedef NSUInteger MDBookmarkResolutionOptions;
 
 
 @interface NSObject (MDMutableDeepCopy)
-- (id)deepMutableCopy;
+- (id)deepMutableCopy NS_RETURNS_RETAINED;
 @end
 
 

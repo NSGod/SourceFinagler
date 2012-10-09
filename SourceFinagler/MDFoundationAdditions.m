@@ -442,6 +442,38 @@ SInt32 MDGetSystemVersion() {
 @end
 
 
+@implementation NSUserDefaults (MDSortDescriptorAdditions)
+
+- (void)setSortDescriptors:(NSArray *)sortDescriptors forKey:(NSString *)key {
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:sortDescriptors];
+	if (data) [self setObject:data forKey:key];
+}
+
+
+- (NSArray *)sortDescriptorsForKey:(NSString *)key {
+	return [NSKeyedUnarchiver unarchiveObjectWithData:[self objectForKey:key]];
+}
+
+
+@end
+
+@implementation NSDictionary (MDSortDescriptorAdditions)
+
+- (NSArray *)sortDescriptorsForKey:(NSString *)key {
+	return [NSKeyedUnarchiver unarchiveObjectWithData:[self objectForKey:key]];
+}
+
+@end
+
+@implementation NSMutableDictionary (MDSortDescriptorAdditions)
+
+- (void)setSortDescriptors:(NSArray *)sortDescriptors forKey:(NSString *)key {
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:sortDescriptors];
+	if (data) [self setObject:data forKey:key];
+}
+
+@end
+
 
 @implementation NSData (MDDescriptionAdditions)
 
