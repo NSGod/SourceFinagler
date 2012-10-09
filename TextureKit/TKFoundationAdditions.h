@@ -24,7 +24,7 @@
 
 @interface NSObject (TKDeepMutableCopy)
 
-- (id)deepMutableCopy;
+- (id)deepMutableCopy NS_RETURNS_RETAINED;
 
 @end
 
