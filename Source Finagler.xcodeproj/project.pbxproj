@@ -172,6 +172,7 @@
 		C135198B13947C730074B5EA /* LGPL.txt in Resources */ = {isa = PBXBuildFile; fileRef = C135198813947C190074B5EA /* LGPL.txt */; };
 		C13519A113947CB00074B5EA /* LGPL.txt in Resources */ = {isa = PBXBuildFile; fileRef = C135199F13947CA40074B5EA /* LGPL.txt */; };
 		C13519A213947CB10074B5EA /* Readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = C13519A013947CA40074B5EA /* Readme.txt */; };
+		C13B4E741620EFBD00D07CB3 /* TKImageRepAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C13B4E731620EF5200D07CB3 /* TKImageRepAdditions.m */; };
 		C13FE24E1394303C00C0D27C /* isRunning.png in Resources */ = {isa = PBXBuildFile; fileRef = C1908B5D13935F1000656A78 /* isRunning.png */; };
 		C140E72513889B7A00027DD6 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C11B279211BDFBB8004D4CC0 /* ApplicationServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C140E72613889BD600027DD6 /* VSSteamManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C1034A9111C5619C0054740E /* VSSteamManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -192,7 +193,7 @@
 		C140E73613889C0E00027DD6 /* MDFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C1A10A2A11D5124F008BBABD /* MDFileManager.m */; };
 		C140E73813889C2400027DD6 /* MDLaunchManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C1BB6F5A11FCA90300B88BBE /* MDLaunchManager.h */; settings = {ATTRIBUTES = (); }; };
 		C140E73913889C2500027DD6 /* MDLaunchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BB6F5B11FCA90300B88BBE /* MDLaunchManager.m */; };
-		C140E74513889CFB00027DD6 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C14D206C121B40BC00AB4F96 /* ServiceManagement.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		C140E74513889CFB00027DD6 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C14D206C121B40BC00AB4F96 /* ServiceManagement.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C140E76E13889E6B00027DD6 /* SteamKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C140E76C13889E6B00027DD6 /* SteamKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C140E76F13889E6B00027DD6 /* SteamKitDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = C140E76D13889E6B00027DD6 /* SteamKitDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C140E80B1388A7B800027DD6 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C140E80A1388A7B800027DD6 /* ScriptingBridge.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -536,9 +537,6 @@
 		C1CA27F113A2E28900235C98 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA27D913A2E1F900235C98 /* Cocoa.framework */; };
 		C1CA27F213A2E28E00235C98 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA27D913A2E1F900235C98 /* Cocoa.framework */; };
 		C1CA285013A2E2C100235C98 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA284F13A2E2C100235C98 /* Quartz.framework */; };
-		C1CA28B013A2E2DE00235C98 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA284F13A2E2C100235C98 /* Quartz.framework */; };
-		C1CA28B113A2E2E000235C98 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA284F13A2E2C100235C98 /* Quartz.framework */; };
-		C1CA28B313A2E2E400235C98 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA284F13A2E2C100235C98 /* Quartz.framework */; };
 		C1CA2B2913A2E36000235C98 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA2B2013A2E32300235C98 /* QuickLook.framework */; };
 		C1CA2B2B13A2E38D00235C98 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA2B2A13A2E38D00235C98 /* WebKit.framework */; };
 		C1CA2D3613A2E40C00235C98 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA2BDE13A2E3E600235C98 /* Foundation.framework */; };
@@ -1015,6 +1013,8 @@
 		C135199F13947CA40074B5EA /* LGPL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LGPL.txt; path = HL/LGPL.txt; sourceTree = "<group>"; };
 		C13519A013947CA40074B5EA /* Readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Readme.txt; path = HL/Readme.txt; sourceTree = "<group>"; };
 		C139C68E137CCEBB00DDA21B /* hl2_osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper; name = hl2_osx.app; path = SteamKit/hl2_osx.app; sourceTree = "<group>"; };
+		C13B4E721620EF5200D07CB3 /* TKImageRepAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TKImageRepAdditions.h; path = TextureFinagler/TKImageRepAdditions.h; sourceTree = "<group>"; };
+		C13B4E731620EF5200D07CB3 /* TKImageRepAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TKImageRepAdditions.m; path = TextureFinagler/TKImageRepAdditions.m; sourceTree = "<group>"; };
 		C13C80C61333A6350063A254 /* TKIWIImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKIWIImageRep.h; path = TextureKit/TKIWIImageRep.h; sourceTree = "<group>"; };
 		C13C80C71333A6350063A254 /* TKIWIImageRep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKIWIImageRep.m; path = TextureKit/TKIWIImageRep.m; sourceTree = "<group>"; };
 		C13E77DE11C805D900B10F3C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDSteamAppsRelocatorView.xib; sourceTree = "<group>"; };
@@ -1737,13 +1737,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1E6DACA12BC232F009D8AD6 /* ApplicationServices.framework in Frameworks */,
+				C1CA27EB13A2E21800235C98 /* Cocoa.framework in Frameworks */,
 				C1E6DB0312BC236C009D8AD6 /* VTF.framework in Frameworks */,
 				C1E6DFFB12BD1091009D8AD6 /* NVTextureTools.framework in Frameworks */,
 				C1E6E13E12BD50DF009D8AD6 /* NVImage.framework in Frameworks */,
 				C1E6E13F12BD50E0009D8AD6 /* NVMath.framework in Frameworks */,
 				C1E6E14012BD50E1009D8AD6 /* NVCore.framework in Frameworks */,
-				C1CA27EB13A2E21800235C98 /* Cocoa.framework in Frameworks */,
-				C1CA28B013A2E2DE00235C98 /* Quartz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1816,7 +1815,6 @@
 				C174299412A39CA200C54F08 /* NVTextureTools.framework in Frameworks */,
 				C17429B812A39D9200C54F08 /* NVImage.framework in Frameworks */,
 				C1CA27EA13A2E21700235C98 /* Cocoa.framework in Frameworks */,
-				C1CA28B313A2E2E400235C98 /* Quartz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1826,7 +1824,6 @@
 			files = (
 				C1C2C659127CBEF7003B24F6 /* ApplicationServices.framework in Frameworks */,
 				C1CA27E813A2E20F00235C98 /* Cocoa.framework in Frameworks */,
-				C1CA28B113A2E2E000235C98 /* Quartz.framework in Frameworks */,
 				C1CA2B2913A2E36000235C98 /* QuickLook.framework in Frameworks */,
 				C1CA329213A4576E00235C98 /* TextureKit.framework in Frameworks */,
 			);
@@ -2180,6 +2177,8 @@
 				C1C1249D123A0967004674B4 /* TKDocumentController.h */,
 				C1C1249E123A0967004674B4 /* TKDocumentController.m */,
 				C116F88812D539C000551787 /* TKImageDocument */,
+				C13B4E721620EF5200D07CB3 /* TKImageRepAdditions.h */,
+				C13B4E731620EF5200D07CB3 /* TKImageRepAdditions.m */,
 			);
 			name = "TK Application stuff";
 			sourceTree = "<group>";
@@ -4744,6 +4743,7 @@
 				C11CA5E713A4E84D006CC348 /* MDCopyOperationSeparatorView.m in Sources */,
 				C11CA69813A4F9FB006CC348 /* MDCopyOperationContentView.m in Sources */,
 				C1BEA1FC161B781900464170 /* MDSGADocument.m in Sources */,
+				C13B4E741620EFBD00D07CB3 /* TKImageRepAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
