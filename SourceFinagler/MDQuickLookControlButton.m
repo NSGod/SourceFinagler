@@ -24,12 +24,21 @@
 
 @end
 
+
+
+#define MD_DEBUG 0
+
+
+
+
 @implementation MDQuickLookControlButton
 
 
 
 - (id)initWithFrame:(NSRect)frame {
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	if ((self = [super initWithFrame:frame])) {
 		[self finishSetup];
 	}
@@ -38,7 +47,9 @@
 
 
 - (id)initWithCoder:(NSCoder *)coder {
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	if ((self = [super initWithCoder:coder])) {
 		[self finishSetup];
 	}
@@ -47,7 +58,9 @@
 
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	[super encodeWithCoder:coder];
 }
 
@@ -58,19 +71,19 @@
 }
 
 
-- (void)dealloc {
-
-	[super dealloc];
-	
-}
+//- (void)dealloc {
+//
+//	[super dealloc];
+//	
+//}
 
 
 - (BOOL)acceptsFirstResponder {
+#if MD_DEBUG
 	BOOL accepts = [super acceptsFirstResponder];
 	NSLog(@"[%@ %@] super's acceptsFirstResponder == %d", NSStringFromClass([self class]), NSStringFromSelector(_cmd), accepts);
-	
+#endif
 	return NO;
-	
 }
 
 
@@ -135,11 +148,5 @@
 	
 }
 
-
-
-
-//- (void)drawRect:(NSRect)rect {
-//    // Drawing code here.
-//}
 
 @end
