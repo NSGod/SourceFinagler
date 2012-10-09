@@ -53,7 +53,9 @@ static void HKInitializeIcons() {
 
 
 + (void)initialize {
+#if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	if (iconsInitialized == NO) HKInitializeIcons();
 }
 
