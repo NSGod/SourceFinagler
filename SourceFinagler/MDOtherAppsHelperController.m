@@ -25,10 +25,26 @@ NSString * const MDSteerMouseBundleIdentifierKey				= @"jp.plentycom.boa.SteerMo
 NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Center.Daemon";
 
 
+static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelperSortDescriptors";
+
+
 
 @implementation MDOtherAppsHelperController
 
 @synthesize enableSourceFinaglerAgent;
+
+
+@dynamic sortDescriptors;
+
+
++ (void)initialize {
+	NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+	NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"displayName" ascending:YES selector:@selector(caseInsensitiveNumericalCompare:)] autorelease];
+	NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+//	NSArray *sortDescriptors = [NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES selector:@selector(caseInsensitiveNumericalCompare:)], nil];
+    [defaults setSortDescriptors:sortDescriptors forKey:MDOtherAppsHelperSortDescriptorsKey];
+	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+}
 
 
 - (id)init {
@@ -67,7 +83,11 @@ NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Cent
 	[tableView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:NO];
 	[tableView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
 	[tableView setVerticalMotionCanBeginDrag:NO];
-	[gamesController setSortDescriptors:[tableView sortDescriptors]];
+	
+	[tableView setSortDescriptors:[[NSUserDefaults standardUserDefaults] sortDescriptorsForKey:MDOtherAppsHelperSortDescriptorsKey]];
+	
+	
+//	[gamesController setSortDescriptors:[tableView sortDescriptors]];
 	
 	NSDictionary *usbInfo = MDInfoForProcessWithBundleIdentifier(MDUSBOverdriveHelperBundleIdentifierKey);
 	
@@ -103,6 +123,16 @@ NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Cent
 	[view setFrameFromString:[uD objectForKey:MDOtherAppsHelperViewSizeKey]];
 	[super appControllerDidLoadNib:self];
 	
+}
+
+
+- (void)setSortDescriptors:(NSArray *)aSortDescriptors {
+	[tableView setSortDescriptors:aSortDescriptors];
+}
+
+
+- (NSArray *)sortDescriptors {
+	return [tableView sortDescriptors];
 }
 
 

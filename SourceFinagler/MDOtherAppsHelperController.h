@@ -59,6 +59,8 @@ typedef NSUInteger MDMouseSoftware;
 
 @property (assign) BOOL enableSourceFinaglerAgent;
 
+@property (nonatomic, retain) NSArray *sortDescriptors;
+
 
 - (IBAction)toggleEnableAgent:(id)sender;
 
