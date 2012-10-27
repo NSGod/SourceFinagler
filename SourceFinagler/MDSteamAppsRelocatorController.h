@@ -24,12 +24,15 @@
 	BOOL						canCreate;
 	
 	BOOL						steamIsRunning;
+	
+	BOOL						steamDidLaunch;
 }
 
-@property (assign) BOOL canCreate;
-@property (retain) NSURL *currentURL;
-@property (retain) NSString *proposedNewPath;
-@property (assign) BOOL steamIsRunning;
+@property (nonatomic, assign) BOOL canCreate;
+@property (nonatomic, retain) NSURL *currentURL;
+@property (nonatomic, retain) NSString *proposedNewPath;
+@property (nonatomic, assign) BOOL steamIsRunning;
+@property (nonatomic, assign) BOOL steamDidLaunch;
 
 - (IBAction)browse:(id)sender;
 - (IBAction)createSteamAppsShortcut:(id)sender;

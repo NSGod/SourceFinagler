@@ -34,6 +34,7 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 @synthesize proposedNewPath;
 @synthesize canCreate;
 @synthesize steamIsRunning;
+@synthesize steamDidLaunch;
 
 
 
@@ -89,9 +90,32 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 	if ([[userInfo objectForKey:@"NSApplicationBundleIdentifier"] isEqualToString:MDSteamBundleIdentifierKey]) {
 		[self setSteamIsRunning:YES];
 		[statusField setStringValue:NSLocalizedString(@"Steam cannot be running", @"")];
+		
+		if (currentURL == nil) {
+			steamDidLaunch = YES;
+			[self performSelector:@selector(updateSteamPath:) withObject:nil afterDelay:5.0];
+		}
 	}
-	
 }
+
+
+- (void)updateSteamPath:(id)sender {
+#if VS_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (steamDidLaunch) {
+		NSString *currentPath = [steamManager steamAppsPath];
+		if (currentPath) {
+			[self setCurrentURL:[NSURL fileURLWithPath:currentPath]];
+			steamDidLaunch = NO;
+			
+		} else {
+			
+			[self performSelector:@selector(updateSteamPath:) withObject:nil afterDelay:5.0];
+		}
+	}
+}
+
 
 - (void)applicationDidTerminate:(NSNotification *)notification {
 #if VS_DEBUG
@@ -133,7 +157,9 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 }
 
 - (void)cleanup {
+#if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	[[NSUserDefaults standardUserDefaults] setObject:[view stringWithSavedFrame] forKey:MDSteamAppsRelocatorViewSizeKey];
 }
 
@@ -159,9 +185,7 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 #endif
 	if (currentURL) {
 		[[NSWorkspace sharedWorkspace] revealInFinder:[NSArray arrayWithObject:[currentURL path]]];
-		
 	}
-	
 }
 
 - (BOOL)panel:(id)sender shouldShowFilename:(NSString *)filename {
