@@ -81,7 +81,9 @@
 
 
 - (void)cleanup {
+#if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	
 }
 
