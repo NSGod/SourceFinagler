@@ -323,7 +323,7 @@ static NSUInteger locateSteamAppsCount = 0;
 		}
 		
 		if (steamAppsPath == nil) {
-			NSLog(@"[%@ %@] failed to locate steamAppsPath!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+			NSLog(@"[%@ %@] steamAppsPath does not exist...", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 			return;
 		}
 		
@@ -455,16 +455,11 @@ static NSUInteger locateSteamAppsCount = 0;
 			}
 		}
 		
-		NSString *sourceFinaglerDirectory = [folderManager pathForDirectoryWithName:@"Source Finagler" inDirectory:MDApplicationSupportDirectory inDomain:MDUserDomain create:YES error:&outError];
-		
-		if (sourceFinaglerDirectory == nil) {
-			NSLog(@"[%@ %@] failed to create Source Finagler application support directory!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-			return;
-		}
+		NSString *sourceFinaglerDirectory = [folderManager pathForDirectoryWithName:@"Source Finagler" inDirectory:MDApplicationSupportDirectory inDomain:MDUserDomain create:NO error:&outError];
 		
 		NSString *sourceFinaglerAgentPath = [sourceFinaglerDirectory stringByAppendingPathComponent:VSSourceFinaglerAgentNameKey];
 		
-		if ([fileManager fileExistsAtPath:sourceFinaglerAgentPath isDirectory:&isDir] && isDir) {
+		if (sourceFinaglerAgentPath && [fileManager fileExistsAtPath:sourceFinaglerAgentPath isDirectory:&isDir] && isDir) {
 			sourceFinaglerLaunchAgentStatus = VSSourceFinaglerLaunchAgentInstalled;
 			sourceFinaglerLaunchAgentPath = [sourceFinaglerAgentPath retain];
 			
