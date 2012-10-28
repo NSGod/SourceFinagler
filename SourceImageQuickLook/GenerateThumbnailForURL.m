@@ -1,9 +1,8 @@
 #include <ApplicationServices/ApplicationServices.h>
 #include <QuickLook/QuickLook.h>
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 #import "MDCGImage.h"
-#import "TKVTFImageRep.h"
-#import "TKDDSImageRep.h"
+#import <TextureKit/TextureKit.h>
 
 
 /* -----------------------------------------------------------------------------
@@ -21,8 +20,10 @@ OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thum
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	if (![(NSString *)contentTypeUTI isEqualToString:TKVTFType] &&
-		![(NSString *)contentTypeUTI isEqualToString:TKDDSType]) {
-		NSLog(@"SourceImage.qlgenerator; GenerateThumbnailForURL(): contentTypeUTI != VTF or DDS; (contentTypeUTI == %@)", contentTypeUTI);
+		![(NSString *)contentTypeUTI isEqualToString:TKDDSType] &&
+		![(NSString *)contentTypeUTI isEqualToString:TKSFTextureImageType]) {
+		
+		NSLog(@"SourceImage.qlgenerator; GenerateThumbnailForURL(): contentTypeUTI != VTF or DDS or SFTI; (contentTypeUTI == %@)", contentTypeUTI);
 		[pool release];
 		return noErr;
 	}
@@ -54,9 +55,58 @@ OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thum
 	CGImageRef imageRef = NULL;
 	
 	if ([(NSString *)contentTypeUTI isEqualToString:TKVTFType]) {
+		
 		imageRef = [[TKVTFImageRep imageRepWithData:imageData] CGImage];
+		
 	} else if ([(NSString *)contentTypeUTI isEqualToString:TKDDSType]) {
+		
 		imageRef = [[TKDDSImageRep imageRepWithData:imageData] CGImage];
+		
+	} else if ([(NSString *)contentTypeUTI isEqualToString:TKSFTextureImageType]) {
+		
+		TKImage *tkImage = [[TKImage alloc] initWithData:imageData firstRepresentationOnly:NO];
+		
+		if (tkImage) {
+			
+		TKImageRep *tkImageRep = nil;
+			
+			if ([tkImage sliceCount]) {
+				
+				
+			} else if ([tkImage faceCount] && [tkImage frameCount]) {
+				
+				NSArray *aTKImageReps = [tkImage representationsForFaceIndexes:[tkImage firstFaceIndexSet]
+																  frameIndexes:[tkImage firstFrameIndexSet]
+																 mipmapIndexes:[tkImage firstMipmapIndexSet]];
+				
+				if ([aTKImageReps count]) tkImageRep = [aTKImageReps objectAtIndex:0];
+				
+			} else if ([tkImage faceCount]) {
+				
+				NSArray *aTKImageReps = [tkImage representationsForFaceIndexes:[tkImage firstFaceIndexSet]
+																 mipmapIndexes:[tkImage firstMipmapIndexSet]];
+				
+				if ([aTKImageReps count]) tkImageRep = [aTKImageReps objectAtIndex:0];
+				
+				
+			} else if ([tkImage frameCount]) {
+				
+				NSArray *aTKImageReps = [tkImage representationsForFrameIndexes:[tkImage firstFrameIndexSet]
+																  mipmapIndexes:[tkImage firstMipmapIndexSet]];
+				
+				if ([aTKImageReps count]) tkImageRep = [aTKImageReps objectAtIndex:0];
+				
+			} else {
+				if ([tkImage mipmapCount]) {
+					tkImageRep = [tkImage representationForMipmapIndex:0];
+				}
+			}
+			
+			imageRef = [tkImageRep CGImage];
+			
+			[tkImage release];
+		}
+		
 	}
 	
 	if (imageRef == NULL) {
