@@ -10,6 +10,8 @@
 #import "TKImageRepAdditions.h"
 #import <Quartz/Quartz.h>
 
+#define TK_DEBUG 0
+
 
 @implementation TKImageRep (IKImageBrowserItem)
 
@@ -40,8 +42,12 @@
 	CGDataProviderRef provider = CGImageGetDataProvider(imageRef);
 	CGImageSourceRef imageSource = CGImageSourceCreateWithDataProvider(provider, NULL);
 	
-	NSDictionary *imageProperties = [(NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL) autorelease];
-	NSLog(@"[%@ %@] imageProperties == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), imageProperties);
+	NSDictionary *theImageProperties = [(NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL) autorelease];
+	
+#if TK_DEBUG
+	NSLog(@"[%@ %@] imageProperties == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), theImageProperties);
+#endif
+	
 	CFRelease(imageSource);
 	
 //	NSMutableDictionary *imageProperties = [NSMutableDictionary dictionary];
@@ -50,7 +56,7 @@
 //	[imageProperties setObject:[NSNumber numberWithBool:[self hasAlpha]] forKey:(NSString *)kCGImagePropertyHasAlpha];
 //	[imageProperties setObject:(NSString *)kCGImagePropertyColorModelRGB forKey:(NSString *)kCGImagePropertyColorModel];
 	
-	return imageProperties;
+	return theImageProperties;
 }
 
 
