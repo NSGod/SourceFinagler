@@ -210,7 +210,6 @@
 		C1594EA21384F247009CE606 /* usbOverdriveNote.png in Resources */ = {isa = PBXBuildFile; fileRef = C1594EA11384F247009CE606 /* usbOverdriveNote.png */; };
 		C15A76431399DC1200B4F485 /* MDAppKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C11B275511BDE826004D4CC0 /* MDAppKitAdditions.m */; };
 		C15A76441399DC1300B4F485 /* MDFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C11B275011BDE7AD004D4CC0 /* MDFoundationAdditions.m */; };
-		C15BCEAE11DA232D00C6E770 /* VSAuthorizationHelperToolLib.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1126211D615E9008BBABD /* VSAuthorizationHelperToolLib.c */; };
 		C15DD653126B205500E44BDB /* VSSourceAddonFinaglerMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C15DD651126B205500E44BDB /* VSSourceAddonFinaglerMainMenu.xib */; };
 		C1614336139973D80042B91B /* HLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C161436F139996AE0042B91B /* HLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -235,12 +234,6 @@
 		C190888813932B2800656A78 /* VSGameAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C190888713932B2800656A78 /* VSGameAdditions.m */; };
 		C1908B5813935CD000656A78 /* MDImageTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1908B5713935CD000656A78 /* MDImageTextCell.m */; };
 		C1908B5E13935F1000656A78 /* isRunning.png in Resources */ = {isa = PBXBuildFile; fileRef = C1908B5D13935F1000656A78 /* isRunning.png */; };
-		C1A112C311D6642B008BBABD /* sourceFinaglerInstaller.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A112C211D6642B008BBABD /* sourceFinaglerInstaller.c */; };
-		C1A112C411D66434008BBABD /* VSAuthorizationHelperToolLib.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1126211D615E9008BBABD /* VSAuthorizationHelperToolLib.c */; };
-		C1A112E411D66720008BBABD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1A112E311D66720008BBABD /* CoreFoundation.framework */; };
-		C1A112EA11D66720008BBABD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1A112E911D66720008BBABD /* Security.framework */; };
-		C1A1160711D66854008BBABD /* sourcefinaglerd.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1160411D66854008BBABD /* sourcefinaglerd.c */; };
-		C1A1160811D66854008BBABD /* VSSourceFinaglerCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = C1A1160511D66854008BBABD /* VSSourceFinaglerCommon.c */; };
 		C1AF8A8512CE653F00027B75 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1C12548123A0EC6004674B4 /* Localizable.strings */; };
 		C1B95374124E73EC00E83451 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1B95340124E73EC00E83451 /* Error.cpp */; };
 		C1B95375124E73EC00E83451 /* Error.h in Headers */ = {isa = PBXBuildFile; fileRef = C1B95341124E73EC00E83451 /* Error.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -540,7 +533,6 @@
 		C1CA285013A2E2C100235C98 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA284F13A2E2C100235C98 /* Quartz.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1CA2B2913A2E36000235C98 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA2B2013A2E32300235C98 /* QuickLook.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1CA2B2B13A2E38D00235C98 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA2B2A13A2E38D00235C98 /* WebKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		C1CA2D3713A2E40F00235C98 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA2BDE13A2E3E600235C98 /* Foundation.framework */; };
 		C1CA329213A4576E00235C98 /* TextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
 		C1CCA6D31288D12F005349E9 /* CoreDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = C1CCA6D21288D12F005349E9 /* CoreDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1CCA7F21288D78C005349E9 /* MathDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = C1CCA7F11288D78C005349E9 /* MathDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -936,8 +928,6 @@
 		256AC3F00F4B6AF500CF3369 /* SourceFinagler_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SourceFinagler_Prefix.pch; path = SourceFinagler/SourceFinagler_Prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SourceFinagler/main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* SourceFinagler.plist */ = {isa = PBXFileReference; explicitFileType = text.plist.info; fileEncoding = 4; name = SourceFinagler.plist; path = SourceFinagler/SourceFinagler.plist; sourceTree = "<group>"; };
-		C101A60912526BFA00BD8091 /* MDGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDGame.h; path = SourceFinagler/MDGame.h; sourceTree = "<group>"; };
-		C101A60A12526BFA00BD8091 /* MDGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDGame.m; path = SourceFinagler/MDGame.m; sourceTree = "<group>"; };
 		C101A6D7125281C700BD8091 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TKImageDocument.xib; sourceTree = "<group>"; };
 		C1034A9111C5619C0054740E /* VSSteamManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSSteamManager.h; path = SteamKit/VSSteamManager.h; sourceTree = "<group>"; };
 		C1034A9211C5619C0054740E /* VSSteamManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSSteamManager.m; path = SteamKit/VSSteamManager.m; sourceTree = "<group>"; };
@@ -972,8 +962,6 @@
 		C1275F60129182C40041ACD7 /* VSSourceAddon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSSourceAddon.h; path = SourceAddonFinagler/VSSourceAddon.h; sourceTree = "<group>"; };
 		C1275F61129182C40041ACD7 /* VSSourceAddon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSSourceAddon.m; path = SourceAddonFinagler/VSSourceAddon.m; sourceTree = "<group>"; };
 		C1279D3512DCB0EA0065F5D7 /* defaultPresets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = defaultPresets.plist; path = TextureFinagler/defaultPresets.plist; sourceTree = "<group>"; };
-		C129181F12E4F27C008E1878 /* TKMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKMaterial.h; path = TextureKit/TKMaterial.h; sourceTree = "<group>"; };
-		C129182012E4F27C008E1878 /* TKMaterial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKMaterial.m; path = TextureKit/TKMaterial.m; sourceTree = "<group>"; };
 		C12A93E211C9A3D9001D8E90 /* MDProcessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDProcessManager.h; path = SourceFinagler/MDProcessManager.h; sourceTree = "<group>"; };
 		C12A93E311C9A3D9001D8E90 /* MDProcessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDProcessManager.m; path = SourceFinagler/MDProcessManager.m; sourceTree = "<group>"; };
 		C12A944811C9CDED001D8E90 /* MDResourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDResourceFile.h; path = SteamKit/MDResourceFile.h; sourceTree = "<group>"; };
@@ -1010,11 +998,6 @@
 		C1305BDE12F08FBD00D68170 /* ClusterFit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ClusterFit.cpp; path = NVTextureTools/nvtt/ClusterFit.cpp; sourceTree = "<group>"; };
 		C1305BDF12F08FBD00D68170 /* ClusterFit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClusterFit.h; path = NVTextureTools/nvtt/ClusterFit.h; sourceTree = "<group>"; };
 		C132DF73124D521B00A8DE04 /* LGPL.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = LGPL.rtf; path = SourceFinagler/LGPL.rtf; sourceTree = "<group>"; };
-		C133296412C1B02B004D83CC /* MDSteamModifierHelperController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDSteamModifierHelperController.h; path = SourceFinagler/MDSteamModifierHelperController.h; sourceTree = "<group>"; };
-		C133296512C1B02B004D83CC /* MDSteamModifierHelperController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDSteamModifierHelperController.m; path = SourceFinagler/MDSteamModifierHelperController.m; sourceTree = "<group>"; };
-		C133296912C1B06D004D83CC /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDSteamModifierHelperView.xib; sourceTree = "<group>"; };
-		C13329E312C1B738004D83CC /* VSModifiedFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSModifiedFile.h; path = SourceFinagler/VSModifiedFile.h; sourceTree = "<group>"; };
-		C13329E412C1B738004D83CC /* VSModifiedFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSModifiedFile.m; path = SourceFinagler/VSModifiedFile.m; sourceTree = "<group>"; };
 		C1351911139479C40074B5EA /* Acknowledgments.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Acknowledgments.rtf; path = SourceFinagler/Acknowledgments.rtf; sourceTree = "<group>"; };
 		C135198813947C190074B5EA /* LGPL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LGPL.txt; path = VTF/LGPL.txt; sourceTree = "<group>"; };
 		C135199F13947CA40074B5EA /* LGPL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LGPL.txt; path = HL/LGPL.txt; sourceTree = "<group>"; };
@@ -1022,11 +1005,8 @@
 		C139C68E137CCEBB00DDA21B /* hl2_osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper; name = hl2_osx.app; path = SteamKit/hl2_osx.app; sourceTree = "<group>"; };
 		C13B4E721620EF5200D07CB3 /* TKImageRepAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TKImageRepAdditions.h; path = TextureFinagler/TKImageRepAdditions.h; sourceTree = "<group>"; };
 		C13B4E731620EF5200D07CB3 /* TKImageRepAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TKImageRepAdditions.m; path = TextureFinagler/TKImageRepAdditions.m; sourceTree = "<group>"; };
-		C13C80C61333A6350063A254 /* TKIWIImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKIWIImageRep.h; path = TextureKit/TKIWIImageRep.h; sourceTree = "<group>"; };
-		C13C80C71333A6350063A254 /* TKIWIImageRep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKIWIImageRep.m; path = TextureKit/TKIWIImageRep.m; sourceTree = "<group>"; };
 		C13E77DE11C805D900B10F3C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDSteamAppsRelocatorView.xib; sourceTree = "<group>"; };
 		C13E77E111C8061500B10F3C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDOtherAppsHelperView.xib; sourceTree = "<group>"; };
-		C13E77EF11C8066D00B10F3C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDConfigCopierView.xib; sourceTree = "<group>"; };
 		C140E63D13889A9400027DD6 /* SteamKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SteamKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C140E63E13889A9400027DD6 /* SteamKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "SteamKit-Info.plist"; path = "SteamKit/SteamKit-Info.plist"; sourceTree = "<group>"; };
 		C140E71A13889B1100027DD6 /* SteamKit_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SteamKit_Prefix.pch; path = SteamKit/SteamKit_Prefix.pch; sourceTree = "<group>"; };
@@ -1141,8 +1121,6 @@
 		C169E27B1243825A0009C66E /* VDF.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VDF.icns; path = Resources/VDF.icns; sourceTree = "<group>"; };
 		C16A68F11600B6170038A8B1 /* HLKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLKit.h; sourceTree = "<group>"; };
 		C16A68F21600B6170038A8B1 /* HLKitDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLKitDefines.h; sourceTree = "<group>"; };
-		C16C63DB12D75E5200D6F254 /* TKTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKTexture.h; path = TextureKit/TKTexture.h; sourceTree = "<group>"; };
-		C16C63DC12D75E5200D6F254 /* TKTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKTexture.m; path = TextureKit/TKTexture.m; sourceTree = "<group>"; };
 		C16D5E38136D3D9900453365 /* TextureKit.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; name = TextureKit.exp; path = TextureKit/TextureKit.exp; sourceTree = "<group>"; };
 		C17023F41283C7ED0056A23D /* VTFNVTT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VTFNVTT.h; path = VTF/VTFNVTT.h; sourceTree = "<group>"; };
 		C17025D612847FA70056A23D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -1152,10 +1130,6 @@
 		C170261A1284BC6F0056A23D /* TKImageRep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageRep.m; path = TextureKit/TKImageRep.m; sourceTree = "<group>"; };
 		C17319B21298D11400C29732 /* TextureKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextureKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C17319B31298D11400C29732 /* TextureKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "TextureKit-Info.plist"; path = "TextureKit/TextureKit-Info.plist"; sourceTree = "<group>"; };
-		C1731B6E12993EE700C29732 /* MDPSDImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPSDImageRep.h; path = SourceFinagler/MDPSDImageRep.h; sourceTree = "<group>"; };
-		C1731B6F12993EE700C29732 /* MDPSDImageRep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPSDImageRep.m; path = SourceFinagler/MDPSDImageRep.m; sourceTree = "<group>"; };
-		C174F05E128A5E6D00817F81 /* MDVolumeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDVolumeFormatter.h; sourceTree = "<group>"; };
-		C174F05F128A5E6D00817F81 /* MDVolumeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDVolumeFormatter.m; sourceTree = "<group>"; };
 		C1758D62124833D1001B5A46 /* RAD.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = RAD.icns; path = Resources/RAD.icns; sourceTree = "<group>"; };
 		C1758D6412483642001B5A46 /* VDM.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VDM.icns; path = Resources/VDM.icns; sourceTree = "<group>"; };
 		C17A6EEA120A0BC40062CBC6 /* Collaboration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Collaboration.framework; path = System/Library/Frameworks/Collaboration.framework; sourceTree = SDKROOT; };
@@ -1183,25 +1157,14 @@
 		C1A10A2A11D5124F008BBABD /* MDFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDFileManager.m; path = SteamKit/MDFileManager.m; sourceTree = "<group>"; };
 		C1A10A6311D516A7008BBABD /* MDResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDResource.h; path = SteamKit/MDResource.h; sourceTree = "<group>"; };
 		C1A10A6411D516A7008BBABD /* MDResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDResource.m; path = SteamKit/MDResource.m; sourceTree = "<group>"; };
-		C1A1126111D615E9008BBABD /* VSAuthorizationHelperToolInstallerTemplate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = VSAuthorizationHelperToolInstallerTemplate.c; path = SourceFinagler/VSAuthorizationHelperToolInstallerTemplate.c; sourceTree = "<group>"; };
-		C1A1126211D615E9008BBABD /* VSAuthorizationHelperToolLib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = VSAuthorizationHelperToolLib.c; path = SourceFinagler/VSAuthorizationHelperToolLib.c; sourceTree = "<group>"; };
-		C1A1126311D615E9008BBABD /* VSAuthorizationHelperToolLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSAuthorizationHelperToolLib.h; path = SourceFinagler/VSAuthorizationHelperToolLib.h; sourceTree = "<group>"; };
-		C1A112B211D66369008BBABD /* sourceFinaglerInstaller */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sourceFinaglerInstaller; sourceTree = BUILT_PRODUCTS_DIR; };
-		C1A112C211D6642B008BBABD /* sourceFinaglerInstaller.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sourceFinaglerInstaller.c; path = SourceFinagler/sourceFinaglerInstaller.c; sourceTree = "<group>"; };
-		C1A112D411D66676008BBABD /* sourcefinaglerd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sourcefinaglerd; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1A112E311D66720008BBABD /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		C1A112E511D66720008BBABD /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		C1A112E911D66720008BBABD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		C1A1160411D66854008BBABD /* sourcefinaglerd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sourcefinaglerd.c; path = SourceFinagler/sourcefinaglerd.c; sourceTree = "<group>"; };
-		C1A1160511D66854008BBABD /* VSSourceFinaglerCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = VSSourceFinaglerCommon.c; path = SourceFinagler/VSSourceFinaglerCommon.c; sourceTree = "<group>"; };
-		C1A1160611D66854008BBABD /* VSSourceFinaglerCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSSourceFinaglerCommon.h; path = SourceFinagler/VSSourceFinaglerCommon.h; sourceTree = "<group>"; };
 		C1A117DC11D695EA008BBABD /* MDTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDTableView.h; path = SourceFinagler/MDTableView.h; sourceTree = "<group>"; };
 		C1A117DD11D695EA008BBABD /* MDTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDTableView.m; path = SourceFinagler/MDTableView.m; sourceTree = "<group>"; };
 		C1A15A7211C48F87008E5361 /* config.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = config.icns; path = Resources/config.icns; sourceTree = "<group>"; };
 		C1A16F5511C5351B008E5361 /* MDSteamAppsRelocatorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDSteamAppsRelocatorController.h; path = SourceFinagler/MDSteamAppsRelocatorController.h; sourceTree = "<group>"; };
 		C1A16F5611C5351B008E5361 /* MDSteamAppsRelocatorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDSteamAppsRelocatorController.m; path = SourceFinagler/MDSteamAppsRelocatorController.m; sourceTree = "<group>"; };
-		C1A16F5911C5352A008E5361 /* MDConfigCopierController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDConfigCopierController.h; path = SourceFinagler/MDConfigCopierController.h; sourceTree = "<group>"; };
-		C1A16F5A11C5352A008E5361 /* MDConfigCopierController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDConfigCopierController.m; path = SourceFinagler/MDConfigCopierController.m; sourceTree = "<group>"; };
 		C1A16F5C11C53539008E5361 /* MDOtherAppsHelperController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDOtherAppsHelperController.h; path = SourceFinagler/MDOtherAppsHelperController.h; sourceTree = "<group>"; };
 		C1A16F5D11C53539008E5361 /* MDOtherAppsHelperController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDOtherAppsHelperController.m; path = SourceFinagler/MDOtherAppsHelperController.m; sourceTree = "<group>"; };
 		C1A16F7E11C535F6008E5361 /* MDController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDController.h; path = SourceFinagler/MDController.h; sourceTree = "<group>"; };
@@ -1334,8 +1297,6 @@
 		C1C124F3123A0B49004674B4 /* MDFileSizeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MDFileSizeFormatter.m; path = SourceFinagler/MDFileSizeFormatter.m; sourceTree = "<group>"; };
 		C1C124F4123A0B49004674B4 /* MDDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MDDateFormatter.h; path = SourceFinagler/MDDateFormatter.h; sourceTree = "<group>"; };
 		C1C124F5123A0B49004674B4 /* MDDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MDDateFormatter.m; path = SourceFinagler/MDDateFormatter.m; sourceTree = "<group>"; };
-		C1C124F8123A0B53004674B4 /* MDAlias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDAlias.h; path = SourceFinagler/MDAlias.h; sourceTree = "<group>"; };
-		C1C124F9123A0B53004674B4 /* MDAlias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDAlias.m; path = SourceFinagler/MDAlias.m; sourceTree = "<group>"; };
 		C1C124FE123A0BA2004674B4 /* MDInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDInspectorController.h; path = SourceFinagler/MDInspectorController.h; sourceTree = "<group>"; };
 		C1C124FF123A0BA2004674B4 /* MDInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDInspectorController.m; path = SourceFinagler/MDInspectorController.m; sourceTree = "<group>"; };
 		C1C12500123A0BA2004674B4 /* MDInspectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDInspectorView.h; path = SourceFinagler/MDInspectorView.h; sourceTree = "<group>"; };
@@ -1464,32 +1425,17 @@
 		C1CCA7F81288D9C9005349E9 /* MathBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MathBase.h; path = NVTextureTools/nvmath/MathBase.h; sourceTree = "<group>"; };
 		C1CCA8091288DFD1005349E9 /* ImageBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageBase.h; path = NVTextureTools/nvimage/ImageBase.h; sourceTree = "<group>"; };
 		C1CCA80A1288DFD1005349E9 /* ImageDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageDefines.h; path = NVTextureTools/nvimage/ImageDefines.h; sourceTree = "<group>"; };
-		C1CE0253124F9985002E66F8 /* Syntax Definitions */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Syntax Definitions"; path = "SourceFinagler/Syntax Definitions"; sourceTree = "<group>"; };
-		C1CE51AD12203911006410E3 /* mousefix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mousefix.c; path = SourceFinagler/mousefix.c; sourceTree = "<group>"; };
 		C1CE51C112203985006410E3 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		C1CE523912203FF1006410E3 /* MDMouseAccelerationHelperController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDMouseAccelerationHelperController.h; path = SourceFinagler/MDMouseAccelerationHelperController.h; sourceTree = "<group>"; };
-		C1CE523A12203FF1006410E3 /* MDMouseAccelerationHelperController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDMouseAccelerationHelperController.m; path = SourceFinagler/MDMouseAccelerationHelperController.m; sourceTree = "<group>"; };
-		C1CE524012204090006410E3 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDMouseAccelerationHelperView.xib; sourceTree = "<group>"; };
 		C1D4494B12602E5100A027EF /* decompress */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = decompress; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1D4496612602E9900A027EF /* decompress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = decompress.cpp; path = SourceFinagler/decompress.cpp; sourceTree = "<group>"; };
-		C1D634EC1263E15E003DF64B /* QLPreviewPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QLPreviewPanel.h; path = SourceFinagler/QLPreviewPanel.h; sourceTree = "<group>"; };
-		C1D634EF1263E1A1003DF64B /* MDPreviewPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPreviewPanel.h; path = SourceFinagler/MDPreviewPanel.h; sourceTree = "<group>"; };
-		C1D634F01263E1A1003DF64B /* MDPreviewPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPreviewPanel.m; path = SourceFinagler/MDPreviewPanel.m; sourceTree = "<group>"; };
-		C1D635001263E3D5003DF64B /* MDPreviewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPreviewItem.h; path = SourceFinagler/MDPreviewItem.h; sourceTree = "<group>"; };
-		C1D635011263E3D5003DF64B /* MDPreviewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPreviewItem.m; path = SourceFinagler/MDPreviewItem.m; sourceTree = "<group>"; };
-		C1DF5D3D12F3973C00D53654 /* MDSteamInstalledFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDSteamInstalledFile.h; path = SourceFinagler/MDSteamInstalledFile.h; sourceTree = "<group>"; };
-		C1DF5D3E12F3973C00D53654 /* MDSteamInstalledFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDSteamInstalledFile.m; path = SourceFinagler/MDSteamInstalledFile.m; sourceTree = "<group>"; };
 		C1E1503016286A01000CBA7A /* TKPrivateInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKPrivateInterfaces.h; path = TextureKit/TKPrivateInterfaces.h; sourceTree = "<group>"; };
 		C1E6DB0812BC2408009D8AD6 /* TextureKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextureKit.h; path = TextureKit/TextureKit.h; sourceTree = "<group>"; };
-		C1E6DB6712BC3441009D8AD6 /* MDEnumNamingStudy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDEnumNamingStudy.h; path = SourceFinagler/MDEnumNamingStudy.h; sourceTree = "<group>"; };
 		C1E6DE6F12BC8CA1009D8AD6 /* packageIDs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = packageIDs.txt; path = SteamKit/packageIDs.txt; sourceTree = "<group>"; };
 		C1E6DE9712BCA0E6009D8AD6 /* addoninfo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = addoninfo.txt; path = SourceAddonFinagler/addoninfo.txt; sourceTree = "<group>"; };
 		C1E6DFAD12BCEF08009D8AD6 /* MENU.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = MENU.icns; path = Resources/MENU.icns; sourceTree = "<group>"; };
 		C1E6DFAE12BCEF08009D8AD6 /* STYLES.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = STYLES.icns; path = Resources/STYLES.icns; sourceTree = "<group>"; };
 		C1E6DFAF12BCEF08009D8AD6 /* LAYOUT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = LAYOUT.icns; path = Resources/LAYOUT.icns; sourceTree = "<group>"; };
 		C1E6DFB412BCFB27009D8AD6 /* INSTALLED.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = INSTALLED.icns; path = Resources/INSTALLED.icns; sourceTree = "<group>"; };
-		C1E6DFC512BD06E1009D8AD6 /* TKSFTIImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKSFTIImageRep.h; path = TextureKit/TKSFTIImageRep.h; sourceTree = "<group>"; };
-		C1E6DFC612BD06E1009D8AD6 /* TKSFTIImageRep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKSFTIImageRep.m; path = TextureKit/TKSFTIImageRep.m; sourceTree = "<group>"; };
 		C1E6DFCC12BD0B00009D8AD6 /* TextureKitDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextureKitDefines.h; path = TextureKit/TextureKitDefines.h; sourceTree = "<group>"; };
 		C1F153C31396699600E32057 /* HKBSPFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKBSPFile.h; sourceTree = "<group>"; };
 		C1F153C41396699600E32057 /* HKBSPFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HKBSPFile.mm; sourceTree = "<group>"; };
@@ -1757,23 +1703,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C1A112B011D66369008BBABD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C1A112D211D66676008BBABD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C1A112E411D66720008BBABD /* CoreFoundation.framework in Frameworks */,
-				C1A112EA11D66720008BBABD /* Security.framework in Frameworks */,
-				C1CA2D3713A2E40F00235C98 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C1B95273124E73B200E83451 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1911,10 +1840,6 @@
 				C11CE9BF119B7FE3000E26D2 /* Extras */,
 				C10355FB11C5AA930054740E /* MDSteamAppsRelocator */,
 				C10355FC11C5AAAF0054740E /* MDOtherAppsHelper */,
-				C133296712C1B034004D83CC /* MDSteamModifierHelperController */,
-				C1CE51A7122038E0006410E3 /* MDMouseAccelerationHelper */,
-				C10355FD11C5AAD10054740E /* MDConfigCopier */,
-				C1A1123011D60191008BBABD /* VSAuthorization */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1960,7 +1885,6 @@
 				C1FEA8FD125E71A200CA78FF /* NVImage.framework */,
 				C1FEA930125E72E300CA78FF /* NVTextureTools.framework */,
 				C1D4494B12602E5100A027EF /* decompress */,
-				C1C2C613127CBE86003B24F6 /* unimplemented */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2021,8 +1945,8 @@
 			isa = PBXGroup;
 			children = (
 				C17CC5AB1627FF740055D950 /* Sparkle.framework */,
-				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				C1A115D811D6673D008BBABD /* Workarounds */,
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2032,9 +1956,7 @@
 			children = (
 				C12F364312D7E5C500D28F26 /* TK Application stuff */,
 				C1D541C5129B4B3300504D66 /* unused */,
-				C1731B6C12993EB400C29732 /* PSD */,
 				C15DD37C126A471E00E44BDB /* MDCGImage */,
-				C1E6DB6712BC3441009D8AD6 /* MDEnumNamingStudy.h */,
 			);
 			name = "Image Finagler";
 			sourceTree = "<group>";
@@ -2066,16 +1988,6 @@
 				C140EA3A1388CE9400027DD6 /* noteIcon.icns */,
 			);
 			name = MDOtherAppsHelper;
-			sourceTree = "<group>";
-		};
-		C10355FD11C5AAD10054740E /* MDConfigCopier */ = {
-			isa = PBXGroup;
-			children = (
-				C1A16F5911C5352A008E5361 /* MDConfigCopierController.h */,
-				C1A16F5A11C5352A008E5361 /* MDConfigCopierController.m */,
-				C13E77EE11C8066D00B10F3C /* MDConfigCopierView.xib */,
-			);
-			name = MDConfigCopier;
 			sourceTree = "<group>";
 		};
 		C116F85C12D5302500551787 /* Accessory View */ = {
@@ -2194,29 +2106,6 @@
 			name = "TK Application stuff";
 			sourceTree = "<group>";
 		};
-		C133296712C1B034004D83CC /* MDSteamModifierHelperController */ = {
-			isa = PBXGroup;
-			children = (
-				C133296412C1B02B004D83CC /* MDSteamModifierHelperController.h */,
-				C133296512C1B02B004D83CC /* MDSteamModifierHelperController.m */,
-				C133296B12C1B072004D83CC /* MDSteamModifierHelperView.xib */,
-				C13329E312C1B738004D83CC /* VSModifiedFile.h */,
-				C13329E412C1B738004D83CC /* VSModifiedFile.m */,
-				C1DF5D3D12F3973C00D53654 /* MDSteamInstalledFile.h */,
-				C1DF5D3E12F3973C00D53654 /* MDSteamInstalledFile.m */,
-			);
-			name = MDSteamModifierHelperController;
-			sourceTree = "<group>";
-		};
-		C13C80A91333A5E70063A254 /* TKIWIImageRep */ = {
-			isa = PBXGroup;
-			children = (
-				C13C80C61333A6350063A254 /* TKIWIImageRep.h */,
-				C13C80C71333A6350063A254 /* TKIWIImageRep.m */,
-			);
-			name = TKIWIImageRep;
-			sourceTree = "<group>";
-		};
 		C140E63713889A6900027DD6 /* SteamKit Framework */ = {
 			isa = PBXGroup;
 			children = (
@@ -2242,8 +2131,6 @@
 			children = (
 				C1647768124E91DB0062B943 /* TKVTFImageRep.h */,
 				C1647769124E91DB0062B943 /* TKVTFImageRep.mm */,
-				C129181F12E4F27C008E1878 /* TKMaterial.h */,
-				C129182012E4F27C008E1878 /* TKMaterial.m */,
 			);
 			name = VTF;
 			sourceTree = "<group>";
@@ -2393,14 +2280,6 @@
 			name = TKImageExport;
 			sourceTree = "<group>";
 		};
-		C15BCEAF11DA233400C6E770 /* unused */ = {
-			isa = PBXGroup;
-			children = (
-				C1A1126111D615E9008BBABD /* VSAuthorizationHelperToolInstallerTemplate.c */,
-			);
-			name = unused;
-			sourceTree = "<group>";
-		};
 		C15DD37C126A471E00E44BDB /* MDCGImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -2437,15 +2316,6 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		C16C63D912D75E3500D6F254 /* OpenGL */ = {
-			isa = PBXGroup;
-			children = (
-				C16C63DB12D75E5200D6F254 /* TKTexture.h */,
-				C16C63DC12D75E5200D6F254 /* TKTexture.m */,
-			);
-			name = OpenGL;
-			sourceTree = "<group>";
-		};
 		C170261B1284BCBE0056A23D /* views */ = {
 			isa = PBXGroup;
 			children = (
@@ -2474,21 +2344,9 @@
 				C170261A1284BC6F0056A23D /* TKImageRep.m */,
 				C145EC72126895C500C34A08 /* DDS */,
 				C145EC71126895BE00C34A08 /* VTF */,
-				C1E6DFAA12BCED5A009D8AD6 /* SFTI */,
 				C1AF851C12C62AFE00027B75 /* Additions */,
-				C13C80A91333A5E70063A254 /* TKIWIImageRep */,
-				C16C63D912D75E3500D6F254 /* OpenGL */,
 			);
 			name = "TextureKit Framework";
-			sourceTree = "<group>";
-		};
-		C1731B6C12993EB400C29732 /* PSD */ = {
-			isa = PBXGroup;
-			children = (
-				C1731B6E12993EE700C29732 /* MDPSDImageRep.h */,
-				C1731B6F12993EE700C29732 /* MDPSDImageRep.m */,
-			);
-			name = PSD;
 			sourceTree = "<group>";
 		};
 		C181AD6E125578C3006810AB /* Source.mdimporter */ = {
@@ -2501,44 +2359,6 @@
 				C181ADAF125579A0006810AB /* schema.strings */,
 			);
 			name = Source.mdimporter;
-			sourceTree = "<group>";
-		};
-		C1A1123011D60191008BBABD /* VSAuthorization */ = {
-			isa = PBXGroup;
-			children = (
-				C1A112CC11D66555008BBABD /* sourcefinaglerd */,
-				C1A112B711D66409008BBABD /* sourceFinaglerInstaller */,
-				C1A1123311D603B5008BBABD /* Reusable Library */,
-			);
-			name = VSAuthorization;
-			sourceTree = "<group>";
-		};
-		C1A1123311D603B5008BBABD /* Reusable Library */ = {
-			isa = PBXGroup;
-			children = (
-				C1A1126311D615E9008BBABD /* VSAuthorizationHelperToolLib.h */,
-				C1A1126211D615E9008BBABD /* VSAuthorizationHelperToolLib.c */,
-				C15BCEAF11DA233400C6E770 /* unused */,
-			);
-			name = "Reusable Library";
-			sourceTree = "<group>";
-		};
-		C1A112B711D66409008BBABD /* sourceFinaglerInstaller */ = {
-			isa = PBXGroup;
-			children = (
-				C1A112C211D6642B008BBABD /* sourceFinaglerInstaller.c */,
-			);
-			name = sourceFinaglerInstaller;
-			sourceTree = "<group>";
-		};
-		C1A112CC11D66555008BBABD /* sourcefinaglerd */ = {
-			isa = PBXGroup;
-			children = (
-				C1A1160411D66854008BBABD /* sourcefinaglerd.c */,
-				C1A1160611D66854008BBABD /* VSSourceFinaglerCommon.h */,
-				C1A1160511D66854008BBABD /* VSSourceFinaglerCommon.c */,
-			);
-			name = sourcefinaglerd;
 			sourceTree = "<group>";
 		};
 		C1A115D811D6673D008BBABD /* Workarounds */ = {
@@ -2782,8 +2602,6 @@
 				C1C124EB123A0B18004674B4 /* MDPathControlView.h */,
 				C1C124EC123A0B18004674B4 /* MDPathControlView.m */,
 				C1C124F1123A0B2F004674B4 /* Formatters & Transformers */,
-				C1C124F8123A0B53004674B4 /* MDAlias.h */,
-				C1C124F9123A0B53004674B4 /* MDAlias.m */,
 				C1C124FC123A0B5C004674B4 /* sounds */,
 				C12D372B12E14CD200397411 /* MDScopeBarView.h */,
 				C12D372C12E14CD200397411 /* MDScopeBarView.m */,
@@ -2815,8 +2633,6 @@
 		C1C124F1123A0B2F004674B4 /* Formatters & Transformers */ = {
 			isa = PBXGroup;
 			children = (
-				C174F05E128A5E6D00817F81 /* MDVolumeFormatter.h */,
-				C174F05F128A5E6D00817F81 /* MDVolumeFormatter.m */,
 				C1C124F2123A0B49004674B4 /* MDFileSizeFormatter.h */,
 				C1C124F3123A0B49004674B4 /* MDFileSizeFormatter.m */,
 				C1C124F4123A0B49004674B4 /* MDDateFormatter.h */,
@@ -2861,7 +2677,6 @@
 		C1C1250B123A0BCA004674B4 /* MDQuickLook */ = {
 			isa = PBXGroup;
 			children = (
-				C1D634EC1263E15E003DF64B /* QLPreviewPanel.h */,
 				C1C1250C123A0BE1004674B4 /* MDQuickLookController.h */,
 				C1C1250D123A0BE1004674B4 /* MDQuickLookController.m */,
 				C1ABAB6712563BD800CAAFEB /* MDQuickLookPanel.h */,
@@ -2874,11 +2689,6 @@
 				C18250AE1262859600D3F663 /* MDImageView.m */,
 				C1C124B7123A0A0C004674B4 /* MDQuickLook.xib */,
 				C1C1249B123A08F8004674B4 /* images */,
-				C1CE0243124F9942002E66F8 /* Text Syntax Coloring */,
-				C1D634EF1263E1A1003DF64B /* MDPreviewPanel.h */,
-				C1D634F01263E1A1003DF64B /* MDPreviewPanel.m */,
-				C1D635001263E3D5003DF64B /* MDPreviewItem.h */,
-				C1D635011263E3D5003DF64B /* MDPreviewItem.m */,
 			);
 			name = MDQuickLook;
 			sourceTree = "<group>";
@@ -3082,15 +2892,6 @@
 			name = Streams;
 			sourceTree = "<group>";
 		};
-		C1C2C613127CBE86003B24F6 /* unimplemented */ = {
-			isa = PBXGroup;
-			children = (
-				C1A112B211D66369008BBABD /* sourceFinaglerInstaller */,
-				C1A112D411D66676008BBABD /* sourcefinaglerd */,
-			);
-			name = unimplemented;
-			sourceTree = "<group>";
-		};
 		C1C2C831127D2843003B24F6 /* Group */ = {
 			isa = PBXGroup;
 			children = (
@@ -3142,27 +2943,6 @@
 			name = "private classes";
 			sourceTree = "<group>";
 		};
-		C1CE0243124F9942002E66F8 /* Text Syntax Coloring */ = {
-			isa = PBXGroup;
-			children = (
-				C1CE0253124F9985002E66F8 /* Syntax Definitions */,
-			);
-			name = "Text Syntax Coloring";
-			sourceTree = "<group>";
-		};
-		C1CE51A7122038E0006410E3 /* MDMouseAccelerationHelper */ = {
-			isa = PBXGroup;
-			children = (
-				C1CE51AD12203911006410E3 /* mousefix.c */,
-				C1CE523912203FF1006410E3 /* MDMouseAccelerationHelperController.h */,
-				C1CE523A12203FF1006410E3 /* MDMouseAccelerationHelperController.m */,
-				C1CE523F12204090006410E3 /* MDMouseAccelerationHelperView.xib */,
-				C101A60912526BFA00BD8091 /* MDGame.h */,
-				C101A60A12526BFA00BD8091 /* MDGame.m */,
-			);
-			name = MDMouseAccelerationHelper;
-			sourceTree = "<group>";
-		};
 		C1D4494512602E1900A027EF /* command-line tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -3199,15 +2979,6 @@
 				C12C8E3012922C7600C8E667 /* sidebar.png */,
 			);
 			name = unused;
-			sourceTree = "<group>";
-		};
-		C1E6DFAA12BCED5A009D8AD6 /* SFTI */ = {
-			isa = PBXGroup;
-			children = (
-				C1E6DFC512BD06E1009D8AD6 /* TKSFTIImageRep.h */,
-				C1E6DFC612BD06E1009D8AD6 /* TKSFTIImageRep.m */,
-			);
-			name = SFTI;
 			sourceTree = "<group>";
 		};
 		C1F153C21396699600E32057 /* HLKit */ = {
@@ -3976,38 +3747,6 @@
 			productReference = C17319B21298D11400C29732 /* TextureKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C1A112B111D66369008BBABD /* sourceFinaglerInstaller */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C1A112B611D66387008BBABD /* Build configuration list for PBXNativeTarget "sourceFinaglerInstaller" */;
-			buildPhases = (
-				C1A112AF11D66369008BBABD /* Sources */,
-				C1A112B011D66369008BBABD /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = sourceFinaglerInstaller;
-			productName = sourceFinaglerInstaller;
-			productReference = C1A112B211D66369008BBABD /* sourceFinaglerInstaller */;
-			productType = "com.apple.product-type.tool";
-		};
-		C1A112D311D66676008BBABD /* sourcefinaglerd */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C1A112E211D666A6008BBABD /* Build configuration list for PBXNativeTarget "sourcefinaglerd" */;
-			buildPhases = (
-				C1A112D111D66676008BBABD /* Sources */,
-				C1A112D211D66676008BBABD /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = sourcefinaglerd;
-			productName = sourcefinaglerd;
-			productReference = C1A112D411D66676008BBABD /* sourcefinaglerd */;
-			productType = "com.apple.product-type.tool";
-		};
 		C1B95274124E73B200E83451 /* VTF */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C1B95279124E73B300E83451 /* Build configuration list for PBXNativeTarget "VTF" */;
@@ -4264,8 +4003,6 @@
 				C1FEA92F125E72E300CA78FF /* NVTextureTools */,
 				C155218011D9954B00CCEDD3 /* Distribution */,
 				C1D4494A12602E5100A027EF /* decompress */,
-				C1A112B111D66369008BBABD /* sourceFinaglerInstaller */,
-				C1A112D311D66676008BBABD /* sourcefinaglerd */,
 			);
 		};
 /* End PBXProject section */
@@ -4603,25 +4340,6 @@
 				C12CFB5A12DFB3AE00A08A4B /* TKDDSImageRep.mm in Sources */,
 				C12CFB7612DFBCB400A08A4B /* TKFoundationAdditions.m in Sources */,
 				C187D8A41635900700F30B64 /* TKBase.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C1A112AF11D66369008BBABD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C1A112C311D6642B008BBABD /* sourceFinaglerInstaller.c in Sources */,
-				C1A112C411D66434008BBABD /* VSAuthorizationHelperToolLib.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C1A112D111D66676008BBABD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C1A1160711D66854008BBABD /* sourcefinaglerd.c in Sources */,
-				C1A1160811D66854008BBABD /* VSSourceFinaglerCommon.c in Sources */,
-				C15BCEAE11DA232D00C6E770 /* VSAuthorizationHelperToolLib.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5062,14 +4780,6 @@
 			name = TKImageDocument.xib;
 			sourceTree = "<group>";
 		};
-		C133296B12C1B072004D83CC /* MDSteamModifierHelperView.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C133296912C1B06D004D83CC /* English */,
-			);
-			name = MDSteamModifierHelperView.xib;
-			sourceTree = "<group>";
-		};
 		C13E77DD11C805D900B10F3C /* MDSteamAppsRelocatorView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -5084,14 +4794,6 @@
 				C13E77E111C8061500B10F3C /* English */,
 			);
 			name = MDOtherAppsHelperView.xib;
-			sourceTree = "<group>";
-		};
-		C13E77EE11C8066D00B10F3C /* MDConfigCopierView.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C13E77EF11C8066D00B10F3C /* English */,
-			);
-			name = MDConfigCopierView.xib;
 			sourceTree = "<group>";
 		};
 		C145B3AF12C05BCF005D7E21 /* TKImageDocumentAccessoryView.xib */ = {
@@ -5228,14 +4930,6 @@
 				C1C12549123A0EC6004674B4 /* English */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		C1CE523F12204090006410E3 /* MDMouseAccelerationHelperView.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C1CE524012204090006410E3 /* English */,
-			);
-			name = MDMouseAccelerationHelperView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -5454,60 +5148,6 @@
 				PRODUCT_NAME = TextureKit;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		C1A112B411D66369008BBABD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = sourceFinaglerInstaller;
-			};
-			name = Debug;
-		};
-		C1A112B511D66369008BBABD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = sourceFinaglerInstaller;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		C1A112D611D66677008BBABD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				INSTALL_PATH = /Library/PrivilegedHelperTools;
-				PRODUCT_NAME = sourcefinaglerd;
-			};
-			name = Debug;
-		};
-		C1A112D711D66677008BBABD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "Mark Douma";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = /Library/PrivilegedHelperTools;
-				PRODUCT_NAME = sourcefinaglerd;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -5974,24 +5614,6 @@
 			buildConfigurations = (
 				C17319B41298D11500C29732 /* Debug */,
 				C17319B51298D11500C29732 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C1A112B611D66387008BBABD /* Build configuration list for PBXNativeTarget "sourceFinaglerInstaller" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C1A112B411D66369008BBABD /* Debug */,
-				C1A112B511D66369008BBABD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C1A112E211D666A6008BBABD /* Build configuration list for PBXNativeTarget "sourcefinaglerd" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C1A112D611D66677008BBABD /* Debug */,
-				C1A112D711D66677008BBABD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
