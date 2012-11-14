@@ -6,23 +6,23 @@
 			sepNavSelRange = "{0, 44}";
 			sepNavVisRange = "{0, 2484}";
 			sepNavVisRect = "{{0, 0}, {1075, 898}}";
-			sepNavWindowFrame = "{{-1280, 56}, {1120, 1002}}";
+			sepNavWindowFrame = "{{679, 56}, {1120, 1002}}";
 		};
 	};
 	256AC3D80F4B6AC300CF3369 /* MDAppController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1282, 1540}}";
-			sepNavSelRange = "{534, 0}";
-			sepNavVisRange = "{0, 2212}";
-			sepNavWindowFrame = "{{492, 34}, {1189, 1024}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1214, 1562}}";
+			sepNavSelRange = "{1119, 0}";
+			sepNavVisRange = "{0, 2229}";
+			sepNavWindowFrame = "{{585, 46}, {1273, 1012}}";
 		};
 	};
 	256AC3D90F4B6AC300CF3369 /* MDAppController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1282, 7469}}";
-			sepNavSelRange = "{261, 0}";
-			sepNavVisRange = "{0, 2579}";
-			sepNavWindowFrame = "{{470, 46}, {1341, 1012}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1214, 7392}}";
+			sepNavSelRange = "{13780, 41}";
+			sepNavVisRange = "{0, 2590}";
+			sepNavWindowFrame = "{{585, 46}, {1273, 1012}}";
 		};
 	};
 	256AC3F00F4B6AF500CF3369 /* SourceFinagler_Prefix.pch */ = {
@@ -34,67 +34,38 @@
 		};
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Release;
+		activeBuildConfigurationName = Debug;
 		activeExecutable = C1C2C5A9127CBCA0003B24F6 /* Source Finagler */;
 		activeTarget = C1C2C4D7127CBCA0003B24F6 /* Source Finagler */;
 		addToTargets = (
 			C1C2C4D7127CBCA0003B24F6 /* Source Finagler */,
 		);
 		breakpoints = (
-			C10E24BB129C5DD900376192 /* TKVTFImageRep.mm:168 */,
-			C10E24BE129C5DE000376192 /* TKVTFImageRep.mm:433 */,
-			C10E24E6129C5EB200376192 /* TKVTFImageRep.mm:179 */,
-			C10E24E8129C5EB400376192 /* TKVTFImageRep.mm:189 */,
-			C10E24EA129C5EC500376192 /* TKVTFImageRep.mm:613 */,
-			C10E24EC129C5ECA00376192 /* TKVTFImageRep.mm:623 */,
-			C10E24EF129C5ECE00376192 /* TKVTFImageRep.mm:606 */,
-			C1DE9B6F12A42F5300D6082F /* TKImageDocument.m:822 */,
-			C106C15612B032FB00E15E82 /* TKImageRep.m:515 */,
-			C155911912B6E8AB00FD0684 /* TKImageDocument.m:551 */,
-			C116F2D512CEB28300551787 /* TKImageView.m:208 */,
-			C12F373312D8137000D28F26 /* TKImageRep.m:438 */,
-			C12F373712D813C600D28F26 /* TKImageRep.m:461 */,
-			C12F373912D813C900D28F26 /* TKImageRep.m:507 */,
-			C15532F112DBD89D00CA6B9E /* TKDDSImageRep.mm:470 */,
-			C155332C12DBDACE00CA6B9E /* TKImageRep.m:426 */,
-			C12A432512DD27BE00C1B25F /* VTFFile.mm:2121 */,
 			C12A496F12DE990500C1B25F /* MDQuickLookController.m:252 */,
-			C12A497312DE992B00C1B25F /* TKVTFImageRep.mm:255 */,
 			C13F4C8412DEB91F0036269F /* MDHLDocument.m:511 */,
-			C13F4C8C12DEBD350036269F /* MDHLDocument.m:1116 */,
 			C13F4CBC12DEBF820036269F /* MDNode.m:281 */,
-			C13F4F7612DEF13B0036269F /* MDQuickLookPreviewViewController.m:56 */,
-			C13730C512DF77750051556A /* MDHLDocument.m:2018 */,
-			C13730FC12DF795F0051556A /* MDHLDocument.m:275 */,
+			C13F4F7612DEF13B0036269F /* MDQuickLookPreviewViewController.m:54 */,
 			C12CFBA012DFBE3A00A08A4B /* VTFFile.mm:3411 */,
-			C17BC02012E12147002F3D02 /* MDHLDocument.m:756 */,
 			C129056512E4CF2C008E1878 /* VTFFile.mm:211 */,
 			C129056912E4CF34008E1878 /* VTFFile.mm:231 */,
-			C129059512E4DEF1008E1878 /* VTFFile.mm:4000 */,
 			C12E620412E7AF1300A3A3A2 /* GCFFile.cpp:32 */,
-			C144AD3612E7DD6100F47439 /* MDFile.mm:216 */,
 			C13279B0130522A0008DD035 /* VSSourceAddonController.m:58 */,
-			C1424A60135E67F300BAC714 /* VSSteamManager.m:1312 */,
-			C1D5621F1381BD1100B2E163 /* VSSourceAddonController.m:192 */,
 			C130CDC413898A8F00683B56 /* MDCopyOperationController.m:105 */,
 			C15943EF138C744D009618EE /* MDCopyOperationController.m:170 */,
 			C1594A5E138DD854009618EE /* MDPreviewViewController.m:49 */,
-			C1594AA9138DE1C1009618EE /* MDFileAdditions.m:100 */,
 			C1221865138DF301000458A6 /* MDResourceFile.m:228 */,
 			C122283413930272000458A6 /* MDBrowser.m:98 */,
-			C13FE2601394322000C0D27C /* VSSteamManager.m:490 */,
-			C15A76611399DCF500B4F485 /* MDTextFieldCell.m:122 */,
+			C13FE2601394322000C0D27C /* VSSteamManager.m:485 */,
 			C1CA335813A4689600235C98 /* MDViewOptionsController.m:149 */,
 			C11CA35313A46DA4006CC348 /* MDViewOptionsController.m:161 */,
 			C11CA35813A46DCA006CC348 /* MDViewOptionsController.m:51 */,
 			C11CA35A13A46DD4006CC348 /* MDAppController.m:543 */,
-			C11CA35D13A46F76006CC348 /* MDFile.mm:92 */,
 			C1A2C6A713A745D50005EFB1 /* MDCopyOperationContentView.m:125 */,
 			C1A2C6E213A751150005EFB1 /* MDCopyOperationContentView.m:60 */,
-			C156C87B13A9951900AF3271 /* TKVTFImageRep.mm:292 */,
-			C12B4E3513B71CA40096FC0E /* TKImageExportController.m:47 */,
-			C12B4E9913B729750096FC0E /* TKDDSImageRep.mm:331 */,
-			C1CB447813BCE6BE00FCCC7E /* VSSteamManager.m:734 */,
+			C1CB447813BCE6BE00FCCC7E /* VSSteamManager.m:729 */,
+			C13ED0671648E3E900E04DD5 /* TKImageRep.m:595 */,
+			C13ED06D1648E43D00E04DD5 /* TKVTFImageRep.mm:312 */,
+			C181B51A16499D0300240F9A /* VTFFile.mm:4017 */,
 		);
 		codeSenseManager = C11CE967119B7F15000E26D2 /* Code sense */;
 		executables = (
@@ -112,11 +83,11 @@
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
 					20,
-					272,
+					215,
 					20,
-					173,
-					173,
-					105,
+					117,
+					117,
+					50,
 					20,
 				);
 				PBXFileTableDataSourceColumnsKey = (
@@ -163,7 +134,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					319,
+					358,
 					20,
 					48,
 					43,
@@ -237,31 +208,50 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXTargetDataSource_PrimaryAttribute;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					279,
+					391,
 					60,
 					20,
+					43,
+					43,
 					48,
-					43,
-					43,
 				);
 				PBXFileTableDataSourceColumnsKey = (
 					PBXFileDataSource_FiletypeID,
 					PBXFileDataSource_Filename_ColumnID,
 					PBXTargetDataSource_PrimaryAttribute,
 					PBXFileDataSource_Built_ColumnID,
-					PBXFileDataSource_ObjectSize_ColumnID,
 					PBXFileDataSource_Errors_ColumnID,
 					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 371170023;
-			PBXWorkspaceStateSaveDate = 371170023;
+			PBXPerProjectTemplateStateSaveDate = 374580751;
+			PBXWorkspaceStateSaveDate = 374580751;
 		};
 		perUserProjectItems = {
-			C12F370512D8127800D28F26 /* PBXTextBookmark */ = C12F370512D8127800D28F26 /* PBXTextBookmark */;
-			C12F370612D8127800D28F26 /* PBXTextBookmark */ = C12F370612D8127800D28F26 /* PBXTextBookmark */;
-			C12F370812D8127800D28F26 /* PBXTextBookmark */ = C12F370812D8127800D28F26 /* PBXTextBookmark */;
-			C1F1581B1396B81500E32057 /* PBXTextBookmark */ = C1F1581B1396B81500E32057 /* PBXTextBookmark */;
+			C12F370612D8127800D28F26 = C12F370612D8127800D28F26 /* PBXTextBookmark */;
+			C12F370812D8127800D28F26 = C12F370812D8127800D28F26 /* PBXTextBookmark */;
+			C13B387D1653A4DB00E27C77 = C13B387D1653A4DB00E27C77 /* PBXTextBookmark */;
+			C13B387E1653A4DB00E27C77 = C13B387E1653A4DB00E27C77 /* PBXTextBookmark */;
+			C13B387F1653A4DB00E27C77 = C13B387F1653A4DB00E27C77 /* PBXTextBookmark */;
+			C13B38801653A4DB00E27C77 = C13B38801653A4DB00E27C77 /* PBXTextBookmark */;
+			C13B38811653A4DB00E27C77 = C13B38811653A4DB00E27C77 /* PBXTextBookmark */;
+			C13B38821653A4DB00E27C77 = C13B38821653A4DB00E27C77 /* PBXTextBookmark */;
+			C13B38831653A4DB00E27C77 = C13B38831653A4DB00E27C77 /* PBXTextBookmark */;
+			C13B38841653A4DB00E27C77 = C13B38841653A4DB00E27C77 /* PBXTextBookmark */;
+			C13B38851653A4DB00E27C77 = C13B38851653A4DB00E27C77 /* PBXTextBookmark */;
+			C16006301653A5DB009709FE = C16006301653A5DB009709FE /* PBXTextBookmark */;
+			C16006311653A5DB009709FE = C16006311653A5DB009709FE /* PBXTextBookmark */;
+			C16006321653A5DB009709FE = C16006321653A5DB009709FE /* PBXTextBookmark */;
+			C16006331653A5DB009709FE = C16006331653A5DB009709FE /* PBXTextBookmark */;
+			C16006341653A5DB009709FE = C16006341653A5DB009709FE /* PBXTextBookmark */;
+			C16006351653A5DB009709FE = C16006351653A5DB009709FE /* PBXTextBookmark */;
+			C16006361653A5DB009709FE = C16006361653A5DB009709FE /* PBXTextBookmark */;
+			C16006371653A5DB009709FE = C16006371653A5DB009709FE /* PBXTextBookmark */;
+			C16006381653A5DB009709FE = C16006381653A5DB009709FE /* PBXTextBookmark */;
+			C161AB8E16356614000A8D08 = C161AB8E16356614000A8D08 /* PBXTextBookmark */;
+			C1F1581B1396B81500E32057 = C1F1581B1396B81500E32057 /* PBXTextBookmark */;
+			C1F9283816492B840089FBA4 = C1F9283816492B840089FBA4 /* PBXTextBookmark */;
 		};
 		sourceControlManager = C11CE966119B7F15000E26D2 /* Source Control */;
 		userBuildSettings = {
@@ -281,7 +271,7 @@
 			sepNavSelRange = "{13497, 1}";
 			sepNavVisRange = "{13191, 2266}";
 			sepNavVisRect = "{{0, 0}, {874, 920}}";
-			sepNavWindowFrame = "{{837, 38}, {957, 1020}}";
+			sepNavWindowFrame = "{{0, 38}, {957, 1020}}";
 		};
 	};
 	C101A60912526BFA00BD8091 /* MDGame.h */ = {
@@ -302,18 +292,18 @@
 	};
 	C1034A9111C5619C0054740E /* VSSteamManager.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1202, 2277}}";
-			sepNavSelRange = "{442, 0}";
-			sepNavVisRange = "{0, 2091}";
-			sepNavWindowFrame = "{{287, 35}, {1261, 1023}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1159, 2277}}";
+			sepNavSelRange = "{1090, 0}";
+			sepNavVisRange = "{3213, 2411}";
+			sepNavWindowFrame = "{{675, 40}, {1218, 1018}}";
 		};
 	};
 	C1034A9211C5619C0054740E /* VSSteamManager.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1202, 15906}}";
-			sepNavSelRange = "{11379, 0}";
-			sepNavVisRange = "{1228, 2898}";
-			sepNavWindowFrame = "{{530, 35}, {1261, 1023}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1202, 15202}}";
+			sepNavSelRange = "{50599, 0}";
+			sepNavVisRange = "{48193, 3603}";
+			sepNavWindowFrame = "{{577, 37}, {1261, 1021}}";
 		};
 	};
 	C103563611C5AF930054740E /* VSGame.h */ = {
@@ -332,150 +322,6 @@
 			sepNavWindowFrame = "{{209, 55}, {1070, 1003}}";
 		};
 	};
-	C106C15612B032FB00E15E82 /* TKImageRep.m:515 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C170261A1284BC6F0056A23D /* TKImageRep.m */;
-		functionName = "-representationUsingPixelFormat:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 515;
-		location = TextureKit;
-		modificationTime = 331146952.504444;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	C10E24BB129C5DD900376192 /* TKVTFImageRep.mm:168 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1647769124E91DB0062B943 /* TKVTFImageRep.mm */;
-		functionName = "+canInitWithData:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 168;
-		location = "Source Finagler";
-		modificationTime = 331146952.429002;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	C10E24BE129C5DE000376192 /* TKVTFImageRep.mm:433 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1647769124E91DB0062B943 /* TKVTFImageRep.mm */;
-		functionName = "+imageRepsWithData:firstImageRepOnly:properties:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 433;
-		location = "Source Finagler";
-		modificationTime = 331146952.433143;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	C10E24E6129C5EB200376192 /* TKVTFImageRep.mm:179 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1647769124E91DB0062B943 /* TKVTFImageRep.mm */;
-		functionName = "+imageRepClassForType:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 179;
-		location = "Source Finagler";
-		modificationTime = 331146952.436015;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	C10E24E8129C5EB400376192 /* TKVTFImageRep.mm:189 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1647769124E91DB0062B943 /* TKVTFImageRep.mm */;
-		functionName = "+imageRepClassForFileType:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 189;
-		location = "Source Finagler";
-		modificationTime = 331146952.4389049;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	C10E24EA129C5EC500376192 /* TKVTFImageRep.mm:613 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1647769124E91DB0062B943 /* TKVTFImageRep.mm */;
-		functionName = "+imageRepWithData:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 613;
-		location = "Source Finagler";
-		modificationTime = 331146952.441656;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	C10E24EC129C5ECA00376192 /* TKVTFImageRep.mm:623 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1647769124E91DB0062B943 /* TKVTFImageRep.mm */;
-		functionName = "-initWithData:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 623;
-		location = "Source Finagler";
-		modificationTime = 331146952.450856;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	C10E24EF129C5ECE00376192 /* TKVTFImageRep.mm:606 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1647769124E91DB0062B943 /* TKVTFImageRep.mm */;
-		functionName = "+imageRepsWithData:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 606;
-		location = "Source Finagler";
-		modificationTime = 331146952.464823;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
 	C1137866128072C500C87072 /* MDCopyOperationViewController.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {963, 793}}";
@@ -492,24 +338,6 @@
 			sepNavWindowFrame = "{{964, 49}, {880, 1009}}";
 		};
 	};
-	C116F2D512CEB28300551787 /* TKImageView.m:208 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C12C8DF3129226E000C8E667 /* TKImageView.m */;
-		functionName = "-togglePlay:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 208;
-		location = "Source Finagler";
-		modificationTime = 331146952.514217;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
 	C116F6EB12CFE71D00551787 /* viewMipmapBrowserCapsuleStyle.pdf */ = {
 		uiCtxt = {
 			sepNavWindowFrame = "{{41, 35}, {1143, 1143}}";
@@ -517,18 +345,18 @@
 	};
 	C116F85812D5301400551787 /* TKImageDocumentAccessoryViewController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1151, 924}}";
-			sepNavSelRange = "{556, 0}";
-			sepNavVisRange = "{0, 1837}";
-			sepNavWindowFrame = "{{607, 37}, {1210, 1021}}";
+			sepNavIntBoundsRect = "{{0, 0}, {882, 1177}}";
+			sepNavSelRange = "{1557, 52}";
+			sepNavVisRange = "{484, 1735}";
+			sepNavWindowFrame = "{{974, 37}, {941, 1021}}";
 		};
 	};
 	C116F85912D5301400551787 /* TKImageDocumentAccessoryViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1151, 2750}}";
-			sepNavSelRange = "{813, 0}";
-			sepNavVisRange = "{320, 2273}";
-			sepNavWindowFrame = "{{607, 37}, {1210, 1021}}";
+			sepNavIntBoundsRect = "{{0, 0}, {882, 4136}}";
+			sepNavSelRange = "{5814, 0}";
+			sepNavVisRange = "{5092, 2784}";
+			sepNavWindowFrame = "{{974, 37}, {941, 1021}}";
 		};
 	};
 	C116FAFB12D588A400551787 /* viewFrameBrowserCapsuleStyle.pdf */ = {
@@ -546,26 +374,26 @@
 	};
 	C11B274C11BDE755004D4CC0 /* MDFolderManager.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1249, 3630}}";
-			sepNavSelRange = "{178, 0}";
-			sepNavVisRange = "{0, 1839}";
+			sepNavIntBoundsRect = "{{0, 0}, {1249, 2849}}";
+			sepNavSelRange = "{7810, 0}";
+			sepNavVisRange = "{6492, 2962}";
 			sepNavWindowFrame = "{{446, 106}, {1308, 952}}";
 		};
 	};
 	C11B274F11BDE7AD004D4CC0 /* MDFoundationAdditions.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1214, 2299}}";
-			sepNavSelRange = "{2812, 0}";
-			sepNavVisRange = "{672, 2888}";
-			sepNavWindowFrame = "{{566, 35}, {1273, 1023}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1214, 2761}}";
+			sepNavSelRange = "{734, 0}";
+			sepNavVisRange = "{0, 2564}";
+			sepNavWindowFrame = "{{566, 37}, {1273, 1021}}";
 		};
 	};
 	C11B275011BDE7AD004D4CC0 /* MDFoundationAdditions.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1214, 12771}}";
-			sepNavSelRange = "{15928, 0}";
-			sepNavVisRange = "{15929, 2323}";
-			sepNavWindowFrame = "{{604, 33}, {1273, 1025}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1214, 13453}}";
+			sepNavSelRange = "{1209, 1}";
+			sepNavVisRange = "{916, 1969}";
+			sepNavWindowFrame = "{{555, 37}, {1273, 1021}}";
 		};
 	};
 	C11B275411BDE826004D4CC0 /* MDAppKitAdditions.h */ = {
@@ -586,10 +414,10 @@
 	};
 	C11C5AC4126844E400B7E51E /* TKImageDocument.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1185, 1430}}";
-			sepNavSelRange = "{2614, 0}";
-			sepNavVisRange = "{1348, 2147}";
-			sepNavWindowFrame = "{{337, 37}, {1244, 1021}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1185, 935}}";
+			sepNavSelRange = "{1174, 0}";
+			sepNavVisRange = "{0, 2134}";
+			sepNavWindowFrame = "{{25, 37}, {1244, 1021}}";
 		};
 	};
 	C11CA35313A46DA4006CC348 /* MDViewOptionsController.m:161 */ = {
@@ -646,23 +474,6 @@
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
-	C11CA35D13A46F76006CC348 /* MDFile.mm:92 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1C124CC123A0A76004674B4 /* MDFile.mm */;
-		functionName = "-beginWritingToFile:assureUniqueFilename:resultingPath:error:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 92;
-		modificationTime = 331146952.743221;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
 	C11CA5E513A4E84D006CC348 /* MDCopyOperationSeparatorView.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {967, 835}}";
@@ -673,9 +484,9 @@
 	};
 	C11CA5E613A4E84D006CC348 /* MDCopyOperationSeparatorView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {358, 803}}";
-			sepNavSelRange = "{254, 0}";
-			sepNavVisRange = "{0, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1195, 792}}";
+			sepNavSelRange = "{588, 74}";
+			sepNavVisRange = "{309, 1243}";
 			sepNavWindowFrame = "{{746, 110}, {1083, 948}}";
 		};
 	};
@@ -689,8 +500,8 @@
 	};
 	C11CA69713A4F9FB006CC348 /* MDCopyOperationContentView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1202, 2607}}";
-			sepNavSelRange = "{249, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {1202, 2695}}";
+			sepNavSelRange = "{1315, 39}";
 			sepNavVisRange = "{0, 2166}";
 			sepNavWindowFrame = "{{443, 38}, {1261, 1020}}";
 		};
@@ -835,24 +646,6 @@
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
-	C129059512E4DEF1008E1878 /* VTFFile.mm:4000 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1B95369124E73EC00E83451 /* VTFFile.mm */;
-		functionName = "CVTFFile::ConvertRGBA8888toBGRA8888(vlByte *src, vlByte *dest, vlUInt pixelCount)";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 4000;
-		location = VTFNVTT;
-		modificationTime = 331146952.623879;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
 	C129181F12E4F27C008E1878 /* TKMaterial.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {919, 761}}";
@@ -868,23 +661,6 @@
 			sepNavVisRange = "{0, 201}";
 		};
 	};
-	C12A432512DD27BE00C1B25F /* VTFFile.mm:2121 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1B95369124E73EC00E83451 /* VTFFile.mm */;
-		functionName = "CVTFFile::GenerateMipmaps(VTFMipmapFilter MipmapFilter, VTFSharpenFilter SharpenFilter)";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2121;
-		modificationTime = 331146952.5437;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
 	C12A496F12DE990500C1B25F /* MDQuickLookController.m:252 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
@@ -899,24 +675,6 @@
 		ignoreCount = 0;
 		lineNumber = 252;
 		modificationTime = 331146952.573198;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	C12A497312DE992B00C1B25F /* TKVTFImageRep.mm:255 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1647769124E91DB0062B943 /* TKVTFImageRep.mm */;
-		functionName = "+VTFRepresentationOfImageRepsInArray:usingFormat:quality:createMipmaps:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 255;
-		location = TextureKit;
-		modificationTime = 331146952.584328;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -960,56 +718,20 @@
 			sepNavWindowFrame = "{{348, 134}, {1343, 856}}";
 		};
 	};
-	C12B4E3513B71CA40096FC0E /* TKImageExportController.m:47 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1583BB612B3A51300A4AE2F /* TKImageExportController.m */;
-		functionName = "+initialize";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 47;
-		location = "Source Finagler";
-		modificationTime = 331146958.1968;
-		originalNumberOfMultipleMatches = 1;
-		state = 1;
-	};
-	C12B4E9913B729750096FC0E /* TKDDSImageRep.mm:331 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C12DB4B4125FADE00051A751 /* TKDDSImageRep.mm */;
-		functionName = "+imageRepsWithData:firstRepresentationOnly:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 331;
-		location = TextureKit;
-		modificationTime = 331146952.7566921;
-		originalNumberOfMultipleMatches = 1;
-		state = 1;
-	};
 	C12C8DF2129226E000C8E667 /* TKImageView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1105, 896}}";
-			sepNavSelRange = "{466, 0}";
-			sepNavVisRange = "{0, 972}";
-			sepNavWindowFrame = "{{463, 35}, {1164, 1023}}";
+			sepNavIntBoundsRect = "{{0, 0}, {993, 917}}";
+			sepNavSelRange = "{762, 0}";
+			sepNavVisRange = "{0, 815}";
+			sepNavWindowFrame = "{{734, 37}, {1052, 1021}}";
 		};
 	};
 	C12C8DF3129226E000C8E667 /* TKImageView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1105, 2486}}";
-			sepNavSelRange = "{4540, 0}";
-			sepNavVisRange = "{3297, 2528}";
-			sepNavWindowFrame = "{{331, 129}, {1164, 1024}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1105, 3982}}";
+			sepNavSelRange = "{4081, 0}";
+			sepNavVisRange = "{2774, 2164}";
+			sepNavWindowFrame = "{{494, 37}, {1164, 1021}}";
 		};
 	};
 	C12C8E3012922C7600C8E667 /* sidebar.png */ = {
@@ -1035,10 +757,10 @@
 	};
 	C12CE5B21288F4BD001FF211 /* TextureTools.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {888, 5280}}";
-			sepNavSelRange = "{712, 0}";
-			sepNavVisRange = "{0, 2773}";
-			sepNavWindowFrame = "{{643, 154}, {947, 1024}}";
+			sepNavIntBoundsRect = "{{0, 0}, {888, 5676}}";
+			sepNavSelRange = "{9901, 26}";
+			sepNavVisRange = "{8351, 2397}";
+			sepNavWindowFrame = "{{973, 37}, {947, 1021}}";
 		};
 	};
 	C12CE5E91288F4F2001FF211 /* TextureToolsBase.h */ = {
@@ -1090,10 +812,10 @@
 	};
 	C12DB4B4125FADE00051A751 /* TKDDSImageRep.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1279, 6259}}";
-			sepNavSelRange = "{9828, 0}";
-			sepNavVisRange = "{9198, 3019}";
-			sepNavWindowFrame = "{{582, 36}, {1338, 1022}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1279, 9119}}";
+			sepNavSelRange = "{9950, 0}";
+			sepNavVisRange = "{9771, 3772}";
+			sepNavWindowFrame = "{{486, 37}, {1338, 1021}}";
 		};
 	};
 	C12E620412E7AF1300A3A3A2 /* GCFFile.cpp:32 */ = {
@@ -1122,16 +844,6 @@
 			sepNavWindowFrame = "{{148, 29}, {1473, 1002}}";
 		};
 	};
-	C12F370512D8127800D28F26 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = C1E6DFC612BD06E1009D8AD6 /* TKSFTIImageRep.m */;
-		name = "TKSFTIImageRep.m: 7";
-		rLen = 0;
-		rLoc = 149;
-		rType = 0;
-		vrLen = 230;
-		vrLoc = 0;
-	};
 	C12F370612D8127800D28F26 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = C1AF851812C6294B00027B75 /* TKFoundationAdditions.h */;
@@ -1151,60 +863,6 @@
 		rType = 0;
 		vrLen = 1175;
 		vrLoc = 0;
-	};
-	C12F373312D8137000D28F26 /* TKImageRep.m:438 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C170261A1284BC6F0056A23D /* TKImageRep.m */;
-		functionName = "-getBitmapInfoAndPixelFormatIfNecessary";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 438;
-		location = TextureKit;
-		modificationTime = 331146952.51829;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	C12F373712D813C600D28F26 /* TKImageRep.m:461 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C170261A1284BC6F0056A23D /* TKImageRep.m */;
-		functionName = "-bitmapInfo";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 461;
-		location = TextureKit;
-		modificationTime = 331146952.523544;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	C12F373912D813C900D28F26 /* TKImageRep.m:507 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C170261A1284BC6F0056A23D /* TKImageRep.m */;
-		functionName = "-RGBAData";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 507;
-		location = TextureKit;
-		modificationTime = 331146952.529649;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
 	};
 	C1305B6312F08DD700D68170 /* SimdVector_SSE.h */ = {
 		uiCtxt = {
@@ -1238,12 +896,19 @@
 			sepNavWindowFrame = "{{425, 216}, {1040, 962}}";
 		};
 	};
+	C1305BCD12F08F8100D68170 /* TaskDispatcher.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {974, 917}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 0}";
+		};
+	};
 	C1305BCE12F08F8100D68170 /* TaskDispatcher.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {759, 1859}}";
-			sepNavSelRange = "{1, 30}";
-			sepNavVisRange = "{0, 2270}";
-			sepNavWindowFrame = "{{618, 138}, {818, 1040}}";
+			sepNavIntBoundsRect = "{{0, 0}, {974, 1562}}";
+			sepNavSelRange = "{619, 0}";
+			sepNavVisRange = "{584, 2219}";
+			sepNavWindowFrame = "{{821, 37}, {1033, 1021}}";
 		};
 	};
 	C1305BDE12F08FBD00D68170 /* ClusterFit.cpp */ = {
@@ -1370,41 +1035,103 @@
 			sepNavWindowFrame = "{{200, 74}, {1188, 984}}";
 		};
 	};
-	C13730C512DF77750051556A /* MDHLDocument.m:2018 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1C124A2123A0990004674B4 /* MDHLDocument.m */;
-		functionName = "-view:stringForToolTip:point:userData:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 2018;
-		location = "Source Finagler";
-		modificationTime = 331146952.598859;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
+	C13B387D1653A4DB00E27C77 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C170261A1284BC6F0056A23D /* TKImageRep.m */;
+		name = "TKImageRep.m: 595";
+		rLen = 2;
+		rLoc = 18938;
+		rType = 0;
+		vrLen = 2305;
+		vrLoc = 17893;
 	};
-	C13730FC12DF795F0051556A /* MDHLDocument.m:275 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1C124A2123A0990004674B4 /* MDHLDocument.m */;
-		functionName = "-readFromURL:ofType:error:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 275;
-		location = "Source Finagler";
-		modificationTime = 331146952.6022;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
+	C13B387E1653A4DB00E27C77 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C116F85812D5301400551787 /* TKImageDocumentAccessoryViewController.h */;
+		name = "TKImageDocumentAccessoryViewController.h: 79";
+		rLen = 52;
+		rLoc = 1557;
+		rType = 0;
+		vrLen = 1735;
+		vrLoc = 484;
+	};
+	C13B387F1653A4DB00E27C77 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C11C5AC4126844E400B7E51E /* TKImageDocument.h */;
+		name = "TKImageDocument.h: 42";
+		rLen = 0;
+		rLoc = 1174;
+		rType = 0;
+		vrLen = 2134;
+		vrLoc = 0;
+	};
+	C13B38801653A4DB00E27C77 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C17026191284BC6F0056A23D /* TKImageRep.h */;
+		name = "TKImageRep.h: 2";
+		rLen = 10;
+		rLoc = 7;
+		rType = 0;
+		vrLen = 1998;
+		vrLoc = 0;
+	};
+	C13B38811653A4DB00E27C77 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C1647768124E91DB0062B943 /* TKVTFImageRep.h */;
+		name = "TKVTFImageRep.h: 45";
+		rLen = 0;
+		rLoc = 1398;
+		rType = 0;
+		vrLen = 2485;
+		vrLoc = 0;
+	};
+	C13B38821653A4DB00E27C77 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C1E1503016286A01000CBA7A /* TKPrivateInterfaces.h */;
+		name = "TKPrivateInterfaces.h: 25";
+		rLen = 0;
+		rLoc = 935;
+		rType = 0;
+		vrLen = 4160;
+		vrLoc = 0;
+	};
+	C13B38831653A4DB00E27C77 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C12DB4B4125FADE00051A751 /* TKDDSImageRep.mm */;
+		name = "TKDDSImageRep.mm: 323";
+		rLen = 0;
+		rLoc = 9950;
+		rType = 0;
+		vrLen = 3772;
+		vrLoc = 9771;
+	};
+	C13B38841653A4DB00E27C77 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C12CE5B21288F4BD001FF211 /* TextureTools.h */;
+		name = "TextureTools.h: 321";
+		rLen = 26;
+		rLoc = 9901;
+		rType = 0;
+		vrLen = 2397;
+		vrLoc = 8351;
+	};
+	C13B38851653A4DB00E27C77 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3D80F4B6AC300CF3369 /* MDAppController.h */;
+		name = "MDAppController.h: 45";
+		rLen = 0;
+		rLoc = 1119;
+		rType = 0;
+		vrLen = 2229;
+		vrLoc = 0;
+	};
+	C13B4E731620EF5200D07CB3 /* TKImageRepAdditions.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {947, 916}}";
+			sepNavSelRange = "{559, 0}";
+			sepNavVisRange = "{0, 1885}";
+			sepNavWindowFrame = "{{185, 38}, {1006, 1020}}";
+		};
 	};
 	C13C80C61333A6350063A254 /* TKIWIImageRep.h */ = {
 		uiCtxt = {
@@ -1422,6 +1149,40 @@
 			sepNavWindowFrame = "{{626, 32}, {1071, 1026}}";
 		};
 	};
+	C13ED0671648E3E900E04DD5 /* TKImageRep.m:595 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = C170261A1284BC6F0056A23D /* TKImageRep.m */;
+		functionName = "-representationUsingPixelFormat:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 595;
+		modificationTime = 373875869.537102;
+		originalNumberOfMultipleMatches = 0;
+		state = 1;
+	};
+	C13ED06D1648E43D00E04DD5 /* TKVTFImageRep.mm:312 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = C1647769124E91DB0062B943 /* TKVTFImageRep.mm */;
+		functionName = "+VTFRepresentationOfImageRepsInArray:usingFormat:quality:options:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 312;
+		modificationTime = 373875773.166569;
+		originalNumberOfMultipleMatches = 0;
+		state = 1;
+	};
 	C13F4C8412DEB91F0036269F /* MDHLDocument.m:511 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
@@ -1437,24 +1198,6 @@
 		lineNumber = 511;
 		location = "Source Finagler";
 		modificationTime = 331146952.5870479;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	C13F4C8C12DEBD350036269F /* MDHLDocument.m:1116 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1C124A2123A0990004674B4 /* MDHLDocument.m */;
-		functionName = "-outlineView:numberOfChildrenOfItem:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 1116;
-		location = "Source Finagler";
-		modificationTime = 331146952.59024;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -1476,7 +1219,7 @@
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
-	C13F4F7612DEF13B0036269F /* MDQuickLookPreviewViewController.m:56 */ = {
+	C13F4F7612DEF13B0036269F /* MDQuickLookPreviewViewController.m:54 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -1488,12 +1231,12 @@
 		functionName = "-setRepresentedObject:";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 56;
-		modificationTime = 331146952.596259;
+		lineNumber = 54;
+		modificationTime = 373922927.897769;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
-	C13FE2601394322000C0D27C /* VSSteamManager.m:490 */ = {
+	C13FE2601394322000C0D27C /* VSSteamManager.m:485 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -1505,7 +1248,7 @@
 		functionName = "-locateSteamApps";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 490;
+		lineNumber = 485;
 		modificationTime = 331146952.6892049;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
@@ -1557,42 +1300,6 @@
 			sepNavVisRange = "{59322, 4247}";
 			sepNavWindowFrame = "{{757, 49}, {1163, 1009}}";
 		};
-	};
-	C1424A60135E67F300BAC714 /* VSSteamManager.m:1312 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1034A9211C5619C0054740E /* VSSteamManager.m */;
-		functionName = "-helpGame:error:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 1312;
-		location = "Source Finagler";
-		modificationTime = 331146952.664803;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	C144AD3612E7DD6100F47439 /* MDFile.mm:216 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1C124CC123A0A76004674B4 /* MDFile.mm */;
-		functionName = "-writeToFile:assureUniqueFilename:tag:resultingPath:error:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 216;
-		location = "Source Addon Finagler";
-		modificationTime = 331146952.657168;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
 	};
 	C145B29F12C034AC005D7E21 /* allDefaultPresets.plist */ = {
 		uiCtxt = {
@@ -1716,58 +1423,6 @@
 			sepNavVisRange = "{0, 1178}";
 		};
 	};
-	C15532F112DBD89D00CA6B9E /* TKDDSImageRep.mm:470 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C12DB4B4125FADE00051A751 /* TKDDSImageRep.mm */;
-		functionName = "TKImageDataFromNSData(NSData *inputData, NSUInteger pixelCount, NSUInteger bitsPerPixel, CGBitmapInfo sourceBitmapInfo, CGBitmapInfo destBitmapInfo)";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 470;
-		modificationTime = 331146952.534371;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	C155332C12DBDACE00CA6B9E /* TKImageRep.m:426 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C170261A1284BC6F0056A23D /* TKImageRep.m */;
-		functionName = "-data";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 426;
-		modificationTime = 331146952.539287;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	C155911912B6E8AB00FD0684 /* TKImageDocument.m:551 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C169D9D0128A0A4A00653B05 /* TKImageDocument.m */;
-		functionName = "-imageBrowser:itemAtIndex:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 551;
-		location = TextureKit;
-		modificationTime = 331146952.510382;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
 	C155939012B71D1B00FD0684 /* 2upTemplate.pdf */ = {
 		uiCtxt = {
 			sepNavWindowFrame = "{{15, 66}, {1185, 1107}}";
@@ -1805,24 +1460,6 @@
 			sepNavWindowFrame = "{{-1049, 210}, {945, 907}}";
 		};
 	};
-	C156C87B13A9951900AF3271 /* TKVTFImageRep.mm:292 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1647769124E91DB0062B943 /* TKVTFImageRep.mm */;
-		functionName = "+VTFRepresentationOfImageRepsInArray:usingFormat:quality:createMipmaps:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 292;
-		location = TextureKit;
-		modificationTime = 331146952.751156;
-		originalNumberOfMultipleMatches = 1;
-		state = 1;
-	};
 	C1580E871396262F00D5D4D8 /* VSPrivateInterfaces.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {689, 898}}";
@@ -1849,9 +1486,9 @@
 	};
 	C1583BB612B3A51300A4AE2F /* TKImageExportController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1054, 2750}}";
-			sepNavSelRange = "{1234, 0}";
-			sepNavVisRange = "{369, 3042}";
+			sepNavIntBoundsRect = "{{0, 0}, {1054, 2739}}";
+			sepNavSelRange = "{1233, 2}";
+			sepNavVisRange = "{338, 3076}";
 			sepNavWindowFrame = "{{420, 37}, {1113, 1021}}";
 		};
 	};
@@ -1907,41 +1544,6 @@
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
-	C1594AA9138DE1C1009618EE /* MDFileAdditions.m:100 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C15B089D1255043800F722B7 /* MDFileAdditions.m */;
-		functionName = "-image";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 100;
-		location = "Source Finagler";
-		modificationTime = 331146952.6790031;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
-	C15A76611399DCF500B4F485 /* MDTextFieldCell.m:122 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1C124D5123A0A8A004674B4 /* MDTextFieldCell.m */;
-		functionName = "-drawWithFrame:inView:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 122;
-		modificationTime = 331146952.693203;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
 	C15B07C31254F46800F722B7 /* MDPreviewViewController.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1181, 902}}";
@@ -1958,14 +1560,6 @@
 			sepNavWindowFrame = "{{613, 52}, {1240, 1006}}";
 		};
 	};
-	C15B089D1255043800F722B7 /* MDFileAdditions.m */ = {
-		isa = PBXFileReference;
-		fileEncoding = 4;
-		lastKnownFileType = sourcecode.c.objc;
-		name = MDFileAdditions.m;
-		path = "/Users/mdouma46/Developer/Source Finagler 2.0.3/MDFileAdditions.m";
-		sourceTree = "<absolute>";
-	};
 	C15DD37D126A476300E44BDB /* MDCGImage.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {689, 253}}";
@@ -1981,6 +1575,106 @@
 			sepNavVisRange = "{888, 987}";
 			sepNavWindowFrame = "{{262, 31}, {1241, 1027}}";
 		};
+	};
+	C16006301653A5DB009709FE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C170261A1284BC6F0056A23D /* TKImageRep.m */;
+		name = "TKImageRep.m: 595";
+		rLen = 2;
+		rLoc = 18938;
+		rType = 0;
+		vrLen = 2305;
+		vrLoc = 17893;
+	};
+	C16006311653A5DB009709FE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C116F85812D5301400551787 /* TKImageDocumentAccessoryViewController.h */;
+		name = "TKImageDocumentAccessoryViewController.h: 79";
+		rLen = 52;
+		rLoc = 1557;
+		rType = 0;
+		vrLen = 1735;
+		vrLoc = 484;
+	};
+	C16006321653A5DB009709FE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C11C5AC4126844E400B7E51E /* TKImageDocument.h */;
+		name = "TKImageDocument.h: 42";
+		rLen = 0;
+		rLoc = 1174;
+		rType = 0;
+		vrLen = 2134;
+		vrLoc = 0;
+	};
+	C16006331653A5DB009709FE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C17026191284BC6F0056A23D /* TKImageRep.h */;
+		name = "TKImageRep.h: 2";
+		rLen = 10;
+		rLoc = 7;
+		rType = 0;
+		vrLen = 1998;
+		vrLoc = 0;
+	};
+	C16006341653A5DB009709FE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C1647768124E91DB0062B943 /* TKVTFImageRep.h */;
+		name = "TKVTFImageRep.h: 45";
+		rLen = 0;
+		rLoc = 1398;
+		rType = 0;
+		vrLen = 2485;
+		vrLoc = 0;
+	};
+	C16006351653A5DB009709FE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C1E1503016286A01000CBA7A /* TKPrivateInterfaces.h */;
+		name = "TKPrivateInterfaces.h: 25";
+		rLen = 0;
+		rLoc = 935;
+		rType = 0;
+		vrLen = 4160;
+		vrLoc = 0;
+	};
+	C16006361653A5DB009709FE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C12DB4B4125FADE00051A751 /* TKDDSImageRep.mm */;
+		name = "TKDDSImageRep.mm: 323";
+		rLen = 0;
+		rLoc = 9950;
+		rType = 0;
+		vrLen = 3772;
+		vrLoc = 9771;
+	};
+	C16006371653A5DB009709FE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C12CE5B21288F4BD001FF211 /* TextureTools.h */;
+		name = "TextureTools.h: 321";
+		rLen = 26;
+		rLoc = 9901;
+		rType = 0;
+		vrLen = 2397;
+		vrLoc = 8351;
+	};
+	C16006381653A5DB009709FE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3D80F4B6AC300CF3369 /* MDAppController.h */;
+		name = "MDAppController.h: 45";
+		rLen = 0;
+		rLoc = 1119;
+		rType = 0;
+		vrLen = 2229;
+		vrLoc = 0;
+	};
+	C161AB8E16356614000A8D08 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C170261A1284BC6F0056A23D /* TKImageRep.m */;
+		name = "TKImageRep.m: 542";
+		rLen = 16;
+		rLoc = 20136;
+		rType = 0;
+		vrLen = 1491;
+		vrLoc = 18643;
 	};
 	C16476F3124E8BA30062B943 /* overlayPlay.png */ = {
 		uiCtxt = {
@@ -2009,18 +1703,18 @@
 	};
 	C1647768124E91DB0062B943 /* TKVTFImageRep.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1613, 1155}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1301, 1199}}";
 			sepNavSelRange = "{1398, 0}";
-			sepNavVisRange = "{366, 333}";
-			sepNavWindowFrame = "{{449, 36}, {1213, 1022}}";
+			sepNavVisRange = "{0, 2485}";
+			sepNavWindowFrame = "{{357, 37}, {1422, 1021}}";
 		};
 	};
 	C1647769124E91DB0062B943 /* TKVTFImageRep.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1613, 7414}}";
-			sepNavSelRange = "{23064, 0}";
-			sepNavVisRange = "{22433, 2314}";
-			sepNavWindowFrame = "{{449, 36}, {1213, 1022}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1327, 10527}}";
+			sepNavSelRange = "{22123, 0}";
+			sepNavVisRange = "{13030, 3403}";
+			sepNavWindowFrame = "{{370, 37}, {1386, 1021}}";
 		};
 	};
 	C1647893124E96FD0062B943 /* SourceImage-Info.plist */ = {
@@ -2038,10 +1732,10 @@
 	};
 	C16478F6124E988C0062B943 /* GeneratePreviewForURL.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1135, 957}}";
-			sepNavSelRange = "{629, 0}";
-			sepNavVisRange = "{255, 2423}";
-			sepNavWindowFrame = "{{51, 90}, {1194, 968}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1135, 1518}}";
+			sepNavSelRange = "{468, 0}";
+			sepNavVisRange = "{1913, 2247}";
+			sepNavWindowFrame = "{{335, 29}, {1194, 968}}";
 		};
 	};
 	C16478F7124E988C0062B943 /* main.c */ = {
@@ -2054,10 +1748,10 @@
 	};
 	C169D9D0128A0A4A00653B05 /* TKImageDocument.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1305, 10978}}";
-			sepNavSelRange = "{14184, 0}";
-			sepNavVisRange = "{15126, 3444}";
-			sepNavWindowFrame = "{{558, 31}, {1244, 1027}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1185, 9328}}";
+			sepNavSelRange = "{27556, 0}";
+			sepNavVisRange = "{9832, 2644}";
+			sepNavWindowFrame = "{{25, 37}, {1244, 1021}}";
 		};
 	};
 	C16A68F11600B6170038A8B1 /* HLKit.h */ = {
@@ -2102,33 +1796,33 @@
 	};
 	C17025F6128486BE0056A23D /* TKImage.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1132, 1727}}";
-			sepNavSelRange = "{5403, 0}";
-			sepNavVisRange = "{1699, 3713}";
-			sepNavWindowFrame = "{{670, 38}, {1191, 1020}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1152, 1947}}";
+			sepNavSelRange = "{2511, 0}";
+			sepNavVisRange = "{76, 2254}";
+			sepNavWindowFrame = "{{622, 38}, {1211, 1020}}";
 		};
 	};
 	C17025F7128486BE0056A23D /* TKImage.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1132, 12078}}";
-			sepNavSelRange = "{35678, 0}";
-			sepNavVisRange = "{29610, 2505}";
-			sepNavWindowFrame = "{{189, 38}, {1191, 1020}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1062, 18073}}";
+			sepNavSelRange = "{493, 0}";
+			sepNavVisRange = "{5868, 3256}";
+			sepNavWindowFrame = "{{604, 38}, {1121, 1020}}";
 		};
 	};
 	C17026191284BC6F0056A23D /* TKImageRep.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1137, 1639}}";
-			sepNavSelRange = "{1709, 0}";
-			sepNavVisRange = "{148, 2133}";
-			sepNavWindowFrame = "{{129, 38}, {1196, 1020}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1137, 2299}}";
+			sepNavSelRange = "{7, 10}";
+			sepNavVisRange = "{0, 1998}";
+			sepNavWindowFrame = "{{229, 37}, {1196, 1020}}";
 		};
 	};
 	C170261A1284BC6F0056A23D /* TKImageRep.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1859, 8481}}";
-			sepNavSelRange = "{12101, 0}";
-			sepNavVisRange = "{11767, 824}";
+			sepNavIntBoundsRect = "{{0, 0}, {1137, 9636}}";
+			sepNavSelRange = "{18938, 2}";
+			sepNavVisRange = "{17893, 2305}";
 			sepNavWindowFrame = "{{616, 38}, {1196, 1020}}";
 		};
 	};
@@ -2155,39 +1849,6 @@
 			sepNavVisRange = "{0, 401}";
 		};
 	};
-	C174F05E128A5E6D00817F81 /* MDVolumeFormatter.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1072, 598}}";
-			sepNavSelRange = "{456, 0}";
-			sepNavVisRange = "{0, 670}";
-		};
-	};
-	C174F05F128A5E6D00817F81 /* MDVolumeFormatter.m */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {847, 838}}";
-			sepNavSelRange = "{573, 0}";
-			sepNavVisRange = "{0, 1367}";
-			sepNavWindowFrame = "{{-1165, 76}, {906, 942}}";
-		};
-	};
-	C17BC02012E12147002F3D02 /* MDHLDocument.m:756 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1C124A2123A0990004674B4 /* MDHLDocument.m */;
-		functionName = "-findAdvanced:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 756;
-		location = "Source Finagler";
-		modificationTime = 331146952.609817;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
 	C17D34F212791CCA00962584 /* HLPackageManager.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1047, 1056}}";
@@ -2211,9 +1872,9 @@
 	};
 	C181AD951255793B006810AB /* GetMetadataForFile.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1086, 2838}}";
-			sepNavSelRange = "{437, 0}";
-			sepNavVisRange = "{6488, 2903}";
+			sepNavIntBoundsRect = "{{0, 0}, {1086, 3212}}";
+			sepNavSelRange = "{221, 0}";
+			sepNavVisRange = "{0, 2677}";
 			sepNavWindowFrame = "{{136, 45}, {1145, 1013}}";
 		};
 	};
@@ -2241,6 +1902,23 @@
 			sepNavWindowFrame = "{{361, 245}, {952, 654}}";
 		};
 	};
+	C181B51A16499D0300240F9A /* VTFFile.mm:4017 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = C1B95369124E73EC00E83451 /* VTFFile.mm */;
+		functionName = "CVTFFile::ConvertRGBA8888toBGRA8888(vlByte *sourceBytes, vlByte *destBytes, vlUInt pixelCount)";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 4017;
+		modificationTime = 373923079.0092679;
+		originalNumberOfMultipleMatches = 0;
+		state = 2;
+	};
 	C18250AD1262859600D3F663 /* MDImageView.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1007, 899}}";
@@ -2254,6 +1932,14 @@
 			sepNavSelRange = "{770, 0}";
 			sepNavVisRange = "{0, 771}";
 			sepNavWindowFrame = "{{-1216, 194}, {1066, 1003}}";
+		};
+	};
+	C187D8A11635900700F30B64 /* TKBase.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {839, 530}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 261}";
+			sepNavWindowFrame = "{{900, 180}, {898, 634}}";
 		};
 	};
 	C190888613932B2800656A78 /* VSGameAdditions.h */ = {
@@ -2467,18 +2153,18 @@
 	};
 	C1A16F5511C5351B008E5361 /* MDSteamAppsRelocatorController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1233, 920}}";
-			sepNavSelRange = "{230, 0}";
-			sepNavVisRange = "{0, 877}";
-			sepNavWindowFrame = "{{257, 34}, {1292, 1024}}";
+			sepNavIntBoundsRect = "{{0, 0}, {963, 914}}";
+			sepNavSelRange = "{777, 0}";
+			sepNavVisRange = "{0, 1019}";
+			sepNavWindowFrame = "{{752, 40}, {1022, 1018}}";
 		};
 	};
 	C1A16F5611C5351B008E5361 /* MDSteamAppsRelocatorController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1233, 2816}}";
-			sepNavSelRange = "{322, 15}";
-			sepNavVisRange = "{0, 2164}";
-			sepNavWindowFrame = "{{385, 34}, {1292, 1024}}";
+			sepNavIntBoundsRect = "{{0, 0}, {963, 2904}}";
+			sepNavSelRange = "{4669, 0}";
+			sepNavVisRange = "{3728, 2677}";
+			sepNavWindowFrame = "{{752, 40}, {1022, 1018}}";
 		};
 	};
 	C1A16F5911C5352A008E5361 /* MDConfigCopierController.h */ = {
@@ -2522,10 +2208,10 @@
 	};
 	C1A16F7F11C535F6008E5361 /* MDController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1121, 1023}}";
-			sepNavSelRange = "{355, 0}";
-			sepNavVisRange = "{0, 1661}";
-			sepNavWindowFrame = "{{-1216, 168}, {1180, 1024}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1121, 1045}}";
+			sepNavSelRange = "{1684, 0}";
+			sepNavVisRange = "{172, 1525}";
+			sepNavWindowFrame = "{{-1216, 56}, {1180, 1024}}";
 		};
 	};
 	C1A2C6A713A745D50005EFB1 /* MDCopyOperationContentView.m:125 */ = {
@@ -2560,9 +2246,9 @@
 		ignoreCount = 0;
 		lineNumber = 60;
 		location = "Source Finagler";
-		modificationTime = 331146957.790916;
+		modificationTime = 373875708.830132;
 		originalNumberOfMultipleMatches = 1;
-		state = 1;
+		state = 2;
 	};
 	C1ABAB6712563BD800CAAFEB /* MDQuickLookPanel.h */ = {
 		uiCtxt = {
@@ -2920,10 +2606,10 @@
 	};
 	C1B95369124E73EC00E83451 /* VTFFile.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1192, 53427}}";
-			sepNavSelRange = "{6265, 0}";
-			sepNavVisRange = "{0, 1872}";
-			sepNavWindowFrame = "{{501, 34}, {1251, 1024}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1192, 53713}}";
+			sepNavSelRange = "{118133, 62}";
+			sepNavVisRange = "{116670, 2334}";
+			sepNavWindowFrame = "{{631, 37}, {1251, 1021}}";
 		};
 	};
 	C1B9536A124E73EC00E83451 /* VTFFile.h */ = {
@@ -3090,10 +2776,10 @@
 	};
 	C1C1249E123A0967004674B4 /* TKDocumentController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1130, 2123}}";
-			sepNavSelRange = "{1634, 0}";
-			sepNavVisRange = "{624, 2913}";
-			sepNavWindowFrame = "{{643, 38}, {1189, 1020}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1130, 2244}}";
+			sepNavSelRange = "{5020, 0}";
+			sepNavVisRange = "{3770, 3180}";
+			sepNavWindowFrame = "{{731, 38}, {1189, 1020}}";
 		};
 	};
 	C1C124A1123A0990004674B4 /* MDHLDocument.h */ = {
@@ -3106,10 +2792,10 @@
 	};
 	C1C124A2123A0990004674B4 /* MDHLDocument.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1301, 28787}}";
-			sepNavSelRange = "{3469, 0}";
-			sepNavVisRange = "{2250, 2463}";
-			sepNavWindowFrame = "{{171, 35}, {1360, 1023}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1301, 26158}}";
+			sepNavSelRange = "{26641, 96}";
+			sepNavVisRange = "{25041, 3861}";
+			sepNavWindowFrame = "{{516, 37}, {1360, 1021}}";
 		};
 	};
 	C1C124C8123A0A76004674B4 /* MDNode.m */ = {
@@ -3119,15 +2805,6 @@
 		lineEnding = 0;
 		name = MDNode.m;
 		path = "/Users/mdouma46/Developer/Source Finagler 2.0.3/MDNode.m";
-		sourceTree = "<absolute>";
-	};
-	C1C124CC123A0A76004674B4 /* MDFile.mm */ = {
-		isa = PBXFileReference;
-		fileEncoding = 4;
-		lastKnownFileType = sourcecode.cpp.objcpp;
-		lineEnding = 0;
-		name = MDFile.mm;
-		path = "/Users/mdouma46/Developer/Source Finagler 2.0.3/MDFile.mm";
 		sourceTree = "<absolute>";
 	};
 	C1C124D4123A0A8A004674B4 /* MDTextFieldCell.h */ = {
@@ -3140,9 +2817,9 @@
 	};
 	C1C124D5123A0A8A004674B4 /* MDTextFieldCell.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1285, 6193}}";
-			sepNavSelRange = "{1460, 0}";
-			sepNavVisRange = "{1718, 1846}";
+			sepNavIntBoundsRect = "{{0, 0}, {1285, 4730}}";
+			sepNavSelRange = "{2157, 0}";
+			sepNavVisRange = "{1700, 1812}";
 			sepNavWindowFrame = "{{470, 75}, {1344, 983}}";
 		};
 	};
@@ -3188,10 +2865,10 @@
 	};
 	C1C124DD123A0AEC004674B4 /* MDQuickLookPreviewViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1062, 1298}}";
-			sepNavSelRange = "{2506, 0}";
-			sepNavVisRange = "{667, 1984}";
-			sepNavWindowFrame = "{{458, 31}, {1121, 1027}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1062, 1221}}";
+			sepNavSelRange = "{1016, 0}";
+			sepNavVisRange = "{256, 2061}";
+			sepNavWindowFrame = "{{749, 37}, {1121, 1021}}";
 		};
 	};
 	C1C124E2123A0B09004674B4 /* MDOutlineView.h */ = {
@@ -3306,17 +2983,17 @@
 	};
 	C1C124F8123A0B53004674B4 /* MDAlias.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {882, 831}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1229, 798}}";
 			sepNavSelRange = "{212, 0}";
 			sepNavVisRange = "{0, 581}";
 		};
 	};
 	C1C124F9123A0B53004674B4 /* MDAlias.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1124, 1397}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1229, 1397}}";
 			sepNavSelRange = "{196, 1}";
-			sepNavVisRange = "{0, 1094}";
-			sepNavWindowFrame = "{{313, 51}, {1145, 1127}}";
+			sepNavVisRange = "{0, 1332}";
+			sepNavWindowFrame = "{{587, 156}, {1288, 902}}";
 		};
 	};
 	C1C124FE123A0BA2004674B4 /* MDInspectorController.h */ = {
@@ -3377,9 +3054,9 @@
 	};
 	C1C12509123A0BC1004674B4 /* MDViewOptionsController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1145, 1969}}";
-			sepNavSelRange = "{366, 0}";
-			sepNavVisRange = "{33, 744}";
+			sepNavIntBoundsRect = "{{0, 0}, {1128, 1969}}";
+			sepNavSelRange = "{4974, 32}";
+			sepNavVisRange = "{2903, 2663}";
 			sepNavWindowFrame = "{{509, 38}, {1187, 1020}}";
 		};
 	};
@@ -3393,10 +3070,10 @@
 	};
 	C1C1250D123A0BE1004674B4 /* MDQuickLookController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1145, 3498}}";
-			sepNavSelRange = "{444, 8}";
-			sepNavVisRange = "{0, 950}";
-			sepNavWindowFrame = "{{708, 34}, {1090, 1024}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1031, 3157}}";
+			sepNavSelRange = "{6086, 0}";
+			sepNavVisRange = "{5875, 1705}";
+			sepNavWindowFrame = "{{708, 37}, {1090, 1021}}";
 		};
 	};
 	C1C1250E123A0BE1004674B4 /* MDQuickLookControlButton.h */ = {
@@ -3424,10 +3101,10 @@
 	};
 	C1C12514123A0C03004674B4 /* MDCopyOperationController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {963, 2079}}";
-			sepNavSelRange = "{411, 0}";
-			sepNavVisRange = "{0, 1779}";
-			sepNavWindowFrame = "{{59, 38}, {1261, 1020}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1202, 2090}}";
+			sepNavSelRange = "{2465, 1}";
+			sepNavVisRange = "{1472, 2029}";
+			sepNavWindowFrame = "{{394, 38}, {1261, 1020}}";
 		};
 	};
 	C1C12517123A0C18004674B4 /* MDCopyOperation.h */ = {
@@ -3504,10 +3181,10 @@
 	};
 	C1C12549123A0EC6004674B4 /* English */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {762, 3773}}";
-			sepNavSelRange = "{7418, 0}";
-			sepNavVisRange = "{6150, 2218}";
-			sepNavWindowFrame = "{{43, 31}, {821, 1027}}";
+			sepNavIntBoundsRect = "{{0, 0}, {762, 3729}}";
+			sepNavSelRange = "{3952, 0}";
+			sepNavVisRange = "{6182, 2273}";
+			sepNavWindowFrame = "{{43, 37}, {821, 1021}}";
 		};
 	};
 	C1C12633123A54F0004674B4 /* HL */ = {
@@ -4117,7 +3794,7 @@
 		argumentStrings = (
 		);
 		autoAttachOnCrash = 0;
-		breakpointsEnabled = 0;
+		breakpointsEnabled = 1;
 		configStateDict = {
 			"PBXLSLaunchAction-1" = {
 				PBXLSLaunchAction = 1;
@@ -4206,7 +3883,7 @@
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
-	C1CB447813BCE6BE00FCCC7E /* VSSteamManager.m:734 */ = {
+	C1CB447813BCE6BE00FCCC7E /* VSSteamManager.m:729 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -4218,18 +3895,18 @@
 		functionName = "-installSourceFinaglerLaunchAgentWithError:";
 		hitCount = 1;
 		ignoreCount = 0;
-		lineNumber = 734;
+		lineNumber = 729;
 		location = SteamKit;
-		modificationTime = 331146972.223458;
+		modificationTime = 373875747.7131029;
 		originalNumberOfMultipleMatches = 1;
-		state = 1;
+		state = 2;
 	};
 	C1CCA6D21288D12F005349E9 /* CoreDefines.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {840, 3058}}";
-			sepNavSelRange = "{201, 0}";
-			sepNavVisRange = "{0, 1386}";
-			sepNavWindowFrame = "{{475, 89}, {899, 1089}}";
+			sepNavIntBoundsRect = "{{0, 0}, {840, 3157}}";
+			sepNavSelRange = "{367, 0}";
+			sepNavVisRange = "{0, 1212}";
+			sepNavWindowFrame = "{{807, 37}, {899, 1021}}";
 		};
 	};
 	C1CCA7F11288D78C005349E9 /* MathDefines.h */ = {
@@ -4329,24 +4006,6 @@
 			sepNavWindowFrame = "{{373, 79}, {1061, 1000}}";
 		};
 	};
-	C1D5621F1381BD1100B2E163 /* VSSourceAddonController.m:192 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C1FEAB44125F64A900CA78FF /* VSSourceAddonController.m */;
-		functionName = "-tableView:willDisplayCell:forTableColumn:row:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 192;
-		location = "Source Addon Finagler";
-		modificationTime = 331146952.667717;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
 	C1D634EC1263E15E003DF64B /* QLPreviewPanel.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1011, 2640}}";
@@ -4385,24 +4044,6 @@
 			sepNavVisRange = "{0, 175}";
 		};
 	};
-	C1DE9B6F12A42F5300D6082F /* TKImageDocument.m:822 */ = {
-		isa = PBXFileBreakpoint;
-		actions = (
-		);
-		breakpointStyle = 0;
-		continueAfterActions = 0;
-		countType = 0;
-		delayBeforeContinue = 0;
-		fileReference = C169D9D0128A0A4A00653B05 /* TKImageDocument.m */;
-		functionName = "-createVTFImage:";
-		hitCount = 0;
-		ignoreCount = 0;
-		lineNumber = 822;
-		location = "Source Finagler";
-		modificationTime = 331146952.473873;
-		originalNumberOfMultipleMatches = 1;
-		state = 2;
-	};
 	C1DF5D3D12F3973C00D53654 /* MDSteamInstalledFile.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {736, 735}}";
@@ -4411,12 +4052,20 @@
 			sepNavWindowFrame = "{{664, 339}, {795, 839}}";
 		};
 	};
+	C1E1503016286A01000CBA7A /* TKPrivateInterfaces.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1168, 816}}";
+			sepNavSelRange = "{935, 0}";
+			sepNavVisRange = "{0, 4160}";
+			sepNavWindowFrame = "{{693, 66}, {1227, 920}}";
+		};
+	};
 	C1E6DB0812BC2408009D8AD6 /* TextureKit.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {838, 694}}";
+			sepNavIntBoundsRect = "{{0, 0}, {593, 407}}";
 			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 368}";
-			sepNavWindowFrame = "{{-1207, 355}, {897, 798}}";
+			sepNavVisRange = "{0, 360}";
+			sepNavWindowFrame = "{{644, 319}, {652, 511}}";
 		};
 	};
 	C1E6DB6712BC3441009D8AD6 /* MDEnumNamingStudy.h */ = {
@@ -4439,23 +4088,23 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {812, 915}}";
 			sepNavSelRange = "{239, 0}";
-			sepNavVisRange = "{0, 239}";
+			sepNavVisRange = "{0, 513}";
 			sepNavWindowFrame = "{{680, 39}, {871, 1019}}";
 		};
 	};
 	C1E6DFC612BD06E1009D8AD6 /* TKSFTIImageRep.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {812, 915}}";
-			sepNavSelRange = "{223, 0}";
-			sepNavVisRange = "{0, 230}";
-			sepNavWindowFrame = "{{680, 39}, {871, 1019}}";
+			sepNavSelRange = "{318, 0}";
+			sepNavVisRange = "{0, 1610}";
+			sepNavWindowFrame = "{{936, 39}, {871, 1019}}";
 		};
 	};
 	C1E6DFCC12BD0B00009D8AD6 /* TextureKitDefines.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {669, 786}}";
-			sepNavSelRange = "{441, 0}";
-			sepNavVisRange = "{0, 1018}";
+			sepNavSelRange = "{307, 0}";
+			sepNavVisRange = "{0, 1037}";
 			sepNavWindowFrame = "{{1186, 168}, {728, 890}}";
 		};
 	};
@@ -4734,6 +4383,16 @@
 		rType = 0;
 		vrLen = 285;
 		vrLoc = 0;
+	};
+	C1F9283816492B840089FBA4 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C1647769124E91DB0062B943 /* TKVTFImageRep.mm */;
+		name = "TKVTFImageRep.mm: 847";
+		rLen = 0;
+		rLoc = 34198;
+		rType = 0;
+		vrLen = 1273;
+		vrLoc = 33699;
 	};
 	C1FEA7E9125E5C9600CA78FF /* NVCore */ = {
 		activeExec = 0;
@@ -5027,10 +4686,10 @@
 	};
 	C1FEA8F4125E718D00CA78FF /* NVMath.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1159, 506}}";
+			sepNavIntBoundsRect = "{{0, 0}, {409, 817}}";
 			sepNavSelRange = "{295, 0}";
 			sepNavVisRange = "{0, 695}";
-			sepNavWindowFrame = "{{537, 174}, {468, 921}}";
+			sepNavWindowFrame = "{{537, 137}, {468, 921}}";
 		};
 	};
 	C1FEA8F5125E718D00CA78FF /* Plane.cpp */ = {
@@ -5217,7 +4876,7 @@
 			sepNavIntBoundsRect = "{{0, 0}, {573, 886}}";
 			sepNavSelRange = "{147, 0}";
 			sepNavVisRange = "{0, 1222}";
-			sepNavWindowFrame = "{{806, 188}, {632, 990}}";
+			sepNavWindowFrame = "{{806, 68}, {632, 990}}";
 		};
 	};
 	C1FEA924125E723B00CA78FF /* PixelFormat.h */ = {
@@ -5823,10 +5482,10 @@
 	};
 	C1FEAB44125F64A900CA78FF /* VSSourceAddonController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1369, 2310}}";
-			sepNavSelRange = "{154, 0}";
-			sepNavVisRange = "{0, 2477}";
-			sepNavWindowFrame = "{{167, 34}, {1428, 1024}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1150, 2343}}";
+			sepNavSelRange = "{1208, 0}";
+			sepNavVisRange = "{308, 2939}";
+			sepNavWindowFrame = "{{846, 37}, {1209, 1021}}";
 		};
 	};
 	C1FEAB91125F66BC00CA78FF /* VSSourceAddonFinaglerMain.m */ = {
