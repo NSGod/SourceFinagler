@@ -3,23 +3,11 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 12/25/2010.
-//  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2013 Mark Douma LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-
-
-//static inline NSSize TKLargestSize(NSSizeArray sizeArray, NSUInteger arrayLength) {
-//	if (arrayLength == 0) return NSZeroSize;
-//	NSSize largestSize = NSZeroSize;
-//	for (NSUInteger i = 0; i < arrayLength; i++) {
-//		NSSize theSize = *(sizeArray + i);
-//		if (theSize.width > largestSize.width && theSize.height > largestSize.height) {
-//			largestSize = theSize;
-//		}
-//	}
-//	return largestSize;
-//}
+#import <TextureKit/TextureKitDefines.h>
 
 
 @interface NSObject (TKDeepMutableCopy)
@@ -28,11 +16,22 @@
 
 @end
 
-struct FSRef;
 
-@interface NSString (TKAdditions)
+enum {
+	TKUndeterminedVersion	= 0,
+	TKCheetah				= 0x1000,
+	TKPuma					= 0x1010,
+	TKJaguar				= 0x1020,
+	TKPanther				= 0x1030,
+	TKTiger					= 0x1040,
+	TKLeopard				= 0x1050,
+	TKSnowLeopard			= 0x1060,
+	TKLion					= 0x1070,
+	TKMountainLion			= 0x1080,
+	TKMavericks				= 0x1090,
+	TKUnknownVersion		= 0x1100
+};
 
-- (BOOL)getFSRef:(FSRef *)anFSRef error:(NSError **)outError;
+TEXTUREKIT_EXTERN SInt32 TKGetSystemVersion();
 
-@end
-
+	

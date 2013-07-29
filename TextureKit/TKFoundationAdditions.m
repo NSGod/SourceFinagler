@@ -3,12 +3,11 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 12/25/2010.
-//  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2013 Mark Douma LLC. All rights reserved.
 //
 
 #import "TKFoundationAdditions.h"
-#import <CoreServices/CoreServices.h>
-#import <sys/syslimits.h>
+
 
 #define TK_DEBUG 0
 
@@ -104,32 +103,20 @@
 @end
 
 
-@implementation NSString (TKAdditions)
 
-- (BOOL)getFSRef:(FSRef *)anFSRef error:(NSError **)outError {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	if (outError) *outError = nil;
-	OSStatus status = noErr;
-	status = FSPathMakeRef((const UInt8 *)[self UTF8String], anFSRef, NULL);
-	if (status != noErr) {
-		if (outError) {
-			if (status == fnfErr) {
-				*outError = [NSError errorWithDomain:NSCocoaErrorDomain	code:NSFileNoSuchFileError userInfo:nil];
-				
-			} else {
-				*outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil];
-			}
-		}
+
+
+
+SInt32 TKGetSystemVersion() {
+	static SInt32 TKSystemVersion = TKUndeterminedVersion;
+	
+	if (TKSystemVersion == TKUndeterminedVersion) {
+		SInt32 fullVersion = 0;
+		Gestalt(gestaltSystemVersion, &fullVersion);
+		TKSystemVersion = fullVersion & 0xfffffff0;
 	}
-	return (status == noErr);
+	return TKSystemVersion;
 }
-
-
-@end
-
-
 
 
 
