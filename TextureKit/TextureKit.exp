@@ -12,7 +12,7 @@
 
 .objc_class_name_TKDDSImageRep
 .objc_class_name_TKVTFImageRep
-.objc_class_name_TKSFTIImageRep
+
 
 
 _TKSFTextureImageType
@@ -22,28 +22,33 @@ _TKSFTextureImageMagicData
 
 
 _NSStringFromDXTCompressionQuality
+_TKDXTCompressionQualityFromString
 
 
 _NSStringFromDDSFormat
+_TKDDSFormatFromString
 
 _TKDDSType
 _TKDDSFileType
 _TKDDSPboardType
-#_TKDDSMagic
 
 
 _NSStringFromVTFFormat
+_TKVTFFormatFromString
 
 _TKVTFType
 _TKVTFFileType
 _TKVTFPboardType
-#_TKVTFMagic
-#_TKHTMLError404Magic
 
 
+_TKImageMipmapGenerationKey
+_TKImageWrapModeKey
+_TKImageRoundModeKey
 
 
+_TKGetSystemVersion
 
 
-
+_TKYES
+_TKNO
 
