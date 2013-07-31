@@ -3,7 +3,7 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 9/25/2010.
-//  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2013 Mark Douma LLC. All rights reserved.
 //
 
 #import <TextureKit/TKImageRep.h>
@@ -42,14 +42,16 @@ typedef NSUInteger TKDDSFormat;
 
 
 TEXTUREKIT_EXTERN NSString *NSStringFromDDSFormat(TKDDSFormat aFormat);
+TEXTUREKIT_EXTERN TKDDSFormat TKDDSFormatFromString(NSString *aFormat);
 
-TEXTUREKIT_EXTERN NSString * const TKDDSType;	// UTI Type
-TEXTUREKIT_EXTERN NSString * const TKDDSFileType;
+TEXTUREKIT_EXTERN NSString * const TKDDSType;			// UTI Type
+TEXTUREKIT_EXTERN NSString * const TKDDSFileType;		// filename extension
 TEXTUREKIT_EXTERN NSString * const TKDDSPboardType;
 
 enum {
 	TKDDSMagic		= 'DDS '
 };
+
 
 
 @interface TKDDSImageRep : TKImageRep <NSCoding, NSCopying> {
@@ -65,8 +67,10 @@ enum {
 + (void)setDefaultFormat:(TKDDSFormat)aFormat;
 
 
-+ (NSData *)DDSRepresentationOfImageRepsInArray:(NSArray *)tkImageReps;
-+ (NSData *)DDSRepresentationOfImageRepsInArray:(NSArray *)tkImageReps usingFormat:(TKDDSFormat)aFormat quality:(TKDXTCompressionQuality)aQuality createMipmaps:(BOOL)createMipmaps;
+
++ (NSData *)DDSRepresentationOfImageRepsInArray:(NSArray *)tkImageReps options:(NSDictionary *)options;
+
++ (NSData *)DDSRepresentationOfImageRepsInArray:(NSArray *)tkImageReps usingFormat:(TKDDSFormat)aFormat quality:(TKDXTCompressionQuality)aQuality options:(NSDictionary *)options;
 
 
 @end
