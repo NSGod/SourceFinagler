@@ -3,7 +3,7 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 9/25/2010.
-//  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2013 Mark Douma LLC. All rights reserved.
 //
 
 #import <TextureKit/TKVTFImageRep.h>
@@ -11,7 +11,11 @@
 #import <ApplicationServices/ApplicationServices.h>
 #import <VTF/VTF.h>
 
-#define TK_DEBUG 0
+#define TK_DEBUG 1
+
+#import "TKPrivateInterfaces.h"
+
+
 
 #if TK_DEBUG
 #import "MDFoundationAdditions.h"
@@ -24,65 +28,83 @@ struct TKVTFFormatMapping {
 	TKVTFFormat		format;
 	VTFImageFormat	vtfFormat;
 	TKPixelFormat	pixelFormat;
+	TKPixelFormat	nativePixelFormat;
 	NSString		*description;
 };
 	
 static const TKVTFFormatMapping TKVTFFormatMappingTable[] = {
-	{ TKVTFFormatRGBA,			IMAGE_FORMAT_RGBA8888, TKPixelFormatRGBA, @"RGBA" },
-	{ TKVTFFormatABGR,			IMAGE_FORMAT_ABGR8888, TKPixelFormatRGBA, @"ABGR" },
-	{ TKVTFFormatRGB,			IMAGE_FORMAT_RGB888, TKPixelFormatRGBA, @"RGB" },
-	{ TKVTFFormatBGR,			IMAGE_FORMAT_BGR888, TKPixelFormatRGBA, @"BGR"  },
-	{ TKVTFFormatRGB565,		IMAGE_FORMAT_RGB565, TKPixelFormatRGBA, @"RGB565" },
-	{ TKVTFFormatI,				IMAGE_FORMAT_I8, TKPixelFormatRGBA, @"I" },
-	{ TKVTFFormatIA,			IMAGE_FORMAT_IA88, TKPixelFormatRGBA, @"IA" },
-	{ TKVTFFormatP,				IMAGE_FORMAT_P8, TKPixelFormatRGBA, @"P" },
-	{ TKVTFFormatA,				IMAGE_FORMAT_A8, TKPixelFormatRGBA, @"A" },
-	{ TKVTFFormatBluescreenRGB,	IMAGE_FORMAT_RGB888_BLUESCREEN, TKPixelFormatRGBA, @"BluescreenRGB" },
-	{ TKVTFFormatBluescreenBGR,	IMAGE_FORMAT_BGR888_BLUESCREEN, TKPixelFormatRGBA, @"BluescreenBGR"  },
-	{ TKVTFFormatARGB,			IMAGE_FORMAT_ARGB8888, TKPixelFormatARGB, @"ARGB" },
-	{ TKVTFFormatBGRA,			IMAGE_FORMAT_BGRA8888, TKPixelFormatRGBA, @"BGRA" },
-	{ TKVTFFormatDXT1,			IMAGE_FORMAT_DXT1, TKPixelFormatRGBA, @"DXT1" },
-	{ TKVTFFormatDXT3,			IMAGE_FORMAT_DXT3, TKPixelFormatRGBA, @"DXT3" },
-	{ TKVTFFormatDXT5,			IMAGE_FORMAT_DXT5, TKPixelFormatRGBA, @"DXT5" },
-	{ TKVTFFormatBGRX,			IMAGE_FORMAT_BGRX8888, TKPixelFormatRGBA, @"BGRX" },
-	{ TKVTFFormatBGR565,		IMAGE_FORMAT_BGR565, TKPixelFormatRGBA, @"BGR565" },
-	{ TKVTFFormatBGRX5551,		IMAGE_FORMAT_BGRX5551, TKPixelFormatRGBA, @"BGRX5551" },
-	{ TKVTFFormatBGRA4444,		IMAGE_FORMAT_BGRA4444, TKPixelFormatRGBA, @"BGRA4444" },
-	{ TKVTFFormatDXT1a,			IMAGE_FORMAT_DXT1_ONEBITALPHA, TKPixelFormatRGBA, @"DXT1a" },
-	{ TKVTFFormatBGRA5551,		IMAGE_FORMAT_BGRA5551, TKPixelFormatRGBA, @"BGRA5551"  },
-	{ TKVTFFormatUV,			IMAGE_FORMAT_UV88, TKPixelFormatRGBA, @"UV"  },
-	{ TKVTFFormatUVWQ,			IMAGE_FORMAT_UVWQ8888, TKPixelFormatRGBA, @"UVWQ"  },
-	{ TKVTFFormatRGBA16161616F,	IMAGE_FORMAT_RGBA16161616F, TKPixelFormatRGBA, @"RGBA16161616F" },
-	{ TKVTFFormatRGBA16161616,	IMAGE_FORMAT_RGBA16161616, TKPixelFormatRGBA16161616, @"RGBA16161616"  },
-	{ TKVTFFormatUVLX,			IMAGE_FORMAT_UVLX8888, TKPixelFormatRGBA, @"UVLX"  },
-	{ TKVTFFormatR32F,			IMAGE_FORMAT_R32F, TKPixelFormatRGBA, @"R32F" },
-	{ TKVTFFormatRGB323232F,	IMAGE_FORMAT_RGB323232F, TKPixelFormatRGBA, @"RGB323232F" },
-	{ TKVTFFormatRGBA32323232F,	IMAGE_FORMAT_RGBA32323232F, TKPixelFormatRGBA32323232F, @"RGBA32323232F" },
-	{ TKVTFFormatNVDST16,		IMAGE_FORMAT_NV_DST16, TKPixelFormatRGBA, @"NVDST16"  },
-	{ TKVTFFormatNVDST24,		IMAGE_FORMAT_NV_DST24, TKPixelFormatRGBA, @"NVDST24" },
-	{ TKVTFFormatNVINTZ,		IMAGE_FORMAT_NV_INTZ, TKPixelFormatRGBA, @"NVINTZ" },
-	{ TKVTFFormatNVRAWZ,		IMAGE_FORMAT_NV_RAWZ, TKPixelFormatRGBA, @"NVRAWZ"  },
-	{ TKVTFFormatATIDST16,		IMAGE_FORMAT_ATI_DST16, TKPixelFormatRGBA, @"ATIDST16" },
-	{ TKVTFFormatATIDST24,		IMAGE_FORMAT_ATI_DST24, TKPixelFormatRGBA, @"ATIDST24"  },
-	{ TKVTFFormatNVNULL,		IMAGE_FORMAT_NV_NULL, TKPixelFormatRGBA, @"NVNULL"  },
-	{ TKVTFFormatATI2N,			IMAGE_FORMAT_ATI2N, TKPixelFormatRGBA, @"ATI2N" },
-	{ TKVTFFormatATI1N,			IMAGE_FORMAT_ATI1N, TKPixelFormatRGBA, @"ATI1N" }
+	{ TKVTFFormatRGB,			IMAGE_FORMAT_RGB888,			TKPixelFormatRGB,		TKPixelFormatRGB,		@"RGB" },
+	{ TKVTFFormatDXT1,			IMAGE_FORMAT_DXT1,				TKPixelFormatRGB,		TKPixelFormatRGB,		@"DXT1" },
+	{ TKVTFFormatDXT1a,			IMAGE_FORMAT_DXT1_ONEBITALPHA,	TKPixelFormatRGBA,		TKPixelFormatRGBA,		@"DXT1a" },
+	{ TKVTFFormatDXT3,			IMAGE_FORMAT_DXT3,				TKPixelFormatRGBA,		TKPixelFormatRGBA,		@"DXT3" },
+	{ TKVTFFormatDXT5,			IMAGE_FORMAT_DXT5,				TKPixelFormatRGBA,		TKPixelFormatRGBA,		@"DXT5" },
+	
+	{ TKVTFFormatRGBA,			IMAGE_FORMAT_RGBA8888,			TKPixelFormatRGBA,		TKPixelFormatRGBA,		@"RGBA" },
+	{ TKVTFFormatARGB,			IMAGE_FORMAT_ARGB8888,			TKPixelFormatARGB,		TKPixelFormatARGB,		@"ARGB" },
+	
+	{ TKVTFFormatBluescreenRGB,	IMAGE_FORMAT_RGB888_BLUESCREEN, TKPixelFormatRGB,		TKPixelFormatRGB,		@"BluescreenRGB" },
+	{ TKVTFFormatRGB565,		IMAGE_FORMAT_RGB565,			TKPixelFormatRGB565,	TKPixelFormatRGB,		@"RGB565" },
+	
+	{ TKVTFFormatBGR,			IMAGE_FORMAT_BGR888,			TKPixelFormatRGB,		TKPixelFormatRGB,		@"BGR"  },
+	{ TKVTFFormatBGRA,			IMAGE_FORMAT_BGRA8888,			TKPixelFormatBGRA,		TKPixelFormatRGBA,		@"BGRA" },
+	{ TKVTFFormatBGRX,			IMAGE_FORMAT_BGRX8888,			TKPixelFormatRGBA,		TKPixelFormatRGB,		@"BGRX" },
+	{ TKVTFFormatABGR,			IMAGE_FORMAT_ABGR8888,			TKPixelFormatARGB,		TKPixelFormatRGBA,		@"ABGR" },
+	
+	{ TKVTFFormatBluescreenBGR,	IMAGE_FORMAT_BGR888_BLUESCREEN,	TKPixelFormatRGBA,		TKPixelFormatRGBA,		 @"BluescreenBGR"  },
+	{ TKVTFFormatBGR565,		IMAGE_FORMAT_BGR565,			TKPixelFormatRGBA,		TKPixelFormatRGBA,		 @"BGR565" },
+	{ TKVTFFormatBGRX5551,		IMAGE_FORMAT_BGRX5551,			TKPixelFormatRGBA,		TKPixelFormatRGBA,		 @"BGRX5551" },
+	{ TKVTFFormatBGRA5551,		IMAGE_FORMAT_BGRA5551,			TKPixelFormatRGBA,		TKPixelFormatRGBA,		 @"BGRA5551"  },
+	{ TKVTFFormatBGRA4444,		IMAGE_FORMAT_BGRA4444,			TKPixelFormatRGBA,		TKPixelFormatRGBA,			@"BGRA4444" },
+	
+	{ TKVTFFormatRGBA16161616,	IMAGE_FORMAT_RGBA16161616, TKPixelFormatRGBA16161616,	TKPixelFormatRGBA16161616,		 @"RGBA16161616"  },
+	{ TKVTFFormatRGBA16161616F,	IMAGE_FORMAT_RGBA16161616F, TKPixelFormatRGBA16161616F,	TKPixelFormatRGBA32323232F,		 @"RGBA16161616F" },
+	
+	{ TKVTFFormatR32F,			IMAGE_FORMAT_R32F,				TKPixelFormatL32F,		TKPixelFormatL32F,				@"R32F" },
+	{ TKVTFFormatRGB323232F,	IMAGE_FORMAT_RGB323232F,		TKPixelFormatRGB323232F,		TKPixelFormatRGB323232F,		 @"RGB323232F" },
+	{ TKVTFFormatRGBA32323232F,	IMAGE_FORMAT_RGBA32323232F,		TKPixelFormatRGBA32323232F, TKPixelFormatRGBA32323232F,			@"RGBA32323232F" },
+	
+	{ TKVTFFormatI,				IMAGE_FORMAT_I8,				TKPixelFormatL,			TKPixelFormatL,						@"I" },
+	{ TKVTFFormatIA,			IMAGE_FORMAT_IA88,				TKPixelFormatLA,		TKPixelFormatLA,				@"IA" },
+//	{ TKVTFFormatP,				IMAGE_FORMAT_P8, TKPixelFormatRGBA, @"P" },
+	{ TKVTFFormatA,				IMAGE_FORMAT_A8,				TKPixelFormatA,			TKPixelFormatA,								@"A" },
+	
+	{ TKVTFFormatUV,			IMAGE_FORMAT_UV88,				TKPixelFormatRGBA,		TKPixelFormatRGBA,							@"UV"  },
+	{ TKVTFFormatUVWQ,			IMAGE_FORMAT_UVWQ8888,			TKPixelFormatRGBA,		TKPixelFormatRGBA,							@"UVWQ"  },
+	{ TKVTFFormatUVLX,			IMAGE_FORMAT_UVLX8888,			TKPixelFormatRGBA,		TKPixelFormatRGBA,							@"UVLX"  },
+	{ TKVTFFormatNVDST16,		IMAGE_FORMAT_NV_DST16,			TKPixelFormatRGBA,		TKPixelFormatRGBA,							@"NVDST16"  },
+	{ TKVTFFormatNVDST24,		IMAGE_FORMAT_NV_DST24,			TKPixelFormatRGBA,		TKPixelFormatRGBA,							@"NVDST24" },
+	{ TKVTFFormatNVINTZ,		IMAGE_FORMAT_NV_INTZ,			TKPixelFormatRGBA,		TKPixelFormatRGBA,							@"NVINTZ" },
+	{ TKVTFFormatNVRAWZ,		IMAGE_FORMAT_NV_RAWZ,			TKPixelFormatRGBA,		TKPixelFormatRGBA,							@"NVRAWZ"  },
+	{ TKVTFFormatATIDST16,		IMAGE_FORMAT_ATI_DST16,			TKPixelFormatRGBA,		TKPixelFormatRGBA,							@"ATIDST16" },
+	{ TKVTFFormatATIDST24,		IMAGE_FORMAT_ATI_DST24,			TKPixelFormatRGBA,		TKPixelFormatRGBA,							@"ATIDST24"  },
+	{ TKVTFFormatNVNULL,		IMAGE_FORMAT_NV_NULL,			TKPixelFormatRGBA,		TKPixelFormatRGBA,							@"NVNULL"  },
+	{ TKVTFFormatATI2N,			IMAGE_FORMAT_ATI2N,				TKPixelFormatRGBA,		TKPixelFormatRGBA,							@"ATI2N" },
+	{ TKVTFFormatATI1N,			IMAGE_FORMAT_ATI1N,				TKPixelFormatRGBA,		TKPixelFormatRGBA,							@"ATI1N" }
 };
-
-static const NSUInteger TKVTFImageFormatMappingTableCount = sizeof(TKVTFFormatMappingTable)/sizeof(TKVTFFormatMapping);
+static const NSUInteger TKVTFFormatMappingTableCount = sizeof(TKVTFFormatMappingTable)/sizeof(TKVTFFormatMappingTable[0]);
 
 
 NSString *NSStringFromVTFFormat(TKVTFFormat aFormat) {
-	for (NSUInteger i = 0; i < TKVTFImageFormatMappingTableCount; i++) {
+	for (NSUInteger i = 0; i < TKVTFFormatMappingTableCount; i++) {
 		if (TKVTFFormatMappingTable[i].format == aFormat) {
 			return TKVTFFormatMappingTable[i].description;
 		}
 	}
 	return @"<Unknown>";
 }
+
+TKVTFFormat TKVTFFormatFromString(NSString *aFormat) {
+	for (NSUInteger i = 0; i < TKVTFFormatMappingTableCount; i++) {
+		if ([TKVTFFormatMappingTable[i].description isEqualToString:aFormat]) {
+			return TKVTFFormatMappingTable[i].format;
+		}
+	}
+	return [TKVTFImageRep defaultFormat];
+}
+
 	
 static inline VTFImageFormat VTFImageFormatFromTKVTFFormat(TKVTFFormat aFormat) {
-	for (NSUInteger i = 0; i < TKVTFImageFormatMappingTableCount; i++) {
+	for (NSUInteger i = 0; i < TKVTFFormatMappingTableCount; i++) {
 		if (TKVTFFormatMappingTable[i].format == aFormat) {
 			return TKVTFFormatMappingTable[i].vtfFormat;
 		}
@@ -91,7 +113,7 @@ static inline VTFImageFormat VTFImageFormatFromTKVTFFormat(TKVTFFormat aFormat) 
 }
 
 static inline TKPixelFormat TKPixelFormatFromVTFImageFormat(VTFImageFormat aFormat) {
-	for (NSUInteger i = 0; i < TKVTFImageFormatMappingTableCount; i++) {
+	for (NSUInteger i = 0; i < TKVTFFormatMappingTableCount; i++) {
 		if (TKVTFFormatMappingTable[i].vtfFormat == aFormat) {
 			return TKVTFFormatMappingTable[i].pixelFormat;
 		}
@@ -99,12 +121,64 @@ static inline TKPixelFormat TKPixelFormatFromVTFImageFormat(VTFImageFormat aForm
 	return TKPixelFormatUnknown;
 }
 
+static inline TKPixelFormat TKNativePixelFormatFromVTFImageFormat(VTFImageFormat aFormat) {
+	for (NSUInteger i = 0; i < TKVTFFormatMappingTableCount; i++) {
+		if (TKVTFFormatMappingTable[i].vtfFormat == aFormat) {
+			return TKVTFFormatMappingTable[i].nativePixelFormat;
+		}
+	}
+	return TKPixelFormatUnknown;
+}
+
+
+
+struct TKVTFMipmapGenerationMapping {
+	VTFMipmapFilter				mipmapFilter;
+	TKMipmapGenerationType		mipmapGenerationType;
+};
+static const TKVTFMipmapGenerationMapping TKVTFMipmapGenerationMappingTable[] = {
+	{ MIPMAP_FILTER_BOX, TKMipmapGenerationUsingBoxFilter },
+	{ MIPMAP_FILTER_TRIANGLE, TKMipmapGenerationUsingTriangleFilter },
+	{ MIPMAP_FILTER_KAISER, TKMipmapGenerationUsingKaiserFilter }
+};
+static const NSUInteger TKVTFMipmapGenerationTableCount = sizeof(TKVTFMipmapGenerationMappingTable)/sizeof(TKVTFMipmapGenerationMappingTable[0]);
+
+static inline VTFMipmapFilter VTFMipmapFilterFromTKMipmapGenerationType(TKMipmapGenerationType mipmapGenerationType) {
+	for (NSUInteger i = 0; i < TKVTFMipmapGenerationTableCount; i++) {
+		if (TKVTFMipmapGenerationMappingTable[i].mipmapGenerationType == mipmapGenerationType) {
+			return TKVTFMipmapGenerationMappingTable[i].mipmapFilter;
+		}
+	}
+	return MIPMAP_FILTER_BOX;
+}
+
+struct TKVTFDXTQualityMapping {
+	TKDXTCompressionQuality		quality;
+	VTFDXTQuality				vtfDXTQuality;
+};
+
+static const TKVTFDXTQualityMapping TKVTFDXTQualityMappingTable[] = {
+	{TKDXTCompressionLowQuality, DXT_QUALITY_LOW },
+	{TKDXTCompressionMediumQuality, DXT_QUALITY_MEDIUM },
+	{TKDXTCompressionHighQuality, DXT_QUALITY_HIGH },
+	{TKDXTCompressionHighestQuality, DXT_QUALITY_HIGHEST }
+};
+static const NSUInteger TKVTFDXTQualityMappingTableCount = sizeof(TKVTFDXTQualityMappingTable)/sizeof(TKVTFDXTQualityMappingTable[0]);
+
+static inline VTFDXTQuality VTFDXTQualityFromTKDXTCompressionQuality(TKDXTCompressionQuality compressionQuality) {
+	for (NSUInteger i = 0; i < TKVTFDXTQualityMappingTableCount; i++) {
+		if (TKVTFDXTQualityMappingTable[i].quality == compressionQuality) {
+			return TKVTFDXTQualityMappingTable[i].vtfDXTQuality;
+		}
+	}
+	return DXT_QUALITY_HIGH;
+}
 
 
 
 NSString * const TKVTFType			= @"com.valvesoftware.source.vtf";
 NSString * const TKVTFFileType		= @"vtf";
-NSString * const TKVTFPboardType	= @"TKVTFPboardType";
+NSString * const TKVTFPboardType	= @"com.valvesoftware.source.vtf";
 
 
 @interface TKVTFImageRep (TKPrivate)
@@ -114,8 +188,20 @@ NSString * const TKVTFPboardType	= @"TKVTFPboardType";
 
 static TKVTFFormat defaultVTFFormat = TKVTFFormatDefault;
 
+static BOOL vtfInitialized = NO;
 
 @implementation TKVTFImageRep
+
+
++ (void)initialize {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (!vtfInitialized) {
+		vlInitialize();
+	}
+}
+
 
 /* Implemented by subclassers to indicate what UTI-identified data types they can deal with. */
 + (NSArray *)imageUnfilteredTypes {
@@ -143,14 +229,14 @@ static TKVTFFormat defaultVTFFormat = TKVTFFormatDefault;
 
 + (NSArray *)imageUnfilteredPasteboardTypes {
 #if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	static NSArray *imageUnfilteredPasteboardTypes = nil;
 	
 	if (imageUnfilteredPasteboardTypes == nil) {
 		NSArray *types = [super imageUnfilteredPasteboardTypes];
 #if TK_DEBUG
-		NSLog(@"[%@ %@] super's imageUnfilteredPasteboardTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), types);
+//		NSLog(@"[%@ %@] super's imageUnfilteredPasteboardTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), types);
 #endif
 		imageUnfilteredPasteboardTypes = [[types arrayByAddingObject:TKVTFPboardType] retain];
 	}
@@ -196,73 +282,101 @@ static TKVTFFormat defaultVTFFormat = TKVTFFormatDefault;
 
 
 + (TKVTFFormat)defaultFormat {
-	return defaultVTFFormat;
+	TKVTFFormat defaultFormat = 0;
+	@synchronized(self) {
+		defaultFormat = defaultVTFFormat;
+	}
+	return defaultFormat;
 }
 
 + (void)setDefaultFormat:(TKVTFFormat)aFormat {
-	defaultVTFFormat = aFormat;
-}
-
-
-+ (NSData *)VTFRepresentationOfImageRepsInArray:(NSArray *)tkImageReps {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	return [[self class] VTFRepresentationOfImageRepsInArray:tkImageReps usingFormat:defaultVTFFormat quality:[[self class] defaultDXTCompressionQuality] createMipmaps:YES];
-}
-
-+ (NSData *)VTFRepresentationOfImageRepsInArray:(NSArray *)tkImageReps usingFormat:(TKVTFFormat)aFormat quality:(TKDXTCompressionQuality)aQuality createMipmaps:(BOOL)createMipmaps {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	if ([tkImageReps count] == 0) {
-		return nil;
+	@synchronized(self) {
+		defaultVTFFormat = aFormat;
 	}
+}
+
+
++ (NSData *)VTFRepresentationOfImageRepsInArray:(NSArray *)tkImageReps options:(NSDictionary *)options {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	return [[self class] VTFRepresentationOfImageRepsInArray:tkImageReps usingFormat:[[self class] defaultFormat] quality:[TKImageRep defaultDXTCompressionQuality] options:options];
+}
+
+
++ (NSData *)VTFRepresentationOfImageRepsInArray:(NSArray *)tkImageReps usingFormat:(TKVTFFormat)aFormat quality:(TKDXTCompressionQuality)aQuality options:(NSDictionary *)options {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	NSParameterAssert([tkImageReps count] != 0);
+	
+	NSNumber *nMipmapType = [options objectForKey:TKImageMipmapGenerationKey];
+//	NSNumber *nWrapMode = [options objectForKey:TKImageWrapModeKey];
+//	NSNumber *nRoundMode = [options objectForKey:TKImageRoundModeKey];
+//	NSNumber *nImageFormat = [options objectForKey:TKImageVTFFormatKey];
+	
 	NSUInteger maxWidth = 0;
 	NSUInteger maxHeight = 0;
 	
 	NSUInteger sliceCount = 1;
 	NSUInteger faceCount = 1;
 	NSUInteger frameCount = 1;
-//	NSUInteger mipmapCount = 1;
+	
+	NSUInteger highestSliceIndex = 0;
+	NSUInteger highestFaceIndex = 0;
+	NSUInteger highestFrameIndex = 0;
 	
 	for (NSImageRep *imageRep in tkImageReps) {
 		if ([imageRep isKindOfClass:[TKImageRep class]]) {
-			TKImageRep *textureImageRep = (TKImageRep *)imageRep;
-			NSUInteger theSliceIndex = [textureImageRep sliceIndex];
-			NSUInteger theFace	= [textureImageRep face];
-			NSUInteger theFrameIndex = [textureImageRep frameIndex];
+			TKImageRep *tkImageRep = (TKImageRep *)imageRep;
+			NSUInteger theSliceIndex = [tkImageRep sliceIndex];
+			NSUInteger theFace	= [tkImageRep face];
+			NSUInteger theFrameIndex = [tkImageRep frameIndex];
 			
-			if ([textureImageRep pixelsWide] > maxWidth) maxWidth = [textureImageRep pixelsWide];
-			if ([textureImageRep pixelsHigh] > maxHeight) maxHeight = [textureImageRep pixelsHigh];
+			if ([tkImageRep pixelsWide] > maxWidth) maxWidth = [tkImageRep pixelsWide];
+			if ([tkImageRep pixelsHigh] > maxHeight) maxHeight = [tkImageRep pixelsHigh];
 			
-			if (theSliceIndex > 0) {
-				if (theSliceIndex > (sliceCount - 1)) {
-					sliceCount = theSliceIndex - 1;
-				}
+			if (theSliceIndex != TKSliceIndexNone) {
+				if (theSliceIndex > highestSliceIndex) highestSliceIndex = theSliceIndex;
 			}
+			
 			if (theFace != TKFaceNone) {
-				faceCount++;
+				if (theFace > highestFaceIndex) highestFaceIndex = theFace;
 			}
-			if (theFrameIndex > 0) {
-				frameCount++;
+			
+			if (theFrameIndex != TKFrameIndexNone) {
+				if (theFrameIndex > highestFrameIndex) highestFrameIndex = theFrameIndex;
 			}
 			
 		} else {
-			NSLog(@"[%@ %@] imageRep is NOT A TKImageRep!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-	
+			NSLog(@"[%@ %@] imageRep is NOT a TKImageRep!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 		}
 	}
+	
+	if (highestSliceIndex > 0) sliceCount = highestSliceIndex + 1;
+	if (highestFaceIndex > 0) faceCount = highestFaceIndex + 1;
+	if (highestFrameIndex > 0) frameCount = highestFrameIndex + 1;
+	
+	
+	VTFDXTQuality compressionQuality = VTFDXTQualityFromTKDXTCompressionQuality(aQuality);
+	
+	vlSetInteger(VTFLIB_DXT_QUALITY, compressionQuality);
 	
 	VTFImageFormat imageFormat = VTFImageFormatFromTKVTFFormat(aFormat);
 	TKPixelFormat aPixelFormat = TKPixelFormatFromVTFImageFormat(imageFormat);
 	
-	
 	CVTFFile *vtfFile = new CVTFFile();
 	
+	vlBool generateMipmaps = vlTrue;
+	
+	if (nMipmapType == nil || [nMipmapType unsignedIntegerValue] == TKMipmapGenerationNoMipmaps) {
+		generateMipmaps = NO;
+	}
+	
+	
 	if (aPixelFormat == TKPixelFormatRGBA) {
-		if (!vtfFile->Create(maxWidth, maxHeight, frameCount, faceCount, sliceCount, IMAGE_FORMAT_RGBA8888, vlFalse, createMipmaps, vlTrue)) {
-//		if (!vtfFile->Create(maxWidth, maxHeight, frameCount, faceCount, sliceCount, IMAGE_FORMAT_RGBA8888, vlTrue, createMipmaps, vlTrue)) {
+		if (!vtfFile->Create(maxWidth, maxHeight, frameCount, faceCount, sliceCount, IMAGE_FORMAT_RGBA8888, vlFalse, generateMipmaps, vlTrue)) {
+//		if (!vtfFile->Create(maxWidth, maxHeight, frameCount, faceCount, sliceCount, IMAGE_FORMAT_RGBA8888, vlTrue, generateMipmaps, vlTrue)) {
 			delete vtfFile;
 			NSLog(@"[%@ %@] vtfFile->Create() failed!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 			return nil;
@@ -272,50 +386,28 @@ static TKVTFFormat defaultVTFFormat = TKVTFFormatDefault;
 			
 			if ([imageRep isKindOfClass:[TKImageRep class]]) {
 				
-				vlUInt theFrameIndex = (vlUInt)[(TKImageRep *)imageRep frameIndex];
-				vlUInt theFace = (vlUInt)[(TKImageRep *)imageRep face];
-				vlUInt theSliceIndex = (vlUInt)[(TKImageRep *)imageRep sliceIndex];
-				vlUInt theMipmapIndex = (vlUInt)[(TKImageRep *)imageRep mipmapIndex];
-				NSData *rgbaData = [(TKImageRep *)imageRep RGBAData];
+				vlUInt theFrameIndex = (vlUInt)([(TKImageRep *)imageRep frameIndex] == TKFrameIndexNone ? 0 : [(TKImageRep *)imageRep frameIndex]);
+				vlUInt theFace = (vlUInt)([(TKImageRep *)imageRep face] == TKFaceNone ? 0 : [(TKImageRep *)imageRep face]);
+				vlUInt theSliceIndex = (vlUInt)([(TKImageRep *)imageRep sliceIndex] == TKSliceIndexNone ? 0 : [(TKImageRep *)imageRep sliceIndex]);
+				vlUInt theMipmapIndex = (vlUInt)([(TKImageRep *)imageRep mipmapIndex] == TKMipmapIndexNone ? 0 : [(TKImageRep *)imageRep mipmapIndex]);
+				
+				NSData *rgbaData = [(TKImageRep *)imageRep representationUsingPixelFormat:TKPixelFormatRGBA];
 				vlByte *rgbaBytes = (vlByte *)[rgbaData bytes];
 				
 				vtfFile->SetData(theFrameIndex, theFace, theSliceIndex, theMipmapIndex, rgbaBytes);
-				
-//				vtfFile->SetData((vlUInt)[(TKImageRep *)imageRep frameIndex],
-//								 (vlUInt)[(TKImageRep *)imageRep face],
-//								 (vlUInt)[(TKImageRep *)imageRep sliceIndex],
-//								 (vlUInt)[(TKImageRep *)imageRep mipmapIndex],
-//								 (vlByte *)[[(TKImageRep *)imageRep RGBAData] bytes]);
 				
 			} else {
 				
 			}
 		}
 		
-#if TK_DEBUG
-		NSString *destPath = [@"/Users/mdouma46/Documents/Programming (Resources)/Source Finagler/test images/generated/testImageBeforeMipmaps.vtf" stringByAssuringUniqueFilename];
-		
-		if (!vtfFile->Save((const vlChar *)[destPath fileSystemRepresentation])) {
-			NSLog(@"[%@ %@] failed to save file to %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), destPath);
-		}
-
-#endif
-		if (createMipmaps) {
-			vlBool success = vtfFile->GenerateMipmaps(MIPMAP_FILTER_BOX, SHARPEN_FILTER_DEFAULT);
+		if (generateMipmaps) {
+			vlBool success = vtfFile->GenerateMipmaps(VTFMipmapFilterFromTKMipmapGenerationType([nMipmapType unsignedIntegerValue]), SHARPEN_FILTER_DEFAULT);
 			if (!success) {
 				NSLog(@"[%@ %@] vtfFile->GenerateMipmaps() failed!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 	
 			}
 		}
-		
-#if TK_DEBUG
-		destPath = [@"/Users/mdouma46/Documents/Programming (Resources)/Source Finagler/test images/generated/testImageAfterMipmaps.vtf" stringByAssuringUniqueFilename];
-		
-		if (!vtfFile->Save((const vlChar *)[destPath fileSystemRepresentation])) {
-			NSLog(@"[%@ %@] failed to save file to %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), destPath);
-		}
-
-#endif
 		
 		CVTFFile *convertedFile = new CVTFFile(*vtfFile, imageFormat);
 		if (convertedFile == 0) {
@@ -345,8 +437,8 @@ static TKVTFFormat defaultVTFFormat = TKVTFFormatDefault;
 		return representation;
 		
 	} else {
-//		if (!vtfFile->Create(maxWidth, maxHeight, frameCount, faceCount, sliceCount, imageFormat, vlTrue, createMipmaps, vlTrue)) {
-		if (!vtfFile->Create(maxWidth, maxHeight, frameCount, faceCount, sliceCount, imageFormat, vlFalse, createMipmaps, vlTrue)) {
+//		if (!vtfFile->Create(maxWidth, maxHeight, frameCount, faceCount, sliceCount, imageFormat, vlTrue, generateMipmaps, vlTrue)) {
+		if (!vtfFile->Create(maxWidth, maxHeight, frameCount, faceCount, sliceCount, imageFormat, vlFalse, generateMipmaps, vlTrue)) {
 			delete vtfFile;
 			NSLog(@"[%@ %@] vtfFile->Create() failed!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 			return nil;
@@ -356,54 +448,25 @@ static TKVTFFormat defaultVTFFormat = TKVTFFormatDefault;
 			
 			if ([imageRep isKindOfClass:[TKImageRep class]]) {
 				
-				vlUInt theFrameIndex = (vlUInt)[(TKImageRep *)imageRep frameIndex];
-				vlUInt theFace = (vlUInt)[(TKImageRep *)imageRep face];
-				vlUInt theSliceIndex = (vlUInt)[(TKImageRep *)imageRep sliceIndex];
-				vlUInt theMipmapIndex = (vlUInt)[(TKImageRep *)imageRep mipmapIndex];
+				vlUInt theFrameIndex = (vlUInt)([(TKImageRep *)imageRep frameIndex] == TKFrameIndexNone ? 0 : [(TKImageRep *)imageRep frameIndex]);
+				vlUInt theFace = (vlUInt)([(TKImageRep *)imageRep face] == TKFaceNone ? 0 : [(TKImageRep *)imageRep face]);
+				vlUInt theSliceIndex = (vlUInt)([(TKImageRep *)imageRep sliceIndex] == TKSliceIndexNone ? 0 : [(TKImageRep *)imageRep sliceIndex]);
+				vlUInt theMipmapIndex = (vlUInt)([(TKImageRep *)imageRep mipmapIndex] == TKMipmapIndexNone ? 0 : [(TKImageRep *)imageRep mipmapIndex]);
+				
 				NSData *pixelData = [(TKImageRep *)imageRep representationUsingPixelFormat:aPixelFormat];
 				vlByte *pixelBytes = (vlByte *)[pixelData bytes];
 				
 				vtfFile->SetData(theFrameIndex, theFace, theSliceIndex, theMipmapIndex, pixelBytes);
 				
-//				vtfFile->SetData((vlUInt)[(TKImageRep *)imageRep frameIndex],
-//								 (vlUInt)[(TKImageRep *)imageRep face],
-//								 (vlUInt)[(TKImageRep *)imageRep sliceIndex],
-//								 (vlUInt)[(TKImageRep *)imageRep mipmapIndex],
-//								 (vlByte *)[[(TKImageRep *)imageRep representationUsingPixelFormat:aPixelFormat] bytes]);
-				
-			} else {
-				
 			}
 		}
 		
-#if TK_DEBUG
-		NSString *destPath = [@"/Users/mdouma46/Documents/Programming (Resources)/Source Finagler/test images/generated/testImageBeforeMipmaps.vtf" stringByAssuringUniqueFilename];
-		
-		if (!vtfFile->Save((const vlChar *)[destPath fileSystemRepresentation])) {
-			NSLog(@"[%@ %@] failed to save file to %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), destPath);
-		}
-		
-#endif
-		
-		if (createMipmaps) {
-			vlBool success = vtfFile->GenerateMipmaps(MIPMAP_FILTER_BOX, SHARPEN_FILTER_DEFAULT);
-//			vlBool success = vtfFile->GenerateMipmaps();
+		if (generateMipmaps) {
+			vlBool success = vtfFile->GenerateMipmaps(VTFMipmapFilterFromTKMipmapGenerationType([nMipmapType unsignedIntegerValue]), SHARPEN_FILTER_DEFAULT);
 			if (!success) {
 				NSLog(@"[%@ %@] vtfFile->GenerateMipmaps() failed!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-				
 			}
 		}
-		
-#if TK_DEBUG
-		destPath = [@"/Users/mdouma46/Documents/Programming (Resources)/Source Finagler/test images/generated/testImageAfterMipmaps.vtf" stringByAssuringUniqueFilename];
-		
-		if (!vtfFile->Save((const vlChar *)[destPath fileSystemRepresentation])) {
-			NSLog(@"[%@ %@] failed to save file to %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), destPath);
-		}
-		
-#endif
-		
-		
 		
 		unsigned char *fileBytes = (unsigned char *)malloc(vtfFile->GetSize());
 		if (fileBytes == NULL) {
@@ -422,10 +485,8 @@ static TKVTFFormat defaultVTFFormat = TKVTFFormatDefault;
 		delete vtfFile;
 		return representation;
 	}
-	
 	return nil;
 }
-
 
 
 + (NSArray *)imageRepsWithData:(NSData *)aData firstRepresentationOnly:(BOOL)firstRepOnly {
@@ -469,18 +530,19 @@ static TKVTFFormat defaultVTFFormat = TKVTFFormatDefault;
 	
 	VTFImageFormat imageFormat = file->GetFormat();
 	
-	VTFImageFormat destFormat = IMAGE_FORMAT_NONE;
+	VTFImageFormat destFormat = IMAGE_FORMAT_RGB888;
 	
-	if (imageFormat == IMAGE_FORMAT_RGBA16161616F ||
-		imageFormat == IMAGE_FORMAT_RGBA16161616 ||
-		imageFormat == IMAGE_FORMAT_R32F ||
-		imageFormat == IMAGE_FORMAT_RGB323232F ||
-		imageFormat == IMAGE_FORMAT_RGBA32323232F) {
-		
-		destFormat = IMAGE_FORMAT_RGBA32323232F;
-	} else {
-		destFormat = (file->GetFlags() & (TEXTUREFLAGS_ONEBITALPHA | TEXTUREFLAGS_EIGHTBITALPHA)) ? IMAGE_FORMAT_RGBA8888 : IMAGE_FORMAT_RGB888;
+	BOOL conversionNeeded = NO;
+	
+	if (imageFormat == IMAGE_FORMAT_DXT1 || imageFormat == IMAGE_FORMAT_DXT3 || imageFormat == IMAGE_FORMAT_DXT5 || imageFormat == IMAGE_FORMAT_DXT1_ONEBITALPHA) {
+		conversionNeeded = YES;
+		if (imageFormat != IMAGE_FORMAT_DXT1) destFormat = IMAGE_FORMAT_RGBA8888;
 	}
+	
+	
+	TKPixelFormat destinationPixelFormat = TKNativePixelFormatFromVTFImageFormat(imageFormat);
+	
+	TKPixelFormatInfo pixelFormatInfo = TKPixelFormatInfoFromPixelFormat(destinationPixelFormat);
 	
 	NSMutableArray *bitmapImageReps = [NSMutableArray array];
 	
@@ -489,109 +551,121 @@ static TKVTFFormat defaultVTFFormat = TKVTFFormatDefault;
 			for (vlUInt faceIndex = 0; faceIndex < faceCount; faceIndex++) {
 				for (vlUInt slice = 0; slice < sliceCount; slice++) {
 					
+					NSLog(@"[%@ %@] mipmapIndex == %lu, frameIndex == %lu, face == %lu, sliceIndex == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)mipmapNumber, (unsigned long)frame, (unsigned long)faceIndex, (unsigned long)slice);
+
+					
+					
 					vlUInt mipmapWidth = 0;
 					vlUInt mipmapHeight = 0;
 					vlUInt mipmapDepth = 0;
 					
-					file->ComputeMipmapDimensions(imageWidth, imageHeight, sliceCount, mipmapNumber, mipmapWidth, mipmapHeight, mipmapDepth);
+					CVTFFile::ComputeMipmapDimensions(imageWidth, imageHeight, sliceCount, mipmapNumber, mipmapWidth, mipmapHeight, mipmapDepth);
 					
-#if TK_DEBUG
-//					NSLog(@"[%@ %@] sliceIndex == %u, faceIndex == %u, frameIndex == %u, mipmapIndex == %u; mipmapWidth == %u, mipmapHeight == %u, mipmapDepth == %u", NSStringFromClass([self class]), NSStringFromSelector(_cmd), slice, faceIndex, frame, mipmapNumber, mipmapWidth, mipmapHeight, mipmapDepth);
-#endif
-					vlUInt convertedMipmapLength = 0;
-					convertedMipmapLength = file->ComputeMipmapSize(imageWidth, imageHeight, sliceCount, mipmapNumber, destFormat);
-#if TK_DEBUG
-//					NSLog(@"[%@ %@] slice == %u, face == %u, frame == %u, mipmap == %u; mipmapLength == %u", NSStringFromClass([self class]), NSStringFromSelector(_cmd), slice, faceIndex, frame, mipmapNumber, convertedMipmapLength);
-#endif
-					vlByte *bytes = new vlByte[convertedMipmapLength];
+					vlInt convertedBytesLength = 0;
+					vlByte *convertedBytes = 0;
 					
-					if (bytes == 0) {
-						NSLog(@"[%@ %@] new [%lu] failed! slice == %u, face == %u, frame == %u, mipmap == %u", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)convertedMipmapLength, slice, faceIndex, frame, mipmapNumber);
-						continue;
-					}
+					if (conversionNeeded) {
+						convertedBytesLength = CVTFFile::ComputeMipmapSize(imageWidth, imageHeight, sliceCount, mipmapNumber, destFormat);
+						convertedBytes = new vlByte[convertedBytesLength];
+						
+						if (convertedBytes == 0) {
+							NSLog(@"[%@ %@] new [%lu] failed! slice == %u, face == %u, frame == %u, mipmap == %u", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)convertedBytesLength, slice, faceIndex, frame, mipmapNumber);
+							continue;
+						}
+					}					
 					
-					vlByte *existingBytes = existingBytes = file->GetData(frame, faceIndex, slice, mipmapNumber);
+					vlUInt existingBytesLength = CVTFFile::ComputeMipmapSize(imageWidth, imageHeight, sliceCount, mipmapNumber, imageFormat);
+					
+					vlByte *existingBytes = file->GetData(frame, faceIndex, slice, mipmapNumber);
 					
 					if (existingBytes == 0) {
 						NSLog(@"[%@ %@] failed to get existing data for slice == %u, face == %u, frame == %u, mipmap == %u", NSStringFromClass([self class]), NSStringFromSelector(_cmd), slice, faceIndex, frame, mipmapNumber);
-						delete [] bytes;
+						delete [] convertedBytes;
 						continue;
 					}
 					
-					
-					if (existingBytes) {
-						if ( file->Convert(existingBytes, bytes, mipmapWidth, mipmapHeight, imageFormat, destFormat)) {
-							
-							size_t bitsPerComponent = 0;
-							size_t bitsPerPixel = 0;
-							size_t bytesPerRow = 0;
-							CGBitmapInfo bitmapInfo = 0;
-							
-							bitsPerComponent = (destFormat == IMAGE_FORMAT_RGBA32323232F ? 32 : 8);
-							if (destFormat == IMAGE_FORMAT_RGBA32323232F) {
-								bitsPerComponent = 32;
-								bitsPerPixel = 128;
-								bytesPerRow = (bitsPerPixel/ 8) * mipmapWidth;
-								bitmapInfo = kCGImageAlphaLast | kCGBitmapFloatComponents;
-								
-							} else if (destFormat == IMAGE_FORMAT_RGBA8888) {
-								bitsPerComponent = 8;
-								bitsPerPixel = 32;
-								bytesPerRow = (bitsPerPixel/ 8) * mipmapWidth;
-								bitmapInfo = kCGImageAlphaLast;
-								
-							} else if (destFormat == IMAGE_FORMAT_RGB888) {
-								bitsPerComponent = 8;
-								bitsPerPixel = 24;
-								bytesPerRow = (bitsPerPixel/ 8) * mipmapWidth;
-								bitmapInfo = kCGImageAlphaNone;
-							}
-							
-							
-							NSData *convertedData = [[NSData alloc] initWithBytes:bytes length:convertedMipmapLength];
-							delete [] bytes;
-							CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)convertedData);
-							[convertedData release];
-							CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-							CGImageRef imageRef = CGImageCreate(mipmapWidth,
-																mipmapHeight,
-																bitsPerComponent,
-																bitsPerPixel,
-																bytesPerRow,
-																colorSpace,
-																bitmapInfo,
-																provider,
-																NULL,
-																false,
-																kCGRenderingIntentDefault);
-							
-							CGColorSpaceRelease(colorSpace);
-							CGDataProviderRelease(provider);
-							
-							if (imageRef) {
-								
-								TKVTFImageRep *imageRep = [[TKVTFImageRep alloc] initWithCGImage:imageRef
-																					  sliceIndex:slice
-																							face:faceIndex
-																					  frameIndex:frame
-																					 mipmapIndex:mipmapNumber];
-								
-								CGImageRelease(imageRef);
-								if (imageRep) {
-									[bitmapImageReps addObject:imageRep];
-									[imageRep release];
-								}
-								
-								if (firstRepOnly && frame == 0 && faceIndex == 0 && slice == 0 && mipmapNumber == 0) {
-									delete file;
-									return [[bitmapImageReps copy] autorelease];
-								}
-							} else {
-								NSLog(@"[%@ %@] CGImageCreate() (for sliceIndex == %u, faceIndex == %u, frameIndex == %u, mipmapIndex == %u) failed!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), slice, faceIndex, frame, mipmapNumber);
-								
-							}
+					if (conversionNeeded) {
+						if (!CVTFFile::Convert(existingBytes, convertedBytes, mipmapWidth, mipmapHeight, imageFormat, destFormat)) {
+							NSLog(@"[%@ %@] CVTFFile::Convert() failed! slice == %u, face == %u, frame == %u, mipmap == %u", NSStringFromClass([self class]), NSStringFromSelector(_cmd), slice, faceIndex, frame, mipmapNumber);
+							delete [] convertedBytes;
+							continue;
 						}
 					}
+					
+					
+					NSData *data = nil;
+					
+					
+					if (imageFormat == IMAGE_FORMAT_RGBA16161616F) {
+						
+						NSData *existingData = [NSData dataWithBytes:existingBytes length:existingBytesLength];
+						
+						data = [[TKImageRep dataRepresentationOfData:existingData inPixelFormat:TKPixelFormatRGBA16161616F size:NSMakeSize(mipmapWidth, mipmapHeight) usingPixelFormat:TKPixelFormatRGBA32323232F] retain];
+						
+					} else if (conversionNeeded) {
+						
+						data = [[NSData alloc] initWithBytes:convertedBytes length:convertedBytesLength];
+						
+					} else {
+						data = [[NSData alloc] initWithBytes:existingBytes length:existingBytesLength];
+						
+					}
+					
+					CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)data);
+					[data release];
+					
+					NSString *colorSpaceName = nil;
+					
+					if (pixelFormatInfo.colorSpaceModel == kCGColorSpaceModelRGB && pixelFormatInfo.bitmapInfo & kCGBitmapFloatComponents) {
+						colorSpaceName = (NSString *)kCGColorSpaceGenericRGBLinear;
+					} else if (pixelFormatInfo.colorSpaceModel == kCGColorSpaceModelRGB) {
+						colorSpaceName = (NSString *)kCGColorSpaceGenericRGB;
+					} else if (pixelFormatInfo.colorSpaceModel == kCGColorSpaceModelMonochrome) {
+						colorSpaceName = (NSString *)kCGColorSpaceGenericGrayGamma2_2;
+					}
+					
+					CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName((CFStringRef)colorSpaceName);
+					
+					CGImageRef imageRef = CGImageCreate(mipmapWidth,
+														mipmapHeight,
+														pixelFormatInfo.bitsPerComponent,
+														pixelFormatInfo.bitsPerPixel,
+														mipmapWidth * pixelFormatInfo.bitsPerPixel/8,
+														colorSpace,
+														pixelFormatInfo.bitmapInfo,
+														provider,
+														NULL,
+														false,
+														pixelFormatInfo.renderingIntent);
+					
+					CGColorSpaceRelease(colorSpace);
+					CGDataProviderRelease(provider);
+					
+					if (imageRef == NULL) {
+						NSLog(@"[%@ %@] CGImageCreate() (for sliceIndex == %u, faceIndex == %u, frameIndex == %u, mipmapIndex == %u) failed!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), slice, faceIndex, frame, mipmapNumber);
+						delete [] convertedBytes;
+						continue;
+					}
+					
+					TKVTFImageRep *imageRep = [[TKVTFImageRep alloc] initWithCGImage:imageRef
+																		  sliceIndex:slice
+																				face:faceIndex
+																		  frameIndex:frame
+																		 mipmapIndex:mipmapNumber];
+					
+					CGImageRelease(imageRef);
+					if (imageRep) {
+						[bitmapImageReps addObject:imageRep];
+						[imageRep release];
+					}
+					
+					delete [] convertedBytes;
+					
+					if (firstRepOnly && frame == 0 && faceIndex == 0 && slice == 0 && mipmapNumber == 0) {
+						delete file;
+						return [[bitmapImageReps copy] autorelease];
+					}
+					
 				}
 			}
 		}
@@ -600,6 +674,185 @@ static TKVTFFormat defaultVTFFormat = TKVTFFormatDefault;
 	return [[bitmapImageReps copy] autorelease];
 }
 
+
+
+//+ (NSArray *)imageRepsWithData:(NSData *)aData firstRepresentationOnly:(BOOL)firstRepOnly {
+//#if TK_DEBUG
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//#endif
+//	
+//	OSType magic = 0;
+//	[aData getBytes:&magic length:sizeof(magic)];
+//	magic = NSSwapBigIntToHost(magic);
+//#if TK_DEBUG
+////	NSLog(@"[%@ %@] magic == 0x%x, %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), magic, NSFileTypeForHFSTypeCode(magic));
+//#endif
+//	CVTFFile *file = new CVTFFile();
+//	if (file == 0) {
+//		NSLog(@"[%@ %@] CVTFFile() returned 0!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//		return nil;
+//	}
+//	
+//	if (file->Load([aData bytes], [aData length], vlFalse) == NO) {
+//		if (magic == TKVTFMagic) {
+//			NSLog(@"[%@ %@] file->Load() failed! (DOES appear to be a valid VTF; magic == 0x%x, %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned int)magic, NSFileTypeForHFSTypeCode(magic));
+//		} else {
+//			NSLog(@"[%@ %@] file->Load() failed! (does not appear to be a valid VTF; magic == 0x%x, %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned int)magic, NSFileTypeForHFSTypeCode(magic));
+//		}
+//		delete file;
+//		return nil;
+//	}
+//	
+//	vlUInt frameCount = file->GetFrameCount();
+//	vlUInt faceCount = file->GetFaceCount();
+//	vlUInt mipmapCount = file->GetMipmapCount();
+//	vlUInt sliceCount = file->GetDepth();
+//	
+//	vlUInt imageWidth = file->GetWidth();
+//	vlUInt imageHeight = file->GetHeight();
+//	
+//#if TK_DEBUG
+////	NSLog(@"[%@ %@] sliceCount == %u, faceCount == %u, frameCount == %u, mipmapCount == %u", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sliceCount, faceCount, frameCount, mipmapCount);
+//#endif
+//	
+//	VTFImageFormat imageFormat = file->GetFormat();
+//	
+//	TKPixelFormat destinationPixelFormat = TKNativePixelFormatFromVTFImageFormat(imageFormat);
+//	
+//	TKPixelFormatInfo pixelFormatInfo = TKPixelFormatInfoFromPixelFormat(destinationPixelFormat);
+//	
+//	
+//	
+//	VTFImageFormat destFormat = IMAGE_FORMAT_NONE;
+//	
+//	if (imageFormat == IMAGE_FORMAT_RGBA16161616F ||
+//		imageFormat == IMAGE_FORMAT_RGBA16161616 ||
+//		imageFormat == IMAGE_FORMAT_R32F ||
+//		imageFormat == IMAGE_FORMAT_RGB323232F ||
+//		imageFormat == IMAGE_FORMAT_RGBA32323232F) {
+//		
+//		destFormat = IMAGE_FORMAT_RGBA32323232F;
+//	} else {
+//		destFormat = (file->GetFlags() & (TEXTUREFLAGS_ONEBITALPHA | TEXTUREFLAGS_EIGHTBITALPHA)) ? IMAGE_FORMAT_RGBA8888 : IMAGE_FORMAT_RGB888;
+//	}
+//	
+//	NSMutableArray *bitmapImageReps = [NSMutableArray array];
+//	
+//	for (vlUInt mipmapNumber = 0; mipmapNumber < mipmapCount; mipmapNumber++) {
+//		for (vlUInt frame = 0; frame < frameCount; frame++) {
+//			for (vlUInt faceIndex = 0; faceIndex < faceCount; faceIndex++) {
+//				for (vlUInt slice = 0; slice < sliceCount; slice++) {
+//					
+//					vlUInt mipmapWidth = 0;
+//					vlUInt mipmapHeight = 0;
+//					vlUInt mipmapDepth = 0;
+//					
+//					file->ComputeMipmapDimensions(imageWidth, imageHeight, sliceCount, mipmapNumber, mipmapWidth, mipmapHeight, mipmapDepth);
+//					
+//#if TK_DEBUG
+////					NSLog(@"[%@ %@] sliceIndex == %u, faceIndex == %u, frameIndex == %u, mipmapIndex == %u; mipmapWidth == %u, mipmapHeight == %u, mipmapDepth == %u", NSStringFromClass([self class]), NSStringFromSelector(_cmd), slice, faceIndex, frame, mipmapNumber, mipmapWidth, mipmapHeight, mipmapDepth);
+//#endif
+//					vlUInt convertedMipmapLength = 0;
+//					convertedMipmapLength = file->ComputeMipmapSize(imageWidth, imageHeight, sliceCount, mipmapNumber, destFormat);
+//#if TK_DEBUG
+////					NSLog(@"[%@ %@] slice == %u, face == %u, frame == %u, mipmap == %u; mipmapLength == %u", NSStringFromClass([self class]), NSStringFromSelector(_cmd), slice, faceIndex, frame, mipmapNumber, convertedMipmapLength);
+//#endif
+//					vlByte *bytes = new vlByte[convertedMipmapLength];
+//					
+//					if (bytes == 0) {
+//						NSLog(@"[%@ %@] new [%lu] failed! slice == %u, face == %u, frame == %u, mipmap == %u", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)convertedMipmapLength, slice, faceIndex, frame, mipmapNumber);
+//						continue;
+//					}
+//					
+//					vlByte *existingBytes = existingBytes = file->GetData(frame, faceIndex, slice, mipmapNumber);
+//					
+//					if (existingBytes == 0) {
+//						NSLog(@"[%@ %@] failed to get existing data for slice == %u, face == %u, frame == %u, mipmap == %u", NSStringFromClass([self class]), NSStringFromSelector(_cmd), slice, faceIndex, frame, mipmapNumber);
+//						continue;
+//					}
+//					
+//					
+//					if (existingBytes) {
+//						if ( file->Convert(existingBytes, bytes, mipmapWidth, mipmapHeight, imageFormat, destFormat)) {
+//							
+//							size_t bitsPerComponent = 0;
+//							size_t bitsPerPixel = 0;
+//							size_t bytesPerRow = 0;
+//							CGBitmapInfo bitmapInfo = 0;
+//							
+//							bitsPerComponent = (destFormat == IMAGE_FORMAT_RGBA32323232F ? 32 : 8);
+//							if (destFormat == IMAGE_FORMAT_RGBA32323232F) {
+//								bitsPerComponent = 32;
+//								bitsPerPixel = 128;
+//								bytesPerRow = (bitsPerPixel/ 8) * mipmapWidth;
+//								bitmapInfo = kCGImageAlphaLast | kCGBitmapFloatComponents;
+//								
+//							} else if (destFormat == IMAGE_FORMAT_RGBA8888) {
+//								bitsPerComponent = 8;
+//								bitsPerPixel = 32;
+//								bytesPerRow = (bitsPerPixel/ 8) * mipmapWidth;
+//								bitmapInfo = kCGImageAlphaLast;
+//								
+//							} else if (destFormat == IMAGE_FORMAT_RGB888) {
+//								bitsPerComponent = 8;
+//								bitsPerPixel = 24;
+//								bytesPerRow = (bitsPerPixel/ 8) * mipmapWidth;
+//								bitmapInfo = kCGImageAlphaNone;
+//							}
+//							
+//							
+//							NSData *convertedData = [[NSData alloc] initWithBytes:bytes length:convertedMipmapLength];
+//							delete [] bytes;
+//							CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)convertedData);
+//							[convertedData release];
+//							CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+//							CGImageRef imageRef = CGImageCreate(mipmapWidth,
+//																mipmapHeight,
+//																bitsPerComponent,
+//																bitsPerPixel,
+//																bytesPerRow,
+//																colorSpace,
+//																bitmapInfo,
+//																provider,
+//																NULL,
+//																false,
+//																kCGRenderingIntentDefault);
+//							
+//							CGColorSpaceRelease(colorSpace);
+//							CGDataProviderRelease(provider);
+//							
+//							if (imageRef) {
+//								
+//								TKVTFImageRep *imageRep = [[TKVTFImageRep alloc] initWithCGImage:imageRef
+//																					  sliceIndex:slice
+//																							face:faceIndex
+//																					  frameIndex:frame
+//																					 mipmapIndex:mipmapNumber];
+//								
+//								CGImageRelease(imageRef);
+//								if (imageRep) {
+//									[bitmapImageReps addObject:imageRep];
+//									[imageRep release];
+//								}
+//								
+//								if (firstRepOnly && frame == 0 && faceIndex == 0 && slice == 0 && mipmapNumber == 0) {
+//									delete file;
+//									return [[bitmapImageReps copy] autorelease];
+//								}
+//							} else {
+//								NSLog(@"[%@ %@] CGImageCreate() (for sliceIndex == %u, faceIndex == %u, frameIndex == %u, mipmapIndex == %u) failed!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), slice, faceIndex, frame, mipmapNumber);
+//								
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
+//	delete file;
+//	return [[bitmapImageReps copy] autorelease];
+//
+//}
 
 + (NSArray *)imageRepsWithData:(NSData *)aData {
 #if TK_DEBUG
@@ -636,7 +889,9 @@ static TKVTFFormat defaultVTFFormat = TKVTFFormatDefault;
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	TKVTFImageRep *copy = (TKVTFImageRep *)[super copyWithZone:zone];
+#if TK_DEBUG
 	NSLog(@"[%@ %@] copy == %@, class == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), copy, NSStringFromClass([copy class]));
+#endif
 	return copy;
 }
 
