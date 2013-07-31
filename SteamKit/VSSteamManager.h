@@ -12,7 +12,6 @@
 
 
 @class NSString, NSError, NSDictionary, NSMutableDictionary, NSArray;
-@class SBSystemEventsExposePreferencesObject, SBSystemEventsSpacesPreferencesObject;
 @class VSGame;
 
 
@@ -27,11 +26,6 @@
 enum {
 	VSGameLaunchNoOptions						= 0,
 	VSGameLaunchHelpingGame						= 1 << 0,
-	VSGameLaunchDisablingExpose					= 1 << 1,
-	VSGameLaunchDisablingSpaces					= 1 << 2,
-	VSGameLaunchDisablingDashboard				= 1 << 3,
-	VSGameLaunchUsingSoundWorkaround			= 1 << 4,
-	VSGameLaunchPreventingGammaCorrection		= 1 << 5,
 	VSGameLaunchDefault							= VSGameLaunchHelpingGame
 };
 typedef NSUInteger VSGameLaunchOptions;
@@ -76,13 +70,8 @@ typedef NSUInteger VSSourceFinaglerLaunchAgentStatus;
 	
 	NSTimeInterval								timeToLocateSteamApps;
 	
-
-	SBSystemEventsExposePreferencesObject		*exposePreferences;
-	
 	BOOL										monitoringGames;
 	
-	BOOL										workspacesEnabled;
-
 }
 
 /* Get the shared instance of VSSteamManager. This method will create an instance of VSSteamManager if it has not been created yet. You should not attempt to instantiate instances of VSSteamManager yourself, and you should not attempt to subclass VSSteamManager. */
@@ -126,11 +115,6 @@ typedef NSUInteger VSSourceFinaglerLaunchAgentStatus;
 
 
 
-@property (retain) SBSystemEventsExposePreferencesObject *exposePreferences;
-@property (assign) BOOL workspacesEnabled;
-
-
-
 - (VSSourceFinaglerLaunchAgentStatus)sourceFinaglerLaunchAgentStatus;
 
 - (NSString *)sourceFinaglerLaunchAgentPath;
@@ -169,6 +153,7 @@ enum {
 
 
 @interface VSSteamManager (VSOtherAppsHelperAdditions)
+
 // force a refresh
 - (void)locateSteamApps;
 
