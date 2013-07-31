@@ -80,14 +80,6 @@ static MDQuickLookController *sharedQuickLookController = nil;
 }
 
 
-//- (void)dealloc {
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//	[[NSNotificationCenter defaultCenter] removeObserver:self];
-//	[super dealloc];
-//}
-
-
-
 - (void)windowDidLoad {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -138,15 +130,6 @@ static MDQuickLookController *sharedQuickLookController = nil;
 		[[NSNotificationCenter defaultCenter] postNotificationName:MDShouldShowQuickLookDidChangeNotification object:self userInfo:nil];
 	}
 }
-
-
-//- (void)showWindow:(id)sender {
-//	NSEvent *currentEvent = [NSApp currentEvent];
-//	NSLog(@"[%@ %@] currentEvent == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), currentEvent);
-//	
-//	NSViewAnimation *viewAnimation;
-//	
-//}
 
 
 - (void)selectedItemsDidChange:(NSNotification *)notification {
@@ -258,7 +241,6 @@ static MDQuickLookController *sharedQuickLookController = nil;
 			}
 		} else {
 			
-//			[[self window] setRepresentedFilename:@""];
 			[[self window] setTitle:@""];
 			
 			[previewViewController setRepresentedObject:nil];
