@@ -7,9 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <TextureKit/TextureKitDefines.h>
-#import <TextureKit/TKDDSImageRep.h>
-#import <TextureKit/TKVTFImageRep.h>
+#import <TextureKit/TextureKit.h>
 
 #import "TKImageView.h"
 
@@ -20,7 +18,7 @@ TEXTUREKIT_EXTERN NSString *TKImageIOLocalizedString(NSString *key);
 @class IKImageBrowserView, TKImage, IKSaveOptions, TKImageExportController, TKImageDocumentAccessoryViewController;
 
 
-@interface TKImageDocument : NSDocument <NSMenuDelegate, NSToolbarDelegate, NSWindowDelegate, NSUserInterfaceValidations, TKImageViewAnimatedImageDataSource> {
+@interface TKImageDocument : NSDocument <NSMenuDelegate, NSToolbarDelegate, NSWindowDelegate, NSUserInterfaceValidations> {
 	IBOutlet NSWindow							*imageWindow;
 	IBOutlet TKImageView						*imageView;
 	IBOutlet IKImageBrowserView					*frameBrowserView;
@@ -45,29 +43,7 @@ TEXTUREKIT_EXTERN NSString *TKImageIOLocalizedString(NSString *key);
 	
 	TKImageExportController						*imageExportController;
 	
-	TKImageDocumentAccessoryViewController		*accessoryController;
-	
-	IBOutlet NSWindow								*originalWindow;
-	
-	IBOutlet NSWindow								*conversionWindow;
-	IBOutlet IKImageBrowserView				*conversionFrameBrowserView;
-	IBOutlet IKImageBrowserView				*conversionMipmapBrowserView;
-	IBOutlet TKImageView					*conversionImageView;
-	
-
-	TKImage									*convertedImage;
-	NSMutableArray							*convertedVisibleMipmapReps;
-	
-	
-	IBOutlet NSPopUpButton					*conversionFormatPopUpButton;
-	IBOutlet NSPopUpButton					*conversionCompressionPopUpButton;
-	IBOutlet NSMenu							*conversionVTFMenu;
-	IBOutlet NSMenu							*conversionDDSMenu;
-	
-	TKVTFFormat								conversionVTFFormat;
-	TKDDSFormat								conversionDDSFormat;
-	
-	TKDXTCompressionQuality					compressionQuality;
+	TKImageDocumentAccessoryViewController		*accessoryViewController;
 	
 	BOOL										shouldShowFrameBrowserView;
 	BOOL										shouldShowMipmapBrowserView;
@@ -75,16 +51,9 @@ TEXTUREKIT_EXTERN NSString *TKImageIOLocalizedString(NSString *key);
 	CGFloat										frameBrowserHeight;
 	CGFloat										mipmapBrowserWidth;
 	
-	BOOL										closingDocument;
 }
 
 @property (retain) TKImage *image;
-
-@property (assign) TKVTFFormat conversionVTFFormat;
-
-@property (assign) TKDDSFormat conversionDDSFormat;
-
-@property (assign) TKDXTCompressionQuality compressionQuality;
 
 @property (retain) NSString *dimensions;
 
@@ -104,20 +73,6 @@ TEXTUREKIT_EXTERN NSString *TKImageIOLocalizedString(NSString *key);
 
 - (IBAction)togglePlayAnimation:(id)sender;
 - (IBAction)toggleAutomaticallyResize:(id)sender;
-
-- (IBAction)changeColumnCount:(id)sender;
-- (IBAction)changeBrowserSortOptions:(id)sender;
-
-- (IBAction)openInNewWindow:(id)sender;
-- (IBAction)saveCopyToFolder:(id)sender;
-
-- (IBAction)sendImageTo:(id)sender;
-
-
-
-- (IBAction)createImage:(id)sender;
-- (IBAction)changeConversionFormat:(id)sender;
-- (IBAction)changeConversionCompression:(id)sender;
 
 
 @end

@@ -48,7 +48,7 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 	
     static NSBundle *imageIOBundle = nil;
     if (imageIOBundle == nil)
-        imageIOBundle = [NSBundle bundleWithIdentifier:@"com.apple.ImageIO.framework"];
+        imageIOBundle = [[NSBundle bundleWithIdentifier:@"com.apple.ImageIO.framework"] retain];
     // Returns a localized version of the string designated by 'key' in table 'CGImageSource'.
 	NSString *string = [imageIOBundle localizedStringForKey:key value:key table:@"CGImageSource"];
 #if TK_DEBUG
@@ -71,7 +71,6 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 
 + (void)initialize {
 	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
-	[defaultValues setObject:TKVTFType forKey:TKImageDocumentLastSavedFormatTypeKey];
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:TKImageDocumentShowFrameBrowserViewKey];
 	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:TKImageDocumentShowMipmapBrowserViewKey];
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:TKImageDocumentDoNotShowWarningAgainKey];
@@ -123,18 +122,16 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 }
 
 
-@synthesize image,  dimensions, compressionQuality, conversionVTFFormat, conversionDDSFormat, shouldShowFrameBrowserView, shouldShowMipmapBrowserView;
+@synthesize image;
+@synthesize dimensions;
+@synthesize shouldShowFrameBrowserView;
+@synthesize shouldShowMipmapBrowserView;
 
 
 - (id)init {
     if ((self = [super init])) {
-		conversionDDSFormat = [TKDDSImageRep defaultFormat];
-		conversionVTFFormat = [TKVTFImageRep defaultFormat];
-		
-		compressionQuality = TKDXTCompressionDefaultQuality;
 		
 		visibleMipmapReps = [[NSMutableArray alloc] init];
-		convertedVisibleMipmapReps = [[NSMutableArray alloc] init];
 		
 		shouldShowFrameBrowserView = [[[NSUserDefaults standardUserDefaults] objectForKey:TKImageDocumentShowFrameBrowserViewKey] boolValue];
 		shouldShowMipmapBrowserView = [[[NSUserDefaults standardUserDefaults] objectForKey:TKImageDocumentShowMipmapBrowserViewKey] boolValue];
@@ -156,10 +153,8 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 	[visibleMipmapReps release];
 	
 	[imageExportController release];
-	[accessoryController release];
+	[accessoryViewController release];
 	
-	[convertedVisibleMipmapReps release];
-	[convertedImage release];
 	[super dealloc];
 }
 
@@ -174,42 +169,19 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 	NSLog(@"[%@ %@] typeName == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), typeName);
 #endif
 	
-    BOOL status = NO;
+	NSData *imageData = [NSData dataWithContentsOfURL:absURL];
+	if (imageData) image = [[TKImage alloc] initWithData:imageData];
 	
-	if ([typeName isEqualToString:TKDDSType] ||
-		[typeName isEqualToString:TKVTFType]) {
-		
-		NSData *data = [NSData dataWithContentsOfURL:absURL];
-		if (data) image = [[TKImage alloc] initWithData:data];
-		
-		return (image != nil);
-		
-	} else if ([typeName isEqualToString:TKSFTextureImageType]) {
-		NSData *archiveData = [NSData dataWithContentsOfURL:absURL];
-		if (archiveData) {
-			image = [[NSKeyedUnarchiver unarchiveObjectWithData:archiveData] retain];
-			if (image) {
-				[self setDimensions:[NSString stringWithFormat:@"%lu x %lu", (unsigned long)[image size].width, (unsigned long)[image size].height]];
-			}
-			return (image != nil);
-		}
-		
-	} else {
-		image = [[TKImage alloc] initWithContentsOfURL:absURL];
-		
-		[self setDimensions:[NSString stringWithFormat:@"%lu x %lu", (unsigned long)[image size].width, (unsigned long)[image size].height]];
-		
-		if (image != nil) status = YES;
-		
-		if (status==NO && outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError userInfo:nil];
-	}
+	if (image) [self setDimensions:[NSString stringWithFormat:@"%lu x %lu", (unsigned long)[image size].width, (unsigned long)[image size].height]];
+	
 #if TK_DEBUG
 	NSLog(@"[%@ %@] image == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), image);
 #endif
 	
-    return status;
+	if (image == nil && outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError userInfo:nil];
+	
+	return (image != nil);
 }
-
 
 
 - (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError {
@@ -217,20 +189,24 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 	NSLog(@"[%@ %@] typeName == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), typeName);
 #endif
 	
+	// force save of defaults
+	NSDictionary *imageProperties = [accessoryViewController imageProperties];
+	
+	
 	BOOL success = NO;
 	
-	if ([[accessoryController imageUTType] isEqualToString:TKDDSType]) {
-		NSData *fileData = [image DDSRepresentationUsingFormat:[accessoryController ddsFormat] quality:[TKImageRep defaultDXTCompressionQuality] createMipmaps:YES];
+	if ([[accessoryViewController imageUTType] isEqualToString:TKDDSType]) {
+		NSData *fileData = [image DDSRepresentationUsingFormat:[accessoryViewController ddsFormat] quality:[TKImageRep defaultDXTCompressionQuality] options:nil];
 		if (fileData) {
 			success = [fileData writeToURL:absoluteURL options:NSDataWritingAtomic error:outError];
 		}
-	} else if ([[accessoryController imageUTType] isEqualToString:TKVTFType]) {
-		NSData *fileData = [image VTFRepresentationUsingFormat:[accessoryController vtfFormat] quality:[TKImageRep defaultDXTCompressionQuality] createMipmaps:YES];
+	} else if ([[accessoryViewController imageUTType] isEqualToString:TKVTFType]) {
+		NSData *fileData = [image VTFRepresentationUsingFormat:[accessoryViewController vtfFormat] quality:[TKImageRep defaultDXTCompressionQuality] options:nil];
 		if (fileData) {
 			success = [fileData writeToURL:absoluteURL options:NSDataWritingAtomic error:outError];
 		}
 		
-	} else if ([[accessoryController imageUTType] isEqualToString:TKSFTextureImageType]) {
+	} else if ([[accessoryViewController imageUTType] isEqualToString:TKSFTextureImageType]) {
 		NSData *archiveData = [NSKeyedArchiver archivedDataWithRootObject:image];
 		if (archiveData) {
 			success = [archiveData writeToURL:absoluteURL options:NSDataWritingAtomic error:outError];
@@ -238,7 +214,7 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 		
 	} else {
 		// ImageIO
-		NSData *fileData = [image dataForType:[accessoryController imageUTType] properties:[accessoryController imageProperties]];
+		NSData *fileData = [image dataForType:[accessoryViewController imageUTType] properties:[accessoryViewController imageProperties]];
 		if (fileData) {
 			success = [fileData writeToURL:absoluteURL options:NSDataWritingAtomic error:outError];
 		}
@@ -255,19 +231,42 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 }
 
 
+static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
+	CALayer *layer = [CALayer layer];
+	CGColorRef cRef = CGColorCreateGenericRGB(229.0/255.0, 235.0/255.0, 245.0/255.0, 1.0);
+	layer.backgroundColor = cRef;
+	CGColorRelease(cRef);
+	layer.bounds = CGRectMake(0.0, 0.0, NSWidth(frame), NSHeight(frame));
+	layer.autoresizingMask = kCALayerHeightSizable | kCALayerWidthSizable | kCALayerMinXMargin | kCALayerMinYMargin | kCALayerMaxXMargin | kCALayerMaxYMargin;
+	return layer;
+}
+
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)windowController {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
+	[super windowControllerDidLoadNib:windowController];
+	
+	
+	if ([mipmapBrowserView respondsToSelector:@selector(setBackgroundLayer:)]) {
+		[mipmapBrowserView setBackgroundLayer:MDBlueBackgroundLayerWithFrame([mipmapBrowserView frame])];
+	}
+	if ([frameBrowserView respondsToSelector:@selector(setBackgroundLayer:)]) {
+		[frameBrowserView setBackgroundLayer:MDBlueBackgroundLayerWithFrame([frameBrowserView frame])];
+	}
 	
 	[self changeViewMode:self];
 
-	NSUInteger contentResizingMask = [frameBrowserView contentResizingMask];
-	NSLog(@"[%@ %@] contentResizingMask == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)contentResizingMask);
+//	NSUInteger contentResizingMask = [frameBrowserView contentResizingMask];
+//	NSLog(@"[%@ %@] contentResizingMask == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)contentResizingMask);
+	
+	
 	[frameBrowserView setContentResizingMask:NSViewWidthSizable];
 	
 	[frameBrowserView reloadData];
+	[mipmapBrowserView reloadData];
+	
 	NSLog(@"[%@ %@] reloaded frameBrowserView, setting selection", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 	
 	if ([image frameCount] > 0) {
@@ -278,36 +277,14 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 		[mipmapBrowserView setSelectionIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
 	}
 	
-	
-	if ([mipmapBrowserView respondsToSelector:@selector(setBackgroundColor:)]) {
-		CALayer *layer = [CALayer layer];
-		CGColorRef cRef = CGColorCreateGenericRGB(229.0/255.0, 235.0/255.0, 245.0/255.0, 1.0);
-		layer.backgroundColor = cRef;
-		CGColorRelease(cRef);
-		NSRect frame = [mipmapBrowserView frame];
-		
-		layer.bounds = CGRectMake(0.0, 0.0, frame.size.width, frame.size.height);
-		layer.autoresizingMask = kCALayerHeightSizable | kCALayerWidthSizable | kCALayerMinXMargin | kCALayerMinYMargin | kCALayerMaxXMargin | kCALayerMaxYMargin;
-		[mipmapBrowserView setBackgroundLayer:layer];
-	}
-	if ([frameBrowserView respondsToSelector:@selector(setBackgroundColor:)]) {
-		CALayer *layer = [CALayer layer];
-		CGColorRef cRef = CGColorCreateGenericRGB(229.0/255.0, 235.0/255.0, 245.0/255.0, 1.0);
-		layer.backgroundColor = cRef;
-		CGColorRelease(cRef);
-		NSRect frame = [frameBrowserView frame];
-		
-		layer.bounds = CGRectMake(0.0, 0.0, frame.size.width, frame.size.height);
-		layer.autoresizingMask = kCALayerHeightSizable | kCALayerWidthSizable | kCALayerMinXMargin | kCALayerMinYMargin | kCALayerMaxXMargin | kCALayerMaxYMargin;
-		[frameBrowserView setBackgroundLayer:layer];
-	}
-	
-	[conversionCompressionPopUpButton setMenu:conversionDDSMenu];
-	[conversionCompressionPopUpButton selectItemWithTag:conversionDDSFormat];
-	
 	if (togglePlaySegmentedControl && ([image frameCount] <= 1)) {
 		[togglePlaySegmentedControl setEnabled:NO forSegment:0];
 	}
+	
+	[mipmapBrowserView setAllowsReordering:NO];
+	
+	[frameBrowserView setDraggingDestinationDelegate:self];
+	
 	
 	if ([[[NSUserDefaults standardUserDefaults] objectForKey:TKImageDocumentDoNotShowWarningAgainKey] boolValue] == NO) {
 		NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"The image-creation and manipulation feature is still a work in progress.", @"")
@@ -339,25 +316,15 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (closingDocument == NO) {
-		NSWindow *window = [notification object];
-		NSLog(@"[%@ %@] window == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), window);
+	if ([notification object] == imageWindow) {
+//		[imageExportController cleanup];
+//		[imageExportController release];
+//		imageExportController = nil;
 		
-		closingDocument = YES;
+		[accessoryViewController cleanup];
+		[accessoryViewController release];
+		accessoryViewController = nil;
 		
-		if (window == imageWindow) {
-			[originalWindow close];
-			[conversionWindow close];
-			
-		} else if (window == originalWindow) {
-			[imageWindow close];
-			[conversionWindow close];
-			
-		} else if (window == conversionWindow) {
-			[imageWindow close];
-			[originalWindow close];
-			
-		}
 	}
 }
 
@@ -366,10 +333,10 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (accessoryController == nil) {
-		accessoryController = [[TKImageDocumentAccessoryViewController alloc] initWithImageDocument:self];
+	if (accessoryViewController == nil) {
+		accessoryViewController = [[TKImageDocumentAccessoryViewController alloc] initWithImageDocument:self];
 	}
-	return [accessoryController prepareSavePanel:aSavePanel];
+	return [accessoryViewController prepareSavePanel:aSavePanel];
 }
 
 
@@ -508,26 +475,60 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 }
 
 
-
-
-#pragma mark -
-#pragma mark <TKImageViewAnimatedImageDataSource>
-
-- (NSArray *)imageRepsForAnimationInImageView:(TKImageView *)anImageView {
-	return [image representationsForFrameIndexes:[image allFrameIndexes] mipmapIndexes:[image firstMipmapIndexSet]];
+- (TKImageRep *)selectedImageRep {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if ([visibleMipmapReps count]) {
+		NSIndexSet *selectedMipmapIndexes = [mipmapBrowserView selectionIndexes];
+		NSArray *selectedImageReps = [visibleMipmapReps objectsAtIndexes:selectedMipmapIndexes];
+		return [TKImageRep largestRepresentationInArray:selectedImageReps];
+	}
+	return nil;
 }
 
 
-#pragma mark <TKImageViewAnimatedImageDataSource> END 
+- (NSArray *)selectedImageReps {
+	return [[visibleMipmapReps copy] autorelease];
+}
+
+
+- (NSUInteger)writeImageReps:(NSArray *)imageReps toPasteboard:(NSPasteboard *)pboard forTypes:(NSArray *)types {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	NSParameterAssert(imageReps != nil);
+	
+	[pboard declareTypes:types owner:self];
+	
+	if ([types containsObject:TKImageDocumentPboardType]) {
+		NSData *imageRepData = [NSKeyedArchiver archivedDataWithRootObject:imageReps];
+		if (imageRepData) [pboard setData:imageRepData forType:TKImageDocumentPboardType];
+	}
+	
+	if ([types containsObject:NSTIFFPboardType]) {
+		TKImageRep *firstImageRep = [imageReps objectAtIndex:0];
+		NSData *TIFFRepresentation = [firstImageRep TIFFRepresentationUsingCompression:NSTIFFCompressionNone factor:0];
+		if (TIFFRepresentation) [pboard setData:TIFFRepresentation forType:NSTIFFPboardType];
+	}
+	
+	return [imageReps count];
+}
+
+
 #pragma mark -
 #pragma mark <IKImageBrowserDataSource>
 
 - (NSUInteger)numberOfItemsInImageBrowser:(IKImageBrowserView *)aBrowser {
 #if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
 	if (aBrowser == frameBrowserView) {
+#if TK_DEBUG
+		NSLog(@"[%@ %@] frameBrowserView", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+		
 		NSUInteger frameCount = [image frameCount];
 //		return [theImage frameCount];
 #if TK_DEBUG
@@ -535,13 +536,21 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 #endif
 		return frameCount;
 	} else if (aBrowser == mipmapBrowserView) {
+#if TK_DEBUG
+		NSLog(@"[%@ %@] mipmapBrowserView", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+		
+		if ([image frameCount]) {
+			
+			[visibleMipmapReps setArray:[image representationsForFrameIndexes:[frameBrowserView selectionIndexes]
+																mipmapIndexes:[image allMipmapIndexes]]];
+			
+		} else {
+			[visibleMipmapReps setArray:[image representationsForMipmapIndexes:[image allMipmapIndexes]]];
+		}
+		
 		return [visibleMipmapReps count];
-	} else if (aBrowser == conversionFrameBrowserView) {
 		
-		return [convertedImage frameCount];
-		
-	} else if (aBrowser == conversionMipmapBrowserView) {
-		return [convertedVisibleMipmapReps count];
 	}
 	return 0;
 }
@@ -559,13 +568,6 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 		
 		return [visibleMipmapReps objectAtIndex:anIndex];
 		
-	} else if (aBrowser == conversionFrameBrowserView) {
-		
-		return [convertedImage representationForFrameIndex:anIndex mipmapIndex:0];
-		
-	} else if (aBrowser == conversionMipmapBrowserView) {
-		
-		return [convertedVisibleMipmapReps objectAtIndex:anIndex];
 	}
 	
 	return nil;
@@ -589,30 +591,28 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 	} else if (aBrowser == mipmapBrowserView) {
 		images = [visibleMipmapReps objectsAtIndexes:itemIndexes];
 		
-		
-	} else if (aBrowser == conversionFrameBrowserView) {
-		images = [convertedImage representationsForFrameIndexes:itemIndexes mipmapIndexes:[convertedImage allMipmapIndexes]];
-		
-	} else if (aBrowser == conversionMipmapBrowserView) {
-		images = [convertedVisibleMipmapReps objectsAtIndexes:itemIndexes];
-		
 	}
 	
 	if (images && [images count]) {
-		[pboard declareTypes:[NSArray arrayWithObjects:TKImageDocumentPboardType, NSTIFFPboardType, nil] owner:self];
-		NSData *imageData = [NSKeyedArchiver archivedDataWithRootObject:images];
-		if (imageData) {
-			[pboard setData:imageData forType:TKImageDocumentPboardType];
-		}
-		TKImageRep *firstImageRep = [images objectAtIndex:0];
-		NSData *TIFFRepresentation = [firstImageRep TIFFRepresentationUsingCompression:NSTIFFCompressionNone factor:0];
-		if (TIFFRepresentation) {
-			[pboard setData:TIFFRepresentation forType:NSTIFFPboardType];
-		}
-		
-		return [images count];
+		return [self writeImageReps:images toPasteboard:pboard forTypes:[NSArray arrayWithObjects:TKImageDocumentPboardType, NSTIFFPboardType, nil]];
 		
 	}
+	
+//	if (images && [images count]) {
+//		[pboard declareTypes:[NSArray arrayWithObjects:TKImageDocumentPboardType, NSTIFFPboardType, nil] owner:self];
+//		NSData *imageData = [NSKeyedArchiver archivedDataWithRootObject:images];
+//		if (imageData) {
+//			[pboard setData:imageData forType:TKImageDocumentPboardType];
+//		}
+//		TKImageRep *firstImageRep = [images objectAtIndex:0];
+//		NSData *TIFFRepresentation = [firstImageRep TIFFRepresentationUsingCompression:NSTIFFCompressionNone factor:0];
+//		if (TIFFRepresentation) {
+//			[pboard setData:TIFFRepresentation forType:NSTIFFPboardType];
+//		}
+//		
+//		return [images count];
+//		
+//	}
 	
 	return 0;
 	
@@ -699,21 +699,6 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 			TKImageRep *imageRep = [visibleMipmapReps objectAtIndex:[selectionIndexes firstIndex]];
 			[imageView setImage:[imageRep CGImage] imageProperties:([imageRep respondsToSelector:@selector(imageProperties)] ? [imageRep imageProperties] : nil)];
 		}
-	} else if (aBrowser == conversionFrameBrowserView) {
-		
-		[convertedVisibleMipmapReps setArray:[convertedImage representationsForFrameIndexes:[conversionFrameBrowserView selectionIndexes] mipmapIndexes:[convertedImage allMipmapIndexes]]];
-		
-		[conversionMipmapBrowserView reloadData];
-		
-	} else if (aBrowser == conversionMipmapBrowserView) {
-		NSIndexSet *selectionIndexes = [aBrowser selectionIndexes];
-		if ([selectionIndexes count] == 0 || [selectionIndexes count] >= 2) {
-			
-		} else if ([selectionIndexes count] == 1) {
-			TKImageRep *imageRep = [convertedVisibleMipmapReps objectAtIndex:[selectionIndexes firstIndex]];
-			[conversionImageView setImage:[imageRep CGImage] imageProperties:([imageRep respondsToSelector:@selector(imageProperties)] ? [imageRep imageProperties] : nil)];
-		}
-		
 	}
 
 }
@@ -748,80 +733,6 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 
 
 
-- (IBAction)changeConversionFormat:(id)sender {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSString *selectedTitle = [conversionFormatPopUpButton titleOfSelectedItem];
-	
-	if ([selectedTitle isEqualToString:@"Source VTF"]) {
-		[conversionCompressionPopUpButton setMenu:conversionVTFMenu];
-		[conversionCompressionPopUpButton selectItemWithTag:conversionVTFFormat];
-	} else if ([selectedTitle isEqualToString:@"Microsoft DDS"]) {
-		[conversionCompressionPopUpButton setMenu:conversionDDSMenu];
-		[conversionCompressionPopUpButton selectItemWithTag:conversionDDSFormat];
-	}
-}
-
-
-- (IBAction)changeConversionCompression:(id)sender {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSString *selectedTitle = [conversionFormatPopUpButton titleOfSelectedItem];
-	
-	NSInteger compressionTag = [[conversionCompressionPopUpButton selectedItem] tag];
-	
-	
-	if ([selectedTitle isEqualToString:@"Source VTF"]) {
-		conversionVTFFormat = compressionTag;
-		
-	} else if ([selectedTitle isEqualToString:@"Microsoft DDS"]) {
-		conversionDDSFormat = compressionTag;
-
-	}
-	
-}
-
-
-
-- (IBAction)createImage:(id)sender {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	
-	[convertedImage release];
-	convertedImage = nil;
-	
-	NSString *selectedTitle = [conversionFormatPopUpButton titleOfSelectedItem];
-	
-	NSData *convertedImageData = nil;
-	
-	if ([selectedTitle isEqualToString:@"Source VTF"]) {
-		convertedImageData = [image VTFRepresentationUsingFormat:conversionVTFFormat quality:compressionQuality createMipmaps:YES];
-		
-	} else if ([selectedTitle isEqualToString:@"Microsoft DDS"]) {
-		convertedImageData = [image DDSRepresentationUsingFormat:conversionDDSFormat quality:compressionQuality createMipmaps:YES];
-
-	}
-	
-	if (convertedImageData) {
-		convertedImage = [[TKImage alloc] initWithData:convertedImageData];
-	}
-	
-	[conversionFrameBrowserView reloadData];
-	
-	if ([convertedImage frameCount] > 0) {
-		[conversionFrameBrowserView setSelectionIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-	}
-	
-	if ([convertedImage mipmapCount] > 0) {
-		[conversionMipmapBrowserView setSelectionIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-	}
-	
-}
-
-
 
 
 - (IBAction)changeToolMode:(id)sender {
@@ -840,15 +751,22 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 	NSLog(@"[%@ %@] sender == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sender);
 #endif
 	
-	BOOL isPlaying = [imageView isPlaying];
+	BOOL isAnimating = [imageView isAnimating];
 	
 	if ([sender isKindOfClass:[NSSegmentedControl class]]) {
-		[(NSSegmentedControl *)sender setImage:[NSImage imageNamed:(isPlaying ? @"overlayPlay" : @"overlayStop")] forSegment:0];
-		[[(NSSegmentedControl *)sender cell] setToolTip:(isPlaying ? NSLocalizedString(@"Play the animated image", @"") : NSLocalizedString(@"Stop playing the animated image", @"")) forSegment:0];
+		[(NSSegmentedControl *)sender setImage:[NSImage imageNamed:(isAnimating ? @"overlayPlay" : @"overlayStop")] forSegment:0];
+		[[(NSSegmentedControl *)sender cell] setToolTip:(isAnimating ? NSLocalizedString(@"Play the animated image", @"") : NSLocalizedString(@"Stop playing the animated image", @"")) forSegment:0];
 	}
-	[togglePlayToolbarItem setLabel:(isPlaying ? NSLocalizedString(@"Play", @"") : NSLocalizedString(@"Stop", @""))];
-	
-	[imageView togglePlay:sender];
+	[togglePlayToolbarItem setLabel:(isAnimating ? NSLocalizedString(@"Play", @"") : NSLocalizedString(@"Stop", @""))];
+		
+	if (isAnimating) {
+		[imageView stopAnimating];
+		imageView.animationImageReps = nil;
+	} else {
+		
+		imageView.animationImageReps = [image representationsForFrameIndexes:[image allFrameIndexes] mipmapIndexes:[image firstMipmapIndexSet]];
+		[imageView startAnimating];
+	}
 }
 
 
@@ -861,41 +779,12 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 }
 
 
-- (IBAction)changeColumnCount:(id)sender  {
+- (void)copy:(id)sender {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	
-}
-
-- (IBAction)changeBrowserSortOptions:(id)sender {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	
-}
-
-
-- (IBAction)openInNewWindow:(id)sender {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	
-}
-
-- (IBAction)saveCopyToFolder:(id)sender {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	
-}
-
-
-- (IBAction)sendImageTo:(id)sender {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	
+	NSArray *selectedImageReps = [self selectedImageReps];
+	[self writeImageReps:selectedImageReps toPasteboard:[NSPasteboard generalPasteboard] forTypes:[NSArray arrayWithObjects:TKImageDocumentPboardType, NSTIFFPboardType, nil]];
 }
 
 
@@ -916,7 +805,7 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 	SEL action = [theItem action];
 	
 	if (action == @selector(togglePlayAnimation:)) {
-		if ([imageView isPlaying]) {
+		if ([imageView isAnimating]) {
 			[theItem setLabel:NSLocalizedString(@"Stop", @"")];
 			[theItem setImage:[NSImage imageNamed:@"overlayStop"]];
 			
@@ -953,57 +842,4 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 
 
 
-
-//- (IBAction)createNormalMapImage:(id)sender {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	[self setConvertedImage:nil];
-//	[convertedImageData setData:[NSData data]];
-//	
-//	InputOptions inputOptions;
-//	inputOptions.setWrapMode(wrapMode);
-//	inputOptions.setAlphaMode(AlphaMode_None);
-//	inputOptions.setRoundMode(RoundMode_ToNearestPowerOfTwo);
-//	
-//	inputOptions.setNormalMap(false);
-//	inputOptions.setConvertToNormalMap(true);
-//	inputOptions.setHeightEvaluation(redHeight, greenHeight, blueHeight, alphaHeight);
-//	inputOptions.setGamma(1.0, 1.0);
-//	inputOptions.setNormalizeMipmaps(true);
-//	
-//	inputOptions.setMipmapGeneration(false);
-//	
-////	if (nvImage) {
-//		inputOptions.setTextureLayout(TextureType_2D, nvImage.width(), nvImage.height());
-//		inputOptions.setMipmapData(nvImage.pixels(), nvImage.width(), nvImage.height());
-////	}
-//	
-//	CompressionOptions compressionOptions;
-//	compressionOptions.setFormat(Format_RGB);
-//	compressionOptions.setQuality(Quality_Normal);
-//	
-//	MDOutputHandler outputHandler(self, true);
-//	Context context;
-//	context.enableCudaAcceleration(false);
-//	
-//	OutputOptions outputOptions;
-//	outputOptions.setOutputHandler(&outputHandler);
-//	
-//	if (!context.process(inputOptions, compressionOptions, outputOptions)) {
-//		NSLog(@"[%@ %@] context.process() returned false!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//		
-//	}
-//	
-//	NSLog(@"[%@ %@] convertedImageData length == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [convertedImageData length]);
-//	
-//	TKDDSImageRep *imageRep = [[[TKDDSImageRep alloc] initWithData:[[convertedImageData copy] autorelease]] autorelease];
-//	if (imageRep) {
-//		NSImage *nImage = [[[NSImage alloc] initWithSize:[imageRep size]] autorelease];
-//		[nImage addRepresentation:imageRep];
-//		[self setConvertedImage:nImage];
-//	}
-//	
-//}
-//
 
