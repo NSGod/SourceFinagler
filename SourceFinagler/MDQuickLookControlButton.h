@@ -8,11 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-//@class MDQuickLookToolTipWindow;
 
 
 @interface MDQuickLookControlButton : NSButton {
-//	MDQuickLookToolTipWindow *_toolTipWindow;
+	
 	
 }
 

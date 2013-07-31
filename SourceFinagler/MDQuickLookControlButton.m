@@ -8,20 +8,8 @@
 
 #import "MDQuickLookControlButton.h"
 
-@interface MDQuickLookControlButton (Private)
+@interface MDQuickLookControlButton (MDPrivate)
 - (void)finishSetup;
-
-- (void)_showToolTipWithText:(NSString *)aString;
-- (void)_closeToolTip;
-- (void)_updateToolTip;
-- (void)mouseEntered:(id)sender;
-- (void)mouseExited:(id)sender;
-- (void)viewWillMoveToWindow:(id)fp8;
-- (void)viewDidMoveToWindow;
-- (void)viewDidHide;
-- (void)viewDidUnhide;
-- (void)setTitle:(NSString *)aTitle;
-
 @end
 
 
