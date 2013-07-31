@@ -540,111 +540,107 @@ SInt32 MDGetSystemVersion() {
 @end
 
 
-//#ifdef TEXTUREKIT_EXTERN
-//#error
+
+//#if 0
+//
+//@implementation NSData (MDAdditions)
+//
+//
+//
+//- (NSString *)sha1HexHash {
+//#if MD_DEBUG
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 //#endif
-//#ifndef TEXTUREKIT_EXTERN
-
-#if 0
-
-@implementation NSData (MDAdditions)
-
-
-
-- (NSString *)sha1HexHash {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	unsigned char digest[SHA_DIGEST_LENGTH];
-	char hashString[(2 * SHA_DIGEST_LENGTH) + 1];
-	
-	SHA1([self bytes], [self length], digest);
-	
-	NSInteger currentIndex = 0;
-	
-	for (currentIndex = 0; currentIndex < SHA_DIGEST_LENGTH; currentIndex++) {
-		sprintf(hashString+currentIndex*2, "%02x", digest[currentIndex]);
-	}
-	hashString[currentIndex * 2] = 0;
-	
-	return [NSString stringWithUTF8String:(const char *)hashString];
-}
-
-
-- (NSData *)sha1Hash {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	unsigned char digest[SHA_DIGEST_LENGTH];
-	SHA1([self bytes], [self length], digest);
-	return [NSData dataWithBytes:&digest length:SHA_DIGEST_LENGTH];
-}
-
-
-@end
-
-
-@implementation NSBundle (MDAdditions)
-
-
-- (NSString *)checksumForAuxiliaryLibrary:(NSString *)dylibName {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSString *checksum = nil;
-	NSString *executablePath = [self executablePath];
-	if (executablePath && dylibName) {
-		NSString *dylibPath = [[executablePath stringByDeletingLastPathComponent] stringByAppendingPathComponent:dylibName];
-		
-		NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
-		BOOL isDir;
-		
-		if ([fileManager fileExistsAtPath:dylibPath isDirectory:&isDir] && !isDir) {
-			NSError *error = nil;
-			
-			NSData *dylibData = [NSData dataWithContentsOfFile:dylibPath options:NSDataReadingUncached error:&error];
-			if (dylibData) {
-				checksum = [dylibData sha1HexHash];
-			} else {
-				NSLog(@"[%@ %@] [NSData dataWithContentsOfFile:options:error:] returned nil with error == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), error);
-			}
-		}
-	}
-	return checksum;
-}
-
-@end
-
-#endif
-
-
-
-NSString *NSStringForAppleScriptListFromPaths(NSArray *paths) {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
-	
-	NSString *listString = @"{";
-	NSString *filePath;
-	NSInteger currentIndex;
-	NSInteger totalCount = [paths count];
-	
-	for (currentIndex = 0; currentIndex < totalCount; currentIndex++) {
-		filePath = [paths objectAtIndex:currentIndex];
-		listString = [listString stringByAppendingString:[NSString stringWithFormat:@"\"%@\" as POSIX file", filePath]];
-		
-		if (currentIndex < (totalCount - 1)) {
-			listString = [listString stringByAppendingString:@", "];
-		}
-	}
-	listString = [[listString stringByAppendingString:@"}"] retain];
-	
-	[localPool release];
-	
-	return [listString autorelease];
-}
-
+//	unsigned char digest[SHA_DIGEST_LENGTH];
+//	char hashString[(2 * SHA_DIGEST_LENGTH) + 1];
+//	
+//	SHA1([self bytes], [self length], digest);
+//	
+//	NSInteger currentIndex = 0;
+//	
+//	for (currentIndex = 0; currentIndex < SHA_DIGEST_LENGTH; currentIndex++) {
+//		sprintf(hashString+currentIndex*2, "%02x", digest[currentIndex]);
+//	}
+//	hashString[currentIndex * 2] = 0;
+//	
+//	return [NSString stringWithUTF8String:(const char *)hashString];
+//}
+//
+//
+//- (NSData *)sha1Hash {
+//#if MD_DEBUG
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//#endif
+//	unsigned char digest[SHA_DIGEST_LENGTH];
+//	SHA1([self bytes], [self length], digest);
+//	return [NSData dataWithBytes:&digest length:SHA_DIGEST_LENGTH];
+//}
+//
+//
+//@end
+//
+//
+//@implementation NSBundle (MDAdditions)
+//
+//
+//- (NSString *)checksumForAuxiliaryLibrary:(NSString *)dylibName {
+//#if MD_DEBUG
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//#endif
+//	NSString *checksum = nil;
+//	NSString *executablePath = [self executablePath];
+//	if (executablePath && dylibName) {
+//		NSString *dylibPath = [[executablePath stringByDeletingLastPathComponent] stringByAppendingPathComponent:dylibName];
+//		
+//		NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+//		BOOL isDir;
+//		
+//		if ([fileManager fileExistsAtPath:dylibPath isDirectory:&isDir] && !isDir) {
+//			NSError *error = nil;
+//			
+//			NSData *dylibData = [NSData dataWithContentsOfFile:dylibPath options:NSDataReadingUncached error:&error];
+//			if (dylibData) {
+//				checksum = [dylibData sha1HexHash];
+//			} else {
+//				NSLog(@"[%@ %@] [NSData dataWithContentsOfFile:options:error:] returned nil with error == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), error);
+//			}
+//		}
+//	}
+//	return checksum;
+//}
+//
+//@end
+//
+//#endif
+//
+//
+//
+//NSString *NSStringForAppleScriptListFromPaths(NSArray *paths) {
+//#if MD_DEBUG
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//#endif
+//	NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
+//	
+//	NSString *listString = @"{";
+//	NSString *filePath;
+//	NSInteger currentIndex;
+//	NSInteger totalCount = [paths count];
+//	
+//	for (currentIndex = 0; currentIndex < totalCount; currentIndex++) {
+//		filePath = [paths objectAtIndex:currentIndex];
+//		listString = [listString stringByAppendingString:[NSString stringWithFormat:@"\"%@\" as POSIX file", filePath]];
+//		
+//		if (currentIndex < (totalCount - 1)) {
+//			listString = [listString stringByAppendingString:@", "];
+//		}
+//	}
+//	listString = [[listString stringByAppendingString:@"}"] retain];
+//	
+//	[localPool release];
+//	
+//	return [listString autorelease];
+//}
+//
 
 //@implementation NSArray (MDAdditions)
 //
@@ -681,39 +677,39 @@ NSString *NSStringForAppleScriptListFromPaths(NSArray *paths) {
 
 
 
-@implementation NSMutableDictionary (MDThreadSafety)
+//@implementation NSMutableDictionary (MDThreadSafety)
+//
+//- (id)threadSafeObjectForKey:(id)aKey usingLock:(NSLock *)aLock {
+//    id    result;
+//	
+//    [aLock lock];
+//    result = [[[self objectForKey:aKey] retain] autorelease];
+//    [aLock unlock];
+//	
+//    return result;
+//}
+//
+//
+//- (void)threadSafeRemoveObjectForKey:(id)aKey usingLock:(NSLock *)aLock {
+//    [aLock lock];
+//    [self removeObjectForKey:aKey];
+//    [aLock unlock];
+//}
+//
+//
+//- (void)threadSafeSetObject:(id)anObject forKey:(id)aKey usingLock:(NSLock *)aLock {
+//    [aLock lock];
+//    [[anObject retain] autorelease];
+//    [self setObject:anObject  forKey:aKey];
+//    [aLock unlock];
+//}
+//
+//
+//@end
 
-- (id)threadSafeObjectForKey:(id)aKey usingLock:(NSLock *)aLock {
-    id    result;
-	
-    [aLock lock];
-    result = [[[self objectForKey:aKey] retain] autorelease];
-    [aLock unlock];
-	
-    return result;
-}
 
 
-- (void)threadSafeRemoveObjectForKey:(id)aKey usingLock:(NSLock *)aLock {
-    [aLock lock];
-    [self removeObjectForKey:aKey];
-    [aLock unlock];
-}
-
-
-- (void)threadSafeSetObject:(id)anObject forKey:(id)aKey usingLock:(NSLock *)aLock {
-    [aLock lock];
-    [[anObject retain] autorelease];
-    [self setObject:anObject  forKey:aKey];
-    [aLock unlock];
-}
-
-
-@end
-
-
-
-@implementation NSObject (MDMutableDeepCopy)
+@implementation NSObject (MDDeepMutableCopy)
 
 - (id)deepMutableCopy {
 #if MD_DEBUG
@@ -731,7 +727,7 @@ NSString *NSStringForAppleScriptListFromPaths(NSArray *paths) {
 
 @end
 
-@implementation NSDictionary (MDMutableDeepCopy)
+@implementation NSDictionary (MDDeepMutableCopy)
 
 - (id)deepMutableCopy {
 #if MD_DEBUG
@@ -763,7 +759,7 @@ NSString *NSStringForAppleScriptListFromPaths(NSArray *paths) {
 @end
 
 
-@implementation NSArray (MDMutableDeepCopy)
+@implementation NSArray (MDDeepMutableCopy)
 
 - (id)deepMutableCopy {
 #if MD_DEBUG
@@ -783,7 +779,7 @@ NSString *NSStringForAppleScriptListFromPaths(NSArray *paths) {
 
 
 
-@implementation NSSet (MDMutableDeepCopy)
+@implementation NSSet (MDDeepMutableCopy)
 
 - (id)deepMutableCopy {
 #if MD_DEBUG
@@ -803,387 +799,4 @@ NSString *NSStringForAppleScriptListFromPaths(NSArray *paths) {
 	
 @end
 
-
-
-#if (MD_BUILDING_WITH_FOUNDATION_NSDATE_ADDITIONS)
-
-@implementation NSDate (MDAdditions)
-
-
-
-+ (id)dateByRoundingDownToNearestMinute {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [NSCalendarDate calendarDate];
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:0
-									 hours:0
-								   minutes:0
-								   seconds:-[calendarDate secondOfMinute]];
-}
-
-
-
-+ (id)dateByRoundingUpToNearestMinute {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [NSCalendarDate calendarDate];
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:0
-									 hours:0
-								   minutes:1
-								   seconds:-[calendarDate secondOfMinute]];
-}
-
-
-
-+ (id)dateByAddingTwoAndRoundingUpToNearestMinute {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [NSCalendarDate calendarDate];
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:0
-									 hours:0
-								   minutes:3
-								   seconds:-[calendarDate secondOfMinute]];
-}
-
-
-
-+ (id)midnightYesterdayMorning {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [NSCalendarDate calendarDate];
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:0
-									 hours:-[calendarDate hourOfDay] - 24
-								   minutes:-[calendarDate minuteOfHour]
-								   seconds:-[calendarDate secondOfMinute]];
-}
-
-
-
-+ (id)midnightThisMorning {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [NSCalendarDate calendarDate];
-	return [calendarDate dateByAddingYears:0
-								   months:0
-									 days:0
-									hours:-[calendarDate hourOfDay]
-								  minutes:-[calendarDate minuteOfHour]
-								  seconds:-[calendarDate secondOfMinute]];
-}
-
-
-
-+ (id)midnightTonight {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [NSCalendarDate calendarDate];
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:0
-									 hours:-[calendarDate hourOfDay] + 24
-								   minutes:-[calendarDate minuteOfHour]
-								   seconds:-[calendarDate secondOfMinute]];
-}
-
-
-
-+ (id)midnightTomorrowNight  {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [NSCalendarDate calendarDate];
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:0
-									 hours:-[calendarDate hourOfDay] + 48
-								   minutes:-[calendarDate minuteOfHour]
-								   seconds:-[calendarDate secondOfMinute]];
-}
-
-
-
-/* if dates are equal (the NSComparisonResult == NSOrderedSame, these methods return NO */
-
-- (BOOL)isEarlierThanDate:(NSDate *)aDate {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	return ([self compare:aDate] == NSOrderedAscending);
-}
-
-
-
-- (BOOL)isLaterThanDate:(NSDate *)aDate {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	return ([self compare:aDate] == NSOrderedDescending);
-}
-
-/* end */
-
-
-- (BOOL)isEarlierThanOrEqualToDate:(NSDate *)aDate {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	return (([self compare:aDate] == NSOrderedAscending) || ([self compare:aDate] == NSOrderedSame));
-	
-}
-
-
-
-- (BOOL)isLaterThanOrEqualToDate:(NSDate *)aDate {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	return (([self compare:aDate] == NSOrderedDescending) || ([self compare:aDate] == NSOrderedSame));
-	
-}
-
-
-
-- (id)dateByRoundingDownToNearestMinute {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[self timeIntervalSinceReferenceDate]] autorelease];
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:0
-									 hours:0
-								   minutes:0
-								   seconds:-[calendarDate secondOfMinute]];
-	
-}
-
-
-
-- (id)dateByRoundingUpToNearestMinute {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[self timeIntervalSinceReferenceDate]] autorelease];
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:0
-									 hours:0
-								   minutes:1
-								   seconds:-[calendarDate secondOfMinute]];
-	
-}
-
-
-
-- (id)dateByAddingTwoAndRoundingUpToNearestMinute {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[self timeIntervalSinceReferenceDate]] autorelease];
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:0
-									 hours:0
-								   minutes:3
-								   seconds:-[calendarDate secondOfMinute]];
-}
-
-
-
-
-- (id)midnightOfYesterdayMorning {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[self timeIntervalSinceReferenceDate]] autorelease];
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:0
-									 hours:-[calendarDate hourOfDay] - 24
-								   minutes:-[calendarDate minuteOfHour]
-								   seconds:-[calendarDate secondOfMinute]];
-}
-
-
-
-- (id)midnightOfMorning {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[self timeIntervalSinceReferenceDate]] autorelease];
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:0
-									 hours:-[calendarDate hourOfDay]
-								   minutes:-[calendarDate minuteOfHour]
-								   seconds:-[calendarDate secondOfMinute]];
-}
-
-
-- (id)midnightOfEvening {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[self timeIntervalSinceReferenceDate]] autorelease];
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:0
-									 hours:-[calendarDate hourOfDay] + 24
-								   minutes:-[calendarDate minuteOfHour]
-								   seconds:-[calendarDate secondOfMinute]];
-}
-
-
-
-- (id)midnightOfTomorrowEvening {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[self timeIntervalSinceReferenceDate]] autorelease];
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:0
-									 hours:-[calendarDate hourOfDay] + 48
-								   minutes:-[calendarDate minuteOfHour]
-								   seconds:-[calendarDate secondOfMinute]];
-}
-
-
-
-
-
-- (id)baseWeekly {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[self timeIntervalSinceReferenceDate]] autorelease];
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:-[calendarDate dayOfWeek]
-									 hours:0
-								   minutes:0
-								   seconds:0];
-}
-
-
-- (id)dateBySynchronizingToTimeOfDayOfDate:(NSDate *)aRepeatedCleaningDate {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[self timeIntervalSinceReferenceDate]] autorelease];
-	NSCalendarDate *repeatedCleaningDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[aRepeatedCleaningDate timeIntervalSinceReferenceDate]] autorelease];
-	
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:0
-									 hours:-[calendarDate hourOfDay] + [repeatedCleaningDate hourOfDay]
-								   minutes:-[calendarDate minuteOfHour] + [repeatedCleaningDate minuteOfHour]
-								   seconds:-[calendarDate secondOfMinute] + [repeatedCleaningDate secondOfMinute]];
-	
-}
-
-
-
-//- (id)baseWeeklyForDate:(NSDate *)aDate {
-//	NSCalendarDate *baseSundayDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[self timeIntervalSinceReferenceDate]] autorelease];
-//	NSCalendarDate *baseWeeklyDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[aDate timeIntervalSinceReferenceDate]] autorelease];
-//	
-//	return [NSCalendarDate dateWithYear:[baseWeeklyDate yearOfCommonEra]
-//								  month:[baseWeeklyDate monthOfYear]
-//									day:[baseWeeklyDate dayOfMonth]
-//								   hour:[baseSundayDate hourOfDay]
-//								 minute:[baseSundayDate minuteOfHour]
-//								 second:[baseSundayDate secondOfMinute]
-//							   timeZone:nil];
-//}
-
-
-
-- (id)baseMonthly {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[self timeIntervalSinceReferenceDate]] autorelease];
-	
-	return [calendarDate dateByAddingYears:0
-									months:0
-									  days:-[calendarDate dayOfMonth] + 1
-									 hours:0
-								   minutes:0
-								   seconds:0];
-	
-}
-
-
-
-- (id)dateByTransposingToCurrentDay {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[self timeIntervalSinceReferenceDate]] autorelease];
-	NSCalendarDate *now = [NSCalendarDate calendarDate];
-	
-	return [now dateByAddingYears:0
-						   months:0
-							 days:0
-							hours:-[now hourOfDay] + [calendarDate hourOfDay]
-						  minutes:-[now minuteOfHour] + [calendarDate minuteOfHour]
-						  seconds:-[now secondOfMinute] + [calendarDate secondOfMinute]];
-}
-
-
-
-- (id)dateByTransposingToFirstDayOfCurrentWeek {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[self timeIntervalSinceReferenceDate]] autorelease];
-	NSCalendarDate *now = [NSCalendarDate calendarDate];
-	
-	return [now dateByAddingYears:0
-						   months:0
-							 days:-[now dayOfWeek]
-							hours:-[now hourOfDay] + [calendarDate hourOfDay]
-						  minutes:-[now minuteOfHour] + [calendarDate minuteOfHour]
-						  seconds:-[now secondOfMinute] + [calendarDate secondOfMinute]];
-}
-
-
-
-- (id)dateByTransposingToFirstDayOfCurrentMonth {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSCalendarDate *calendarDate = [[[NSCalendarDate alloc] initWithTimeIntervalSinceReferenceDate:[self timeIntervalSinceReferenceDate]] autorelease];
-	NSCalendarDate *now = [NSCalendarDate calendarDate];
-	
-	return [now dateByAddingYears:0
-						   months:0
-							 days:-[now dayOfMonth] + 1
-							hours:-[now hourOfDay] + [calendarDate hourOfDay]
-						  minutes:-[now minuteOfHour] + [calendarDate minuteOfHour]
-						  seconds:-[now secondOfMinute] + [calendarDate secondOfMinute]];
-	
-}
-
-
-
-
-@end
-
-#endif
 

@@ -156,34 +156,34 @@ typedef NSUInteger MDBookmarkResolutionOptions;
 @end
 
 
-#if !defined(TEXTUREKIT_EXTERN)
-
-@interface NSData (MDAdditions)
-- (NSString *)sha1HexHash;
-- (NSData *)sha1Hash;
-
-
-@end
-
-@interface NSBundle (MDAdditions)
-- (NSString *)checksumForAuxiliaryLibrary:(NSString *)dylibName;
-@end
-#endif
+//#if !defined(TEXTUREKIT_EXTERN)
+//
+//@interface NSData (MDAdditions)
+//- (NSString *)sha1HexHash;
+//- (NSData *)sha1Hash;
+//
+//
+//@end
+//
+//@interface NSBundle (MDAdditions)
+//- (NSString *)checksumForAuxiliaryLibrary:(NSString *)dylibName;
+//@end
+//#endif
 
 
 ////////////////////////////////////////////////////////////////
 ////    NSMutableDictionary CATEGORY FOR THREAD-SAFETY
 ////////////////////////////////////////////////////////////////
 
-@interface NSMutableDictionary (MDThreadSafety)
-
-- (id)threadSafeObjectForKey:(id)aKey usingLock:(NSLock *)aLock;
-
-- (void)threadSafeRemoveObjectForKey:(id)aKey usingLock:(NSLock *)aLock;
-
-- (void)threadSafeSetObject:(id)anObject forKey:(id)aKey usingLock:(NSLock *)aLock;
-
-@end
+//@interface NSMutableDictionary (MDThreadSafety)
+//
+//- (id)threadSafeObjectForKey:(id)aKey usingLock:(NSLock *)aLock;
+//
+//- (void)threadSafeRemoveObjectForKey:(id)aKey usingLock:(NSLock *)aLock;
+//
+//- (void)threadSafeSetObject:(id)anObject forKey:(id)aKey usingLock:(NSLock *)aLock;
+//
+//@end
 
 
 //@interface NSArray (MDAdditions)
@@ -195,43 +195,9 @@ typedef NSUInteger MDBookmarkResolutionOptions;
 @end
 
 
-
-
-@interface NSObject (MDMutableDeepCopy)
+@interface NSObject (MDDeepMutableCopy)
 - (id)deepMutableCopy NS_RETURNS_RETAINED;
 @end
 
 
-#define MD_BUILDING_WITH_FOUNDATION_NSDATE_ADDITIONS 0
-
-#if (MD_BUILDING_WITH_FOUNDATION_NSDATE_ADDITIONS)
-
-@interface NSDate (MDAdditions)
-+ (id)dateByRoundingDownToNearestMinute;
-+ (id)dateByRoundingUpToNearestMinute;
-+ (id)dateByAddingTwoAndRoundingUpToNearestMinute;
-+ (id)midnightYesterdayMorning;
-+ (id)midnightThisMorning;
-+ (id)midnightTonight;
-+ (id)midnightTomorrowNight;
-- (BOOL)isEarlierThanDate:(NSDate *)aDate;
-- (BOOL)isLaterThanDate:(NSDate *)aDate;
-- (BOOL)isEarlierThanOrEqualToDate:(NSDate *)aDate;
-- (BOOL)isLaterThanOrEqualToDate:(NSDate *)aDate;
-- (id)dateByRoundingDownToNearestMinute;
-- (id)dateByRoundingUpToNearestMinute;
-- (id)dateByAddingTwoAndRoundingUpToNearestMinute;
-- (id)midnightOfMorning;
-- (id)midnightOfEvening;
-- (id)midnightOfYesterdayMorning;
-- (id)midnightOfTomorrowEvening;
-- (id)baseWeekly; // take receiver's time of day and shift it to the first day of the week
-//- (id)baseWeeklyForDate:(id)aDate; // basically the reverse of -baseWeekly; given that the receiver is a baseWeekly's time of day, transpose the time to the specified 'aDate'
-- (id)baseMonthly; // take receiver's time of day and shift it to the first day of the month
-- (id)dateByTransposingToCurrentDay;
-- (id)dateByTransposingToFirstDayOfCurrentWeek;
-- (id)dateByTransposingToFirstDayOfCurrentMonth;
-- (id)dateBySynchronizingToTimeOfDayOfDate:(NSDate *)aDate;
-@end
-#endif
 
