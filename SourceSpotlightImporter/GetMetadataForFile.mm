@@ -1,6 +1,6 @@
 #include <CoreServices/CoreServices.h>
 #import <Cocoa/Cocoa.h>
-#import <NVImage/NVImage.h>
+#import <NVTextureTools/NVTextureTools.h>
 #import <VTF/VTF.h>
 #import <TextureKit/TextureKit.h>
 
@@ -222,6 +222,7 @@ BOOL MDGetMetadataFromImageWithContentsOfFile(NSString *filePath, NSString *cont
 		
 	}
 	
+	[data release];
 	[pool release];
 	return NO;
 }
