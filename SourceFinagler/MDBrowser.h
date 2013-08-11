@@ -38,10 +38,10 @@ enum {
 	
 }
 
-@property (copy) NSArray *sortDescriptors;
+@property (nonatomic, copy) NSArray *sortDescriptors;
 
-@property (readonly, assign) BOOL shouldShowIcons;
-@property (readonly, assign) BOOL shouldShowPreview;
+@property (nonatomic, readonly, assign) BOOL shouldShowIcons;
+@property (nonatomic, readonly, assign) BOOL shouldShowPreview;
 
 
 - (NSInteger)fontAndIconSize;
