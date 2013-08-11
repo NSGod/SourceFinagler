@@ -14,6 +14,6 @@
 	NSImage		*image;
 }
 
-@property (retain) NSImage *image;
+@property (nonatomic, retain) NSImage *image;
 
 @end
