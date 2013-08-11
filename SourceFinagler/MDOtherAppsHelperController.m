@@ -11,18 +11,22 @@
 
 #import "MDOtherAppsHelperController.h"
 #import "VSSteamManager.h"
-#import "MDAppKitAdditions.h"
+#import "TKAppKitAdditions.h"
 #import "MDProcessManager.h"
+#import "MDTableView.h"
+
 
 
 //#define VS_DEBUG 0
 #define VS_DEBUG 1
 
-NSString * const MDOtherAppsHelperViewSizeKey = @"MDOtherAppsHelperViewSize";
 
 NSString * const MDUSBOverdriveHelperBundleIdentifierKey		= @"com.montalcini.usboverdrivehelper";
 NSString * const MDSteerMouseBundleIdentifierKey				= @"jp.plentycom.boa.SteerMouse";
 NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Center.Daemon";
+
+
+static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelperSortDescriptors";
 
 
 
@@ -30,13 +34,25 @@ NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Cent
 
 @synthesize enableSourceFinaglerAgent;
 
+@dynamic sortDescriptors;
+
+
+
++ (void)initialize {
+	NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+	NSArray *sortDescriptors = [NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES selector:@selector(caseInsensitiveNumericalCompare:)], nil];
+    [defaults setSortDescriptors:sortDescriptors forKey:MDOtherAppsHelperSortDescriptorsKey];
+	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+}
+
+
 
 - (id)init {
 	if ((self = [super init])) {
 		games = [[NSMutableArray alloc] init];
 		steamManager = [[VSSteamManager defaultManager] retain];
 		[steamManager setDelegate:self];
-		resizable = YES;
+
 		if ([steamManager sourceFinaglerLaunchAgentStatus] == VSSourceFinaglerLaunchAgentUpdateNeeded) {
 			[steamManager updateSourceFinaglerLaunchAgentWithError:NULL];
 		}
@@ -54,20 +70,31 @@ NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Cent
 }
 
 
+- (NSString *)title {
+	return NSLocalizedString(@"Other Apps Helper", @"");
+}
+
+
+- (NSString *)viewSizeAutosaveName {
+	return @"otherAppsHelperView";
+}
+
+
+
 - (void)awakeFromNib {
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	minWinSize = [view frame].size;
-	maxWinSize = NSMakeSize(16000, 16000);
-	
+	minWinSize = [TKViewController windowSizeForViewWithSize:self.view.frame.size];
+	maxWinSize = NSMakeSize(FLT_MAX, FLT_MAX);
 	
 	[tableView setTarget:self];
 	[tableView setDoubleAction:@selector(launchGame:)];
 	[tableView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:NO];
 	[tableView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
 	[tableView setVerticalMotionCanBeginDrag:NO];
-	[gamesController setSortDescriptors:[tableView sortDescriptors]];
+	
+	[tableView setSortDescriptors:[[NSUserDefaults standardUserDefaults] sortDescriptorsForKey:MDOtherAppsHelperSortDescriptorsKey]];
 	
 	NSDictionary *usbInfo = MDInfoForProcessWithBundleIdentifier(MDUSBOverdriveHelperBundleIdentifierKey);
 	
@@ -87,31 +114,43 @@ NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Cent
 		}
 	}
 	
-	[[self mutableArrayValueForKey:@"games"] setArray:[steamManager games]];
+	[[self mutableArrayValueForKey:@"games"] setArray:steamManager.games];
 	
 	[VSSteamManager	setDefaultPersistentOptions:VSGameLaunchDefault];
 	[steamManager setMonitoringGames:YES];
 	
 }
 
-- (void)appControllerDidLoadNib:(id)sender {
-#if VS_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSUserDefaults *uD = [NSUserDefaults standardUserDefaults];
-	if ([uD objectForKey:MDOtherAppsHelperViewSizeKey] == nil) [uD setObject:[view stringWithSavedFrame] forKey:MDOtherAppsHelperViewSizeKey];
-	[view setFrameFromString:[uD objectForKey:MDOtherAppsHelperViewSizeKey]];
-	[super appControllerDidLoadNib:self];
-	
+
+- (void)setSortDescriptors:(NSArray *)aSortDescriptors {
+	[tableView setSortDescriptors:aSortDescriptors];
 }
 
 
-- (void)cleanup {
-#if VS_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	[[NSUserDefaults standardUserDefaults] setObject:[view stringWithSavedFrame] forKey:MDOtherAppsHelperViewSizeKey];
+- (NSArray *)sortDescriptors {
+	return [tableView sortDescriptors];
 }
+
+
+
+//- (void)appControllerDidLoadNib:(id)sender {
+//#if VS_DEBUG
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//#endif
+//	NSUserDefaults *uD = [NSUserDefaults standardUserDefaults];
+//	if ([uD objectForKey:MDOtherAppsHelperViewSizeKey] == nil) [uD setObject:[self.view stringWithSavedFrame] forKey:MDOtherAppsHelperViewSizeKey];
+//	[self.view setFrameFromString:[uD objectForKey:MDOtherAppsHelperViewSizeKey]];
+//	[super appControllerDidLoadNib:self];
+//	
+//}
+
+
+//- (void)cleanup {
+//#if VS_DEBUG
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//#endif
+//	[[NSUserDefaults standardUserDefaults] setObject:[self.view stringWithSavedFrame] forKey:MDOtherAppsHelperViewSizeKey];
+//}
 
 
 - (void)gameDidLaunch:(VSGame *)game {
@@ -131,7 +170,10 @@ NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Cent
 
 
 - (IBAction)toggleEnableAgent:(id)sender {
+#if VS_DEBUG
 	NSLog(@"[%@ %@] sender's state == %ld; enableSourceFinaglerAgent == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (long)[(NSButton *)sender state], (enableSourceFinaglerAgent ? @"YES" : @"NO"));
+#endif
+	
 	NSError *outError = nil;
 	
 	if (enableSourceFinaglerAgent) {
@@ -213,7 +255,7 @@ NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Cent
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	[NSApp beginSheet:usbOverdriveWindow modalForWindow:[view window] modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+	[NSApp beginSheet:usbOverdriveWindow modalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
 	
 }
 
@@ -269,7 +311,7 @@ NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Cent
 				NSLog(@"[%@ %@] failed to unhelp game == %@, error = %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), game, error);
 			}
 		} else {
-			if (![steamManager helpGame:game forUSBOverdrive:(mouseSoftware & MDUSBOverdrive) error:&error]) {
+			if (![steamManager helpGame:game forUSBOverdrive:(mouseSoftware & MDUSBOverdrive) updateLaunchAgent:YES error:&error]) {
 				NSLog(@"[%@ %@] failed to help game == %@, error = %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), game, error);
 			}
 		}
@@ -287,7 +329,7 @@ NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Cent
 	NSError *error = nil;
 	
 	for (VSGame *game in selectedGames) {
-		if (![steamManager helpGame:game forUSBOverdrive:(mouseSoftware & MDUSBOverdrive) error:&error]) {
+		if (![steamManager helpGame:game forUSBOverdrive:(mouseSoftware & MDUSBOverdrive) updateLaunchAgent:YES error:&error]) {
 			NSLog(@"[%@ %@] failed to help game == %@, error = %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), game, error);
 		}
 	}
@@ -320,7 +362,7 @@ NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Cent
 #endif
 	[steamManager locateSteamApps];
 	
-	NSArray *theGames = [steamManager games];
+	NSArray *theGames = steamManager.games;
 	NSArray *selectedObjects = [[gamesController selectedObjects] retain];
 	if (theGames) {
 		[[self mutableArrayValueForKey:@"games"] setArray:theGames];
@@ -334,6 +376,7 @@ NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Cent
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
+	
 	NSArray *selectedGames = [gamesController selectedObjects];
 	NSMutableArray *filePaths = [NSMutableArray array];
 	

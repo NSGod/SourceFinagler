@@ -8,7 +8,7 @@
 
 //#if TARGET_CPU_X86 || TARGET_CPU_X86_64
 
-#import "MDController.h"
+#import "TKViewController.h"
 #import <SteamKit/SteamKit.h>
 
 @class MDTableView;
@@ -23,7 +23,7 @@ enum {
 typedef NSUInteger MDMouseSoftware;
 
 
-@interface MDOtherAppsHelperController : MDController <NSTableViewDelegate, VSSteamManagerDelegate> {
+@interface MDOtherAppsHelperController : TKViewController <NSTableViewDelegate, VSSteamManagerDelegate> {
 	IBOutlet NSArrayController	*gamesController;
 	IBOutlet NSButton			*helpButton;
 	IBOutlet MDTableView		*tableView;
@@ -58,6 +58,8 @@ typedef NSUInteger MDMouseSoftware;
 - (IBAction)toggleHelpApps:(id)sender;
 
 @property (assign) BOOL enableSourceFinaglerAgent;
+
+@property (nonatomic, retain) NSArray *sortDescriptors;
 
 
 - (IBAction)toggleEnableAgent:(id)sender;
