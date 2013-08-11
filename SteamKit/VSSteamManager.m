@@ -44,11 +44,11 @@ static NSString * const VSPortal2USBOverdriveExecutableNameKey								= @"portal
 static NSString * const VSCounterStrikeGlobalOffensiveUSBOverdriveExecutableNameKey		= @"csgo_osx (for USB Overdrive)";
 
 
-NSString * const VSResourceNameKey							= @"resource";
-NSString * const VSGameIconNameKey							= @"game.icns";
+NSString * const VSResourceNameKey									= @"resource";
+NSString * const VSGameIconNameKey									= @"game.icns";
 
 
-NSString * const VSSteamAppsDirectoryNameKey				= @"SteamApps";
+NSString * const VSSteamAppsDirectoryNameKey						= @"SteamApps";
 
 static NSString * const VSSourceFinaglerBundleIdentifierKey			= @"com.markdouma.SourceFinagler";
 
@@ -72,10 +72,10 @@ static NSString * const VSDockExposeDisabledKey						= @"mcx-expose-disabled";
 static NSString * const VSDashboardDisabledKey						= @"mcx-disabled";
 
 
-NSString * const VSSourceAddonErrorDomain					= @"com.markdouma.SourceFinagler.SourceAddonErrorDomain";
-NSString * const VSSourceAddonGameIDKey						= @"VSSourceAddonGameID";
+NSString * const VSSourceAddonErrorDomain							= @"com.markdouma.SourceFinagler.SourceAddonErrorDomain";
+NSString * const VSSourceAddonGameIDKey								= @"VSSourceAddonGameID";
 
-NSString * const VSSourceAddonFolderNameKey				= @"addons";
+NSString * const VSSourceAddonFolderNameKey							= @"addons";
 
 static NSString * const VSSourceAddonInfoNameKey					= @"addoninfo.txt";
 static NSString * const VSSourceAddonSteamAppIDKey					= @"addonSteamAppID";
@@ -177,7 +177,7 @@ static VSSteamManager *sharedManager = nil;
 
 - (void)applicationWillLaunch:(NSNotification *)notification {
 #if VS_DEBUG
-//	NSLog(@"[%@ %@] userInfo == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [notification userInfo]);
+	NSLog(@"[%@ %@] userInfo == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [notification userInfo]);
 #endif
 	NSString *appPath = [[notification userInfo] objectForKey:@"NSApplicationPath"];
 	
@@ -210,10 +210,10 @@ static VSSteamManager *sharedManager = nil;
 
 - (void)applicationDidLaunch:(NSNotification *)notification {
 #if VS_DEBUG
-//	NSLog(@"[%@ %@] userInfo == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [notification userInfo]);
+	NSLog(@"[%@ %@] userInfo == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [notification userInfo]);
 #endif
-	NSString *appPath = [[notification userInfo] objectForKey:@"NSApplicationPath"];
-	
+	NSString *appPath = [[[notification userInfo] objectForKey:@"NSApplicationPath"] stringByResolvingSymlinksInPath];
+
 	if ([gamePathsAndGames objectForKey:VSMakeGamePathKey(appPath)] != nil ||
 		[executableNames containsObject:[VSMakeGamePathKey(appPath) lastPathComponent]]) {
 		
@@ -323,7 +323,7 @@ static NSUInteger locateSteamAppsCount = 0;
 		}
 		
 		if (steamAppsPath == nil) {
-			NSLog(@"[%@ %@] failed to locate steamAppsPath!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+			NSLog(@"[%@ %@] steamAppsPath does not exist...", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 			return;
 		}
 		
@@ -416,7 +416,7 @@ static NSUInteger locateSteamAppsCount = 0;
 		NSArray *launchedApps = [[NSWorkspace sharedWorkspace] launchedApplications];
 		
 		for (NSDictionary *launchedApp in launchedApps) {
-			NSString *gamePath = [launchedApp objectForKey:@"NSApplicationPath"];
+			NSString *gamePath = [[launchedApp objectForKey:@"NSApplicationPath"] stringByResolvingSymlinksInPath];
 			
 			if ([installedGamePaths containsObject:VSMakeGamePathKey(gamePath)]) {
 				VSGame *game = [gamePathsAndGames objectForKey:VSMakeGamePathKey(gamePath)];
@@ -455,16 +455,11 @@ static NSUInteger locateSteamAppsCount = 0;
 			}
 		}
 		
-		NSString *sourceFinaglerDirectory = [folderManager pathForDirectoryWithName:@"Source Finagler" inDirectory:MDApplicationSupportDirectory inDomain:MDUserDomain create:YES error:&outError];
-		
-		if (sourceFinaglerDirectory == nil) {
-			NSLog(@"[%@ %@] failed to create Source Finagler application support directory!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-			return;
-		}
+		NSString *sourceFinaglerDirectory = [folderManager pathForDirectoryWithName:@"Source Finagler" inDirectory:MDApplicationSupportDirectory inDomain:MDUserDomain create:NO error:&outError];
 		
 		NSString *sourceFinaglerAgentPath = [sourceFinaglerDirectory stringByAppendingPathComponent:VSSourceFinaglerAgentNameKey];
 		
-		if ([fileManager fileExistsAtPath:sourceFinaglerAgentPath isDirectory:&isDir] && isDir) {
+		if (sourceFinaglerAgentPath && [fileManager fileExistsAtPath:sourceFinaglerAgentPath isDirectory:&isDir] && isDir) {
 			sourceFinaglerLaunchAgentStatus = VSSourceFinaglerLaunchAgentInstalled;
 			sourceFinaglerLaunchAgentPath = [sourceFinaglerAgentPath retain];
 			
