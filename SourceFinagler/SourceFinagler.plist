@@ -90,6 +90,20 @@
 		</dict>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
+			<string>SGA</string>
+			<key>CFBundleTypeName</key>
+			<string>Source Game Archive</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.valvesoftware.source.sga</string>
+			</array>
+			<key>NSDocumentClass</key>
+			<string>MDSGADocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
 			<string>VPK</string>
 			<key>CFBundleTypeName</key>
 			<string>Source Addon file</string>
@@ -173,6 +187,76 @@
 			</array>
 			<key>NSDocumentClass</key>
 			<string>MDXZPDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
+			<string>OBJ</string>
+			<key>CFBundleTypeName</key>
+			<string>Wavefront 3D Object file</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.markdouma.obj</string>
+			</array>
+			<key>NSDocumentClass</key>
+			<string>TKModelDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
+			<string>DAE</string>
+			<key>CFBundleTypeName</key>
+			<string>Digital Asset Exchange (DAE)</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.khronos.collada.digital-asset-exchange</string>
+			</array>
+			<key>NSDocumentClass</key>
+			<string>TKModelDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
+			<string>DAED</string>
+			<key>CFBundleTypeName</key>
+			<string>Digital Asset Exchange (DAE) Document with Attachments</string>
+			<key>LSTypeIsPackage</key>
+			<true/>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.markdouma.daed</string>
+			</array>
+			<key>NSDocumentClass</key>
+			<string>TKModelDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
+			<string>MTL</string>
+			<key>CFBundleTypeName</key>
+			<string>Wavefront 3D Object Material file</string>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.markdouma.mtl</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
+			<string>VMT</string>
+			<key>CFBundleTypeName</key>
+			<string>Source Material Type</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.valvesoftware.source.vmt</string>
+			</array>
+			<key>NSDocumentClass</key>
+			<string>TKVMTMaterialDocument</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
@@ -325,12 +409,12 @@
 			<string>Source VGUI Menu file</string>
 			<key>CFBundleTypeRole</key>
 			<string>None</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.valvesoftware.source.menu</string>
 			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
 		</dict>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
@@ -502,6 +586,30 @@
 		</dict>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
+			<string>MMT</string>
+			<key>CFBundleTypeName</key>
+			<string>Source Motion Mapping Template</string>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.valvesoftware.source.mmt</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
+			<string>PRT</string>
+			<key>CFBundleTypeName</key>
+			<string>Source Portal file</string>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.valvesoftware.source.prt</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
 			<string>VTA</string>
 			<key>CFBundleTypeName</key>
 			<string>Source Vertex Animation Data</string>
@@ -574,18 +682,6 @@
 		</dict>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
-			<string>VMT</string>
-			<key>CFBundleTypeName</key>
-			<string>Source Material Type</string>
-			<key>CFBundleTypeRole</key>
-			<string>None</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.valvesoftware.source.vmt</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFile</key>
 			<string>VBSP</string>
 			<key>CFBundleTypeName</key>
 			<string>Source Detail Prop</string>
@@ -636,7 +732,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Source Finagler 2.0.3, © 2010-2011 Mark Douma. All rights reserved.</string>
+	<string>Source Finagler 2.5, © 2010-2012 Mark Douma. All rights reserved.</string>
 	<key>CFBundleIconFile</key>
 	<string>sourceFinagler</string>
 	<key>CFBundleIdentifier</key>
@@ -648,19 +744,23 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.3</string>
+	<string>2.5</string>
 	<key>CFBundleSignature</key>
 	<string>H2Oƒ</string>
 	<key>CFBundleVersion</key>
-	<string>203</string>
+	<string>250</string>
+	<key>NSAppleScriptEnabled</key>
+	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2010-2011 Mark Douma. All rights reserved.</string>
+	<string>Copyright © 2010-2012 Mark Douma. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSSupportsSuddenTermination</key>
 	<string>NO</string>
+	<key>OSAScriptingDefinition</key>
+	<string>Source Finagler.sdef</string>
 	<key>SUFeedURL</key>
 	<string>http://www.markdouma.com/sourcefinagler/version.xml</string>
 	<key>SUPublicDSAKeyFile</key>
@@ -697,7 +797,7 @@
 			<key>UTTypeDescription</key>
 			<string>Steam Cache file</string>
 			<key>UTTypeIconFile</key>
-			<string>gcf</string>
+			<string>GCF</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.valvesoftware.source.gcf</string>
 			<key>UTTypeReferenceURL</key>
@@ -771,6 +871,28 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>pak</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.archive </string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Source Game Archive</string>
+			<key>UTTypeIconFile</key>
+			<string>SGA</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.valvesoftware.source.sga</string>
+			<key>UTTypeReferenceURL</key>
+			<string></string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>sga</string>
 				</array>
 			</dict>
 		</dict>
@@ -1244,6 +1366,48 @@
 				<string>public.plain-text</string>
 			</array>
 			<key>UTTypeDescription</key>
+			<string>Source Motion Mapping Template</string>
+			<key>UTTypeIconFile</key>
+			<string>MMT</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.valvesoftware.source.mmt</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://developer.valvesoftware.com/wiki/Skeleton_motion_mapping#Using_Template_Files</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mmt</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.plain-text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Source Portal file</string>
+			<key>UTTypeIconFile</key>
+			<string>PRT</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.valvesoftware.source.prt</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://developer.valvesoftware.com/wiki/PRT</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>prt</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.plain-text</string>
+			</array>
+			<key>UTTypeDescription</key>
 			<string>Source VGUI Layout file</string>
 			<key>UTTypeIconFile</key>
 			<string>LAYOUT</string>
@@ -1675,6 +1839,112 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>so</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.source-code</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>C Inline Header Source</string>
+			<key>UTTypeIconFile</key>
+			<string></string>
+			<key>UTTypeIdentifier</key>
+			<string>public.c-inline-header</string>
+			<key>UTTypeReferenceURL</key>
+			<string></string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>inl</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.plain-text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Wavefront 3D Object file</string>
+			<key>UTTypeIconFile</key>
+			<string></string>
+			<key>UTTypeIdentifier</key>
+			<string>com.markdouma.obj</string>
+			<key>UTTypeReferenceURL</key>
+			<string></string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>obj</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.plain-text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Wavefront 3D Object Material file</string>
+			<key>UTTypeIconFile</key>
+			<string></string>
+			<key>UTTypeIdentifier</key>
+			<string>com.markdouma.mtl</string>
+			<key>UTTypeReferenceURL</key>
+			<string></string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mtl</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Digital Asset Exchange (DAE)</string>
+			<key>UTTypeIconFile</key>
+			<string>DAE</string>
+			<key>UTTypeIdentifier</key>
+			<string>org.khronos.collada.digital-asset-exchange</string>
+			<key>UTTypeReferenceURL</key>
+			<string></string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>dae</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.package</string>
+				<string>public.composite-content</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Digital Asset Exchange (DAE) Document with Attachments</string>
+			<key>UTTypeIconFile</key>
+			<string>DAED</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.markdouma.daed</string>
+			<key>UTTypeReferenceURL</key>
+			<string></string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>daed</string>
 				</array>
 			</dict>
 		</dict>
