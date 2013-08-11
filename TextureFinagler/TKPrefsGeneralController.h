@@ -6,10 +6,10 @@
 //  Copyright 2010 Mark Douma LLC. All rights reserved.
 //
 
-#import "TKController.h"
+#import "TKViewController.h"
 
 
-@interface TKPrefsGeneralController : TKController {
+@interface TKPrefsGeneralController : TKViewController {
 	IBOutlet NSButton		*openMainWindowCheckbox;
 	IBOutlet NSButton		*openDocumentCheckbox;
 	

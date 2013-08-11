@@ -14,7 +14,14 @@
 @implementation TKPrefsGeneralController
 
 
+- (NSString *)title {
+	return NSLocalizedString(@"General", @"");
+}
+
+
 - (void)awakeFromNib {
+	
+	resizable = NO;
 	
 	if ([[[NSUserDefaults standardUserDefaults] objectForKey:TKLaunchTimeActionKey] unsignedIntegerValue] & TKLaunchTimeActionOpenMainWindow) {
 		[openMainWindowCheckbox setState:NSOnState];
@@ -24,7 +31,6 @@
 		[openDocumentCheckbox setState:NSOnState];
 	}
 }
-
 
 
 - (IBAction)changeLaunchTimeOptions:(id)sender {
