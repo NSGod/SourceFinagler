@@ -9,17 +9,14 @@
 //#if TARGET_CPU_X86 || TARGET_CPU_X86_64
 
 #import "MDSteamAppsRelocatorController.h"
-#import "MDAppKitAdditions.h"
-#import "MDFoundationAdditions.h"
+#import "TKAppKitAdditions.h"
+//#import "MDFolderManager.h"
 #import "MDFolderManager.h"
 #import "VSSteamManager.h"
 #import "MDProcessManager.h"
 
 
-#define VS_DEBUG 0
-
-
-static NSString * const MDSteamAppsRelocatorViewSizeKey = @"MDSteamAppsRelocatorViewSize";
+#define VS_DEBUG 1
 
 
 // default "SteamApps" path is now
@@ -28,16 +25,20 @@ static NSString * const MDSteamAppsRelocatorViewSizeKey = @"MDSteamAppsRelocator
 
 NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 
+
+
 @implementation MDSteamAppsRelocatorController
 
-@synthesize currentURL, newPath, canCreate, steamIsRunning;
+@synthesize currentURL;
+@synthesize proposedNewPath;
+@synthesize canCreate;
+@synthesize steamIsRunning;
+@synthesize steamDidLaunch;
+
+
 
 - (id)init {
 	if ((self = [super init])) {
-		currentURL = nil;
-		newPath = nil;
-		resizable = YES;
-		
 		steamManager = [[VSSteamManager defaultManager] retain];
 		
 		NSString *currentPath = [steamManager steamAppsPath];
@@ -46,11 +47,7 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 			[self setCurrentURL:[NSURL fileURLWithPath:currentPath]];
 		} 
 		
-		[self setNewPath:nil];
-		[self setCanCreate:NO];
-		
-		[self setSteamIsRunning:(MDInfoForProcessWithBundleIdentifier(MDSteamBundleIdentifierKey) ? YES : NO)];
-		
+		[self setSteamIsRunning:MDInfoForProcessWithBundleIdentifier(MDSteamBundleIdentifierKey) != nil];
 		
 		[[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(applicationDidLaunch:) name:NSWorkspaceDidLaunchApplicationNotification object:nil];
 		[[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(applicationDidTerminate:) name:NSWorkspaceDidTerminateApplicationNotification object:nil];
@@ -61,10 +58,20 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 
 - (void)dealloc {
 	[currentURL release];
-	[newPath release];
+	[proposedNewPath release];
 	[steamManager release];
 	[[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
 	[super dealloc];
+}
+
+
+- (NSString *)title {
+	return NSLocalizedString(@"Steam Apps Re-locator", @"");
+}
+
+
+- (NSString *)viewSizeAutosaveName {
+	return @"steamAppsRelocatorView";
 }
 
 
@@ -72,12 +79,11 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	minWinSize = [view frame].size;
-	minWinSize.height += 22.0;
-	maxWinSize = NSMakeSize(16000, minWinSize.height);
+	minWinSize = [TKViewController windowSizeForViewWithSize:self.view.frame.size];
+	maxWinSize = NSMakeSize(FLT_MAX, minWinSize.height);
 	
 	if (steamIsRunning) {
-		[statusField setStringValue:@"Steam cannot be running"];
+		[statusField setStringValue:NSLocalizedString(@"Steam cannot be running", @"")];
 	}
 }
 
@@ -89,10 +95,33 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 	NSDictionary *userInfo = [notification userInfo];
 	if ([[userInfo objectForKey:@"NSApplicationBundleIdentifier"] isEqualToString:MDSteamBundleIdentifierKey]) {
 		[self setSteamIsRunning:YES];
-		[statusField setStringValue:@"Steam cannot be running"];
+		[statusField setStringValue:NSLocalizedString(@"Steam cannot be running", @"")];
+		
+		if (currentURL == nil) {
+			steamDidLaunch = YES;
+			[self performSelector:@selector(updateSteamPath:) withObject:nil afterDelay:5.0];
 	}
-	
+	}
 }
+	
+
+- (void)updateSteamPath:(id)sender {
+#if VS_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (steamDidLaunch) {
+		NSString *currentPath = [steamManager steamAppsPath];
+		if (currentPath) {
+			[self setCurrentURL:[NSURL fileURLWithPath:currentPath]];
+			steamDidLaunch = NO;
+			
+		} else {
+			
+			[self performSelector:@selector(updateSteamPath:) withObject:nil afterDelay:5.0];
+}
+	}
+}
+
 
 - (void)applicationDidTerminate:(NSNotification *)notification {
 #if VS_DEBUG
@@ -123,29 +152,30 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 }
 
 
-- (void)appControllerDidLoadNib:(id)sender {
-#if VS_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSUserDefaults *uD = [NSUserDefaults standardUserDefaults];
-	if ([uD objectForKey:MDSteamAppsRelocatorViewSizeKey] == nil) [uD setObject:[view stringWithSavedFrame] forKey:MDSteamAppsRelocatorViewSizeKey];
-	[view setFrameFromString:[uD objectForKey:MDSteamAppsRelocatorViewSizeKey]];
-	[super appControllerDidLoadNib:self];
-}
+//- (void)appControllerDidLoadNib:(id)sender {
+//#if VS_DEBUG
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//#endif
+//	NSUserDefaults *uD = [NSUserDefaults standardUserDefaults];
+//	if ([uD objectForKey:MDSteamAppsRelocatorViewSizeKey] == nil) [uD setObject:[self.view stringWithSavedFrame] forKey:MDSteamAppsRelocatorViewSizeKey];
+//	[self.view setFrameFromString:[uD objectForKey:MDSteamAppsRelocatorViewSizeKey]];
+//	[super appControllerDidLoadNib:self];
+//}
 
-- (void)cleanup {
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-	[[NSUserDefaults standardUserDefaults] setObject:[view stringWithSavedFrame] forKey:MDSteamAppsRelocatorViewSizeKey];
-}
+
+//- (void)cleanup {
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	[[NSUserDefaults standardUserDefaults] setObject:[self.view stringWithSavedFrame] forKey:MDSteamAppsRelocatorViewSizeKey];
+//}
 
 
 - (void)controlTextDidChange:(NSNotification *)notification {
 //	NSLog(@"[%@ %@] newPath == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), newPath);
-	[self setNewPath:[[newPathField stringValue] stringByStandardizingPath]];
+	[self setProposedNewPath:[[newPathField stringValue] stringByStandardizingPath]];
 	
 	NSString *status = nil;
 	
-	BOOL isValid = [steamManager isProposedRelocationPathValid:newPath errorDescription:&status];
+	BOOL isValid = [steamManager isProposedRelocationPathValid:proposedNewPath errorDescription:&status];
 	
 	[self setCanCreate:isValid];
 	if (status) {
@@ -174,7 +204,6 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 			NSLog(@"returning no");
 			return NO;
 		}
-		
 	}
 	
 	if ([filename isEqualToString:[steamManager defaultSteamAppsPath]]) {
@@ -182,8 +211,6 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 	}
 	return YES;
 }
-
-
 
 
 - (IBAction)browse:(id)sender {
@@ -199,24 +226,26 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 													delegate:self];
 	[openPanel setResolvesAliases:NO];
 	
-	NSInteger result = [openPanel runModalForDirectory:nil file:nil types:nil];
+	NSInteger result = [openPanel runModal];
 	
-	if (result == NSOKButton) {
-		NSArray *filePaths = [openPanel filenames];
-		NSString *filePath = [filePaths objectAtIndex:0];
-		if (filePaths && [filePaths count]) {
-			[self setNewPath:filePath];
+	if (result == NSFileHandlingPanelOKButton) {
+		NSArray *fileURLs = [openPanel URLs];
+		if (fileURLs && [fileURLs count]) {
+			NSString *filePath = [[fileURLs objectAtIndex:0] path];
+			[self setProposedNewPath:filePath];
 		}
 		
 		NSString *status = nil;
 		
-		BOOL isValid = [steamManager isProposedRelocationPathValid:newPath errorDescription:&status];
+		BOOL isValid = [steamManager isProposedRelocationPathValid:proposedNewPath errorDescription:&status];
 		
 		[self setCanCreate:isValid];
 		if (status) {
 			[statusField setStringValue:status];
 		}
 	}
+	
+//	NSInteger result = [openPanel runModalForDirectory:nil file:nil types:nil];
 }
 
 
@@ -225,10 +254,10 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSError *error = nil;
-	if ([steamManager relocateSteamAppsToPath:newPath error:&error]) {
+	if ([steamManager relocateSteamAppsToPath:proposedNewPath error:&error]) {
 		[statusField setStringValue:@"Success"];
 		[self setCanCreate:NO];
-		[self setCurrentURL:[NSURL fileURLWithPath:newPath]];
+		[self setCurrentURL:[NSURL fileURLWithPath:proposedNewPath]];
 		[statusField performSelector:@selector(setStringValue:) withObject:@"" afterDelay:10.0];
 		
 	} else {

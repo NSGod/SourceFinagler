@@ -8,27 +8,34 @@
 
 //#if TARGET_CPU_X86 || TARGET_CPU_X86_64
 
-#import "MDController.h"
+#import "TKViewController.h"
 
 @class VSSteamManager;
 
-@interface MDSteamAppsRelocatorController : MDController <NSOpenSavePanelDelegate> {
+
+
+@interface MDSteamAppsRelocatorController : TKViewController <NSOpenSavePanelDelegate> {
+	
 	IBOutlet NSTextField		*statusField;
 	IBOutlet NSTextField		*newPathField;
 	
 	NSURL						*currentURL;
-	NSString					*newPath;
+	NSString					*proposedNewPath;
+	
+	VSSteamManager				*steamManager;
+	
 	BOOL						canCreate;
 	
 	BOOL						steamIsRunning;
 	
-	VSSteamManager				*steamManager;
+	BOOL						steamDidLaunch;
 }
 
-@property (assign) BOOL canCreate;
-@property (retain) NSURL *currentURL;
-@property (retain) NSString *newPath;
-@property (assign) BOOL steamIsRunning;
+@property (nonatomic, assign) BOOL canCreate;
+@property (nonatomic, retain) NSURL *currentURL;
+@property (nonatomic, retain) NSString *proposedNewPath;
+@property (nonatomic, assign) BOOL steamIsRunning;
+@property (nonatomic, assign) BOOL steamDidLaunch;
 
 - (IBAction)browse:(id)sender;
 - (IBAction)createSteamAppsShortcut:(id)sender;
