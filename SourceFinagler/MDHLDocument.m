@@ -14,7 +14,7 @@
 
 #import <HLKit/HLKit.h>
 
-#import "MDAppController.h"
+#import "TKAppController.h"
 #import "MDViewOptionsController.h"
 
 #import "MDMetalBevelView.h"
@@ -25,7 +25,7 @@
 #import "MDBrowser.h"
 #import "MDBrowserCell.h"
 
-#import "MDAppKitAdditions.h"
+#import "TKAppKitAdditions.h"
 
 #import "MDUserDefaults.h"
 #import "MDBottomBar.h"
@@ -42,8 +42,8 @@
 
 
 
-//#define MD_DEBUG 1
-#define MD_DEBUG 0
+#define MD_DEBUG 1
+//#define MD_DEBUG 0
 
 
 NSString * const MDHLDocumentErrorDomain			= @"MDHLDocumentErrorDomain";
@@ -119,7 +119,7 @@ static NSInteger copyTag = 0;
 + (void)initialize {
 	SInt32 MDFullSystemVersion = 0;
 	Gestalt(gestaltSystemVersion, &MDFullSystemVersion);
-	MDSystemVersion = MDFullSystemVersion & 0xfffffff0;
+	TKSystemVersion = MDFullSystemVersion & 0xfffffff0;
 }
 
 
@@ -155,7 +155,7 @@ static NSInteger copyTag = 0;
 				
 		copyOperationsAndTags = [[NSMutableDictionary alloc] init];
 		
-		if (MDSystemVersion >= MDLeopard) {
+		if (TKSystemVersion >= TKLeopard) {
 			if (!MDPerformingBatchOperation) {
 				NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsLeopardKey forAppIdentifier:MDSystemSoundEffectsLeopardBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
 				
@@ -205,6 +205,12 @@ static NSInteger copyTag = 0;
 		case (HKArchiveFileVPKType) : {
 			[self setKind:NSLocalizedString(@"Source Addon file", @"")];
 			file = [[HKVPKFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
+			break;
+		}
+			
+		case (HKArchiveFileSGAType) : {
+			[self setKind:NSLocalizedString(@"Source Game Archive", @"")];
+			file = [[HKSGAFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 			
@@ -281,7 +287,6 @@ static NSInteger copyTag = 0;
 	
 //	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:NSStringFromDefaultsKeyPath(MDShouldShowInvisibleItemsKey)];
 	
-	[searchResults release];
 	
 	[outlineViewMenuShowQuickLookMenuItem release];
 	
@@ -299,11 +304,19 @@ static NSInteger copyTag = 0;
 	[actionButtonShowQuickLookMenuItem release];
 	[actionButtonShowViewOptionsMenuItem release];
 	
-	[image release];
-	
-	[searchPredicate release];
+	[file release];
 	
 	[copyOperationsAndTags release];
+	
+	[searchResults release];
+	[searchPredicate release];
+	
+	[image release];
+	
+	[version release];
+	
+	[kind release];
+	
 	
 //	[browserPreviewViewController release];
 	
@@ -312,10 +325,10 @@ static NSInteger copyTag = 0;
 
 
 - (NSString *)windowNibName {
-	if (MDSystemVersion >= MDSnowLeopard) {
-		return @"MDHLDocumentSnowLeopard";
+	if (TKSystemVersion >= TKLion) {
+		return @"MDHLDocumentLion";
 	}
-	return @"MDHLDocumentLeopard";
+	return @"MDHLDocumentSnowLeopard";
 }
 
 
@@ -339,7 +352,7 @@ static NSInteger copyTag = 0;
 	[outlineViewMenuShowViewOptionsMenuItem retain];
 	
 
-	if (MDSystemVersion >= MDSnowLeopard) {
+	if (TKSystemVersion >= TKSnowLeopard) {
 		browserMenuShowQuickLookMenuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Quick Look", @"") action:@selector(toggleShowQuickLook:) keyEquivalent:@""];
 		[browserMenuShowInspectorMenuItem retain];
 		[browserMenuShowViewOptionsMenuItem retain];
@@ -626,12 +639,12 @@ static NSInteger copyTag = 0;
 			HKItem *parent = [browser parentForItemsInColumn:targetColumn];
 			
 			if (parent) {
-				totalCount = [NSNumber numberWithUnsignedInteger:(NSUInteger) (shouldShowInvisibleItems ? [parent countOfChildren] : [parent countOfVisibleChildren])];
+				totalCount = [NSNumber numberWithUnsignedInteger:(NSUInteger) (shouldShowInvisibleItems ? [parent countOfChildNodes] : [parent countOfVisibleChildNodes])];
 			} else {
-				totalCount = [NSNumber numberWithUnsignedInteger:(NSUInteger) (shouldShowInvisibleItems ? [[file items] countOfChildren] : [[file items] countOfVisibleChildren])];
+				totalCount = [NSNumber numberWithUnsignedInteger:(NSUInteger) (shouldShowInvisibleItems ? [[file items] countOfChildNodes] : [[file items] countOfVisibleChildNodes])];
 			}
 		} else {
-			totalCount = [NSNumber numberWithUnsignedInteger:(NSUInteger) (shouldShowInvisibleItems ? [[file items] countOfChildren] : [[file items] countOfVisibleChildren])];
+			totalCount = [NSNumber numberWithUnsignedInteger:(NSUInteger) (shouldShowInvisibleItems ? [[file items] countOfChildNodes] : [[file items] countOfVisibleChildNodes])];
 //			NSLog(@"[%@ %@] must implement", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 	
 		}
@@ -643,9 +656,6 @@ static NSInteger copyTag = 0;
 }
 
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)aWindow {
-//	if (aWindow == hlWindow) {
-//		NSLog(@" \"%@\" [%@ %@] aWindow == documentWindow", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//	}
 	return [[NSApp delegate] globalUndoManager];
 }
 
@@ -938,7 +948,7 @@ static NSInteger copyTag = 0;
 //	NSLog(@" \"%@\" [%@ %@] item == %@", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), item);
 #endif
 	HKItem *node = (item == nil ? [file items] : item);
-	if (node) return (shouldShowInvisibleItems ? [node countOfChildren] : [node countOfVisibleChildren]);
+	if (node) return (shouldShowInvisibleItems ? [node countOfChildNodes] : [node countOfVisibleChildNodes]);
 	return 0;
 }
 
@@ -949,7 +959,7 @@ static NSInteger copyTag = 0;
 //	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	HKItem *node = (item == nil ? [file items] : item);
-	if (node) return (shouldShowInvisibleItems ? [node childAtIndex:index] : [node visibleChildAtIndex:index]);
+	if (node) return (shouldShowInvisibleItems ? [node childNodeAtIndex:index] : [node visibleChildNodeAtIndex:index]);
 	return nil;
 }
 
@@ -1044,18 +1054,18 @@ static NSInteger copyTag = 0;
 			outlineViewItemCount = 0;
 			node = [file items];
 			if (node) {
-				outlineViewItemCount += (shouldShowInvisibleItems ? [node countOfChildren] : [node countOfVisibleChildren]);
+				outlineViewItemCount += (shouldShowInvisibleItems ? [node countOfChildNodes] : [node countOfVisibleChildNodes]);
 			}
 		}
 		
 	} else {
 		node = item;
 		if (outlineViewIsReloadingData) {
-			outlineViewItemCount += (shouldShowInvisibleItems ? [node countOfChildren] : [node countOfVisibleChildren]);
+			outlineViewItemCount += (shouldShowInvisibleItems ? [node countOfChildNodes] : [node countOfVisibleChildNodes]);
 		}
 	}
 	if (node) {
-		return (shouldShowInvisibleItems ? [node countOfChildren] : [node countOfVisibleChildren]);
+		return (shouldShowInvisibleItems ? [node countOfChildNodes] : [node countOfVisibleChildNodes]);
 	}
 	return 0;
 	
@@ -1076,7 +1086,7 @@ static NSInteger copyTag = 0;
 		node = item;
 	}
 	if (node) {
-		return (shouldShowInvisibleItems ? [node childAtIndex:index] : [node visibleChildAtIndex:index]);
+		return (shouldShowInvisibleItems ? [node childNodeAtIndex:index] : [node visibleChildNodeAtIndex:index]);
 	}
 	return nil;
 }
@@ -1236,7 +1246,7 @@ static NSInteger copyTag = 0;
 #endif
 	NSDictionary *userInfo = [notification userInfo];
 	HKItem *item = [userInfo objectForKey:@"NSObject"];
-	outlineViewItemCount += (shouldShowInvisibleItems ? [item countOfChildren] : [item countOfVisibleChildren]);
+	outlineViewItemCount += (shouldShowInvisibleItems ? [item countOfChildNodes] : [item countOfVisibleChildNodes]);
 	[self updateCount];
 }
 
@@ -1247,7 +1257,7 @@ static NSInteger copyTag = 0;
 #endif
 	NSDictionary *userInfo = [notification userInfo];
 	HKItem *item = [userInfo objectForKey:@"NSObject"];
-	outlineViewItemCount -= (shouldShowInvisibleItems ? [item countOfChildren] : [item countOfVisibleChildren]);
+	outlineViewItemCount -= (shouldShowInvisibleItems ? [item countOfChildNodes] : [item countOfVisibleChildNodes]);
 	[self updateCount];
 }
 
@@ -1331,12 +1341,18 @@ static NSInteger copyTag = 0;
 	
 	if (items && [items count]) {
 		
+		NSDate *startDate = [NSDate date];
+		
 #if MD_DEBUG
 //		NSUInteger dragEventModifiers = [[NSApp currentEvent] modifierFlags];
 //		NSLog(@" \"%@\" [%@ %@] dragEventModifiers == %lu", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)dragEventModifiers);
 #endif
 		
 		NSDictionary *simplifiedItemsAndPaths = [self simplifiedItemsAndPathsForItems:items resultingNames:&resultingNames];
+		NSTimeInterval elapsedTime = fabs([startDate timeIntervalSinceNow]);
+		
+		NSLog(@"[%@ %@] elapsed time to gather %lu items == %.7f sec / %.4f ms", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)[simplifiedItemsAndPaths count], elapsedTime, elapsedTime * 1000.0);
+		
 		
 		if (simplifiedItemsAndPaths == nil) {
 			return nil;
@@ -1377,10 +1393,8 @@ static NSInteger copyTag = 0;
 	[NSThread detachNewThreadSelector:@selector(performCopyOperationWithTagInBackground:) toTarget:self withObject:aTag];
 }
 
-
-
-//#define MD_PROGRESS_UPDATE_TIME_INTERVAL 1.0
 #define MD_PROGRESS_UPDATE_TIME_INTERVAL 0.5
+
 
 - (void)performCopyOperationWithTagInBackground:(id)sender {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -1406,14 +1420,23 @@ static NSInteger copyTag = 0;
 			NSDictionary *itemsAndPaths = [copyOperation itemsAndPaths];
 			NSArray *allItems = [itemsAndPaths allValues];
 			
+			
 			unsigned long long totalBytes = 0;
 			unsigned long long currentBytes = 0;
+			
+			
+			NSDate *startDate = [NSDate date];
+			
 			
 			for (HKItem *item in allItems) {
 				if ([item isLeaf]) {
 					totalBytes += [[item size] unsignedLongLongValue];
 				}
 			}
+			
+			NSTimeInterval elapsedTime = fabs([startDate timeIntervalSinceNow]);
+			
+			NSLog(@"[%@ %@] elapsed time to size %lu items == %.7f sec / %.4f ms", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)[allItems count], elapsedTime, elapsedTime * 1000.0);
 			
 			NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
 										copyOperation,MDCopyOperationKey,
@@ -1564,6 +1587,7 @@ static NSInteger copyTag = 0;
 }
 
 
+
 - (void)updateProgressWithDictionary:(NSDictionary *)dictionary {
 //	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 	
@@ -1647,7 +1671,6 @@ static NSInteger copyTag = 0;
 		}
 	}
 }
-
 
 - (NSDictionary *)simplifiedItemsAndPathsForItems:(NSArray *)items resultingNames:(NSArray **)resultingNames {
 #if MD_DEBUG
@@ -1809,7 +1832,7 @@ static NSInteger copyTag = 0;
 		if ([[NSApp orderedDocuments] count] == 1) {
 //			NSLog(@" \"%@\" [MDHLDocument windowWillClose:] one window left",  [self displayName]);
 			
-			[[NSNotificationCenter defaultCenter] postNotificationName:MDLastWindowDidCloseNotification
+			[[NSNotificationCenter defaultCenter] postNotificationName:TKLastWindowDidCloseNotification
 																object:self
 															  userInfo:nil];
 		}
