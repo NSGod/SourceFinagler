@@ -10,7 +10,7 @@
 
 
 @interface HKFolder : HKItem {
-	NSUInteger			countOfVisibleChildren;
+	NSUInteger			countOfVisibleChildNodes;
 	
 @private
 	void *_privateData;

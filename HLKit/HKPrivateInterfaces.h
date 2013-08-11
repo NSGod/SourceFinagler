@@ -33,7 +33,8 @@ static const HKArchiveFilePackagePair HKArchiveFilePackagePairTable[] = {
 	{ HKArchiveFileXZPType, HL_PACKAGE_XZP },
 	{ HKArchiveFileZIPType, HL_PACKAGE_ZIP },
 	{ HKArchiveFileNCFType, HL_PACKAGE_NCF },
-	{ HKArchiveFileVPKType, HL_PACKAGE_VPK }
+	{ HKArchiveFileVPKType, HL_PACKAGE_VPK },
+	{ HKArchiveFileVPKType, HL_PACKAGE_SGA }
 };
 static const NSUInteger HKArchiveFilePackagePairTableCount = sizeof(HKArchiveFilePackagePairTable);
 

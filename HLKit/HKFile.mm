@@ -39,7 +39,7 @@ using namespace HLLib::Streams;
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if ((self = [super initWithParent:aParent children:nil sortDescriptors:nil container:aContainer])) {
+	if ((self = [super initWithParent:aParent childNodes:nil sortDescriptors:nil container:aContainer])) {
 		_privateData = aFile;
 		
 		isExtractable = static_cast<const CDirectoryFile *>(_privateData)->GetExtractable();
@@ -133,7 +133,7 @@ using namespace HLLib::Streams;
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-		if (kind == nil) {
+	if (kind == nil) {
 		kind = [[[NSWorkspace sharedWorkspace] localizedDescriptionForType:[self type]] retain];
 		if (kind == nil) {
 			LSCopyKindStringForTypeInfo(kLSUnknownType, kLSUnknownCreator, (CFStringRef)[self nameExtension], (CFStringRef *)&kind);

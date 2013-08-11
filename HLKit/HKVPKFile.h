@@ -15,7 +15,7 @@
 	NSUInteger		addonGameID;
 }
 
-@property (assign, readonly) NSUInteger archiveCount;
-@property (assign, readonly) NSUInteger	addonGameID;
+@property (nonatomic, readonly, assign) NSUInteger archiveCount;
+@property (nonatomic, readonly, assign) NSUInteger	addonGameID;
 
 @end

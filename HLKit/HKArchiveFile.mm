@@ -15,21 +15,15 @@
 
 using namespace HLLib;
 
-#define HK_DEBUG 0
+#define HK_DEBUG 1
 
 #define HK_DEFAULT_PACKAGE_TEST_LENGTH 8
-
-#define HK_USE_BLOCKS 0
-
-#if HK_USE_BLOCKS
-#else
-#endif
 
 
 typedef struct HKArchiveFileTest {
 	HKArchiveFileType	fileType;
-	NSUInteger		testDataLength;
-	unsigned char	testData[HK_DEFAULT_PACKAGE_TEST_LENGTH];
+	NSUInteger			testDataLength;
+	unsigned char		testData[HK_DEFAULT_PACKAGE_TEST_LENGTH];
 } HKArchiveFileTest;
 
 
@@ -38,6 +32,7 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 	{ HKArchiveFileGCFType, 8, { 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00 } },
 	{ HKArchiveFileNCFType, 8, { 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00 } },
 	{ HKArchiveFilePAKType, 4, { 'P', 'A', 'C', 'K' } },
+	{ HKArchiveFileSGAType, 8, { '_', 'A', 'R', 'C', 'H', 'I', 'V', 'E' } },
 	{ HKArchiveFileVBSPType, 4, { 'V', 'B', 'S', 'P' } },
 	{ HKArchiveFileVPKType, 4, { 0x34, 0x12, 0xaa, 0x55} },
 	{ HKArchiveFileWADType, 4, { 'W', 'A', 'D', '3' } },
@@ -51,7 +46,11 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 
 
 
-@synthesize filePath, fileType, haveGatheredAllItems, isReadOnly, version;
+@synthesize filePath;
+@synthesize fileType;
+@synthesize haveGatheredAllItems;
+@synthesize isReadOnly;
+@synthesize version;
 
 
 + (HKArchiveFileType)fileTypeForData:(NSData *)aData {
@@ -72,7 +71,8 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 
 
 - (id)initWithContentsOfFile:(NSString *)aPath {
-	return [self initWithContentsOfFile:aPath mode:HL_MODE_READ | HL_MODE_VOLATILE | HL_MODE_QUICK_FILEMAPPING showInvisibleItems:YES sortDescriptors:nil error:NULL];
+//	return [self initWithContentsOfFile:aPath mode:HL_MODE_READ | HL_MODE_VOLATILE | HL_MODE_QUICK_FILEMAPPING showInvisibleItems:YES sortDescriptors:nil error:NULL];
+	return [self initWithContentsOfFile:aPath mode:HL_MODE_READ | HL_MODE_VOLATILE showInvisibleItems:YES sortDescriptors:nil error:NULL];
 }
 
 - (id)initWithContentsOfFile:(NSString *)aPath showInvisibleItems:(BOOL)showInvisibleItems sortDescriptors:(NSArray *)sortDescriptors  error:(NSError **)outError {
@@ -143,20 +143,14 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 		NSDate *startDate = [[NSDate date] retain];
 		
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
-		NSMutableArray *gatheredItems = [NSMutableArray array];
+		
+		NSMutableArray *gatheredItems = [[NSMutableArray alloc] init];
 		
 		[gatheredItems addObject:items];
 		
-		NSArray *children = [items children];
+		NSArray *childNodes = [items childNodes];
 		
-#if HK_USE_BLOCKS
-		[children enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(HKItem *item, NSUInteger idx, BOOL *stop) {
-			[gatheredItems addObject:item];
-			if (![item isLeaf]) [gatheredItems addObjectsFromArray:[item descendants]];
-		}];
-#else
-		for (HKItem *item in children) {
+		for (HKItem *item in childNodes) {
 			
 			[gatheredItems addObject:item];
 			
@@ -164,9 +158,9 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 				[gatheredItems addObjectsFromArray:[item descendants]];
 			}
 		}
-#endif
+		allItems = gatheredItems;
 		
-		allItems = [gatheredItems copy];
+//		allItems = [gatheredItems copy];
 		
 		[pool release];
 		

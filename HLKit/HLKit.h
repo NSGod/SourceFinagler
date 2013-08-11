@@ -13,6 +13,7 @@
 #import <HLKit/HKGCFFile.h>
 #import <HLKit/HKNCFFile.h>
 #import <HLKit/HKPAKFile.h>
+#import <HLKit/HKSGAFile.h>
 #import <HLKit/HKVPKFile.h>
 #import <HLKit/HKWADFile.h>
 #import <HLKit/HKXZPFile.h>
