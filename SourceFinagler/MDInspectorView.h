@@ -86,8 +86,8 @@ extern NSString * const MDInspectorViewDidHideNotification;
 //@property (assign, setter=setInitiallyShown:) BOOL isInitiallyShown;
 
 
-- (NSString *)identifier						DEPRECATED_ATTRIBUTE;
-- (void)setIdentifier:(NSString *)anIdentifier	DEPRECATED_ATTRIBUTE;
+//- (NSString *)identifier						DEPRECATED_ATTRIBUTE;
+//- (void)setIdentifier:(NSString *)anIdentifier	DEPRECATED_ATTRIBUTE;
 
 - (void)changeWindowHeightBy:(CGFloat)value;
 
