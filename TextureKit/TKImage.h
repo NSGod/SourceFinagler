@@ -3,7 +3,7 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 11/5/2010.
-//  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2013 Mark Douma LLC. All rights reserved.
 //
 
 #import <AppKit/NSImage.h>
@@ -24,63 +24,75 @@ typedef NSUInteger TKImageType;
 
 // In VTF images:
 // 
-// if sliceCount (depth) > 1, the image must have a single face, frame, and mipmap level
+//// if sliceCount (depth) > 1, the image must have a single face, frame, and mipmap level
+// if sliceCount (depth) > 0, the image must have a single face, frame, and mipmap level
 
-TEXTUREKIT_EXTERN NSString * const TKSFTextureImageType;
-TEXTUREKIT_EXTERN NSString * const TKSFTextureImageFileType;
+TEXTUREKIT_EXTERN NSString * const TKSFTextureImageType;		// UTI Type
+TEXTUREKIT_EXTERN NSString * const TKSFTextureImageFileType;	// filename extension
 TEXTUREKIT_EXTERN NSString * const TKSFTextureImagePboardType;
 
-extern NSData * TKSFTextureImageMagicData;
+TEXTUREKIT_EXTERN NSData * TKSFTextureImageMagicData;
 
+// 80 / 160
+// 72 / 136
 
 @interface TKImage : NSImage <NSCoding, NSCopying> {
-	NSUInteger				sliceCount;
-	BOOL					isDepthTexture;
 	
-	NSUInteger				faceCount;
-	BOOL					isCubemap;
-	BOOL					isSpheremap;
+@private
+	id _private;
 	
-	NSUInteger				frameCount;
-	BOOL					isAnimated;
+@protected
 	
-	NSUInteger				mipmapCount;
-	BOOL					hasMipmaps;
-	
-	BOOL					hasAlpha;
+	NSMutableDictionary		*reps;
 	
 	NSString				*version;
 	NSString				*compression;
 	
-	NSMutableDictionary		*reps;
+	NSUInteger				sliceCount;
 	
-	TKImageType				type;
+	NSUInteger				faceCount;
 	
-@private
-	id _private;
+	NSUInteger				frameCount;
+	
+	NSUInteger				mipmapCount;
+	
+	TKImageType				imageType;
+	
+	BOOL					isDepthTexture;
+	
+	BOOL					isCubemap;
+	BOOL					isSpheremap;
+	
+	BOOL					isAnimated;
+	
+	BOOL					hasMipmaps;
+	
+	BOOL					hasAlpha;
+
 }
 
 - (id)initWithData:(NSData *)aData firstRepresentationOnly:(BOOL)firstRepOnly;
 
 - (void)removeRepresentations:(NSArray *)imageReps;
 
-@property (assign, readonly) NSUInteger sliceCount;
-@property (assign, readonly) NSUInteger faceCount;
-@property (assign, readonly) NSUInteger frameCount;
-@property (assign, readonly) NSUInteger mipmapCount;
 
-@property (assign, readonly) BOOL isDepthTexture;
-@property (assign, readonly) BOOL isAnimated;
-@property (assign, readonly) BOOL isSpheremap;
-@property (assign, readonly) BOOL isCubemap;
-@property (assign, readonly) BOOL hasMipmaps;
+@property (readonly, nonatomic, assign) NSUInteger sliceCount;
+@property (readonly, nonatomic, assign) NSUInteger faceCount;
+@property (readonly, nonatomic, assign) NSUInteger frameCount;
+@property (readonly, nonatomic, assign) NSUInteger mipmapCount;
+
+@property (readonly, nonatomic, assign) BOOL isDepthTexture;
+@property (readonly, nonatomic, assign) BOOL isAnimated;
+@property (readonly, nonatomic, assign) BOOL isSpheremap;
+@property (readonly, nonatomic, assign) BOOL isCubemap;
+@property (readonly, nonatomic, assign) BOOL hasMipmaps;
 
 
-@property (assign, setter=setAlpha:) BOOL hasAlpha;
-@property (retain) NSString *version;
-@property (retain) NSString *compression;
+@property (nonatomic, assign, setter=setAlpha:) BOOL hasAlpha;
+@property (nonatomic, retain) NSString *version;
+@property (nonatomic, retain) NSString *compression;
 
-@property (assign) TKImageType type;
+@property (nonatomic, assign) TKImageType imageType;
 
 
 - (NSIndexSet *)allSliceIndexes;
@@ -88,70 +100,84 @@ extern NSData * TKSFTextureImageMagicData;
 - (NSIndexSet *)allFrameIndexes;
 - (NSIndexSet *)allMipmapIndexes;
 
+- (NSIndexSet *)mipmapIndexes;
+
 - (NSIndexSet *)firstSliceIndexSet;
 - (NSIndexSet *)firstFaceIndexSet;
 - (NSIndexSet *)firstFrameIndexSet;
 - (NSIndexSet *)firstMipmapIndexSet;
 
 
-
-
+/* for depth texture images */
 - (TKImageRep *)representationForSliceIndex:(NSUInteger)sliceIndex;
 - (void)setRepresentation:(TKImageRep *)representation forSliceIndex:(NSUInteger)sliceIndex;
 - (void)removeRepresentationForSliceIndex:(NSUInteger)sliceIndex;
 
 
 
+/* for static, non-animated texture images */
 - (TKImageRep *)representationForMipmapIndex:(NSUInteger)mipmapIndex;
 - (void)setRepresentation:(TKImageRep *)representation forMipmapIndex:(NSUInteger)mipmapIndex;
 - (void)removeRepresentationForMipmapIndex:(NSUInteger)mipmapIndex;
 
-//- (NSArray *)representationsForMipmapIndexes:(NSIndexSet *)mipmapIndexes;
-//- (void)setRepresentations:(NSArray *)representations forMipmapIndexes:(NSIndexSet *)mipmapIndexes;
-//- (void)removeRepresentationsForMipmapIndexes:(NSIndexSet *)mipmapIndexes;
+- (NSArray *)representationsForMipmapIndexes:(NSIndexSet *)mipmapIndexes;
+- (void)setRepresentations:(NSArray *)representations forMipmapIndexes:(NSIndexSet *)mipmapIndexes;
+- (void)removeRepresentationsForMipmapIndexes:(NSIndexSet *)mipmapIndexes;
 
 
 
+/* for animated (multi-frame) texture images */
 - (TKImageRep *)representationForFrameIndex:(NSUInteger)frameIndex mipmapIndex:(NSUInteger)mipmapIndex;
 - (void)setRepresentation:(TKImageRep *)representation forFrameIndex:(NSUInteger)frameIndex mipmapIndex:(NSUInteger)mipmapIndex;
 - (void)removeRepresentationForFrameIndex:(NSUInteger)frameIndex mipmapIndex:(NSUInteger)mipmapIndex;
 
-
-- (NSArray *)representationsForFrameIndexes:(NSIndexSet *)frameIndexes mipmapIndexes:(NSIndexSet *)mipmapIndexes;
+- (NSArray *)representationsForFrameIndexes:(NSIndexSet *)frameIndexes mipmapIndexes:(NSIndexSet *)mipmapIndexes;								/* USED	*/
 - (void)setRepresentations:(NSArray *)representations forFrameIndexes:(NSIndexSet *)frameIndexes mipmapIndexes:(NSIndexSet *)mipmapIndexes;
 - (void)removeRepresentationsForFrameIndexes:(NSIndexSet *)frameIndexes mipmapIndexes:(NSIndexSet *)mipmapIndexes;
 
-//- (NSArray *)representationsForFrameIndexes:(NSIndexSet *)frameIndexes;
-//- (NSArray *)representationsForFrameIndexes:(NSIndexSet *)frameIndexes includeMipmaps:(BOOL)includeMipmaps;
 
 
-- (TKImageRep *)representationForFace:(TKFace)aFace;
-- (void)setRepresentation:(TKImageRep *)representation forFace:(TKFace)aFace;
-- (void)removeRepresentationForFace:(TKFace)aFace;
 
+/* for multi-sided texture images */
 - (TKImageRep *)representationForFace:(TKFace)aFace mipmapIndex:(NSUInteger)mipmapIndex;
 - (void)setRepresentation:(TKImageRep *)representation forFace:(TKFace)aFace mipmapIndex:(NSUInteger)mipmapIndex;
 - (void)removeRepresentationForFace:(TKFace)aFace mipmapIndex:(NSUInteger)mipmapIndex;
 
+- (NSArray *)representationsForFaceIndexes:(NSIndexSet *)faceIndexes mipmapIndexes:(NSIndexSet *)mipmapIndexes;
+- (void)setRepresentations:(NSArray *)representations forFaceIndexes:(NSIndexSet *)faceIndexes mipmapIndexes:(NSIndexSet *)mipmapIndexes;
+- (void)removeRepresentationsForFaceIndexes:(NSIndexSet *)faceIndexes mipmapIndexes:(NSIndexSet *)mipmapIndexes;
+
+
+
+/* for animated (multi-frame), multi-sided texture images */
 - (TKImageRep *)representationForFace:(TKFace)aFace frameIndex:(NSUInteger)frameIndex mipmapIndex:(NSUInteger)mipmapIndex;
 - (void)setRepresentation:(TKImageRep *)representation forFace:(TKFace)aFace frameIndex:(NSUInteger)frameIndex mipmapIndex:(NSUInteger)mipmapIndex;
 - (void)removeRepresentationForFace:(TKFace)aFace frameIndex:(NSUInteger)frameIndex mipmapIndex:(NSUInteger)mipmapIndex;
 
+- (NSArray *)representationsForFaceIndexes:(NSIndexSet *)faceIndexes frameIndexes:(NSIndexSet *)frameIndexes mipmapIndexes:(NSIndexSet *)mipmapIndexes;
+- (void)setRepresentations:(NSArray *)representations forFaceIndexes:(NSIndexSet *)faceIndexes frameIndexes:(NSIndexSet *)frameIndexes mipmapIndexes:(NSIndexSet *)mipmapIndexes;
+- (void)removeRepresentationsForFaceIndexes:(NSIndexSet *)faceIndexes frameIndexes:(NSIndexSet *)frameIndexes mipmapIndexes:(NSIndexSet *)mipmapIndexes;
 
 
-- (NSData *)DDSRepresentation;
-- (NSData *)DDSRepresentationUsingFormat:(TKDDSFormat)aFormat quality:(TKDXTCompressionQuality)aQuality createMipmaps:(BOOL)createMipmaps;
 
-- (NSData *)VTFRepresentation;
-- (NSData *)VTFRepresentationUsingFormat:(TKVTFFormat)aFormat quality:(TKDXTCompressionQuality)aQuality createMipmaps:(BOOL)createMipmaps;
+
+- (void)generateMipmapsUsingFilter:(TKMipmapGenerationType)filterType;
+
+- (void)removeMipmaps;
+
+
+
+- (NSData *)DDSRepresentationWithOptions:(NSDictionary *)options;
+- (NSData *)DDSRepresentationUsingFormat:(TKDDSFormat)aFormat quality:(TKDXTCompressionQuality)aQuality options:(NSDictionary *)options;
+
+
+- (NSData *)VTFRepresentationWithOptions:(NSDictionary *)options;
+- (NSData *)VTFRepresentationUsingFormat:(TKVTFFormat)aFormat quality:(TKDXTCompressionQuality)aQuality options:(NSDictionary *)options;
 
 
 - (NSData *)dataForType:(NSString *)utiType properties:(NSDictionary *)properties;
 
 @end
-
-
-
 
 
 
