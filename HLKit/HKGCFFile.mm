@@ -12,7 +12,7 @@
 #import "HKPrivateInterfaces.h"
 #import <HL/HL.h>
 
-#define HK_DEBUG 1
+#define HK_DEBUG 0
 
 @implementation HKGCFFile
 

@@ -15,7 +15,7 @@
 
 using namespace HLLib;
 
-#define HK_DEBUG 1
+#define HK_DEBUG 0
 
 #define HK_DEFAULT_PACKAGE_TEST_LENGTH 8
 
