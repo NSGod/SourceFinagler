@@ -1,5 +1,5 @@
 //
-//  TKMaterial.h
+//  TKVMTMaterial.h
 //  Texture Kit
 //
 //  Created by Mark Douma on 1/17/2011.
@@ -13,7 +13,7 @@
 @class TKVMTNode;
 
 
-@interface TKMaterial : NSObject <NSCopying> {
+@interface TKVMTMaterial : NSObject <NSCopying> {
 	TKVMTNode		*rootNode;
 }
 
@@ -35,3 +35,5 @@
 
 
 @end
+
+
