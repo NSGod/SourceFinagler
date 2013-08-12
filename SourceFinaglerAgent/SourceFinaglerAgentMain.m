@@ -38,7 +38,7 @@ int main (int argc, const char * argv[]) {
 	
 	VSSteamManager *steamManager = [VSSteamManager defaultManager];
 	
-	NSArray *games = [steamManager games];
+	NSArray *games = steamManager.games;
 	
 	NSLog(@"games == %@", games);
 	
