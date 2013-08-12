@@ -3,7 +3,7 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 9/25/2010.
-//  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2013 Mark Douma LLC. All rights reserved.
 //
 
 #import <TextureKit/TKDDSImageRep.h>
@@ -14,62 +14,207 @@
 #import "TKFoundationAdditions.h"
 
 
-NSData *TKImageDataFromNSData(NSData *data, NSUInteger pixelCount, NSUInteger bitsPerPixel, CGBitmapInfo sourceBitmapInfo, CGBitmapInfo destinationBitmapInfo);
-NSData *TKBGRADataFromImageData(NSData *data, NSUInteger pixelCount, NSUInteger bitsPerPixel, CGBitmapInfo aCGBitmapInfo);
+static NSData *TKImageDataFromNSData(NSData *data, NSUInteger pixelCount, NSUInteger bitsPerPixel, CGBitmapInfo sourceBitmapInfo, CGBitmapInfo destinationBitmapInfo);
+static NSData *TKBGRADataFromImageData(NSData *data, NSUInteger pixelCount, NSUInteger bitsPerPixel, CGBitmapInfo aCGBitmapInfo);
 
-struct TKDDSFormatDescription {
+
+using namespace nv;
+using namespace nvtt;
+
+
+struct TKDDSFormatMapping {
 	TKDDSFormat		format;
+	D3DFORMAT		d3dFormat;
+	FOURCC			fourcc;
+	DXGI_FORMAT		dxgiFormat;
+	Format			ddsFormat;
+	TKPixelFormat	pixelFormat;
+	TKPixelFormat	nativePixelFormat;
 	NSString		*description;
 };
 	
-static const TKDDSFormatDescription TKDDSFormatDescriptionTable[] = {
-	{ TKDDSFormatRGB, @"RGB" },
-	{ TKDDSFormatRGBA, @"RGBA" },
-	{ TKDDSFormatDXT1, @"DXT1" },
-	{ TKDDSFormatDXT1a, @"DXT1a" },
-	{ TKDDSFormatDXT3, @"DXT3" },
-	{ TKDDSFormatDXT5, @"DXT5" },
-	{ TKDDSFormatBC4, @"BC4 (ATI1)" },
-	{ TKDDSFormatBC5, @"BC5 (3DC, ATI2)" },
-	{ TKDDSFormatRGBE, @"RGBE" }
+static const TKDDSFormatMapping TKDDSFormatMappingTable[] = {
+	{ TKDDSFormatDXT1,		D3DFMT_NONE,	FOURCC_DXT1,	DXGI_FORMAT_UNKNOWN,	Format_DXT1,	TKPixelFormatRGB,	TKPixelFormatRGB,	@"DXT1" },
+	{ TKDDSFormatDXT1a,		D3DFMT_NONE,	FOURCC_DXT1,	DXGI_FORMAT_UNKNOWN,	Format_DXT1a,	TKPixelFormatRGBA,	TKPixelFormatRGBA,	@"DXT1a" },
+	{ TKDDSFormatDXT3,		D3DFMT_NONE,	FOURCC_DXT3,	DXGI_FORMAT_UNKNOWN,	Format_DXT3,	TKPixelFormatRGBA,	TKPixelFormatRGBA,	@"DXT3" },
+	{ TKDDSFormatDXT5, 		D3DFMT_NONE,	FOURCC_DXT5,	DXGI_FORMAT_UNKNOWN,	Format_DXT5,	TKPixelFormatRGBA,	TKPixelFormatRGBA,	@"DXT5" },
+	{ TKDDSFormatDXT5n, 	D3DFMT_NONE,	FOURCC_DXT5,	DXGI_FORMAT_UNKNOWN,	Format_DXT5n,	TKPixelFormatRGBA,	TKPixelFormatRGBA,	@"DXT5n" },
+	
+	{ TKDDSFormatRGB,		D3DFMT_R8G8B8,		FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGB,		TKPixelFormatRGB, TKPixelFormatRGB,		@"RGB" },
+	{ TKDDSFormatRGB565,	D3DFMT_R5G6B5,		FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGB,		TKPixelFormatRGB, TKPixelFormatRGB,		@"RGB565" },
+	
+	{ TKDDSFormatARGB,		D3DFMT_A8R8G8B8,	FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatARGB, TKPixelFormatARGB,	@"ARGB" },
+	{ TKDDSFormatARGB4444, 	D3DFMT_A4R4G4B4,	FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatARGB, TKPixelFormatARGB,	@"ARGB4444" },
+	{ TKDDSFormatARGB1555, 	D3DFMT_A1R5G5B5,	FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatARGB, TKPixelFormatARGB,	@"ARGB1555" },
+	{ TKDDSFormatARGB8332, 	D3DFMT_A8R3G3B2,	FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatARGB, TKPixelFormatARGB,	@"ARGB8332" },
+	{ TKDDSFormatARGB2101010, 	D3DFMT_A2R10G10B10,	FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatARGB, TKPixelFormatRGBA16161616,	@"ARGB2101010" },
+
+	{ TKDDSFormatXRGB,		D3DFMT_X8R8G8B8,	FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatXRGB, TKPixelFormatXRGB,	@"XRGB" },
+	{ TKDDSFormatXRGB1555, 	D3DFMT_X1R5G5B5,	FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatXRGB1555, TKPixelFormatXRGB1555,	@"XRGB1555" },
+	{ TKDDSFormatXRGB4444, 	D3DFMT_X4R4G4B4,	FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatXRGB, TKPixelFormatXRGB,	@"XRGB4444" },
+
+	{ TKDDSFormatABGR,		D3DFMT_A8B8G8R8,	FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatABGR, TKPixelFormatARGB,	@"ABGR" },
+	{ TKDDSFormatXBGR,		D3DFMT_X8B8G8R8,	FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatXBGR, TKPixelFormatXRGB,	@"XBGR" },
+	{ TKDDSFormatABGR2101010, 	D3DFMT_A2B10G10R10,	FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatARGB, TKPixelFormatRGBA16161616,	@"ABGR2101010" },
+	{ TKDDSFormatABGR16161616,		D3DFMT_A16B16G16R16,	FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatARGB, TKPixelFormatARGB,	@"ABGR16161616" },
+	
+	{ TKDDSFormatA,			D3DFMT_A8,			FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatA,		TKPixelFormatA,		@"A" },
+
+	{ TKDDSFormatP,			D3DFMT_P8,			FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatL,		TKPixelFormatL,		@"P" },
+	{ TKDDSFormatAP,		D3DFMT_A8P8,		FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatLA,	TKPixelFormatLA,	@"AP" },
+	
+	{ TKDDSFormatL,			D3DFMT_L8,			FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatL,		TKPixelFormatA,		@"L" },
+	{ TKDDSFormatAL,		D3DFMT_A8L8,		FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatA,		TKPixelFormatA,		@"AL" },
+	{ TKDDSFormatA4L4,		D3DFMT_A8,			FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatA,		TKPixelFormatA,		@"AL44" },
+	{ TKDDSFormatL16,		D3DFMT_A8,			FOURCC_NONE,	DXGI_FORMAT_UNKNOWN,	Format_RGBA,	TKPixelFormatA,		TKPixelFormatA,		@"L16" },
+
+	
+//	{ TKDDSFormatRGB, Format_RGB, TKPixelFormatRGB, @"RGB" },
+//	{ TKDDSFormatRGBA, Format_RGBA, TKPixelFormatRGBA, @"RGBA" },
+//	{ TKDDSFormatBC4, Format_BC4, TKPixelFormatRGBA, @"BC4 (ATI1)" },
+//	{ TKDDSFormatBC5, Format_BC5, TKPixelFormatRGBA, @"BC5 (3DC, ATI2)" },
+//	{ TKDDSFormatRGBE, Format_RGBE, TKPixelFormatRGBA /* ?? */, @"RGBE" }
 };
-static const NSUInteger TKDDSFormatTableCount = sizeof(TKDDSFormatDescriptionTable)/sizeof(TKDDSFormatDescription);
+static const NSUInteger TKDDSFormatMappingTableCount = sizeof(TKDDSFormatMappingTable)/sizeof(TKDDSFormatMappingTable[0]);
 	
 	
 NSString *NSStringFromDDSFormat(TKDDSFormat aFormat) {
-	for (NSUInteger i = 0; i < TKDDSFormatTableCount; i++) {
-		if (TKDDSFormatDescriptionTable[i].format == aFormat) {
-			return TKDDSFormatDescriptionTable[i].description;
+	for (NSUInteger i = 0; i < TKDDSFormatMappingTableCount; i++) {
+		if (TKDDSFormatMappingTable[i].format == aFormat) {
+			return TKDDSFormatMappingTable[i].description;
 		}
 	}
 	return @"<Unknown>";
 }
 
 TKDDSFormat TKDDSFormatFromString(NSString *aFormat) {
-	for (NSUInteger i = 0; i < TKDDSFormatTableCount; i++) {
-		if ([TKDDSFormatDescriptionTable[i].description isEqualToString:aFormat]) {
-			return TKDDSFormatDescriptionTable[i].format;
+	for (NSUInteger i = 0; i < TKDDSFormatMappingTableCount; i++) {
+		if ([TKDDSFormatMappingTable[i].description isEqualToString:aFormat]) {
+			return TKDDSFormatMappingTable[i].format;
 		}
 	}
 	return [TKDDSImageRep defaultFormat];
 }
 
+static inline Format FormatFromTKDDSFormat(TKDDSFormat aFormat) {
+	for (NSUInteger i = 0; i < TKDDSFormatMappingTableCount; i++) {
+		if (TKDDSFormatMappingTable[i].format == aFormat) {
+			return TKDDSFormatMappingTable[i].ddsFormat;
+		}
+	}
+	return Format_DXT1;
+}
 
-using namespace nv;
+struct TKWrapModeMapping {
+	WrapMode		wrapMode;
+	TKWrapMode		tkWrapMode;
+};
+static const TKWrapModeMapping TKWrapModeMappingTable[] = {
+	{ WrapMode_Clamp, TKWrapModeClamp },
+	{ WrapMode_Repeat, TKWrapModeRepeat },
+	{ WrapMode_Mirror, TKWrapModeMirror }
+};
+static const NSUInteger TKWrapModeTableCount = sizeof(TKWrapModeMappingTable)/sizeof(TKWrapModeMappingTable[0]);
 
-#define TK_DEBUG 0
+static inline WrapMode WrapModeFromTKWrapMode(TKWrapMode wrapMode) {
+	for (NSUInteger i = 0; i < TKWrapModeTableCount; i++) {
+		if (TKWrapModeMappingTable[i].tkWrapMode == wrapMode) {
+			return TKWrapModeMappingTable[i].wrapMode;
+		}
+	}
+	return WrapMode_Clamp;
+}
+
+struct TKDDSMipmapGenerationMapping {
+	MipmapFilter				mipmapFilter;
+	TKMipmapGenerationType		mipmapGenerationType;
+};
+static const TKDDSMipmapGenerationMapping TKDDSMipmapGenerationMappingTable[] = {
+	{ MipmapFilter_Box, TKMipmapGenerationUsingBoxFilter },
+	{ MipmapFilter_Triangle, TKMipmapGenerationUsingTriangleFilter },
+	{ MipmapFilter_Kaiser, TKMipmapGenerationUsingKaiserFilter }
+};
+static const NSUInteger TKDDSMipmapGenerationTableCount = sizeof(TKDDSMipmapGenerationMappingTable)/sizeof(TKDDSMipmapGenerationMappingTable[0]);
+
+static inline MipmapFilter DDSMipmapFilterFromTKMipmapGenerationType(TKMipmapGenerationType mipmapGenerationType) {
+	for (NSUInteger i = 0; i < TKDDSMipmapGenerationTableCount; i++) {
+		if (TKDDSMipmapGenerationMappingTable[i].mipmapGenerationType == mipmapGenerationType) {
+			return TKDDSMipmapGenerationMappingTable[i].mipmapFilter;
+		}
+	}
+	return MipmapFilter_Box;
+}
+
+struct TKRoundModeMapping {
+	RoundMode		roundMode;
+	TKRoundMode		tkRoundMode;
+};
+static const TKRoundModeMapping TKRoundModeMappingTable[] = {
+	{ RoundMode_None, TKRoundModeNone },
+	{ RoundMode_ToNextPowerOfTwo, TKRoundModeNextPowerOfTwo },
+	{ RoundMode_ToNearestPowerOfTwo, TKRoundModeNearestPowerOfTwo },
+	{ RoundMode_ToPreviousPowerOfTwo, TKRoundModePreviousPowerOfTwo }
+};
+static const NSUInteger TKRoundModeTableCount = sizeof(TKRoundModeMappingTable)/sizeof(TKRoundModeMappingTable[0]);
+
+static inline RoundMode RoundModeFromTKRoundMode(TKRoundMode roundMode) {
+	for (NSUInteger i = 0; i < TKRoundModeTableCount; i++) {
+		if (TKRoundModeMappingTable[i].tkRoundMode == roundMode) {
+			return TKRoundModeMappingTable[i].roundMode;
+		}
+	}
+	return RoundMode_None;
+}
+
+static AlphaMode AlphaModeFromAlphaInfo(CGImageAlphaInfo alphaInfo) {
+	if (alphaInfo == kCGImageAlphaNone || alphaInfo == kCGImageAlphaNoneSkipLast ||
+		alphaInfo == kCGImageAlphaNoneSkipFirst) {
+		return AlphaMode_None;
+	} else if (alphaInfo == kCGImageAlphaPremultipliedLast || alphaInfo == kCGImageAlphaPremultipliedFirst) {
+		return AlphaMode_Premultiplied;
+	} else if (alphaInfo == kCGImageAlphaLast || alphaInfo == kCGImageAlphaFirst) {
+		return AlphaMode_Transparency;
+	}
+	return AlphaMode_None;
+}
+
+
+struct TKDDSDXTQualityMapping {
+	TKDXTCompressionQuality		quality;
+	Quality						ddsDXTQuality;
+};
+static const TKDDSDXTQualityMapping TKDDSDXTQualityMappingTable[] = {
+	{TKDXTCompressionLowQuality, Quality_Fastest },
+	{TKDXTCompressionMediumQuality, Quality_Normal },
+	{TKDXTCompressionHighQuality, Quality_Production },
+	{TKDXTCompressionHighestQuality, Quality_Highest }
+};
+static const NSUInteger TKDDSDXTQualityMappingTableCount = sizeof(TKDDSDXTQualityMappingTable)/sizeof(TKDDSDXTQualityMappingTable[0]);
+
+static inline Quality DDSDXTQualityFromTKDXTCompressionQuality(TKDXTCompressionQuality compressionQuality) {
+	for (NSUInteger i = 0; i < TKDDSDXTQualityMappingTableCount; i++) {
+		if (TKDDSDXTQualityMappingTable[i].quality == compressionQuality) {
+			return TKDDSDXTQualityMappingTable[i].ddsDXTQuality;
+		}
+	}
+	return Quality_Production;
+}
+
+
+#define TK_DEBUG 1
+
 
 
 NSString * const TKDDSType			= @"com.microsoft.dds";
 NSString * const TKDDSFileType		= @"dds";
-NSString * const TKDDSPboardType	= @"TKDDSPboardType";
+NSString * const TKDDSPboardType	= @"com.microsoft.dds";
+
 
 
 @interface TKDDSImageRep (TKPrivate)
 + (NSArray *)imageRepsWithData:(NSData *)aData firstRepresentationOnly:(BOOL)firstRepOnly;
 @end
 
-using namespace nvtt;
 
 struct TKOutputHandler : public OutputHandler {
 	
@@ -80,21 +225,71 @@ struct TKOutputHandler : public OutputHandler {
 	virtual ~TKOutputHandler() { }
 	
     virtual void beginImage(int size, int width, int height, int depth, int face, int miplevel) {
+#if TK_DEBUG
+		printf("TKOutputHandler::beginImage(size == %d, width == %d, height == %d, depth == %d, face == %d, mipmapLevel == %d)\n", size, width, height, depth, face, miplevel);
+#endif
+		
         // ignore.
     }
 	
     virtual bool writeData(const void * data, int size) {
 #if TK_DEBUG
-		printf("TKOutputHandler::writeData()\n");
+//		printf("TKOutputHandler::writeData()\n");
 #endif
 		
-		if (this->imageData) {
-			[this->imageData appendBytes:data length:size];
-		}
+		if (this->imageData) [this->imageData appendBytes:data length:size];
         return true;
     }
+	
+	virtual void endImage() {
+#if TK_DEBUG
+		printf("TKOutputHandler::endImage()\n");
+#endif
+		
+	}
+	
 	NSMutableData *imageData;
 };
+
+
+struct TKMipmapOutputHandler : public OutputHandler {
+	
+	TKMipmapOutputHandler(NSMutableData *imageData) : imageData(imageData) {
+		
+	}
+	
+	virtual ~TKMipmapOutputHandler() {
+		
+	}
+	
+    virtual void beginImage(int size, int width, int height, int depth, int face, int miplevel) {
+#if TK_DEBUG
+		printf("TKMipmapOutputHandler::beginImage(size == %d, width == %d, height == %d, depth == %d, face == %d, mipmapLevel == %d)\n", size, width, height, depth, face, miplevel);
+#endif
+		
+        // ignore.
+    }
+	
+    virtual bool writeData(const void *data, int size) {
+#if TK_DEBUG
+//		printf("TKMipmapOutputHandler::writeData()\n");
+#endif
+		
+		if (this->imageData) [this->imageData appendBytes:data length:size];
+        return true;
+    }
+	
+	
+	virtual void endImage() {
+#if TK_DEBUG
+		printf("TKMipmapOutputHandler::endImage()\n");
+#endif
+		
+	}
+	
+	NSMutableData		*imageData;
+};
+
 
 
 
@@ -105,7 +300,7 @@ static TKDDSFormat defaultDDSFormat = TKDDSFormatDefault;
 /* Implemented by subclassers to indicate what UTI-identified data types they can deal with. */
 + (NSArray *)imageUnfilteredTypes {
 #if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	static NSArray *types = nil;
 	if (types == nil) types = [[NSArray alloc] initWithObjects:TKDDSType, nil];
@@ -115,7 +310,7 @@ static TKDDSFormat defaultDDSFormat = TKDDSFormatDefault;
 
 + (NSArray *)imageUnfilteredFileTypes {
 #if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	static NSArray *fileTypes = nil;
 	if (fileTypes == nil) fileTypes = [[NSArray alloc] initWithObjects:TKDDSFileType, nil];
@@ -124,13 +319,15 @@ static TKDDSFormat defaultDDSFormat = TKDDSFormatDefault;
 
 + (NSArray *)imageUnfilteredPasteboardTypes {
 #if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	static NSArray *imageUnfilteredPasteboardTypes = nil;
 	
 	if (imageUnfilteredPasteboardTypes == nil) {
 		NSArray *types = [super imageUnfilteredPasteboardTypes];
-		NSLog(@"[%@ %@] super's imageUnfilteredPasteboardTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), types);
+#if TK_DEBUG
+//		NSLog(@"[%@ %@] super's imageUnfilteredPasteboardTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), types);
+#endif
 		imageUnfilteredPasteboardTypes = [[types arrayByAddingObject:TKDDSPboardType] retain];
 	}
 	return imageUnfilteredPasteboardTypes;
@@ -190,55 +387,135 @@ static TKDDSFormat defaultDDSFormat = TKDDSFormatDefault;
 }
 
 
-+ (NSData *)DDSRepresentationOfImageRepsInArray:(NSArray *)tkImageReps {
+- (NSArray *)mipmapImageRepsUsingFilter:(TKMipmapGenerationType)filterType {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	return [[self class] DDSRepresentationOfImageRepsInArray:tkImageReps usingFormat:defaultDDSFormat quality:[[self class] defaultDXTCompressionQuality] createMipmaps:YES];
+	NSParameterAssert(filterType != TKMipmapGenerationNoMipmaps);
+	
+	InputOptions inputOptions;
+	inputOptions.setTextureLayout(TextureType_2D, [self pixelsWide], [self pixelsHigh]);
+	inputOptions.setFormat(InputFormat_BGRA_8UB);
+	
+	inputOptions.setNormalMap(false);
+	inputOptions.setConvertToNormalMap(false);
+	inputOptions.setGamma(2.2, 2.2);
+	
+	inputOptions.setMipmapGeneration(true);
+	inputOptions.setMipmapFilter(DDSMipmapFilterFromTKMipmapGenerationType(filterType));
+	
+	CGImageAlphaInfo cgAlphaInfo = [self alphaInfo];
+#if TK_DEBUG
+	NSLog(@"[%@ %@] alphaInfo == %u, bitmapFormat == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), cgAlphaInfo, (unsigned long)[self bitmapFormat]);
+#endif
+	
+	inputOptions.setAlphaMode(AlphaModeFromAlphaInfo(cgAlphaInfo));
+	
+	NSData *imageData = [self data];
+	NSData *swappedData = TKBGRADataFromImageData(imageData, [self pixelsWide] * [self pixelsHigh], [self bitsPerPixel], cgAlphaInfo);
+	inputOptions.setMipmapData([swappedData bytes], [self pixelsWide], [self pixelsHigh], 1, (face == TKFaceNone ? 0 : face), mipmapIndex);
+	
+	
+	
+	CompressionOptions compressionOptions;
+	compressionOptions.setFormat(Format_RGBA);
+	compressionOptions.setQuality(Quality_Highest);
+	
+	Context context;
+	context.enableCudaAcceleration(false);
+	
+	NSMutableData *mipmapData = [[NSMutableData alloc] init];
+	
+	TKMipmapOutputHandler outputHandler(mipmapData);
+	
+	OutputOptions outputOptions;
+	outputOptions.setContainer(Container_DDS);
+	outputOptions.setOutputHandler(&outputHandler);
+	
+	
+	if (!context.process(inputOptions, compressionOptions, outputOptions)) {
+		NSLog(@"[%@ %@] context.process() returned false!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	}
+	
+#if TK_DEBUG
+	NSLog(@"[%@ %@] mipmapData length == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)[mipmapData length]);
+#endif
+	
+	NSArray *ddsImageReps = [TKDDSImageRep imageRepsWithData:mipmapData];
+	
+#if TK_DEBUG
+	NSLog(@"[%@ %@] description == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [super description]);
+	
+	NSLog(@"[%@ %@] ddsImageReps == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), ddsImageReps);
+	
+#endif
+	
+	NSMutableArray *tkImageReps = [NSMutableArray array];
+	
+	for (TKDDSImageRep *ddsImageRep in ddsImageReps) {
+		if ([ddsImageRep mipmapIndex] == mipmapIndex) continue;
+		TKImageRep *imageRep = [TKImageRep imageRepWithImageRep:ddsImageRep];
+		if (imageRep) [tkImageReps addObject:imageRep];
+	}
+	
+	[mipmapData release];
+	
+	return [[tkImageReps copy] autorelease];
 }
 
 
-+ (NSData *)DDSRepresentationOfImageRepsInArray:(NSArray *)tkImageReps usingFormat:(TKDDSFormat)aFormat quality:(TKDXTCompressionQuality)aQuality createMipmaps:(BOOL)createMipmaps {
+- (NSArray *)imageRepsByApplyingNormalMapFilterWithHeightEvaluationWeights:(CIVector *)heightEvaluationWeights
+															 filterWeights:(CIVector *)aFilterWeights
+																  wrapMode:(TKWrapMode)aWrapMode
+														  normalizeMipmaps:(BOOL)normalizeMipmaps 
+														  normalMapLibrary:(TKNormalMapLibrary)normalMapLibrary {
+	
+	NSParameterAssert(normalMapLibrary >= TKNormalMapLibraryUseNVIDIATextureTools && normalMapLibrary <= TKNormalMapLibraryUseAccelerateFramework);
+	
 #if TK_DEBUG
-	NSLog(@"[%@ %@] tkImageReps == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), tkImageReps);
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	NSUInteger imageRepCount = [tkImageReps count];
 	
-	if (imageRepCount == 0) {
-		return nil;
-	}
-	
-	NSMutableData *ddsData = [[NSMutableData alloc] init];
-	
-	TKImageRep *imageRep = [TKImageRep largestRepresentationInArray:tkImageReps];
-	NSData *data = [imageRep data];
-	CGImageAlphaInfo cgAlphaInfo = [imageRep alphaInfo];
-	
-	NSLog(@"[%@ %@] alphaInfo == %u", NSStringFromClass([self class]), NSStringFromSelector(_cmd), cgAlphaInfo);
-	
-	NSData *swappedData = TKBGRADataFromImageData(data, [imageRep pixelsWide] * [imageRep pixelsHigh], [imageRep bitsPerPixel], cgAlphaInfo);
-	
-	if (swappedData) {
+	if (normalMapLibrary == TKNormalMapLibraryUseNVIDIATextureTools) {
 		InputOptions inputOptions;
-		inputOptions.setTextureLayout(TextureType_2D, [imageRep pixelsWide], [imageRep pixelsHigh]);
+		inputOptions.setTextureLayout(TextureType_2D, [self pixelsWide], [self pixelsHigh]);
 		inputOptions.setFormat(InputFormat_BGRA_8UB);
-		inputOptions.setMipmapData([swappedData bytes], [imageRep pixelsWide], [imageRep pixelsHigh]);
 		
-		inputOptions.setWrapMode(WrapMode_Clamp);
-		inputOptions.setRoundMode(RoundMode_ToNearestPowerOfTwo);
 		inputOptions.setNormalMap(false);
-		inputOptions.setConvertToNormalMap(false);
-		inputOptions.setGamma(2.2, 2.2);
-		inputOptions.setMipmapGeneration(createMipmaps);
+		inputOptions.setGamma(1.0, 1.0);
+		inputOptions.setConvertToNormalMap(true);
+		
+		if (heightEvaluationWeights == nil) heightEvaluationWeights = [CIVector vectorWithX:1.0/3.0 Y:1.0/3.0 Z:1.0/3.0 W:0.0];
+		if (aFilterWeights == nil) aFilterWeights = [CIVector vectorWithX:1.0 Y:0.5 Z:0.25 W:0.125];
+		
+		inputOptions.setHeightEvaluation([heightEvaluationWeights X], [heightEvaluationWeights Y], [heightEvaluationWeights Z], [heightEvaluationWeights W]);
+		inputOptions.setNormalFilter([aFilterWeights X], [aFilterWeights Y], [aFilterWeights Z], [aFilterWeights W]);
+		
+		inputOptions.setNormalizeMipmaps(normalizeMipmaps);
+		
+		inputOptions.setWrapMode(WrapModeFromTKWrapMode(aWrapMode));
+		
+		CGImageAlphaInfo cgAlphaInfo = [self alphaInfo];
+#if TK_DEBUG
+		NSLog(@"[%@ %@] alphaInfo == %u, bitmapFormat == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), cgAlphaInfo, (unsigned long)[self bitmapFormat]);
+#endif
+		inputOptions.setAlphaMode(AlphaModeFromAlphaInfo(cgAlphaInfo));
+
+		NSData *imageData = [self data];
+		NSData *swappedData = TKBGRADataFromImageData(imageData, [self pixelsWide] * [self pixelsHigh], [self bitsPerPixel], cgAlphaInfo);
+		
+		inputOptions.setMipmapData([swappedData bytes], [self pixelsWide], [self pixelsHigh], 1, 0, [self mipmapIndex]);
 		
 		CompressionOptions compressionOptions;
-		compressionOptions.setFormat(static_cast<nvtt::Format>(aFormat));
-		compressionOptions.setQuality(static_cast<nvtt::Quality>(aQuality));
+		compressionOptions.setFormat(Format_RGBA);
+		compressionOptions.setQuality(Quality_Highest);
 		
 		Context context;
 		context.enableCudaAcceleration(false);
 		
-		TKOutputHandler outputHandler(ddsData);
+		NSMutableData *normalMapData = [[NSMutableData alloc] init];
+		
+		TKOutputHandler outputHandler(normalMapData);
 		
 		OutputOptions outputOptions;
 		outputOptions.setOutputHandler(&outputHandler);
@@ -246,15 +523,160 @@ static TKDDSFormat defaultDDSFormat = TKDDSFormatDefault;
 		if (!context.process(inputOptions, compressionOptions, outputOptions)) {
 			NSLog(@"[%@ %@] context.process() returned false!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 		}
-		NSLog(@"[%@ %@] ddsData length == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)[ddsData length]);
-		NSData *copiedData = [ddsData copy];
-		[ddsData release];
-		return [copiedData autorelease];
+		
+#if TK_DEBUG
+		NSLog(@"[%@ %@] normalMapData length == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)[normalMapData length]);
+#endif
+		
+		NSArray *ddsImageReps = [TKDDSImageRep imageRepsWithData:normalMapData];
+		
+#if TK_DEBUG
+		NSLog(@"[%@ %@] description == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [super description]);
+		
+		NSLog(@"[%@ %@] ddsImageReps == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), ddsImageReps);
+		
+#endif
+		
+		NSMutableArray *tkImageReps = [NSMutableArray array];
+		
+		for (TKDDSImageRep *ddsImageRep in ddsImageReps) {
+			//		if ([ddsImageRep mipmapIndex] == mipmapIndex) continue;
+			TKImageRep *imageRep = [TKImageRep imageRepWithImageRep:ddsImageRep];
+			if (imageRep) [tkImageReps addObject:imageRep];
+		}
+		
+		[normalMapData release];
+		
+		return [[tkImageReps copy] autorelease];
+		
+	} else if (normalMapLibrary == TKNormalMapLibraryUseAccelerateFramework) {
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
-	
 	return nil;
 }
 
+
++ (NSData *)DDSRepresentationOfImageRepsInArray:(NSArray *)tkImageReps options:(NSDictionary *)options {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	return [[self class] DDSRepresentationOfImageRepsInArray:tkImageReps usingFormat:[[self class] defaultFormat] quality:[TKImageRep defaultDXTCompressionQuality] options:options];
+}
+
+
++ (NSData *)DDSRepresentationOfImageRepsInArray:(NSArray *)tkImageReps usingFormat:(TKDDSFormat)aFormat quality:(TKDXTCompressionQuality)aQuality options:(NSDictionary *)options {
+#if TK_DEBUG
+	NSLog(@"[%@ %@] tkImageReps == %@, options == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), tkImageReps, options);
+#endif
+	NSParameterAssert([tkImageReps count] != 0);
+	
+	NSNumber *nMipmapType = [options objectForKey:TKImageMipmapGenerationKey];
+	NSNumber *nWrapMode = [options objectForKey:TKImageWrapModeKey];
+	NSNumber *nRoundMode = [options objectForKey:TKImageRoundModeKey];
+	
+	NSUInteger maxWidth = 0;
+	NSUInteger maxHeight = 0;
+	
+//	NSUInteger sliceCount = 1;
+	NSUInteger faceCount = 1;
+	
+	for (NSImageRep *imageRep in tkImageReps) {
+		if ([imageRep isKindOfClass:[TKImageRep class]]) {
+			TKImageRep *tkImageRep = (TKImageRep *)imageRep;
+			NSUInteger theFace = [tkImageRep face];
+			
+			if ([tkImageRep pixelsWide] > maxWidth) maxWidth = [tkImageRep pixelsWide];
+			if ([tkImageRep pixelsHigh] > maxHeight) maxHeight = [tkImageRep pixelsHigh];
+			
+			if (theFace != TKFaceNone) faceCount++;
+		} else {
+			NSLog(@"[%@ %@] imageRep is NOT a TKImageRep!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+		}
+	}
+	
+	InputOptions inputOptions;
+	inputOptions.setTextureLayout((faceCount == 1 ? TextureType_2D : TextureType_Cube), maxWidth, maxHeight);
+	inputOptions.setFormat(InputFormat_BGRA_8UB);
+	
+	inputOptions.setWrapMode(WrapModeFromTKWrapMode([nWrapMode unsignedIntegerValue]));
+	inputOptions.setRoundMode(RoundModeFromTKRoundMode([nRoundMode unsignedIntegerValue]));
+	inputOptions.setNormalMap(false);
+	inputOptions.setConvertToNormalMap(false);
+	inputOptions.setGamma(2.2, 2.2);
+	
+	if (nMipmapType == nil || [nMipmapType unsignedIntegerValue] == TKMipmapGenerationNoMipmaps) {
+		inputOptions.setMipmapGeneration(false);
+	} else {
+		inputOptions.setMipmapGeneration(true);
+		inputOptions.setMipmapFilter(DDSMipmapFilterFromTKMipmapGenerationType([nMipmapType unsignedIntegerValue]));
+	}
+	
+	for (NSImageRep *imageRep in tkImageReps) {
+		if (![imageRep isKindOfClass:[TKImageRep class]]) {
+			NSLog(@"[%@ %@] imageRep is NOT a TKImageRep!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+			continue;
+		}
+		TKImageRep *tkImageRep = (TKImageRep *)imageRep;
+		
+		CGImageAlphaInfo cgAlphaInfo = [tkImageRep alphaInfo];
+#if TK_DEBUG
+		NSLog(@"[%@ %@] alphaInfo == %u, bitmapFormat == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), cgAlphaInfo, (unsigned long)[tkImageRep bitmapFormat]);
+#endif
+		
+		inputOptions.setAlphaMode(AlphaModeFromAlphaInfo(cgAlphaInfo));
+
+		NSData *imageData = [tkImageRep data];
+		NSData *swappedData = TKBGRADataFromImageData(imageData,
+													  [tkImageRep pixelsWide] * [tkImageRep pixelsHigh],
+													  [tkImageRep bitsPerPixel],
+													  cgAlphaInfo);
+		
+		if (!inputOptions.setMipmapData([swappedData bytes], [tkImageRep pixelsWide], [tkImageRep pixelsHigh], 1, ([tkImageRep face] == TKFaceNone ? 0 : [tkImageRep face]), [tkImageRep mipmapIndex])) {
+			NSLog(@"[%@ %@] failed to inputOptions.setMipmapData() for ", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	
+		}
+		
+	}
+	
+	CompressionOptions compressionOptions;
+	compressionOptions.setFormat(FormatFromTKDDSFormat(aFormat));
+	compressionOptions.setQuality(DDSDXTQualityFromTKDXTCompressionQuality(aQuality));
+//	compressionOptions.setQuality(static_cast<nvtt::Quality>(nCompressionQuality == nil ? [TKImageRep defaultDXTCompressionQuality] : [nCompressionQuality unsignedIntegerValue]));
+	
+	Context context;
+	context.enableCudaAcceleration(false);
+	
+	NSMutableData *ddsData = [[NSMutableData alloc] init];
+	
+	TKOutputHandler outputHandler(ddsData);
+	
+	OutputOptions outputOptions;
+	outputOptions.setOutputHandler(&outputHandler);
+	
+	if (!context.process(inputOptions, compressionOptions, outputOptions)) {
+		NSLog(@"[%@ %@] context.process() returned false!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	}
+#if TK_DEBUG
+	NSLog(@"[%@ %@] ddsData length == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)[ddsData length]);
+#endif
+	NSData *copiedData = [ddsData copy];
+	[ddsData release];
+	return [copiedData autorelease];
+}
+
+static unsigned char *TKCreateRGBADataFromColor32(Color32 *pixels, NSUInteger pixelCount, NSUInteger bitsPerPixel, NSUInteger *length) CF_RETURNS_RETAINED;
+
+//static unsigned char *TKCreateRGBADataFromColor32(Color32 *pixels, NSUInteger pixelCount, NSUInteger bitsPerPixel, NSUInteger *length) NS_RETURNS_RETAINED;
 
 static unsigned char *TKCreateRGBADataFromColor32(Color32 *pixels, NSUInteger pixelCount, NSUInteger bitsPerPixel, NSUInteger *length) {
 	if (pixels == NULL || pixelCount == 0 || bitsPerPixel == 0 || (bitsPerPixel != 24 && bitsPerPixel != 32) || length == NULL) {
@@ -303,7 +725,7 @@ static unsigned char *TKCreateRGBADataFromColor32(Color32 *pixels, NSUInteger pi
 	[aData getBytes:&magic length:sizeof(magic)];
 	magic = NSSwapBigIntToHost(magic);
 #if TK_DEBUG
-	NSLog(@"[%@ %@] magic == 0x%x, %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), magic, NSFileTypeForHFSTypeCode(magic));
+	NSLog(@"[%@ %@] magic == 0x%x, %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd),  (unsigned int)magic, NSFileTypeForHFSTypeCode(magic));
 #endif
 	
 	DirectDrawSurface *dds = new DirectDrawSurface((unsigned char *)[aData bytes], [aData length]);
@@ -311,6 +733,11 @@ static unsigned char *TKCreateRGBADataFromColor32(Color32 *pixels, NSUInteger pi
 		NSLog(@"[%@ %@] new DirectDrawSurface() with data failed!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 		return nil;
 	}
+	
+#if TK_DEBUG
+	NSLog(@"[%@ %@] dds info == \n", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	dds->printInfo();
+#endif
 	
 	if (!dds->isValid() || !dds->isSupported() || (dds->width() > 65535) || (dds->height() > 65535)) {
 		if (!dds->isValid()) {
@@ -324,10 +751,10 @@ static unsigned char *TKCreateRGBADataFromColor32(Color32 *pixels, NSUInteger pi
 		delete dds;
 		return nil;
 	}
-#if TK_DEBUG
-	NSLog(@"[%@ %@] dds info == \n", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-	dds->printInfo();
-#endif
+//#if TK_DEBUG
+//	NSLog(@"[%@ %@] dds info == \n", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	dds->printInfo();
+//#endif
 	
 	NSMutableArray *bitmapImageReps = [NSMutableArray array];
 	
@@ -364,9 +791,9 @@ static unsigned char *TKCreateRGBADataFromColor32(Color32 *pixels, NSUInteger pi
 				if (imageRef) {
 					
 					TKDDSImageRep *imageRep = [[TKDDSImageRep alloc] initWithCGImage:imageRef
-																		  sliceIndex:0
+																		  sliceIndex:TKSliceIndexNone
 																				face:faceIndex
-																		  frameIndex:0
+																		  frameIndex:TKFrameIndexNone
 																		 mipmapIndex:mipmap];
 					
 					CGImageRelease(imageRef);
@@ -389,6 +816,36 @@ static unsigned char *TKCreateRGBADataFromColor32(Color32 *pixels, NSUInteger pi
 	delete dds;
 	return [[bitmapImageReps copy] autorelease];
 	
+}
+
+
+/* create TKDDSImageRep(s) from NSBitmapImageRep(s) */
+
++ (id)imageRepWithImageRep:(NSBitmapImageRep *)aBitmapImageRep {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if ([aBitmapImageRep isKindOfClass:[TKImageRep class]]) {
+		return [[[[self class] alloc] initWithCGImage:[aBitmapImageRep CGImage]
+										   sliceIndex:[(TKImageRep *)aBitmapImageRep sliceIndex]
+												 face:[(TKImageRep *)aBitmapImageRep face]
+										   frameIndex:[(TKImageRep *)aBitmapImageRep frameIndex]
+										  mipmapIndex:[(TKImageRep *)aBitmapImageRep mipmapIndex]] autorelease];
+	}
+	return [[[[self class] alloc] initWithCGImage:[aBitmapImageRep CGImage]] autorelease];
+}
+
+
++ (NSArray *)imageRepsWithImageReps:(NSArray *)bitmapImageReps {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	NSMutableArray *imageReps = [NSMutableArray array];
+	for (NSBitmapImageRep *imageRep in bitmapImageReps) {
+		TKDDSImageRep *ddsImageRep = [[self class] imageRepWithImageRep:imageRep];
+		if (ddsImageRep) [imageReps addObject:ddsImageRep];
+	}
+	return imageReps;
 }
 
 
@@ -417,8 +874,7 @@ static unsigned char *TKCreateRGBADataFromColor32(Color32 *pixels, NSUInteger pi
 	NSArray *imageReps = [[self class] imageRepsWithData:aData firstRepresentationOnly:YES];
 	if ((imageReps == nil) || !([imageReps count] > 0)) {
 		[self release];
-		self = nil;
-		return self;
+		return nil;
 	}
 	self = [[imageReps objectAtIndex:0] retain];
 	return self;
@@ -479,11 +935,11 @@ enum {
 	TKBGRA	= UINT_MAX
 };
 
-NSData *TKImageDataFromNSData(NSData *inputData, NSUInteger pixelCount, NSUInteger bitsPerPixel, CGBitmapInfo sourceBitmapInfo, CGBitmapInfo destBitmapInfo) {
-	if (inputData == nil || pixelCount == 0 || bitsPerPixel == 0 || (bitsPerPixel != 24 && bitsPerPixel != 32)) {
-		NSLog(@"TKImageDataFromNSData() invalid parameters!");
-		return nil;
-	}
+static NSData *TKImageDataFromNSData(NSData *inputData, NSUInteger pixelCount, NSUInteger bitsPerPixel, CGBitmapInfo sourceBitmapInfo, CGBitmapInfo destBitmapInfo) {
+	NSCParameterAssert(inputData != nil);
+	NSCParameterAssert(pixelCount != 0);
+	NSCParameterAssert(bitsPerPixel != 0);
+	NSCParameterAssert((bitsPerPixel == 24) || (bitsPerPixel == 32));
 	
 	NSUInteger newLength = pixelCount;
 	
@@ -597,10 +1053,7 @@ NSData *TKImageDataFromNSData(NSData *inputData, NSUInteger pixelCount, NSUInteg
 					destPixel.w = sourcePixel.x;
 					
 				}
-					
-				
 				destPixels[i] = destPixel;
-				
 			}
 			
 			NSData *newData = [NSData dataWithBytes:destPixels length:newLength];
@@ -613,6 +1066,9 @@ NSData *TKImageDataFromNSData(NSData *inputData, NSUInteger pixelCount, NSUInteg
 	return nil;
 }
 
-NSData *TKBGRADataFromImageData(NSData *data, NSUInteger pixelCount, NSUInteger bitsPerPixel, CGBitmapInfo sourceBitmapInfo) {
+static NSData *TKBGRADataFromImageData(NSData *data, NSUInteger pixelCount, NSUInteger bitsPerPixel, CGBitmapInfo sourceBitmapInfo) {
 	return TKImageDataFromNSData(data, pixelCount, bitsPerPixel, sourceBitmapInfo, TKBGRA);
 }
+
+
+
