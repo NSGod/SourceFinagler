@@ -3,14 +3,11 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 1/5/2011.
-//  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
-
-#import <TextureKit/TextureKitDefines.h>
-#import <TextureKit/TKDDSImageRep.h>
-#import <TextureKit/TKVTFImageRep.h>
+#import <TextureKit/TextureKit.h>
 
 
 @class TKImage, TKImageDocument;
@@ -22,18 +19,28 @@
 	
 	NSSavePanel						*savePanel;		// non-retained
 	
+	TKImage							*image;			// non-retained
+	
+	IBOutlet NSObjectController		*mediator;
+	
 	IBOutlet NSPopUpButton			*formatPopUpButton;
 	
 	IBOutlet NSBox					*compressionBox;
+	
 	IBOutlet NSView					*compressionView;
 	IBOutlet NSPopUpButton			*compressionPopUpButton;
 	
+	IBOutlet NSView					*tiffCompressionView;
+	
+	
 	IBOutlet NSMenu					*vtfMenu;
 	IBOutlet NSMenu					*ddsMenu;
-	IBOutlet NSMenu					*tiffMenu;
-	IBOutlet NSButton				*mipmapsCheckbox;
 	
 	IBOutlet NSView					*jpegQualityView;
+	
+	IBOutlet NSView					*jpeg2000QualityView;
+	
+	IBOutlet NSView					*alphaView;
 	
 	IBOutlet NSView					*blankView;
 	
@@ -46,17 +53,26 @@
 	
 	TKDDSFormat						ddsFormat;
 	
-	NSTIFFCompression				tiffCompression;
-	
 	TKDXTCompressionQuality			compressionQuality;
 	
+	NSTIFFCompression				tiffCompression;
+	
 	CGFloat							jpegQuality;
+	CGFloat							jpeg2000Quality;
+	
+	BOOL							saveAlpha;
+	
+	BOOL							generateMipmaps;
 }
 
 - (id)initWithImageDocument:(TKImageDocument *)aDocument;
 
+- (void)cleanup;
+
+
 @property (assign) TKImageDocument *document;
 @property (assign) NSSavePanel *savePanel;
+@property (assign) TKImage *image;
 
 
 @property (retain) NSString *imageUTType;
@@ -65,7 +81,14 @@
 @property (assign) TKVTFFormat vtfFormat;
 @property (assign) TKDDSFormat ddsFormat;
 @property (assign) TKDXTCompressionQuality compressionQuality;
+
+@property (assign) NSTIFFCompression tiffCompression;
 @property (assign) CGFloat jpegQuality;
+@property (assign) CGFloat jpeg2000Quality;
+
+@property (assign) BOOL saveAlpha;
+
+@property (assign) BOOL generateMipmaps;
 
 
 - (BOOL)prepareSavePanel:(NSSavePanel *)aSavePanel;
@@ -77,7 +100,7 @@
 
 @end
 
-TEXTUREKIT_EXTERN NSString * const TKImageDocumentLastSavedFormatTypeKey;
+//TEXTUREKIT_EXTERN NSString * const TKImageDocumentLastSavedFormatTypeKey;
 
 
 

@@ -3,7 +3,7 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 1/5/2011.
-//  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import "TKImageDocumentAccessoryViewController.h"
@@ -11,25 +11,65 @@
 
 #import <TextureKit/TextureKit.h>
 
-#import "MDAppKitAdditions.h"
+#import "TKAppKitAdditions.h"
 
 
 
-NSString * const TKImageDocumentLastSavedFormatTypeKey = @"TKImageDocumentLastSavedFormatType";
+static NSString * const kTKUTTypeTGA = @"com.truevision.tga-image";
+static NSString * const kTKUTTypePSD = @"com.adobe.photoshop-image";
+static NSString * const kTKUTTypeOpenEXR = @"com.ilm.openexr-image";
+static NSString * const kTKUTTypeSGI = @"com.sgi.sgi-image";
+
+
+
+static NSString * const TKImageDocumentLastSavedFormatTypeKey		= @"TKImageDocumentLastSavedFormatType";
+
+static NSString * const TKImageDocumentVTFFormatKey					= @"TKImageDocumentVTFFormat";
+static NSString * const TKImageDocumentDDSFormatKey					= @"TKImageDocumentDDSFormat";
+static NSString * const TKImageDocumentGenerateMipmapsKey			= @"TKImageDocumentGenerateMipmaps";
+
+static NSString * const TKImageDocumentTIFFCompressionKey			= @"TKImageDocumentTIFFCompression";
+
+static NSString * const TKImageDocumentJPEGQualityKey				= @"TKImageDocumentJPEGQuality";
+static NSString * const TKImageDocumentJPEG2000QualityKey			= @"TKImageDocumentJPEG2000Quality";
+
+static NSString * const TKImageDocumentSaveAlphaKey					= @"TKImageDocumentSaveAlpha";
 
 
 static NSMutableDictionary *displayNameAndUTITypes = nil;
 
 
+
+#define TK_DEBUG 1
+
+
+
 @implementation TKImageDocumentAccessoryViewController
 
-
-@synthesize document, savePanel, imageUTType, vtfFormat, ddsFormat, compressionQuality, jpegQuality;
+@synthesize document;
+@synthesize savePanel;
+@synthesize image;
+@synthesize imageUTType;
+@synthesize vtfFormat;
+@synthesize ddsFormat;
+@synthesize compressionQuality;
+@synthesize tiffCompression;
+@synthesize jpegQuality;
+@synthesize jpeg2000Quality;
+@synthesize saveAlpha;
+@synthesize generateMipmaps;
 
 
 + (void)initialize {
 	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
-	[defaultValues setObject:TKVTFType forKey:TKImageDocumentLastSavedFormatTypeKey];
+	[defaultValues setObject:TKSFTextureImageType forKey:TKImageDocumentLastSavedFormatTypeKey];
+	[defaultValues setObject:[NSNumber numberWithUnsignedInteger:[TKVTFImageRep defaultFormat]] forKey:TKImageDocumentVTFFormatKey];
+	[defaultValues setObject:[NSNumber numberWithUnsignedInteger:[TKDDSImageRep defaultFormat]] forKey:TKImageDocumentDDSFormatKey];
+	[defaultValues setObject:[NSNumber numberWithDouble:0.8] forKey:TKImageDocumentJPEGQualityKey];
+	[defaultValues setObject:[NSNumber numberWithDouble:0.8] forKey:TKImageDocumentJPEG2000QualityKey];
+	[defaultValues setObject:[NSNumber numberWithUnsignedInteger:NSTIFFCompressionNone] forKey:TKImageDocumentTIFFCompressionKey];
+	[defaultValues setObject:TKYES forKey:TKImageDocumentSaveAlphaKey];
+	[defaultValues setObject:TKYES forKey:TKImageDocumentGenerateMipmapsKey];
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
 }
 
@@ -42,28 +82,52 @@ static NSMutableDictionary *displayNameAndUTITypes = nil;
 - (id)initWithImageDocument:(TKImageDocument *)aDocument {
 	if ((self = [super initWithNibName:[self nibName] bundle:nil])) {
 		document = aDocument;
+		[self setImage:[document image]];
 		
 		[self setImageUTType:[[NSUserDefaults standardUserDefaults] objectForKey:TKImageDocumentLastSavedFormatTypeKey]];
 		
-		if (imageUTTypes == nil) {
-			imageUTTypes = [[[document class] writableTypes] retain];
-		}
-		vtfFormat = TKVTFFormatDefault;
-		ddsFormat = TKDDSFormatDefault;
-		compressionQuality = TKDXTCompressionDefaultQuality;
+		if (imageUTTypes == nil) imageUTTypes = [[[document class] writableTypes] retain];
+		
+		vtfFormat = [[[NSUserDefaults standardUserDefaults] objectForKey:TKImageDocumentVTFFormatKey] unsignedIntegerValue];
+		ddsFormat = [[[NSUserDefaults standardUserDefaults] objectForKey:TKImageDocumentDDSFormatKey] unsignedIntegerValue];
+		
+		tiffCompression = [[[NSUserDefaults standardUserDefaults] objectForKey:TKImageDocumentTIFFCompressionKey] unsignedIntegerValue];
+		
+		jpegQuality = [[[NSUserDefaults standardUserDefaults] objectForKey:TKImageDocumentJPEGQualityKey] doubleValue];
+		jpeg2000Quality = [[[NSUserDefaults standardUserDefaults] objectForKey:TKImageDocumentJPEG2000QualityKey] doubleValue];
+		
+		saveAlpha = [[[NSUserDefaults standardUserDefaults] objectForKey:TKImageDocumentSaveAlphaKey] boolValue];
+		
+		generateMipmaps = [[[NSUserDefaults standardUserDefaults] objectForKey:TKImageDocumentGenerateMipmapsKey] boolValue];
 	}
 	return self;
 }
 
 
+//- (void)dealloc {
+////	document = nil;
+////	savePanel = nil;
+////	[imageUTType release];
+////	[imageUTTypes release];
+//	[super dealloc];
+//}
 
-- (void)dealloc {
-	document = nil;
-	savePanel = nil;
+
+- (void)cleanup {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	
+	[mediator unbind:@"contentObject"];
+	[mediator setContent:nil];
+	
 	[imageUTType release];
 	[imageUTTypes release];
-	[super dealloc];
+	document = nil;
+	savePanel = nil;
 }
+
+
 
 
 - (NSString *)nibName {
@@ -75,14 +139,18 @@ static NSMutableDictionary *displayNameAndUTITypes = nil;
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (displayNameAndUTITypes == nil) {
-		displayNameAndUTITypes = [[NSMutableDictionary alloc] init];
-		
-		for (NSString *aSaveType in imageUTTypes) {
-			NSString *displayName = [[NSDocumentController sharedDocumentController] displayNameForType:aSaveType];
-			if (displayName) [displayNameAndUTITypes setObject:aSaveType forKey:displayName];
+	
+	@synchronized([self class]) {
+		if (displayNameAndUTITypes == nil) {
+			displayNameAndUTITypes = [[NSMutableDictionary alloc] init];
+			
+			for (NSString *aSaveType in imageUTTypes) {
+				NSString *displayName = [[NSDocumentController sharedDocumentController] displayNameForType:aSaveType];
+				if (displayName) [displayNameAndUTITypes setObject:aSaveType forKey:displayName];
+			}
 		}
 	}
+	
 	
 	NSArray *sortedDisplayNames = [[displayNameAndUTITypes allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 	NSMutableArray *menuItems = [NSMutableArray array];
@@ -94,7 +162,6 @@ static NSMutableDictionary *displayNameAndUTITypes = nil;
 		}
 	}
 	[formatPopUpButton setItemArray:menuItems];
-	
 }
 
 
@@ -104,11 +171,10 @@ static NSMutableDictionary *displayNameAndUTITypes = nil;
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[self setSavePanel:aSavePanel];
-	
 	[savePanel setAccessoryView:[self view]];
 	[self changeFormat:self];
-	return YES;
 	
+	return YES;
 }
 
 
@@ -132,7 +198,7 @@ static NSMutableDictionary *displayNameAndUTITypes = nil;
 	NSString *utiType = [displayNameAndUTITypes objectForKey:title];
 	[self setImageUTType:utiType];
 	
-	NSArray *filenameExtensions = [[NSDocumentController sharedDocumentController] fileExtensionsFromType:utiType];
+	NSArray *filenameExtensions = [[NSDocumentController sharedDocumentController] fileExtensionsFromType:imageUTType];
 	NSString *filenameExtension = nil;
 	
 	if ([filenameExtensions count]) {
@@ -140,12 +206,11 @@ static NSMutableDictionary *displayNameAndUTITypes = nil;
 		if (filenameExtension) [savePanel setAllowedFileTypes:[NSArray arrayWithObject:filenameExtension]];
 	}
 	
-	if ([utiType isEqualToString:TKDDSType] ||
-		[utiType isEqualToString:TKVTFType]) {
+	if ([imageUTType isEqual:TKDDSType] ||
+		[imageUTType isEqual:TKVTFType]) {
 		
 		
-		if ([utiType isEqualToString:TKDDSType]) {
-			
+		if ([imageUTType isEqual:TKDDSType]) {
 			
 			[compressionPopUpButton setMenu:ddsMenu];
 			[compressionPopUpButton selectItemWithTag:[compressionPopUpButton indexOfItemWithTag:ddsFormat]];
@@ -155,37 +220,36 @@ static NSMutableDictionary *displayNameAndUTITypes = nil;
 			[compressionPopUpButton selectItemWithTag:[compressionPopUpButton indexOfItemWithTag:vtfFormat]];
 		}
 		
-		[mipmapsCheckbox setHidden:NO];
-		
 		[compressionBox setContentView:compressionView];
 		
-	} else if ([utiType isEqualToString:(NSString *)kUTTypeJPEG] ||
-			   [utiType isEqualToString:(NSString *)kUTTypeJPEG2000]) {
-		
+	} else if ([imageUTType isEqual:(NSString *)kUTTypeJPEG]) {
 		
 		[compressionBox setContentView:jpegQualityView];
 		
+	} else if ([imageUTType isEqual:(NSString *)kUTTypeJPEG2000]) {
+		
+		[compressionBox setContentView:jpeg2000QualityView];
 	
-	} else if ([utiType isEqualToString:(NSString *)kUTTypeTIFF]) {
-		 
-		[compressionPopUpButton setMenu:tiffMenu];
-		[compressionPopUpButton selectItemWithTag:[compressionPopUpButton indexOfItemWithTag:tiffCompression]];
-		[mipmapsCheckbox setHidden:YES];
+	} else if ([imageUTType isEqual:(NSString *)kUTTypeTIFF]) {
+
+		[compressionBox setContentView:tiffCompressionView];
 		
-		[compressionBox setContentView:compressionView];
+	} else if ([imageUTType isEqual:(NSString *)kUTTypeBMP] ||
+			   [imageUTType isEqual:(NSString *)kUTTypeAppleICNS] ||
+			   [imageUTType isEqual:(NSString *)kUTTypeICO] ||
+			   [imageUTType isEqual:kTKUTTypePSD] ||
+			   [imageUTType isEqual:kTKUTTypeTGA] ||
+			   [imageUTType isEqual:kTKUTTypeOpenEXR] ||
+			   [imageUTType isEqual:(NSString *)kUTTypeGIF] ||
+			   [imageUTType isEqual:(NSString *)kUTTypePDF] ||
+			   [imageUTType isEqual:(NSString *)kUTTypePNG]) {
 		
+		[compressionBox setContentView:alphaView];
 		
 	} else {
+		
 		[compressionBox setContentView:blankView];
-	}
-	
-}
-
-- (void)setNilValueForKey:(NSString *)key {
-	if ([key isEqualToString:@"jpegQuality"]) {
-		jpegQuality = 0.0;
-	} else if ([super respondsToSelector:@selector(setNilValueForKey:)]) {
-		[super setNilValueForKey:key];
+		
 	}
 }
 
@@ -194,39 +258,108 @@ static NSMutableDictionary *displayNameAndUTITypes = nil;
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	NSString *title = [formatPopUpButton titleOfSelectedItem];
-	NSString *utiType = [displayNameAndUTITypes objectForKey:title];
 	
-	if ([utiType isEqualToString:TKDDSType]) {
-		ddsFormat = [[compressionPopUpButton selectedItem] tag];
-	} else if ([utiType isEqualToString:TKVTFType]) {
-		vtfFormat = [[compressionPopUpButton selectedItem] tag];
-	} else if ([utiType isEqualToString:(NSString *)kUTTypeTIFF]) {
-		tiffCompression = [[compressionPopUpButton selectedItem] tag];
+	if ([imageUTType isEqual:TKDDSType]) {
+		
+		self.ddsFormat = [[compressionPopUpButton selectedItem] tag];
+		
+	} else if ([imageUTType isEqual:TKVTFType]) {
+		
+		self.vtfFormat = [[compressionPopUpButton selectedItem] tag];
 	}
 }
 
 
-- (NSDictionary *)imageProperties {
-	NSDictionary *imgProperties = nil;
+- (void)setNilValueForKey:(NSString *)key {
 	
-	@synchronized(self) {
-		if ([imageUTType isEqualToString:TKDDSType] || [imageUTType isEqualToString:TKVTFType]) {
-			
-		} else if ([imageUTType isEqualToString:(NSString *)kUTTypeJPEG] || [imageUTType isEqualToString:(NSString *)kUTTypeJPEG2000]) {
-			imgProperties = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:jpegQuality],(id)kCGImageDestinationLossyCompressionQuality,
-							 [NSNumber numberWithBool:[[document image] hasAlpha]],(id)kCGImagePropertyHasAlpha, nil];
-			
-//		} else if ([imageUTType isEqualToString:(NSString *)kUTTypeTIFF]) {
-//			imgProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-//							 [NSNumber numberWithBool:[[document image] hasAlpha]],(id)kCGImagePropertyHasAlpha, nil];
-//			
-		} else {
-			imgProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-							 [NSNumber numberWithBool:[[document image] hasAlpha]],(id)kCGImagePropertyHasAlpha, nil];
-			
-		}
+	if ([key isEqual:@"vtfFormat"]) {
+		vtfFormat = [TKVTFImageRep defaultFormat];
+		
+	} else if ([key isEqual:@"ddsFormat"]) {
+		ddsFormat = [TKDDSImageRep defaultFormat];
+		
+	} else if ([key isEqual:@"compressionQuality"]) {
+		compressionQuality = [TKImageRep defaultDXTCompressionQuality];
+		
+	} else if ([key isEqual:@"tiffCompression"]) {
+		tiffCompression = NSTIFFCompressionNone;
+		
+	} else if ([key isEqual:@"jpegQuality"]) {
+		jpegQuality = 0.0;
+		
+	} else if ([key isEqual:@"jpeg2000Quality"]) {
+		jpeg2000Quality = 0.0;
+		
+	} else if ([key isEqual:@"saveAlpha"]) {
+		saveAlpha = NO;
+		
+	} else if ([key isEqual:@"generateMipmaps"]) {
+		generateMipmaps = NO;
+		
+	} else if ([super respondsToSelector:@selector(setNilValueForKey:)]) {
+		[super setNilValueForKey:key];
 	}
+}
+
+
+- (void)saveDefaults {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	[userDefaults setObject:imageUTType forKey:TKImageDocumentLastSavedFormatTypeKey];
+	[userDefaults setObject:[NSNumber numberWithUnsignedInteger:vtfFormat] forKey:TKImageDocumentVTFFormatKey];
+	[userDefaults setObject:[NSNumber numberWithUnsignedInteger:ddsFormat] forKey:TKImageDocumentDDSFormatKey];
+	[userDefaults setObject:[NSNumber numberWithDouble:jpegQuality] forKey:TKImageDocumentJPEGQualityKey];
+	[userDefaults setObject:[NSNumber numberWithDouble:jpeg2000Quality] forKey:TKImageDocumentJPEG2000QualityKey];
+	[userDefaults setObject:[NSNumber numberWithUnsignedInteger:tiffCompression] forKey:TKImageDocumentTIFFCompressionKey];
+	[userDefaults setObject:(saveAlpha ? TKYES : TKNO) forKey:TKImageDocumentSaveAlphaKey];
+	[userDefaults setObject:(generateMipmaps ? TKYES : TKNO) forKey:TKImageDocumentGenerateMipmapsKey];
+}
+
+
+- (NSDictionary *)imageProperties {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	NSMutableDictionary *imgProperties = [NSMutableDictionary dictionary];
+	
+	BOOL imageHasAlpha = [image hasAlpha];
+	
+	if ([imageUTType isEqual:TKDDSType] || [imageUTType isEqual:TKVTFType]) {
+		
+		
+	} else if ([imageUTType isEqual:(NSString *)kUTTypeJPEG]) {
+		
+		[imgProperties setObject:[NSNumber numberWithDouble:jpegQuality] forKey:(id)kCGImageDestinationLossyCompressionQuality];
+		if (imageHasAlpha && saveAlpha) [imgProperties setObject:TKYES forKey:(id)kCGImagePropertyHasAlpha];
+		
+	} else if ([imageUTType isEqual:(NSString *)kUTTypeJPEG2000]) {
+		
+		[imgProperties setObject:[NSNumber numberWithDouble:jpeg2000Quality] forKey:(id)kCGImageDestinationLossyCompressionQuality];
+		if (imageHasAlpha && saveAlpha) [imgProperties setObject:TKYES forKey:(id)kCGImagePropertyHasAlpha];
+		
+	} else if ([imageUTType isEqual:(NSString *)kUTTypeTIFF]) {
+		
+		[imgProperties setObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:tiffCompression],(id)kCGImagePropertyTIFFCompression, nil]
+						  forKey:(id)kCGImagePropertyTIFFDictionary];
+		
+		
+	} else if ([imageUTType isEqual:(NSString *)kUTTypeBMP] ||
+			   [imageUTType isEqual:(NSString *)kUTTypeAppleICNS] ||
+			   [imageUTType isEqual:(NSString *)kUTTypeICO] ||
+			   [imageUTType isEqual:(NSString *)kTKUTTypeTGA] ||
+			   [imageUTType isEqual:(NSString *)kTKUTTypePSD] ||
+			   [imageUTType isEqual:(NSString *)kTKUTTypeOpenEXR] ||
+			   [imageUTType isEqual:(NSString *)kUTTypeGIF] ||
+			   [imageUTType isEqual:(NSString *)kUTTypePDF] ||
+			   [imageUTType isEqual:(NSString *)kUTTypePNG]) {
+		
+		if (imageHasAlpha && saveAlpha) [imgProperties setObject:TKYES forKey:(id)kCGImagePropertyHasAlpha];
+		
+	}
+	
+	[self saveDefaults];
 	
 	return imgProperties;
 }
@@ -234,3 +367,6 @@ static NSMutableDictionary *displayNameAndUTITypes = nil;
 
 
 @end
+
+
+
