@@ -23,8 +23,10 @@ extern NSString * const TKImageExportPreviewKey;
 - (id)initWithImageExportPreview:(TKImageExportPreview *)anImageExportPreview;
 
 
-@property (retain) TKImageExportPreview *imageExportPreview;
+@property (assign) TKImageExportPreview *imageExportPreview;
 
 - (BOOL)isEqual:(id)object;
 
 @end
+
+

@@ -3,7 +3,7 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 12/14/2010.
-//  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -12,7 +12,7 @@
 
 @interface TKImageExportPreview : NSObject {
 	
-	TKImageExportController		*controller;
+	TKImageExportController		*controller;	// non-retained
 	
 	TKImage						*image;
 	
@@ -27,11 +27,12 @@
 
 - (id)initWithController:(TKImageExportController *)aController image:(TKImage *)anImage preset:(TKImageExportPreset *)aPreset tag:(NSInteger)aTag;
 
-@property (retain) TKImageExportController *controller;
+@property (assign) TKImageExportController *controller;
 
 @property (retain) TKImage *image;
 
 @property (retain) TKImageRep *imageRep;
+
 @property (retain) TKImageExportPreset *preset;
 
 @property (assign) NSUInteger imageFileSize;
@@ -39,3 +40,5 @@
 @property (assign) NSInteger tag;
 
 @end
+
+

@@ -15,13 +15,8 @@
 #define TK_DEBUG 1
 
 
-
-
 NSString * const TKImageExportPreviewOperationDidCompleteNotification	= @"TKImageExportPreviewOperationDidComplete";
 NSString * const TKImageExportPreviewKey	= @"TKImageExportPreview";
-
-
-
 
 
 @implementation TKImageExportPreviewOperation
@@ -32,16 +27,16 @@ NSString * const TKImageExportPreviewKey	= @"TKImageExportPreview";
 - (id)initWithImageExportPreview:(TKImageExportPreview *)anImageExportPreview {
 	if (anImageExportPreview == nil) return nil;
 	if ((self = [super init])) {
-		imageExportPreview = [anImageExportPreview retain];
+		imageExportPreview = anImageExportPreview;
 	}
 	return self;
 }
 
 
-- (void)dealloc {
-	[imageExportPreview release];
-	[super dealloc];
-}
+//- (void)dealloc {
+//
+//	[super dealloc];
+//}
 
 
 - (void)main {

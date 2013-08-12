@@ -3,11 +3,12 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 12/14/2010.
-//  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import "TKImageExportPreview.h"
 #import "TKImageExportPreset.h"
+#import "TKImageExportController.h"
 #import <TextureKit/TextureKit.h>
 
 
@@ -21,9 +22,9 @@
 - (id)initWithController:(TKImageExportController *)aController image:(TKImage *)anImage preset:(TKImageExportPreset *)aPreset tag:(NSInteger)aTag {
 	if (anImage == nil || aPreset == nil) return nil;
 	if ((self = [super init])) {
-		controller = [aController retain];
+		controller = aController;
 		image = [anImage retain];
-		[self setPreset:aPreset];
+		preset = [aPreset retain];
 		tag = aTag;
 	}
 	return self;
@@ -34,10 +35,10 @@
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	[controller release];
+	controller = nil;
 	[image release];
-	[preset release];
 	[imageRep release];
+	[preset release];
 	[super dealloc];
 }
 
@@ -71,9 +72,9 @@
 	NSMutableString *description = [NSMutableString stringWithString:[super description]];
 	[description appendFormat:@", "];
 	[description appendFormat:@"preset == %@, ", preset];
-	[description appendFormat:@"imageRep == %@, ", imageRep];
-	[description appendFormat:@"imageFileSize == %lu, ", imageFileSize];
-	[description appendFormat:@"tag == %ld", tag];
+//	[description appendFormat:@"imageRep == %@, ", imageRep];
+//	[description appendFormat:@"imageFileSize == %lu, ", imageFileSize];
+	[description appendFormat:@"tag == %ld", (long)tag];
 	return description;
 }
 
