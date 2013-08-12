@@ -7,12 +7,12 @@
 //
 
 #import "TKImageInspectorController.h"
-#import "MDAppKitAdditions.h"
+#import "TKAppKitAdditions.h"
 #import "TKImageChannel.h"
 #import "TKImageChannelCell.h"
 #import "TKImageDocument.h"
 
-#import "MDAppController.h"
+#import "TKAppController.h"
 
 
 #define TK_DEBUG 1
