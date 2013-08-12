@@ -3,7 +3,7 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 12/11/2010.
-//  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import "TKImageExportPreset.h"
@@ -12,10 +12,16 @@ NSString * const TKImageExportNameKey						= @"TKImageExportName";
 NSString * const TKImageExportFileTypeKey					= @"TKImageExportFileType";
 NSString * const TKImageExportFormatKey						= @"TKImageExportFormat";
 NSString * const TKImageExportDXTCompressionQualityKey		= @"TKImageExportDXTCompressionQuality";
-NSString * const TKImageExportMipmapsKey					= @"TKImageExportMipmaps";
+NSString * const TKImageExportMipmapGenerationKey					= @"TKImageExportMipmaps";
 
 
 #define TK_DEBUG 1
+
+
+@interface TKImageExportPreset (TKPrivate)
+- (void)updateName;
+@end
+
 
 
 extern NSString * const TKImageExportPresetsKey;
@@ -23,31 +29,19 @@ extern NSString * const TKImageExportPresetsKey;
 
 static TKImageExportPreset *originalImagePreset = nil;
 
-//static NSMutableArray *savedPresets = nil;
-
-
-//@interface TKImageExportPreset (TKPrivate)
-//
-//- (void)updateName;
-//
-//@end
+static NSMutableArray *imagePresets = nil;
 
 
 @implementation TKImageExportPreset
 
-@synthesize name, fileType, format, compressionQuality, mipmaps;
+@synthesize name, fileType, compressionFormat, compressionQuality, mipmapGeneration;
 
-//@synthesize name;
-//
-//@dynamic fileType, format, compressionQuality, mipmaps;
-
-
-//+ (void)initialize {
-//	if (savedPresets == nil) {
-//		savedPresets = [[NSMutableArray alloc] init];
-//		[savedPresets setArray:[TKImageExportPreset imageExportPresetsWithDictionaryRepresentations:[[NSUserDefaults standardUserDefaults] objectForKey:TKImageExportPresetsKey]]];
-//	}
-//}
++ (void)initialize {
+	if (imagePresets == nil) {
+		imagePresets = [[NSMutableArray alloc] init];
+		[imagePresets setArray:[TKImageExportPreset imageExportPresetsWithDictionaryRepresentations:[[NSUserDefaults standardUserDefaults] objectForKey:TKImageExportPresetsKey]]];
+	}
+}
 
 
 + (NSArray *)imageExportPresetsWithDictionaryRepresentations:(NSArray *)dictionaryRepresentations {
@@ -74,13 +68,13 @@ static TKImageExportPreset *originalImagePreset = nil;
 }
 
 
-+ (id)originalImagePreset {
++ (TKImageExportPreset *)originalImagePreset {
 	@synchronized(self) {
 		if (originalImagePreset == nil) {
 #if TK_DEBUG
 			NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-			originalImagePreset = [[[self class] alloc] initWithName:NSLocalizedString(@"Original", @"") fileType:nil format:nil compressionQuality:nil mipmaps:NO];
+			originalImagePreset = [[[self class] alloc] initWithName:NSLocalizedString(@"Original", @"") fileType:nil compressionFormat:nil compressionQuality:nil mipmapGeneration:TKMipmapGenerationNoMipmaps];
 		}
 	}
 	return originalImagePreset;
@@ -94,24 +88,24 @@ static TKImageExportPreset *originalImagePreset = nil;
 	return [[[[self class] alloc] initWithDictionary:aDictionary] autorelease];
 }
 
-+ (id)imageExportPresetWithName:(NSString *)aName fileType:(NSString *)aFileType format:(NSString *)aFormat compressionQuality:(NSString *)aQuality mipmaps:(BOOL)aMipmaps {
++ (id)imageExportPresetWithName:(NSString *)aName fileType:(NSString *)aFileType compressionFormat:(NSString *)aCompressionFormat compressionQuality:(NSString *)aQuality mipmapGeneration:(TKMipmapGenerationType)aMipmapGeneration {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	return [[[[self class] alloc] initWithName:aName fileType:aFileType format:aFormat compressionQuality:aQuality mipmaps:aMipmaps] autorelease];
+	return [[[[self class] alloc] initWithName:aName fileType:aFileType compressionFormat:aCompressionFormat compressionQuality:aQuality mipmapGeneration:aMipmapGeneration] autorelease];
 }
 
 
-- (id)initWithName:(NSString *)aName fileType:(NSString *)aFileType format:(NSString *)aFormat compressionQuality:(NSString *)aQuality mipmaps:(BOOL)aMipmaps {
+- (id)initWithName:(NSString *)aName fileType:(NSString *)aFileType compressionFormat:(NSString *)aCompressionFormat compressionQuality:(NSString *)aQuality mipmapGeneration:(TKMipmapGenerationType)aMipmapGeneration {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super init])) {
-		[self setName:aName];
+		name = [aName retain];
 		fileType = [aFileType retain];
-		format = [aFormat retain];
+		compressionFormat = [aCompressionFormat retain];
 		compressionQuality = [aQuality retain];
-		mipmaps = aMipmaps;
+		mipmapGeneration = aMipmapGeneration;
 	}
 	return self;
 }
@@ -122,11 +116,11 @@ static TKImageExportPreset *originalImagePreset = nil;
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super init])) {
-		[self setName:[aDictionary objectForKey:TKImageExportNameKey]];
+		name = [[aDictionary objectForKey:TKImageExportNameKey] retain];
 		fileType = [[aDictionary objectForKey:TKImageExportFileTypeKey] retain];
-		format = [[aDictionary objectForKey:TKImageExportFormatKey] retain];
+		compressionFormat = [[aDictionary objectForKey:TKImageExportFormatKey] retain];
 		compressionQuality = [[aDictionary objectForKey:TKImageExportDXTCompressionQualityKey] retain];
-		mipmaps = [[aDictionary objectForKey:TKImageExportMipmapsKey] boolValue];
+		mipmapGeneration = [[aDictionary objectForKey:TKImageExportMipmapGenerationKey] unsignedIntegerValue];
 	}
 	return self;
 }
@@ -136,12 +130,11 @@ static TKImageExportPreset *originalImagePreset = nil;
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super init])) {
-		[self setName:[coder decodeObjectForKey:TKImageExportNameKey]];
-		
+		name = [[coder decodeObjectForKey:TKImageExportNameKey] retain];
 		fileType = [[coder decodeObjectForKey:TKImageExportFileTypeKey] retain];
-		format = [[coder decodeObjectForKey:TKImageExportFormatKey] retain];
+		compressionFormat = [[coder decodeObjectForKey:TKImageExportFormatKey] retain];
 		compressionQuality = [[coder decodeObjectForKey:TKImageExportDXTCompressionQualityKey] retain];
-		mipmaps = [[coder decodeObjectForKey:TKImageExportMipmapsKey] boolValue];
+		mipmapGeneration = [[coder decodeObjectForKey:TKImageExportMipmapGenerationKey] unsignedIntegerValue];
 	}
 	return self;
 }
@@ -152,9 +145,9 @@ static TKImageExportPreset *originalImagePreset = nil;
 #endif
 	[coder encodeObject:name forKey:TKImageExportNameKey];
 	[coder encodeObject:fileType forKey:TKImageExportFileTypeKey];
-	[coder encodeObject:format forKey:TKImageExportFormatKey];
+	[coder encodeObject:compressionFormat forKey:TKImageExportFormatKey];
 	[coder encodeObject:compressionQuality forKey:TKImageExportDXTCompressionQualityKey];
-	[coder encodeObject:[NSNumber numberWithBool:mipmaps] forKey:TKImageExportMipmapsKey];
+	[coder encodeObject:[NSNumber numberWithUnsignedInteger:mipmapGeneration] forKey:TKImageExportMipmapGenerationKey];
 }
 
 - (id)copyWithZone:(NSZone *)zone {
@@ -168,21 +161,20 @@ static TKImageExportPreset *originalImagePreset = nil;
 	
 	TKImageExportPreset *copy = [[TKImageExportPreset alloc] initWithName:name
 																 fileType:fileType
-																   format:format
+																   compressionFormat:compressionFormat
 													   compressionQuality:compressionQuality
-																  mipmaps:mipmaps];
-	
+														 mipmapGeneration:mipmapGeneration];
 	return copy;
 }
 
 
 - (void)dealloc {
 #if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[name release];
 	[fileType release];
-	[format release];
+	[compressionFormat release];
 	[compressionQuality release];
 	[super dealloc];
 }
@@ -192,100 +184,85 @@ static TKImageExportPreset *originalImagePreset = nil;
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if ([key isEqualToString:@"mipmaps"]) {
-		mipmaps = NO;
+	if ([key isEqualToString:@"mipmapGeneration"]) {
+		mipmapGeneration = TKMipmapGenerationNoMipmaps;
 	} else {
 		[super setNilValueForKey:key];
 	}
 }
 
 
-//- (void)updateName {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	@synchronized(savedPresets) {
-//		[savedPresets setArray:[TKImageExportPreset imageExportPresetsWithDictionaryRepresentations:[[NSUserDefaults standardUserDefaults] objectForKey:TKImageExportPresetsKey]]];
-//		
-//		for (TKImageExportPreset *preset in savedPresets) {
-//			if ([preset matchesPreset:self]) {
-//				[self setName:[preset name]];
-//				return;
-//			}
-//		}
-//	}
-//	
-//	[self setName:@"[Custom]"];
-//	
-//}
+- (void)updateName {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if ([imagePresets containsObject:self]) {
+		
+	}
+	
+	for (TKImageExportPreset *preset in imagePresets) {
+		if ([preset matchesPreset:self]) {
+			[self setName:[preset name]];
+			return;
+		}
+	}
+	[self setName:NSLocalizedString(@"[Custom]", @"")];
+}
 
 
+- (NSString *)name {
+    return name;
+}
 
-//- (NSString *)fileType {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//    return fileType;
-//}
-//
-//- (void)setFileType:(NSString *)value {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	[value retain];
-//	[fileType release];
-//	fileType = value;
+- (void)setName:(NSString *)value {
+	[value retain];
+	[name release];
+	name = value;
 //	[self updateName];
-//}
-//
-//- (NSString *)format {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//    return format;
-//}
-//
-//- (void)setFormat:(NSString *)value {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	[value retain];
-//	[format release];
-//	format = value;
-//	[self updateName];
-//}
-//
-//- (NSString *)compressionQuality {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//    return compressionQuality;
-//}
-//
-//- (void)setCompressionQuality:(NSString *)value {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	[value retain];
-//	[compressionQuality release];
-//	compressionQuality = value;
-//	[self updateName];
-//}
-//
-//- (BOOL)mipmaps {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//    return mipmaps;
-//}
-//
-//- (void)setMipmaps:(BOOL)value {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	mipmaps = value;
-//	[self updateName];
-//}
+}
+
+- (NSString *)fileType {
+    return fileType;
+}
+
+- (void)setFileType:(NSString *)value {
+	[value retain];
+	[fileType release];
+	fileType = value;
+	[self updateName];
+}
+
+- (NSString *)compressionFormat {
+    return compressionFormat;
+}
+
+- (void)setCompressionFormat:(NSString *)value {
+	[value retain];
+	[compressionFormat release];
+	compressionFormat = value;
+	[self updateName];
+}
+
+- (NSString *)compressionQuality {
+    return compressionQuality;
+}
+
+- (void)setCompressionQuality:(NSString *)value {
+	[value retain];
+	[compressionQuality release];
+	compressionQuality = value;
+	[self updateName];
+}
+
+
+- (TKMipmapGenerationType)mipmapGeneration {
+	return mipmapGeneration;
+}
+
+- (void)setMipmapGeneration:(TKMipmapGenerationType)aMipmapGeneration {
+	mipmapGeneration = aMipmapGeneration;
+	[self updateName];
+}
 
 
 - (NSDictionary *)dictionaryRepresentation {
@@ -294,9 +271,9 @@ static TKImageExportPreset *originalImagePreset = nil;
 #endif
 	NSDictionary *dictionaryRepresentation = [NSDictionary dictionaryWithObjectsAndKeys:name,TKImageExportNameKey,
 											  fileType,TKImageExportFileTypeKey,
-											  format,TKImageExportFormatKey,
+											  compressionFormat,TKImageExportFormatKey,
 											  compressionQuality,TKImageExportDXTCompressionQualityKey,
-											  [NSNumber numberWithBool:mipmaps],TKImageExportMipmapsKey, nil];
+											  [NSNumber numberWithUnsignedInteger:mipmapGeneration],TKImageExportMipmapGenerationKey, nil];
 	return dictionaryRepresentation;
 }
 
@@ -317,21 +294,21 @@ static TKImageExportPreset *originalImagePreset = nil;
 		
 		return ([[preset name] isEqualToString:name] &&
 				[[preset fileType] isEqualToString:fileType] &&
-				[[preset format] isEqualToString:format] &&
+				[[preset compressionFormat] isEqualToString:compressionFormat] &&
 				[[preset compressionQuality] isEqualToString:compressionQuality] &&
-				[preset mipmaps] == mipmaps);
+				[preset mipmapGeneration] == mipmapGeneration);
 	}
 	return NO;
 }
 
 
-// matchesPreset: is all but name is equal
+// matchesPreset: all but name is equal
 - (BOOL)matchesPreset:(TKImageExportPreset *)preset {
 	if ([preset isKindOfClass:[self class]]) {
 		return ([[preset fileType] isEqualToString:fileType] &&
-				[[preset format] isEqualToString:format] &&
+				[[preset compressionFormat] isEqualToString:compressionFormat] &&
 				[[preset compressionQuality] isEqualToString:compressionQuality] &&
-				[preset mipmaps] == mipmaps);
+				[preset mipmapGeneration] == mipmapGeneration);
 	}
 	return NO;
 }
@@ -340,12 +317,13 @@ static TKImageExportPreset *originalImagePreset = nil;
 
 
 - (NSString *)description {
-	NSMutableString *description = [NSMutableString stringWithString:[super description]];
+//	NSMutableString *description = [NSMutableString stringWithString:[super description]];
+	NSMutableString *description = [NSMutableString string];
 	[description appendFormat:@" %@, ", name];
 	[description appendFormat:@"%@, ", fileType];
-	[description appendFormat:@"%@, ", format];
+	[description appendFormat:@"%@, ", compressionFormat];
 	[description appendFormat:@"%@, ", compressionQuality];
-	[description appendFormat:@"mipmaps == %@", (mipmaps ? @"YES" : @"NO")];
+	[description appendFormat:@"mipmapGeneration == %lu", (unsigned long)mipmapGeneration];
 	return description;
 }
 
@@ -359,9 +337,9 @@ static TKImageExportPreset *originalImagePreset = nil;
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return [[self class] DDSRepresentationOfImageRepsInArray:tkImageReps
-												 usingFormat:TKDDSFormatFromString([preset format])
+												 usingFormat:TKDDSFormatFromString([preset compressionFormat])
 													 quality:TKDXTCompressionQualityFromString([preset compressionQuality])
-											   createMipmaps:[preset mipmaps]];
+													 options:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:[preset mipmapGeneration]],TKImageMipmapGenerationKey, nil]];
 }
 
 @end
@@ -375,9 +353,9 @@ static TKImageExportPreset *originalImagePreset = nil;
 #endif
 	
 	return [[self class] VTFRepresentationOfImageRepsInArray:tkImageReps
-												 usingFormat:TKVTFFormatFromString([preset format])
+												 usingFormat:TKVTFFormatFromString([preset compressionFormat])
 													 quality:TKDXTCompressionQualityFromString([preset compressionQuality])
-											   createMipmaps:[preset mipmaps]];
+													 options:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:[preset mipmapGeneration]],TKImageMipmapGenerationKey, nil]];
 }
 
 @end
