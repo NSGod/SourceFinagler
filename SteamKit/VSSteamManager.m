@@ -19,7 +19,7 @@
 
 #import "MDResource.h"
 #import "MDResourceFile.h"
-#import "SBSystemEvents.h"
+
 
 static NSString * const VSGameBundleIdentifiersAndGamesKey						= @"VSGameBundleIdentifiersAndGames";
 static NSString * const VSExecutableNamesKey									= @"VSExecutableNames";
@@ -52,24 +52,13 @@ NSString * const VSSteamAppsDirectoryNameKey						= @"SteamApps";
 
 static NSString * const VSSourceFinaglerBundleIdentifierKey			= @"com.markdouma.SourceFinagler";
 
-
 static NSString * const VSSourceFinaglerAgentNameKey					= @"SourceFinaglerAgent.app";
 
 static NSString * const VSSourceFinaglerAgentBundleIdentifierKey		= @"com.markdouma.SourceFinaglerAgent";
 
-
 static NSString * const VSTimeMachineDatabaseNameKey				= @"Backups.backupdb";
 
-
 static NSString * const VSSteamLaunchGameURL						= @"steam://run/";
-
-static NSString * const VSDockBundleIdentifierKey					= @"com.apple.dock";
-static NSString * const VSDashboardBundleIdentifierKey				= @"com.apple.dashboard";
-static NSString * const VSSystemEventsBundleIdentifierKey			= @"com.apple.systemevents";
-
-static NSString * const VSDockWorkspacesKey							= @"workspaces";
-static NSString * const VSDockExposeDisabledKey						= @"mcx-expose-disabled";
-static NSString * const VSDashboardDisabledKey						= @"mcx-disabled";
 
 
 NSString * const VSSourceAddonErrorDomain							= @"com.markdouma.SourceFinagler.SourceAddonErrorDomain";
@@ -91,11 +80,6 @@ static inline NSString *VSMakeGamePathKey(NSString *gamePath) {
 
 #define VS_DEBUG 0
 
-@interface VSSteamManager (VSPrivate)
-
-- (void)locateSteamApps;
-
-@end
 
 static BOOL locatedSteamApps = NO;
 
@@ -112,12 +96,16 @@ static VSSteamManager *sharedManager = nil;
 
 @implementation VSSteamManager
 
-@synthesize delegate, exposePreferences, workspacesEnabled, monitoringGames;
+@synthesize delegate;
+@synthesize monitoringGames;
+
 
 
 + (VSSteamManager *)defaultManager {
+	@synchronized(self) {
 	if (sharedManager == nil) {
 		sharedManager = [[super allocWithZone:NULL] init];
+	}
 	}
 	return sharedManager;
 }
@@ -709,13 +697,13 @@ static inline NSString *VSMakeLabelFromBundleIdentifier(NSString *bundleIdentifi
 				
 				NSBundle *sourceFinaglerAgentBundle = [NSBundle bundleWithPath:sourceFinaglerLaunchAgentPath];
 				if (sourceFinaglerAgentBundle == nil) {
-					NSLog(@"[%@ %@] *** ERROR: [NSBundle bundleWithPath:sourceFinaglerLaunchAgentPath] return nil! (sourceFinaglerLaunchAgentPath == %@)", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sourceFinaglerLaunchAgentPath);
+					NSLog(@"[%@ %@] *** ERROR: [NSBundle bundleWithPath:sourceFinaglerLaunchAgentPath] returned nil! (sourceFinaglerLaunchAgentPath == %@)", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sourceFinaglerLaunchAgentPath);
 					return NO;
 				}
 				
 				NSString *launchAgentExecutablePath = [sourceFinaglerAgentBundle executablePath];
 				if (launchAgentExecutablePath == nil) {
-					NSLog(@"[%@ %@] *** ERROR: [sourceFinaglerAgentBundle executablePath] return nil!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+					NSLog(@"[%@ %@] *** ERROR: [sourceFinaglerAgentBundle executablePath] returned nil!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 					return NO;
 				}
 				
@@ -730,7 +718,6 @@ static inline NSString *VSMakeLabelFromBundleIdentifier(NSString *bundleIdentifi
 					NSLog(@"[%@ %@] failed to submit job!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 					return NO;
 				}
-				
 			}
 		}
 	}
@@ -828,14 +815,14 @@ static inline NSString *VSMakeLabelFromBundleIdentifier(NSString *bundleIdentifi
 	return YES;
 }
 
-#define VS_SOURCE_FINAGLER_AGENT_THROTTLEINTERVAL 2
+#define VS_SOURCE_FINAGLER_AGENT_THROTTLE_INTERVAL 2
 
 static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *programArguments, NSString *aWatchPath) {
 	if (jobLabel == nil || programArguments == nil || aWatchPath == nil) return nil;
 	return [NSDictionary dictionaryWithObjectsAndKeys:jobLabel,NSStringFromLaunchJobKey(LAUNCH_JOBKEY_LABEL),
 			programArguments, NSStringFromLaunchJobKey(LAUNCH_JOBKEY_PROGRAMARGUMENTS),
 			[NSNumber numberWithBool:NO], NSStringFromLaunchJobKey(LAUNCH_JOBKEY_RUNATLOAD), 
-			[NSNumber numberWithInteger:VS_SOURCE_FINAGLER_AGENT_THROTTLEINTERVAL], NSStringFromLaunchJobKey(LAUNCH_JOBKEY_THROTTLEINTERVAL),
+			[NSNumber numberWithInteger:VS_SOURCE_FINAGLER_AGENT_THROTTLE_INTERVAL], NSStringFromLaunchJobKey(LAUNCH_JOBKEY_THROTTLEINTERVAL),
 			[NSArray arrayWithObject:aWatchPath], NSStringFromLaunchJobKey(LAUNCH_JOBKEY_WATCHPATHS), nil];
 }
 
@@ -883,8 +870,6 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 	[self locateSteamApps];
 	return YES;
 }
-
-
 
 
 - (VSGame *)gameWithPath:(NSString *)aPath {
@@ -941,6 +926,7 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 	if (propertyListData) {
 		NSString *propertyListString = [[[NSString alloc] initWithData:propertyListData encoding:NSUTF8StringEncoding] autorelease];
 		if (propertyListString) {
+			// old-style 'plst' resources require carriage-returns
 			propertyListString = [propertyListString stringByReplacingOccurrencesOfString:@"\n" withString:@"\r"];
 		}
 		propertyListData = [propertyListString dataUsingEncoding:NSUTF8StringEncoding];
@@ -992,7 +978,6 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 	if (![mdFileManager setAttributes:attributes ofItemAtPath:path error:outError]) {
 		success = NO;
 	}
-	
 	
 	if (helpForUSBOverdrive) {
 		
@@ -1077,12 +1062,14 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 		NSMutableDictionary *mInfoPlist = [[infoPlist mutableCopy] autorelease];
 		[mInfoPlist setObject:@"game" forKey:@"CFBundleIconFile"];
 		
+		[mInfoPlist setObject:@"NSApplication" forKey:@"NSPrincipalClass"];
+		[mInfoPlist setObject:@"MainMenu" forKey:@"NSMainNibFile"];
+		
 		
 		if (![mInfoPlist writeToFile:[[destUSBPath stringByAppendingPathComponent:@"Contents"] stringByAppendingPathComponent:@"Info.plist"] atomically:YES]) {
 			NSLog(@"[%@ %@] failed to write Info.plist!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 			return NO;
 		}
-		
 		
 		if (![fileManager setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[NSDate date],NSFileModificationDate, nil] ofItemAtPath:destUSBPath error:outError]) {
 			NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -1187,13 +1174,6 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 	if (options & VSGameLaunchHelpingGame && ![game isHelped]) {
 		if (![self helpGame:game forUSBOverdrive:YES updateLaunchAgent:NO error:outError]) return NO;
 	}
-	
-	SBSystemEventsApplication *systemEvents = [SBApplication applicationWithBundleIdentifier:VSSystemEventsBundleIdentifierKey];
-	if (systemEvents) {
-		[self setExposePreferences:[systemEvents exposePreferences]];
-		NSLog(@"[%@ %@] exposePreferences == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), exposePreferences);
-	}
-	
 	
 	NSURL *URL = [NSURL URLWithString:[VSSteamLaunchGameURL stringByAppendingFormat:@"%lu", (unsigned long)[game gameID]]];
 	if (URL) {
@@ -1379,9 +1359,6 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 }
 
 
-
-
-	
 @end
 
 
