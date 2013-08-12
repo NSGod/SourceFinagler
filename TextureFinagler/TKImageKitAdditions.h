@@ -1,5 +1,5 @@
 //
-//  IKImageBrowserView+TKImageKitAdditions.h
+//  TKImageKitAdditions.h
 //  Source Finagler
 //
 //  Created by Mark Douma on 12/2/2011.
@@ -9,5 +9,10 @@
 #import <Quartz/Quartz.h>
 
 @interface IKImageBrowserView (TKImageKitAdditions)
+
+- (CGFloat)idealViewWidth;
+
+- (CGFloat)idealViewHeight;
+
 
 @end
