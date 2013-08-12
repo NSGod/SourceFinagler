@@ -9,30 +9,20 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class TKPrefsGeneralController;
+enum {
+	TKPrefsGeneralView	= 0
+};
+typedef NSUInteger TKPrefsView;
 
 
 
 @interface TKPrefsController : NSWindowController <NSToolbarDelegate> {
-	TKPrefsGeneralController	*generalController;
-	
+	NSMutableArray				*viewControllers;
+	TKPrefsView					currentView;
 }
 
-- (IBAction)switchToView:(id)sender;
+- (IBAction)changeView:(id)sender;
 
 @end
-
-
-/*************		Preferences		*************/
-//extern NSString * const MDPrefsCurrentViewKey;
-
-// various pref views...  the values need to be the "itemIdentifier" strings of the toolbarItems
-
-//extern NSString * const MDPrefsGeneralViewKey;
-//
-//extern NSString * const MDPrefsViewDidChangeNotification;
-//extern NSString * const MDPrefsWindowWillCloseNotification;
-
-
 
 

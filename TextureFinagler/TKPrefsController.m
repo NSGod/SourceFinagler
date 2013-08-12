@@ -8,19 +8,43 @@
 
 #import "TKPrefsController.h"
 #import "TKPrefsGeneralController.h"
-#import "MDAppKitAdditions.h"
+#import "TKAppKitAdditions.h"
 
-enum {
-	MDPrefsGeneralView	= 1
-};
 
+
+#define TK_DEBUG 1
+
+
+static NSString * const TKPrefsCurrentViewKey			= @"TKPrefsCurrentView";
+
+static NSArray *prefsClassNames = nil;
 
 
 @implementation TKPrefsController
 
+
++ (void)initialize {
+	@synchronized(self) {
+		if (prefsClassNames == nil) {
+			prefsClassNames = [[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"TKPrefs" ofType:@"plist"]] objectForKey:@"TKPrefsClassNames"] retain];
+		}
+		NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+		[defaults setObject:[NSNumber numberWithUnsignedInteger:TKPrefsGeneralView]	forKey:TKPrefsCurrentViewKey];
+		[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+	}
+}
+
+
 - (id)init {
 	if ((self = [super initWithWindowNibName:@"TKPrefs"])) {
-
+		currentView = [[[NSUserDefaults standardUserDefaults] objectForKey:TKPrefsCurrentViewKey] unsignedIntegerValue];
+		viewControllers = [[NSMutableArray alloc] init];
+		NSUInteger count = prefsClassNames.count;
+		for (NSUInteger i = 0; i < count; i++) {
+			[viewControllers addObject:[NSNull null]];
+		}
+		[self window];
+		
 	} else {
 		[NSBundle runFailedNibLoadAlert:@"TKPrefs"];
 	}
@@ -28,26 +52,52 @@ enum {
 }
 
 - (void)dealloc {
-	[generalController release];
+	[viewControllers release];
 	[super dealloc];
 }
 
 
-//- (void)awakeFromNib {
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//	
-//}
+- (void)awakeFromNib {
+#if TK_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	[self changeView:self];
+}
 
-- (void)windowDidLoad {
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-	if (generalController == nil) {
-		generalController = [[TKPrefsGeneralController alloc] init];
-		if (![NSBundle loadNibNamed:@"TKPrefsGeneral" owner:generalController]) {
-			NSLog(@"[%@ %@] failed to load TKPrefsGeneral.nib!!!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+
+- (IBAction)changeView:(id)sender {
+#if TK_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	
+	if (sender == self || sender == nil) {
+		NSArray *toolbarItems = self.window.toolbar.items;
+		for (NSToolbarItem *toolbarItem in toolbarItems) {
+			if (toolbarItem.tag == currentView) {
+				[self.window.toolbar setSelectedItemIdentifier:toolbarItem.itemIdentifier]; break;
+			}
 		}
+	} else {
+		currentView = [(NSToolbarItem *)sender tag];
 	}
-	[[[self window] toolbar] setSelectedItemIdentifier:@"general"];
-	[[self window] switchView:[generalController view] newTitle:NSLocalizedString(@"General", @"")];
+	
+	TKViewController *viewController = [viewControllers objectAtIndex:currentView];
+
+	if ((NSNull *)viewController == [NSNull null]) {
+		NSString *className = [prefsClassNames objectAtIndex:currentView];
+		
+		Class viewControllerClass = NSClassFromString(className);
+		
+		viewController = [[viewControllerClass alloc] init];
+		
+		[viewControllers replaceObjectAtIndex:currentView withObject:viewController];
+		
+		[viewController release];
+		
+	}
+	
+	[self.window switchView:viewController.view newTitle:viewController.title];
+	[viewController didSwitchToView:self];
 	
 }
 
@@ -58,36 +108,6 @@ enum {
 }
 
 
-- (IBAction)switchToView:(id)sender {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	
-	
-	
-	
-	
-}
-
-
-
-
-
-
 @end
 
-
-
-
-
-
-
-//NSString * const MDPrefsCurrentViewKey = @"MDPrefsCurrentView";
-
-// various pref views...  the values need to be the "itemIdentifier" strings of the toolbarItems
-
-//NSString * const MDPrefsGeneralViewKey = @"generalPrefs";
-//
-//NSString * const MDPrefsViewDidChangeNotification = @"MDPrefsViewDidChange";
-//NSString * const MDPrefsWindowWillCloseNotification = @"MDPrefsWindowWillClose";
 
