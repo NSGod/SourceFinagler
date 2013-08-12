@@ -9,6 +9,8 @@
 #import "TKImageBrowserItem.h"
 #import <TextureKit/TextureKit.h>
 #import <ApplicationServices/ApplicationServices.h>
+#import "TKImageRepAdditions.h"
+
 
 
 #define TK_DEBUG 1

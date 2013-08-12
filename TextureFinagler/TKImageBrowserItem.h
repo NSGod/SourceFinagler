@@ -31,8 +31,8 @@ typedef NSUInteger TKBrowserItemType;
 
 - (id)initWithImageRep:(TKImageRep *)anImageRep type:(TKBrowserItemType)aType;
 
-@property (retain) TKImageRep *imageRep;
-@property (assign) TKBrowserItemType type;
+@property (nonatomic, retain) TKImageRep *imageRep;
+@property (nonatomic, assign) TKBrowserItemType type;
 
 
 - (NSString *)imageUID;
