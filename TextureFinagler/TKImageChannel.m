@@ -36,7 +36,7 @@
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	NSParameterAssert(anImageRep != nil);
+//	NSParameterAssert(anImageRep != nil);
 	NSMutableArray *imageChannels = [NSMutableArray array];
 	
 	BOOL irHasAlpha = [anImageRep hasAlpha];
