@@ -3,24 +3,20 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 11/15/2010.
-//  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
 #import <Quartz/Quartz.h>
 
 
-@class TKImageView, CALayer;
+@class TKImageView, TKImageRep;
 
 enum {
 	TKImageViewZoomOutTag			= -1,
 	TKImageViewZoomActualSizeTag	= 0,
 	TKImageViewZoomInTag			= 1
 };
-
-@protocol TKImageViewAnimatedImageDataSource <NSObject>
-- (NSArray *)imageRepsForAnimationInImageView:(TKImageView *)anImageView;
-@end
 
 
 @protocol TKImageViewDelegate <NSObject>
@@ -29,36 +25,58 @@ enum {
 
 
 @interface TKImageView : IKImageView {
-	NSArray										*imageReps;
 	
-	id <TKImageViewAnimatedImageDataSource>		dataSource;		// non-retained
 	
 	id <TKImageViewDelegate>					delegate;		// non-retained
 	
 	
-	CALayer										*animatedImageLayer;
+	CALayer										*imageKitLayer;
 	
-	CALayer										*oldLayer;
+	CALayer										*animationImageLayer;
 	
-	BOOL										playing;
+	NSArray										*animationImageReps;
+	BOOL										isAnimating;
+	
+	
+	
+	
+	CGImageRef									image;
+	
+	TKImageRep									*previewImageRep;
+	
+	BOOL										previewing;
+	
+	BOOL										showsImageBackground;
+	
 }
 
-@property (retain) NSArray *imageReps;
+@property (retain) CALayer *imageKitLayer;
 
-@property (assign) IBOutlet id <TKImageViewAnimatedImageDataSource> dataSource;
+@property (retain) CALayer *animationImageLayer;
+
+@property (copy) NSArray *animationImageReps;
+
+
+- (void)startAnimating;
+- (void)stopAnimating;
+- (BOOL)isAnimating;
+
 
 @property (assign) IBOutlet id <TKImageViewDelegate> delegate;
 
-@property (assign, getter=isPlaying) BOOL playing;
+@property (retain) TKImageRep *previewImageRep;
 
-//@property (nonatomic, retain) NSArray *imageReps;
-//
-//@property (nonatomic, assign) IBOutlet id <TKImageViewAnimatedImageDataSource> dataSource;
-//
-//@property (nonatomic, assign, getter=isPlaying) BOOL playing;
+@property (assign, getter=isPreviewing) BOOL previewing;
 
-- (IBAction)togglePlay:(id)sender;
+
+@property (assign) BOOL showsImageBackground;
+
+
+
+- (IBAction)toggleShowImageBackground:(id)sender;
 
 - (IBAction)zoom:(id)sender;
 
+
 @end
+

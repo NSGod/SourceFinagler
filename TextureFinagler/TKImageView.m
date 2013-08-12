@@ -3,7 +3,7 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 11/15/2010.
-//  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import "TKImageView.h"
@@ -12,17 +12,91 @@
 
 #define TK_DEBUG 1
 
+
+typedef struct TKZoomMapping {
+	CGFloat currentZoomLow;
+	CGFloat currentZoomHigh;
+} TKZoomMapping;
+
+
+static const TKZoomMapping TKZoomMappingTable[] = {
+	{ 0.0, 0.05 },
+	{ 0.05, 0.075 },
+	{ 0.075, 0.1 },
+	{ 0.1, 0.15 },
+	{ 0.15, 0.2 },
+	{ 0.2, 0.25 },
+	{ 0.25, 0.3 },
+	{ 0.3, 0.4 },
+	{ 0.4, 0.5 },
+	{ 0.5, 0.75 },
+	{ 0.75, 1.0 },
+	{ 1.0, 1.5 },
+	{ 1.5, 2.0 },
+	{ 2.0, 3.0 },
+	{ 3.0, 4.0 },
+	{ 4.0, 6.0 },
+	{ 6.0, 8.0 },
+	{ 8.0, 10.0 },
+	{ 10.0, 15.0 },
+	{ 15.0, 20.0 },
+	{ 20.0, 30.0 },
+	{ 30.0, 40.0 },
+	{ 40.0, 60.0 },
+	{ 60.0, 80.0 }
+};
+static const NSUInteger TKZoomMappingTableCount = sizeof(TKZoomMappingTable)/sizeof(TKZoomMappingTable[0]);
+
+
+
+static inline CGFloat TKNextZoomFactorForZoomFactorAndOperation(CGFloat currentZoomFactor, NSInteger zoomInOrZoomOut) {
+	for (NSUInteger i = 0; i < TKZoomMappingTableCount; i++) {
+		if (TKZoomMappingTable[i].currentZoomLow < currentZoomFactor && currentZoomFactor <= TKZoomMappingTable[i].currentZoomHigh) {
+			if (zoomInOrZoomOut == TKImageViewZoomOutTag && i > 0) {
+				return TKZoomMappingTable[i].currentZoomLow;
+			} else {
+				if (i < TKZoomMappingTableCount - 2) {
+					return TKZoomMappingTable[i + 1].currentZoomHigh;
+				}
+			}
+		}
+	}
+	return currentZoomFactor;
+}
+
+
+static TKImageRep *checkerboardImageRep = nil;
+
+
+CGPatternRef TKCreatePatternWithImage(CGImageRef imageRef);
+CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
+
+
+
 @interface TKImageView ()
 
-- (void)loadAnimatedImageReps;
-- (void)unloadAnimatedImageReps;
+
+- (void)setImageKitLayerIfNeeded;
+
+- (void)loadAnimationImageReps;
+- (void)unloadAnimationImageReps;
 
 @end
 
 
 @implementation TKImageView
 
-@synthesize imageReps, playing, dataSource, delegate;
+@dynamic imageKitLayer;
+
+@synthesize animationImageLayer;
+
+@synthesize animationImageReps;
+
+@synthesize delegate;
+@synthesize previewing;
+
+@dynamic previewImageRep;
+@dynamic showsImageBackground;
 
 
 - (id)initWithFrame:(NSRect)frameRect {
@@ -34,18 +108,232 @@
 
 
 - (void)dealloc {
-	[imageReps release];
-	[animatedImageLayer release];
-	[oldLayer release];
-	dataSource = nil;
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	[imageKitLayer release];
+	[animationImageLayer release];
+	[animationImageReps release];
 	delegate = nil;
+	CGImageRelease(image);
+	[previewImageRep release];
 	[super dealloc];
 }
 
 
 - (void)awakeFromNib {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	
 	[self setCurrentToolMode:IKToolModeMove];
+	
+//	[self setImageKitLayer:[self layer]];
 }
+
+
+- (void)setImageKitLayerIfNeeded {
+	if (imageKitLayer == nil) self.imageKitLayer = [self layer];
+}
+
+- (CALayer *)imageKitLayer {
+	[self setImageKitLayerIfNeeded];
+    return imageKitLayer;
+}
+
+- (void)setImageKitLayer:(CALayer *)aLayer {
+	[aLayer retain];
+	[imageKitLayer release];
+	imageKitLayer = aLayer;
+}
+
+
+- (TKImageRep *)previewImageRep {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	return previewImageRep;
+}
+
+
+- (void)setPreviewImageRep:(TKImageRep *)aPreviewImageRep {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	
+	[aPreviewImageRep retain];
+	[previewImageRep release];
+	previewImageRep = aPreviewImageRep;
+	
+	if (previewImageRep) {
+		CGImageRelease(image);
+		image = CGImageRetain([self image]);
+		
+		[self setImage:[previewImageRep CGImage] imageProperties:nil];
+		
+	} else {
+		
+		[self setImage:image imageProperties:nil];
+	}
+	
+	[self setPreviewing:(previewImageRep != nil)];
+	
+}
+
+
+
+- (BOOL)showsImageBackground {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+    return showsImageBackground;
+}
+
+- (void)setShowsImageBackground:(BOOL)showImageBackground {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	showsImageBackground = showImageBackground;
+	
+	[self setImageKitLayerIfNeeded];
+	
+	if (self.layer != imageKitLayer) self.layer = imageKitLayer;
+	
+	if (showsImageBackground) {
+		@synchronized([self class]) {
+			if (checkerboardImageRep == nil) {
+				checkerboardImageRep = [[TKImageRep imageRepWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"checkerboard" ofType:@"png"]] retain];
+			}
+		}
+		CGImageRef checkerboardImageRef = CGImageRetain([checkerboardImageRep CGImage]);
+		CGColorRef patternColorRef = TKCreatePatternColorWithImage(checkerboardImageRef);
+		imageKitLayer.backgroundColor = patternColorRef;
+		CGColorRelease(patternColorRef);
+		
+	} else {
+		imageKitLayer.backgroundColor = nil;
+	}
+}
+
+- (IBAction)toggleShowImageBackground:(id)sender {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	[self setShowsImageBackground:!showsImageBackground];
+}
+
+
+
+
+#define TK_FRAMES_PER_SECOND 0.75
+#define TK_TIME_INTERVAL_PER_FRAME 1.0
+
+- (void)loadAnimationImageReps {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	
+#if TK_DEBUG
+//		NSLog(@"[%@ %@] animationImageReps == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), animationImageReps);
+#endif
+		
+	if ([animationImageReps count]) {
+		
+		[self setImageKitLayerIfNeeded];
+		
+		
+		NSMutableArray *imageRefs = [NSMutableArray array];
+		for (TKImageRep *imageRep in animationImageReps) {
+			[imageRefs addObject:(id)[imageRep CGImage]];
+		}
+		
+		CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:@"contents"];
+		anim.duration = TK_FRAMES_PER_SECOND; // frame rate == [animationImageReps count] / duration
+		anim.calculationMode = kCAAnimationDiscrete;
+		anim.repeatCount = HUGE_VAL;
+		anim.values = imageRefs;
+		
+#if TK_DEBUG
+		NSLog(@"[%@ %@] zoomFactor == %.3f", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [self zoomFactor]);
+#endif
+		
+		TKImageRep *largestRep = [TKImageRep largestRepresentationInArray:animationImageReps];
+		
+		if (animationImageLayer == nil) animationImageLayer = [[CALayer layer] retain];
+		
+		animationImageLayer.frame = NSRectToCGRect(NSMakeRect(0.0, 0.0, [largestRep size].width, [largestRep size].height));
+		animationImageLayer.position = NSPointToCGPoint(NSMakePoint([self bounds].size.width/2.0, [self bounds].size.height/2.0));
+		
+		[animationImageLayer setValue:[NSNumber numberWithDouble:[self zoomFactor]] forKeyPath:@"transform.scale"];
+		
+		self.layer = animationImageLayer;
+		
+		[self.layer addAnimation:anim forKey:@"animation"];
+	}
+	//	}
+}
+
+
+- (void)unloadAnimationImageReps {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	[self.layer removeAnimationForKey:@"animation"];
+	
+	self.layer = imageKitLayer;
+	
+//	[animationImageLayer release];
+//	animationImageLayer = nil;
+//	
+//	[animationImageReps release];
+//	animationImageReps = nil;
+	
+}
+
+
+- (void)startAnimating {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (isAnimating) return;
+	
+	[self loadAnimationImageReps];
+}
+
+
+- (void)stopAnimating {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (isAnimating == NO) return;
+	
+	[self unloadAnimationImageReps];
+}
+
+
+- (BOOL)isAnimating {
+	return isAnimating;
+}
+
+
+
+//- (IBAction)togglePlay:(id)sender {
+//#if TK_DEBUG
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	CALayer *layer = [self layer];
+//	NSLog(@"[%@ %@] layer == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), layer);
+//#endif
+//	
+//	if (playing) {
+//		
+//		[self unloadAnimationImageReps];
+//	} else {
+//		[self loadAnimationImageReps];
+//	}
+//	
+//	[self setPlaying:!playing];
+//	[self setNeedsDisplay:YES];
+//}
 
 
 - (void)mouseDown:(NSEvent *)event {
@@ -57,31 +345,6 @@
 	}
 	[super mouseDown:event];
 }
-
-
-/*! 
- @method scrollToPoint:
- @abstract Scrolls the view to the specified point.
- */
-- (void)scrollToPoint:(NSPoint)point {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	[super scrollToPoint:point];
-}
-
-/*! 
- @method scrollToRect:
- @abstract Scrolls the view so that it includes the provided rectangular area.
- */
-- (void)scrollToRect:(NSRect)rect {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	[super scrollToRect:rect];
-}
-
-
 
 
 - (IBAction)zoom:(id)sender {
@@ -127,134 +390,143 @@
 }
 
 
-#define TK_ZOOM_FACTOR_MIN 0.125
-#define TK_ZOOM_FACTOR_MAX 32.0
-
-
 - (void)scrollWheel:(NSEvent *)event {
 	
-	CGFloat deltaX = [event deltaX];
 	CGFloat deltaY = [event deltaY];
-	CGFloat deltaZ = [event deltaZ];
 	
 	CGFloat currentZoomFactor = [self zoomFactor];
 	
 #if TK_DEBUG
-	NSLog(@"[%@ %@] currentZoomFactor == %.3f, deltaX == %.3f, deltaY == %.3f, deltaZ == %.3f", NSStringFromClass([self class]), NSStringFromSelector(_cmd), currentZoomFactor, deltaX, deltaY, deltaZ);
+	NSLog(@"[%@ %@] currentZoomFactor == %.5f, deltaY == %.5f", NSStringFromClass([self class]), NSStringFromSelector(_cmd), currentZoomFactor, deltaY);
 #endif
 	
-	// resulting zoom factor should always be greater than 0, and less than, say, 16 (1600%) -- let's do 32
-	
-	if (currentZoomFactor > TK_ZOOM_FACTOR_MIN && currentZoomFactor <= TK_ZOOM_FACTOR_MAX) {
-		CGFloat zoomOperation = 10 * deltaY;
-		currentZoomFactor += zoomOperation;
-		if (currentZoomFactor < 0.0) {
-			currentZoomFactor = TK_ZOOM_FACTOR_MIN;
-		} else if (currentZoomFactor > TK_ZOOM_FACTOR_MAX) {
-			currentZoomFactor = TK_ZOOM_FACTOR_MAX;
-		}
-		[self setZoomFactor:currentZoomFactor];
-//		[self setImageZoomFactor:currentZoomFactor centerPoint:[self convertViewPointToImagePoint:[self convertPoint:[event locationInWindow] fromView:nil]]];
-//		[self setZoomFactor:(CGFloat)
-	}
+	[self setZoomFactor:TKNextZoomFactorForZoomFactorAndOperation(currentZoomFactor, (deltaY > 0 ? TKImageViewZoomInTag : TKImageViewZoomOutTag))];
 }
 
 
-#define TK_FRAMES_PER_SECOND 0.75
-#define TK_TIME_INTERVAL_PER_FRAME 1.0
-
-- (void)loadAnimatedImageReps {
+- (void)setRotationAngle:(CGFloat)aRotationAngle centerPoint:(NSPoint)centerPoint {
 #if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"[%@ %@] rotationAngle == %.3f, centerPoint == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), aRotationAngle, NSStringFromPoint(centerPoint));
 #endif
-	[imageReps release];
-	imageReps = nil;
-	
-	if (dataSource && [dataSource respondsToSelector:@selector(imageRepsForAnimationInImageView:)]) {
-		imageReps = [[dataSource imageRepsForAnimationInImageView:self] retain];
-#if TK_DEBUG
-		NSLog(@"[%@ %@] imageReps == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), imageReps);
-#endif
-	
-		
-		if (imageReps && [imageReps count]) {
-			NSMutableArray *imageRefs = [NSMutableArray array];
-			for (TKImageRep *imageRep in imageReps) {
-				[imageRefs addObject:(id)[imageRep CGImage]];
-			}
-			
-			CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:@"contents"];
-			anim.duration = TK_FRAMES_PER_SECOND; // frame rate == [imageReps count] / duration
-			anim.calculationMode = kCAAnimationDiscrete;
-			anim.repeatCount = HUGE_VAL;
-			anim.values = imageRefs;
-			
-			
-			CALayer *currentLayer = [[self layer] retain];
-			
-			NSLog(@"[%@ %@] zoomFactor == %.3f", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [self zoomFactor]);
-	
-			
-//			NSLog(@"[%@ %@] currentLayer == %@; wantsLayer == %@; isFlipped == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), currentLayer, ([self wantsLayer] ? @"YES" : @"NO"), ([self isFlipped] ? @"YES" : @"NO"));
-			
-			[oldLayer release];
-			oldLayer = currentLayer;
-			
-			[animatedImageLayer release];
-			
-			animatedImageLayer = [CALayer layer];
-			NSImageRep *firstRep = (TKImageRep *)[imageReps objectAtIndex:0];
-			
-			animatedImageLayer.frame = NSRectToCGRect(NSMakeRect(0.0, 0.0, [firstRep size].width, [firstRep size].height));
-			animatedImageLayer.position = NSPointToCGPoint(NSMakePoint([self bounds].size.width/2.0, [self bounds].size.height/2.0));
-			
-			[animatedImageLayer setValue:[NSNumber numberWithDouble:[self zoomFactor]] forKeyPath:@"transform.scale"];
-			
-			self.layer = animatedImageLayer;
-
-			[self.layer addAnimation:anim forKey:@"animation"];
-			
-		}
-	}
+	[super setRotationAngle:aRotationAngle centerPoint:centerPoint];
 }
 
 
-- (void)unloadAnimatedImageReps {
+
+/*! 
+ @method setImageZoomFactor:centerPoint:
+ @abstract Sets the zoom factor at the provided origin.
+ */
+- (void)setImageZoomFactor:(CGFloat)aZoomFactor centerPoint:(NSPoint)centerPoint {
 #if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"[%@ %@] zoomFactor == %.3f, centerPoint == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), aZoomFactor, NSStringFromPoint(centerPoint));
 #endif
-	[self.layer removeAnimationForKey:@"animation"];
-	
-	self.layer = oldLayer;
-	
-	[oldLayer release];
-	oldLayer = nil;
-	
-	[imageReps release];
-	imageReps = nil;
-	
-	animatedImageLayer = nil;
-	
+	[super setImageZoomFactor:aZoomFactor centerPoint:centerPoint];
 }
 
 
-- (IBAction)togglePlay:(id)sender {
+
+/*! 
+ @method scrollToPoint:
+ @abstract Scrolls the view to the specified point.
+ */
+- (void)scrollToPoint:(NSPoint)point {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	CALayer *layer = [self layer];
-	NSLog(@"[%@ %@] layer == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), layer);
+	[super scrollToPoint:point];
+}
+
+/*! 
+ @method scrollToRect:
+ @abstract Scrolls the view so that it includes the provided rectangular area.
+ */
+- (void)scrollToRect:(NSRect)rect {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	[super scrollToRect:rect];
+}
+
+
+
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
+	SEL action = [menuItem action];
 	
-	if (playing) {
-		
-		[self unloadAnimatedImageReps];
-	} else {
-		[self loadAnimatedImageReps];
+	if (action == @selector(toggleShowImageBackground:)) {
+		[menuItem setState:showsImageBackground];
 	}
-	
-	[self setPlaying:!playing];
-	[self setNeedsDisplay:YES];
+	return YES;
 }
 	
 
 @end
+
+
+         // can be resource name or abs. path
+//CGColorRef GetCGPatternNamed(NSString *name) {
+//	
+//    // For efficiency, loaded patterns are cached in a dictionary by name.
+//    static NSMutableDictionary *sMap;
+//    if (!sMap)
+//        sMap = [[NSMutableDictionary alloc] init];
+//    
+//    CGColorRef pattern = (CGColorRef) [sMap objectForKey: name];
+//    if (!pattern) {
+//        pattern = CreatePatternColor(MDGetCGImageNamed(name));
+//        [sMap setObject:(id)pattern forKey: name];
+//    }
+//    return pattern;
+//}
+
+
+
+#pragma mark -
+#pragma mark PATTERNS:
+
+
+// callback for TKCreatePatternWithImage.
+static void TKDrawPatternImage(void *info, CGContextRef ctx) {
+    CGImageRef imageRef = (CGImageRef)info;
+    CGContextDrawImage(ctx, CGRectMake(0, 0, CGImageGetWidth(imageRef), CGImageGetHeight(imageRef)), imageRef);
+}
+
+
+// callback for TKCreatePatternWithImage.
+static void TKReleasePatternImage(void *info) {
+    CGImageRelease((CGImageRef)info);
+}
+
+
+CGPatternRef TKCreatePatternWithImage(CGImageRef imageRef) {
+    NSCParameterAssert(imageRef);
+    NSInteger imageWidth = CGImageGetWidth(imageRef);
+    NSInteger imageHeight = CGImageGetHeight(imageRef);
+    static const CGPatternCallbacks callbacks = {0, &TKDrawPatternImage, &TKReleasePatternImage};
+    return CGPatternCreate(imageRef,
+						   CGRectMake(0, 0, imageWidth, imageHeight),
+						   CGAffineTransformMake(1, 0, 0, 1, 0, 0),
+						   imageWidth,
+						   imageHeight,
+						   kCGPatternTilingConstantSpacing,
+						   true,
+						   &callbacks);
+}
+
+
+CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef) {
+    CGPatternRef pattern = TKCreatePatternWithImage(imageRef);
+    CGColorSpaceRef space = CGColorSpaceCreatePattern(NULL);
+    CGFloat components[1] = {(CGFloat)1.0};
+    CGColorRef color = CGColorCreateWithPattern(space, pattern, components);
+    CGColorSpaceRelease(space);
+    CGPatternRelease(pattern);
+    return color;
+}
+
+
+
+
+
+
