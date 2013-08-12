@@ -36,7 +36,7 @@ static const HKArchiveFilePackagePair HKArchiveFilePackagePairTable[] = {
 	{ HKArchiveFileVPKType, HL_PACKAGE_VPK },
 	{ HKArchiveFileVPKType, HL_PACKAGE_SGA }
 };
-static const NSUInteger HKArchiveFilePackagePairTableCount = sizeof(HKArchiveFilePackagePairTable);
+static const NSUInteger HKArchiveFilePackagePairTableCount = sizeof(HKArchiveFilePackagePairTable)/sizeof(HKArchiveFilePackagePairTable[0]);
 
 static inline HLPackageType HLPackageTypeFromHKArchiveFileType(HKArchiveFileType aFileType) {
 	for (NSUInteger i = 0; i < HKArchiveFilePackagePairTableCount; i++) {
