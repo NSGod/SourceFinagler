@@ -74,7 +74,6 @@ static MDLaunchManager *sharedManager = nil;
 		MDSystemVersion = MDFullSystemVersion & 0xfffffff0;
 		
 		useServiceManagement = (MDSystemVersion >= MDSnowLeopard);
-		agentLaunchDate = nil;
 	}
 	return self;
 }
