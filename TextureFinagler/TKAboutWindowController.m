@@ -8,7 +8,7 @@
 
 
 #import "TKAboutWindowController.h"
-#import "MDAppKitAdditions.h"
+#import "TKAppKitAdditions.h"
 
 
 #define TK_DEBUG 0
