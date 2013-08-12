@@ -2,25 +2,25 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">11D50</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1938</string>
-		<string key="IBDocument.AppKitVersion">1138.32</string>
-		<string key="IBDocument.HIToolboxVersion">568.00</string>
+		<string key="IBDocument.SystemVersion">12C54</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2840</string>
+		<string key="IBDocument.AppKitVersion">1187.34</string>
+		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">1938</string>
+			<string key="NS.object.0">2840</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
-			<string>NSView</string>
+			<string>NSCustomObject</string>
 			<string>NSMenu</string>
-			<string>NSWindowTemplate</string>
 			<string>NSMenuItem</string>
-			<string>NSToolbarSeparatorItem</string>
-			<string>NSToolbarItem</string>
-			<string>NSToolbarSpaceItem</string>
 			<string>NSToolbar</string>
 			<string>NSToolbarFlexibleSpaceItem</string>
-			<string>NSCustomObject</string>
+			<string>NSToolbarItem</string>
+			<string>NSToolbarSeparatorItem</string>
+			<string>NSToolbarSpaceItem</string>
+			<string>NSView</string>
+			<string>NSWindowTemplate</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1357,7 +1357,7 @@
 			<object class="NSWindowTemplate" id="972006081">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{219, 648}, {776, 410}}</string>
+				<string key="NSWindowRect">{{249, 648}, {634, 397}}</string>
 				<int key="NSWTFlags">1954021376</int>
 				<string key="NSWindowTitle">Source Finagler</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -1391,7 +1391,7 @@
 							<string key="NSToolbarItemMaxSize">{0, 0}</string>
 							<bool key="NSToolbarItemEnabled">YES</bool>
 							<bool key="NSToolbarItemAutovalidates">YES</bool>
-							<int key="NSToolbarItemTag">3</int>
+							<int key="NSToolbarItemTag">2</int>
 							<bool key="NSToolbarIsUserRemovable">YES</bool>
 							<int key="NSToolbarItemVisibilityPriority">0</int>
 						</object>
@@ -1413,7 +1413,7 @@
 							<string key="NSToolbarItemMaxSize">{0, 0}</string>
 							<bool key="NSToolbarItemEnabled">YES</bool>
 							<bool key="NSToolbarItemAutovalidates">YES</bool>
-							<int key="NSToolbarItemTag">2</int>
+							<int key="NSToolbarItemTag">1</int>
 							<bool key="NSToolbarIsUserRemovable">YES</bool>
 							<int key="NSToolbarItemVisibilityPriority">0</int>
 						</object>
@@ -1435,7 +1435,7 @@
 							<string key="NSToolbarItemMaxSize">{0, 0}</string>
 							<bool key="NSToolbarItemEnabled">YES</bool>
 							<bool key="NSToolbarItemAutovalidates">YES</bool>
-							<int key="NSToolbarItemTag">1</int>
+							<int key="NSToolbarItemTag">0</int>
 							<bool key="NSToolbarIsUserRemovable">YES</bool>
 							<int key="NSToolbarItemVisibilityPriority">0</int>
 						</object>
@@ -1579,14 +1579,17 @@
 					<array key="NSToolbarIBSelectableItems" id="0"/>
 				</object>
 				<nil key="NSUserInterfaceItemIdentifier"/>
-				<string key="NSWindowContentMinSize">{664, 308}</string>
+				<string key="NSWindowContentMinSize">{634, 200}</string>
 				<object class="NSView" key="NSWindowView" id="439893737">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
-					<string key="NSFrameSize">{776, 410}</string>
+					<string key="NSFrameSize">{634, 397}</string>
+					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
+					<reference key="NSNextKeyView"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
-				<string key="NSMinSize">{664, 386}</string>
+				<string key="NSMinSize">{634, 278}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<string key="NSFrameAutosaveName">mainWindow</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
@@ -2390,6 +2393,14 @@
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
+						<reference key="source" ref="774437183"/>
+						<reference key="destination" ref="976324537"/>
+					</object>
+					<int key="connectionID">1116</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
 						<reference key="source" ref="607737096"/>
 						<reference key="destination" ref="976324537"/>
 					</object>
@@ -2910,6 +2921,7 @@
 						<reference key="object" ref="439893737"/>
 						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="972006081"/>
+						<string key="objectName">view</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">450</int>
@@ -3005,7 +3017,7 @@
 						<int key="objectID">494</int>
 						<reference key="object" ref="976324537"/>
 						<reference key="parent" ref="0"/>
-						<string key="objectName">MDAppController</string>
+						<string key="objectName">TKAppController</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">586</int>
@@ -3595,15 +3607,12 @@
 				<string key="592.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="593.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="594.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="594.designableToolbarItemIdentifier">MDSteamAppsRelocatorIdentifier</string>
 				<boolean value="YES" key="594.toolbarItem.selectable"/>
 				<string key="595.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="595.designableToolbarItemIdentifier">MDConfigCopyIdentifier</string>
 				<boolean value="YES" key="595.toolbarItem.selectable"/>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="73.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="732.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="732.designableToolbarItemIdentifier">MDOtherAppsHelperIdentifier</string>
 				<boolean value="YES" key="732.toolbarItem.selectable"/>
 				<string key="75.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="77.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3637,7 +3646,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1115</int>
+			<int key="maxID">1116</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3657,152 +3666,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/IKImageView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MDAppController</string>
-					<string key="superclassName">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="chat:">id</string>
-						<string key="email:">id</string>
-						<string key="resetAllWarningDialogs:">id</string>
-						<string key="showAboutWindow:">id</string>
-						<string key="showMainWindow:">id</string>
-						<string key="showPrefsWindow:">id</string>
-						<string key="switchView:">id</string>
-						<string key="toggleShowImageInspector:">id</string>
-						<string key="toggleShowInspector:">id</string>
-						<string key="toggleShowQuickLook:">id</string>
-						<string key="toggleShowViewOptions:">id</string>
-						<string key="webpage:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="chat:">
-							<string key="name">chat:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="email:">
-							<string key="name">email:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="resetAllWarningDialogs:">
-							<string key="name">resetAllWarningDialogs:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showAboutWindow:">
-							<string key="name">showAboutWindow:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showMainWindow:">
-							<string key="name">showMainWindow:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showPrefsWindow:">
-							<string key="name">showPrefsWindow:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="switchView:">
-							<string key="name">switchView:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="toggleShowImageInspector:">
-							<string key="name">toggleShowImageInspector:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="toggleShowInspector:">
-							<string key="name">toggleShowInspector:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="toggleShowQuickLook:">
-							<string key="name">toggleShowQuickLook:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="toggleShowViewOptions:">
-							<string key="name">toggleShowViewOptions:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="webpage:">
-							<string key="name">webpage:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="chatMenuItem">NSMenuItem</string>
-						<string key="debugMenuItem">NSMenuItem</string>
-						<string key="emailMenuItem">NSMenuItem</string>
-						<string key="toggleInspectorMenuItem">NSMenuItem</string>
-						<string key="toggleQuickLookMenuItem">NSMenuItem</string>
-						<string key="viewCustomizeToolbarMenuItem">NSMenuItem</string>
-						<string key="viewMenu">NSMenu</string>
-						<string key="viewModeAsColumnsMenuItem">NSMenuItem</string>
-						<string key="viewModeAsListMenuItem">NSMenuItem</string>
-						<string key="viewOptionsMenuItem">NSMenuItem</string>
-						<string key="viewTogglePathBarMenuItem">NSMenuItem</string>
-						<string key="viewToggleToolbarShownMenuItem">NSMenuItem</string>
-						<string key="webpageMenuItem">NSMenuItem</string>
-						<string key="window">NSWindow</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="chatMenuItem">
-							<string key="name">chatMenuItem</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="debugMenuItem">
-							<string key="name">debugMenuItem</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="emailMenuItem">
-							<string key="name">emailMenuItem</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="toggleInspectorMenuItem">
-							<string key="name">toggleInspectorMenuItem</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="toggleQuickLookMenuItem">
-							<string key="name">toggleQuickLookMenuItem</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="viewCustomizeToolbarMenuItem">
-							<string key="name">viewCustomizeToolbarMenuItem</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="viewMenu">
-							<string key="name">viewMenu</string>
-							<string key="candidateClassName">NSMenu</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="viewModeAsColumnsMenuItem">
-							<string key="name">viewModeAsColumnsMenuItem</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="viewModeAsListMenuItem">
-							<string key="name">viewModeAsListMenuItem</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="viewOptionsMenuItem">
-							<string key="name">viewOptionsMenuItem</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="viewTogglePathBarMenuItem">
-							<string key="name">viewTogglePathBarMenuItem</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="viewToggleToolbarShownMenuItem">
-							<string key="name">viewToggleToolbarShownMenuItem</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="webpageMenuItem">
-							<string key="name">webpageMenuItem</string>
-							<string key="candidateClassName">NSMenuItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="window">
-							<string key="name">window</string>
-							<string key="candidateClassName">NSWindow</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MDAppController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3830,25 +3693,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/MDBrowser.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MDController</string>
-					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">view</string>
-						<string key="NS.object.0">NSView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">view</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">view</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MDController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -4125,7 +3969,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">MDMouseAccelerationHelperController</string>
-					<string key="superclassName">MDController</string>
+					<string key="superclassName">TKViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="helpApps:">id</string>
 						<string key="launchGame:">id</string>
@@ -4181,7 +4025,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">MDOtherAppsHelperController</string>
-					<string key="superclassName">MDController</string>
+					<string key="superclassName">TKViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="helpApps:">id</string>
 						<string key="launchGame:">id</string>
@@ -4315,7 +4159,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">MDSteamAppsRelocatorController</string>
-					<string key="superclassName">MDController</string>
+					<string key="superclassName">TKViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="browse:">id</string>
 						<string key="createSteamAppsShortcut:">id</string>
@@ -4406,6 +4250,152 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/SUUpdater.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TKAppController</string>
+					<string key="superclassName">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="chat:">id</string>
+						<string key="email:">id</string>
+						<string key="resetAllWarningDialogs:">id</string>
+						<string key="showAboutWindow:">id</string>
+						<string key="showMainWindow:">id</string>
+						<string key="showPrefsWindow:">id</string>
+						<string key="switchView:">id</string>
+						<string key="toggleShowImageInspector:">id</string>
+						<string key="toggleShowInspector:">id</string>
+						<string key="toggleShowQuickLook:">id</string>
+						<string key="toggleShowViewOptions:">id</string>
+						<string key="webpage:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="chat:">
+							<string key="name">chat:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="email:">
+							<string key="name">email:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="resetAllWarningDialogs:">
+							<string key="name">resetAllWarningDialogs:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="showAboutWindow:">
+							<string key="name">showAboutWindow:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="showMainWindow:">
+							<string key="name">showMainWindow:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="showPrefsWindow:">
+							<string key="name">showPrefsWindow:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="switchView:">
+							<string key="name">switchView:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleShowImageInspector:">
+							<string key="name">toggleShowImageInspector:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleShowInspector:">
+							<string key="name">toggleShowInspector:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleShowQuickLook:">
+							<string key="name">toggleShowQuickLook:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleShowViewOptions:">
+							<string key="name">toggleShowViewOptions:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="webpage:">
+							<string key="name">webpage:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="chatMenuItem">NSMenuItem</string>
+						<string key="debugMenuItem">NSMenuItem</string>
+						<string key="emailMenuItem">NSMenuItem</string>
+						<string key="toggleInspectorMenuItem">NSMenuItem</string>
+						<string key="toggleQuickLookMenuItem">NSMenuItem</string>
+						<string key="viewCustomizeToolbarMenuItem">NSMenuItem</string>
+						<string key="viewMenu">NSMenu</string>
+						<string key="viewModeAsColumnsMenuItem">NSMenuItem</string>
+						<string key="viewModeAsListMenuItem">NSMenuItem</string>
+						<string key="viewOptionsMenuItem">NSMenuItem</string>
+						<string key="viewTogglePathBarMenuItem">NSMenuItem</string>
+						<string key="viewToggleToolbarShownMenuItem">NSMenuItem</string>
+						<string key="webpageMenuItem">NSMenuItem</string>
+						<string key="window">NSWindow</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="chatMenuItem">
+							<string key="name">chatMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="debugMenuItem">
+							<string key="name">debugMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="emailMenuItem">
+							<string key="name">emailMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="toggleInspectorMenuItem">
+							<string key="name">toggleInspectorMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="toggleQuickLookMenuItem">
+							<string key="name">toggleQuickLookMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="viewCustomizeToolbarMenuItem">
+							<string key="name">viewCustomizeToolbarMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="viewMenu">
+							<string key="name">viewMenu</string>
+							<string key="candidateClassName">NSMenu</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="viewModeAsColumnsMenuItem">
+							<string key="name">viewModeAsColumnsMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="viewModeAsListMenuItem">
+							<string key="name">viewModeAsListMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="viewOptionsMenuItem">
+							<string key="name">viewOptionsMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="viewTogglePathBarMenuItem">
+							<string key="name">viewTogglePathBarMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="viewToggleToolbarShownMenuItem">
+							<string key="name">viewToggleToolbarShownMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="webpageMenuItem">
+							<string key="name">webpageMenuItem</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="window">
+							<string key="name">window</string>
+							<string key="candidateClassName">NSWindow</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TKAppController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -4634,6 +4624,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TKImageView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TKViewController</string>
+					<string key="superclassName">NSViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TKViewController.h</string>
 					</object>
 				</object>
 			</array>

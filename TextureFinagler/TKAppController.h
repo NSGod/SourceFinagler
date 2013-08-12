@@ -20,9 +20,10 @@
 
 
 enum {
-	MDSteamAppsRelocatorView			= 1,
-	MDOtherAppsHelperView				= 2
+	TKSteamAppsRelocatorView			= 0,
+	TKOtherAppsHelperView				= 1
 };
+typedef NSUInteger TKAppView;
 
 
 extern NSString * const MDCurrentViewKey;
@@ -32,11 +33,6 @@ extern NSString * const TKLastVersionRunKey;
 extern NSString * const TKLastSpotlightImporterVersionKey;
 extern NSString * const TKLastSourceAddonFinaglerVersionKey;
 extern NSString * const TKSpotlightImporterBundleIdentifierKey;
-
-
-extern NSString * const MDSteamAppsRelocatorIdentifierKey;
-extern NSString * const MDOtherAppsHelperIdentifierKey;
-extern NSString * const MDConfigCopyIdentifierKey;
 
 
 enum {
@@ -117,7 +113,9 @@ extern SInt32		TKSystemVersion;
 	MDSteamAppsRelocatorController		*steamAppsRelocatorController;
 	MDOtherAppsHelperController			*otherAppsHelperController;
 
-	NSInteger							currentView;
+	NSMutableArray						*viewControllers;
+	
+	TKAppView							currentView;
 	
 	TKImageInspectorController			*imageInspectorController;
 	

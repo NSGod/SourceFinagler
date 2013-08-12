@@ -9,10 +9,11 @@
 
 #import "TKAppController.h"
 
+#import "TKViewController.h"
 #import "MDSteamAppsRelocatorController.h"
 #import "MDOtherAppsHelperController.h"
 
-#import "MDAppKitAdditions.h"
+#import "TKAppKitAdditions.h"
 
 #import "TKAboutWindowController.h"
 #import "MDInspectorController.h"
@@ -40,10 +41,6 @@ NSString * const TKLastVersionRunKey						= @"TKLastVersionRun";
 NSString * const TKLastSpotlightImporterVersionKey			= @"TKLastSpotlightImporterVersion";
 NSString * const TKLastSourceAddonFinaglerVersionKey		= @"TKLastSourceAddonFinaglerVersion";
 NSString * const TKSpotlightImporterBundleIdentifierKey		= @"com.markdouma.mdimporter.Source";
-
-NSString * const MDSteamAppsRelocatorIdentifierKey			= @"MDSteamAppsRelocatorIdentifier";
-NSString * const MDOtherAppsHelperIdentifierKey				= @"MDOtherAppsHelperIdentifier";
-NSString * const MDConfigCopyIdentifierKey					= @"MDConfigCopyIdentifier";
 
 NSString * const TKLaunchTimeActionKey						= @"TKLaunchTimeAction";
 
@@ -78,7 +75,7 @@ BOOL	MDPlaySoundEffects = NO;
 BOOL	MDPerformingBatchOperation = NO;
 
 
-#define TK_DEBUG 0
+#define TK_DEBUG 1
 
 #define TK_DEBUG_SPOTLIGHT 0
 
@@ -93,6 +90,9 @@ BOOL needSpotlightReimport = NO;
 BOOL needSourceAddonFinaglerRegister = NO;
 
 
+static NSArray *appClassNames = nil;
+
+
 @interface TKAppController (TKPrivate)
 - (void)forceSpotlightReimport:(id)sender;
 @end
@@ -102,99 +102,107 @@ BOOL needSourceAddonFinaglerRegister = NO;
 
 + (void)initialize {
 	
-	SInt32 MDFullSystemVersion = 0;
-
-	Gestalt(gestaltSystemVersion, &MDFullSystemVersion);
-	TKSystemVersion = MDFullSystemVersion & 0xfffffff0;
-	
-	
-	// need to run it here in case the font document isn't created prior to the view options window being instantiated.
-	
-	MDPlaySoundEffects = NO;
-	
-	NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsLeopardKey forAppIdentifier:MDSystemSoundEffectsLeopardBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
-	
-	/*	enabled is an NSNumber, not a YES or NO value. If enabled is nil, we assume the default sound effect setting, which is enabled. Only if enabled is non-nil do we have an actual YES or NO answer to examine	*/
-	
-	if (enabled) {
-		MDPlaySoundEffects = (BOOL)[enabled intValue];
-	} else {
-		MDPlaySoundEffects = YES;
-	}
-	
-	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
-	
-	NSNumber *finderListViewFontSize = nil;
-	NSNumber *finderListViewIconSize = nil;
-	NSNumber *finderColumnViewFontAndIconSize = nil;
-	
-	MDUserDefaults *userDefaults = [MDUserDefaults standardUserDefaults];
-	
+	@synchronized(self) {
 		
-	finderListViewFontSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:TKFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ListViewOptions"] objectForKey:@"FontSize"];
-	finderListViewIconSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:TKFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ListViewOptions"] objectForKey:@"IconSize"];
-	
-	finderColumnViewFontAndIconSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:TKFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ColumnViewOptions"] objectForKey:@"FontSize"];
-	
-	[defaultValues setObject:[NSNumber numberWithInteger:MDListViewMode] forKey:MDDocumentViewModeKey];
-	
-	if (finderListViewFontSize) {
-		[defaultValues setObject:finderListViewFontSize forKey:MDListViewFontSizeKey];
-	} else {
-		[defaultValues setObject:[NSNumber numberWithInteger:defaultFontSize] forKey:MDListViewFontSizeKey];
+		if (appClassNames == nil) {
+			appClassNames = [[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"TKAppController" ofType:@"plist"]] objectForKey:@"TKAppControllerClassNames"] retain];
+		}
+		
+		SInt32 MDFullSystemVersion = 0;
+		
+		Gestalt(gestaltSystemVersion, &MDFullSystemVersion);
+		TKSystemVersion = MDFullSystemVersion & 0xfffffff0;
+		
+		
+		// need to run it here in case the font document isn't created prior to the view options window being instantiated.
+		
+		MDPlaySoundEffects = NO;
+		
+		NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsLeopardKey forAppIdentifier:MDSystemSoundEffectsLeopardBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
+		
+		/*	enabled is an NSNumber, not a YES or NO value. If enabled is nil, we assume the default sound effect setting, which is enabled. Only if enabled is non-nil do we have an actual YES or NO answer to examine	*/
+		
+		if (enabled) {
+			MDPlaySoundEffects = (BOOL)[enabled intValue];
+		} else {
+			MDPlaySoundEffects = YES;
+		}
+		
+		NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
+		
+		NSNumber *finderListViewFontSize = nil;
+		NSNumber *finderListViewIconSize = nil;
+		NSNumber *finderColumnViewFontAndIconSize = nil;
+		
+		MDUserDefaults *userDefaults = [MDUserDefaults standardUserDefaults];
+		
+		
+		finderListViewFontSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:TKFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ListViewOptions"] objectForKey:@"FontSize"];
+		finderListViewIconSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:TKFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ListViewOptions"] objectForKey:@"IconSize"];
+		
+		finderColumnViewFontAndIconSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:TKFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ColumnViewOptions"] objectForKey:@"FontSize"];
+		
+		[defaultValues setObject:[NSNumber numberWithInteger:MDListViewMode] forKey:MDDocumentViewModeKey];
+		
+		if (finderListViewFontSize) {
+			[defaultValues setObject:finderListViewFontSize forKey:MDListViewFontSizeKey];
+		} else {
+			[defaultValues setObject:[NSNumber numberWithInteger:defaultFontSize] forKey:MDListViewFontSizeKey];
+		}
+		
+		if (finderListViewIconSize) {
+			[defaultValues setObject:finderListViewIconSize forKey:MDListViewIconSizeKey];
+		} else {
+			[defaultValues setObject:[NSNumber numberWithInteger:defaultIconSize] forKey:MDListViewIconSizeKey];
+		}
+		
+		if (finderColumnViewFontAndIconSize) {
+			[defaultValues setObject:finderColumnViewFontAndIconSize forKey:MDBrowserFontAndIconSizeKey];
+		} else {
+			[defaultValues setObject:[NSNumber numberWithInteger:defaultBrowserViewFontAndIconSize] forKey:MDBrowserFontAndIconSizeKey];
+		}
+		
+		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowInvisibleItemsKey];
+		
+		[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:MDShouldShowKindColumnKey];
+		[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:MDShouldShowSizeColumnKey];
+		
+		[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:MDBrowserShouldShowIconsKey];
+		[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:MDBrowserShouldShowPreviewKey];
+		
+		[defaultValues setObject:[NSNumber numberWithInteger:MDBrowserSortByName] forKey:MDBrowserSortByKey];
+		
+		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowInspectorKey];
+		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowQuickLookKey];
+		
+		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:TKShouldShowImageInspectorKey];
+		
+		[defaultValues setObject:[NSNumber numberWithUnsignedInteger:TKLaunchTimeActionOpenMainWindow] forKey:TKLaunchTimeActionKey];
+		
+		[defaultValues setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:TKLastVersionRunKey];
+		
+		if ([[NSUserDefaults standardUserDefaults] objectForKey:TKLastSpotlightImporterVersionKey] == nil) {
+			needSpotlightReimport = YES;
+			NSLog(@"[%@ %@] needSpotlightReimport = YES", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+		}
+		[defaultValues setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:TKLastSpotlightImporterVersionKey];
+		
+		if ([[NSUserDefaults standardUserDefaults] objectForKey:TKLastSourceAddonFinaglerVersionKey] == nil) {
+			needSourceAddonFinaglerRegister = YES;
+			NSLog(@"[%@ %@] needSourceAddonFinaglerRegister = YES", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+		}
+		[defaultValues setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:TKLastSourceAddonFinaglerVersionKey];
+		
+		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:TKQuitAfterAllWindowsClosedKey];
+		
+		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowViewOptionsKey];
+		
+		
+		[defaultValues setObject:[NSNumber numberWithUnsignedInteger:TKSteamAppsRelocatorView] forKey:MDCurrentViewKey];
+		[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
+		[[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaultValues];
+		
 	}
-	
-	if (finderListViewIconSize) {
-		[defaultValues setObject:finderListViewIconSize forKey:MDListViewIconSizeKey];
-	} else {
-		[defaultValues setObject:[NSNumber numberWithInteger:defaultIconSize] forKey:MDListViewIconSizeKey];
-	}
-	
-	if (finderColumnViewFontAndIconSize) {
-		[defaultValues setObject:finderColumnViewFontAndIconSize forKey:MDBrowserFontAndIconSizeKey];
-	} else {
-		[defaultValues setObject:[NSNumber numberWithInteger:defaultBrowserViewFontAndIconSize] forKey:MDBrowserFontAndIconSizeKey];
-	}
-	
-	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowInvisibleItemsKey];
-	
-	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:MDShouldShowKindColumnKey];
-	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:MDShouldShowSizeColumnKey];
-	
-	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:MDBrowserShouldShowIconsKey];
-	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:MDBrowserShouldShowPreviewKey];
-	
-	[defaultValues setObject:[NSNumber numberWithInteger:MDBrowserSortByName] forKey:MDBrowserSortByKey];
-	
-	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowInspectorKey];
-	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowQuickLookKey];
-	
-	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:TKShouldShowImageInspectorKey];
-	
-	[defaultValues setObject:[NSNumber numberWithUnsignedInteger:TKLaunchTimeActionOpenMainWindow] forKey:TKLaunchTimeActionKey];
-	
-	[defaultValues setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:TKLastVersionRunKey];
-	
-	if ([[NSUserDefaults standardUserDefaults] objectForKey:TKLastSpotlightImporterVersionKey] == nil) {
-		needSpotlightReimport = YES;
-		NSLog(@"[%@ %@] needSpotlightReimport = YES", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-	}
-	[defaultValues setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:TKLastSpotlightImporterVersionKey];
-
-	if ([[NSUserDefaults standardUserDefaults] objectForKey:TKLastSourceAddonFinaglerVersionKey] == nil) {
-		needSourceAddonFinaglerRegister = YES;
-		NSLog(@"[%@ %@] needSourceAddonFinaglerRegister = YES", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-	}
-	[defaultValues setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:TKLastSourceAddonFinaglerVersionKey];
-	
-	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:TKQuitAfterAllWindowsClosedKey];
-	
-	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowViewOptionsKey];
-	
-	
-	[defaultValues setObject:[NSNumber numberWithUnsignedInteger:MDSteamAppsRelocatorView] forKey:MDCurrentViewKey];
-	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
-	[[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaultValues];
 }
 
 - (id)init {
@@ -206,11 +214,24 @@ BOOL needSourceAddonFinaglerRegister = NO;
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowQuickLookDidChange:) name:MDShouldShowQuickLookDidChangeNotification object:nil];
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowImageInspectorDidChange:) name:TKShouldShowImageInspectorDidChangeNotification object:nil];
+		
+		viewControllers = [[NSMutableArray alloc] init];
+		
+		NSUInteger count = appClassNames.count;
+		
+		for (NSUInteger i = 0; i < count; i++) {
+			[viewControllers addObject:[NSNull null]];
+		}
+		
 	}
 	return self;
 }
 
 - (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
+	[viewControllers release];
+	
 	[aboutWindowController release];
 	
 	[inspectorController release];
@@ -229,9 +250,6 @@ BOOL needSourceAddonFinaglerRegister = NO;
 	[viewOptionsMenuItem release];
 	
 	[globalUndoManager release];
-	
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
 	
 	[super dealloc];
 }
@@ -264,7 +282,7 @@ BOOL needSourceAddonFinaglerRegister = NO;
 	
 	[viewModeAsListMenuItem retain];
 	
-	if (TKSystemVersion < MDSnowLeopard) {
+	if (TKSystemVersion < TKSnowLeopard) {
 		[viewMenu removeItem:viewModeAsColumnsMenuItem];
 		viewModeAsColumnsMenuItem = nil;
 	} else {
@@ -380,36 +398,36 @@ BOOL needSourceAddonFinaglerRegister = NO;
 //#if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 //#endif
-	NSString *spotlightImporterPath = nil;
-	
-	spotlightImporterPath = [[[[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Contents"] stringByAppendingPathComponent:@"Library"] stringByAppendingPathComponent:@"Spotlight"] stringByAppendingPathComponent:@"Source.mdimporter"];
-	
-	NSData *standardOutputData = nil;
-	NSData *standardErrorData = nil;
-	NSTask *task = [[[NSTask alloc] init] autorelease];
-	[task setLaunchPath:@"/usr/bin/mdimport"];
-	[task setArguments:[NSArray arrayWithObjects:@"-r", spotlightImporterPath, nil]];
-	[task setStandardOutput:[NSPipe pipe]];
-	[task setStandardError:[NSPipe pipe]];
-	[task launch];
-	[task waitUntilExit];
-	
-	standardOutputData = [[[task standardOutput] fileHandleForReading] availableData];
-	if (standardOutputData && [standardOutputData length]) {
-		NSString *standardOutputString = [[[NSString alloc] initWithData:standardOutputData encoding:NSUTF8StringEncoding] autorelease];
-		NSLog(@"[%@ %@] standardOutputString == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), standardOutputString);
-	}
-	standardErrorData = [[[task standardError] fileHandleForReading] availableData];
-	if (standardErrorData && [standardErrorData length]) {
-		NSString *standardErrorString = [[[NSString alloc] initWithData:standardErrorData encoding:NSUTF8StringEncoding] autorelease];
-		NSLog(@"[%@ %@] standardErrorString == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), standardErrorString);
-	}
-	if (![task isRunning]) {
-		if ([task terminationStatus] != 0) {
-			NSLog(@"[%@ %@] /usr/bin/mdimport returned %d", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [task terminationStatus]);
-		}
-	}
-	[[NSUserDefaults standardUserDefaults] setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:TKLastSpotlightImporterVersionKey];
+//	NSString *spotlightImporterPath = nil;
+//	
+//	spotlightImporterPath = [[[[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Contents"] stringByAppendingPathComponent:@"Library"] stringByAppendingPathComponent:@"Spotlight"] stringByAppendingPathComponent:@"Source.mdimporter"];
+//	
+//	NSData *standardOutputData = nil;
+//	NSData *standardErrorData = nil;
+//	NSTask *task = [[[NSTask alloc] init] autorelease];
+//	[task setLaunchPath:@"/usr/bin/mdimport"];
+//	[task setArguments:[NSArray arrayWithObjects:@"-r", spotlightImporterPath, nil]];
+//	[task setStandardOutput:[NSPipe pipe]];
+//	[task setStandardError:[NSPipe pipe]];
+//	[task launch];
+//	[task waitUntilExit];
+//	
+//	standardOutputData = [[[task standardOutput] fileHandleForReading] availableData];
+//	if (standardOutputData && [standardOutputData length]) {
+//		NSString *standardOutputString = [[[NSString alloc] initWithData:standardOutputData encoding:NSUTF8StringEncoding] autorelease];
+//		NSLog(@"[%@ %@] standardOutputString == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), standardOutputString);
+//	}
+//	standardErrorData = [[[task standardError] fileHandleForReading] availableData];
+//	if (standardErrorData && [standardErrorData length]) {
+//		NSString *standardErrorString = [[[NSString alloc] initWithData:standardErrorData encoding:NSUTF8StringEncoding] autorelease];
+//		NSLog(@"[%@ %@] standardErrorString == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), standardErrorString);
+//	}
+//	if (![task isRunning]) {
+//		if ([task terminationStatus] != 0) {
+//			NSLog(@"[%@ %@] /usr/bin/mdimport returned %d", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [task terminationStatus]);
+//		}
+//	}
+//	[[NSUserDefaults standardUserDefaults] setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:TKLastSpotlightImporterVersionKey];
 }
 
 
@@ -445,10 +463,10 @@ BOOL needSourceAddonFinaglerRegister = NO;
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	if (TKSystemVersion == MDLeopard) {
+	if (TKSystemVersion == TKLeopard) {
 		[viewMenu setItemArray:[NSArray arrayWithObjects:viewModeAsListMenuItem,[NSMenuItem separatorItem], viewTogglePathBarMenuItem, [NSMenuItem separatorItem], viewToggleToolbarShownMenuItem,viewCustomizeToolbarMenuItem,[NSMenuItem separatorItem],viewOptionsMenuItem, nil]];
 		
-	} else if (TKSystemVersion >= MDSnowLeopard) {
+	} else if (TKSystemVersion >= TKSnowLeopard) {
 		[viewMenu setItemArray:[NSArray arrayWithObjects:viewModeAsListMenuItem,viewModeAsColumnsMenuItem,[NSMenuItem separatorItem], viewTogglePathBarMenuItem, [NSMenuItem separatorItem], viewToggleToolbarShownMenuItem,viewCustomizeToolbarMenuItem,[NSMenuItem separatorItem],viewOptionsMenuItem, nil]];
 		
 	}
@@ -461,46 +479,41 @@ BOOL needSourceAddonFinaglerRegister = NO;
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	if (sender != self) {
-		NSInteger tag = [(NSToolbarItem *)sender tag];
+	if (sender == self || sender == nil) {
 		
-		if (currentView != tag) {
-			currentView = tag;
+		NSUInteger count = viewControllers.count;
+		
+		while (currentView >= count) {
+			currentView--;
 		}
+		
+		NSArray *toolbarItems = window.toolbar.items;
+		for (NSToolbarItem *toolbarItem in toolbarItems) {
+			if (toolbarItem.tag == currentView) {
+				[window.toolbar setSelectedItemIdentifier:toolbarItem.itemIdentifier]; break;
+			}
+		}
+	} else {
+		currentView = [(NSToolbarItem *)sender tag];
 	}
 	
-	if (currentView == MDSteamAppsRelocatorView) {
-		if (steamAppsRelocatorController == nil) {
-			steamAppsRelocatorController = [[MDSteamAppsRelocatorController alloc] init];
-			if (![NSBundle loadNibNamed:@"MDSteamAppsRelocatorView" owner:steamAppsRelocatorController]) {
-				NSLog(@"[%@ %@] failed to load MDSteamAppsRelocatorView!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	TKViewController *viewController = [viewControllers objectAtIndex:currentView];
 	
-			}
-			[steamAppsRelocatorController appControllerDidLoadNib:self];
-		}
+	if ((NSNull *)viewController == [NSNull null]) {
+		NSString *className = [appClassNames objectAtIndex:currentView];
 		
+		Class viewControllerClass = NSClassFromString(className);
 		
-		[window switchView:[steamAppsRelocatorController view] newTitle:@"Steam Apps Re-locator"];
-		[steamAppsRelocatorController didSwitchToView:self];
-		[[window toolbar] setSelectedItemIdentifier:MDSteamAppsRelocatorIdentifierKey];
+		viewController = [[viewControllerClass alloc] init];
 		
-	} else if (currentView == MDOtherAppsHelperView) {
+		[viewControllers replaceObjectAtIndex:currentView withObject:viewController];
 		
-		if (otherAppsHelperController == nil) {
-			otherAppsHelperController = [[MDOtherAppsHelperController alloc] init];
-			if (![NSBundle loadNibNamed:@"MDOtherAppsHelperView" owner:otherAppsHelperController]) {
-				NSLog(@"[%@ %@] failed to load MDOtherAppsHelperView!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-				
-			}
-			[otherAppsHelperController appControllerDidLoadNib:self];
-		}
-		[window switchView:[otherAppsHelperController view] newTitle:@"Other Apps Helper"];
-		[otherAppsHelperController didSwitchToView:self];
-		
-		[[window toolbar] setSelectedItemIdentifier:MDOtherAppsHelperIdentifierKey];
-		
+		[viewController release];
 	}
-
+	
+	[window switchView:viewController.view newTitle:viewController.title];
+	[viewController didSwitchToView:self];
+	
 }
 
 
