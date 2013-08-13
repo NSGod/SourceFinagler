@@ -9,13 +9,13 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "TextureKit/TKVTFImageRep.mm"
-         timestampString = "333537686.160311"
+         timestampString = "344139867.517116"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "179"
-         endingLineNumber = "179"
-         landmarkName = "+initialize"
-         landmarkType = "5">
+         startingLineNumber = "194"
+         endingLineNumber = "194"
+         landmarkName = "@implementation TKVTFImageRep"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -23,11 +23,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "TextureKit/TKVTFImageRep.mm"
-         timestampString = "333537686.177382"
+         timestampString = "344139867.517116"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "398"
-         endingLineNumber = "398"
+         startingLineNumber = "413"
+         endingLineNumber = "413"
          landmarkName = "+VTFRepresentationOfImageRepsInArray:usingFormat:quality:options:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -37,13 +37,13 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "TextureKit/TKVTFImageRep.mm"
-         timestampString = "333537686.184303"
+         timestampString = "344139867.517116"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "190"
-         endingLineNumber = "190"
-         landmarkName = "+imageUnfilteredTypes"
-         landmarkType = "5">
+         startingLineNumber = "205"
+         endingLineNumber = "205"
+         landmarkName = "@implementation TKVTFImageRep"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -51,55 +51,13 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "TextureKit/TKVTFImageRep.mm"
-         timestampString = "333537686.191172"
+         timestampString = "344139867.517116"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "200"
-         endingLineNumber = "200"
-         landmarkName = "+imageUnfilteredFileTypes"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TextureKit/TKVTFImageRep.mm"
-         timestampString = "333537686.198105"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "578"
-         endingLineNumber = "578"
-         landmarkName = "+imageRepsWithData:firstRepresentationOnly:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TextureKit/TKVTFImageRep.mm"
-         timestampString = "333537686.205004"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "588"
-         endingLineNumber = "588"
-         landmarkName = "+imageRepsWithData:firstRepresentationOnly:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TextureKit/TKVTFImageRep.mm"
-         timestampString = "333537686.2120069"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "571"
-         endingLineNumber = "571"
-         landmarkName = "+imageRepsWithData:firstRepresentationOnly:"
-         landmarkType = "5">
+         startingLineNumber = "215"
+         endingLineNumber = "215"
+         landmarkName = "@implementation TKVTFImageRep"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -112,7 +70,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "736"
          endingLineNumber = "736"
-         landmarkName = "-changeViewMode:"
+         landmarkName = "-prepareSavePanel:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -121,13 +79,13 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "TextureKit/TKImageRep.m"
-         timestampString = "333537686.225835"
+         timestampString = "373176133.487452"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "532"
-         endingLineNumber = "532"
-         landmarkName = "-getBitmapInfoAndPixelFormatIfNecessary"
-         landmarkType = "5">
+         startingLineNumber = "538"
+         endingLineNumber = "538"
+         landmarkName = "@implementation TKImageRep"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -140,8 +98,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "570"
          endingLineNumber = "570"
-         landmarkName = "-exportSheetDidEnd:returnCode:contextInfo:"
-         landmarkType = "5">
+         landmarkName = "@implementation TKImageDocument"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -154,7 +112,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "248"
          endingLineNumber = "248"
-         landmarkName = "-loadAnimatedImageReps"
+         landmarkName = "-loadAnimationImageReps"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -163,12 +121,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "TextureKit/TKImageRep.m"
-         timestampString = "333537686.259379"
+         timestampString = "373176133.487452"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "455"
-         endingLineNumber = "455"
-         landmarkName = "-initWithCoder:"
+         startingLineNumber = "461"
+         endingLineNumber = "461"
+         landmarkName = "-initWithCGImage:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -177,54 +135,40 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "TextureKit/TKImageRep.m"
-         timestampString = "333537686.2663819"
+         timestampString = "373176133.487452"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "478"
-         endingLineNumber = "478"
-         landmarkName = "-encodeWithCoder:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TextureKit/TKImageRep.m"
-         timestampString = "333537686.273266"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "524"
-         endingLineNumber = "524"
-         landmarkName = "-getBitmapInfoAndPixelFormatIfNecessary"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TextureKit/TKDDSImageRep.mm"
-         timestampString = "333537686.280033"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "487"
-         endingLineNumber = "487"
-         landmarkName = "-imageRepsByApplyingNormalMapFilterWithHeightEvaluationWeights:filterWeights:wrapMode:normalizeMipmaps:normalMapLibrary:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TextureKit/TKImageRep.m"
-         timestampString = "333537686.286654"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "443"
-         endingLineNumber = "443"
+         startingLineNumber = "484"
+         endingLineNumber = "484"
          landmarkName = "-initWithCGImage:sliceIndex:face:frameIndex:mipmapIndex:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "TextureKit/TKImageRep.m"
+         timestampString = "373176133.487452"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "530"
+         endingLineNumber = "530"
+         landmarkName = "-copyWithZone:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "TextureKit/TKImageRep.m"
+         timestampString = "373176133.487452"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "449"
+         endingLineNumber = "449"
+         landmarkName = "+imageRepsWithImageReps:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -249,7 +193,9 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "251"
-         endingLineNumber = "251">
+         endingLineNumber = "251"
+         landmarkName = "-loadItemAtIndex:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -257,12 +203,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "TextureKit/TKVTFImageRep.mm"
-         timestampString = "333537686.3078271"
+         timestampString = "344139867.517116"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "271"
-         endingLineNumber = "271"
-         landmarkName = "+setDefaultFormat:"
+         startingLineNumber = "286"
+         endingLineNumber = "286"
+         landmarkName = "+defaultFormat"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -271,18 +217,20 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "SourceFinagler/MDHLDocument.m"
-         timestampString = "333537686.327446"
+         timestampString = "370817378.446483"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "426"
-         endingLineNumber = "426">
+         startingLineNumber = "439"
+         endingLineNumber = "439"
+         landmarkName = "-windowControllerDidLoadNib:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "0"
-         filePath = "/Users/mdouma46/Developer/Source Finagler 2.0.3/MDNode.m"
+         filePath = "/../../Source Finagler 2.0.3/MDNode.m"
          timestampString = "333537686.334062"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
@@ -307,23 +255,13 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "SourceFinagler/MDHLDocument.m"
-         timestampString = "333537686.347074"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1939"
-         endingLineNumber = "1939">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "SourceFinagler/MDHLDocument.m"
          timestampString = "333537686.353605"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "187"
-         endingLineNumber = "187">
+         endingLineNumber = "187"
+         landmarkName = "-readFromURL:ofType:error:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -343,11 +281,13 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "SourceFinagler/MDHLDocument.m"
-         timestampString = "333537686.3666781"
+         timestampString = "370817378.446483"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "672"
-         endingLineNumber = "672">
+         startingLineNumber = "685"
+         endingLineNumber = "685"
+         landmarkName = "-findAdvanced:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -395,14 +335,16 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "32"
-         endingLineNumber = "32">
+         endingLineNumber = "32"
+         landmarkName = "CGCFFile::CGCFFile()"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "0"
-         filePath = "/Users/mdouma46/Developer/Source Finagler 2.0.3/MDFile.mm"
+         filePath = "/../../Source Finagler 2.0.3/MDFile.mm"
          timestampString = "333537686.414357"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
@@ -419,7 +361,9 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "58"
-         endingLineNumber = "58">
+         endingLineNumber = "58"
+         landmarkName = "-application:openFiles:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -427,11 +371,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "SteamKit/VSSteamManager.m"
-         timestampString = "333537686.4272979"
+         timestampString = "370448342.024522"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1322"
-         endingLineNumber = "1322"
+         startingLineNumber = "1339"
+         endingLineNumber = "1339"
          landmarkName = "-installAddonAtPath:method:resultingPath:resultingGame:overwrite:error:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -445,7 +389,9 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "192"
-         endingLineNumber = "192">
+         endingLineNumber = "192"
+         landmarkName = "-tableView:willDisplayCell:forTableColumn:row:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -457,7 +403,9 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "105"
-         endingLineNumber = "105">
+         endingLineNumber = "105"
+         landmarkName = "-addOperation:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -469,7 +417,9 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "170"
-         endingLineNumber = "170">
+         endingLineNumber = "170"
+         landmarkName = "-endOperation:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -488,7 +438,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "0"
-         filePath = "/Users/mdouma46/Developer/Source Finagler 2.0.3/MDFileAdditions.m"
+         filePath = "/../../Source Finagler 2.0.3/MDFileAdditions.m"
          timestampString = "333537686.4749261"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
@@ -505,7 +455,9 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "228"
-         endingLineNumber = "228">
+         endingLineNumber = "228"
+         landmarkName = "-initWithContentsOfURL:permission:fork:error:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -517,20 +469,8 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "98"
-         endingLineNumber = "98">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "SteamKit/VSSteamManager.m"
-         timestampString = "333537686.494814"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "494"
-         endingLineNumber = "494"
-         landmarkName = "-locateSteamApps"
+         endingLineNumber = "98"
+         landmarkName = "-dealloc"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -538,12 +478,14 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "SourceFinagler/MDTextFieldCell.m"
-         timestampString = "333537686.501296"
+         filePath = "SteamKit/VSSteamManager.m"
+         timestampString = "370448342.024522"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "122"
-         endingLineNumber = "122">
+         startingLineNumber = "511"
+         endingLineNumber = "511"
+         landmarkName = "-locateSteamApps"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -555,7 +497,9 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "149"
-         endingLineNumber = "149">
+         endingLineNumber = "149"
+         landmarkName = "-showWindow:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -567,7 +511,9 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "161"
-         endingLineNumber = "161">
+         endingLineNumber = "161"
+         landmarkName = "-windowWillClose:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -579,7 +525,9 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "51"
-         endingLineNumber = "51">
+         endingLineNumber = "51"
+         landmarkName = "-dealloc"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -592,15 +540,15 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "543"
          endingLineNumber = "543"
-         landmarkName = "-shouldShowViewOptionsDidChange:"
-         landmarkType = "5">
+         landmarkName = "@implementation MDAppController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "0"
-         filePath = "/Users/mdouma46/Developer/Source Finagler 2.0.3/MDFile.mm"
+         filePath = "/../../Source Finagler 2.0.3/MDFile.mm"
          timestampString = "333537686.5481361"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
@@ -617,7 +565,9 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "125"
-         endingLineNumber = "125">
+         endingLineNumber = "125"
+         landmarkName = "-removeCopyOperationView:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -629,7 +579,9 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "60"
-         endingLineNumber = "60">
+         endingLineNumber = "60"
+         landmarkName = "-addCopyOperationView:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -637,11 +589,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "TextureKit/TKVTFImageRep.mm"
-         timestampString = "333537686.568042"
+         timestampString = "344139867.517116"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "302"
-         endingLineNumber = "302"
+         startingLineNumber = "317"
+         endingLineNumber = "317"
          landmarkName = "+VTFRepresentationOfImageRepsInArray:usingFormat:quality:options:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -670,7 +622,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "348"
          endingLineNumber = "348"
-         landmarkName = "-mipmapImageRepsUsingFilter:"
+         landmarkName = "+canInitWithData:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -679,12 +631,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "SteamKit/VSSteamManager.m"
-         timestampString = "333537686.587761"
+         timestampString = "370448342.024522"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "738"
-         endingLineNumber = "738"
-         landmarkName = "-setPersistentOptions:forGame:error:"
+         startingLineNumber = "755"
+         endingLineNumber = "755"
+         landmarkName = "-sourceFinaglerLaunchAgentPath"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -693,23 +645,13 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "SourceFinagler/MDHLDocument.m"
-         timestampString = "333537686.594335"
+         timestampString = "370817378.446483"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1388"
-         endingLineNumber = "1388">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "SourceFinagler/MDHLDocument.m"
-         timestampString = "333537686.600912"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1418"
-         endingLineNumber = "1418">
+         startingLineNumber = "1407"
+         endingLineNumber = "1407"
+         landmarkName = "-performCopyOperationWithTagInBackground:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -814,7 +756,7 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
@@ -828,7 +770,7 @@
          landmarkType = "7">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
@@ -838,11 +780,11 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "335"
          endingLineNumber = "335"
-         landmarkName = "Kernel2::Kernel2(const Kernel2 &amp; k)"
+         landmarkName = "Kernel2::Kernel2(uint ws, const float * data)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
@@ -853,6 +795,102 @@
          startingLineNumber = "329"
          endingLineNumber = "329"
          landmarkName = "Kernel2::Kernel2(uint ws)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "HLKit/HKFolder.mm"
+         timestampString = "344151016.995934"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "306"
+         endingLineNumber = "306"
+         landmarkName = "-writeToFile:assureUniqueFilename:resultingPath:error:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "TextureKit/TKImageRep.m"
+         timestampString = "373176133.487452"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "749"
+         endingLineNumber = "749"
+         landmarkName = "+dataRepresentationOfData:inPixelFormat:size:usingPixelFormat:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "TextureKit/TKVTFImageRep.mm"
+         timestampString = "344175173.38748"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "558"
+         endingLineNumber = "558"
+         landmarkName = "+imageRepsWithData:firstRepresentationOnly:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "0"
+         filePath = "/../../../../../TextureKit/TKVMTMaterial.m"
+         timestampString = "347939267.289456"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "742"
+         endingLineNumber = "742"
+         landmarkName = "-initWithData:error:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "0"
+         filePath = "/../../../../../TextureKit/TKVMTMaterial.m"
+         timestampString = "347939267.289456"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "776"
+         endingLineNumber = "776"
+         landmarkName = "-parseData:error:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SourceFinagler/MDOtherAppsHelperController.m"
+         timestampString = "370108057.756233"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "389"
+         endingLineNumber = "389"
+         landmarkName = "-revealInFinder:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SteamKit/VSSteamManager.m"
+         timestampString = "370448054.293003"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "418"
+         endingLineNumber = "418"
+         landmarkName = "-locateSteamApps"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
