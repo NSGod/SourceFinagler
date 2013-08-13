@@ -1,5 +1,5 @@
 //
-//  MDCGImage.mm
+//  MDCGImage.h
 //  Source Finagler
 //
 //  Created by Mark Douma on 9/25/2010.
