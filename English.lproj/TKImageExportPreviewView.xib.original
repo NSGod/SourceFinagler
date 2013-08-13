@@ -2,30 +2,34 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">12E55</string>
-		<string key="IBDocument.InterfaceBuilderVersion">940</string>
-		<string key="IBDocument.AppKitVersion">1187.39</string>
-		<string key="IBDocument.HIToolboxVersion">626.00</string>
+		<string key="IBDocument.SystemVersion">11B26</string>
+		<string key="IBDocument.InterfaceBuilderVersion">851</string>
+		<string key="IBDocument.AppKitVersion">1138</string>
+		<string key="IBDocument.HIToolboxVersion">566.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string>com.apple.imagekit.ibplugin</string>
+				<string>com.markdouma.MDAppKit.IBPlugin</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>940</string>
+				<string>851</string>
 				<string>1.1</string>
+				<string>270</string>
 			</object>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<string>com.apple.imagekit.ibplugin</string>
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+			<string>com.markdouma.MDAppKit.IBPlugin</string>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.Metadata">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -48,13 +52,14 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSProgressIndicator" id="144619299">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">1313</int>
+						<object class="NSPSMatrix" key="NSDrawMatrix"/>
 						<string key="NSFrame">{{161, 9}, {16, 16}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<int key="NSpiFlags">28938</int>
@@ -67,7 +72,7 @@
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="366332432">
-							<int key="NSCellFlags">67108928</int>
+							<int key="NSCellFlags">67239488</int>
 							<int key="NSCellFlags2">-2076046848</int>
 							<string key="NSContents"/>
 							<object class="NSFont" key="NSSupport" id="26">
@@ -75,7 +80,10 @@
 								<double key="NSSize">11</double>
 								<int key="NSfFlags">3088</int>
 							</object>
-							<object class="IBCustomFormatter" key="NSFormatter" id="842860035"/>
+							<object class="MDFileSizeFormatter" key="NSFormatter" id="842860035">
+								<integer value="1" key="MDFileSizeFormatterUnitsType"/>
+								<integer value="0" key="MDFileSizeFormatterStyle"/>
+							</object>
 							<reference key="NSControlView" ref="808329094"/>
 							<object class="NSColor" key="NSBackgroundColor" id="32643522">
 								<int key="NSColorSpace">6</int>
@@ -96,7 +104,6 @@
 								</object>
 							</object>
 						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="IKImageView" id="319542629">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -104,7 +111,7 @@
 						<string key="NSFrame">{{7, 33}, {250, 200}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSViewIsLayerTreeHost">YES</bool>
-						<float key="zoomFactor">0.0</float>
+						<float key="zoomFactor">1</float>
 						<float key="rotationAngle">0.0</float>
 						<string key="currentToolMode">IKToolModeMove</string>
 						<bool key="autoresizes">YES</bool>
@@ -126,7 +133,7 @@
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="134097145">
-							<int key="NSCellFlags">68157504</int>
+							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">4326400</int>
 							<string key="NSContents">DDS</string>
 							<reference key="NSSupport" ref="26"/>
@@ -134,7 +141,6 @@
 							<reference key="NSBackgroundColor" ref="32643522"/>
 							<reference key="NSTextColor" ref="40593792"/>
 						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 					<object class="NSTextField" id="78374263">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -143,7 +149,7 @@
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="1006346310">
-							<int key="NSCellFlags">68157504</int>
+							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">4326400</int>
 							<string key="NSContents">RGBA16161616F</string>
 							<reference key="NSSupport" ref="26"/>
@@ -151,10 +157,10 @@
 							<reference key="NSBackgroundColor" ref="32643522"/>
 							<reference key="NSTextColor" ref="40593792"/>
 						</object>
-						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 					</object>
 				</object>
 				<string key="NSFrameSize">{264, 240}</string>
+				<reference key="NSSuperview"/>
 				<string key="NSClassName">TKImageExportPreviewView</string>
 			</object>
 		</object>
@@ -358,7 +364,6 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="NSArray" key="dict.sortedKeys">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>-3.IBPluginDependency</string>
 					<string>1.IBEditorWindowLastContentRect</string>
 					<string>1.IBPluginDependency</string>
 					<string>1.IBViewBoundsToFrameTransform</string>
@@ -368,8 +373,6 @@
 					<string>10.IBPluginDependency</string>
 					<string>11.IBPluginDependency</string>
 					<string>24.IBPluginDependency</string>
-					<string>25.CustomClassName</string>
-					<string>25.IBAttributePlaceholdersKey</string>
 					<string>25.IBPluginDependency</string>
 					<string>4.IBPluginDependency</string>
 					<string>4.IBViewBoundsToFrameTransform</string>
@@ -388,7 +391,6 @@
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{497, 674}, {264, 240}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform"/>
@@ -398,28 +400,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>MDFileSizeFormatter</string>
-					<object class="NSMutableDictionary">
-						<string key="NS.key.0">IBUserDefinedRuntimeAttributesPlaceholderName</string>
-						<object class="IBUserDefinedRuntimeAttributesPlaceholder" key="NS.object.0">
-							<string key="name">IBUserDefinedRuntimeAttributesPlaceholderName</string>
-							<reference key="object" ref="842860035"/>
-							<object class="NSArray" key="userDefinedRuntimeAttributes">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="IBUserDefinedRuntimeAttribute">
-									<string key="typeIdentifier">com.apple.InterfaceBuilder.userDefinedRuntimeAttributeType.number</string>
-									<string key="keyPath">unitsType</string>
-									<integer value="1" key="value"/>
-								</object>
-								<object class="IBUserDefinedRuntimeAttribute">
-									<string key="typeIdentifier">com.apple.InterfaceBuilder.userDefinedRuntimeAttributeType.number</string>
-									<string key="keyPath">style</string>
-									<integer value="0" key="value"/>
-								</object>
-							</object>
-						</object>
-					</object>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.markdouma.MDAppKit.IBPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">P4AAAL+AAABC4AAAwcAAAA</bytes>
@@ -1437,11 +1418,4 @@
 		<string key="IBDocument.LastKnownRelativeProjectPath">../Source Finagler.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 	</data>
-	<classes>
-		<class name="IBCustomFormatter">
-			<fallbacks>
-				<name>NSFormatter</name>
-			</fallbacks>
-		</class>
-	</classes>
 </archive>

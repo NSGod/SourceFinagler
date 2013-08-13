@@ -8,7 +8,8 @@
 
 #import "TKImageExportPreviewView.h"
 
-#define TK_DEBUG 1
+//#define TK_DEBUG 1
+#define TK_DEBUG 0
 
 @implementation TKImageExportPreviewView
 
@@ -25,6 +26,15 @@
 		
     }
     return self;
+}
+
+- (void)dealloc {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	delegate = nil;
+	viewController = nil;
+	[super dealloc];
 }
 
 
@@ -72,7 +82,7 @@
 }
 
 
-
+// this method needs work, I believe
 - (void)drawRect:(NSRect)dirtyRect {
 	[super drawRect:dirtyRect];
 	if (isHighlighted) {

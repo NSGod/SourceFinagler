@@ -10,16 +10,15 @@
 
 @class TKImageExportPreviewView, TKImageExportPreviewViewController;
 
+
 @protocol TKImageExportPreviewViewDelegate <NSObject>
-
 - (void)didSelectImageExportPreviewView:(TKImageExportPreviewView *)anImageExportPreviewView;
-
 @end
 
 
 @interface TKImageExportPreviewView : NSView {
-	IBOutlet id <TKImageExportPreviewViewDelegate>	delegate;		// non-retained
-	IBOutlet TKImageExportPreviewViewController		*viewController;
+	IBOutlet id <TKImageExportPreviewViewDelegate>	delegate;			// non-retained
+	IBOutlet TKImageExportPreviewViewController		*viewController;	// non-retained
 	BOOL											isHighlighted;
 }
 

@@ -3,13 +3,18 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 12/13/2010.
-//  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import "TKImageExportPreviewViewController.h"
 #import "TKImageView.h"
+#import <TextureKit/TextureKit.h>
+#import "TKImageExportController.h"
+#import "TKImageExportPreset.h"
 #import "TKImageExportPreview.h"
-#import "MDAppKitAdditions.h"
+#import "TKImageDocument.h"
+#import "TKAppKitAdditions.h"
+
 
 #define TK_DEBUG 1
 
@@ -18,11 +23,23 @@
 
 @synthesize imageView;
 
-- (id)init {
+
++ (id)previewViewControllerWithExportController:(TKImageExportController *)controller preset:(TKImageExportPreset *)preset tag:(NSInteger)tag {
+	return [[[[self class] alloc] initWithExportController:controller preset:preset tag:tag] autorelease];
+}
+
+- (id)initWithExportController:(TKImageExportController *)controller preset:(TKImageExportPreset *)preset tag:(NSInteger)tag {
+	if (controller == nil ||preset == nil) return nil;
+	
 	if ((self = [super initWithNibName:@"TKImageExportPreviewView" bundle:nil])) {
+		TKImageExportPreview *preview = [[[TKImageExportPreview alloc] initWithController:controller image:[[controller document] image] preset:preset tag:tag] autorelease];
+		[self setRepresentedObject:preview];
+		[(TKImageExportPreviewView *)[self view] setDelegate:controller];
+		[imageView setDelegate:controller];
 		
 	} else {
 		[NSBundle runFailedNibLoadAlert:@"TKImageExportPreviewView"];
+		
 	}
 	return self;
 }
@@ -32,7 +49,7 @@
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	[super dealloc];	
+	[super dealloc];
 }
 
 
@@ -57,5 +74,11 @@
 }
 
 
+- (NSString *)description {
+	NSMutableString *description = [NSMutableString stringWithFormat:@"%@, ", [super description]];
+	[description appendFormat:@"representedObject == %@", [self representedObject]];
+	return description;
+}
 
 @end
+
