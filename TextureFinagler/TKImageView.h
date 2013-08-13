@@ -18,31 +18,36 @@ enum {
 	TKImageViewZoomInTag			= 1
 };
 
-@protocol TKImageViewAnimatedImageDataSource <NSObject>
-- (NSArray *)imageRepsForAnimationInImageView:(TKImageView *)anImageView;
-@end
-
 
 @interface TKImageView : IKImageView {
-	NSArray									*imageReps;
 	
-	id <TKImageViewAnimatedImageDataSource> dataSource;
 	
-	BOOL									playing;
+	CALayer									*imageKitLayer;
 	
-	CALayer									*animatedImageLayer;
+	CALayer									*animationImageLayer;
 	
-	CALayer									*oldLayer;
+	NSArray									*animationImageReps;
+	BOOL									isAnimating;
+	
 }
 
-@property (nonatomic, retain) NSArray *imageReps;
-@property (nonatomic, assign) IBOutlet id <TKImageViewAnimatedImageDataSource> dataSource;
+@property (retain) CALayer *imageKitLayer;
 
-@property (nonatomic, assign, getter=isPlaying) BOOL playing;
+@property (retain) CALayer *animationImageLayer;
+
+@property (copy) NSArray *animationImageReps;
 
 
-- (IBAction)togglePlay:(id)sender;
+- (void)startAnimating;
+- (void)stopAnimating;
+- (BOOL)isAnimating;
+
+
+
+//- (IBAction)togglePlay:(id)sender;
 
 - (IBAction)zoom:(id)sender;
 
 @end
+
+
