@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>VTF.framework 1.3.2, © 2010-2011 Mark Douma. VTFLib 1.3.2 © 2005-2011 Neil Jedrzejewski &amp; Ryan Gregg.</string>
+	<string>VTF.framework 1.3.2, © 2010-2013 Mark Douma. VTFLib 1.3.2 © 2005-2013 Neil Jedrzejewski &amp; Ryan Gregg.</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.markdouma.VTF.framework</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -23,6 +23,6 @@
 	<key>CFBundleVersion</key>
 	<string>132</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2010-2011 Mark Douma. VTFLib 1.3.2 © 2005-2011 Neil Jedrzejewski &amp; Ryan Gregg.</string>
+	<string>Copyright © 2010-2013 Mark Douma. VTFLib 1.3.2 © 2005-2013 Neil Jedrzejewski &amp; Ryan Gregg.</string>
 </dict>
 </plist>
