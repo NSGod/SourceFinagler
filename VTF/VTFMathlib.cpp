@@ -11,7 +11,8 @@
 
 #include "VTFMathlib.h"
 
-
+namespace VTFLib {
+	
 // Vector functions
 //-----------------
 void VecAdd(Vector *a, Vector *b, Vector *sum)
@@ -62,4 +63,6 @@ vlInt Intersect(Vector *v)
 		f = (v->z > 0) ? 3 : 1;
 
 	return f;
+}
+
 }

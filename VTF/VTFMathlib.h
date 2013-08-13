@@ -48,6 +48,10 @@
 /*!
 	A simple 3D Vector class.
 */
+
+namespace VTFLib {
+	
+
 class Vector
 {
 	public:
@@ -105,12 +109,16 @@ class CACHE_ALIGN VectorAligned
 			z = 0.0f;
 		};
 };
-
+	
 void VecAdd(Vector *a, Vector *b, Vector *sum);			//!< Vector addition function.
 void VecSub(Vector *a, Vector *b, Vector *diff);		//!< Vector subtraction function.
 void VecScale(Vector *v, vlSingle scale);				//!< Vector scale function.
 vlSingle VecDot(Vector *u, Vector *v);					//!< Vector dot-product function.
 void VecReflect(Vector *axis, Vector *v, Vector *r);	//!< Vector reflect function.
 vlInt Intersect(Vector *v);								//!< Vector intersect function.
+	
+}
+
+
 
 #endif //VTF_MATHLIB
