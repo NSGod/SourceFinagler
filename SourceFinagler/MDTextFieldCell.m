@@ -14,7 +14,7 @@
 #define MD_INSET_HORIZ		16.0		/* Distance image icon is inset from the left edge */
 #define MD_INTER_SPACE		6.0		/* Distance between right edge of icon image and left edge of text */
 
-#define MD_DEBUG 0
+#define MD_DEBUG 1
 
 
 @interface MDTextFieldCell (MDPrivate)
@@ -28,15 +28,83 @@
 
 @implementation MDTextFieldCell
 
+@synthesize highlightedActiveEnabledAttributes;
+@synthesize highlightedActiveDisabledAttributes;
+@synthesize highlightedInactiveEnabledAttributes;
+@synthesize highlightedInactiveDisabledAttributes;
+@synthesize enabledAttributes;
+@synthesize disabledAttributes;
+
+
 - (id)copyWithZone:(NSZone *)zone {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	MDTextFieldCell *cell = (MDTextFieldCell *)[super copyWithZone:zone];
 	cell->image = nil;
-	[cell setImage:image];
+	cell->highlightedActiveEnabledAttributes = nil;
+	cell->highlightedActiveDisabledAttributes = nil;
+	cell->highlightedInactiveEnabledAttributes = nil;
+	cell->highlightedInactiveDisabledAttributes = nil;
+	cell->enabledAttributes = nil;
+	cell->disabledAttributes = nil;
+	
+	cell.image = image;
+	
+	cell->highlightedActiveEnabledAttributes = [highlightedActiveEnabledAttributes mutableCopy];
+	cell->highlightedActiveDisabledAttributes = [highlightedActiveDisabledAttributes mutableCopy];
+	cell->highlightedInactiveEnabledAttributes = [highlightedInactiveEnabledAttributes mutableCopy];
+	cell->highlightedInactiveDisabledAttributes = [highlightedInactiveDisabledAttributes mutableCopy];
+	cell->enabledAttributes = [enabledAttributes mutableCopy];
+	cell->disabledAttributes = [disabledAttributes mutableCopy];
+//	cell.highlightedActiveEnabledAttributes = highlightedActiveEnabledAttributes;
+//	cell.highlightedActiveDisabledAttributes = highlightedActiveDisabledAttributes;
+//	cell.highlightedInactiveEnabledAttributes = highlightedInactiveEnabledAttributes;
+//	cell.highlightedInactiveDisabledAttributes = highlightedInactiveDisabledAttributes;
+//	cell.enabledAttributes = enabledAttributes;
+//	cell.disabledAttributes = disabledAttributes;
+	
 	return cell;
 }
+
+
+- (void)initAttributes {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	NSMutableParagraphStyle *style = [[[NSParagraphStyle defaultParagraphStyle] mutableCopy] autorelease];
+	[style setLineBreakMode:NSLineBreakByTruncatingMiddle];
+	style.alignment = self.alignment;
+	
+	
+	highlightedActiveEnabledAttributes = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[self font],NSFontAttributeName,
+										  style,NSParagraphStyleAttributeName,
+										  [NSColor alternateSelectedControlTextColor],NSForegroundColorAttributeName, nil];
+	
+	highlightedActiveDisabledAttributes = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[self font],NSFontAttributeName,
+										   style,NSParagraphStyleAttributeName,
+										   [NSColor colorWithCalibratedRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0],NSForegroundColorAttributeName, nil];
+	
+	highlightedInactiveEnabledAttributes = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[self font],NSFontAttributeName,
+											style,NSParagraphStyleAttributeName,
+											[NSColor controlTextColor],NSForegroundColorAttributeName, nil];
+	
+	highlightedInactiveDisabledAttributes = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[self font],NSFontAttributeName,
+											 style,NSParagraphStyleAttributeName,
+											 [[NSColor controlTextColor] colorWithAlphaComponent:0.5],NSForegroundColorAttributeName, nil];
+	
+	enabledAttributes = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[self font],NSFontAttributeName,
+						 style,NSParagraphStyleAttributeName,
+						 [self textColor],NSForegroundColorAttributeName, nil];
+	
+	disabledAttributes = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[self font],NSFontAttributeName,
+						  style,NSParagraphStyleAttributeName,
+						  [[NSColor controlTextColor] colorWithAlphaComponent:0.5],NSForegroundColorAttributeName, nil];
+	
+	
+	
+}
+
 
 
 - (id)initTextCell:(NSString *)value {
@@ -45,6 +113,7 @@
 #endif
 	if  ((self = [super initTextCell:value])) {
 		leftEdgePadding = MD_LEFT_EDGE_PADDING;
+		[self initAttributes];
 	}
 	return self;
 }
@@ -57,6 +126,7 @@
 	if ((self = [super initImageCell:value])) {
 		image = [value retain];
 		leftEdgePadding = MD_LEFT_EDGE_PADDING;
+		[self initAttributes];
 	}
 	return self;
 }
@@ -80,6 +150,8 @@
 	if ((self = [super initWithCoder:coder])) {
 		
 		leftEdgePadding = MD_LEFT_EDGE_PADDING;
+		[self initAttributes];
+
 	}
 	return self;
 }
@@ -94,6 +166,12 @@
 
 - (void)dealloc {
 	[image release];
+	[highlightedActiveEnabledAttributes release];
+	[highlightedActiveDisabledAttributes release];
+	[highlightedInactiveEnabledAttributes release];
+	[highlightedInactiveDisabledAttributes release];
+	[enabledAttributes release];
+	[disabledAttributes release];
 	[super dealloc];
 }
 
@@ -131,7 +209,7 @@
 
 - (NSPoint)calculatedImagePointForFrame:(NSRect)cellFrame imageSize:(NSSize)imageSize isFlipped:(BOOL)isFlipped {
 #if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSPoint imagePoint = cellFrame.origin;
 	imagePoint.x += leftEdgePadding;
@@ -169,7 +247,7 @@
 
 - (NSRect)calculatedRichTextRectForFrame:(NSRect)cellFrame richText:(NSAttributedString *)richText fontSize:(CGFloat)fontSize imageSize:(NSSize)imageSize isFlipped:(BOOL)isFlipped {
 #if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSRect richTextRect = NSZeroRect;
 	
@@ -229,10 +307,24 @@
 }
 
 
+- (void)setFont:(NSFont *)fontObj {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	[highlightedActiveEnabledAttributes setObject:fontObj forKey:NSFontAttributeName];
+	[highlightedActiveDisabledAttributes setObject:fontObj forKey:NSFontAttributeName];
+	[highlightedInactiveEnabledAttributes setObject:fontObj forKey:NSFontAttributeName];
+	[highlightedInactiveDisabledAttributes setObject:fontObj forKey:NSFontAttributeName];
+	[enabledAttributes setObject:fontObj forKey:NSFontAttributeName];
+	[disabledAttributes setObject:fontObj forKey:NSFontAttributeName];
+	[super setFont:fontObj];
+}
+
+
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView {
 #if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
 	NSSize	imageSize = NSZeroSize;
@@ -242,10 +334,6 @@
 		imageSize = [image size];
 		imagePoint = [self calculatedImagePointForFrame:cellFrame imageSize:imageSize isFlipped:[controlView isFlipped]];
 	}
-	
-	NSMutableParagraphStyle *style = [[[NSParagraphStyle defaultParagraphStyle] mutableCopy] autorelease];
-	[style setLineBreakMode:NSLineBreakByTruncatingMiddle];
-	[style setAlignment:[self alignment]];
 	
 	NSDictionary *attributes = nil;
 	
@@ -268,24 +356,32 @@
 		[tempObject release];
 		
 		if ([[controlView window] isKeyWindow]) {
-			attributes = [NSDictionary dictionaryWithObjectsAndKeys:[self font],NSFontAttributeName,
-			 style,NSParagraphStyleAttributeName,
-			 (isEnabled ? [NSColor alternateSelectedControlTextColor] : [NSColor colorWithCalibratedRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0] ),NSForegroundColorAttributeName, nil];
+			attributes = (isEnabled ? highlightedActiveEnabledAttributes : highlightedActiveDisabledAttributes);
 			
 		} else {
-			attributes = [NSDictionary dictionaryWithObjectsAndKeys:[self font],NSFontAttributeName,
-						  style,NSParagraphStyleAttributeName,
-						  (isEnabled ? [NSColor controlTextColor] : [[NSColor controlTextColor] colorWithAlphaComponent:0.5]),NSForegroundColorAttributeName, nil];
+			attributes = (isEnabled ? highlightedInactiveEnabledAttributes : highlightedInactiveDisabledAttributes);
 		}
 		
 	} else {
-		attributes = [NSDictionary dictionaryWithObjectsAndKeys:[self font],NSFontAttributeName,
-					  style,NSParagraphStyleAttributeName,
-					  (isEnabled ? [self textColor] : [[NSColor controlTextColor] colorWithAlphaComponent:0.5]),NSForegroundColorAttributeName, nil];
+		attributes = (isEnabled ? enabledAttributes : disabledAttributes);
 	}
 	
 	if (image) {
-		[image compositeToPoint:imagePoint operation:NSCompositeSourceOver fraction:(isEnabled ? 1.0 : 0.5)];
+		BOOL isFlipped = [controlView isFlipped] != image.isFlipped;
+		if (isFlipped) {
+			NSLog(@"isFlipped");
+			[[NSGraphicsContext currentContext] saveGraphicsState];
+			NSAffineTransform *transform = [[NSAffineTransform alloc] init];
+			[transform translateXBy:0.0 yBy:(cellFrame.origin.y + cellFrame.size.height)];
+			[transform scaleXBy:0.0 yBy:-1.0];
+			[transform translateXBy:0.0 yBy:-cellFrame.origin.y];
+			[transform concat];
+			[transform release];
+		}
+		[image drawAtPoint:imagePoint fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:(isEnabled ? 1.0 : 0.5)];
+		if (isFlipped) [[NSGraphicsContext currentContext] restoreGraphicsState];
+		
+//		[image compositeToPoint:imagePoint operation:NSCompositeSourceOver fraction:(isEnabled ? 1.0 : 0.5)];
 	}
 	
 	NSAttributedString *richText = [[[NSAttributedString alloc] initWithString:[self stringValue] attributes:attributes] autorelease];
