@@ -25,12 +25,13 @@
 #ifndef NV_TT_CONTEXT_H
 #define NV_TT_CONTEXT_H
 
-#include <NVTextureTools/TextureTools.h>
+#include "nvcore/Ptr.h"
 
-#include <NVTextureTools/Compressor.h>
-#include <NVTextureTools/CudaCompressorDXT.h>
-
-#include <NVTextureTools/TaskDispatcher.h>
+#include "Compressor.h"
+//#include "cuda/CudaCompressorDXT.h"
+#include "CudaCompressorDXT.h"
+#include "nvtt.h"
+#include "TaskDispatcher.h"
 
 namespace nv
 {
@@ -46,10 +47,10 @@ namespace nvtt
         Private() {}
 
         bool compress(const InputOptions::Private & inputOptions, const CompressionOptions::Private & compressionOptions, const OutputOptions::Private & outputOptions) const;
-        bool compress(const TexImage & tex, int face, int mipmap, const CompressionOptions::Private & compressionOptions, const OutputOptions::Private & outputOptions) const;
+        bool compress(const Surface & tex, int face, int mipmap, const CompressionOptions::Private & compressionOptions, const OutputOptions::Private & outputOptions) const;
         bool compress(AlphaMode alphaMode, int w, int h, int d, int face, int mipmap, const float * data, const CompressionOptions::Private & compressionOptions, const OutputOptions::Private & outputOptions) const;
 
-        void quantize(TexImage & tex, const CompressionOptions::Private & compressionOptions) const;
+        void quantize(Surface & tex, const CompressionOptions::Private & compressionOptions) const;
 
         bool outputHeader(nvtt::TextureType textureType, int w, int h, int d, int mipmapCount, bool isNormalMap, const CompressionOptions::Private & compressionOptions, const OutputOptions::Private & outputOptions) const;
 

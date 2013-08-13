@@ -1,7 +1,16 @@
 // This code is in the public domain -- castanyo@yahoo.es
 
-#include <NVImage/Image.h>
-#include <NVImage/ImageIO.h>
+#include "Image.h"
+#include "ImageIO.h"
+
+#include "nvmath/Color.h"
+
+#include "nvcore/Debug.h"
+#include "nvcore/Ptr.h"
+#include "nvcore/Utils.h" // swap
+#include "nvcore/Memory.h" // realloc, free
+
+#include <string.h> // memcpy
 
 
 using namespace nv;

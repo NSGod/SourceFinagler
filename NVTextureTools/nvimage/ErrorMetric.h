@@ -1,9 +1,5 @@
-// This code is in the public domain -- castanyo@yahoo.es
 
-#ifndef NV_IMAGE_ERRORMETRIC_H
-#define NV_IMAGE_ERRORMETRIC_H
-
-#include <NVImage/ImageBase.h>
+#include "nvimage.h"
 
 
 namespace nv
@@ -23,6 +19,3 @@ namespace nv
     float rmsAngularError(const FloatImage * img0, const FloatImage * img1);
 
 } // nv namespace
-
-
-#endif // NV_IMAGE_ERRORMETRIC_H

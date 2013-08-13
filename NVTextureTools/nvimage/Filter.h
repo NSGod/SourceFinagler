@@ -4,7 +4,8 @@
 #ifndef NV_IMAGE_FILTER_H
 #define NV_IMAGE_FILTER_H
 
-#include <NVImage/ImageBase.h>
+#include "nvimage.h"
+#include "nvcore/Debug.h"
 
 namespace nv
 {
@@ -165,6 +166,7 @@ namespace nv
     {
     public:
         Kernel2(uint width);
+        Kernel2(uint width, const float * data);
         Kernel2(const Kernel2 & k);
         ~Kernel2();
 

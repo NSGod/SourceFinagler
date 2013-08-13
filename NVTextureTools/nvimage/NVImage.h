@@ -4,68 +4,45 @@
 #ifndef NV_IMAGE_H
 #define NV_IMAGE_H
 
-#ifndef NV_IMAGE_DEFINES_H
-#include <NVImage/ImageDefines.h>
+#include "nvcore/nvcore.h"
+#include "nvcore/Debug.h" // nvDebugCheck
+#include "nvcore/Utils.h" // isPowerOfTwo
+
+// Function linkage
+#if NVIMAGE_SHARED
+#ifdef NVIMAGE_EXPORTS
+#define NVIMAGE_API DLL_EXPORT
+#define NVIMAGE_CLASS DLL_EXPORT_CLASS
+#else
+#define NVIMAGE_API DLL_IMPORT
+#define NVIMAGE_CLASS DLL_IMPORT
+#endif
+#else
+#define NVIMAGE_API
+#define NVIMAGE_CLASS
 #endif
 
-#ifndef NV_IMAGE_BASE_H
-#include <NVImage/ImageBase.h>
-#endif
 
-#ifndef NV_IMAGE_ERRORMETRIC_H
-#include <NVImage/ErrorMetric.h>
-#endif
+namespace nv {
 
-#ifndef NV_IMAGE_FLOATIMAGE_H
-#include <NVImage/FloatImage.h>
-#endif
+    // Some utility functions:
 
-#ifndef NV_IMAGE_FILTER_H
-#include <NVImage/Filter.h>
-#endif
+    inline uint computeBitPitch(uint w, uint bitsize, uint alignmentInBits)
+    {
+        nvDebugCheck(isPowerOfTwo(alignmentInBits));
 
-#ifndef NV_IMAGE_IMAGE_H
-#include <NVImage/Image.h>
-#endif
+        return ((w * bitsize +  alignmentInBits - 1) / alignmentInBits) * alignmentInBits;
+    }
 
-#ifndef NV_IMAGE_IMAGEIO_H
-#include <NVImage/ImageIO.h>
-#endif
+    inline uint computeBytePitch(uint w, uint bitsize, uint alignmentInBytes)
+    {
+        uint pitch = computeBitPitch(w, bitsize, 8*alignmentInBytes);
+        nvDebugCheck((pitch & 7) == 0);
 
-#ifndef NV_IMAGE_COLORBLOCK_H
-#include <NVImage/ColorBlock.h>
-#endif
+        return (pitch + 7) / 8;
+    }
 
-#ifndef NV_IMAGE_BLOCKDXT_H
-#include <NVImage/BlockDXT.h>
-#endif
 
-#ifndef NV_IMAGE_DIRECTDRAWSURFACE_H
-#include <NVImage/DirectDrawSurface.h>
-#endif
-
-//#ifndef NV_IMAGE_QUANTIZE_H
-//#include <NVImage/Quantize.h>
-//#endif
-
-#ifndef NV_IMAGE_NORMALMAP_H
-#include <NVImage/NormalMap.h>
-#endif
-
-#ifndef NV_IMAGE_PSDFILE_H
-#include <NVImage/PsdFile.h>
-#endif
-
-#ifndef NV_IMAGE_TGAFILE_H
-#include <NVImage/TgaFile.h>
-#endif
-
-#ifndef NV_IMAGE_COLORSPACE_H
-#include <NVImage/ColorSpace.h>
-#endif
-
-#ifndef NV_IMAGE_PIXELFORMAT_H
-#include <NVImage/PixelFormat.h>
-#endif
+} // nv namespace
 
 #endif // NV_IMAGE_H

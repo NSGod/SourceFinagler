@@ -21,11 +21,15 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
-#include <NVImage/DirectDrawSurface.h>
-#include <NVImage/ColorBlock.h>
-#include <NVImage/Image.h>
-#include <NVImage/BlockDXT.h>
-#include <NVImage/PixelFormat.h>
+#include "DirectDrawSurface.h"
+#include "ColorBlock.h"
+#include "Image.h"
+#include "BlockDXT.h"
+#include "PixelFormat.h"
+
+#include "nvcore/Debug.h"
+#include "nvcore/Utils.h" // max
+#include "nvcore/StdStream.h"
 
 #include <string.h> // memset
 
@@ -339,9 +343,10 @@ namespace
             case DXGI_FORMAT_B8G8R8X8_TYPELESS:
             case DXGI_FORMAT_B8G8R8X8_UNORM_SRGB:
                 return 8*4;
+            default:
+                return 0;
         }
-
-        return 0;
+        nvUnreachable();
     }
 
 } // namespace
@@ -856,7 +861,7 @@ uint DDSHeader::pixelSize() const
         return ::pixelSize((DXGI_FORMAT)header10.dxgiFormat);
     }
     else {
-        if (flags & DDPF_FOURCC) {
+        if (pf.flags & DDPF_FOURCC) {
             return ::pixelSize((D3DFORMAT)pf.fourcc);
         }
         else {
@@ -1298,6 +1303,7 @@ void DirectDrawSurface::readLinearImage(Image * img)
 
     const uint w = img->width();
     const uint h = img->height();
+    const uint d = img->depth();
 
     uint rshift, rsize;
     PixelFormat::maskShiftAndSize(header.pf.rmask, &rshift, &rsize);
@@ -1316,20 +1322,23 @@ void DirectDrawSurface::readLinearImage(Image * img)
 #pragma NV_MESSAGE("TODO: Support floating point linear images and other FOURCC codes.")
 
     // Read linear RGB images.
-    for (uint y = 0; y < h; y++)
+    for (uint z = 0; z < d; z++)
     {
-        for (uint x = 0; x < w; x++)
+        for (uint y = 0; y < h; y++)
         {
-            uint c = 0;
-            stream->serialize(&c, byteCount);
+            for (uint x = 0; x < w; x++)
+            {
+                uint c = 0;
+                stream->serialize(&c, byteCount);
 
-            Color32 pixel(0, 0, 0, 0xFF);
-            pixel.r = PixelFormat::convert((c & header.pf.rmask) >> rshift, rsize, 8);
-            pixel.g = PixelFormat::convert((c & header.pf.gmask) >> gshift, gsize, 8);
-            pixel.b = PixelFormat::convert((c & header.pf.bmask) >> bshift, bsize, 8);
-            pixel.a = PixelFormat::convert((c & header.pf.amask) >> ashift, asize, 8);
+                Color32 pixel(0, 0, 0, 0xFF);
+                pixel.r = PixelFormat::convert((c & header.pf.rmask) >> rshift, rsize, 8);
+                pixel.g = PixelFormat::convert((c & header.pf.gmask) >> gshift, gsize, 8);
+                pixel.b = PixelFormat::convert((c & header.pf.bmask) >> bshift, bsize, 8);
+                pixel.a = PixelFormat::convert((c & header.pf.amask) >> ashift, asize, 8);
 
-            img->pixel(x, y) = pixel;
+                img->pixel(x, y, z) = pixel;
+            }
         }
     }
 }

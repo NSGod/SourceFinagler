@@ -33,7 +33,10 @@
  * http://www.dspguide.com/ch16.htm
  */
 
-#include <NVImage/Filter.h>
+#include "Filter.h"
+
+#include "nvmath/Vector.h" // Vector4
+#include "nvcore/Utils.h" // swap
 
 #include <string.h> // memset
 
@@ -280,7 +283,6 @@ void GaussianFilter::setParameters(float variance)
 
 
 
-/// Ctor.
 Kernel1::Kernel1(const Filter & f, int iscale, int samples/*= 32*/)
 {
     nvDebugCheck(iscale > 1);
@@ -309,13 +311,12 @@ Kernel1::Kernel1(const Filter & f, int iscale, int samples/*= 32*/)
     }
 }
 
-/// Dtor.
 Kernel1::~Kernel1()
 {
     delete m_data;
 }
 
-/// Print the kernel for debugging purposes.
+// Print the kernel for debugging purposes.
 void Kernel1::debugPrint()
 {
     for (int i = 0; i < m_windowSize; i++) {
@@ -325,13 +326,18 @@ void Kernel1::debugPrint()
 
 
 
-/// Ctor.
 Kernel2::Kernel2(uint ws) : m_windowSize(ws)
 {
     m_data = new float[m_windowSize * m_windowSize];
 }
 
-/// Copy ctor.
+Kernel2::Kernel2(uint ws, const float * data) : m_windowSize(ws)
+{
+    m_data = new float[m_windowSize * m_windowSize];
+
+    memcpy(m_data, data, sizeof(float) * m_windowSize * m_windowSize);
+}
+
 Kernel2::Kernel2(const Kernel2 & k) : m_windowSize(k.m_windowSize)
 {
     m_data = new float[m_windowSize * m_windowSize];
@@ -341,13 +347,12 @@ Kernel2::Kernel2(const Kernel2 & k) : m_windowSize(k.m_windowSize)
 }
 
 
-/// Dtor.
 Kernel2::~Kernel2()
 {
     delete m_data;
 }
 
-/// Normalize the filter.
+// Normalize the filter.
 void Kernel2::normalize()
 {
     float total = 0.0f;
@@ -361,7 +366,7 @@ void Kernel2::normalize()
     }
 }
 
-/// Transpose the kernel.
+// Transpose the kernel.
 void Kernel2::transpose()
 {
     for(uint i = 0; i < m_windowSize; i++) {
@@ -371,7 +376,7 @@ void Kernel2::transpose()
     }
 }
 
-/// Init laplacian filter, usually used for sharpening.
+// Init laplacian filter, usually used for sharpening.
 void Kernel2::initLaplacian()
 {
     nvDebugCheck(m_windowSize == 3);
@@ -389,7 +394,7 @@ void Kernel2::initLaplacian()
 }
 
 
-/// Init simple edge detection filter.
+// Init simple edge detection filter.
 void Kernel2::initEdgeDetection()
 {
     nvCheck(m_windowSize == 3);
@@ -398,7 +403,7 @@ void Kernel2::initEdgeDetection()
     m_data[6] = 0; m_data[7] = 0; m_data[8] = 0;
 }
 
-/// Init sobel filter.
+// Init sobel filter.
 void Kernel2::initSobel()
 {
     if (m_windowSize == 3)
@@ -457,7 +462,7 @@ void Kernel2::initSobel()
     }
 }
 
-/// Init prewitt filter.
+// Init prewitt filter.
 void Kernel2::initPrewitt()
 {
     if (m_windowSize == 3)
@@ -483,7 +488,7 @@ void Kernel2::initPrewitt()
     }
 }
 
-/// Init blended sobel filter.
+// Init blended sobel filter.
 void Kernel2::initBlendedSobel(const Vector4 & scale)
 {
     nvCheck(m_windowSize == 9);
@@ -606,7 +611,7 @@ PolyphaseKernel::~PolyphaseKernel()
 }
 
 
-/// Print the kernel for debugging purposes.
+// Print the kernel for debugging purposes.
 void PolyphaseKernel::debugPrint() const
 {
     for (uint i = 0; i < m_length; i++)

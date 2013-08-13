@@ -25,8 +25,9 @@
 #ifndef NV_IMAGE_BLOCKDXT_H
 #define NV_IMAGE_BLOCKDXT_H
 
-#include <NVImage/ImageBase.h>
+#include "nvimage.h"
 
+#include "nvmath/Color.h"
 
 namespace nv
 {

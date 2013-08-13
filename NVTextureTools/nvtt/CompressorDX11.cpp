@@ -22,9 +22,10 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
-#include <NVTextureTools/CompressorDX11.h>
-#include <NVTextureTools/TextureTools.h>
-#include <NVTextureTools/CompressionOptions.h>
+#include "CompressorDX11.h"
+
+#include "nvtt.h"
+#include "CompressionOptions.h"
 
 #include "bc6h/zoh.h"
 #include "bc6h/utils.h"
@@ -36,7 +37,7 @@ using namespace nv;
 using namespace nvtt;
 
 
-void CompressorBC6::compressBlock(Tile & tile, AlphaMode alphaMode, const CompressionOptions::Private & compressionOptions, void * output)
+void CompressorBC6::compressBlock(ColorSet & tile, AlphaMode alphaMode, const CompressionOptions::Private & compressionOptions, void * output)
 {
     NV_UNUSED(alphaMode); // ZOH does not support alpha.
 
@@ -55,7 +56,7 @@ void CompressorBC6::compressBlock(Tile & tile, AlphaMode alphaMode, const Compre
 }
 
 
-void CompressorBC7::compressBlock(Tile & tile, AlphaMode alphaMode, const CompressionOptions::Private & compressionOptions, void * output)
+void CompressorBC7::compressBlock(ColorSet & tile, AlphaMode alphaMode, const CompressionOptions::Private & compressionOptions, void * output)
 {
     // @@ TODO
 }

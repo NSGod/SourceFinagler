@@ -27,9 +27,12 @@
 #ifndef NVTT_CLUSTERFIT_H
 #define NVTT_CLUSTERFIT_H
 
-#define NVTT_USE_SIMD 0
+#include "nvmath/SimdVector.h"
+#include "nvmath/Vector.h"
 
-#include <NVTextureTools/TextureTools.h>
+// Use SIMD version if altivec or SSE are available.
+#define NVTT_USE_SIMD (NV_USE_ALTIVEC || NV_USE_SSE)
+//#define NVTT_USE_SIMD 0
 
 namespace nv {
 
@@ -42,7 +45,7 @@ namespace nv {
 
         void setColourSet(const ColorSet * set);
 
-        void setMetric(Vector4::Arg w);
+        void setMetric(const Vector4 & w);
         float bestError() const;
 
         bool compress3(Vector3 * start, Vector3 * end);
@@ -53,7 +56,7 @@ namespace nv {
         uint m_count;
 
     #if NVTT_USE_SIMD
-        SimdVector m_weighted[16];  // color | weight
+        NV_ALIGN_16 SimdVector m_weighted[16];  // color | weight
         SimdVector m_metric;        // vec3
         SimdVector m_metricSqr;     // vec3
         SimdVector m_xxsum;         // color | weight

@@ -1,6 +1,6 @@
 
-#include <NVCore/Library.h>
-#include <NVCore/Debug.h>
+#include "Library.h"
+#include "Debug.h"
 
 #if NV_OS_WIN32
 #define WIN32_LEAN_AND_MEAN

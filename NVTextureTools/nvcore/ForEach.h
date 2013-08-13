@@ -5,13 +5,10 @@
 #define NV_CORE_FOREACH_H
 
 /*
-The foreach macros that I use are very non-standard and somewhat confusing, but I like them.
+These foreach macros are very non-standard and somewhat confusing, but I like them.
 */
 
-
-//#include "nvcore.h"
-#include <NVCore/CoreDefines.h>
-
+#include "nvcore.h"
 
 #if NV_CC_GNUC // If typeof is available:
 
@@ -25,6 +22,8 @@ for(typename typeof(container)::PseudoIndex i((container).start()); !(container)
 
 #else // If typeof not available:
 
+#include <new> // placement new
+
 struct PseudoIndexWrapper {
     template <typename T>
     PseudoIndexWrapper(const T & container) {
@@ -33,10 +32,10 @@ struct PseudoIndexWrapper {
     }
     // PseudoIndex cannot have a dtor!
 
-    template <typename T> typename T::PseudoIndex & operator()(const T * container) {
+    template <typename T> typename T::PseudoIndex & operator()(const T * /*container*/) {
         return *reinterpret_cast<typename T::PseudoIndex *>(memory);
     }
-    template <typename T> const typename T::PseudoIndex & operator()(const T * container) const {
+    template <typename T> const typename T::PseudoIndex & operator()(const T * /*container*/) const {
         return *reinterpret_cast<const typename T::PseudoIndex *>(memory);
     }
 

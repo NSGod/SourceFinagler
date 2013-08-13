@@ -4,7 +4,9 @@
 #ifndef NV_IMAGE_IMAGEIO_H
 #define NV_IMAGE_IMAGEIO_H
 
-#include <NVImage/ImageBase.h>
+#include "nvimage.h"
+
+#include "nvcore/StrLib.h"
 
 
 namespace nv

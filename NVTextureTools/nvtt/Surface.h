@@ -25,13 +25,18 @@
 #ifndef NVTT_TEXIMAGE_H
 #define NVTT_TEXIMAGE_H
 
-#include <NVTextureTools/TextureTools.h>
+#include "nvtt.h"
 
+#include "nvcore/RefCounted.h"
+#include "nvcore/Ptr.h"
+
+#include "nvimage/Image.h"
+#include "nvimage/FloatImage.h"
 
 namespace nvtt
 {
 
-    struct TexImage::Private : public nv::RefCounted
+    struct Surface::Private : public nv::RefCounted
     {
         void operator=(const Private &);
     public:
@@ -73,9 +78,10 @@ namespace nvtt
 } // nvtt namespace
 
 namespace nv {
+    uint countMipmaps(uint w);
     uint countMipmaps(uint w, uint h, uint d);
     uint computeImageSize(uint w, uint h, uint d, uint bitCount, uint alignmentInBytes, nvtt::Format format);
-    void getTargetExtent(int & w, int & h, int & d, int maxExtent, nvtt::RoundMode roundMode, nvtt::TextureType textureType);
+    void getTargetExtent(int * w, int * h, int * d, int maxExtent, nvtt::RoundMode roundMode, nvtt::TextureType textureType);
 }
 
 

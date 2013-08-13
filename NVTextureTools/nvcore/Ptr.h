@@ -3,15 +3,10 @@
 #ifndef NV_CORE_PTR_H
 #define NV_CORE_PTR_H
 
-#include <cstdlib>
+#include "nvcore.h"
+#include "Debug.h"
 
-
-#include <NVCore/RefCounted.h>
-
-
-#include <NVCore/Debug.h>
-#include <NVCore/CoreDefines.h>
-
+#include "RefCounted.h"
 
 namespace nv
 {
@@ -108,7 +103,7 @@ namespace nv
         }
 
     private:
-        T *m_ptr;
+        T * m_ptr;
     };
 
 

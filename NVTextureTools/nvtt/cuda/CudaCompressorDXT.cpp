@@ -25,10 +25,16 @@
 #include "CudaCompressorDXT.h"
 #include "CudaUtils.h"
 
-#include "NVTextureTools/CompressionOptions.h"
-#include "NVTextureTools/OutputOptions.h"
-#include "NVTextureTools/QuickCompressDXT.h"
-#include "NVTextureTools/OptimalCompressDXT.h"
+#include "nvcore/Debug.h"
+#include "nvmath/Color.h"
+#include "nvmath/Vector.inl"
+#include "nvimage/Image.h"
+#include "nvimage/ColorBlock.h"
+#include "nvimage/BlockDXT.h"
+#include "nvtt/CompressionOptions.h"
+#include "nvtt/OutputOptions.h"
+#include "nvtt/QuickCompressDXT.h"
+#include "nvtt/OptimalCompressDXT.h"
 
 #include <time.h>
 #include <stdio.h>
@@ -120,8 +126,9 @@ CudaCompressor::CudaCompressor(CudaContext & ctx) : m_ctx(ctx)
 
 }
 
-void CudaCompressor::compress(nvtt::AlphaMode alphaMode, uint w, uint h, const float * data, nvtt::TaskDispatcher * dispatcher, const nvtt::CompressionOptions::Private & compressionOptions, const nvtt::OutputOptions::Private & outputOptions)
+void CudaCompressor::compress(nvtt::AlphaMode alphaMode, uint w, uint h, uint d, const float * data, nvtt::TaskDispatcher * dispatcher, const nvtt::CompressionOptions::Private & compressionOptions, const nvtt::OutputOptions::Private & outputOptions)
 {
+    nvDebugCheck(d == 1);
     nvDebugCheck(cuda::isHardwarePresent());
 
 #if defined HAVE_CUDA

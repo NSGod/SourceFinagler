@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2011 Ignacio Castano <castano@gmail.com>
 // Copyright (c) 2007-2009 NVIDIA Corporation -- Ignacio Castano <icastano@nvidia.com>
-//
+// 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
 // files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
 // copies of the Software, and to permit persons to whom the
 // Software is furnished to do so, subject to the following
 // conditions:
-//
+// 
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-//
+// 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 // OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -25,7 +25,7 @@
 #ifndef NVTT_COMPRESSORDX10_H
 #define NVTT_COMPRESSORDX10_H
 
-#include <NVTextureTools/CompressorDXT.h>
+#include "CompressorDXT.h"
 
 namespace nv
 {
@@ -40,7 +40,7 @@ namespace nv
 
 	struct FastCompressorBC5 : public FixedBlockCompressor
 	{
-		virtual void compressBlock(ColorBlock & rgba, nvtt::AlphaMode alphaMode, const nvtt::CompressionOptions::Private &compressionOptions, void *output);
+		virtual void compressBlock(ColorBlock & rgba, nvtt::AlphaMode alphaMode, const nvtt::CompressionOptions::Private & compressionOptions, void * output);
 		virtual uint blockSize() const { return 16; }
 	};
 
@@ -51,13 +51,13 @@ namespace nv
 		virtual void compressBlock(ColorBlock & rgba, nvtt::AlphaMode alphaMode, const nvtt::CompressionOptions::Private & compressionOptions, void * output);
 		virtual uint blockSize() const { return 8; }
 	};
-	
+
 	struct ProductionCompressorBC5 : public FixedBlockCompressor
 	{
 		virtual void compressBlock(ColorBlock & rgba, nvtt::AlphaMode alphaMode, const nvtt::CompressionOptions::Private & compressionOptions, void * output);
 		virtual uint blockSize() const { return 16; }
 	};
-	
+
 } // nv namespace
 
 

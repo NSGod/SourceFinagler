@@ -43,6 +43,7 @@ See the License for the specific language governing permissions and limitations 
 #include "utils.h"
 
 #include "nvmath/Fitting.h"
+#include "nvmath/Vector.inl"
 
 #include <string.h> // strlen
 #include <float.h> // FLT_MAX
@@ -280,7 +281,7 @@ static void write_header(const ComprEndpts endpts[NREGIONS_TWO], int shapeindex,
         case FIELD_BX:	out.write(bx >> endbit, len); break;
         case FIELD_BY:	out.write(by >> endbit, len); break;
         case FIELD_BZ:	out.write(bz >> endbit, len); break;
-        default: nvAssume(0);
+        default: nvUnreachable();
         }
     }
 }
@@ -337,7 +338,7 @@ static bool read_header(Bits &in, ComprEndpts endpts[NREGIONS_TWO], int &shapein
         case FIELD_BX:	bx |= in.read(len) << endbit; break;
         case FIELD_BY:	by |= in.read(len) << endbit; break;
         case FIELD_BZ:	bz |= in.read(len) << endbit; break;
-        default: nvAssume(0);
+        default: nvUnreachable();
         }
     }
 
@@ -668,7 +669,7 @@ static void optimize_endpts(const Tile &tile, int shapeindex, const double orig_
 {
     Vector3 pixels[Tile::TILE_TOTAL];
     float importance[Tile::TILE_TOTAL];
-//    double err = 0;
+    double err = 0;
 
     for (int region=0; region<NREGIONS_TWO; ++region)
     {
