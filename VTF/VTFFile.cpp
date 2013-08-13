@@ -15,6 +15,14 @@
 #include "VTFDXTn.h"
 #include "VTFMathlib.h"
 
+
+//#include <assert.h>
+
+
+#include <AssertMacros.h>
+
+
+
 #define MD_DEBUG 0
 
 
@@ -64,7 +72,7 @@
 #ifdef USE_NVTT
 
 #	include <NVTextureTools/NVTextureTools.h>
-#	include <NVMath/NVMath.h>
+//#	include <NVMath/NVMath.h>
 
 using namespace nv;
 using namespace nvtt;
@@ -198,7 +206,7 @@ public:
 public:
 	
 	NVOutputHandler(SNVCompressionUserData *aUserData) : userData(aUserData), mipmapIndex(0), currentData(0), currentOffset(0), currentLength(0) {
-		assert(userData != 0);
+		nvAssert(userData != 0);
 	}
 	
 	virtual ~NVOutputHandler() {
@@ -227,8 +235,10 @@ public:
 	
     virtual bool writeData(const void * data, int aSize) {
 //		printf("NVOutputHandler::writeData()\n");
+		__Require(this->userData != 0, bail);
+//		__assert(this->userData != 0);
 		
-		assert(this->userData != 0);
+//		nvAssert(this->userData != 0);
 		
 		if (this->currentOffset + aSize <= this->currentLength) {
 			memcpy(this->currentData + this->currentOffset, (vlByte *)data, aSize);
@@ -253,7 +263,7 @@ public:
 					if (this->userData->pVTFFile->GetFormat() == this->userData->ImageFormat) {
 						this->userData->pVTFFile->SetData(this->userData->uiFrame, this->userData->uiFace, this->userData->uiSlice, this->mipmapIndex, this->currentData);
 					} else {
-						assert(this->userData->pVTFFile->GetFormat() != IMAGE_FORMAT_DXT1 &&
+						nvAssert(this->userData->pVTFFile->GetFormat() != IMAGE_FORMAT_DXT1 &&
 							   this->userData->pVTFFile->GetFormat() != IMAGE_FORMAT_DXT1_ONEBITALPHA &&
 							   this->userData->pVTFFile->GetFormat() != IMAGE_FORMAT_DXT3 &&
 							   this->userData->pVTFFile->GetFormat() != IMAGE_FORMAT_DXT5);
@@ -287,9 +297,15 @@ public:
 			}
 			
 		}
+bail:
+		
 		
         return true;
     }
+	
+	virtual void endImage() {
+		
+	}
 	
 };
 
@@ -809,8 +825,8 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 				break;
 			}
 
-			assert((uiNewWidth & (uiNewWidth - 1)) == 0);
-			assert((uiNewHeight & (uiNewHeight - 1)) == 0);
+			nvAssert((uiNewWidth & (uiNewWidth - 1)) == 0);
+			nvAssert((uiNewHeight & (uiNewHeight - 1)) == 0);
 
 			// Resize the input.
 			if(uiWidth != uiNewWidth || uiHeight != uiNewHeight)
@@ -2474,9 +2490,9 @@ vlBool CVTFFile::GenerateMipmaps(vlUInt uiFace, vlUInt uiFrame, VTFMipmapFilter 
 		return vlFalse;
 	}
 
-	assert(MipmapFilter >= 0 && MipmapFilter < MIPMAP_FILTER_COUNT);
+	nvAssert(MipmapFilter >= 0 && MipmapFilter < MIPMAP_FILTER_COUNT);
 
-	assert(SharpenFilter >= 0 && SharpenFilter < SHARPEN_FILTER_COUNT);
+	nvAssert(SharpenFilter >= 0 && SharpenFilter < SHARPEN_FILTER_COUNT);
 
 	if(this->Header->MipCount == 1)
 	{
@@ -2881,7 +2897,8 @@ vlBool CVTFFile::GenerateNormalMap(vlUInt uiFrame, VTFKernelFilter KernelFilter,
 struct SphereMapFace
 {
 	vlUInt *buf;			// pointer to the address where the image data is.
-	Vector u, v, n, o;		// vectors for plane equations
+	VTFLib::Vector u, v, n, o;
+//	Vector u, v, n, o;		// vectors for plane equations
 };
 
 // Define our faces and vectors (don't moan about the order!)
@@ -3234,7 +3251,7 @@ static SVTFImageFormatInfo VTFImageFormatInfo[] =
 
 SVTFImageFormatInfo const &CVTFFile::GetImageFormatInfo(VTFImageFormat ImageFormat)
 {
-	assert(ImageFormat >= 0 && ImageFormat < IMAGE_FORMAT_COUNT);
+	nvAssert(ImageFormat >= 0 && ImageFormat < IMAGE_FORMAT_COUNT);
 
 	return VTFImageFormatInfo[ImageFormat];
 }
@@ -3282,7 +3299,7 @@ vlUInt CVTFFile::ComputeImageSize(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiDept
 {
 	vlUInt uiImageSize = 0;
 
-	assert(uiWidth != 0 && uiHeight != 0 && uiDepth != 0);
+	nvAssert(uiWidth != 0 && uiHeight != 0 && uiDepth != 0);
 
 	for(vlUInt i = 0; i < uiMipmaps; i++)
 	{
@@ -3314,7 +3331,7 @@ vlUInt CVTFFile::ComputeMipmapCount(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiDe
 {
 	vlUInt uiCount = 0;
 
-	assert(uiWidth != 0 && uiHeight != 0 && uiDepth != 0);
+	nvAssert(uiWidth != 0 && uiHeight != 0 && uiDepth != 0);
 
 	while(vlTrue)
 	{
@@ -3430,7 +3447,7 @@ vlUInt CVTFFile::ComputeDataOffset(vlUInt uiFrame, vlUInt uiFace, vlUInt uiSlice
 	uiOffset += uiTemp1 * uiFace * uiSliceCount;
 	uiOffset += uiTemp2 * uiSlice;
 
-	assert(uiOffset < this->uiImageBufferSize);
+	nvAssert(uiOffset < this->uiImageBufferSize);
 	
 	return uiOffset;
 }
@@ -4055,6 +4072,8 @@ vlSingle ClampFP16(vlSingle sValue)
 
 // Reference:
 // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/directx9_c/directx/graphics/programmingguide/advancedtopics/HDRLighting/HDRLighting.asp
+// http://msdn.microsoft.com/en-us/library/windows/desktop/bb173486(v=vs.85).aspx
+
 vlVoid FromFP16(vlUInt16& R, vlUInt16& G, vlUInt16& B, vlUInt16& A)
 {
 	vlSingle sR = (vlSingle)R, sG = (vlSingle)G, sB = (vlSingle)B;//, sA = (vlSingle)A;
@@ -4397,17 +4416,18 @@ vlBool ConvertTemplated(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, vlUInt
 
 vlBool CVTFFile::Convert(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, vlUInt uiHeight, VTFImageFormat SourceFormat, VTFImageFormat DestFormat)
 {
-	assert(lpSource != 0);
-	assert(lpDest != 0);
+	nvAssert(lpSource != 0);
+	nvAssert(lpDest != 0);
 
-	assert(SourceFormat >= 0 && SourceFormat < IMAGE_FORMAT_COUNT);
-	assert(DestFormat >= 0 && DestFormat < IMAGE_FORMAT_COUNT);
+	nvAssert(SourceFormat >= 0 && SourceFormat < IMAGE_FORMAT_COUNT);
+	nvAssert(DestFormat >= 0 && DestFormat < IMAGE_FORMAT_COUNT);
 
 	const SVTFImageConvertInfo& SourceInfo = VTFImageConvertInfo[SourceFormat];
 	const SVTFImageConvertInfo& DestInfo = VTFImageConvertInfo[DestFormat];
 
 	if(!SourceInfo.bIsSupported || !DestInfo.bIsSupported)
 	{
+		printf("Image format conversion not supported.");
 		LastError.Set("Image format conversion not supported.");
 
 		return vlFalse;
@@ -4567,9 +4587,9 @@ vlBool CVTFFile::Convert(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, vlUIn
 
 vlBool CVTFFile::ConvertToNormalMap(vlByte *lpSourceRGBA8888, vlByte *lpDestRGBA8888, vlUInt uiWidth, vlUInt uiHeight, VTFKernelFilter KernelFilter, VTFHeightConversionMethod HeightConversionMethod, VTFNormalAlphaResult NormalAlphaResult, vlByte bMinimumZ, vlSingle sScale, vlBool bWrap, vlBool bInvertX, vlBool bInvertY, vlBool bInvertZ)
 {
-	assert(KernelFilter >= 0 && KernelFilter < KERNEL_FILTER_COUNT);
-	assert(HeightConversionMethod >= 0 && HeightConversionMethod < HEIGHT_CONVERSION_METHOD_COUNT);
-	assert(NormalAlphaResult >= 0 && NormalAlphaResult < NORMAL_ALPHA_RESULT_COUNT);
+	nvAssert(KernelFilter >= 0 && KernelFilter < KERNEL_FILTER_COUNT);
+	nvAssert(HeightConversionMethod >= 0 && HeightConversionMethod < HEIGHT_CONVERSION_METHOD_COUNT);
+	nvAssert(NormalAlphaResult >= 0 && NormalAlphaResult < NORMAL_ALPHA_RESULT_COUNT);
 
 #ifdef USE_NVDXT
 	nvCompressionOptions Options = nvCompressionOptions();
@@ -4645,8 +4665,8 @@ vlBool CVTFFile::ConvertToNormalMap(vlByte *lpSourceRGBA8888, vlByte *lpDestRGBA
 
 vlBool CVTFFile::Resize(vlByte *lpSourceRGBA8888, vlByte *lpDestRGBA8888, vlUInt uiSourceWidth, vlUInt uiSourceHeight, vlUInt uiDestWidth, vlUInt uiDestHeight, VTFMipmapFilter ResizeFilter, VTFSharpenFilter SharpenFilter)
 {
-	assert(ResizeFilter >= 0 && ResizeFilter < MIPMAP_FILTER_COUNT);
-	assert(SharpenFilter >= 0 && SharpenFilter < SHARPEN_FILTER_COUNT);
+	nvAssert(ResizeFilter >= 0 && ResizeFilter < MIPMAP_FILTER_COUNT);
+	nvAssert(SharpenFilter >= 0 && SharpenFilter < SHARPEN_FILTER_COUNT);
 
 #ifdef USE_NVDXT
 	nvCompressionOptions Options = nvCompressionOptions();
