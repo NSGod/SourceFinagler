@@ -1,0 +1,22 @@
+/*
+A Core Image kernel routine that computes a multiply effect.
+The code looks up the source pixel in the sampler and then multiplies it by the value passed to the routine.
+*/
+
+kernel vec4 grayscaleKernel(sampler Image, float redScale, float greenScale, float blueScale, float alphaScale) {
+	vec4 originalColor, grayscaleColor;
+	originalColor = unpremultiply(sample(Image, samplerCoord(Image)));
+	
+	const float sum = redScale + greenScale + blueScale + alphaScale;
+	
+	const float newRedScale = redScale / sum;
+	const float newGreenScale = greenScale / sum;
+	const float newBlueScale = blueScale / sum;
+	
+	const float gray = originalColor.r * newRedScale + 
+	                   originalColor.g * newGreenScale +
+	                   originalColor.b * newBlueScale;
+	                   
+	grayscaleColor.rgba = vec4(gray, gray, gray, 1.0);
+	return premultiply(grayscaleColor);
+}

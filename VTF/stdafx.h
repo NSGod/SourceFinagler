@@ -1,6 +1,6 @@
 /*
  * VTFLib
- * Copyright (C) 2005-2010 Neil Jedrzejewski & Ryan Gregg
+ * Copyright (C) 2005-2011 Neil Jedrzejewski & Ryan Gregg
 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,15 +17,15 @@
 	\brief Application framework header plus VTFLib custom data types.
 */
 
-#ifndef VTF_STDAFX_H
-#define VTF_STDAFX_H
+#ifndef STDAFX_H
+#define STDAFX_H
 
 #ifdef _MSC_VER
-#	ifdef VTFLIB_EXPORTS
-#		define VTFLIB_API __declspec(dllexport)
-#	else
-#		define VTFLIB_API __declspec(dllimport)
-#	endif
+#ifdef VTFLIB_EXPORTS
+#	define VTFLIB_API __declspec(dllexport)
+#else
+#	define VTFLIB_API __declspec(dllimport)
+#endif
 #else
 #	if defined(HAVE_GCCVISIBILITYPATCH) || __GNUC__ >= 4
 #		define VTFLIB_API __attribute__ ((visibility("default")))
@@ -94,8 +94,23 @@ typedef enum tagVLSeekMode {
 #ifdef _WIN32
 #	define WIN32_LEAN_AND_MEAN
 #	include <windows.h>
+#	include <stdlib.h>
+#	include <stdio.h>
+#	include <assert.h>
+#	include <math.h>
 #	include <stdarg.h>
+
+#	if _MSC_VER >= 1600 // Visual Studio 2010
+#		define STATIC_ASSERT(condition, message) static_assert(condition, message)
+#	else
+#		define STATIC_ASSERT(condition, message) typedef char __C_ASSERT__[(condition) ? 1 : -1]
+#	endif
+    
+#	undef USE_NVTT
+#	define USE_NVDXT
+
 #else
+
 #	define stricmp strcasecmp
 #	define _stricmp strcasecmp
 #	define _strnicmp strncasecmp
@@ -105,20 +120,25 @@ typedef enum tagVLSeekMode {
 #	include <sys/mman.h>
 #	include <unistd.h>
 #	include <fcntl.h>
-#endif
 
-#include <assert.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
-#include <math.h>
 
-#include <list>
-#include <vector>
+#	include <assert.h>
+#	include <stdlib.h>
+#	include <stdio.h>
+#	include <time.h>
+#	include <math.h>
 
+#	include <list>
+#	include <vector>
+
+//#	define STATIC_ASSERT(condition, message) static_assert(condition, message)
+#		define STATIC_ASSERT(condition, message) typedef char __C_ASSERT__[(condition) ? 1 : -1]
 
 #	undef USE_NVDXT
 #	define USE_NVTT
+
+#endif
+
 
 
 #endif

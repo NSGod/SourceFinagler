@@ -21,14 +21,13 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
-#include <NVCore/StrLib.h>
-#include <NVCore/StdStream.h>
+#include <nvcore/StrLib.h>
+#include <nvcore/StdStream.h>
 
-#include <NVImage/Image.h>
+#include <nvimage/Image.h>
+#include <nvimage/DirectDrawSurface.h>
 
-#include <NVImage/DirectDrawSurface.h>
-
-#include <NVTextureTools/NVTextureTools.h>
+#include <nvtt/nvtt.h>
 
 #include "cmdline.h"
 

@@ -4,11 +4,10 @@
 #ifndef NV_CORE_STRING_H
 #define NV_CORE_STRING_H
 
-#include <NVCore/CoreDefines.h>
-#include <NVCore/Memory.h>
-#include <NVCore/Utils.h> // swap, hash
+#include "Debug.h"
+#include "Hash.h" // hash
 
-#include <string.h> // strlen, strcmp, etc.
+//#include <string.h> // strlen, etc.
 
 #if NV_OS_WIN32
 #define NV_PATH_SEPARATOR '\\'
@@ -19,7 +18,7 @@
 namespace nv
 {
 
-    uint strHash(const char * str, uint h) NV_PURE;
+    NVCORE_API uint strHash(const char * str, uint h) NV_PURE;
 
     /// String hash based on Bernstein's hash.
     inline uint strHash(const char * data, uint h = 5381)
@@ -37,18 +36,23 @@ namespace nv
     };
 
 
+    NVCORE_API uint strLen(const char * str) NV_PURE;
 
     NVCORE_API int strCaseCmp(const char * s1, const char * s2) NV_PURE;
     NVCORE_API int strCmp(const char * s1, const char * s2) NV_PURE;
+    NVCORE_API bool strEqual(const char * s1, const char * s2) NV_PURE; // Accepts NULL strings.
 
     template <> struct Equal<const char *> {
-        bool operator()(const char * a, const char * b) const { return strCmp(a, b) == 0; }
+        bool operator()(const char * a, const char * b) const { return strEqual(a, b); }
     };
 
+    NVCORE_API bool strBeginsWith(const char * dst, const char * prefix) NV_PURE;
+    NVCORE_API bool strEndsWith(const char * dst, const char * suffix) NV_PURE;
 
-    NVCORE_API void strCpy(char * dst, int size, const char * src);
-    NVCORE_API void strCpy(char * dst, int size, const char * src, int len);
-    NVCORE_API void strCat(char * dst, int size, const char * src);
+
+    NVCORE_API void strCpy(char * dst, uint size, const char * src);
+    NVCORE_API void strCpy(char * dst, uint size, const char * src, uint len);
+    NVCORE_API void strCat(char * dst, uint size, const char * src);
 
     NVCORE_API bool strMatch(const char * str, const char * pat) NV_PURE;
 
@@ -59,9 +63,10 @@ namespace nv
     public:
 
         StringBuilder();
-        explicit StringBuilder( int size_hint );
-        StringBuilder( const char * str, int extra_size_hint = 0);
-        StringBuilder( const StringBuilder & );
+        explicit StringBuilder( uint size_hint );
+        StringBuilder(const char * str);
+        StringBuilder(const char * str, uint len);
+        StringBuilder(const StringBuilder & other);
 
         ~StringBuilder();
 
@@ -72,12 +77,15 @@ namespace nv
         StringBuilder & appendFormat( const char * format, ... ) __attribute__((format (printf, 2, 3)));
         StringBuilder & appendFormatList( const char * format, va_list arg );
 
+        StringBuilder & appendSpace(uint n);
+
         StringBuilder & number( int i, int base = 10 );
         StringBuilder & number( uint i, int base = 10 );
 
-        StringBuilder & reserve( uint size_hint );
-        StringBuilder & copy( const char * str, int extra_size/*=0*/ );
-        StringBuilder & copy( const StringBuilder & str );
+        StringBuilder & reserve(uint size_hint);
+        StringBuilder & copy(const char * str);
+        StringBuilder & copy(const char * str, uint len);
+        StringBuilder & copy(const StringBuilder & str);
 
         StringBuilder & toLower();
         StringBuilder & toUpper();
@@ -108,13 +116,11 @@ namespace nv
 
         /// Equal operator.
         bool operator==( const StringBuilder & s ) const {
-            if (s.isNull()) return isNull();
-            else if (isNull()) return false;
-            else return strcmp(s.m_str, m_str) != 0;
+            return strMatch(s.m_str, m_str);
         }
 
         /// Return the exact length.
-        uint length() const { return isNull() ? 0 : uint(strlen(m_str)); }
+        uint length() const { return isNull() ? 0 : strLen(m_str); }
 
         /// Return the size of the string container.
         uint capacity() const { return m_size; }
@@ -122,11 +128,8 @@ namespace nv
         /// Return the hash of the string.
         uint hash() const { return isNull() ? 0 : strHash(m_str); }
 
-        /// Swap strings.
-        friend void swap(StringBuilder & a, StringBuilder & b) {
-            nv::swap(a.m_size, b.m_size);
-            nv::swap(a.m_str, b.m_str);
-        }
+        // Swap strings.
+        friend void swap(StringBuilder & a, StringBuilder & b);
 
     protected:
 
@@ -145,13 +148,15 @@ namespace nv
     public:
         Path() : StringBuilder() {}
         explicit Path(int size_hint) : StringBuilder(size_hint) {}
-        Path(const char * str, int extra_size_hint = 0) : StringBuilder(str, extra_size_hint) {}
+        Path(const char * str) : StringBuilder(str) {}
         Path(const Path & path) : StringBuilder(path) {}
 
         const char * fileName() const;
         const char * extension() const;
 
         void translatePath(char pathSeparator = NV_PATH_SEPARATOR);
+
+        void appendSeparator(char pathSeparator = NV_PATH_SEPARATOR);
 
         void stripFileName();
         void stripExtension();
@@ -238,52 +243,32 @@ namespace nv
         /// Equal operator.
         bool operator==( const String & str ) const
         {
-            if( str.data == data ) {
-                return true;
-            }
-            if ((data == NULL) != (str.data == NULL)) {
-                return false;
-            }
-            return strcmp(data, str.data) == 0;
+            return strMatch(str.data, data);
         }
 
         /// Equal operator.
         bool operator==( const char * str ) const
         {
-            nvCheck(str != NULL);	// Use isNull!
-            if (data == NULL) {
-                return false;
-            }
-            return strcmp(data, str) == 0;
+            return strMatch(str, data);
         }
 
         /// Not equal operator.
         bool operator!=( const String & str ) const
         {
-            if( str.data == data ) {
-                return false;
-            }
-            if ((data == NULL) != (str.data == NULL)) {
-                return true;
-            }
-            return strcmp(data, str.data) != 0;
+            return !strMatch(str.data, data);
         }
 
         /// Not equal operator.
         bool operator!=( const char * str ) const
         {
-            nvCheck(str != NULL);	// Use isNull!
-            if (data == NULL) {
-                return false;
-            }
-            return strcmp(data, str) != 0;
+            return !strMatch(str, data);
         }
 
         /// Returns true if this string is the null string.
         bool isNull() const { return data == NULL; }
 
         /// Return the exact length.
-        uint length() const { nvDebugCheck(data != NULL); return uint(strlen(data)); }
+        uint length() const { nvDebugCheck(data != NULL); return strLen(data); }
 
         /// Return the hash of the string.
         uint hash() const { nvDebugCheck(data != NULL); return strHash(data); }
@@ -298,27 +283,10 @@ namespace nv
     private:
 
         // Add reference count.
-        void addRef()
-        {
-            if (data != NULL)
-            {
-                setRefCount(getRefCount() + 1);
-            }
-        }
+        void addRef();
 
         // Decrease reference count.
-        void release()
-        {
-            if (data != NULL)
-            {
-                const uint16 count = getRefCount();
-                setRefCount(count - 1);
-                if (count - 1 == 0) {
-                    free(data - 2);
-                    data = NULL;
-                }
-            }
-        }
+        void release();
 
         uint16 getRefCount() const
         {
@@ -338,31 +306,17 @@ namespace nv
 
         void allocString(const char * str)
         {
-            allocString(str, (int)strlen(str));
+            allocString(str, strLen(str));
         }
 
-        void allocString(const char * str, int len)
-        {
-            const char * ptr = malloc<char>(2 + len + 1);
-
-            setData( ptr );
-            setRefCount( 0 );
-
-            // Copy string.
-            strCpy(const_cast<char *>(data), len+1, str, len);
-
-            // Add terminating character.
-            const_cast<char *>(data)[len] = '\0';
-        }
+        void allocString(const char * str, uint length);
 
         void setString(const char * str);
-        void setString(const char * str, int length);
+        void setString(const char * str, uint length);
         void setString(const StringBuilder & str);
 
-        /// Swap strings.
-        friend void swap(String & a, String & b) {
-            swap(a.data, b.data);
-        }
+        // Swap strings.
+        friend void swap(String & a, String & b);
 
     private:
 

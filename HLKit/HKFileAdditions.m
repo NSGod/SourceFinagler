@@ -1,18 +1,25 @@
 //
 //  HKFileAdditions.m
-//  Source Finagler
+//  HLKit
 //
 //  Created by Mark Douma on 9/30/2010.
-//  Copyright 2010 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKFileAdditions.h>
 #import <HLKit/HKFoundationAdditions.h>
 
+#import <Cocoa/Cocoa.h>
 
-#define MD_DEBUG 0
+#import <QTKit/QTKit.h>
 
-@implementation HKFile (MDAdditions)
+#import <TextureKit/TKImage.h>
+#import <TextureKit/TKVTFImageRep.h>
+
+
+#define HK_DEBUG 0
+
+@implementation HKFile (HKAdditions)
 
 
 - (NSString *)stringValue {
@@ -71,6 +78,65 @@
 		}
 	}
 	return stringValue;
+}
+
+
+- (NSSound *)sound {
+	if (fileType != HKFileTypeSound) return nil;
+	NSData *soundData = [self data];
+	if (soundData) return [[[NSSound alloc] initWithData:soundData] autorelease];
+	return nil;
+}
+
+
+- (NSImage *)image {
+#if HK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	NSImage *theImage = nil;
+	if (fileType == HKFileTypeImage) {
+		NSData *data = [self data];
+		if (data) {
+			if ([type isEqualToString:TKVTFType]) {
+				theImage = [[[TKImage alloc] initWithData:data firstRepresentationOnly:YES] autorelease];
+				if (theImage) {
+					[self setVersion:[(TKImage *)theImage version]];
+					[self setCompression:[(TKImage *)theImage compression]];
+					[self setHasMipmaps:([(TKImage *)theImage hasMipmaps] ? NSLocalizedString(@"Yes", @"") : NSLocalizedString(@"No", @""))];
+					[self setAlpha:([(TKImage *)theImage hasAlpha] ? NSLocalizedString(@"Yes", @"") : NSLocalizedString(@"No", @""))];
+				}
+			} else {
+				theImage = [[[NSImage alloc] initWithData:data] autorelease];
+			}
+		}
+		if (theImage) {
+			NSSize imageSize = [theImage size];
+			[self setDimensions:[NSString stringWithFormat:NSLocalizedString(@"%lu x %lu", @""), (NSUInteger)imageSize.width, (NSUInteger)imageSize.height]];
+		}
+	} else if (fileType == HKFileTypeOther ||
+			   fileType == HKFileTypeText ||
+			   fileType == HKFileTypeHTML ||
+			   fileType == HKFileTypeNotExtractable) {
+		theImage = [HKItem copiedImageForItem:self];
+		[theImage setSize:NSMakeSize(128.0, 128.0)];
+	}
+	return theImage;
+}
+
+
+- (QTMovie *)movie {
+	QTMovie *movie = nil;
+	if (fileType == HKFileTypeMovie) {
+		NSData *data = [self data];
+		if (data) {
+			NSError *error = nil;
+			movie = [QTMovie movieWithData:data error:&error];
+			if (!movie) {
+				NSLog(@"[%@ %@] failed to create movie (error == %@)", NSStringFromClass([self class]), NSStringFromSelector(_cmd), error);
+			}
+		}
+	}
+	return movie;
 }
 
 

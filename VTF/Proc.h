@@ -12,15 +12,15 @@
 #ifndef PROC_H
 #define PROC_H
 
-#include <VTF/stdafx.h>
-#include <VTF/Error.h>
-
+#include "stdafx.h"
+#include "Error.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef enum tagVLProc {
+typedef enum tagVLProc
+{
 	PROC_READ_CLOSE = 0,
 	PROC_READ_OPEN,
 	PROC_READ_READ,
@@ -36,7 +36,8 @@ typedef enum tagVLProc {
 	PROC_COUNT
 } VLProc;
 
-//typedef enum tagVLSeekMode {
+//typedef enum tagVLSeekMode
+// {
 //	SEEK_MODE_BEGIN = 0,
 //	SEEK_MODE_CURRENT,
 //	SEEK_MODE_END
@@ -60,8 +61,8 @@ typedef vlUInt (*PWriteTellProc) (vlVoid *);
 }
 #endif
 
-namespace VTFLib {
-	
+namespace VTFLib
+{
 	extern PReadCloseProc pReadCloseProc;
 	extern PReadOpenProc pReadOpenProc;
 	extern PReadReadProc pReadReadProc;

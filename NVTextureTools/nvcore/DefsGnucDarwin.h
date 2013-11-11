@@ -1,9 +1,9 @@
-#ifndef NV_CORE_DEFINES_H
+#ifndef NV_CORE_H
 #error "Do not include this file directly."
 #endif
 
-//#include <stdint.h> // uint8_t, int8_t, ...
-#include <cstddef> // operator new, size_t, NULL
+#include <stdint.h> // uint8_t, int8_t, ... uintptr_t
+#include <stddef.h> // operator new, size_t, NULL
 
 // Function linkage
 #define DLL_IMPORT
@@ -25,7 +25,7 @@
 #endif
 
 #define NV_FASTCALL		__attribute__((fastcall))
-#define NV_FORCEINLINE	__attribute__((always_inline))
+#define NV_FORCEINLINE	inline __attribute__((always_inline))
 #define NV_DEPRECATED   __attribute__((deprecated))
 
 #if __GNUC__ > 2

@@ -23,15 +23,15 @@
 
 #include "cmdline.h"
 
-#include <NVTextureTools/NVTextureTools.h>
+#include <nvtt/nvtt.h>
 
 #include <nvimage/Image.h>    // @@ It might be a good idea to use FreeImage directly instead of ImageIO.
 #include <nvimage/ImageIO.h>
 #include <nvimage/FloatImage.h>
 #include <nvimage/DirectDrawSurface.h>
 
-#include <NVCore/Ptr.h>
-#include <NVCore/StrLib.h>
+#include <nvcore/Ptr.h> // AutoPtr
+#include <nvcore/StrLib.h> // Path
 #include <nvcore/StdStream.h>
 #include <nvcore/FileSystem.h>
 #include <nvcore/Timer.h>
@@ -54,6 +54,11 @@ struct MyOutputHandler : public nvtt::OutputHandler
     virtual void beginImage(int size, int width, int height, int depth, int face, int miplevel)
     {
         // ignore.
+    }
+
+    virtual void endImage()
+    {
+        // Ignore.
     }
 
     // Output data.
@@ -265,6 +270,11 @@ int main(int argc, char *argv[])
                 i++;
             }
         }
+        else if (strcmp("-pause", argv[i]) == 0)
+        {
+            printf("Press ENTER\n"); fflush(stdout);
+            getchar();
+        }
 
         // Output options
         else if (strcmp("-silent", argv[i]) == 0)
@@ -453,7 +463,7 @@ int main(int argc, char *argv[])
     // Block compressed textures with mipmaps must be powers of two.
     if (!noMipmaps && format != nvtt::Format_RGB)
     {
-        inputOptions.setRoundMode(nvtt::RoundMode_ToNearestPowerOfTwo);
+        inputOptions.setRoundMode(nvtt::RoundMode_ToPreviousPowerOfTwo);
     }
 
     if (normal)
@@ -487,11 +497,11 @@ int main(int argc, char *argv[])
 
     if (format == nvtt::Format_BC2) {
         // Dither alpha when using BC2.
-        compressionOptions.setQuantization(false, true, false);
+        compressionOptions.setQuantization(/*color dithering*/false, /*alpha dithering*/true, /*binary alpha*/false);
     }
     else if (format == nvtt::Format_BC1a) {
         // Binary alpha when using BC1a.
-        compressionOptions.setQuantization(false, true, true, 127);
+        compressionOptions.setQuantization(/*color dithering*/false, /*alpha dithering*/true, /*binary alpha*/true, 127);
     }
     else if (format == nvtt::Format_RGBA)
     {
@@ -523,6 +533,11 @@ int main(int argc, char *argv[])
     {
         compressionOptions.setColorWeights(1, 1, 0);
     }
+
+    
+    //compressionOptions.setColorWeights(0.2126, 0.7152, 0.0722);
+    //compressionOptions.setColorWeights(0.299, 0.587, 0.114);
+    //compressionOptions.setColorWeights(3, 4, 2);
 
     if (externalCompressor != NULL)
     {

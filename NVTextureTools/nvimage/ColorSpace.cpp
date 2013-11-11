@@ -1,8 +1,11 @@
 // This code is in the public domain -- jim@tilander.org
 
-#include <NVImage/ImageBase.h>
-#include <NVImage/Image.h>
-#include <NVImage/ColorSpace.h>
+#include <nvcore/nvcore.h>
+
+#include <nvmath/Color.h>
+#include <nvimage/Image.h>
+
+#include "ColorSpace.h"
 
 namespace nv
 {
@@ -22,9 +25,9 @@ namespace nv
 				const int b = pixel.b;
 				
 				const int Co = r - b;
-				const int t  = b + Co / 2;
+				const int t  = b + Co/2;
 				const int Cg = g - t;
-				const int Y  = t + Cg / 2;
+				const int Y  = t + Cg/2;
 				
 				// Just saturate the chroma here (we loose out of one bit in each channel)
 				// this just means that we won't have as high dynamic range. Perhaps a better option
@@ -41,7 +44,7 @@ namespace nv
 	{
 		const uint w = img->width();
 		const uint h = img->height();
-	
+		
 		for( uint y=0; y < h; y++ )
 		{
 			for( uint x=0; x < w; x++ )
@@ -50,11 +53,11 @@ namespace nv
 				
 				const int Co = (int)pixel.r - 128;
 				const int Cg = (int)pixel.g - 128;
-				const int Y  = pixel.a;
+				const int Y  =      pixel.a;
 				
-				const int t = Y - Cg / 2;
+				const int t = Y - Cg/2;
 				const int g = Cg + t;
-				const int b = t - Co / 2;
+				const int b = t - Co/2;
 				const int r = b + Co;
 				
 				pixel.r = r;

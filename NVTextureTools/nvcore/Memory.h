@@ -1,15 +1,15 @@
-// This code is in the public domain -- Ignacio Castaño <castano@gmail.com>
+// This code is in the public domain -- Ignacio Casta√±o <castano@gmail.com>
 
 #pragma once
 #ifndef NV_CORE_MEMORY_H
 #define NV_CORE_MEMORY_H
 
-#include <NVCore/CoreDefines.h>
+#include "nvcore.h"
 
 #include <stdlib.h> // malloc(), realloc() and free()
-#include <stddef.h> // size_t
+//#include <stddef.h> // size_t
 
-#include <new>	// new and delete
+//#include <new>	// new and delete
 
 
 #if NV_CC_GNUC
@@ -43,15 +43,15 @@ extern "C" {
 namespace nv {
 
     // C++ helpers.
-    template <typename T> T * malloc(size_t count) {
+    template <typename T> NV_FORCEINLINE T * malloc(size_t count) {
         return (T *)::malloc(sizeof(T) * count);
     }
 
-    template <typename T> T * realloc(T * ptr, size_t count) {
+    template <typename T> NV_FORCEINLINE T * realloc(T * ptr, size_t count) {
         return (T *)::realloc(ptr, sizeof(T) * count);
     }
 
-    template <typename T> void free(const T * ptr) {
+    template <typename T> NV_FORCEINLINE void free(const T * ptr) {
         ::free((void *)ptr);
     }
 

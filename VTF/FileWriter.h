@@ -12,16 +12,17 @@
 #ifndef FILEWRITER_H
 #define FILEWRITER_H
 
-#include <VTF/stdafx.h>
-#include <VTF/Writer.h>
+#include "stdafx.h"
+#include "Writer.h"
 
-namespace VTFLib {
-	
-	namespace IO {
-		
-		namespace Writers {
-			
-			class CFileWriter : public IWriter {
+namespace VTFLib
+{
+	namespace IO
+	{
+		namespace Writers
+		{
+			class CFileWriter : public IWriter
+			{
 			private:
 #ifdef _WIN32
 				HANDLE hFile;

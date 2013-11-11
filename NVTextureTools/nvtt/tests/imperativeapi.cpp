@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     context.enableCudaAcceleration(false);
 
     // Load input image.
-    nvtt::TexImage image;
+    nvtt::Surface image;
     if (!image.load(inputFileName)) {
         return EXIT_FAILURE;
     }
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     // Output compressed image.
     context.outputHeader(image, image.countMipmaps(), compressionOptions, outputOptions);
 
-    image.flipVertically();
+    image.flipY();
     image.setAlphaMode(nvtt::AlphaMode_Transparency);
 
     // Output first mipmap.
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     int m = 1;
     while (image.buildNextMipmap(nvtt::MipmapFilter_Kaiser))
     {
-        nvtt::TexImage tmpImage = image;
+        nvtt::Surface tmpImage = image;
         tmpImage.toGamma(gamma);
 
         tmpImage.scaleAlphaToCoverage(coverage, alphaRef);

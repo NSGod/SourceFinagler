@@ -12,17 +12,15 @@
 #ifndef VMTSINGLENODE_H
 #define VMTSINGLENODE_H
 
-#include <VTF/stdafx.h>
-#include <VTF/VMTValueNode.h>
+#include "stdafx.h"
+#include "VMTValueNode.h"
 
-
-
-
-namespace VTFLib {
-	
-	namespace Nodes {
-		
-		class VTFLIB_API CVMTSingleNode : public CVMTValueNode {
+namespace VTFLib
+{
+	namespace Nodes
+	{
+		class VTFLIB_API CVMTSingleNode : public CVMTValueNode
+		{
 		private:
 			vlFloat fValue;
 

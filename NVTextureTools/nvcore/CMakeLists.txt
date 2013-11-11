@@ -17,9 +17,8 @@ SET(CORE_SRCS
     StrLib.h StrLib.cpp
     Stream.h
     StdStream.h
-    TextReader.h TextReader.cpp
     TextWriter.h TextWriter.cpp
-    Timer.h
+    Timer.h Timer.cpp
     Utils.h)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})

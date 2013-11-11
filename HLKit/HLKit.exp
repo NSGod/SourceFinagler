@@ -1,0 +1,27 @@
+# HLKit.exp
+# HLKit
+#
+# Created by Mark Douma on 7/8/2011.
+# Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
+
+.objc_class_name_HKArchiveFile
+.objc_class_name_HKBSPFile
+.objc_class_name_HKGCFFile
+.objc_class_name_HKNCFFile
+.objc_class_name_HKPAKFile
+.objc_class_name_HKVPKFile
+.objc_class_name_HKSGAFile
+.objc_class_name_HKWADFile
+.objc_class_name_HKXZPFile
+
+.objc_class_name_HKNode
+.objc_class_name_HKItem
+.objc_class_name_HKFile
+.objc_class_name_HKFolder
+
+.objc_class_name_HKFileHandle
+
+_HKErrorDomain
+_HKErrorMessageKey
+_HKSystemErrorMessageKey
+

@@ -5,16 +5,18 @@
 #define HAVE_STDARG_H
 #define HAVE_SIGNAL_H
 #define HAVE_EXECINFO_H
-/* #undef HAVE_MALLOC_H */
+//#define HAVE_MALLOC_H
 
-#define HAVE_OPENMP
+//#define HAVE_OPENMP
+#define HAVE_DISPATCH_H
 
-#define HAVE_PNG
-#define HAVE_JPEG
-#define HAVE_TIFF
+// #define HAVE_STBIMAGE
+//#define HAVE_PNG
+//#define HAVE_JPEG
+//#define HAVE_TIFF
 //#define HAVE_OPENEXR
-#define HAVE_FREEIMAGE
+//#define HAVE_FREEIMAGE
 
-/* #undef HAVE_MAYA */
+//#define HAVE_MAYA
 
 #endif // NV_CONFIG

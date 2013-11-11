@@ -26,9 +26,7 @@ namespace HLLib
 	extern POpenProc pOpenProc;
 	extern PCloseProc pCloseProc;
 	extern PReadProc pReadProc;
-	extern PReadExProc pReadExProc;
 	extern PWriteProc pWriteProc;
-	extern PWriteExProc pWriteExProc;
 	extern PSeekProc pSeekProc;
 	extern PSeekExProc pSeekExProc;
 	extern PTellProc pTellProc;
@@ -39,9 +37,7 @@ namespace HLLib
 	extern PExtractItemStartProc pExtractItemStartProc;
 	extern PExtractItemEndProc pExtractItemEndProc;
 	extern PExtractFileProgressProc pExtractFileProgressProc;
-	extern PExtractFileProgressExProc pExtractFileProgressExProc;
 	extern PValidateFileProgressProc pValidateFileProgressProc;
-	extern PValidateFileProgressExProc pValidateFileProgressExProc;
 	extern PDefragmentProgressProc pDefragmentProgressProc;
 	extern PDefragmentProgressExProc pDefragmentProgressExProc;
 

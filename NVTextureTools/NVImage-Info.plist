@@ -9,7 +9,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.nvidia.NVImage.framework</string>
 	<key>CFBundleGetInfoString</key>
-	<string>NVImage.framework 2.1.0, © 2007-2011 NVIDIA Corporation</string>
+	<string>NVImage.framework 2.1.0, © 2007-2013 NVIDIA Corporation</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -21,6 +21,6 @@
 	<key>CFBundleVersion</key>
 	<string>210</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2007-2011 NVIDIA Corporation</string>
+	<string>Copyright © 2007-2013 NVIDIA Corporation</string>
 </dict>
 </plist>

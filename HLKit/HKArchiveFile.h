@@ -1,9 +1,9 @@
 //
 //  HKArchiveFile.h
-//  Source Finagler
+//  HLKit
 //
 //  Created by Mark Douma on 4/27/2010.
-//  Copyright 2010 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
 //
 
 
@@ -22,7 +22,8 @@ enum {
 	HKArchiveFileXZPType		= 6,
 	HKArchiveFileZIPType		= 7,
 	HKArchiveFileNCFType		= 8,
-	HKArchiveFileVPKType		= 9
+	HKArchiveFileVPKType		= 9,
+	HKArchiveFileSGAType		= 10
 };
 typedef NSUInteger HKArchiveFileType;
 
@@ -56,10 +57,10 @@ typedef NSUInteger HKArchiveFileType;
 
 @property (retain, readonly) NSString *filePath;
 
-@property (assign, readonly) HKArchiveFileType fileType;
+@property (nonatomic, readonly, assign) HKArchiveFileType fileType;
 
-@property (assign, readonly) BOOL isReadOnly;
-@property (assign, readonly) BOOL haveGatheredAllItems;
+@property (nonatomic, readonly, assign) BOOL isReadOnly;
+@property (nonatomic, readonly, assign) BOOL haveGatheredAllItems;
 
 
 @property (retain) NSString *version;

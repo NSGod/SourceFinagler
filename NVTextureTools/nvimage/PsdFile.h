@@ -4,7 +4,7 @@
 #ifndef NV_IMAGE_PSDFILE_H
 #define NV_IMAGE_PSDFILE_H
 
-#include <NVImage/ImageBase.h>
+#include "nvcore/Stream.h"
 
 namespace nv
 {

@@ -1,10 +1,10 @@
 // This code is in the public domain -- castano@gmail.com
 
-#include <NVCore/FileSystem.h>
+#include "FileSystem.h"
 
 #if NV_OS_WIN32
 #define _CRT_NONSTDC_NO_WARNINGS // _chdir is defined deprecated, but that's a bug, chdir is deprecated, _chdir is *not*.
-								 //#include <shlwapi.h> // PathFileExists
+//#include <shlwapi.h> // PathFileExists
 #include <windows.h> // GetFileAttributes
 #include <direct.h> // _mkdir
 #elif NV_OS_XBOX
@@ -22,13 +22,13 @@ using namespace nv;
 bool FileSystem::exists(const char * path)
 {
 #if NV_OS_UNIX
-	return access(path, F_OK | R_OK) == 0;
+	return access(path, F_OK|R_OK) == 0;
 	//struct stat buf;
 	//return stat(path, &buf) == 0;
 #elif NV_OS_WIN32 || NV_OS_XBOX
-	// PathFileExists requires linking to shlwapi.lib
-	//return PathFileExists(path) != 0;
-	return GetFileAttributesA(path) != 0xFFFFFFFF;
+    // PathFileExists requires linking to shlwapi.lib
+    //return PathFileExists(path) != 0;
+    return GetFileAttributesA(path) != INVALID_FILE_ATTRIBUTES;
 #else
 	if (FILE * fp = fopen(path, "r"))
 	{
@@ -42,16 +42,16 @@ bool FileSystem::exists(const char * path)
 bool FileSystem::createDirectory(const char * path)
 {
 #if NV_OS_WIN32 || NV_OS_XBOX
-    return CreateDirectory(path, NULL) != 0;
+    return CreateDirectoryA(path, NULL) != 0;
 #else
-	return mkdir(path, 0777) != -1;
+    return mkdir(path, 0777) != -1;
 #endif
 }
 
 bool FileSystem::changeDirectory(const char * path)
 {
 #if NV_OS_WIN32
-	return _chdir(path) != -1;
+    return _chdir(path) != -1;
 #elif NV_OS_XBOX
 	// Xbox doesn't support Current Working Directory!
 	return false;
@@ -62,6 +62,6 @@ bool FileSystem::changeDirectory(const char * path)
 
 bool FileSystem::removeFile(const char * path)
 {
-	// @@ Use unlink or remove?
-	return remove(path) == 0;
+    // @@ Use unlink or remove?
+    return remove(path) == 0;
 }

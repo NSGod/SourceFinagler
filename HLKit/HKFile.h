@@ -1,9 +1,9 @@
 //
 //  HKFile.h
-//  Source Finagler
+//  HLKit
 //
 //  Created by Mark Douma on 9/1/2010.
-//  Copyright 2010 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKItem.h>

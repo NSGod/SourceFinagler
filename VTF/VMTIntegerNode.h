@@ -12,14 +12,15 @@
 #ifndef VMTINTEGERNODE_H
 #define VMTINTEGERNODE_H
 
-#include <VTF/stdafx.h>
-#include <VTF/VMTValueNode.h>
+#include "stdafx.h"
+#include "VMTValueNode.h"
 
-namespace VTFLib {
-	
-	namespace Nodes {
-		
-		class VTFLIB_API CVMTIntegerNode : public CVMTValueNode {
+namespace VTFLib
+{
+	namespace Nodes
+	{
+		class VTFLIB_API CVMTIntegerNode : public CVMTValueNode
+		{
 		private:
 			vlInt iValue;
 

@@ -1,6 +1,6 @@
 
-#include <NVCore/Library.h>
-#include <NVCore/Debug.h>
+#include "Library.h"
+#include "Debug.h"
 
 #if NV_OS_WIN32
 #define WIN32_LEAN_AND_MEAN
@@ -17,7 +17,7 @@
 void * nvLoadLibrary(const char * name)
 {
 #if NV_OS_WIN32
-	return (void *)LoadLibraryExA(name, NULL, 0);
+	return (void *)LoadLibraryExA( name, NULL, 0 );
 #elif NV_OS_XBOX
     return (void *)LoadLibraryA( name );
 #else
@@ -41,5 +41,5 @@ void * nvBindSymbol(void * handle, const char * symbol)
 	return (void *)GetProcAddress((HMODULE)handle, symbol);
 #else
 	return (void *)dlsym(handle, symbol);
-#endif
+#endif	
 }

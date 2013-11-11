@@ -9,35 +9,33 @@
  * version.
  */
 
-#include <VTF/Error.h>
-
-#include <errno.h>
-
+#include "Error.h"
 
 using namespace VTFLib::Diagnostics;
 
-CError::CError() {
+CError::CError()
+{
 	this->cErrorMessage = 0;
 }
 
-
-CError::~CError() {
-	delete [] this->cErrorMessage;
+CError::~CError()
+{
+	delete []this->cErrorMessage;
 }
 
-
-vlVoid CError::Clear() {
-	delete [] this->cErrorMessage;
+vlVoid CError::Clear()
+{
+	delete []this->cErrorMessage;
 	this->cErrorMessage = 0;
 }
 
-
-const vlChar *CError::Get() const {
+const vlChar *CError::Get() const
+{
 	return this->cErrorMessage != 0 ? this->cErrorMessage : "";
 }
 
-
-vlVoid CError::SetFormatted(const vlChar *cFormat, ...) {
+vlVoid CError::SetFormatted(const vlChar *cFormat, ...)
+{
 	vlChar cBuffer[2048];
 
 	va_list ArgumentList;
@@ -48,38 +46,43 @@ vlVoid CError::SetFormatted(const vlChar *cFormat, ...) {
 	this->Set(cBuffer, vlFalse);
 }
 
-
-vlVoid CError::Set(const vlChar *cErrorMessage, vlBool bSystemError) {
+vlVoid CError::Set(const vlChar *cErrorMessage, vlBool bSystemError)
+{
 	vlChar cBuffer[2048];
 	
 #ifdef _WIN32
 	
-	if (bSystemError) {
-		
+	if (bSystemError)
+	{
 		LPVOID lpMessage;
-		vlUInt uiLastError = GetLastError();
+		vlUInt uiLastError = GetLastError(); 
 
-		if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, uiLastError, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&lpMessage, 0, NULL)) {
-			sprintf(cBuffer, "Error:\n%s\n\nSystem Error: 0x%.8x:\n%s", cErrorMessage, uiLastError, lpMessage);
+		if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, uiLastError, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&lpMessage, 0, NULL))
+		{
+			sprintf(cBuffer, "Error:\n%s\n\nSystem Error: 0x%.8x:\n%s", cErrorMessage, uiLastError, lpMessage); 
 
 			LocalFree(lpMessage);
-		} else {
-			sprintf(cBuffer, "Error:\n%s\n\nSystem Error: 0x%.8x.", cErrorMessage, uiLastError);
 		}
-	} else {
-		sprintf(cBuffer, "Error:\n%s", cErrorMessage);
+		else
+		{
+			sprintf(cBuffer, "Error:\n%s\n\nSystem Error: 0x%.8x.", cErrorMessage, uiLastError); 
+		}
+	}
+	else
+	{
+		sprintf(cBuffer, "Error:\n%s", cErrorMessage); 
 	}
 #else
 	vlUInt error = errno;
 	vlChar *message = strerror(error);
 	
-	if (message != NULL) {
+	if (message != NULL)
+	{
 		strcpy(cBuffer, message);
 	}
 #endif
 	this->cErrorMessage = new vlChar[strlen(cBuffer) + 1];
 	strcpy(this->cErrorMessage, cBuffer);
 }
-
 
 

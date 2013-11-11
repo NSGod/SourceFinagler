@@ -18,7 +18,7 @@ See the License for the specific language governing permissions and limitations 
 #include "zoh.h"
 #include "utils.h"
 
-#include "nvmath/Vector.h"
+#include "nvmath/Vector.inl"
 #include "nvmath/Fitting.h"
 
 #include <string.h> // strlen
@@ -223,7 +223,7 @@ static void write_header(const ComprEndpts endpts[NREGIONS_ONE], const Pattern &
         case FIELD_GZ:
         case FIELD_BY:
         case FIELD_BZ:
-        default: nvAssume(0);
+        default: nvUnreachable();
         }
     }
 }
@@ -278,7 +278,7 @@ static void read_header(Bits &in, ComprEndpts endpts[NREGIONS_ONE], Pattern &p)
         case FIELD_GZ:
         case FIELD_BY:
         case FIELD_BZ:
-        default: nvAssume(0);
+        default: nvUnreachable();
         }
     }
 
@@ -581,7 +581,7 @@ static void optimize_endpts(const Tile &tile, int shapeindex, const double orig_
 {
     Vector3 pixels[Tile::TILE_TOTAL];
     float importance[Tile::TILE_TOTAL];
-//    double err = 0;
+    double err = 0;
 
     for (int region=0; region<NREGIONS_ONE; ++region)
     {

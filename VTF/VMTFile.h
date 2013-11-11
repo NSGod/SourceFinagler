@@ -12,17 +12,18 @@
 #ifndef VMTFILE_H
 #define VMTFILE_H
 
-#include <VTF/stdafx.h>
-#include <VTF/Readers.h>
-#include <VTF/Writers.h>
-#include <VTF/VMTNodes.h>
+#include "stdafx.h"
+#include "Readers.h"
+#include "Writers.h"
+#include "VMTNodes.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 //! VMT parsing mode.
-typedef enum tagVMTParseMode {
+typedef enum tagVMTParseMode
+{
 	PARSE_MODE_STRICT = 0,
 	PARSE_MODE_LOOSE,
 	PARSE_MODE_COUNT
@@ -32,9 +33,10 @@ typedef enum tagVMTParseMode {
 }
 #endif
 
-namespace VTFLib {
-	
-	class VTFLIB_API CVMTFile {
+namespace VTFLib
+{
+	class VTFLIB_API CVMTFile
+	{
 	private:
 		Nodes::CVMTGroupNode *Root;
 

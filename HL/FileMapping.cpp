@@ -132,6 +132,8 @@ hlBool CFileMapping::OpenInternal(hlUInt uiMode)
 		}
 	}
 #else
+	printf("CFileMapping::OpenInternal()\n");
+
 	hlInt iMode;
 	
 	if((uiMode & HL_MODE_READ) && (uiMode & HL_MODE_WRITE))
@@ -168,7 +170,13 @@ hlBool CFileMapping::OpenInternal(hlUInt uiMode)
 		this->iFile = -1;
 		return hlFalse;
 	}
-
+	
+	hlInt fcntlResult = fcntl(this->iFile, F_NOCACHE, 1);
+	
+	if (fcntlResult < 0) {
+		printf("fcntl(this->iFile, F_NOCACHE, 1) returned %d\n", fcntlResult);
+	}
+	
 	// Map the whole file to memory then pass pointers to the
 	// master view back instead of mapping smaller views.
 	if(uiMode & HL_MODE_QUICK_FILEMAPPING)

@@ -22,8 +22,18 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
-#include <NVTextureTools/QuickCompressDXT.h>
-#include <NVTextureTools/OptimalCompressDXT.h>
+#include "QuickCompressDXT.h"
+#include "OptimalCompressDXT.h"
+
+#include "nvimage/ColorBlock.h"
+#include "nvimage/BlockDXT.h"
+
+#include "nvmath/Color.h"
+#include "nvmath/Vector.inl"
+#include "nvmath/Fitting.h"
+
+#include "nvcore/Utils.h" // swap
+
 
 
 using namespace nv;
@@ -73,7 +83,7 @@ inline static void findMinMaxColorsBox(const Vector3 * block, uint num, Vector3 
 
 inline static void selectDiagonal(const Vector3 * block, uint num, Vector3 * restrict maxColor, Vector3 * restrict minColor)
 {
-	Vector3 center = (*maxColor + *minColor) * 0.5;
+	Vector3 center = (*maxColor + *minColor) * 0.5f;
 
 	Vector2 covariance = Vector2(0.0f);
 	for (uint i = 0; i < num; i++)
@@ -105,6 +115,7 @@ inline static void insetBBox(Vector3 * restrict maxColor, Vector3 * restrict min
 	*minColor = clamp(*minColor + inset, 0.0f, 255.0f);
 }
 
+// Takes a normalized color in [0, 255] range and returns 
 inline static uint16 roundAndExpand(Vector3 * restrict v)
 {
 	uint r = uint(clamp(v->x * (31.0f / 255.0f), 0.0f, 31.0f) + 0.5f);
@@ -158,6 +169,7 @@ inline static uint computeIndices4(const Vector3 block[16], Vector3::Arg maxColo
 	return indices;
 }
 
+// maxColor and minColor are expected to be in the same range as the color set.
 inline static uint computeIndices4(const ColorSet & set, Vector3::Arg maxColor, Vector3::Arg minColor)
 {
 	Vector3 palette[4];
@@ -167,8 +179,13 @@ inline static uint computeIndices4(const ColorSet & set, Vector3::Arg maxColor, 
 	palette[3] = lerp(palette[0], palette[1], 2.0f / 3.0f);
 	
 	uint indices = 0;
-	for(int i = 0; i < 16; i++)
+    for(int i = 0; i < 16; i++)
 	{
+        if (!set.isValidIndex(i)) {
+            // Skip masked pixels and out of bounds.
+            continue;
+        }
+
         Vector3 color = set.color(i).xyz();
 
 		float d0 = colorDistance(palette[0], color);
@@ -214,6 +231,7 @@ inline static float evaluatePaletteError4(const Vector3 block[16], Vector3::Arg 
 	return total;
 }
 
+// maxColor and minColor are expected to be in the same range as the color set.
 inline static uint computeIndices3(const ColorSet & set, Vector3::Arg maxColor, Vector3::Arg minColor)
 {
 	Vector3 palette[4];
@@ -224,16 +242,20 @@ inline static uint computeIndices3(const ColorSet & set, Vector3::Arg maxColor, 
 	uint indices = 0;
 	for(int i = 0; i < 16; i++)
 	{
+        if (!set.isValidIndex(i)) {
+            // Skip masked pixels and out of bounds.
+            indices |= 3 << (2 * i);
+            continue;
+        }
+
         Vector3 color = set.color(i).xyz();
-		float alpha = set.color(i).w;
 		
 		float d0 = colorDistance(palette[0], color);
 		float d1 = colorDistance(palette[1], color);
 		float d2 = colorDistance(palette[2], color);
 		
 		uint index;
-		if (alpha == 0) index = 3;
-		else if (d0 < d1 && d0 < d2) index = 0;
+		if (d0 < d1 && d0 < d2) index = 0;
 		else if (d1 < d2) index = 1;
 		else index = 2;
 		
@@ -692,40 +714,41 @@ void QuickCompress::compressDXT5(const ColorBlock & rgba, BlockDXT5 * dxtBlock, 
 
 void QuickCompress::outputBlock4(const ColorSet & set, const Vector3 & start, const Vector3 & end, BlockDXT1 * block)
 {
-    Vector3 maxColor = start * 255;
-    Vector3 minColor = end * 255;
-	uint16 color0 = roundAndExpand(&maxColor);
-	uint16 color1 = roundAndExpand(&minColor);
+    Vector3 minColor = start * 255.0f;
+    Vector3 maxColor = end * 255.0f;
+    uint16 color0 = roundAndExpand(&maxColor);
+    uint16 color1 = roundAndExpand(&minColor);
 
-	if (color0 < color1)
-	{
-		swap(maxColor, minColor);
-		swap(color0, color1);
-	}
+    if (color0 < color1)
+    {
+        swap(maxColor, minColor);
+        swap(color0, color1);
+    }
 
-	block->col0 = Color16(color0);
-	block->col1 = Color16(color1);
-	block->indices = computeIndices4(set, maxColor, minColor);
+    block->col0 = Color16(color0);
+    block->col1 = Color16(color1);
+    block->indices = computeIndices4(set, maxColor / 255.0f, minColor / 255.0f);
 
-	//optimizeEndPoints4(set, block);
+    //optimizeEndPoints4(set, block);
 }
 
 void QuickCompress::outputBlock3(const ColorSet & set, const Vector3 & start, const Vector3 & end, BlockDXT1 * block)
 {
-    Vector3 maxColor = start * 255;
-    Vector3 minColor = end * 255;
-	uint16 color0 = roundAndExpand(&maxColor);
-	uint16 color1 = roundAndExpand(&minColor);
+    Vector3 minColor = start * 255.0f;
+    Vector3 maxColor = end * 255.0f;
+    uint16 color0 = roundAndExpand(&minColor);
+    uint16 color1 = roundAndExpand(&maxColor);
 
-	if (color0 > color1)
-	{
-		swap(maxColor, minColor);
-		swap(color0, color1);
-	}
+    if (color0 > color1)
+    {
+        swap(maxColor, minColor);
+        swap(color0, color1);
+    }
 
-	block->col0 = Color16(color0);
-	block->col1 = Color16(color1);
-    block->indices = computeIndices3(set, maxColor, minColor);
+    block->col0 = Color16(color0);
+    block->col1 = Color16(color1);
+    block->indices = computeIndices3(set, maxColor / 255.0f, minColor / 255.0f);
 
-	//optimizeEndPoints3(set, block);
+    //optimizeEndPoints3(set, block);
 }
+

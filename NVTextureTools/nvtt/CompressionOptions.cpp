@@ -22,7 +22,9 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
-#include <NVTextureTools/CompressionOptions.h>
+#include "CompressionOptions.h"
+#include "nvimage/DirectDrawSurface.h"
+#include "nvmath/Vector.inl"
 
 using namespace nv;
 using namespace nvtt;

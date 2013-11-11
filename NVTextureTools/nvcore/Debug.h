@@ -1,23 +1,25 @@
-// This code is in the public domain -- Ignacio Casta–o <castano@gmail.com>
+// This code is in the public domain -- Ignacio Castaño <castano@gmail.com>
 
 #pragma once
 #ifndef NV_CORE_DEBUG_H
 #define NV_CORE_DEBUG_H
 
-#include <NVCore/CoreDefines.h>
+#include "nvcore.h"
 
-#if defined(HAVE_STDARG_H)
-#   include <stdarg.h> // va_list
-#endif
+#include <stdarg.h> // va_list
+
+
+// Make sure we are using our assert.
+#undef assert
 
 #define NV_ABORT_DEBUG      1
 #define NV_ABORT_IGNORE     2
 #define NV_ABORT_EXIT       3
 
 #define nvNoAssert(exp) \
-    do { \
-        (void)sizeof(exp); \
-    } while(0)
+    NV_MULTI_LINE_MACRO_BEGIN \
+    (void)sizeof(exp); \
+    NV_MULTI_LINE_MACRO_END
 
 #if NV_NO_ASSERT
 
@@ -30,64 +32,89 @@
 #else // NV_NO_ASSERT
 
 #   if NV_CC_MSVC
-// @@ Does this work in msvc-6 and earlier?
+        // @@ Does this work in msvc-6 and earlier?
 #       define nvDebugBreak()       __debugbreak()
-//#       define nvDebugBreak()        __asm { int 3 }
-#   elif NV_CC_GNUC && NV_CPU_PPC && NV_OS_DARWIN
-// @@ Use __builtin_trap() on GCC
-#       define nvDebugBreak()       __asm__ volatile ("trap");
-#   elif NV_CC_GNUC && NV_CPU_X86 && NV_OS_DARWIN
-#       define nvDebugBreak()       __asm__ volatile ("int3");
-#   elif NV_CC_GNUC && NV_CPU_X86 
+        //#define nvDebugBreak()        __asm { int 3 }
+#   elif NV_CC_GNUC
+#       define nvDebugBreak()       __builtin_trap()
+#   else
+#       error "No nvDebugBreak()!"
+#   endif
+
+/*
+#   elif NV_CC_GNUC || NV_CPU_PPC && NV_OS_DARWIN
+        // @@ Use __builtin_trap() on GCC
+#       define nvDebugBreak()       __asm__ volatile ("trap")
+#   elif (NV_CC_GNUC || NV_CPU_X86 || NV_CPU_X86_64) && NV_OS_DARWIN
+#       define nvDebugBreak()       __asm__ volatile ("int3")
+#   elif NV_CC_GNUC || NV_CPU_X86 || NV_CPU_X86_64
 #       define nvDebugBreak()       __asm__ ( "int %0" : :"I"(3) )
 #   else
 #       include <signal.h>
-#       define nvDebugBreak()       raise(SIGTRAP); 
-// define nvDebugBreak()        *((int *)(0)) = 0
+#       define nvDebugBreak()       raise(SIGTRAP)
 #   endif
+*/
 
 #define nvDebugBreakOnce() \
-    do { \
-        static bool firstTime = true; \
-        if (firstTime) { firstTime = false; nvDebugBreak(); } \
-    } while(false)
+    NV_MULTI_LINE_MACRO_BEGIN \
+    static bool firstTime = true; \
+    if (firstTime) { firstTime = false; nvDebugBreak(); } \
+    NV_MULTI_LINE_MACRO_END
 
-#   define nvAssertMacro(exp) \
-    do { \
-        if (!(exp)) { \
-            if (nvAbort(#exp, __FILE__, __LINE__, __FUNC__) == NV_ABORT_DEBUG) { \
-                nvDebugBreak(); \
-            } \
+#define nvAssertMacro(exp) \
+    NV_MULTI_LINE_MACRO_BEGIN \
+    if (!(exp)) { \
+        if (nvAbort(#exp, __FILE__, __LINE__, __FUNC__) == NV_ABORT_DEBUG) { \
+            nvDebugBreak(); \
         } \
-    } while(false)
+    } \
+    NV_MULTI_LINE_MACRO_END
 
-#   define nvAssertMacroWithIgnoreAll(exp) \
-    do { \
+#define nvAssertMacroWithIgnoreAll(exp) \
+    NV_MULTI_LINE_MACRO_BEGIN \
         static bool ignoreAll = false; \
         if (!ignoreAll && !(exp)) { \
-            if (nvAbort(#exp, __FILE__, __LINE__, __FUNC__) == NV_ABORT_DEBUG) { \
+            int result = nvAbort(#exp, __FILE__, __LINE__, __FUNC__); \
+            if (result == NV_ABORT_DEBUG) { \
                 nvDebugBreak(); \
-            } else { \
+            } else if (result == NV_ABORT_IGNORE) { \
                 ignoreAll = true; \
             } \
         } \
-    } while(false)
+    NV_MULTI_LINE_MACRO_END
 
-#   define nvAssert(exp)    nvAssertMacro(exp)
-#   define nvCheck(exp)     nvAssertMacro(exp)
+// Interesting assert macro from Insomniac:
+// http://www.gdcvault.com/play/1015319/Developing-Imperfect-Software-How-to
+// Used as follows:
+// if (nvCheck(i < count)) {
+//     normal path
+// } else {
+//     fixup code.
+// }
+// This style of macro could be combined with __builtin_expect to let the compiler know failure is unlikely.
+#define nvCheckMacro(exp) \
+    (\
+        (exp) ? true : ( \
+            (nvAbort(#exp, __FILE__, __LINE__, __FUNC__) == NV_ABORT_DEBUG) ? (nvDebugBreak(), true) : ( false ) \
+        ) \
+    )
 
-#   if defined(_DEBUG)
-#       define nvDebugAssert(exp)   nvAssertMacro(exp)
-#       define nvDebugCheck(exp)    nvAssertMacro(exp)
-#   else // _DEBUG
-#       define nvDebugAssert(exp)   nvNoAssert(exp)
-#       define nvDebugCheck(exp)    nvNoAssert(exp)
-#   endif // _DEBUG
+
+#define nvAssert(exp)    nvAssertMacro(exp)
+#define nvCheck(exp)     nvAssertMacro(exp)
+
+#if defined(_DEBUG)
+#   define nvDebugAssert(exp)   nvAssertMacro(exp)
+#   define nvDebugCheck(exp)    nvAssertMacro(exp)
+#else // _DEBUG
+#   define nvDebugAssert(exp)   nvNoAssert(exp)
+#   define nvDebugCheck(exp)    nvNoAssert(exp)
+#endif // _DEBUG
 
 #endif // NV_NO_ASSERT
 
 // Use nvAssume for very simple expresions only: nvAssume(0), nvAssume(value == true), etc.
-#if !defined(_DEBUG)
+/*#if !defined(_DEBUG)
 #   if NV_CC_MSVC
 #       define nvAssume(exp)    __assume(exp)
 #   else
@@ -95,6 +122,20 @@
 #   endif
 #else
 #   define nvAssume(exp)    nvCheck(exp)
+#endif*/
+
+#if defined(_DEBUG)
+#  if NV_CC_MSVC
+#   define nvUnreachable() nvAssert(0 && "unreachable"); __assume(0)
+#  else
+#   define nvUnreachable() nvAssert(0 && "unreachable"); __builtin_unreachable()
+#  endif
+#else
+#  if NV_CC_MSVC
+#   define nvUnreachable() __assume(0)
+#  else
+#   define nvUnreachable() __builtin_unreachable()
+#  endif
 #endif
 
 
@@ -116,16 +157,8 @@
 #endif
 
 
-#if __cplusplus > 199711L
-#define nvStaticCheck(x) static_assert(x)
-#else
-#define nvStaticCheck(x) typedef char NV_DO_STRING_JOIN2(__static_assert_,__LINE__)[(x)]
-#endif
-
 NVCORE_API int nvAbort(const char *exp, const char *file, int line, const char * func = NULL);
 NVCORE_API void NV_CDECL nvDebugPrint( const char *msg, ... ) __attribute__((format (printf, 1, 2)));
-
-#include <sys/types.h>
 
 namespace nv
 {
@@ -135,21 +168,21 @@ namespace nv
         if (reinterpret_cast<uint64>(ptr) < 0x10000ULL) return false;
         if (reinterpret_cast<uint64>(ptr) >= 0x000007FFFFFEFFFFULL) return false;
     #else
-	    if (reinterpret_cast<uintptr_t>(ptr) == 0xcccccccc) return false;
-	    if (reinterpret_cast<uintptr_t>(ptr) == 0xcdcdcdcd) return false;
-	    if (reinterpret_cast<uintptr_t>(ptr) == 0xdddddddd) return false;
-	    if (reinterpret_cast<uintptr_t>(ptr) == 0xffffffff) return false;
+	    if (reinterpret_cast<uint32>(ptr) == 0xcccccccc) return false;
+	    if (reinterpret_cast<uint32>(ptr) == 0xcdcdcdcd) return false;
+	    if (reinterpret_cast<uint32>(ptr) == 0xdddddddd) return false;
+	    if (reinterpret_cast<uint32>(ptr) == 0xffffffff) return false;
     #endif
         return true;
     }
 
-    /// Message handler interface.
+    // Message handler interface.
     struct MessageHandler {
         virtual void log(const char * str, va_list arg) = 0;
         virtual ~MessageHandler() {}
     };
 
-    /// Assert handler interface.
+    // Assert handler interface.
     struct AssertHandler {
         virtual int assertion(const char *exp, const char *file, int line, const char *func = NULL) = 0;
         virtual ~AssertHandler() {}
@@ -166,8 +199,13 @@ namespace nv
         NVCORE_API void setAssertHandler( AssertHandler * assertHanlder );
         NVCORE_API void resetAssertHandler();
 
-        NVCORE_API void enableSigHandler();
+        NVCORE_API void enableSigHandler(bool interactive);
         NVCORE_API void disableSigHandler();
+
+        NVCORE_API bool isDebuggerPresent();
+        NVCORE_API bool attachToDebugger();
+
+        NVCORE_API void terminate(int code);
     }
 
 } // nv namespace

@@ -269,6 +269,10 @@ struct MyOutputHandler : public nvtt::OutputHandler
         m_ptr = m_data;
     }
 
+    virtual void endImage()
+    {
+    }
+
     virtual bool writeData(const void * data, int size)
     {
         memcpy(m_ptr, data, size);
@@ -276,9 +280,9 @@ struct MyOutputHandler : public nvtt::OutputHandler
         return true;
     }
 
-    nvtt::TexImage decompress(Mode mode, nvtt::Format format, nvtt::Decoder decoder)
+    nvtt::Surface decompress(Mode mode, nvtt::Format format, nvtt::Decoder decoder)
     {
-        nvtt::TexImage img;
+        nvtt::Surface img;
         img.setImage2D(format, decoder, m_width, m_height, m_data);
         return img;
     }
@@ -572,9 +576,9 @@ int main(int argc, char *argv[])
     //int failedTests = 0;
     //float totalDiff = 0;
 
-    nvtt::TexImage img;
+    nvtt::Surface img;
 
-    printf("Running Test: %s\n", set.name);
+    printf("Running Test: %s with Set: %s\n", test.name, set.name);
 
     graphWriter << "&chd=t:";
 
@@ -617,7 +621,7 @@ int main(int argc, char *argv[])
         FileSystem::createDirectory(outputFilePath.str());
 
 
-        printf("Processing Set: %s\n", set.name);
+        printf("Processing Mode: %s\n", s_modeNames[test.modes[t]]);
         for (int i = 0; i < set.fileCount; i++)
         {
             if (!img.load(set.fileNames[i]))
@@ -636,7 +640,7 @@ int main(int argc, char *argv[])
                 img.toGamma(2);
             }
 
-            nvtt::TexImage tmp = img;
+            nvtt::Surface tmp = img;
             if (mode == Mode_BC1) {
                 if (set.type == ImageType_HDR) {
                     /*for (int i = 0; i < 3; i++) {
@@ -720,10 +724,10 @@ int main(int argc, char *argv[])
             context.compress(tmp, 0, 0, compressionOptions, outputOptions);
 
             timer.stop();
-            printf("  Time: \t%.3f sec\n", timer.elapsed());
+            printf("  Time:  \t%.3f sec\n", timer.elapsed());
             totalTime += timer.elapsed();
 
-            nvtt::TexImage img_out = outputHandler.decompress(mode, format, decoder);
+            nvtt::Surface img_out = outputHandler.decompress(mode, format, decoder);
             img_out.setAlphaMode(img.alphaMode());
             img_out.setNormalMap(img.isNormalMap());
 
@@ -792,14 +796,14 @@ int main(int argc, char *argv[])
                 tmp.transformNormals(nvtt::NormalTransform_DualParaboloid);
             }*/
 
-            nvtt::TexImage diff = nvtt::diff(img, img_out, 1.0f);
+            nvtt::Surface diff = nvtt::diff(img, img_out, 1.0f);
 
             //bool residualCompression = (set.type == ImageType_HDR);
             bool residualCompression = (mode == Mode_BC3_RGBS);
             if (residualCompression)
             {
                 float residualScale = 8.0f;
-                nvtt::TexImage residual = diff;
+                nvtt::Surface residual = diff;
                 for (int j = 0; j < 3; j++) {
                     residual.scaleBias(j, residualScale, 0.5); // @@ The residual scale is fairly arbitrary.
                     residual.clamp(j);
@@ -817,7 +821,7 @@ int main(int argc, char *argv[])
                 
                 context.compress(residual, 0, 0, compressionOptions, outputOptions);
 
-                nvtt::TexImage residual_out = outputHandler.decompress(mode, format, decoder);
+                nvtt::Surface residual_out = outputHandler.decompress(mode, format, decoder);
 
                 /*outputFileName.format("%s/%s", outputFilePath.str(), set.fileNames[i]);
                 outputFileName.stripExtension();
@@ -839,7 +843,7 @@ int main(int argc, char *argv[])
                 outputFileName.format("%s/%s", outPath, set.fileNames[i]);
                 outputFileName.stripExtension();
                 if (set.type == ImageType_HDR) outputFileName.append(".dds");
-                else outputFileName.append(".png");
+                else outputFileName.append(".tga");
                 if (!img.save(outputFileName.str()))
                 {
                     printf("Error saving file '%s'.\n", outputFileName.str());
@@ -851,7 +855,7 @@ int main(int argc, char *argv[])
             outputFileName.format("%s/%s", outputFilePath.str(), set.fileNames[i]);
             outputFileName.stripExtension();
             if (set.type == ImageType_HDR) outputFileName.append(".dds");
-            else outputFileName.append(".png");
+            else outputFileName.append(".tga");
             if (!img_out.save(outputFileName.str()))
             {
                 printf("Error saving file '%s'.\n", outputFileName.str());
@@ -871,7 +875,7 @@ int main(int argc, char *argv[])
             }
 
             totalError += error;
-            printf("  Error:          \t%.4f\n", error);
+            printf("  Error: \t%.4f\n", error);
 
             graphWriter << error;
             if (i != set.fileCount-1) graphWriter << ",";
@@ -886,7 +890,7 @@ int main(int argc, char *argv[])
 
             outputFileName.format("%s/%s", outputFilePath.str(), set.fileNames[i]);
             outputFileName.stripExtension();
-            outputFileName.append("_diff.png");
+            outputFileName.append("_diff.tga");
             diff.save(outputFileName.str());
 
 
@@ -900,7 +904,7 @@ int main(int argc, char *argv[])
                 regressFileName.stripExtension();
                 regressFileName.append(".png");
 
-                nvtt::TexImage img_reg;
+                nvtt::Surface img_reg;
                 if (!img_reg.load(regressFileName.str()))
                 {
                     printf("Regression image '%s' not found.\n", regressFileName.str());

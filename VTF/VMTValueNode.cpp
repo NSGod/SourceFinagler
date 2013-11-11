@@ -9,15 +9,16 @@
  * version.
  */
 
-#include <VTF/VMTValueNode.h>
-
+#include "VMTValueNode.h"
 
 using namespace VTFLib::Nodes;
 
-CVMTValueNode::CVMTValueNode(const vlChar *cName) : CVMTNode(cName) {
+CVMTValueNode::CVMTValueNode(const vlChar *cName) : CVMTNode(cName)
+{
 
 }
 
-CVMTValueNode::~CVMTValueNode() {
+CVMTValueNode::~CVMTValueNode()
+{
 
 }
