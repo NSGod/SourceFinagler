@@ -17,8 +17,8 @@
 	#define HAVE_EXECINFO_H
 	/* #undef HAVE_MALLOC_H */
 
-	#define HAVE_OPENMP
-	#define HAVE_DISPATCH_H
+//	#define HAVE_OPENMP
+//	#define HAVE_DISPATCH_H
 
 //#define HAVE_STBIMAGE
 

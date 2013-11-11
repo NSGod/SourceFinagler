@@ -12,12 +12,16 @@
 #include "HLLib.h"
 #include "FileStream.h"
 
+
 using namespace HLLib;
 using namespace HLLib::Streams;
 
 #ifdef _WIN32
 CFileStream::CFileStream(const hlChar *lpFileName) : hFile(0), uiMode(HL_MODE_INVALID)
 #else
+
+#include <fcntl.h>
+
 CFileStream::CFileStream(const hlChar *lpFileName) : iFile(-1), uiMode(HL_MODE_INVALID)
 #endif
 {
@@ -82,6 +86,9 @@ hlBool CFileStream::Open(hlUInt uiMode)
 		return hlFalse;
 	}
 #else
+	
+	printf("CFileStream::Open()\n");
+	
 	hlInt iMode;
 	
 	if((uiMode & HL_MODE_READ) && (uiMode & HL_MODE_WRITE))
@@ -118,6 +125,13 @@ hlBool CFileStream::Open(hlUInt uiMode)
 		this->iFile = -1;
 		return hlFalse;
 	}
+	
+	hlInt fcntlResult = fcntl(this->iFile, F_NOCACHE, 1);
+	
+	if (fcntlResult < 0) {
+		printf("fcntl(this->iFile, F_NOCACHE, 1) returned %d\n", fcntlResult);
+	}
+	
 #endif
 
 	this->uiMode = uiMode;

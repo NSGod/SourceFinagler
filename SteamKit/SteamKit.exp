@@ -1,0 +1,32 @@
+# SteamKit.exp
+# Source Finagler
+#
+# Created by Mark Douma on 3/9/2012.
+# Copyright 2012 Mark Douma LLC. All rights reserved.
+
+
+
+
+.objc_class_name_VSGame
+.objc_class_name_VSSteamManager
+
+
+_VSGameIDKey
+_VSGameSupportsAddonsKey
+_VSGameNameKey
+_VSGameShortNameKey
+_VSGameLongNameKey
+_VSGameCreatorCodeKey
+_VSGameBundleIdentifierKey
+_VSGameInfoPlistKey
+
+_VSResourceNameKey
+_VSGameIconNameKey
+
+_VSSteamAppsDirectoryNameKey
+
+
+_VSSourceAddonFolderNameKey
+_VSSourceAddonErrorDomain
+_VSSourceAddonGameIDKey
+

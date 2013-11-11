@@ -12,8 +12,7 @@
 #ifndef VTFDXTN_H
 #define VTFDXTN_H
 
-#include <VTF/stdafx.h>
-
+#include "stdafx.h"
 
 //-----------------------------------------------------------------------------
 //
@@ -26,45 +25,46 @@
 //-----------------------------------------------------------------------------
 
 // RGBA Pixel type
-typedef struct Colour8888 {
+typedef struct Colour8888
+{
 	vlByte r;		// change the order of names to change the 
 	vlByte g;		// order of the output ARGB or BGRA, etc...
 	vlByte b;		// Last one is MSB, 1st is LSB.
 	vlByte a;
 } Colour8888;
 
-
 // RGB Pixel type
-typedef struct Colour888 {
+typedef struct Colour888
+{
 	vlByte r;		// change the order of names to change the 
 	vlByte g;		// order of the output ARGB or BGRA, etc...
 	vlByte b;		// Last one is MSB, 1st is LSB.
 } Colour888;
 
-
 // BGR565 Pixel type
-typedef struct Colour565 {
+typedef struct Colour565
+{
 	vlUInt nBlue	: 5;		// order of names changes
 	vlUInt nGreen	: 6;		// byte order of output to 32 bit
 	vlUInt nRed		: 5;
 } Colour565;
 
-
 // DXTn Colour block type
-typedef struct DXTColBlock {
+typedef struct DXTColBlock
+{
 	vlShort col0;
 	vlShort col1;
 	vlChar	row[4];		// no bit fields - use bytes
 } DXTColBlock;
 
-
 // DXTn Alpha block types
-typedef struct DXTAlphaBlockExplicit {
+typedef struct DXTAlphaBlockExplicit
+{
 	vlShort row[4];
 } DXTAlphaBlockExplicit;
 
-
-typedef struct DXTAlphaBlock3BitLinear {
+typedef struct DXTAlphaBlock3BitLinear
+{
 	vlChar alpha0;
 	vlChar alpha1;
 	vlChar stuff[6];

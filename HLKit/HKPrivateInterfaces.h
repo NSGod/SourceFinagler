@@ -1,17 +1,20 @@
 //
 //  HKPrivateInterfaces.h
-//  Source Finagler
+//  HLKit
 //
 //  Created by Mark Douma on 12/16/2010.
-//  Copyright 2010 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+
 #import <HL/HL.h>
 
+#import <HLKit/HLKitDefines.h>
 #import <HLKit/HKFolder.h>
 #import <HLKit/HKFile.h>
 #import <HLKit/HKArchiveFile.h>
+
 
 using namespace HLLib;
 
@@ -30,7 +33,8 @@ static const HKArchiveFilePackagePair HKArchiveFilePackagePairTable[] = {
 	{ HKArchiveFileXZPType, HL_PACKAGE_XZP },
 	{ HKArchiveFileZIPType, HL_PACKAGE_ZIP },
 	{ HKArchiveFileNCFType, HL_PACKAGE_NCF },
-	{ HKArchiveFileVPKType, HL_PACKAGE_VPK }
+	{ HKArchiveFileVPKType, HL_PACKAGE_VPK },
+	{ HKArchiveFileVPKType, HL_PACKAGE_SGA }
 };
 static const NSUInteger HKArchiveFilePackagePairTableCount = sizeof(HKArchiveFilePackagePairTable);
 
@@ -42,6 +46,8 @@ static inline HLPackageType HLPackageTypeFromHKArchiveFileType(HKArchiveFileType
 	}
 	return HL_PACKAGE_NONE;
 }
+
+
 
 
 @interface HKFolder (HKPrivateInterfaces)

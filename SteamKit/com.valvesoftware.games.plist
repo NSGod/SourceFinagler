@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>VSGameBundleIdentifiersAndGames</key>
+	<dict>
+		<key>com.garrysmod.GarrysMod</key>
+		<dict>
+			<key>VSGameID</key>
+			<integer>4000</integer>
+			<key>VSGameName</key>
+			<string>garrysmod</string>
+			<key>VSGameShortName</key>
+			<string>hl2</string>
+			<key>VSGameCreatorCode</key>
+			<integer>1196248900</integer>
+			<key>VSGameBundleIdentifier</key>
+			<string>com.garrysmod.GarrysMod</string>
+			<key>VSGameInfoPlist</key>
+			<dict>
+				<key>CFBundleDevelopmentRegion</key>
+				<string>English</string>
+				<key>CFBundleExecutable</key>
+				<string>hl2_osx</string>
+				<key>CFBundleGetInfoString</key>
+				<string>Garry&apos;s Mod, (c) 2010 Garry Newman. All rights reserved.</string>
+				<key>CFBundleIdentifier</key>
+				<string>com.garrysmod.GarrysMod</string>
+				<key>CFBundleInfoDictionaryVersion</key>
+				<string>6.0</string>
+				<key>CFBundleName</key>
+				<string>Garry&apos;s Mod</string>
+				<key>CFBundleDisplayName</key>
+				<string>Garry&apos;s Mod</string>
+				<key>CFBundlePackageType</key>
+				<string>APPL</string>
+				<key>CFBundleShortVersionString</key>
+				<string>1.0</string>
+				<key>CFBundleSignature</key>
+				<string>GMOD</string>
+				<key>CFBundleVersion</key>
+				<string>100</string>
+				<key>NSHumanReadableCopyright</key>
+				<string>Copyright (c) 2010 Garry Newman. All rights reserved.</string>
+			</dict>
+		</dict>
+		<key>com.garrysmod.GarrysMod13Beta</key>
+		<dict>
+			<key>VSGameID</key>
+			<integer>4010</integer>
+			<key>VSGameName</key>
+			<string>garry&apos;s mod beta</string>
+			<key>VSGameShortName</key>
+			<string>hl2</string>
+			<key>VSGameCreatorCode</key>
+			<integer>1196248900</integer>
+			<key>VSGameBundleIdentifier</key>
+			<string>com.garrysmod.GarrysMod13Beta</string>
+			<key>VSGameInfoPlist</key>
+			<dict>
+				<key>CFBundleDevelopmentRegion</key>
+				<string>English</string>
+				<key>CFBundleExecutable</key>
+				<string>hl2_osx</string>
+				<key>CFBundleGetInfoString</key>
+				<string>Garry&apos;s Mod 13 Beta, (c) 2013 Garry Newman. All rights reserved.</string>
+				<key>CFBundleIdentifier</key>
+				<string>com.garrysmod.GarrysMod13Beta</string>
+				<key>CFBundleInfoDictionaryVersion</key>
+				<string>6.0</string>
+				<key>CFBundleName</key>
+				<string>Garry&apos;s Mod 13 Beta</string>
+				<key>CFBundleDisplayName</key>
+				<string>Garry&apos;s Mod 13 Beta</string>
+				<key>CFBundlePackageType</key>
+				<string>APPL</string>
+				<key>CFBundleShortVersionString</key>
+				<string>1.0</string>
+				<key>CFBundleSignature</key>
+				<string>GMDb</string>
+				<key>CFBundleVersion</key>
+				<string>100</string>
+				<key>NSHumanReadableCopyright</key>
+				<string>Copyright (c) 2013 Garry Newman. All rights reserved.</string>
+			</dict>
+		</dict>
+		<key>com.valvesoftware.Portal</key>
+		<dict>
+			<key>VSGameID</key>
+			<integer>400</integer>
+			<key>VSGameName</key>
+			<string>portal</string>
+			<key>VSGameShortName</key>
+			<string>portal</string>
+			<key>VSGameCreatorCode</key>
+			<integer>1146244944</integer>
+			<key>VSGameBundleIdentifier</key>
+			<string>com.valvesoftware.Portal</string>
+			<key>VSGameInfoPlist</key>
+			<dict>
+				<key>CFBundleDevelopmentRegion</key>
+				<string>English</string>
+				<key>CFBundleExecutable</key>
+				<string>hl2_osx</string>
+				<key>CFBundleGetInfoString</key>
+				<string>Portal, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<key>CFBundleIdentifier</key>
+				<string>com.valvesoftware.Portal</string>
+				<key>CFBundleInfoDictionaryVersion</key>
+				<string>6.0</string>
+				<key>CFBundleName</key>
+				<string>Portal</string>
+				<key>CFBundleDisplayName</key>
+				<string>Portal</string>
+				<key>CFBundlePackageType</key>
+				<string>APPL</string>
+				<key>CFBundleShortVersionString</key>
+				<string>1.0</string>
+				<key>CFBundleSignature</key>
+				<string>DROP</string>
+				<key>CFBundleVersion</key>
+				<string>100</string>
+				<key>NSHumanReadableCopyright</key>
+				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+			</dict>
+		</dict>
+		<key>com.valvesoftware.Portal2</key>
+		<dict>
+			<key>VSGameID</key>
+			<integer>620</integer>
+			<key>VSGameName</key>
+			<string>Portal 2</string>
+			<key>VSGameShortName</key>
+			<string>portal2</string>
+			<key>VSGameCreatorCode</key>
+			<integer>1146245170</integer>
+			<key>VSGameBundleIdentifier</key>
+			<string>com.valvesoftware.Portal2</string>
+			<key>VSGameInfoPlist</key>
+			<dict>
+				<key>CFBundleDevelopmentRegion</key>
+				<string>English</string>
+				<key>CFBundleExecutable</key>
+				<string>portal2_osx</string>
+				<key>CFBundleGetInfoString</key>
+				<string>Portal 2, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<key>CFBundleIdentifier</key>
+				<string>com.valvesoftware.Portal2</string>
+				<key>CFBundleInfoDictionaryVersion</key>
+				<string>6.0</string>
+				<key>CFBundleName</key>
+				<string>Portal 2</string>
+				<key>CFBundleDisplayName</key>
+				<string>Portal 2</string>
+				<key>CFBundlePackageType</key>
+				<string>APPL</string>
+				<key>CFBundleShortVersionString</key>
+				<string>1.0</string>
+				<key>CFBundleSignature</key>
+				<string>DRP2</string>
+				<key>CFBundleVersion</key>
+				<string>100</string>
+				<key>NSHumanReadableCopyright</key>
+				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+			</dict>
+		</dict>
+		<key>com.valvesoftware.Half-Life2</key>
+		<dict>
+			<key>VSGameID</key>
+			<integer>220</integer>
+			<key>VSGameName</key>
+			<string>half-life 2</string>
+			<key>VSGameShortName</key>
+			<string>hl2</string>
+			<key>VSGameCreatorCode</key>
+			<integer>1212566578</integer>
+			<key>VSGameBundleIdentifier</key>
+			<string>com.valvesoftware.Half-Life2</string>
+			<key>VSGameInfoPlist</key>
+			<dict>
+				<key>CFBundleDevelopmentRegion</key>
+				<string>English</string>
+				<key>CFBundleExecutable</key>
+				<string>hl2_osx</string>
+				<key>CFBundleGetInfoString</key>
+				<string>Half-Life 2, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<key>CFBundleIdentifier</key>
+				<string>com.valvesoftware.Half-Life2</string>
+				<key>CFBundleInfoDictionaryVersion</key>
+				<string>6.0</string>
+				<key>CFBundleName</key>
+				<string>Half-Life 2</string>
+				<key>CFBundleDisplayName</key>
+				<string>Half-Life 2</string>
+				<key>CFBundlePackageType</key>
+				<string>APPL</string>
+				<key>CFBundleShortVersionString</key>
+				<string>1.0</string>
+				<key>CFBundleSignature</key>
+				<string>HFL2</string>
+				<key>CFBundleVersion</key>
+				<string>100</string>
+				<key>NSHumanReadableCopyright</key>
+				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+			</dict>
+		</dict>
+		<key>com.valvesoftware.Half-Life2-Deathmatch</key>
+		<dict>
+			<key>VSGameID</key>
+			<integer>320</integer>
+			<key>VSGameName</key>
+			<string>half-life 2 deathmatch</string>
+			<key>VSGameShortName</key>
+			<string>hl2</string>
+			<key>VSGameCreatorCode</key>
+			<integer>1212953165</integer>
+			<key>VSGameBundleIdentifier</key>
+			<string>com.valvesoftware.Half-Life2-Deathmatch</string>
+			<key>VSGameInfoPlist</key>
+			<dict>
+				<key>CFBundleDevelopmentRegion</key>
+				<string>English</string>
+				<key>CFBundleExecutable</key>
+				<string>hl2_osx</string>
+				<key>CFBundleGetInfoString</key>
+				<string>Half-Life 2: Deathmatch, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<key>CFBundleIdentifier</key>
+				<string>com.valvesoftware.Half-Life2-Deathmatch</string>
+				<key>CFBundleInfoDictionaryVersion</key>
+				<string>6.0</string>
+				<key>CFBundleName</key>
+				<string>Half-Life 2: Deathmatch</string>
+				<key>CFBundleDisplayName</key>
+				<string>Half-Life 2: Deathmatch</string>
+				<key>CFBundlePackageType</key>
+				<string>APPL</string>
+				<key>CFBundleShortVersionString</key>
+				<string>1.0</string>
+				<key>CFBundleSignature</key>
+				<string>HL2M</string>
+				<key>CFBundleVersion</key>
+				<string>100</string>
+				<key>NSHumanReadableCopyright</key>
+				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+			</dict>
+		</dict>
+		<key>com.valvesoftware.Half-Life2-EpisodeOne</key>
+		<dict>
+			<key>VSGameID</key>
+			<integer>380</integer>
+			<key>VSGameName</key>
+			<string>half-life 2 episode one</string>
+			<key>VSGameShortName</key>
+			<string>hl2</string>
+			<key>VSGameCreatorCode</key>
+			<integer>1212953137</integer>
+			<key>VSGameBundleIdentifier</key>
+			<string>com.valvesoftware.Half-Life2-EpisodeOne</string>
+			<key>VSGameInfoPlist</key>
+			<dict>
+				<key>CFBundleDevelopmentRegion</key>
+				<string>English</string>
+				<key>CFBundleExecutable</key>
+				<string>hl2_osx</string>
+				<key>CFBundleGetInfoString</key>
+				<string>Half-Life 2: Episode One, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<key>CFBundleIdentifier</key>
+				<string>com.valvesoftware.Half-Life2-EpisodeOne</string>
+				<key>CFBundleInfoDictionaryVersion</key>
+				<string>6.0</string>
+				<key>CFBundleName</key>
+				<string>Half-Life 2: Episode One</string>
+				<key>CFBundleDisplayName</key>
+				<string>Half-Life 2: Episode One</string>
+				<key>CFBundlePackageType</key>
+				<string>APPL</string>
+				<key>CFBundleShortVersionString</key>
+				<string>1.0</string>
+				<key>CFBundleSignature</key>
+				<string>HL21</string>
+				<key>CFBundleVersion</key>
+				<string>100</string>
+				<key>NSHumanReadableCopyright</key>
+				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+			</dict>
+		</dict>
+		<key>com.valvesoftware.Half-Life2-EpisodeTwo</key>
+		<dict>
+			<key>VSGameID</key>
+			<integer>420</integer>
+			<key>VSGameName</key>
+			<string>half-life 2 episode two</string>
+			<key>VSGameShortName</key>
+			<string>hl2</string>
+			<key>VSGameCreatorCode</key>
+			<integer>1212953138</integer>
+			<key>VSGameBundleIdentifier</key>
+			<string>com.valvesoftware.Half-Life2-EpisodeTwo</string>
+			<key>VSGameInfoPlist</key>
+			<dict>
+				<key>CFBundleDevelopmentRegion</key>
+				<string>English</string>
+				<key>CFBundleExecutable</key>
+				<string>hl2_osx</string>
+				<key>CFBundleGetInfoString</key>
+				<string>Half-Life 2: Episode Two, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<key>CFBundleIdentifier</key>
+				<string>com.valvesoftware.Half-Life2-EpisodeTwo</string>
+				<key>CFBundleInfoDictionaryVersion</key>
+				<string>6.0</string>
+				<key>CFBundleName</key>
+				<string>Half-Life 2: Episode Two</string>
+				<key>CFBundleDisplayName</key>
+				<string>Half-Life 2: Episode Two</string>
+				<key>CFBundlePackageType</key>
+				<string>APPL</string>
+				<key>CFBundleShortVersionString</key>
+				<string>1.0</string>
+				<key>CFBundleSignature</key>
+				<string>HL22</string>
+				<key>CFBundleVersion</key>
+				<string>100</string>
+				<key>NSHumanReadableCopyright</key>
+				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+			</dict>
+		</dict>
+		<key>com.valvesoftware.TeamFortress2</key>
+		<dict>
+			<key>VSGameID</key>
+			<integer>440</integer>
+			<key>VSGameName</key>
+			<string>team fortress 2</string>
+			<key>VSGameShortName</key>
+			<string>tf</string>
+			<key>VSGameCreatorCode</key>
+			<integer>1413886584</integer>
+			<key>VSGameBundleIdentifier</key>
+			<string>com.valvesoftware.TeamFortress2</string>
+			<key>VSGameInfoPlist</key>
+			<dict>
+				<key>CFBundleDevelopmentRegion</key>
+				<string>English</string>
+				<key>CFBundleExecutable</key>
+				<string>hl2_osx</string>
+				<key>CFBundleGetInfoString</key>
+				<string>Team Fortress 2, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<key>CFBundleIdentifier</key>
+				<string>com.valvesoftware.TeamFortress2</string>
+				<key>CFBundleInfoDictionaryVersion</key>
+				<string>6.0</string>
+				<key>CFBundleName</key>
+				<string>Team Fortress 2</string>
+				<key>CFBundleDisplayName</key>
+				<string>Team Fortress 2</string>
+				<key>CFBundlePackageType</key>
+				<string>APPL</string>
+				<key>CFBundleShortVersionString</key>
+				<string>1.0</string>
+				<key>CFBundleSignature</key>
+				<string>TF2x</string>
+				<key>CFBundleVersion</key>
+				<string>100</string>
+				<key>NSHumanReadableCopyright</key>
+				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+			</dict>
+		</dict>
+		<key>com.valvesoftware.TeamFortress2Beta</key>
+		<dict>
+			<key>VSGameID</key>
+			<integer>520</integer>
+			<key>VSGameName</key>
+			<string>team fortress 2 beta</string>
+			<key>VSGameShortName</key>
+			<string>tf_beta</string>
+			<key>VSGameCreatorCode</key>
+			<integer>1413886562</integer>
+			<key>VSGameBundleIdentifier</key>
+			<string>com.valvesoftware.TeamFortress2Beta</string>
+			<key>VSGameInfoPlist</key>
+			<dict>
+				<key>CFBundleDevelopmentRegion</key>
+				<string>English</string>
+				<key>CFBundleExecutable</key>
+				<string>hl2_osx</string>
+				<key>CFBundleGetInfoString</key>
+				<string>Team Fortress 2 Beta, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<key>CFBundleIdentifier</key>
+				<string>com.valvesoftware.TeamFortress2Beta</string>
+				<key>CFBundleInfoDictionaryVersion</key>
+				<string>6.0</string>
+				<key>CFBundleName</key>
+				<string>Team Fortress 2 Beta</string>
+				<key>CFBundleDisplayName</key>
+				<string>Team Fortress 2 Beta</string>
+				<key>CFBundlePackageType</key>
+				<string>APPL</string>
+				<key>CFBundleShortVersionString</key>
+				<string>1.0</string>
+				<key>CFBundleSignature</key>
+				<string>TF2b</string>
+				<key>CFBundleVersion</key>
+				<string>100</string>
+				<key>NSHumanReadableCopyright</key>
+				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+			</dict>
+		</dict>
+		<key>com.valvesoftware.Left4Dead</key>
+		<dict>
+			<key>VSGameID</key>
+			<integer>500</integer>
+			<key>VSGameSupportsAddons</key>
+			<true/>
+			<key>VSGameName</key>
+			<string>left 4 dead</string>
+			<key>VSGameShortName</key>
+			<string>left4dead</string>
+			<key>VSGameCreatorCode</key>
+			<integer>1278493745</integer>
+			<key>VSGameBundleIdentifier</key>
+			<string>com.valvesoftware.Left4Dead</string>
+			<key>VSGameInfoPlist</key>
+			<dict>
+				<key>CFBundleDevelopmentRegion</key>
+				<string>English</string>
+				<key>CFBundleExecutable</key>
+				<string>hl2_osx</string>
+				<key>CFBundleGetInfoString</key>
+				<string>Left 4 Dead, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<key>CFBundleIdentifier</key>
+				<string>com.valvesoftware.Left4Dead</string>
+				<key>CFBundleInfoDictionaryVersion</key>
+				<string>6.0</string>
+				<key>CFBundleName</key>
+				<string>Left 4 Dead</string>
+				<key>CFBundleDisplayName</key>
+				<string>Left 4 Dead</string>
+				<key>CFBundlePackageType</key>
+				<string>APPL</string>
+				<key>CFBundleShortVersionString</key>
+				<string>1.0</string>
+				<key>CFBundleSignature</key>
+				<string>L4D1</string>
+				<key>CFBundleVersion</key>
+				<string>100</string>
+				<key>NSHumanReadableCopyright</key>
+				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+			</dict>
+		</dict>
+		<key>com.valvesoftware.Left4Dead2</key>
+		<dict>
+			<key>VSGameID</key>
+			<integer>550</integer>
+			<key>VSGameSupportsAddons</key>
+			<true/>
+			<key>VSGameName</key>
+			<string>left 4 dead 2</string>
+			<key>VSGameShortName</key>
+			<string>left4dead2</string>
+			<key>VSGameCreatorCode</key>
+			<integer>1278493746</integer>
+			<key>VSGameBundleIdentifier</key>
+			<string>com.valvesoftware.Left4Dead2</string>
+			<key>VSGameInfoPlist</key>
+			<dict>
+				<key>CFBundleDevelopmentRegion</key>
+				<string>English</string>
+				<key>CFBundleExecutable</key>
+				<string>hl2_osx</string>
+				<key>CFBundleGetInfoString</key>
+				<string>Left 4 Dead 2, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<key>CFBundleIdentifier</key>
+				<string>com.valvesoftware.Left4Dead2</string>
+				<key>CFBundleInfoDictionaryVersion</key>
+				<string>6.0</string>
+				<key>CFBundleName</key>
+				<string>Left 4 Dead 2</string>
+				<key>CFBundleDisplayName</key>
+				<string>Left 4 Dead 2</string>
+				<key>CFBundlePackageType</key>
+				<string>APPL</string>
+				<key>CFBundleShortVersionString</key>
+				<string>1.0</string>
+				<key>CFBundleSignature</key>
+				<string>L4D2</string>
+				<key>CFBundleVersion</key>
+				<string>100</string>
+				<key>NSHumanReadableCopyright</key>
+				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+			</dict>
+		</dict>
+		<key>com.valvesoftware.CounterStrikeSource</key>
+		<dict>
+			<key>VSGameID</key>
+			<integer>240</integer>
+			<key>VSGameName</key>
+			<string>counter-strike source</string>
+			<key>VSGameShortName</key>
+			<string>cstrike</string>
+			<key>VSGameCreatorCode</key>
+			<integer>1129527891</integer>
+			<key>VSGameBundleIdentifier</key>
+			<string>com.valvesoftware.CounterStrikeSource</string>
+			<key>VSGameInfoPlist</key>
+			<dict>
+				<key>CFBundleDevelopmentRegion</key>
+				<string>English</string>
+				<key>CFBundleExecutable</key>
+				<string>hl2_osx</string>
+				<key>CFBundleGetInfoString</key>
+				<string>Counter-Strike: Source, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<key>CFBundleIdentifier</key>
+				<string>com.valvesoftware.CounterStrikeSource</string>
+				<key>CFBundleInfoDictionaryVersion</key>
+				<string>6.0</string>
+				<key>CFBundleName</key>
+				<string>Counter-Strike: Source</string>
+				<key>CFBundleDisplayName</key>
+				<string>Counter-Strike: Source</string>
+				<key>CFBundlePackageType</key>
+				<string>APPL</string>
+				<key>CFBundleShortVersionString</key>
+				<string>1.0</string>
+				<key>CFBundleSignature</key>
+				<string>CS:S</string>
+				<key>CFBundleVersion</key>
+				<string>100</string>
+				<key>NSHumanReadableCopyright</key>
+				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+			</dict>
+		</dict>
+		<key>com.valvesoftware.DayOfDefeatSource</key>
+		<dict>
+			<key>VSGameID</key>
+			<integer>300</integer>
+			<key>VSGameName</key>
+			<string>day of defeat source</string>
+			<key>VSGameShortName</key>
+			<string>dod</string>
+			<key>VSGameCreatorCode</key>
+			<integer>1145322067</integer>
+			<key>VSGameBundleIdentifier</key>
+			<string>com.valvesoftware.DayOfDefeatSource</string>
+			<key>VSGameInfoPlist</key>
+			<dict>
+				<key>CFBundleDevelopmentRegion</key>
+				<string>English</string>
+				<key>CFBundleExecutable</key>
+				<string>hl2_osx</string>
+				<key>CFBundleGetInfoString</key>
+				<string>Day of Defeat: Source, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<key>CFBundleIdentifier</key>
+				<string>com.valvesoftware.DayOfDefeatSource</string>
+				<key>CFBundleInfoDictionaryVersion</key>
+				<string>6.0</string>
+				<key>CFBundleName</key>
+				<string>Day of Defeat: Source</string>
+				<key>CFBundleDisplayName</key>
+				<string>Day of Defeat: Source</string>
+				<key>CFBundlePackageType</key>
+				<string>APPL</string>
+				<key>CFBundleShortVersionString</key>
+				<string>1.0</string>
+				<key>CFBundleSignature</key>
+				<string>DD:S</string>
+				<key>CFBundleVersion</key>
+				<string>100</string>
+				<key>NSHumanReadableCopyright</key>
+				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+			</dict>
+		</dict>
+		<key>com.valvesoftware.CounterStrikeGlobalOffensive</key>
+		<dict>
+			<key>VSGameID</key>
+			<integer>730</integer>
+			<key>VSGameName</key>
+			<string>Counter-Strike Global Offensive</string>
+			<key>VSGameShortName</key>
+			<string>csgo</string>
+			<key>VSGameCreatorCode</key>
+			<integer>1129531215</integer>
+			<key>VSGameBundleIdentifier</key>
+			<string>com.valvesoftware.CounterStrikeGlobalOffensive</string>
+			<key>VSGameInfoPlist</key>
+			<dict>
+				<key>CFBundleDevelopmentRegion</key>
+				<string>English</string>
+				<key>CFBundleExecutable</key>
+				<string>csgo_osx</string>
+				<key>CFBundleGetInfoString</key>
+				<string>Counter-Strike: Global Offensive, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<key>CFBundleIdentifier</key>
+				<string>com.valvesoftware.CounterStrikeGlobalOffensive</string>
+				<key>CFBundleInfoDictionaryVersion</key>
+				<string>6.0</string>
+				<key>CFBundleName</key>
+				<string>Counter-Strike: Global Offensive</string>
+				<key>CFBundleDisplayName</key>
+				<string>Counter-Strike: Global Offensive</string>
+				<key>CFBundlePackageType</key>
+				<string>APPL</string>
+				<key>CFBundleShortVersionString</key>
+				<string>1.0</string>
+				<key>CFBundleSignature</key>
+				<string>CSGO</string>
+				<key>CFBundleVersion</key>
+				<string>100</string>
+				<key>NSHumanReadableCopyright</key>
+				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>VSExecutableNames</key>
+	<array>
+		<string>hl2_osx</string>
+		<string>portal2_osx</string>
+		<string>csgo_osx</string>
+	</array>
+</dict>
+</plist>

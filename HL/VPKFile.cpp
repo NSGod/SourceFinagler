@@ -97,7 +97,19 @@ hlBool CVPKFile::MapDataStructures()
 	}
 	else
 	{
+		if(this->pHeader->uiVersion > 2)
+		{
+			LastError.SetErrorMessageFormated("Invalid VPK version (v%u): you have a version of a VPK file that HLLib does not know how to read. Check for product updates.", this->pHeader->uiVersion);
+			return hlFalse;
+		}
 		lpViewData += sizeof(VPKHeader);
+		switch(this->pHeader->uiVersion)
+		{
+		case 2:
+			// Version two includes 4 more double words.
+			lpViewData += 4 * sizeof(hlUInt);
+			break;
+		}
 		lpViewDirectoryDataEnd = lpViewData + this->pHeader->uiDirectoryLength;
 	}
 
@@ -195,7 +207,7 @@ hlBool CVPKFile::MapDataStructures()
 			memset(this->lpArchives, 0, this->uiArchiveCount * sizeof(VPKArchive));
 			for(hlUInt i = 0; i < this->uiArchiveCount; i++)
 			{
-				hlInt iPrinted = sprintf(lpArchiveNumber, "%0.3u", i);
+				hlInt iPrinted = sprintf(lpArchiveNumber, "%u", i);
 				if(iPrinted > 0)
 				{
 					strcat(lpArchiveNumber + iPrinted, lpExtension);

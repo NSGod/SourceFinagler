@@ -9,47 +9,56 @@
  * version.
  */
 
-#include <VTF/VMTIntegerNode.h>
-
+#include "VMTIntegerNode.h"
 
 using namespace VTFLib::Nodes;
 
-CVMTIntegerNode::CVMTIntegerNode(const vlChar *cName) : CVMTValueNode(cName) {
+CVMTIntegerNode::CVMTIntegerNode(const vlChar *cName) : CVMTValueNode(cName)
+{
 	this->iValue = 0;
 }
 
-CVMTIntegerNode::CVMTIntegerNode(const vlChar *cName, const vlChar *cValue) : CVMTValueNode(cName) {
+CVMTIntegerNode::CVMTIntegerNode(const vlChar *cName, const vlChar *cValue) : CVMTValueNode(cName)
+{
 	this->SetValue(cValue);
 }
 
-CVMTIntegerNode::CVMTIntegerNode(const vlChar *cName, vlInt iValue) : CVMTValueNode(cName) {
+CVMTIntegerNode::CVMTIntegerNode(const vlChar *cName, vlInt iValue) : CVMTValueNode(cName)
+{
 	this->iValue = iValue;
 }
 
-CVMTIntegerNode::CVMTIntegerNode(const CVMTIntegerNode &IntegerNode) : CVMTValueNode(IntegerNode.GetName()) {
+CVMTIntegerNode::CVMTIntegerNode(const CVMTIntegerNode &IntegerNode) : CVMTValueNode(IntegerNode.GetName())
+{
 	this->iValue = IntegerNode.iValue;
 }
 
-CVMTIntegerNode::~CVMTIntegerNode() {
+CVMTIntegerNode::~CVMTIntegerNode()
+{
 
 }
 
-vlVoid CVMTIntegerNode::SetValue(const vlChar *cValue) {
+vlVoid CVMTIntegerNode::SetValue(const vlChar *cValue)
+{
 	this->iValue = atoi(cValue);
 }
 
-vlVoid CVMTIntegerNode::SetValue(vlInt iValue) {
+vlVoid CVMTIntegerNode::SetValue(vlInt iValue)
+{
 	this->iValue = iValue;
 }
 
-const vlInt CVMTIntegerNode::GetValue() const {
+const vlInt CVMTIntegerNode::GetValue() const
+{
 	return this->iValue;
 }
 
-VMTNodeType CVMTIntegerNode::GetType() const {
+VMTNodeType CVMTIntegerNode::GetType() const
+{
 	return NODE_TYPE_INTEGER;
 }
 
-CVMTNode *CVMTIntegerNode::Clone() const {
+CVMTNode *CVMTIntegerNode::Clone() const
+{
 	return new CVMTIntegerNode(*this);
 }

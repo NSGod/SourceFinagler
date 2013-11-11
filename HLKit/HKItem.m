@@ -1,18 +1,23 @@
-/*
-    HKItem.m
-    Copyright (c) 2001-2006, Apple Computer, Inc., all rights reserved.
-    Author: Chuck Pisula
-
-    Milestones:
-    * 03-01-2001: Initial creation by Chuck Pisula
-    * 02-17-2006: Cleaned up the code. Corbin Dunn.
-
-    Generic Tree node structure (TreeNode).
-    
-    TreeNode is a node in a doubly linked tree data structure.  TreeNode's have weak references to their parent (to avoid retain 
-    cycles since parents retain their children).  Each node has 0 or more children and a reference to a piece of node data. The TreeNode provides method to manipulate and extract structural information about a tree.  For instance, TreeNode implements: insertChild:atIndex:, removeChild:, isDescendantOfNode:, and other useful operations on tree nodes.
-    TreeNode provides the structure and common functionality of trees and is expected to be subclassed.
-*/
+//  HKItem.m
+//  HLKit
+//
+//  Created by Mark Douma on 11/20/2009.
+//  Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
+//
+//  Based, in part, on "TreeNode":
+//
+//  Copyright (c) 2001-2006, Apple Computer, Inc., all rights reserved.
+//  Author: Chuck Pisula
+//
+//  Milestones:
+//  * 03-01-2001: Initial creation by Chuck Pisula
+//  * 02-17-2006: Cleaned up the code. Corbin Dunn.
+//
+//  Generic Tree node structure (TreeNode).
+//
+//  TreeNode is a node in a doubly linked tree data structure.  TreeNode's have weak references to their parent (to avoid retain 
+//  cycles since parents retain their children).  Each node has 0 or more children and a reference to a piece of node data. The TreeNode provides method to manipulate and extract structural information about a tree.  For instance, TreeNode implements: insertChildNode:atIndex:, removeChildNode:, isDescendantOfNode:, and other useful operations on tree nodes.
+//  TreeNode provides the structure and common functionality of trees and is expected to be subclassed.
 
 
 #import <HLKit/HKItem.h>
@@ -21,12 +26,74 @@
 
 #define HK_DEBUG 0
 
-NSString * const HKErrorDomain			= @"HKErrorDomain";
-NSString * const HKErrorMessageKey		= @"HKErrorMessage";
+NSString * const HKErrorDomain				= @"HKErrorDomain";
+NSString * const HKErrorMessageKey			= @"HKErrorMessage";
 NSString * const HKSystemErrorMessageKey	= @"HKSystemErrorMessage";
+
+static BOOL iconsInitialized = NO;
+static NSImage *folderImage = nil;
+static NSImage *fileImage = nil;
+static NSMutableDictionary *icons = nil;
+
+static void HKInitializeIcons() {
+	if (iconsInitialized == NO) {
+		icons = [[NSMutableDictionary alloc] init];
+		if (folderImage == nil) {
+			folderImage = [[[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)] retain];
+		}
+		if (fileImage == nil) {
+			fileImage = [[[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericDocumentIcon)] retain];
+		}
+		iconsInitialized = YES;
+	}
+}
 
 
 @implementation HKItem
+
+
++ (void)initialize {
+#if HK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (iconsInitialized == NO) HKInitializeIcons();
+}
+
+
++ (NSImage *)iconForItem:(HKItem *)item {
+#if HK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	NSImage *image = nil;
+	if ([item isLeaf]) {
+		NSString *fileNameExtension = [item nameExtension];
+		if ([fileNameExtension isEqualToString:@""]) {
+			image = fileImage;
+		} else {
+			image = [icons objectForKey:fileNameExtension];
+			if (image == nil) {
+				image = [[NSWorkspace sharedWorkspace] iconForFileType:fileNameExtension];
+				if (image) [icons setObject:image forKey:fileNameExtension];
+			}
+		}
+	} else {
+		return folderImage;
+	}
+	return image;
+}
+
+
+
++ (NSImage *)copiedImageForItem:(HKItem *)anItem {
+#if HK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	NSImage *image = [[self class] iconForItem:anItem];
+	NSImage *copiedImage = [[image copy] autorelease];
+	return copiedImage;
+}
+
+
 
 @synthesize name, nameExtension, kind, size,
 		type, isExtractable, isEncrypted,
@@ -39,13 +106,12 @@ NSString * const HKSystemErrorMessageKey	= @"HKSystemErrorMessage";
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	
-	return [self initWithParent:nil children:nil sortDescriptors:nil container:nil];
+	return [self initWithParent:nil childNodes:nil sortDescriptors:nil container:nil];
 }
 
 
-- (id)initWithParent:(HKNode *)aParent children:(NSArray *)theChildren sortDescriptors:(NSArray *)aSortDescriptors container:(id)aContainer {
-	if ((self = [super initWithParent:aParent children:theChildren sortDescriptors:aSortDescriptors container:aContainer])) {
+- (id)initWithParent:(HKNode *)aParent childNodes:(NSArray *)theChildren sortDescriptors:(NSArray *)aSortDescriptors container:(id)aContainer {
+	if ((self = [super initWithParent:aParent childNodes:theChildren sortDescriptors:aSortDescriptors container:aContainer])) {
 		fileType = HKFileTypeNone;
 	}
 	return self;
@@ -121,9 +187,11 @@ NSString * const HKSystemErrorMessageKey	= @"HKSystemErrorMessage";
 
 
 - (BOOL)writeToFile:(NSString *)aPath assureUniqueFilename:(BOOL)assureUniqueFilename resultingPath:(NSString **)resultingPath error:(NSError **)outError {
-#if HK_DEBUG
-	NSLog(@"[%@ %@] subclasses must implement!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
+	NSLog(@"[%@ %@] (HKItem) subclasses must implement!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSException *exception = [NSException exceptionWithName:NSInternalInconsistencyException
+													 reason:[NSString stringWithFormat:@"[%@ %@] (HKItem) subclasses must implement!", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]
+												   userInfo:nil];
+	[exception raise];
 	return NO;
 }
 
@@ -151,16 +219,20 @@ NSString * const HKSystemErrorMessageKey	= @"HKSystemErrorMessage";
 //	Generates an array of all descendants.
 // -------------------------------------------------------------------------------
 - (NSArray *)descendants {
-#if HK_DEBUG
-	NSLog(@"[%@ %@] subclasses must override!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
+	NSLog(@"[%@ %@] (HKItem) subclasses must override!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSException *exception = [NSException exceptionWithName:NSInternalInconsistencyException
+													 reason:[NSString stringWithFormat:@"[%@ %@] (HKItem) subclasses must implement!", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]
+												   userInfo:nil];
+	[exception raise];
 	return nil;
 }
 
 - (NSArray *)visibleDescendants {
-#if HK_DEBUG
 	NSLog(@"[%@ %@] subclasses must override!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
+	NSException *exception = [NSException exceptionWithName:NSInternalInconsistencyException
+													 reason:[NSString stringWithFormat:@"[%@ %@] (HKItem) subclasses must implement!", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]
+												   userInfo:nil];
+	[exception raise];
 	return nil;
 }
 
@@ -176,13 +248,20 @@ static NSString * const HKFileTypeDescription[] = {
 };
 
 - (NSString *)description {
-	NSMutableString *description = [NSMutableString stringWithString:@"{\n"];
-//	[description appendFormat:@"%@\n\t", [super description]];
-	[description appendFormat:@"\tname == %@\n", name];
-	[description appendFormat:@"\tpath == %@\n", [self path]];
-	if (!isLeaf) [description appendFormat:@"\tshowInvisibleItems == %@\n", (showInvisibleItems ? @"YES" : @"NO")];
-	if (!isLeaf) [description appendFormat:@"\tsortDescriptors == %@\n", sortDescriptors];
-	[description appendFormat:@"}\n"];
+//	NSMutableString *description = [NSMutableString stringWithString:[super description]];
+	NSMutableString *description = [NSMutableString stringWithFormat:@"<%@> %@", NSStringFromClass([self class]), name];
+//	[description appendFormat:@", %@", name];
+//	[description appendFormat:@", %@", [self path]];
+	
+//	NSMutableString *description = [NSMutableString stringWithString:@"{\n"];
+////	[description appendFormat:@"%@\n\t", [super description]];
+//	[description appendFormat:@"\tname == %@\n", name];
+//	[description appendFormat:@"\tpath == %@\n", [self path]];
+////	if (!isLeaf) [description appendFormat:@"\tshowInvisibleItems == %@\n", (showInvisibleItems ? @"YES" : @"NO")];
+////	if (!isLeaf) [description appendFormat:@"\tsortDescriptors == %@\n", sortDescriptors];
+//	[description appendFormat:@"}\n"];
+	
+	
 //	[description appendFormat:@"\n\tnameExtension == %@", nameExtension];
 //	[description appendFormat:@"\n\tkind == %@", kind];
 //	[description appendFormat:@"\n\tsize == %@", size];
@@ -210,12 +289,12 @@ static NSString * const HKFileTypeDescription[] = {
 //		if (node == self) {     // If we are in the root array, return nil
 //			break;
 //		}
-//		if ([[node children] containsObjectIdenticalTo:self]) {
+//		if ([[node childNodes] containsObjectIdenticalTo:self]) {
 //			result = node;
 //			break;
 //		}
 //		if (![node isLeaf]) {
-//			HKItem *innerNode = [self parentFromArray:[node children]];
+//			HKItem *innerNode = [self parentFromArray:[node childNodes]];
 //			if (innerNode) {
 //				result = innerNode;
 //				break;
@@ -242,7 +321,7 @@ static NSString * const HKFileTypeDescription[] = {
 //	NSInteger index;
 //
 //	while (aParent = [doc parentFromArray:array]) {
-//		index = [[aParent children] indexOfObjectIdenticalTo:doc];
+//		index = [[aParent childNodes] indexOfObjectIdenticalTo:doc];
 //		if (index == NSNotFound) {
 //			return nil;
 //		}

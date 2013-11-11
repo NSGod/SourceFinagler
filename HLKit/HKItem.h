@@ -1,12 +1,14 @@
 //
 //  HKItem.h
-//  Source Finagler
+//  HLKit
 //
 //  Created by Mark Douma on 11/20/2009.
-//  Copyright 2009 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKNode.h>
+#import <HLKit/HLKitDefines.h>
+
 
 enum {
 	HKErrorNotExtractable = 1
@@ -25,9 +27,9 @@ enum {
 typedef NSUInteger HKFileType;
 
 
-extern NSString * const HKErrorDomain;
-extern NSString * const HKErrorMessageKey;
-extern NSString * const HKSystemErrorMessageKey;
+HLKIT_EXTERN NSString * const HKErrorDomain;
+HLKIT_EXTERN NSString * const HKErrorMessageKey;
+HLKIT_EXTERN NSString * const HKSystemErrorMessageKey;
 
 
 @interface HKItem : HKNode {
@@ -54,25 +56,28 @@ extern NSString * const HKSystemErrorMessageKey;
 	
 }
 
++ (NSImage *)iconForItem:(HKItem *)anItem;
++ (NSImage *)copiedImageForItem:(HKItem *)anItem;
+
 - (BOOL)writeToFile:(NSString *)aPath assureUniqueFilename:(BOOL)assureUniqueFilename resultingPath:(NSString **)resultingPath error:(NSError **)outError;
 
-@property (retain) NSString *name;
-@property (retain) NSString	*nameExtension;
-@property (retain) NSString *kind;
-@property (retain) NSNumber *size;
+@property (nonatomic, retain) NSString *name;
+@property (nonatomic, retain) NSString *nameExtension;
+@property (nonatomic, retain) NSString *kind;
+@property (nonatomic, retain) NSNumber *size;
 
-@property (retain) NSString *path;
+@property (nonatomic, retain) NSString *path;
 
-@property (retain) NSString *type;
-@property (retain) NSString *dimensions;
-@property (retain) NSString *version;
-@property (retain) NSString *compression;
-@property (retain, setter=setAlpha:) NSString *hasAlpha;
-@property (retain) NSString *hasMipmaps;
+@property (nonatomic, retain) NSString *type;
+@property (nonatomic, retain) NSString *dimensions;
+@property (nonatomic, retain) NSString *version;
+@property (nonatomic, retain) NSString *compression;
+@property (nonatomic, retain, setter=setAlpha:) NSString *hasAlpha;
+@property (nonatomic, retain) NSString *hasMipmaps;
 
-@property (assign, setter=setExtractable:) BOOL isExtractable;
-@property (assign, setter=setEncrypted:) BOOL isEncrypted;
-@property (assign) HKFileType fileType;
+@property (nonatomic, assign, setter=setExtractable:) BOOL isExtractable;
+@property (nonatomic, assign, setter=setEncrypted:) BOOL isEncrypted;
+@property (nonatomic, assign) HKFileType fileType;
 
 
 - (NSString *)pathRelativeToItem:(HKItem *)anItem;

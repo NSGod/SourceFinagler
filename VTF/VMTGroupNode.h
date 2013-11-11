@@ -12,21 +12,23 @@
 #ifndef VMTGROUPNODE_H
 #define VMTGROUPNODE_H
 
-#include <VTF/stdafx.h>
-#include <VTF/VMTNode.h>
-#include <VTF/VMTStringNode.h>
-#include <VTF/VMTIntegerNode.h>
-#include <VTF/VMTSingleNode.h>
+#include "stdafx.h"
+#include "VMTNode.h"
+
+#include "VMTStringNode.h"
+#include "VMTIntegerNode.h"
+#include "VMTSingleNode.h"
 
 #include <list>
 
-namespace VTFLib {
-	
+namespace VTFLib
+{
 	class CVMTFile;
 
-	namespace Nodes {
-		
-		class VTFLIB_API CVMTGroupNode : public CVMTNode {
+	namespace Nodes
+	{
+		class VTFLIB_API CVMTGroupNode : public CVMTNode
+		{
 		//private:
 		//	friend class CVMTFile;	// For direct node addition.
 

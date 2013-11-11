@@ -20,10 +20,10 @@
 #ifndef VTFFILE_H
 #define VTFFILE_H
 
-#include <VTF/stdafx.h>
-#include <VTF/Readers.h>
-#include <VTF/Writers.h>
-#include <VTF/VTFFormat.h>
+#include "stdafx.h"
+#include "Readers.h"
+#include "Writers.h"
+#include "VTFFormat.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -108,12 +108,8 @@ typedef struct tagSVTFCreateOptions
 }
 #endif
 
-namespace nv {
-	class Color32;
-}
 namespace VTFLib
 {
-	
 	//! VTF File access/creation class.
 	/*!
 		The CVTFFile class is the component designed for working with VTF
@@ -757,9 +753,6 @@ namespace VTFLib
 	public:
 		
 		static vlBool ConvertRGBA8888toBGRA8888(vlByte *src, vlByte *dest, vlUInt pixelCount);
-		
-		
-//		static vlByte *CreateBGRADataFromColor32(nv::Color32 *lpImagePixels, vlUInt pixelCount, vlUInt bitsPerPixel, vlUInt &length);
 		
 	};
 }

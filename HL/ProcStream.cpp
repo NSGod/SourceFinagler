@@ -153,22 +153,13 @@ hlBool CProcStream::Read(hlChar &cChar)
 		return hlFalse;
 	}
 
-	if (pReadExProc == 0 && pReadProc == 0)
+	if (pReadProc == 0)
 	{
 		LastError.SetErrorMessage("pReadProc not set.");
 		return hlFalse;
 	}
 
-	hlULongLong ullBytesRead = 0;
-
-	if(pReadExProc != 0)
-	{
-		ullBytesRead = pReadExProc(&cChar, 1, this->pUserData);
-	}
-	else if (pReadProc != 0)
-	{
-		ullBytesRead = pReadProc(&cChar, 1, this->pUserData);
-	}
+	hlULongLong ullBytesRead = pReadProc(&cChar, 1, this->pUserData);
 	
 	if(ullBytesRead == 0)
 	{
@@ -191,7 +182,7 @@ hlULongLong CProcStream::Read(hlVoid *lpData, hlULongLong ullBytes)
 		return 0;
 	}
 
-	if(pReadExProc == 0 && pReadProc == 0)
+	if(pReadProc == 0)
 	{
 		LastError.SetErrorMessage("pReadProc not set.");
 		return 0;
@@ -220,7 +211,7 @@ hlBool CProcStream::Write(hlChar cChar)
 		return hlFalse;
 	}
 
-	if(pWriteExProc == 0 && pWriteProc == 0)
+	if(pWriteProc == 0)
 	{
 		LastError.SetErrorMessage("pWriteProc not set.");
 		return hlFalse;
@@ -249,7 +240,7 @@ hlULongLong CProcStream::Write(const hlVoid *lpData, hlULongLong ullBytes)
 		return 0;
 	}
 
-	if(pWriteExProc == 0 && pWriteProc == 0)
+	if(pWriteProc == 0)
 	{
 		LastError.SetErrorMessage("pWriteProc not set.");
 		return 0;

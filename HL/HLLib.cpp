@@ -21,9 +21,7 @@ namespace HLLib
 	POpenProc pOpenProc = 0;
 	PCloseProc pCloseProc = 0;
 	PReadProc pReadProc = 0;
-	PReadExProc pReadExProc = 0;
 	PWriteProc pWriteProc = 0;
-	PWriteExProc pWriteExProc = 0;
 	PSeekProc pSeekProc = 0;
 	PSeekExProc pSeekExProc = 0;
 	PTellProc pTellProc = 0;
@@ -34,9 +32,7 @@ namespace HLLib
 	PExtractItemStartProc pExtractItemStartProc = 0;
 	PExtractItemEndProc pExtractItemEndProc = 0;
 	PExtractFileProgressProc pExtractFileProgressProc = 0;
-	PExtractFileProgressExProc pExtractFileProgressExProc = 0;
 	PValidateFileProgressProc pValidateFileProgressProc = 0;
-	PValidateFileProgressExProc pValidateFileProgressExProc = 0;
 	PDefragmentProgressProc pDefragmentProgressProc = 0;
 	PDefragmentProgressExProc pDefragmentProgressExProc = 0;
 
@@ -69,10 +65,6 @@ namespace HLLib
 		{
 			pExtractFileProgressProc(pFile, static_cast<hlUInt>(ullBytesExtracted), static_cast<hlUInt>(ullBytesTotal), pCancel);
 		}
-		if(pExtractFileProgressExProc)
-		{
-			pExtractFileProgressExProc(pFile, ullBytesExtracted, ullBytesTotal, pCancel);
-		}
 	}
 
 	hlVoid hlValidateFileProgress(const HLDirectoryItem *pFile, hlULongLong ullBytesValidated, hlULongLong ullBytesTotal, hlBool *pCancel)
@@ -80,10 +72,6 @@ namespace HLLib
 		if(pValidateFileProgressProc)
 		{
 			pValidateFileProgressProc(pFile, static_cast<hlUInt>(ullBytesValidated), static_cast<hlUInt>(ullBytesTotal), pCancel);
-		}
-		if(pValidateFileProgressExProc)
-		{
-			pValidateFileProgressExProc(pFile, ullBytesValidated, ullBytesTotal, pCancel);
 		}
 	}
 
@@ -449,14 +437,8 @@ HLLIB_API hlBool hlGetVoidValidate(HLOption eOption, const hlVoid **pValue)
 	case HL_PROC_READ:
 		*pValue = (const hlVoid *)pReadProc;
 		return hlTrue;
-	case HL_PROC_READ_EX:
-		*pValue = (const hlVoid *)pReadExProc;
-		return hlTrue;
 	case HL_PROC_WRITE:
 		*pValue = (const hlVoid *)pWriteProc;
-		return hlTrue;
-	case HL_PROC_WRITE_EX:
-		*pValue = (const hlVoid *)pWriteExProc;
 		return hlTrue;
 	case HL_PROC_SEEK:
 		*pValue = (const hlVoid *)pSeekProc;
@@ -485,14 +467,8 @@ HLLIB_API hlBool hlGetVoidValidate(HLOption eOption, const hlVoid **pValue)
 	case HL_PROC_EXTRACT_FILE_PROGRESS:
 		*pValue = (const hlVoid *)pExtractFileProgressProc;
 		return hlTrue;
-	case HL_PROC_EXTRACT_FILE_PROGRESS_EX:
-		*pValue = (const hlVoid *)pExtractFileProgressExProc;
-		return hlTrue;
 	case HL_PROC_VALIDATE_FILE_PROGRESS:
 		*pValue = (const hlVoid *)pValidateFileProgressProc;
-		return hlTrue;
-	case HL_PROC_VALIDATE_FILE_PROGRESS_EX:
-		*pValue = (const hlVoid *)pValidateFileProgressExProc;
 		return hlTrue;
 	case HL_PROC_DEFRAGMENT_PROGRESS:
 		*pValue = (const hlVoid *)pDefragmentProgressProc;
@@ -518,14 +494,8 @@ HLLIB_API hlVoid hlSetVoid(HLOption eOption, const hlVoid *pValue)
 	case HL_PROC_READ:
 		pReadProc = (PReadProc)pValue;
 		break;
-	case HL_PROC_READ_EX:
-		pReadExProc = (PReadExProc)pValue;
-		break;
 	case HL_PROC_WRITE:
 		pWriteProc = (PWriteProc)pValue;
-		break;
-	case HL_PROC_WRITE_EX:
-		pWriteExProc = (PWriteExProc)pValue;
 		break;
 	case HL_PROC_SEEK:
 		pSeekProc = (PSeekProc)pValue;
@@ -554,14 +524,8 @@ HLLIB_API hlVoid hlSetVoid(HLOption eOption, const hlVoid *pValue)
 	case HL_PROC_EXTRACT_FILE_PROGRESS:
 		pExtractFileProgressProc = (PExtractFileProgressProc)pValue;
 		break;
-	case HL_PROC_EXTRACT_FILE_PROGRESS_EX:
-		pExtractFileProgressExProc = (PExtractFileProgressExProc)pValue;
-		break;
 	case HL_PROC_VALIDATE_FILE_PROGRESS:
 		pValidateFileProgressProc = (PValidateFileProgressProc)pValue;
-		break;
-	case HL_PROC_VALIDATE_FILE_PROGRESS_EX:
-		pValidateFileProgressExProc = (PValidateFileProgressExProc)pValue;
 		break;
 	case HL_PROC_DEFRAGMENT_PROGRESS:
 		pDefragmentProgressProc = (PDefragmentProgressProc)pValue;

@@ -3,10 +3,10 @@
 //  HL.framework
 //
 //  Created by Mark Douma on 8/30/2010.
-//  Copyright (c) 2010-2011 Mark Douma
+//  Copyright (c) 2010-2013 Mark Douma
 //
 //	HLLib
-//	Copyright (c) 2006-2011 Ryan Gregg
+//	Copyright (c) 2006-2013 Ryan Gregg
 
 //	This library is free software; you can redistribute it and/or
 //	modify it under the terms of the GNU Lesser General Public

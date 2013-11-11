@@ -1,9 +1,9 @@
 //
 //  HKFolder.mm
-//  Source Finagler
+//  HLKit
 //
 //  Created by Mark Douma on 9/1/2010.
-//  Copyright 2010 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKFolder.h>
@@ -17,10 +17,13 @@ using namespace HLLib;
 
 #define HK_DEBUG 0
 
+#define HK_LAZY_INIT 1
+
+
+
 @interface HKFolder (Private)
 - (void)populateChildrenIfNeeded;
 @end
-
 
 
 @implementation HKFolder
@@ -30,54 +33,105 @@ using namespace HLLib;
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if ((self = [super initWithParent:aParent children:nil sortDescriptors:aSortDescriptors container:aContainer])) {
+	if ((self = [super initWithParent:aParent childNodes:nil sortDescriptors:aSortDescriptors container:aContainer])) {
 		_privateData = aFolder;
-		const hlChar *cName = static_cast<const CDirectoryFolder *>(_privateData)->GetName();
-		if (cName) name = [[NSString stringWithCString:cName encoding:NSUTF8StringEncoding] retain];
-		nameExtension = [[name pathExtension] retain];
-		kind = [NSLocalizedString(@"Folder", @"") retain];
 		isLeaf = NO;
 		isExtractable = YES;
 		isVisible = YES;
 		size = [[NSNumber numberWithLongLong:-1] retain];
-		countOfVisibleChildren = NSNotFound;
-		fileType = HKFileTypeOther;
+		countOfVisibleChildNodes = NSNotFound;
 		[self setShowInvisibleItems:showInvisibles];
 		
+#if !(HK_LAZY_INIT)
+		const hlChar *cName = static_cast<const CDirectoryFolder *>(_privateData)->GetName();
+		if (cName) name = [[NSString stringWithCString:cName encoding:NSUTF8StringEncoding] retain];
+		nameExtension = [[name pathExtension] retain];
+		kind = [NSLocalizedString(@"Folder", @"") retain];
+		fileType = HKFileTypeOther;
+#endif
 	}
 	return self;
 }
 
+#if (HK_LAZY_INIT)
+
+- (NSString *)name {
+#if HK_DEBUG
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (name == nil) {
+		const hlChar *cName = static_cast<const CDirectoryFile *>(_privateData)->GetName();
+		if (cName) name = [[NSString stringWithCString:cName encoding:NSUTF8StringEncoding] retain];
+	}
+	return name;
+}
+
+- (NSString *)nameExtension {
+#if HK_DEBUG
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (nameExtension == nil) nameExtension = [[[self name] pathExtension] retain];
+	return nameExtension;
+}
+
+//- (NSString *)type {
+//#if HK_DEBUG
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//#endif
+//	if (type == nil) {
+//		type = (NSString *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (CFStringRef)[self nameExtension], NULL);
+//	}
+//	return type;
+//}
+
+- (NSString *)kind {
+#if HK_DEBUG
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (kind == nil) kind = [NSLocalizedString(@"Folder", @"") retain];
+	return kind;
+}
 
 
-- (NSUInteger)countOfChildren {
+- (HKFileType)fileType {
+#if HK_DEBUG
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (fileType == HKFileTypeNone) fileType = HKFileTypeOther;
+	return fileType;
+}
+
+#endif
+
+
+- (NSUInteger)countOfChildNodes {
 	return (NSUInteger)static_cast<const CDirectoryFolder *>(_privateData)->GetCount();
 }
 
-- (NSUInteger)countOfVisibleChildren {
-	if (countOfVisibleChildren == NSNotFound) {
-		countOfVisibleChildren = 0;
+- (NSUInteger)countOfVisibleChildNodes {
+	if (countOfVisibleChildNodes == NSNotFound) {
+		countOfVisibleChildNodes = 0;
 		NSUInteger numChildren = static_cast<const CDirectoryFolder *>(_privateData)->GetCount();
 		for (NSUInteger i = 0; i < numChildren; i++) {
 			CDirectoryItem *item = static_cast<CDirectoryFolder *>(_privateData)->GetItem(i);
 			HLDirectoryItemType itemType = item->GetType();
 			if (itemType == HL_ITEM_FOLDER) {
-				countOfVisibleChildren++;
+				countOfVisibleChildNodes++;
 			} else if (itemType == HL_ITEM_FILE) {
 				if (static_cast<const CDirectoryFile *>(item)->GetExtractable()) {
-					countOfVisibleChildren++;
+					countOfVisibleChildNodes++;
 				}
 			}
 		}
 	}
-	return countOfVisibleChildren;
+	return countOfVisibleChildNodes;
 }
 
 - (void)populateChildrenIfNeeded {
 #if HK_DEBUG
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (children == nil && visibleChildren == nil) {
+	if (childNodes == nil && visibleChildNodes == nil) {
 		[self initializeChildrenIfNeeded];
 		
 		NSMutableArray *tempChildren = [[NSMutableArray alloc] init];
@@ -100,7 +154,7 @@ using namespace HLLib;
 				[child release];
 			}
 		}
-		[self insertChildren:tempChildren atIndex:0];
+		[self insertChildNodes:tempChildren atIndex:0];
 		[tempChildren release];
 	}
 }
@@ -114,10 +168,7 @@ using namespace HLLib;
 	
 	[self populateChildrenIfNeeded];
 	
-	NSString *targetName = nil;
-	NSString *remainingPath = nil;
 	NSArray *pathComponents = [aPath pathComponents];
-	
 	
 	NSMutableArray *revisedPathComponents = [NSMutableArray array];
 	
@@ -137,10 +188,12 @@ using namespace HLLib;
 	
 	if (count == 0) return nil;
 	
-	targetName = [revisedPathComponents objectAtIndex:0];
+	NSString *targetName = [revisedPathComponents objectAtIndex:0];
+	NSString *remainingPath = nil;
+	
 	if (count > 1) remainingPath = [NSString pathWithComponents:[revisedPathComponents subarrayWithRange:NSMakeRange(1, (count - 1))]];
 	
-	for (HKItem *child in children) {
+	for (HKItem *child in childNodes) {
 		if ([[child name] isEqualToString:targetName]) {
 			if (remainingPath == nil) {
 				return child;
@@ -151,6 +204,7 @@ using namespace HLLib;
 			return [(HKFolder *)child descendantAtPath:remainingPath];
 		}
 	}
+	
 	return nil;
 }
 
@@ -163,31 +217,33 @@ using namespace HLLib;
 	
 	NSMutableArray  *descendants = [[NSMutableArray alloc] init];
 	
-	for (HKItem *node in children) {
+	for (HKItem *node in childNodes) {
 		[descendants addObject:node];
 		
 		if (![node isLeaf]) {
 			[descendants addObjectsFromArray:[node descendants]];   // Recursive - will go down the chain to get all
 		}
 	}
+
 	return [descendants autorelease];
 }
 
 
 - (NSArray *)visibleDescendants {
 #if HK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[self populateChildrenIfNeeded];
 	
 	NSMutableArray *visibleDescendants = [[NSMutableArray alloc] init];
 	
-	for (HKItem *node in visibleChildren) {
+	for (HKItem *node in visibleChildNodes) {
 		[visibleDescendants addObject:node];
 		if (![node isLeaf]) {
 			[visibleDescendants addObjectsFromArray:[node visibleDescendants]];	// Recursive - will go down the chain to get all
 		}
 	}
+	
 	return [visibleDescendants autorelease];
 }
 
@@ -196,53 +252,52 @@ using namespace HLLib;
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	NSMutableDictionary *visibleDescendantsAndPaths = [NSMutableDictionary dictionary];
+	NSMutableDictionary *visibleDescendantsAndPaths = [[NSMutableDictionary alloc] init];
 	
-	NSArray *visibleDecendants = [self visibleDescendants];
+	NSArray *visibleDescendants = [self visibleDescendants];
 	
-	for (HKItem *item in visibleDecendants) {
+	for (HKItem *item in visibleDescendants) {
 		NSString *itemPath = [item pathRelativeToItem:parentItem];
 		if (itemPath) {
 			[visibleDescendantsAndPaths setObject:item forKey:itemPath];
 		}
 	}
-	
-	return visibleDescendantsAndPaths;
+	return [visibleDescendantsAndPaths autorelease];
 }
 
 
-- (HKNode *)childAtIndex:(NSUInteger)index {
+- (HKNode *)childNodeAtIndex:(NSUInteger)index {
 	[self populateChildrenIfNeeded];
-	return [super childAtIndex:index];
+	return [super childNodeAtIndex:index];
 }
 
-- (HKNode *)visibleChildAtIndex:(NSUInteger)index {
+- (HKNode *)visibleChildNodeAtIndex:(NSUInteger)index {
 #if HK_DEBUG
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[self populateChildrenIfNeeded];
-	return [super visibleChildAtIndex:index];
+	return [super visibleChildNodeAtIndex:index];
 }
 
-- (NSArray *)children {
+- (NSArray *)childNodes {
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[self populateChildrenIfNeeded];
-    return [[children copy] autorelease];
+    return [[childNodes copy] autorelease];
 }
 
 
-- (NSArray *)visibleChildren {
+- (NSArray *)visibleChildNodes {
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[self populateChildrenIfNeeded];
-	return [[visibleChildren copy] autorelease];
+	return [[visibleChildNodes copy] autorelease];
 }
 
 
-- (BOOL)writeToFile:(NSString *)aPath assureUniqueFilename:(BOOL)assureUniqueFilename tag:(NSInteger)tag  resultingPath:(NSString **)resultingPath error:(NSError **)outError {
+- (BOOL)writeToFile:(NSString *)aPath assureUniqueFilename:(BOOL)assureUniqueFilename resultingPath:(NSString **)resultingPath error:(NSError **)outError {
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif

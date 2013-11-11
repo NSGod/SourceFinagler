@@ -1,9 +1,9 @@
 //
 //  HKGCFFile.mm
-//  Source Finagler
+//  HLKit
 //
 //  Created by Mark Douma on 10/27/2010.
-//  Copyright 2010 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKGCFFile.h>
@@ -16,7 +16,12 @@
 
 @implementation HKGCFFile
 
-@synthesize packageID, blockSize, totalBlockCount, usedBlockCount, freeBlockCount, lastVersionPlayed;
+@synthesize packageID;
+@synthesize blockSize;
+@synthesize totalBlockCount;
+@synthesize usedBlockCount;
+@synthesize freeBlockCount;
+@synthesize lastVersionPlayed;
 
 
 - (id)initWithContentsOfFile:(NSString *)aPath mode:(HLFileMode)permission showInvisibleItems:(BOOL)showInvisibleItems sortDescriptors:(NSArray *)sortDescriptors error:(NSError **)outError {
@@ -43,7 +48,7 @@
 					
 					
 					if (static_cast<CGCFFile *>(_privateData)->GetAttribute(HL_GCF_PACKAGE_VERSION, versionAttr)) {
-						version = [[NSString stringWithFormat:@"1.%lu", versionAttr.Value.UnsignedInteger.uiValue] retain];
+						version = [[NSString stringWithFormat:@"1.%lu", (unsigned long)versionAttr.Value.UnsignedInteger.uiValue] retain];
 					}
 					if (static_cast<CGCFFile *>(_privateData)->GetAttribute(HL_GCF_PACKAGE_ID, packageIDAttr)) {
 						packageID = (NSUInteger)packageIDAttr.Value.UnsignedInteger.uiValue;
@@ -85,11 +90,11 @@
 - (NSString *)description {
 	NSMutableString *description = [NSMutableString stringWithString:@""];
 	[description appendFormat:@"\tfilePath == %@\n", filePath];
-	[description appendFormat:@"\tpackageID == %lu\n", packageID];
-	[description appendFormat:@"\tblockSize == %lu\n", blockSize];
-	[description appendFormat:@"\ttotalBlockCount == %lu\n", totalBlockCount];
-	[description appendFormat:@"\tusedBlockCount == %lu\n", usedBlockCount];
-	[description appendFormat:@"\tlastVersionPlayed == %lu\n", lastVersionPlayed];
+	[description appendFormat:@"\tpackageID == %lu\n", (unsigned long)packageID];
+	[description appendFormat:@"\tblockSize == %lu\n", (unsigned long)blockSize];
+	[description appendFormat:@"\ttotalBlockCount == %lu\n", (unsigned long)totalBlockCount];
+	[description appendFormat:@"\tusedBlockCount == %lu\n", (unsigned long)usedBlockCount];
+	[description appendFormat:@"\tlastVersionPlayed == %lu\n", (unsigned long)lastVersionPlayed];
 	return [NSString stringWithFormat:@"%@", description];
 }
 

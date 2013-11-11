@@ -1,6 +1,6 @@
 /*
  * HLLib
- * Copyright (C) 2006-2010 Ryan Gregg
+ * Copyright (C) 2006-2012 Ryan Gregg
 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -28,6 +28,11 @@
 
 typedef unsigned char		hlBool;
 typedef char				hlChar;
+#ifdef __cplusplus
+typedef wchar_t				hlWChar;
+#else
+typedef unsigned short		hlWChar;
+#endif
 typedef unsigned char		hlByte;
 typedef signed short		hlShort;
 typedef unsigned short		hlUShort;
@@ -60,8 +65,8 @@ typedef hlSingle		hlFloat;
 #define hlFalse			0
 #define hlTrue			1
 
-#define HL_VERSION_NUMBER	((2 << 24) | (4 << 16) | (2 << 8) | 0)
-#define HL_VERSION_STRING	"2.4.2"
+#define HL_VERSION_NUMBER	((2 << 24) | (4 << 16) | (3 << 8) | 0)
+#define HL_VERSION_STRING	"2.4.3"
 
 #define HL_ID_INVALID 0xffffffff
 
@@ -89,9 +94,7 @@ enum {
 	HL_PROC_EXTRACT_ITEM_START,
 	HL_PROC_EXTRACT_ITEM_END,
 	HL_PROC_EXTRACT_FILE_PROGRESS,
-	HL_PROC_EXTRACT_FILE_PROGRESS_EX,
 	HL_PROC_VALIDATE_FILE_PROGRESS,
-	HL_PROC_VALIDATE_FILE_PROGRESS_EX,
 	HL_OVERWRITE_FILES,
 	HL_PACKAGE_BOUND,
 	HL_PACKAGE_ID,
@@ -103,8 +106,6 @@ enum {
 	HL_FORCE_DEFRAGMENT,
 	HL_PROC_DEFRAGMENT_PROGRESS,
 	HL_PROC_DEFRAGMENT_PROGRESS_EX,
-	HL_PROC_READ_EX,
-	HL_PROC_WRITE_EX,
 	HL_PROC_SEEK_EX,
 	HL_PROC_TELL_EX,
 	HL_PROC_SIZE_EX
@@ -194,7 +195,8 @@ enum {
 	HL_PACKAGE_XZP,
 	HL_PACKAGE_ZIP,
 	HL_PACKAGE_NCF,
-	HL_PACKAGE_VPK
+	HL_PACKAGE_VPK,
+	HL_PACKAGE_SGA
 };
 typedef hlUInt HLPackageType;
 
@@ -245,6 +247,19 @@ enum {
 
 	HL_PAK_PACKAGE_COUNT = 0,
 	HL_PAK_ITEM_COUNT = 0,
+
+	HL_SGA_PACKAGE_VERSION_MAJOR = 0,
+	HL_SGA_PACKAGE_VERSION_MINOR,
+	HL_SGA_PACKAGE_MD5_FILE,
+	HL_SGA_PACKAGE_NAME,
+	HL_SGA_PACKAGE_MD5_HEADER,
+	HL_SGA_PACKAGE_COUNT,
+	HL_SGA_ITEM_SECTION_ALIAS = 0,
+	HL_SGA_ITEM_SECTION_NAME,
+	HL_SGA_ITEM_MODIFIED,
+	HL_SGA_ITEM_TYPE,
+	HL_SGA_ITEM_CRC,
+	HL_SGA_ITEM_COUNT,
 
 	HL_VBSP_PACKAGE_VERSION = 0,
 	HL_VBSP_PACKAGE_MAP_REVISION,
@@ -311,29 +326,31 @@ enum {
 };
 typedef hlUInt HLValidation;
 
-
-typedef struct {
+typedef struct
+{
 	HLAttributeType eAttributeType;
 	hlChar lpName[252];
-	union {
-		struct {
+	union
+	{
+		struct
+		{
 			hlBool bValue;
 		} Boolean;
-		
-		struct {
+		struct
+		{
 			hlInt iValue;
 		} Integer;
-		
-		struct {
+		struct
+		{
 			hlUInt uiValue;
 			hlBool bHexadecimal;
 		} UnsignedInteger;
-		
-		struct {
+		struct
+		{
 			hlFloat fValue;
 		} Float;
-		
-		struct {
+		struct
+		{
 			hlChar lpValue[256];
 		} String;
 	} Value;
@@ -347,9 +364,7 @@ typedef hlVoid HLStream;
 typedef hlBool (*POpenProc) (hlUInt, hlVoid *);
 typedef hlVoid (*PCloseProc)(hlVoid *);
 typedef hlUInt (*PReadProc)  (hlVoid *, hlUInt, hlVoid *);
-typedef hlULongLong (*PReadExProc)  (hlVoid *, hlULongLong, hlVoid *);
 typedef hlUInt (*PWriteProc)  (const hlVoid *, hlUInt, hlVoid *);
-typedef hlULongLong (*PWriteExProc)  (const hlVoid *, hlULongLong, hlVoid *);
 typedef hlUInt (*PSeekProc) (hlLongLong, HLSeekMode, hlVoid *);
 typedef hlULongLong (*PSeekExProc) (hlLongLong, HLSeekMode, hlVoid *);
 typedef hlUInt (*PTellProc) (hlVoid *);
@@ -360,9 +375,7 @@ typedef hlULongLong (*PSizeExProc) (hlVoid *);
 typedef hlVoid (*PExtractItemStartProc) (const HLDirectoryItem *pItem);
 typedef hlVoid (*PExtractItemEndProc) (const HLDirectoryItem *pItem, hlBool bSuccess);
 typedef hlVoid (*PExtractFileProgressProc) (const HLDirectoryItem *pFile, hlUInt uiBytesExtracted, hlUInt uiBytesTotal, hlBool *pCancel);
-typedef hlVoid (*PExtractFileProgressExProc) (const HLDirectoryItem *pFile, hlULongLong ullBytesExtracted, hlULongLong ullBytesTotal, hlBool *pCancel);
 typedef hlVoid (*PValidateFileProgressProc) (const HLDirectoryItem *pFile, hlUInt uiBytesValidated, hlUInt uiBytesTotal, hlBool *pCancel);
-typedef hlVoid (*PValidateFileProgressExProc) (const HLDirectoryItem *pFile, hlULongLong ullBytesValidated, hlULongLong ullBytesTotal, hlBool *pCancel);
 typedef hlVoid (*PDefragmentProgressProc) (const HLDirectoryItem *pFile, hlUInt uiFilesDefragmented, hlUInt uiFilesTotal, hlUInt uiBytesDefragmented, hlUInt uiBytesTotal, hlBool *pCancel);
 typedef hlVoid (*PDefragmentProgressExProc) (const HLDirectoryItem *pFile, hlUInt uiFilesDefragmented, hlUInt uiFilesTotal, hlULongLong uiBytesDefragmented, hlULongLong uiBytesTotal, hlBool *pCancel);
 
@@ -396,36 +409,38 @@ typedef hlVoid (*PDefragmentProgressExProc) (const HLDirectoryItem *pFile, hlUIn
 #		define O_RANDOM 0
 #	endif
 
-// http://www.gamedev.net/reference/articles/article1966.asp
+	// http://www.gamedev.net/reference/articles/article1966.asp
+	typedef struct tagBITMAPINFOHEADER
+	{
+		unsigned int	biSize;
+		unsigned long	biWidth;
+		unsigned long	biHeight;
+		unsigned short	biPlanes;
+		unsigned short	biBitCount;
+		unsigned int	biCompression;
+		unsigned int	biSizeImage;
+		unsigned long	biXPelsPerMeter;
+		unsigned long	biYPelsPerMeter;
+		unsigned int	biClrUsed;
+		unsigned int	biClrImportant;
+	} BITMAPINFOHEADER;
 
-typedef struct tagBITMAPINFOHEADER {
-	unsigned int	biSize;
-	unsigned long	biWidth;
-	unsigned long	biHeight;
-	unsigned short	biPlanes;
-	unsigned short	biBitCount;
-	unsigned int	biCompression;
-	unsigned int	biSizeImage;
-	unsigned long	biXPelsPerMeter;
-	unsigned long	biYPelsPerMeter;
-	unsigned int	biClrUsed;
-	unsigned int	biClrImportant;
-} BITMAPINFOHEADER;
+	typedef struct tagBITMAPFILEHEADER
+	{ 
+		unsigned short	bfType;
+		unsigned int	bfSize;
+		unsigned short	bfReserved1;
+		unsigned short	bfReserved2;
+		unsigned int	bfOffBits;
+	} BITMAPFILEHEADER;
 
-typedef struct tagBITMAPFILEHEADER { 
-	unsigned short	bfType;
-	unsigned int	bfSize;
-	unsigned short	bfReserved1;
-	unsigned short	bfReserved2;
-	unsigned int	bfOffBits;
-} BITMAPFILEHEADER;
-
-typedef struct tagRGBQUAD {
-	unsigned char	rgbBlue;
-	unsigned char	rgbGreen;
-	unsigned char	rgbRed;
-	unsigned char	rgbReserved;
-} RGBQUAD;
+	typedef struct tagRGBQUAD
+	{
+		unsigned char	rgbBlue;
+		unsigned char	rgbGreen;
+		unsigned char	rgbRed;
+		unsigned char	rgbReserved;
+	} RGBQUAD;
 #endif
 
 #include <assert.h>

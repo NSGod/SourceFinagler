@@ -3,7 +3,7 @@
 //  HKFoundationAdditions
 //
 //  Created by Mark Douma on 12/03/2007.
-//  Copyright (c) 2007-2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2007-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

@@ -12,17 +12,17 @@
 #ifndef MEMORYREADER_H
 #define MEMORYREADER_H
 
-#include <VTF/stdafx.h>
-#include <VTF/Reader.h>
+#include "stdafx.h"
+#include "Reader.h"
 
-
-namespace VTFLib {
-	
-	namespace IO {
-		
-		namespace Readers {
-			
-			class CMemoryReader : public IReader {
+namespace VTFLib
+{
+	namespace IO
+	{
+		namespace Readers
+		{
+			class CMemoryReader : public IReader
+			{
 			private:
 				vlBool bOpened;
 

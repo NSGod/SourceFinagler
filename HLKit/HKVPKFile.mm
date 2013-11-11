@@ -1,9 +1,9 @@
 //
 //  HKVPKFile.mm
-//  Source Finagler
+//  HLKit
 //
 //  Created by Mark Douma on 10/27/2010.
-//  Copyright 2010 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import "HKVPKFile.h"
@@ -14,9 +14,6 @@
 
 using namespace HLLib;
 
-
-NSString * const VSAddonInfoNameKey = @"addoninfo.txt";
-NSString * const VSAddonSteamAppIDKey = @"addonSteamAppID";
 
 #define HK_DEBUG 0
 
@@ -68,7 +65,7 @@ NSString * const VSAddonSteamAppIDKey = @"addonSteamAppID";
 - (NSString *)description {
 	NSMutableString *description = [NSMutableString stringWithString:@""];
 	[description appendFormat:@"\tfilePath == %@\n", filePath];
-	[description appendFormat:@"\tarchiveCount== %lu\n", archiveCount];
+	[description appendFormat:@"\tarchiveCount== %lu\n", (unsigned long)archiveCount];
 	return [NSString stringWithFormat:@"%@", description];
 }
 

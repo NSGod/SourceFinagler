@@ -1,0 +1,54 @@
+# TextureKit.exp
+# Texture Finagler
+#
+# Created by Mark Douma on 3/9/2011.
+# Copyright 2011 Mark Douma LLC. All rights reserved.
+
+.objc_class_name_TKImage
+
+
+.objc_class_name_TKImageRep
+
+
+.objc_class_name_TKDDSImageRep
+.objc_class_name_TKVTFImageRep
+
+
+
+_TKSFTextureImageType
+_TKSFTextureImageFileType
+_TKSFTextureImagePboardType
+_TKSFTextureImageMagicData
+
+
+_NSStringFromDXTCompressionQuality
+_TKDXTCompressionQualityFromString
+
+
+_NSStringFromDDSFormat
+_TKDDSFormatFromString
+
+_TKDDSType
+_TKDDSFileType
+_TKDDSPboardType
+
+
+_NSStringFromVTFFormat
+_TKVTFFormatFromString
+
+_TKVTFType
+_TKVTFFileType
+_TKVTFPboardType
+
+
+_TKImageMipmapGenerationKey
+_TKImageWrapModeKey
+_TKImageRoundModeKey
+
+
+_TKGetSystemVersion
+
+
+_TKYES
+_TKNO
+

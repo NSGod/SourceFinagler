@@ -1,16 +1,12 @@
 //
 //  HKVPKFile.h
-//  Source Finagler
+//  HLKit
 //
 //  Created by Mark Douma on 10/27/2010.
-//  Copyright 2010 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2009-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import <HLKit/HKArchiveFile.h>
-
-
-extern NSString * const VSAddonInfoNameKey;
-extern NSString * const VSAddonSteamAppIDKey;
 
 
 @interface HKVPKFile : HKArchiveFile {
@@ -19,7 +15,7 @@ extern NSString * const VSAddonSteamAppIDKey;
 	NSUInteger		addonGameID;
 }
 
-@property (assign, readonly) NSUInteger archiveCount;
-@property (assign, readonly) NSUInteger	addonGameID;
+@property (nonatomic, readonly, assign) NSUInteger archiveCount;
+@property (nonatomic, readonly, assign) NSUInteger	addonGameID;
 
 @end
