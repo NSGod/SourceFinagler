@@ -1289,8 +1289,6 @@
 		C17845C5148300E700082335 /* TKModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKModel.h; sourceTree = "<group>"; };
 		C17845C6148300E800082335 /* TKModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKModel.m; sourceTree = "<group>"; };
 		C17A6EEA120A0BC40062CBC6 /* Collaboration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Collaboration.framework; path = System/Library/Frameworks/Collaboration.framework; sourceTree = SDKROOT; };
-		C17D34F212791CCA00962584 /* HLPackageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLPackageManager.h; path = SourceFinagler/HLPackageManager.h; sourceTree = "<group>"; };
-		C17D34F312791CCA00962584 /* HLPackageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLPackageManager.m; path = SourceFinagler/HLPackageManager.m; sourceTree = "<group>"; };
 		C17D74C31443C8EA0048697D /* TKTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKTextFieldCell.h; path = TextureFinagler/TKTextFieldCell.h; sourceTree = "<group>"; };
 		C17D74C41443C8EA0048697D /* TKTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKTextFieldCell.m; path = TextureFinagler/TKTextFieldCell.m; sourceTree = "<group>"; };
 		C17D74E91443D0DA0048697D /* TKTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKTextField.h; path = TextureFinagler/TKTextField.h; sourceTree = "<group>"; };
@@ -1410,8 +1408,6 @@
 		C1A16F5611C5351B008E5361 /* MDSteamAppsRelocatorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDSteamAppsRelocatorController.m; path = SourceFinagler/MDSteamAppsRelocatorController.m; sourceTree = "<group>"; };
 		C1A16F5C11C53539008E5361 /* MDOtherAppsHelperController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDOtherAppsHelperController.h; path = SourceFinagler/MDOtherAppsHelperController.h; sourceTree = "<group>"; };
 		C1A16F5D11C53539008E5361 /* MDOtherAppsHelperController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDOtherAppsHelperController.m; path = SourceFinagler/MDOtherAppsHelperController.m; sourceTree = "<group>"; };
-		C1A16F7E11C535F6008E5361 /* TKController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKController.h; path = TextureFinagler/TKController.h; sourceTree = "<group>"; };
-		C1A16F7F11C535F6008E5361 /* TKController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKController.m; path = TextureFinagler/TKController.m; sourceTree = "<group>"; };
 		C1A2DD9D13D3B4C4001ABB83 /* allDefaultPresets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = allDefaultPresets.plist; path = TextureFinagler/allDefaultPresets.plist; sourceTree = "<group>"; };
 		C1A2DDD213D3B927001ABB83 /* TKImageExportPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageExportPreviewView.h; path = TextureFinagler/TKImageExportPreviewView.h; sourceTree = "<group>"; };
 		C1A2DDD313D3B927001ABB83 /* TKImageExportPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageExportPreviewView.m; path = TextureFinagler/TKImageExportPreviewView.m; sourceTree = "<group>"; };
@@ -2118,7 +2114,6 @@
 				C146091A14F3373700B7286B /* TKFoundationAdditions.m */,
 				C146091714F3373700B7286B /* TKAppKitAdditions.h */,
 				C146091814F3373700B7286B /* TKAppKitAdditions.m */,
-				C1828A00160EC30300E9A3F1 /* unused */,
 				C11CE9BF119B7FE3000E26D2 /* Extras */,
 				C10355FB11C5AA930054740E /* MDSteamAppsRelocator */,
 				C10355FC11C5AAAF0054740E /* MDOtherAppsHelper */,
@@ -2761,15 +2756,6 @@
 			name = Source.mdimporter;
 			sourceTree = "<group>";
 		};
-		C1828A00160EC30300E9A3F1 /* unused */ = {
-			isa = PBXGroup;
-			children = (
-				C1A16F7E11C535F6008E5361 /* TKController.h */,
-				C1A16F7F11C535F6008E5361 /* TKController.m */,
-			);
-			name = unused;
-			sourceTree = "<group>";
-		};
 		C18418071455A9B5007D8EE6 /* views */ = {
 			isa = PBXGroup;
 			children = (
@@ -3282,8 +3268,6 @@
 				C1C126CF123A977D004674B4 /* Packages */,
 				C1C126CE123A9770004674B4 /* Mappings */,
 				C1C126D0123A9786004674B4 /* Streams */,
-				C17D34F212791CCA00962584 /* HLPackageManager.h */,
-				C17D34F312791CCA00962584 /* HLPackageManager.m */,
 			);
 			name = "HL framework";
 			sourceTree = "<group>";
