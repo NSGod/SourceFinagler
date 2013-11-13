@@ -1683,7 +1683,6 @@
 		C1D00790160D302C0045EEC3 /* TKAppController.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = TKAppController.plist; path = TextureFinagler/TKAppController.plist; sourceTree = "<group>"; };
 		C1D00792160D320C0045EEC3 /* TKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKViewController.h; path = TextureFinagler/TKViewController.h; sourceTree = "<group>"; };
 		C1D00793160D320C0045EEC3 /* TKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKViewController.m; path = TextureFinagler/TKViewController.m; sourceTree = "<group>"; };
-		C1D4494B12602E5100A027EF /* decompress */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = decompress; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1D5B01F147BE6F200B0599B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDHLDocumentLion.xib; sourceTree = "<group>"; };
 		C1E183D114831B880054A444 /* TKPrivateInterfaces.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TKPrivateInterfaces.h; path = TextureKit/TKPrivateInterfaces.h; sourceTree = "<group>"; };
 		C1E6DB0812BC2408009D8AD6 /* TextureKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextureKit.h; path = TextureKit/TextureKit.h; sourceTree = "<group>"; };
@@ -2051,13 +2050,6 @@
 				C1CA28B113A2E2E000235C98 /* Quartz.framework in Frameworks */,
 				C1CA2B2913A2E36000235C98 /* QuickLook.framework in Frameworks */,
 				C1CA329213A4576E00235C98 /* TextureKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C1D4494912602E5100A027EF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3430,7 +3422,6 @@
 		C1C2C613127CBE86003B24F6 /* unimplemented */ = {
 			isa = PBXGroup;
 			children = (
-				C1D4494B12602E5100A027EF /* decompress */,
 			);
 			name = unimplemented;
 			sourceTree = "<group>";
@@ -4489,22 +4480,6 @@
 			productReference = C1C2C661127CBEF7003B24F6 /* SourceImage.qlgenerator */;
 			productType = "com.apple.product-type.bundle";
 		};
-		C1D4494A12602E5100A027EF /* decompress */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C1D4496812602E9900A027EF /* Build configuration list for PBXNativeTarget "decompress" */;
-			buildPhases = (
-				C1D4494812602E5100A027EF /* Sources */,
-				C1D4494912602E5100A027EF /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = decompress;
-			productName = decompress;
-			productReference = C1D4494B12602E5100A027EF /* decompress */;
-			productType = "com.apple.product-type.tool";
-		};
 		C1FEA7E9125E5C9600CA78FF /* NVCore */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C1FEA7EE125E5C9600CA78FF /* Build configuration list for PBXNativeTarget "NVCore" */;
@@ -4642,7 +4617,6 @@
 				C180E37814728E1B0001C07F /* NVThread */,
 				C1FEA92F125E72E300CA78FF /* NVTextureTools */,
 				C155218011D9954B00CCEDD3 /* Distribution */,
-				C1D4494A12602E5100A027EF /* decompress */,
 				C17D8F771642AAC40044039F /* ddsFinagler */,
 			);
 		};
@@ -5214,13 +5188,6 @@
 				C1C2C650127CBEF7003B24F6 /* GeneratePreviewForURL.m in Sources */,
 				C1C2C651127CBEF7003B24F6 /* main.c in Sources */,
 				C1C2C657127CBEF7003B24F6 /* MDCGImage.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C1D4494812602E5100A027EF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6169,37 +6136,6 @@
 			};
 			name = Release;
 		};
-		C1D4494D12602E5100A027EF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = decompress;
-			};
-			name = Debug;
-		};
-		C1D4494E12602E5100A027EF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					x86_64,
-				);
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = decompress;
-			};
-			name = Release;
-		};
 		C1FEA7EC125E5C9600CA78FF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -6494,15 +6430,6 @@
 			buildConfigurations = (
 				C1C2C65F127CBEF7003B24F6 /* Debug */,
 				C1C2C660127CBEF7003B24F6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C1D4496812602E9900A027EF /* Build configuration list for PBXNativeTarget "decompress" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C1D4494D12602E5100A027EF /* Debug */,
-				C1D4494E12602E5100A027EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
