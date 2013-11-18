@@ -7,7 +7,7 @@
 //
 
 #import <HLKit/HKFileAdditions.h>
-#import <HLKit/HKFoundationAdditions.h>
+#import "HKFoundationAdditions.h"
 
 #import <Cocoa/Cocoa.h>
 

@@ -8,7 +8,7 @@
 
 #import <HLKit/HKFolder.h>
 #import <HLKit/HKFile.h>
-#import <HLKit/HKFoundationAdditions.h>
+#import "HKFoundationAdditions.h"
 #import <HL/HL.h>
 
 #import "HKPrivateInterfaces.h"
@@ -29,12 +29,12 @@ using namespace HLLib;
 @implementation HKFolder
 
 
-- (id)initWithParent:(HKFolder *)aParent directoryFolder:(CDirectoryFolder *)aFolder showInvisibleItems:(BOOL)showInvisibles sortDescriptors:(NSArray *)aSortDescriptors container:(id)aContainer {
+- (id)initWithParent:(HKFolder *)aParent directoryFolder:(const CDirectoryFolder *)aFolder showInvisibleItems:(BOOL)showInvisibles sortDescriptors:(NSArray *)aSortDescriptors container:(id)aContainer {
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super initWithParent:aParent childNodes:nil sortDescriptors:aSortDescriptors container:aContainer])) {
-		_privateData = aFolder;
+		_privateData = (__bridge void *)aFolder;
 		isLeaf = NO;
 		isExtractable = YES;
 		isVisible = YES;

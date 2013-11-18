@@ -7,7 +7,7 @@
 //
 
 #import <HLKit/HKFileHandle.h>
-#import <HLKit/HKFoundationAdditions.h>
+#import "HKFoundationAdditions.h"
 
 
 
@@ -58,7 +58,7 @@ enum {
 			
 			// if a POSIX path name coming in has a slash / in the actual file name, it'll have been converted to a colon : by POSIX. This command needs a colon-delimited path, so it needs to be converted from colons back to slashes
 			
-			NSString *correctedFileName = [[aPath lastPathComponent] colonToSlash];
+			NSString *correctedFileName = [[aPath lastPathComponent] md_colonToSlash];
 			UniCharCount correctedFileNameLength = [correctedFileName length];
 			UniChar correctedFileNameUnicode[NAME_MAX];
 			

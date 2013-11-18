@@ -6,7 +6,7 @@
 //  Copyright (c) 2007-2012 Mark Douma LLC. All rights reserved.
 //
 
-#import <HLKit/HKFoundationAdditions.h>
+#import "HKFoundationAdditions.h"
 #import <sys/syslimits.h>
 #import <openssl/sha.h>
 
@@ -134,7 +134,7 @@
 	return (!NSEqualRanges([self rangeOfString:aString], NSMakeRange(NSNotFound, 0)));
 }
 
-- (NSString *)stringByReplacing:(NSString *)value with:(NSString *)newValue {
+- (NSString *)md_stringByReplacing:(NSString *)value with:(NSString *)newValue {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
@@ -144,18 +144,18 @@
 }
 
 
-- (NSString *)slashToColon {
+- (NSString *)md_slashToColon {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	return [self stringByReplacing:@"/" with:@":"];
+	return [self md_stringByReplacing:@"/" with:@":"];
 }
 
-- (NSString *)colonToSlash {
+- (NSString *)md_colonToSlash {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	return [self stringByReplacing:@":" with:@"/"];
+	return [self md_stringByReplacing:@":" with:@"/"];
 }
 
 

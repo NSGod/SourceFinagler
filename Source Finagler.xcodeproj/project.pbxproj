@@ -642,7 +642,7 @@
 		C1F153F01396699600E32057 /* HKGCFFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1F153D01396699600E32057 /* HKGCFFile.mm */; };
 		C1F153F11396699600E32057 /* HKArchiveFile.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153D11396699600E32057 /* HKArchiveFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1F153F21396699600E32057 /* HKArchiveFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1F153D21396699600E32057 /* HKArchiveFile.mm */; };
-		C1F153F31396699600E32057 /* HKPrivateInterfaces.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153D31396699600E32057 /* HKPrivateInterfaces.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C1F153F31396699600E32057 /* HKPrivateInterfaces.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153D31396699600E32057 /* HKPrivateInterfaces.h */; };
 		C1F153F41396699600E32057 /* HKPrivateInterfaces.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1F153D41396699600E32057 /* HKPrivateInterfaces.mm */; };
 		C1F153F51396699600E32057 /* HKItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153D51396699600E32057 /* HKItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1F153F61396699600E32057 /* HKItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F153D61396699600E32057 /* HKItem.m */; };
@@ -660,7 +660,7 @@
 		C1F154021396699600E32057 /* HKXZPFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1F153E21396699600E32057 /* HKXZPFile.mm */; };
 		C1F1579413969E3D00E32057 /* HL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1C12634123A54F0004674B4 /* HL.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1F1579F13969EAB00E32057 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1A112E511D66720008BBABD /* CoreServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		C1F157DE1396B05700E32057 /* HKFoundationAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F157DC1396B05700E32057 /* HKFoundationAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C1F157DE1396B05700E32057 /* HKFoundationAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F157DC1396B05700E32057 /* HKFoundationAdditions.h */; };
 		C1F157DF1396B05700E32057 /* HKFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F157DD1396B05700E32057 /* HKFoundationAdditions.m */; };
 		C1F2E965143185020049532C /* Library.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F2E9521431821D0049532C /* Library.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1F2E966143185040049532C /* Library.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1F2E9511431821D0049532C /* Library.cpp */; };
@@ -4004,7 +4004,6 @@
 				C1F153EB1396699600E32057 /* HKFolder.h in Headers */,
 				C1F153EF1396699600E32057 /* HKGCFFile.h in Headers */,
 				C1F153F11396699600E32057 /* HKArchiveFile.h in Headers */,
-				C1F153F31396699600E32057 /* HKPrivateInterfaces.h in Headers */,
 				C1F153F51396699600E32057 /* HKItem.h in Headers */,
 				C1F153F71396699600E32057 /* HKNCFFile.h in Headers */,
 				C1F153F91396699600E32057 /* HKNode.h in Headers */,
@@ -4012,10 +4011,11 @@
 				C1F153FD1396699600E32057 /* HKVPKFile.h in Headers */,
 				C1F153FF1396699600E32057 /* HKWADFile.h in Headers */,
 				C1F154011396699600E32057 /* HKXZPFile.h in Headers */,
-				C1F157DE1396B05700E32057 /* HKFoundationAdditions.h in Headers */,
 				C16143CA1399975C0042B91B /* HKFileAdditions.h in Headers */,
 				C159969B13C7919200849C73 /* HKFolderAdditions.h in Headers */,
 				C165FA531615F81300A8BB2D /* HKSGAFile.h in Headers */,
+				C1F153F31396699600E32057 /* HKPrivateInterfaces.h in Headers */,
+				C1F157DE1396B05700E32057 /* HKFoundationAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

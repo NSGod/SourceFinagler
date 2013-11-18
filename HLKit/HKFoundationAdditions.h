@@ -22,9 +22,9 @@
 - (NSComparisonResult)localizedCaseInsensitiveNumericalCompare:(NSString *)string;
 
 
-- (NSString *)stringByReplacing:(NSString *)value with:(NSString *)newValue;
-- (NSString *)slashToColon;
-- (NSString *)colonToSlash;
+- (NSString *)md_stringByReplacing:(NSString *)value with:(NSString *)newValue;
+- (NSString *)md_slashToColon;
+- (NSString *)md_colonToSlash;
 
 
 @end

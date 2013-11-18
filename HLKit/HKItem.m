@@ -21,7 +21,7 @@
 
 
 #import <HLKit/HKItem.h>
-#import <HLKit/HKFoundationAdditions.h>
+#import "HKFoundationAdditions.h"
 #import <HLKit/HKArchiveFile.h>
 
 #define HK_DEBUG 0
