@@ -8,7 +8,7 @@
 
 #import <HLKit/HKFile.h>
 #import <HLKit/HKFolder.h>
-#import <HLKit/HKFoundationAdditions.h>
+#import "HKFoundationAdditions.h"
 #import "HKPrivateInterfaces.h"
 #import <HLKit/HKFileHandle.h>
 #import <HL/HL.h>
@@ -35,12 +35,12 @@ using namespace HLLib::Streams;
 @implementation HKFile
 
 
-- (id)initWithParent:(HKFolder *)aParent directoryFile:(CDirectoryFile *)aFile container:(id)aContainer {
+- (id)initWithParent:(HKFolder *)aParent directoryFile:(const CDirectoryFile *)aFile container:(id)aContainer {
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super initWithParent:aParent childNodes:nil sortDescriptors:nil container:aContainer])) {
-		_privateData = aFile;
+		_privateData = (__bridge void *)aFile;
 		
 		isExtractable = static_cast<const CDirectoryFile *>(_privateData)->GetExtractable();
 		isVisible = isExtractable;

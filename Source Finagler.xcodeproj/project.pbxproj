@@ -571,7 +571,7 @@
 		C1F153F01396699600E32057 /* HKGCFFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1F153D01396699600E32057 /* HKGCFFile.mm */; };
 		C1F153F11396699600E32057 /* HKArchiveFile.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153D11396699600E32057 /* HKArchiveFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1F153F21396699600E32057 /* HKArchiveFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1F153D21396699600E32057 /* HKArchiveFile.mm */; };
-		C1F153F31396699600E32057 /* HKPrivateInterfaces.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153D31396699600E32057 /* HKPrivateInterfaces.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C1F153F31396699600E32057 /* HKPrivateInterfaces.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153D31396699600E32057 /* HKPrivateInterfaces.h */; };
 		C1F153F41396699600E32057 /* HKPrivateInterfaces.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1F153D41396699600E32057 /* HKPrivateInterfaces.mm */; };
 		C1F153F51396699600E32057 /* HKItem.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153D51396699600E32057 /* HKItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1F153F61396699600E32057 /* HKItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F153D61396699600E32057 /* HKItem.m */; };
@@ -589,7 +589,7 @@
 		C1F154021396699600E32057 /* HKXZPFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1F153E21396699600E32057 /* HKXZPFile.mm */; };
 		C1F1579413969E3D00E32057 /* HL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1C12634123A54F0004674B4 /* HL.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1F1579F13969EAB00E32057 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1A112E511D66720008BBABD /* CoreServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		C1F157DE1396B05700E32057 /* HKFoundationAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F157DC1396B05700E32057 /* HKFoundationAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C1F157DE1396B05700E32057 /* HKFoundationAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F157DC1396B05700E32057 /* HKFoundationAdditions.h */; };
 		C1F157DF1396B05700E32057 /* HKFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F157DD1396B05700E32057 /* HKFoundationAdditions.m */; };
 		C1F9282C16492B790089FBA4 /* caution.png in Resources */ = {isa = PBXBuildFile; fileRef = C1F9282B16492B790089FBA4 /* caution.png */; };
 		C1FEA9B1125E889C00CA78FF /* NVCore.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FEA8CA125E5D7E00CA78FF /* NVCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
