@@ -12,16 +12,11 @@
 
 
 _VSGameIDKey
-_VSGameSupportsAddonsKey
 _VSGameNameKey
 _VSGameShortNameKey
 _VSGameLongNameKey
-_VSGameCreatorCodeKey
-_VSGameBundleIdentifierKey
-_VSGameInfoPlistKey
-
-_VSResourceNameKey
 _VSGameIconNameKey
+
 
 _VSSteamAppsDirectoryNameKey
 

@@ -12,20 +12,18 @@
 
 @interface VSGame ()
 
-+ (id)gameWithPath:(NSString *)aPath infoPlist:(NSDictionary *)anInfoPlist;
-- (id)initWithPath:(NSString *)aPath infoPlist:(NSDictionary *)anInfoPlist;
++ (id)gameWithExecutableURL:(NSURL *)aURL infoPlist:(NSDictionary *)anInfoPlist appManifestURL:(NSURL *)anAppManifestURL;
+- (id)initWithExecutableURL:(NSURL *)aURL infoPlist:(NSDictionary *)anInfoPlist appManifestURL:(NSURL *)anAppManifestURL;
 
 
 - (void)synchronizeHelped;
-
-@property (retain) NSString *executablePath;
 
 /* Indicates the URL to the games's executable. */
 @property (retain) NSURL *executableURL;
 
 @property (retain) NSString *displayName;
 
-@property (retain) NSString *iconPath;
+@property (retain) NSURL *iconURL;
 
 /* Returns the icon of the application. */
 @property (retain) NSImage *icon;
@@ -33,7 +31,9 @@
 
 @property (retain) NSDictionary *infoDictionary;
 
-@property (retain) NSString	*addonsFolderPath;
+@property (retain) NSURL *appManifestURL;
+
+@property (retain) NSURL *addonsFolderURL;
 
 /* Indicates the process identifier (pid) of the application.  Do not rely on this for comparing processes.  Use isEqual: instead.  Not all applications have a pid.  Applications without a pid return -1 from this method. */
 @property (assign) pid_t processIdentifier;
@@ -44,9 +44,10 @@
 @property (assign) OSType creatorCode;
 
 
-@property (assign, setter=setHelped:) BOOL isHelped;
+@property (assign) BOOL helped;
 
-@property (assign, setter=setRunning:) BOOL isRunning;
+@property (assign) BOOL running;
+
 
 
 @end
