@@ -46,8 +46,10 @@ enum {
 typedef NSUInteger VSSourceFinaglerLaunchAgentStatus;
 
 
+
 @interface VSSteamManager : NSObject {
 	
+@private
 	NSString									*defaultSteamAppsPath;
 	
 	NSString									*steamAppsPath;
@@ -55,7 +57,7 @@ typedef NSUInteger VSSourceFinaglerLaunchAgentStatus;
 	VSSteamAppsRelocationType					steamAppsRelocationType;
 	
 	NSDictionary								*gameBundleIdentifiersAndGames;
-	NSArray										*executableNames;
+	NSSet										*knownExecutableNames;
 	
 	NSMutableDictionary							*gamePathsAndGames;
 	NSMutableDictionary							*runningGamePathsAndGames;
@@ -82,6 +84,8 @@ typedef NSUInteger VSSourceFinaglerLaunchAgentStatus;
 @property (assign) id <VSSteamManagerDelegate> delegate;
 
 
+/*		SteamApps folder relocation		*/
+
 - (NSString *)defaultSteamAppsPath;
 
 - (NSString *)steamAppsPath;
@@ -92,8 +96,12 @@ typedef NSUInteger VSSourceFinaglerLaunchAgentStatus;
 - (BOOL)relocateSteamAppsToPath:(NSString *)aPath error:(NSError **)outError;
 
 
-- (NSArray *)games;
-- (NSArray *)runningGames;
+/*		Games		*/
+
+@property (readonly, copy) NSArray *games;
+
+@property (readonly, copy) NSArray *runningGames;
+
 
 - (VSGame *)gameWithPath:(NSString *)aPath;
 
@@ -115,9 +123,11 @@ typedef NSUInteger VSSourceFinaglerLaunchAgentStatus;
 
 
 
-- (VSSourceFinaglerLaunchAgentStatus)sourceFinaglerLaunchAgentStatus;
+/* Source Finagler Launch Agent */
 
-- (NSString *)sourceFinaglerLaunchAgentPath;
+@property (readonly, assign) VSSourceFinaglerLaunchAgentStatus sourceFinaglerLaunchAgentStatus;
+@property (readonly, copy) NSString *sourceFinaglerLaunchAgentPath;
+
 
 - (BOOL)installSourceFinaglerLaunchAgentWithError:(NSError **)outError;
 - (BOOL)updateSourceFinaglerLaunchAgentWithError:(NSError **)outError;
@@ -160,30 +170,12 @@ enum {
 @end
 
 
-STEAMKIT_EXTERN NSString * const VSGameIDKey;
-STEAMKIT_EXTERN NSString * const VSGameSupportsAddonsKey;
-STEAMKIT_EXTERN NSString * const VSGameNameKey;
-STEAMKIT_EXTERN NSString * const VSGameShortNameKey;
-STEAMKIT_EXTERN NSString * const VSGameLongNameKey;
-STEAMKIT_EXTERN NSString * const VSGameCreatorCodeKey;
-STEAMKIT_EXTERN NSString * const VSGameBundleIdentifierKey;
-STEAMKIT_EXTERN NSString * const VSGameInfoPlistKey;
-
-
-STEAMKIT_EXTERN NSString * const VSResourceNameKey;
-STEAMKIT_EXTERN NSString * const VSGameIconNameKey;
-
 STEAMKIT_EXTERN NSString * const VSSteamAppsDirectoryNameKey;
 
 
 STEAMKIT_EXTERN NSString * const VSSourceAddonErrorDomain;
-
 STEAMKIT_EXTERN NSString * const VSSourceAddonGameIDKey;
-
-
-
 STEAMKIT_EXTERN NSString * const VSSourceAddonFolderNameKey;
 
-// SourceFinaglerAgent
 
 
