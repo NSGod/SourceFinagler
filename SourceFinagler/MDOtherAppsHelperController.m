@@ -10,7 +10,6 @@
 
 
 #import "MDOtherAppsHelperController.h"
-#import "VSSteamManager.h"
 #import "TKAppKitAdditions.h"
 #import "MDProcessManager.h"
 #import "MDTableView.h"
@@ -65,6 +64,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 
 - (void)dealloc {
 	[games release];
+	[steamManager setDelegate:nil];
 	[steamManager release];
 	[super dealloc];
 }
@@ -184,24 +184,12 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 }
 
 
-- (NSArray *)games {
-    return games;
-}
-
-- (NSUInteger)countOfGames {
-    return [games count];
-}
-
-- (id)objectInGamesAtIndex:(NSUInteger)theIndex {
-    return [games objectAtIndex:theIndex];
-}
-
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
 	NSUInteger count = [[gamesController selectedObjects] count];
 	if (count > 1) {
-		[helpButton setTitle:@"Help Other Apps Recognize Games"];
+		[helpButton setTitle:NSLocalizedString(@"Help Other Apps Recognize Games", @"")];
 	} else {
-		[helpButton setTitle:@"Help Other Apps Recognize Game"];
+		[helpButton setTitle:NSLocalizedString(@"Help Other Apps Recognize Game", @"")];
 	}
 }
 
@@ -230,7 +218,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	
 	if (selectedGames && [selectedGames count] == 1) {
 		[pboard declareTypes:[NSArray arrayWithObject:NSFilenamesPboardType] owner:self];
-		NSString *filePath = [(VSGame *)[selectedGames objectAtIndex:0] executablePath];
+		NSString *filePath = [[(VSGame *)[selectedGames objectAtIndex:0] executableURL] path];
 		if (filePath) {
 			[pboard setPropertyList:[NSArray arrayWithObject:filePath] forType:NSFilenamesPboardType];
 			return YES;
@@ -378,23 +366,18 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 #endif
 	
 	NSArray *selectedGames = [gamesController selectedObjects];
-	NSMutableArray *filePaths = [NSMutableArray array];
+	NSMutableArray *URLs = [NSMutableArray array];
 	
 	for (VSGame *game in selectedGames) {
-		NSString *path = [game executablePath];
-		if (path) {
-			[filePaths addObject:path];
-		}
+		NSURL *URL = game.executableURL;
+		if (URL) [URLs addObject:URL];
 	}
 	
-	if ([filePaths count]) {
-		if (![[NSWorkspace sharedWorkspace] revealInFinder:filePaths]) {
-			NSLog(@"[%@ %@] [[NSWorkspace sharedWorkspace] revealInFinder:filePaths] returned NO! ", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-	
-		}
+	if ([URLs count]) {
+		[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:URLs];
 	}
-	
 }
+
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
 	SEL action = [menuItem action];

@@ -44,10 +44,6 @@ typedef NSUInteger MDMouseSoftware;
 }
 
 
-- (NSArray *)games;
-- (NSUInteger)countOfGames;
-- (id)objectInGamesAtIndex:(NSUInteger)theIndex;
-
 - (IBAction)showUSBOverdriveTip:(id)sender;
 - (IBAction)ok:(id)sender;
 
