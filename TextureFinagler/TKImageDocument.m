@@ -309,6 +309,7 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
+	[imageView setDelegate:nil];
 	
 	[image release];
 	[metadata release];
@@ -884,13 +885,13 @@ static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
 	TKImageRep *selectedImageRep = [self selectedImageRep];
 	if (selectedImageRep == nil) return;
 	
-	if (imageView.imageKitLayer.filters == nil) 
-		imageView.imageKitLayer.filters = [NSArray arrayWithObjects:grayscaleFilter, nil];
-	
-	[imageView.imageKitLayer setValue:[NSNumber numberWithDouble:redScale] forKeyPath:@"filters.grayscaleFilter.redScale"];
-	[imageView.imageKitLayer setValue:[NSNumber numberWithDouble:greenScale] forKeyPath:@"filters.grayscaleFilter.greenScale"];
-	[imageView.imageKitLayer setValue:[NSNumber numberWithDouble:blueScale] forKeyPath:@"filters.grayscaleFilter.blueScale"];
-	[imageView.imageKitLayer setValue:[NSNumber numberWithDouble:alphaScale] forKeyPath:@"filters.grayscaleFilter.alphaScale"];
+//	if (imageView.imageKitLayer.filters == nil) 
+//		imageView.imageKitLayer.filters = [NSArray arrayWithObjects:grayscaleFilter, nil];
+//	
+//	[imageView.imageKitLayer setValue:[NSNumber numberWithDouble:redScale] forKeyPath:@"filters.grayscaleFilter.redScale"];
+//	[imageView.imageKitLayer setValue:[NSNumber numberWithDouble:greenScale] forKeyPath:@"filters.grayscaleFilter.greenScale"];
+//	[imageView.imageKitLayer setValue:[NSNumber numberWithDouble:blueScale] forKeyPath:@"filters.grayscaleFilter.blueScale"];
+//	[imageView.imageKitLayer setValue:[NSNumber numberWithDouble:alphaScale] forKeyPath:@"filters.grayscaleFilter.alphaScale"];
 	
 }
 
@@ -899,7 +900,7 @@ static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	imageView.imageKitLayer.filters = nil;
+//	imageView.imageKitLayer.filters = nil;
 }
 
 
@@ -1186,7 +1187,7 @@ static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
 
 - (BOOL)splitView:(NSSplitView *)splitView shouldAdjustSizeOfSubview:(NSView *)view {
 #if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSRect subviewBounds = [view bounds];
 	
@@ -1204,7 +1205,7 @@ static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
 			CGFloat idealWidth = [faceBrowserView idealViewWidth];
 			
 #if TK_DEBUG
-			NSLog(@"[%@ %@] subviewBounds == %@, idealWidth == %f", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(subviewBounds), idealWidth);
+//			NSLog(@"[%@ %@] subviewBounds == %@, idealWidth == %f", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(subviewBounds), idealWidth);
 #endif
 			if (NSWidth(subviewBounds) > idealWidth) {
 				return YES;
@@ -1218,7 +1219,7 @@ static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
 			CGFloat idealWidth = [mipmapBrowserView idealViewWidth];
 			
 #if TK_DEBUG
-			NSLog(@"[%@ %@] subviewBounds == %@, idealWidth == %f", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(subviewBounds), idealWidth);
+//			NSLog(@"[%@ %@] subviewBounds == %@, idealWidth == %f", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(subviewBounds), idealWidth);
 #endif
 			if (NSWidth(subviewBounds) > idealWidth) {
 				return YES;
@@ -1240,7 +1241,7 @@ static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
 
 - (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview {
 #if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
 	if (splitView == mainSplitView) {
@@ -2016,7 +2017,7 @@ static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
 		[imageChannelNamesAndFilters setObject:alphaChannelFilter forKey:alphaChannelFilter.name];
 		[imageChannelNamesAndFilters setObject:multiChannelFilter forKey:multiChannelFilter.name];
 		
-		imageView.imageKitLayer.filters = [NSArray arrayWithArray:[imageChannelNamesAndFilters allValues]];
+//		imageView.imageKitLayer.filters = [NSArray arrayWithArray:[imageChannelNamesAndFilters allValues]];
 		
 	}
 }
@@ -2033,28 +2034,28 @@ static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
 		imageChannelMask == TKImageChannelAlphaMask) {
 		// single-channel preview
 		
-		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:(imageChannelMask == TKImageChannelRedMask)]	forKeyPath:@"filters.redChannelFilter.enabled"];
-		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:(imageChannelMask == TKImageChannelGreenMask)] forKeyPath:@"filters.greenChannelFilter.enabled"];
-		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:(imageChannelMask == TKImageChannelBlueMask)] forKeyPath:@"filters.blueChannelFilter.enabled"];
-		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:(imageChannelMask == TKImageChannelAlphaMask)] forKeyPath:@"filters.alphaChannelFilter.enabled"];
-		
-		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:NO] forKeyPath:@"filters.multiChannelFilter.enabled"];
+//		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:(imageChannelMask == TKImageChannelRedMask)]	forKeyPath:@"filters.redChannelFilter.enabled"];
+//		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:(imageChannelMask == TKImageChannelGreenMask)] forKeyPath:@"filters.greenChannelFilter.enabled"];
+//		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:(imageChannelMask == TKImageChannelBlueMask)] forKeyPath:@"filters.blueChannelFilter.enabled"];
+//		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:(imageChannelMask == TKImageChannelAlphaMask)] forKeyPath:@"filters.alphaChannelFilter.enabled"];
+//		
+//		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:NO] forKeyPath:@"filters.multiChannelFilter.enabled"];
 		
 		
 	} else {
 		// multi-channel preview
 		
-		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:NO] forKeyPath:@"filters.redChannelFilter.enabled"];
-		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:NO] forKeyPath:@"filters.greenChannelFilter.enabled"];
-		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:NO] forKeyPath:@"filters.blueChannelFilter.enabled"];
-		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:NO] forKeyPath:@"filters.alphaChannelFilter.enabled"];
-		
-		[imageView.imageKitLayer setValue:[CIVector vectorWithString:(imageChannelMask & TKImageChannelRedMask) ? @"[1.0 0.0 0.0 0.0]" : @"[0.0 0.0 0.0 0.0]"] forKeyPath:@"filters.multiChannelFilter.inputRVector"];
-		[imageView.imageKitLayer setValue:[CIVector vectorWithString:(imageChannelMask & TKImageChannelGreenMask) ? @"[1.0 0.0 0.0 0.0]" : @"[0.0 0.0 0.0 0.0]"] forKeyPath:@"filters.multiChannelFilter.inputGVector"];
-		[imageView.imageKitLayer setValue:[CIVector vectorWithString:(imageChannelMask & TKImageChannelBlueMask) ? @"[1.0 0.0 0.0 0.0]" : @"[0.0 0.0 0.0 0.0]"] forKeyPath:@"filters.multiChannelFilter.inputBVector"];
-		[imageView.imageKitLayer setValue:[CIVector vectorWithString:(imageChannelMask & TKImageChannelAlphaMask) ? @"[1.0 0.0 0.0 0.0]" : @"[0.0 0.0 0.0 0.0]"] forKeyPath:@"filters.multiChannelFilter.inputAVector"];
-
-		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:YES] forKeyPath:@"filters.multiChannelFilter.enabled"];
+//		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:NO] forKeyPath:@"filters.redChannelFilter.enabled"];
+//		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:NO] forKeyPath:@"filters.greenChannelFilter.enabled"];
+//		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:NO] forKeyPath:@"filters.blueChannelFilter.enabled"];
+//		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:NO] forKeyPath:@"filters.alphaChannelFilter.enabled"];
+//		
+//		[imageView.imageKitLayer setValue:[CIVector vectorWithString:(imageChannelMask & TKImageChannelRedMask) ? @"[1.0 0.0 0.0 0.0]" : @"[0.0 0.0 0.0 0.0]"] forKeyPath:@"filters.multiChannelFilter.inputRVector"];
+//		[imageView.imageKitLayer setValue:[CIVector vectorWithString:(imageChannelMask & TKImageChannelGreenMask) ? @"[1.0 0.0 0.0 0.0]" : @"[0.0 0.0 0.0 0.0]"] forKeyPath:@"filters.multiChannelFilter.inputGVector"];
+//		[imageView.imageKitLayer setValue:[CIVector vectorWithString:(imageChannelMask & TKImageChannelBlueMask) ? @"[1.0 0.0 0.0 0.0]" : @"[0.0 0.0 0.0 0.0]"] forKeyPath:@"filters.multiChannelFilter.inputBVector"];
+//		[imageView.imageKitLayer setValue:[CIVector vectorWithString:(imageChannelMask & TKImageChannelAlphaMask) ? @"[1.0 0.0 0.0 0.0]" : @"[0.0 0.0 0.0 0.0]"] forKeyPath:@"filters.multiChannelFilter.inputAVector"];
+//
+//		[imageView.imageKitLayer setValue:[NSNumber numberWithBool:YES] forKeyPath:@"filters.multiChannelFilter.enabled"];
 
 	}
 }
@@ -2110,10 +2111,7 @@ static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
 		
 		imageView.animationImageReps = [image representationsForFrameIndexes:[image allFrameIndexes] mipmapIndexes:[image firstMipmapIndexSet]];
 	}
-	
-	
-//	if (isAnimating == NO) 	
-	
+		
 	(isAnimating ? [imageView stopAnimating] : [imageView startAnimating]);
 }
 

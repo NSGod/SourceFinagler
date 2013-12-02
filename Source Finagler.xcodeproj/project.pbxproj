@@ -93,6 +93,7 @@
 		C1224DAA13B09351009AA0F4 /* SourceFinaglerAgent.app in Resources */ = {isa = PBXBuildFile; fileRef = C1224BEC13B06B9A009AA0F4 /* SourceFinaglerAgent.app */; };
 		C1275F62129182C40041ACD7 /* VSSourceAddon.m in Sources */ = {isa = PBXBuildFile; fileRef = C1275F61129182C40041ACD7 /* VSSourceAddon.m */; };
 		C1279D3612DCB0EB0065F5D7 /* defaultPresets.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1279D3512DCB0EA0065F5D7 /* defaultPresets.plist */; };
+		C12B139917C665B50088D25C /* TKAnimationImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C12B139817C665B50088D25C /* TKAnimationImageView.m */; };
 		C12B4DAA13B7179C0096FC0E /* ForEach.h in Headers */ = {isa = PBXBuildFile; fileRef = C12B4DA913B7179B0096FC0E /* ForEach.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C12CFB5A12DFB3AE00A08A4B /* TKDDSImageRep.mm in Sources */ = {isa = PBXBuildFile; fileRef = C12DB4B4125FADE00051A751 /* TKDDSImageRep.mm */; };
 		C12D372D12E14CD200397411 /* MDScopeBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = C12D372C12E14CD200397411 /* MDScopeBarView.m */; };
@@ -277,6 +278,7 @@
 		C1968A0614F560E400ACFD02 /* Source.mdimporter in Copy Spotlight importer */ = {isa = PBXBuildFile; fileRef = C1C2C63D127CBED1003B24F6 /* Source.mdimporter */; };
 		C1968A0814F5676300ACFD02 /* TKFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C146091A14F3373700B7286B /* TKFoundationAdditions.m */; };
 		C197B529148887CC00B64B1B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C145AC6612BD69D1005D7E21 /* OpenGL.framework */; };
+		C19874C117CE4D6A009D55E8 /* TKImageViewPrivateInterfaces.m in Sources */ = {isa = PBXBuildFile; fileRef = C19874C017CE4D6A009D55E8 /* TKImageViewPrivateInterfaces.m */; };
 		C19B1FC114514BC2005F7902 /* TKGrayscaleFilter.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = C1EEE1C21450AC0800CB8ED6 /* TKGrayscaleFilter.cikernel */; };
 		C19C1C0E1489901500EE2B12 /* TKImageKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C19C1C0C14898DA300EE2B12 /* TKImageKitAdditions.m */; };
 		C19EB0FD145575BB0021185E /* TKImageInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = C19EB0FC145575BB0021185E /* TKImageInspectorController.m */; };
@@ -1100,6 +1102,8 @@
 		C12A93E311C9A3D9001D8E90 /* MDProcessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDProcessManager.m; path = SourceFinagler/MDProcessManager.m; sourceTree = "<group>"; };
 		C12A944811C9CDED001D8E90 /* MDResourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDResourceFile.h; path = SteamKit/MDResourceFile.h; sourceTree = "<group>"; };
 		C12A944911C9CDED001D8E90 /* MDResourceFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDResourceFile.m; path = SteamKit/MDResourceFile.m; sourceTree = "<group>"; };
+		C12B139717C665B50088D25C /* TKAnimationImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKAnimationImageView.h; path = TextureFinagler/TKAnimationImageView.h; sourceTree = "<group>"; };
+		C12B139817C665B50088D25C /* TKAnimationImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKAnimationImageView.m; path = TextureFinagler/TKAnimationImageView.m; sourceTree = "<group>"; };
 		C12B4DA913B7179B0096FC0E /* ForEach.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForEach.h; path = NVTextureTools/nvcore/ForEach.h; sourceTree = "<group>"; };
 		C12B4DBE13B717EA0096FC0E /* KtxFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = KtxFile.cpp; path = NVTextureTools/nvimage/KtxFile.cpp; sourceTree = "<group>"; };
 		C12B4DBF13B717EA0096FC0E /* KtxFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KtxFile.h; path = NVTextureTools/nvimage/KtxFile.h; sourceTree = "<group>"; };
@@ -1381,6 +1385,8 @@
 		C1958030149117DC0024C716 /* TKOBJModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKOBJModel.m; sourceTree = "<group>"; };
 		C195C8A91442B26800B983E1 /* checkerboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkerboard.png; path = Resources/checkerboard.png; sourceTree = "<group>"; };
 		C1967B8F125C327900037CDA /* VFE.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VFE.icns; path = Resources/VFE.icns; sourceTree = "<group>"; };
+		C19874BF17CE4D6A009D55E8 /* TKImageViewPrivateInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageViewPrivateInterfaces.h; path = TextureFinagler/TKImageViewPrivateInterfaces.h; sourceTree = "<group>"; };
+		C19874C017CE4D6A009D55E8 /* TKImageViewPrivateInterfaces.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageViewPrivateInterfaces.m; path = TextureFinagler/TKImageViewPrivateInterfaces.m; sourceTree = "<group>"; };
 		C19C1C0B14898DA300EE2B12 /* TKImageKitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageKitAdditions.h; path = TextureFinagler/TKImageKitAdditions.h; sourceTree = "<group>"; };
 		C19C1C0C14898DA300EE2B12 /* TKImageKitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageKitAdditions.m; path = TextureFinagler/TKImageKitAdditions.m; sourceTree = "<group>"; };
 		C19EB0FB145575BB0021185E /* TKImageInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageInspectorController.h; path = TextureFinagler/TKImageInspectorController.h; sourceTree = "<group>"; };
@@ -2760,6 +2766,10 @@
 			children = (
 				C12C8DF2129226E000C8E667 /* TKImageView.h */,
 				C12C8DF3129226E000C8E667 /* TKImageView.m */,
+				C12B139717C665B50088D25C /* TKAnimationImageView.h */,
+				C12B139817C665B50088D25C /* TKAnimationImageView.m */,
+				C19874BF17CE4D6A009D55E8 /* TKImageViewPrivateInterfaces.h */,
+				C19874C017CE4D6A009D55E8 /* TKImageViewPrivateInterfaces.m */,
 			);
 			name = TKImageView;
 			sourceTree = "<group>";
@@ -5119,6 +5129,7 @@
 				C1C2C56F127CBCA0003B24F6 /* MDCopyOperation.m in Sources */,
 				C1C2C570127CBCA0003B24F6 /* MDCopyOperationView.m in Sources */,
 				C1C2C571127CBCA0003B24F6 /* MDRolloverButton.m in Sources */,
+				C19874C117CE4D6A009D55E8 /* TKImageViewPrivateInterfaces.m in Sources */,
 				C1C2C572127CBCA0003B24F6 /* TKAboutWindowController.m in Sources */,
 				C1C2C573127CBCA0003B24F6 /* MDStash.m in Sources */,
 				C1C2C574127CBCA0003B24F6 /* MDGCFDocument.m in Sources */,
@@ -5162,6 +5173,7 @@
 				C184180E1455AA2A007D8EE6 /* TKImageChannelCell.m in Sources */,
 				C176D4B1145BEF6E00319284 /* TKImageChannelEnabledCell.m in Sources */,
 				C1770FD81488C9FF00E6F651 /* TKModelDocument.m in Sources */,
+				C12B139917C665B50088D25C /* TKAnimationImageView.m in Sources */,
 				C19C1C0E1489901500EE2B12 /* TKImageKitAdditions.m in Sources */,
 				C1F5C25C14BCF11E0091A36D /* TKVMTMaterialDocument.m in Sources */,
 				C146091B14F3377200B7286B /* TKAppKitAdditions.m in Sources */,

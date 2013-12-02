@@ -24,20 +24,14 @@ enum {
 @end
 
 
+@class TKAnimationImageView;
+
+
 @interface TKImageView : IKImageView {
-	
 	
 	id <TKImageViewDelegate>					delegate;		// non-retained
 	
-	
-	CALayer										*imageKitLayer;
-	
-	CALayer										*animationImageLayer;
-	
-	NSArray										*animationImageReps;
-	BOOL										isAnimating;
-	
-	
+	TKAnimationImageView						*animationImageView;
 	
 	
 	CGImageRef									image;
@@ -50,15 +44,13 @@ enum {
 	
 }
 
-@property (retain) CALayer *imageKitLayer;
-
-@property (retain) CALayer *animationImageLayer;
 
 @property (copy) NSArray *animationImageReps;
 
 
 - (void)startAnimating;
 - (void)stopAnimating;
+
 - (BOOL)isAnimating;
 
 

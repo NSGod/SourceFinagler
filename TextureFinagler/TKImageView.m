@@ -9,6 +9,10 @@
 #import "TKImageView.h"
 #import <TextureKit/TKImageRep.h>
 #import <QuartzCore/QuartzCore.h>
+#import "TKAnimationImageView.h"
+#import "TKImageViewPrivateInterfaces.h"
+
+
 
 #define TK_DEBUG 1
 
@@ -73,24 +77,11 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 
 
 
-@interface TKImageView ()
-
-
-- (void)setImageKitLayerIfNeeded;
-
-- (void)loadAnimationImageReps;
-- (void)unloadAnimationImageReps;
-
-@end
-
-
 @implementation TKImageView
 
-@dynamic imageKitLayer;
 
-@synthesize animationImageLayer;
+@dynamic animationImageReps;
 
-@synthesize animationImageReps;
 
 @synthesize delegate;
 @synthesize previewing;
@@ -111,9 +102,8 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	[imageKitLayer release];
-	[animationImageLayer release];
-	[animationImageReps release];
+	animationImageView.imageView = nil;
+	[animationImageView release];
 	delegate = nil;
 	CGImageRelease(image);
 	[previewImageRep release];
@@ -128,23 +118,26 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 	
 	[self setCurrentToolMode:IKToolModeMove];
 	
-//	[self setImageKitLayer:[self layer]];
+	
+#if TK_DEBUG
+//	NSColor *backgroundColor = [self backgroundColor];
+//	NSLog(@"[%@ %@] backgroundColor == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), backgroundColor);
+//	CGColorRef colorRef = [backgroundColor CGColor];
+//	NSLog(@"colorRef == %@", colorRef);
+	
+#endif
+
 }
 
-
-- (void)setImageKitLayerIfNeeded {
-	if (imageKitLayer == nil) self.imageKitLayer = [self layer];
-}
-
-- (CALayer *)imageKitLayer {
-	[self setImageKitLayerIfNeeded];
-    return imageKitLayer;
-}
-
-- (void)setImageKitLayer:(CALayer *)aLayer {
-	[aLayer retain];
-	[imageKitLayer release];
-	imageKitLayer = aLayer;
+- (void)loadAnimationImageViewIfNeeded {
+#if TK_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (animationImageView) return;
+	animationImageView = [[TKAnimationImageView alloc] initWithFrame:NSMakeRect(0.0, 0.0, self.bounds.size.width, self.bounds.size.height)];
+	animationImageView.imageView = self;
+	animationImageView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+	animationImageView.layer.backgroundColor = self.layer.backgroundColor;
 }
 
 
@@ -195,10 +188,6 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 #endif
 	showsImageBackground = showImageBackground;
 	
-	[self setImageKitLayerIfNeeded];
-	
-	if (self.layer != imageKitLayer) self.layer = imageKitLayer;
-	
 	if (showsImageBackground) {
 		@synchronized([self class]) {
 			if (checkerboardImageRep == nil) {
@@ -207,11 +196,17 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 		}
 		CGImageRef checkerboardImageRef = CGImageRetain([checkerboardImageRep CGImage]);
 		CGColorRef patternColorRef = TKCreatePatternColorWithImage(checkerboardImageRef);
-		imageKitLayer.backgroundColor = patternColorRef;
+		self.layer.backgroundColor = patternColorRef;
+		animationImageView.layer.backgroundColor = patternColorRef;
 		CGColorRelease(patternColorRef);
 		
 	} else {
-		imageKitLayer.backgroundColor = nil;
+		CGColorRef grayBackgroundColorRef = TKCreateGrayBackgroundColor();
+		
+		self.layer.backgroundColor = grayBackgroundColorRef;
+		animationImageView.layer.backgroundColor = grayBackgroundColorRef;
+		
+		CGColorRelease(grayBackgroundColorRef);
 	}
 }
 
@@ -223,71 +218,14 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 }
 
 
-
-
-#define TK_FRAMES_PER_SECOND 0.75
-#define TK_TIME_INTERVAL_PER_FRAME 1.0
-
-- (void)loadAnimationImageReps {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	
-#if TK_DEBUG
-//		NSLog(@"[%@ %@] animationImageReps == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), animationImageReps);
-#endif
-		
-	if ([animationImageReps count]) {
-		
-		[self setImageKitLayerIfNeeded];
-		
-		
-		NSMutableArray *imageRefs = [NSMutableArray array];
-		for (TKImageRep *imageRep in animationImageReps) {
-			[imageRefs addObject:(id)[imageRep CGImage]];
-		}
-		
-		CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:@"contents"];
-		anim.duration = TK_FRAMES_PER_SECOND; // frame rate == [animationImageReps count] / duration
-		anim.calculationMode = kCAAnimationDiscrete;
-		anim.repeatCount = HUGE_VAL;
-		anim.values = imageRefs;
-		
-#if TK_DEBUG
-		NSLog(@"[%@ %@] zoomFactor == %.3f", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [self zoomFactor]);
-#endif
-		
-		TKImageRep *largestRep = [TKImageRep largestRepresentationInArray:animationImageReps];
-		
-		if (animationImageLayer == nil) animationImageLayer = [[CALayer layer] retain];
-		
-		animationImageLayer.frame = NSRectToCGRect(NSMakeRect(0.0, 0.0, [largestRep size].width, [largestRep size].height));
-		animationImageLayer.position = NSPointToCGPoint(NSMakePoint([self bounds].size.width/2.0, [self bounds].size.height/2.0));
-		
-		[animationImageLayer setValue:[NSNumber numberWithDouble:[self zoomFactor]] forKeyPath:@"transform.scale"];
-		
-		self.layer = animationImageLayer;
-		
-		[self.layer addAnimation:anim forKey:@"animation"];
-	}
-	//	}
+- (void)setAnimationImageReps:(NSArray *)animationImageReps {
+	[self loadAnimationImageViewIfNeeded];
+	animationImageView.animationImageReps = animationImageReps;
 }
 
-
-- (void)unloadAnimationImageReps {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	[self.layer removeAnimationForKey:@"animation"];
-	
-	self.layer = imageKitLayer;
-	
-//	[animationImageLayer release];
-//	animationImageLayer = nil;
-//	
-//	[animationImageReps release];
-//	animationImageReps = nil;
-	
+- (NSArray *)animationImageReps {
+	[self loadAnimationImageViewIfNeeded];
+	return animationImageView.animationImageReps;
 }
 
 
@@ -295,9 +233,17 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (isAnimating) return;
 	
-	[self loadAnimationImageReps];
+	if (self.isAnimating) return;
+	
+	[self loadAnimationImageViewIfNeeded];
+	
+	if ([animationImageView.animationImageReps count]) {
+		
+		[animationImageView startAnimating];
+		
+		[self addSubview:animationImageView];
+	}
 }
 
 
@@ -305,35 +251,19 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (isAnimating == NO) return;
+	if (self.isAnimating == NO) return;
 	
-	[self unloadAnimationImageReps];
+	[animationImageView removeFromSuperview];
+	
+	[animationImageView stopAnimating];
+	
 }
 
 
 - (BOOL)isAnimating {
-	return isAnimating;
+	[self loadAnimationImageViewIfNeeded];
+	return animationImageView.isAnimating;
 }
-
-
-
-//- (IBAction)togglePlay:(id)sender {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//	CALayer *layer = [self layer];
-//	NSLog(@"[%@ %@] layer == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), layer);
-//#endif
-//	
-//	if (playing) {
-//		
-//		[self unloadAnimationImageReps];
-//	} else {
-//		[self loadAnimationImageReps];
-//	}
-//	
-//	[self setPlaying:!playing];
-//	[self setNeedsDisplay:YES];
-//}
 
 
 - (void)mouseDown:(NSEvent *)event {
@@ -462,24 +392,6 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 	
 
 @end
-
-
-         // can be resource name or abs. path
-//CGColorRef GetCGPatternNamed(NSString *name) {
-//	
-//    // For efficiency, loaded patterns are cached in a dictionary by name.
-//    static NSMutableDictionary *sMap;
-//    if (!sMap)
-//        sMap = [[NSMutableDictionary alloc] init];
-//    
-//    CGColorRef pattern = (CGColorRef) [sMap objectForKey: name];
-//    if (!pattern) {
-//        pattern = CreatePatternColor(MDGetCGImageNamed(name));
-//        [sMap setObject:(id)pattern forKey: name];
-//    }
-//    return pattern;
-//}
-
 
 
 #pragma mark -
