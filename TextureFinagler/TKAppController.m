@@ -8,11 +8,7 @@
 
 
 #import "TKAppController.h"
-
 #import "TKViewController.h"
-#import "MDSteamAppsRelocatorController.h"
-#import "MDOtherAppsHelperController.h"
-
 #import "TKAppKitAdditions.h"
 
 #import "TKAboutWindowController.h"
@@ -34,33 +30,33 @@
 
 
 
-NSString * const MDCurrentViewKey							= @"MDCurrentView";
+static NSString * const MDCurrentViewIndexKey						= @"MDCurrentViewIndex";
 
-NSString * const TKLastVersionRunKey						= @"TKLastVersionRun";
+static NSString * const TKLastVersionRunKey							= @"TKLastVersionRun";
 
-NSString * const TKLastSpotlightImporterVersionKey			= @"TKLastSpotlightImporterVersion";
-NSString * const TKLastSourceAddonFinaglerVersionKey		= @"TKLastSourceAddonFinaglerVersion";
-NSString * const TKSpotlightImporterBundleIdentifierKey		= @"com.markdouma.mdimporter.Source";
+static NSString * const TKLastSpotlightImporterVersionKey			= @"TKLastSpotlightImporterVersion";
+static NSString * const TKLastSourceAddonFinaglerVersionKey			= @"TKLastSourceAddonFinaglerVersion";
+static NSString * const TKSpotlightImporterBundleIdentifierKey		= @"com.markdouma.mdimporter.Source";
 
-NSString * const TKLaunchTimeActionKey						= @"TKLaunchTimeAction";
+NSString * const TKLaunchTimeActionKey								= @"TKLaunchTimeAction";
 
-NSString * const TKQuitAfterAllWindowsClosedKey				= @"TKQuitAfterAllWindowsClosed";
-NSString * const TKLastWindowDidCloseNotification			= @"TKLastWindowDidClose";
+static NSString * const TKQuitAfterAllWindowsClosedKey				= @"TKQuitAfterAllWindowsClosed";
+NSString * const TKLastWindowDidCloseNotification					= @"TKLastWindowDidClose";
 
-NSString * const TKFinderBundleIdentifierKey				= @"com.apple.finder";
+static NSString * const TKFinderBundleIdentifierKey					= @"com.apple.finder";
 
 
 /*************		websites & email addresses	*************/
 
-NSString * const TKWebpage						= @"http://www.markdouma.com/sourcefinagler/";
+static NSString * const TKWebpage						= @"http://www.markdouma.com/sourcefinagler/";
 
-NSString * const TKEmailStaticURLString			= @"mailto:mark@markdouma.com";
+static NSString * const TKEmailStaticURLString			= @"mailto:mark@markdouma.com";
 
-NSString * const TKEmailDynamicURLString		= @"mailto:mark@markdouma.com?subject=Source Finagler (%@)&body=Note: creating a unique Subject for your email will help me keep track of your inquiry more easily. Feel free to alter the one provided as you like.";
+static NSString * const TKEmailDynamicURLString		= @"mailto:mark@markdouma.com?subject=Source Finagler (%@)&body=Note: creating a unique Subject for your email will help me keep track of your inquiry more easily. Feel free to alter the one provided as you like.";
 
 
-NSString * const TKEmailAddress					= @"mark@markdouma.com";
-NSString * const TKiChatURLString				= @"aim:goim?screenname=MarkDouma46&message=Type+your+message+here.";
+static NSString * const TKEmailAddress					= @"mark@markdouma.com";
+static NSString * const TKiChatURLString				= @"aim:goim?screenname=MarkDouma46&message=Type+your+message+here.";
 
 
 BOOL	MDShouldShowViewOptions = NO;
@@ -72,7 +68,6 @@ BOOL	TKShouldShowImageInspector = NO;
 BOOL	MDShouldShowPathBar = NO;
 
 BOOL	MDPlaySoundEffects = NO;
-BOOL	MDPerformingBatchOperation = NO;
 
 
 #define TK_DEBUG 1
@@ -114,7 +109,7 @@ static NSArray *appClassNames = nil;
 		TKSystemVersion = MDFullSystemVersion & 0xfffffff0;
 		
 		
-		// need to run it here in case the font document isn't created prior to the view options window being instantiated.
+		// need to run it here in case the document isn't created prior to the view options window being instantiated.
 		
 		MDPlaySoundEffects = NO;
 		
@@ -197,8 +192,8 @@ static NSArray *appClassNames = nil;
 		
 		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowViewOptionsKey];
 		
+		[defaultValues setObject:@0 forKey:MDCurrentViewIndexKey];
 		
-		[defaultValues setObject:[NSNumber numberWithUnsignedInteger:TKSteamAppsRelocatorView] forKey:MDCurrentViewKey];
 		[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
 		[[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaultValues];
 		
@@ -217,9 +212,7 @@ static NSArray *appClassNames = nil;
 		
 		viewControllers = [[NSMutableArray alloc] init];
 		
-		NSUInteger count = appClassNames.count;
-		
-		for (NSUInteger i = 0; i < count; i++) {
+		for (NSUInteger i = 0; i < appClassNames.count; i++) {
 			[viewControllers addObject:[NSNull null]];
 		}
 		
@@ -241,9 +234,6 @@ static NSArray *appClassNames = nil;
 	[imageInspectorController release];
 	
 	[prefsController release];
-		
-	[steamAppsRelocatorController release];
-	[otherAppsHelperController release];
 	
 	[viewToggleToolbarShownMenuItem release];
 	[viewCustomizeToolbarMenuItem release];
@@ -296,7 +286,7 @@ static NSArray *appClassNames = nil;
 	[viewCustomizeToolbarMenuItem retain];
 	[viewOptionsMenuItem retain];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSwitchTo:) name:MDDidSwitchDocumentNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSwitchToDocument:) name:MDDidSwitchDocumentNotification object:nil];
 	
 	// from setupUI, since it only needs to be done once
 	
@@ -346,7 +336,7 @@ static NSArray *appClassNames = nil;
 		[imageInspectorController showWindow:self];
 	}
 	
-	currentView = [[userDefaults objectForKey:MDCurrentViewKey] unsignedIntegerValue];
+	currentViewIndex = [[userDefaults objectForKey:MDCurrentViewIndexKey] unsignedIntegerValue];
 	[self switchView:self];
 	
 	
@@ -442,11 +432,14 @@ static NSArray *appClassNames = nil;
 
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
-	[steamAppsRelocatorController cleanup];
-	[otherAppsHelperController cleanup];
-	
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedInteger:currentView] forKey:MDCurrentViewKey];
+	for (TKViewController *viewConroller in viewControllers) {
+		if ((NSNull *)viewConroller != [NSNull null]) {
+			[viewConroller cleanup];
+		}
+	}
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedInteger:currentViewIndex] forKey:MDCurrentViewIndexKey];
 }
+
 
 - (NSUndoManager *)globalUndoManager {
 #if TK_DEBUG
@@ -457,8 +450,8 @@ static NSArray *appClassNames = nil;
 }
 
 
-	// this method is used 
-- (void)didSwitchTo:(NSNotification *)notification {
+// this method is used
+- (void)didSwitchToDocument:(NSNotification *)notification {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
@@ -483,30 +476,30 @@ static NSArray *appClassNames = nil;
 		
 		NSUInteger count = viewControllers.count;
 		
-		while (currentView >= count) {
-			currentView--;
+		while (currentViewIndex >= count) {
+			currentViewIndex--;
 		}
 		
 		NSArray *toolbarItems = window.toolbar.items;
 		for (NSToolbarItem *toolbarItem in toolbarItems) {
-			if (toolbarItem.tag == currentView) {
+			if (toolbarItem.tag == currentViewIndex) {
 				[window.toolbar setSelectedItemIdentifier:toolbarItem.itemIdentifier]; break;
 			}
 		}
 	} else {
-		currentView = [(NSToolbarItem *)sender tag];
+		currentViewIndex = [(NSToolbarItem *)sender tag];
 	}
 	
-	TKViewController *viewController = [viewControllers objectAtIndex:currentView];
+	TKViewController *viewController = [viewControllers objectAtIndex:currentViewIndex];
 	
 	if ((NSNull *)viewController == [NSNull null]) {
-		NSString *className = [appClassNames objectAtIndex:currentView];
+		NSString *className = [appClassNames objectAtIndex:currentViewIndex];
 		
 		Class viewControllerClass = NSClassFromString(className);
 		
 		viewController = [[viewControllerClass alloc] init];
 		
-		[viewControllers replaceObjectAtIndex:currentView withObject:viewController];
+		[viewControllers replaceObjectAtIndex:currentViewIndex withObject:viewController];
 		
 		[viewController release];
 	}
@@ -661,7 +654,6 @@ static NSArray *appClassNames = nil;
 //	NSLog(@"[%@ %@] %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), menuItem);
 	
 	SEL action = [menuItem action];
-//	NSInteger tag = [menuItem tag];
 	
 	if (action == @selector(switchView:)) {
 	} else if (action == @selector(showPrefsWindow:)) {

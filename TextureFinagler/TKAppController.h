@@ -15,24 +15,6 @@
 @class MDViewOptionsController;
 @class MDInspectorController;
 @class MDQuickLookController;
-@class MDSteamAppsRelocatorController;
-@class MDOtherAppsHelperController;
-
-
-enum {
-	TKSteamAppsRelocatorView			= 0,
-	TKOtherAppsHelperView				= 1
-};
-typedef NSUInteger TKAppView;
-
-
-extern NSString * const MDCurrentViewKey;
-
-extern NSString * const TKLastVersionRunKey;
-
-extern NSString * const TKLastSpotlightImporterVersionKey;
-extern NSString * const TKLastSourceAddonFinaglerVersionKey;
-extern NSString * const TKSpotlightImporterBundleIdentifierKey;
 
 
 enum {
@@ -44,20 +26,7 @@ typedef NSUInteger TKLaunchTimeActionType;
 
 extern NSString * const TKLaunchTimeActionKey;
 
-
-extern NSString * const TKQuitAfterAllWindowsClosedKey;
 extern NSString * const TKLastWindowDidCloseNotification;
-
-extern NSString * const TKFinderBundleIdentifierKey;
-
-
-/*************		websites & email addresses	*************/
-
-extern NSString * const TKWebpage;
-extern NSString * const TKEmailStaticURLString;
-extern NSString * const TKEmailDynamicURLString;
-extern NSString * const TKEmailAddress;
-extern NSString * const TKiChatURLString;
 
 
 extern BOOL			MDShouldShowViewOptions;
@@ -69,9 +38,6 @@ extern BOOL			TKShouldShowImageInspector;
 extern BOOL			MDShouldShowPathBar;
 
 extern BOOL			MDPlaySoundEffects;
-
-extern BOOL			MDPerformingBatchOperation;
-
 
 extern SInt32		TKSystemVersion;
 
@@ -110,12 +76,9 @@ extern SInt32		TKSystemVersion;
 	NSUndoManager						*globalUndoManager;
 	
 	
-	MDSteamAppsRelocatorController		*steamAppsRelocatorController;
-	MDOtherAppsHelperController			*otherAppsHelperController;
-
 	NSMutableArray						*viewControllers;
 	
-	TKAppView							currentView;
+	NSUInteger							currentViewIndex;
 	
 	TKImageInspectorController			*imageInspectorController;
 	
