@@ -453,48 +453,48 @@ static NSView *blankView() {
 	
 	BOOL success = YES;
 	
-	/* If we are given a list of multiple files to reveal, and any of those
-	 files is within the same parent folder, then we do the smart thing and 
-	 create a single Finder window where the selection will be of multiple files.
-	 This is far better than spamming the user with new windows for each individual file. */
-	
-	NSMutableDictionary *groupedFilePaths = [NSMutableDictionary dictionary];
-	
-	for (NSString *filePath in filePaths) {
-		NSString *parentDirectory = [filePath stringByDeletingLastPathComponent];
-		
-		if ([groupedFilePaths objectForKey:parentDirectory] == nil) {
-			NSMutableArray *files = [NSMutableArray arrayWithObject:filePath];
-			[groupedFilePaths setObject:files forKey:parentDirectory];
-			
-		} else {
-			[[groupedFilePaths objectForKey:parentDirectory] addObject:filePath];
-		}
-	}
-	
-	NSArray *folderPaths = [groupedFilePaths allKeys];
-	
-	for (NSString *folderPath in folderPaths) {
-		NSArray *files = [groupedFilePaths objectForKey:folderPath];
-		
-		NSString *applescriptListString = NSStringForAppleScriptListFromPaths(files);
-		
-		NSDictionary *errorMessage = nil;
-		NSAppleEventDescriptor *result = nil;
-		
-		NSAppleScript *script = [[[NSAppleScript alloc] initWithSource:[NSString stringWithFormat:@"set targetFolder to (POSIX path of ((\"%@\" as POSIX file) as alias))\nset fileList to %@\n\ntell application \"Finder\"\n	activate\n	set finderWindows to every Finder window\n	repeat with i from 1 to (count of finderWindows)\n		set finderWindow to item i of finderWindows\n		try\n			set targetPath to (POSIX path of ((target of finderWindow) as alias))\n			if targetPath = targetFolder then\n				select every item of fileList\n				return\n			end if\n		end try\n	end repeat\n	set newWindow to make new Finder window to (targetFolder as POSIX file)\n	select every item of fileList\nend tell", folderPath, applescriptListString]] autorelease];
-		
-		if (script) {
-			result = [script executeAndReturnError:&errorMessage];
-			
-			if (errorMessage) {
-				NSLog(@"%@", errorMessage);
-				success = NO;
-			}
-		} else {
-			success = NO;
-		}
-	}
+//	/* If we are given a list of multiple files to reveal, and any of those
+//	 files is within the same parent folder, then we do the smart thing and 
+//	 create a single Finder window where the selection will be of multiple files.
+//	 This is far better than spamming the user with new windows for each individual file. */
+//	
+//	NSMutableDictionary *groupedFilePaths = [NSMutableDictionary dictionary];
+//	
+//	for (NSString *filePath in filePaths) {
+//		NSString *parentDirectory = [filePath stringByDeletingLastPathComponent];
+//		
+//		if ([groupedFilePaths objectForKey:parentDirectory] == nil) {
+//			NSMutableArray *files = [NSMutableArray arrayWithObject:filePath];
+//			[groupedFilePaths setObject:files forKey:parentDirectory];
+//			
+//		} else {
+//			[[groupedFilePaths objectForKey:parentDirectory] addObject:filePath];
+//		}
+//	}
+//	
+//	NSArray *folderPaths = [groupedFilePaths allKeys];
+//	
+//	for (NSString *folderPath in folderPaths) {
+//		NSArray *files = [groupedFilePaths objectForKey:folderPath];
+//		
+//		NSString *applescriptListString = NSStringForAppleScriptListFromPaths(files);
+//		
+//		NSDictionary *errorMessage = nil;
+//		NSAppleEventDescriptor *result = nil;
+//		
+//		NSAppleScript *script = [[[NSAppleScript alloc] initWithSource:[NSString stringWithFormat:@"set targetFolder to (POSIX path of ((\"%@\" as POSIX file) as alias))\nset fileList to %@\n\ntell application \"Finder\"\n	activate\n	set finderWindows to every Finder window\n	repeat with i from 1 to (count of finderWindows)\n		set finderWindow to item i of finderWindows\n		try\n			set targetPath to (POSIX path of ((target of finderWindow) as alias))\n			if targetPath = targetFolder then\n				select every item of fileList\n				return\n			end if\n		end try\n	end repeat\n	set newWindow to make new Finder window to (targetFolder as POSIX file)\n	select every item of fileList\nend tell", folderPath, applescriptListString]] autorelease];
+//		
+//		if (script) {
+//			result = [script executeAndReturnError:&errorMessage];
+//			
+//			if (errorMessage) {
+//				NSLog(@"%@", errorMessage);
+//				success = NO;
+//			}
+//		} else {
+//			success = NO;
+//		}
+//	}
 	return success;
 }
 

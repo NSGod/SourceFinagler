@@ -30,7 +30,7 @@
 
 
 enum {
-	TKUndeterminedVersion	= -1,
+	TKUndeterminedVersion	= 0,
 	TKCheetah				= 0x1000,
 	TKPuma					= 0x1010,
 	TKJaguar				= 0x1020,
@@ -40,7 +40,7 @@ enum {
 	TKSnowLeopard			= 0x1060,
 	TKLion					= 0x1070,
 	TKMountainLion			= 0x1080,
-	TKUnknownKitty			= 0x1090,
+	TKMavericks				= 0x1090,
 	TKUnknownVersion		= 0x1100
 };
 
@@ -171,35 +171,6 @@ typedef NSUInteger TKBookmarkResolutionOptions;
 @end
 
 
-#if !defined(TEXTUREKIT_EXTERN)
-
-@interface NSData (TKAdditions)
-- (NSString *)sha1HexHash;
-- (NSData *)sha1Hash;
-
-
-@end
-
-@interface NSBundle (TKAdditions)
-- (NSString *)checksumForAuxiliaryLibrary:(NSString *)dylibName;
-@end
-#endif
-
-
-////////////////////////////////////////////////////////////////
-////    NSMutableDictionary CATEGORY FOR THREAD-SAFETY
-////////////////////////////////////////////////////////////////
-
-@interface NSMutableDictionary (TKThreadSafety)
-
-- (id)threadSafeObjectForKey:(id)aKey usingLock:(NSLock *)aLock;
-
-- (void)threadSafeRemoveObjectForKey:(id)aKey usingLock:(NSLock *)aLock;
-
-- (void)threadSafeSetObject:(id)anObject forKey:(id)aKey usingLock:(NSLock *)aLock;
-
-@end
-
 
 //@interface NSArray (TKAdditions)
 //- (BOOL)containsObjectIdenticalTo:(id)object;
@@ -216,37 +187,4 @@ typedef NSUInteger TKBookmarkResolutionOptions;
 - (id)deepMutableCopy NS_RETURNS_RETAINED;
 @end
 
-
-#define TK_BUILDING_WITH_FOUNDATION_NSDATE_ADDITIONS 0
-
-#if (TK_BUILDING_WITH_FOUNDATION_NSDATE_ADDITIONS)
-
-@interface NSDate (TKAdditions)
-+ (id)dateByRoundingDownToNearestMinute;
-+ (id)dateByRoundingUpToNearestMinute;
-+ (id)dateByAddingTwoAndRoundingUpToNearestMinute;
-+ (id)midnightYesterdayMorning;
-+ (id)midnightThisMorning;
-+ (id)midnightTonight;
-+ (id)midnightTomorrowNight;
-- (BOOL)isEarlierThanDate:(NSDate *)aDate;
-- (BOOL)isLaterThanDate:(NSDate *)aDate;
-- (BOOL)isEarlierThanOrEqualToDate:(NSDate *)aDate;
-- (BOOL)isLaterThanOrEqualToDate:(NSDate *)aDate;
-- (id)dateByRoundingDownToNearestMinute;
-- (id)dateByRoundingUpToNearestMinute;
-- (id)dateByAddingTwoAndRoundingUpToNearestMinute;
-- (id)midnightOfMorning;
-- (id)midnightOfEvening;
-- (id)midnightOfYesterdayMorning;
-- (id)midnightOfTomorrowEvening;
-- (id)baseWeekly; // take receiver's time of day and shift it to the first day of the week
-//- (id)baseWeeklyForDate:(id)aDate; // basically the reverse of -baseWeekly; given that the receiver is a baseWeekly's time of day, transpose the time to the specified 'aDate'
-- (id)baseMonthly; // take receiver's time of day and shift it to the first day of the month
-- (id)dateByTransposingToCurrentDay;
-- (id)dateByTransposingToFirstDayOfCurrentWeek;
-- (id)dateByTransposingToFirstDayOfCurrentMonth;
-- (id)dateBySynchronizingToTimeOfDayOfDate:(NSDate *)aDate;
-@end
-#endif
 
