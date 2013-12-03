@@ -5,6 +5,52 @@
 //  Created by Mark Douma on 1/31/2008.
 //  Copyright © 2008 Mark Douma. All rights reserved.
 //  
+/*
+     File: FileSystemBrowserCell.m
+ Abstract: A cell that can draw an image/icon and a label color.
+  Version: 1.2
+ 
+ Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
+ Inc. ("Apple") in consideration of your agreement to the following
+ terms, and your use, installation, modification or redistribution of
+ this Apple software constitutes acceptance of these terms.  If you do
+ not agree with these terms, please do not use, install, modify or
+ redistribute this Apple software.
+ 
+ In consideration of your agreement to abide by the following terms, and
+ subject to these terms, Apple grants you a personal, non-exclusive
+ license, under Apple's copyrights in this original Apple software (the
+ "Apple Software"), to use, reproduce, modify and redistribute the Apple
+ Software, with or without modifications, in source and/or binary forms;
+ provided that if you redistribute the Apple Software in its entirety and
+ without modifications, you must retain this notice and the following
+ text and disclaimers in all such redistributions of the Apple Software.
+ Neither the name, trademarks, service marks or logos of Apple Inc. may
+ be used to endorse or promote products derived from the Apple Software
+ without specific prior written permission from Apple.  Except as
+ expressly stated in this notice, no other rights or licenses, express or
+ implied, are granted by Apple herein, including but not limited to any
+ patent rights that may be infringed by your derivative works or by other
+ works in which the Apple Software may be incorporated.
+ 
+ The Apple Software is provided by Apple on an "AS IS" basis.  APPLE
+ MAKES NO WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+ THE IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS
+ FOR A PARTICULAR PURPOSE, REGARDING THE APPLE SOFTWARE OR ITS USE AND
+ OPERATION ALONE OR IN COMBINATION WITH YOUR PRODUCTS.
+ 
+ IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL
+ OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ INTERRUPTION) ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION,
+ MODIFICATION AND/OR DISTRIBUTION OF THE APPLE SOFTWARE, HOWEVER CAUSED
+ AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
+ STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
+ POSSIBILITY OF SUCH DAMAGE.
+ 
+ Copyright (C) 2012 Apple Inc. All Rights Reserved.
+ 
+ */
 
 
 #import "MDTextFieldCell.h"
@@ -14,7 +60,10 @@
 #define MD_INSET_HORIZ		16.0		/* Distance image icon is inset from the left edge */
 #define MD_INTER_SPACE		6.0		/* Distance between right edge of icon image and left edge of text */
 
-#define MD_DEBUG 1
+
+#define MD_DEBUG 0
+#define MD_DEBUG_DRAW 0
+
 
 
 @interface MDTextFieldCell (MDPrivate)
@@ -28,6 +77,8 @@
 
 @implementation MDTextFieldCell
 
+@synthesize leftEdgePadding;
+@synthesize centerImageVertically;
 @synthesize highlightedActiveEnabledAttributes;
 @synthesize highlightedActiveDisabledAttributes;
 @synthesize highlightedInactiveEnabledAttributes;
@@ -42,12 +93,12 @@
 #endif
 	MDTextFieldCell *cell = (MDTextFieldCell *)[super copyWithZone:zone];
 	cell->image = nil;
-	cell->highlightedActiveEnabledAttributes = nil;
-	cell->highlightedActiveDisabledAttributes = nil;
-	cell->highlightedInactiveEnabledAttributes = nil;
-	cell->highlightedInactiveDisabledAttributes = nil;
-	cell->enabledAttributes = nil;
-	cell->disabledAttributes = nil;
+//	cell->highlightedActiveEnabledAttributes = nil;
+//	cell->highlightedActiveDisabledAttributes = nil;
+//	cell->highlightedInactiveEnabledAttributes = nil;
+//	cell->highlightedInactiveDisabledAttributes = nil;
+//	cell->enabledAttributes = nil;
+//	cell->disabledAttributes = nil;
 	
 	cell.image = image;
 	
@@ -57,12 +108,6 @@
 	cell->highlightedInactiveDisabledAttributes = [highlightedInactiveDisabledAttributes mutableCopy];
 	cell->enabledAttributes = [enabledAttributes mutableCopy];
 	cell->disabledAttributes = [disabledAttributes mutableCopy];
-//	cell.highlightedActiveEnabledAttributes = highlightedActiveEnabledAttributes;
-//	cell.highlightedActiveDisabledAttributes = highlightedActiveDisabledAttributes;
-//	cell.highlightedInactiveEnabledAttributes = highlightedInactiveEnabledAttributes;
-//	cell.highlightedInactiveDisabledAttributes = highlightedInactiveDisabledAttributes;
-//	cell.enabledAttributes = enabledAttributes;
-//	cell.disabledAttributes = disabledAttributes;
 	
 	return cell;
 }
@@ -148,10 +193,8 @@
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super initWithCoder:coder])) {
-		
 		leftEdgePadding = MD_LEFT_EDGE_PADDING;
 		[self initAttributes];
-
 	}
 	return self;
 }
@@ -188,60 +231,68 @@
 }
 
 
-- (void)setLeftEdgePadding:(CGFloat)aPadding {
-	leftEdgePadding = aPadding;
-}
-
-
-- (CGFloat)leftEdgePadding {
-	return leftEdgePadding;
-}
-
-
-- (BOOL)centerImageVertically {
-    return centerImageVertically;
-}
-
-- (void)setCenterImageVertically:(BOOL)value {
-	centerImageVertically = value;
-}
-
-
-- (NSPoint)calculatedImagePointForFrame:(NSRect)cellFrame imageSize:(NSSize)imageSize isFlipped:(BOOL)isFlipped {
+- (void)setFont:(NSFont *)fontObj {
 #if MD_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	NSPoint imagePoint = cellFrame.origin;
-	imagePoint.x += leftEdgePadding;
-	
-	if (isFlipped) {
-		if (imageSize.height == 16.0) {
-			if (centerImageVertically) {
-				imagePoint.y += (imageSize.height + ceil((cellFrame.size.height - imageSize.height)/2.0));
-				
-			} else {
-				if (cellFrame.size.height >= 17.0 && cellFrame.size.height <= 18.0) {
-					// in other words, if the font size is 15 pt or 16 pt
-					imagePoint.y += imageSize.height;
-				} else {
-					imagePoint.y += (imageSize.height - 1.0);
-				}
-			}
-		} else if (imageSize.height == 32.0) {
-			imagePoint.y += imageSize.height;
-		}
-	} else {
-		if (imageSize.height == 16.0) {
-			if (cellFrame.size.height == 18.0) {
-				imagePoint.y += 1.0;
-			} else {
-				
-			}
-		} else if (imageSize.height == 32.0) {
+	[highlightedActiveEnabledAttributes setObject:fontObj forKey:NSFontAttributeName];
+	[highlightedActiveDisabledAttributes setObject:fontObj forKey:NSFontAttributeName];
+	[highlightedInactiveEnabledAttributes setObject:fontObj forKey:NSFontAttributeName];
+	[highlightedInactiveDisabledAttributes setObject:fontObj forKey:NSFontAttributeName];
+	[enabledAttributes setObject:fontObj forKey:NSFontAttributeName];
+	[disabledAttributes setObject:fontObj forKey:NSFontAttributeName];
+	[super setFont:fontObj];
+}
 
-		}
+
+- (NSSize)cellSizeForBounds:(NSRect)aRect {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	return [super cellSizeForBounds:aRect];
+}
+
+
+- (NSSize)cellSize {
+#if MD_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	
+	NSSize cellSize = [super cellSize];
+	
+	if (image == nil) {
+		cellSize.width += 30.0;
+	} else {
+		NSSize imageSize = [image size];
+		cellSize.width += (31.0 + imageSize.width + MD_INTER_SPACE);
 	}
-	return imagePoint;
+	return cellSize;
+}
+
+
+- (NSRect)imageRectForBounds:(NSRect)cellFrame {
+#if MD_DEBUG
+//    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (image == nil) return NSZeroRect;
+	
+	NSSize imageSize = image.size;
+	
+	NSRect result;
+	result.size = imageSize;
+	result.origin = cellFrame.origin;
+	result.origin.x += leftEdgePadding;
+	result.origin.y += floor((cellFrame.size.height - result.size.height) / 2.0);
+	
+	return result;
+}
+
+
+- (NSRect)titleRectForBounds:(NSRect)theRect {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	return [super titleRectForBounds:theRect];
 }
 
 
@@ -307,33 +358,17 @@
 }
 
 
-- (void)setFont:(NSFont *)fontObj {
-#if MD_DEBUG
-    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	[highlightedActiveEnabledAttributes setObject:fontObj forKey:NSFontAttributeName];
-	[highlightedActiveDisabledAttributes setObject:fontObj forKey:NSFontAttributeName];
-	[highlightedInactiveEnabledAttributes setObject:fontObj forKey:NSFontAttributeName];
-	[highlightedInactiveDisabledAttributes setObject:fontObj forKey:NSFontAttributeName];
-	[enabledAttributes setObject:fontObj forKey:NSFontAttributeName];
-	[disabledAttributes setObject:fontObj forKey:NSFontAttributeName];
-	[super setFont:fontObj];
-}
-
-
-
-- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView {
+- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView {
 #if MD_DEBUG
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
 	NSSize	imageSize = NSZeroSize;
-	NSPoint	imagePoint = NSZeroPoint;
 	
-	if (image) {
-		imageSize = [image size];
-		imagePoint = [self calculatedImagePointForFrame:cellFrame imageSize:imageSize isFlipped:[controlView isFlipped]];
-	}
+	if (image) imageSize = [image size];
+	
+	NSRect imageFrame = [self imageRectForBounds:cellFrame];
+	
 	
 	NSDictionary *attributes = nil;
 	
@@ -341,13 +376,15 @@
 	
 	if ([self isHighlighted]) {
 		
+		/* This is a hack to get the proper hightlight color behavior */
+		
 		NSImage *tempImage = [image retain];
 		id tempObject = [[self objectValue] retain];
 		
 		[self setImage:nil];
 		[self setStringValue:@""];
 		
-		[super drawWithFrame:cellFrame inView:controlView];
+		[super drawInteriorWithFrame:cellFrame inView:controlView];
 		
 		[self setImage:tempImage];
 		[self setObjectValue:tempObject];
@@ -367,21 +404,7 @@
 	}
 	
 	if (image) {
-		BOOL isFlipped = [controlView isFlipped] != image.isFlipped;
-		if (isFlipped) {
-			NSLog(@"isFlipped");
-			[[NSGraphicsContext currentContext] saveGraphicsState];
-			NSAffineTransform *transform = [[NSAffineTransform alloc] init];
-			[transform translateXBy:0.0 yBy:(cellFrame.origin.y + cellFrame.size.height)];
-			[transform scaleXBy:0.0 yBy:-1.0];
-			[transform translateXBy:0.0 yBy:-cellFrame.origin.y];
-			[transform concat];
-			[transform release];
-		}
-		[image drawAtPoint:imagePoint fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:(isEnabled ? 1.0 : 0.5)];
-		if (isFlipped) [[NSGraphicsContext currentContext] restoreGraphicsState];
-		
-//		[image compositeToPoint:imagePoint operation:NSCompositeSourceOver fraction:(isEnabled ? 1.0 : 0.5)];
+		[image drawInRect:imageFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:(isEnabled ? 1.0 : 0.5) respectFlipped:YES hints:nil];
 	}
 	
 	NSAttributedString *richText = [[[NSAttributedString alloc] initWithString:[self stringValue] attributes:attributes] autorelease];
@@ -390,114 +413,23 @@
 	
 	[richText drawInRect:richTextRect];
 	
-//	[[NSColor greenColor] set];
-//	[NSBezierPath strokeRect:richTextRect];
+#if MD_DEBUG_DRAW
+	[[NSColor greenColor] set];
+	[NSBezierPath strokeRect:richTextRect];
 	
-//	[self hitRectsForFrame:cellFrame isFlipped:[controlView isFlipped]];
-//	
-//	[[[NSColor greenColor] colorWithAlphaComponent:0.37] set];
-//	
-//	NSEnumerator *enumerator = [hitRects objectEnumerator];
-//	NSValue *hitRectValue;
-//	
-//	while (hitRectValue = [enumerator nextObject]) {
-//		NSRect hitRect = [hitRectValue rectValue];
-//		[NSBezierPath fillRect:hitRect];
-//	}
-}
-
-
-
-- (NSSize)cellSize {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	#if MD_DEBUG
+		if (image) {
+			NSLog(@"[%@ %@] imageFrame == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(imageFrame));
+		}
+	#endif
+	
 #endif
 	
-	NSSize cellSize = [super cellSize];
 	
-	if (image == nil) {
-		cellSize.width += 30.0;
-	} else {
-		NSSize imageSize = [image size];
-		cellSize.width += (31.0 + imageSize.width + MD_INTER_SPACE);
-	}
-	return cellSize;
-}
-
-
-- (void)drawWithFrame:(NSRect)cellFrame inImage:(NSImage *)dragImage {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	
-#if MD_DEBUG
-	[dragImage lockFocus];
-//	[[[NSColor grayColor] colorWithAlphaComponent:0.37] set];
-	[[[NSColor redColor] colorWithAlphaComponent:0.37] set];
-	[NSBezierPath fillRect:cellFrame];
-	[dragImage unlockFocus];
-#endif
-	
-	NSSize	imageSize = NSZeroSize;
-	NSPoint imagePoint = NSZeroPoint;
-	
-	if (image) {
-		imageSize = [image size];
-		imagePoint = [self calculatedImagePointForFrame:cellFrame imageSize:imageSize isFlipped:[dragImage isFlipped]];
-		
-		[dragImage lockFocus];
-		[image compositeToPoint:imagePoint operation:NSCompositeSourceOver fraction:0.37];
-		[dragImage unlockFocus];
-	}
-	
-	NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[self font],NSFontAttributeName, [[NSColor controlTextColor] colorWithAlphaComponent:0.37],NSForegroundColorAttributeName, nil];
-	
-	NSAttributedString *richText = [[[NSAttributedString alloc] initWithString:[self stringValue] attributes:attributes] autorelease];
-	
-	NSRect richTextRect = [self calculatedRichTextRectForFrame:cellFrame richText:richText fontSize:[[self font] pointSize] imageSize:imageSize isFlipped:[dragImage isFlipped]];
-	
-	[dragImage lockFocus];
-	[richText drawInRect:richTextRect];
-	[dragImage unlockFocus];
-}
-
-
-	
-- (NSArray *)hitRectsForFrame:(NSRect)cellFrame isFlipped:(BOOL)isFlipped {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	
-	NSMutableArray *hitRects = [NSMutableArray array];
-	
-	NSSize	imageSize = NSZeroSize;
-	NSPoint imagePoint = NSZeroPoint;
-	NSRect	imageFrame = NSZeroRect;
-	
-	if (image) {
-		imageSize = [image size];
-		imagePoint = [self calculatedImagePointForFrame:cellFrame imageSize:imageSize isFlipped:isFlipped];
-		
-		imageFrame = NSMakeRect(imagePoint.x, imagePoint.y, imageSize.width, imageSize.height);
-		
-		[hitRects addObject:[NSValue valueWithRect:imageFrame]];
-	}
-	
-	NSMutableParagraphStyle *style = [[[NSParagraphStyle defaultParagraphStyle] mutableCopy] autorelease];
-	[style setLineBreakMode:NSLineBreakByTruncatingMiddle];
-	[style setAlignment:[self alignment]];
-	
-	NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[self font],NSFontAttributeName, style,NSParagraphStyleAttributeName, nil];
-	
-	NSAttributedString *richText = [[[NSAttributedString alloc] initWithString:[self stringValue] attributes:attributes] autorelease];
-	
-	NSRect richTextRect = [self calculatedRichTextRectForFrame:cellFrame richText:richText fontSize:[[self font] pointSize] imageSize:imageSize isFlipped:isFlipped];
-	
-	[hitRects addObject:[NSValue valueWithRect:richTextRect]];
-	
-	return [[hitRects copy] autorelease];
 }
 
 
 @end
+
+
 
