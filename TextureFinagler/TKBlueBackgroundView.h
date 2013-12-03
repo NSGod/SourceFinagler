@@ -11,10 +11,6 @@
 
 @interface TKBlueBackgroundView : NSView {
 	NSGradient		*gradient;
-	
-//	NSColor		*backgroundColor;
 }
-
-//@property (retain) NSGradient *gradient;
 
 @end
