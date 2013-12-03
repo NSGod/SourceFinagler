@@ -174,7 +174,7 @@
 		C15590CA12B6E04200FD0684 /* SFTI.icns in Resources */ = {isa = PBXBuildFile; fileRef = C15590C912B6E04200FD0684 /* SFTI.icns */; };
 		C155C9C813A06907008151E7 /* HLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; };
 		C155C9DC13A06931008151E7 /* HLKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; };
-		C1580E891396262F00D5D4D8 /* VSPrivateInterfaces.h in Headers */ = {isa = PBXBuildFile; fileRef = C1580E871396262F00D5D4D8 /* VSPrivateInterfaces.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C1580E891396262F00D5D4D8 /* VSPrivateInterfaces.h in Headers */ = {isa = PBXBuildFile; fileRef = C1580E871396262F00D5D4D8 /* VSPrivateInterfaces.h */; };
 		C15878BC1615C8E3002CF3E6 /* SGAFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C15878BA1615C8C6002CF3E6 /* SGAFile.cpp */; };
 		C15878BD1615C8E3002CF3E6 /* SGAFile.h in Headers */ = {isa = PBXBuildFile; fileRef = C15878BB1615C8C6002CF3E6 /* SGAFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1594EA21384F247009CE606 /* usbOverdriveNote.png in Resources */ = {isa = PBXBuildFile; fileRef = C1594EA11384F247009CE606 /* usbOverdriveNote.png */; };
@@ -252,9 +252,9 @@
 		C184180E1455AA2A007D8EE6 /* TKImageChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C184180D1455AA2A007D8EE6 /* TKImageChannelCell.m */; };
 		C1862CF41642908B0019B703 /* CompressKernel.cu in Resources */ = {isa = PBXBuildFile; fileRef = C1FEA97E125E763700CA78FF /* CompressKernel.cu */; };
 		C1862CF5164290900019B703 /* ConvolveKernel.cu in Resources */ = {isa = PBXBuildFile; fileRef = C1FEA97F125E763700CA78FF /* ConvolveKernel.cu */; };
-		C186404A159C2F0D009D15FB /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1864047159C2F0C009D15FB /* GLKit.framework */; };
-		C186404B159C2F0D009D15FB /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1864048159C2F0C009D15FB /* SceneKit.framework */; };
-		C186404C159C2F0D009D15FB /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1864049159C2F0D009D15FB /* VideoToolbox.framework */; };
+		C186404A159C2F0D009D15FB /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1864047159C2F0C009D15FB /* GLKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C186404B159C2F0D009D15FB /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1864048159C2F0C009D15FB /* SceneKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C186404C159C2F0D009D15FB /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1864049159C2F0D009D15FB /* VideoToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C189820C161A377500335863 /* SGA.icns in Resources */ = {isa = PBXBuildFile; fileRef = C189820B161A377500335863 /* SGA.icns */; };
 		C189820F161A37F700335863 /* MDSGADocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C189820E161A37F700335863 /* MDSGADocument.m */; };
 		C1898210161A466E00335863 /* NVThread.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C180E37914728E1B0001C07F /* NVThread.framework */; };
