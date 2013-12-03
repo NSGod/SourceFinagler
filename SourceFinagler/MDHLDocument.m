@@ -113,8 +113,15 @@ static NSInteger copyTag = 0;
 
 @implementation MDHLDocument
 
-@synthesize image, kind, outlineViewIsReloadingData, version, isSearching;
-@dynamic shouldShowInvisibleItems, searchPredicate;
+@synthesize image;
+@synthesize kind;
+@synthesize outlineViewIsReloadingData;
+@synthesize version;
+@synthesize isSearching;
+
+@dynamic shouldShowInvisibleItems;
+@dynamic searchPredicate;
+
 
 + (void)initialize {
 	SInt32 MDFullSystemVersion = 0;
@@ -156,16 +163,14 @@ static NSInteger copyTag = 0;
 		copyOperationsAndTags = [[NSMutableDictionary alloc] init];
 		
 		if (TKSystemVersion >= TKLeopard) {
-			if (!MDPerformingBatchOperation) {
-				NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsLeopardKey forAppIdentifier:MDSystemSoundEffectsLeopardBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
-				
-				/*	enabled is an NSNumber, not a YES or NO value. If enabled is nil, we assume the default sound effect setting, which is enabled. Only if enabled is non-nil do we have an actual YES or NO answer to examine	*/
-				
-				if (enabled) {
-					MDPlaySoundEffects = (BOOL)[enabled intValue];
-				} else {
-					MDPlaySoundEffects = YES;
-				}
+			NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsLeopardKey forAppIdentifier:MDSystemSoundEffectsLeopardBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
+			
+			/*	enabled is an NSNumber, not a YES or NO value. If enabled is nil, we assume the default sound effect setting, which is enabled. Only if enabled is non-nil do we have an actual YES or NO answer to examine	*/
+			
+			if (enabled) {
+				MDPlaySoundEffects = (BOOL)[enabled intValue];
+			} else {
+				MDPlaySoundEffects = YES;
 			}
 		}
 		
@@ -316,9 +321,6 @@ static NSInteger copyTag = 0;
 	[version release];
 	
 	[kind release];
-	
-	
-//	[browserPreviewViewController release];
 	
 	[super dealloc];
 }
@@ -936,8 +938,6 @@ static NSInteger copyTag = 0;
 		browserPreviewViewController = [[MDPreviewViewController alloc] init];
 		[browserPreviewViewController loadView];
 	}
-	
-//	if (browserPreviewViewController == nil) browserPreviewViewController = [[MDPreviewViewController alloc] init];
 	return browserPreviewViewController;
 }
 
@@ -1781,7 +1781,7 @@ static NSInteger copyTag = 0;
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:MDWillSwitchViewNotification object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:MDViewKey,MDViewNameKey, [NSNumber numberWithInteger:viewMode],MDDocumentViewModeKey, [self displayName],MDDocumentNameKey, nil]];
 		
-		/*	this is for the appController, so it'll know to swap the view menu items for the suitcase rather than the main window	*/
+		/*	this is for the appController, so it'll know to swap the view menu items for the document rather than the main window	*/
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:MDDidSwitchDocumentNotification object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:viewMode],MDDocumentViewModeKey, [self displayName],MDDocumentNameKey, nil]];
 		
