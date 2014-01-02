@@ -42,27 +42,27 @@
 			
 			switch (errorCode) {
 				case VSSourceAddonNotAValidAddonFileError : {
-					[self setProblem:NSLocalizedString(@"Not a valid Source addon file", @"")];
+					[self setProblem:NSLocalizedString(@"Not a valid Source Addon file", @"")];
 					break;
 				}
 					
 				case VSSourceAddonSourceFileIsDestinationFileError : {
-					[self setProblem:NSLocalizedString(@"This addon file is already installed", @"")];
+					[self setProblem:NSLocalizedString(@"This Addon file is already installed", @"")];
 					break;
 				}
 					
 				case VSSourceAddonNoAddonInfoFoundError : {
-					[self setProblem:NSLocalizedString(@"No addoninfo.txt file could be found inside the Source addon file", @"")];
+					[self setProblem:NSLocalizedString(@"No addoninfo.txt file could be found inside the Source Addon file", @"")];
 					break;
 				}
 					
 				case VSSourceAddonAddonInfoUnreadableError : {
-					[self setProblem:NSLocalizedString(@"Couldn't read the addoninfo.txt file inside the Source addon file", @"")];
+					[self setProblem:NSLocalizedString(@"Couldn't read the addoninfo.txt file inside the Source Addon file", @"")];
 					break;
 				}
 					
 				case VSSourceAddonNoGameIDFoundInAddonInfoError : {
-					[self setProblem:NSLocalizedString(@"Didn't find a valid game ID in the addoninfo.txt file inside the Source addon file", @"")];
+					[self setProblem:NSLocalizedString(@"Didn't find a valid game ID in the addoninfo.txt file inside the Source Addon file", @"")];
 					break;
 				}
 					
