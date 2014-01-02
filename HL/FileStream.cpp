@@ -13,6 +13,9 @@
 #include "FileStream.h"
 
 
+#define MD_DEBUG 0
+
+
 using namespace HLLib;
 using namespace HLLib::Streams;
 
@@ -87,7 +90,9 @@ hlBool CFileStream::Open(hlUInt uiMode)
 	}
 #else
 	
+#if MD_DEBUG
 	printf("CFileStream::Open()\n");
+#endif
 	
 	hlInt iMode;
 	

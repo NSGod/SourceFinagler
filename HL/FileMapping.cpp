@@ -12,6 +12,11 @@
 #include "HLLib.h"
 #include "FileMapping.h"
 
+
+
+#define MD_DEBUG 0
+
+
 using namespace HLLib;
 using namespace HLLib::Mapping;
 
@@ -132,8 +137,13 @@ hlBool CFileMapping::OpenInternal(hlUInt uiMode)
 		}
 	}
 #else
+	
+	
+#if MD_DEBUG
 	printf("CFileMapping::OpenInternal()\n");
-
+#endif
+	
+	
 	hlInt iMode;
 	
 	if((uiMode & HL_MODE_READ) && (uiMode & HL_MODE_WRITE))
