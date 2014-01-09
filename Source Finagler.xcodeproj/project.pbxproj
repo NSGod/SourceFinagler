@@ -172,6 +172,7 @@
 		C14D700712F9E5C000A2FD7E /* MDTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124D5123A0A8A004674B4 /* MDTextFieldCell.m */; };
 		C151173B1443064F0042F13E /* TKImageBrowserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C151173A1443064F0042F13E /* TKImageBrowserItem.m */; };
 		C15590CA12B6E04200FD0684 /* SFTI.icns in Resources */ = {isa = PBXBuildFile; fileRef = C15590C912B6E04200FD0684 /* SFTI.icns */; };
+		C1559F1F186A41460052F595 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1559F21186A41460052F595 /* Localizable.strings */; };
 		C155C9C813A06907008151E7 /* HLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; };
 		C155C9DC13A06931008151E7 /* HLKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; };
 		C1580E891396262F00D5D4D8 /* VSPrivateInterfaces.h in Headers */ = {isa = PBXBuildFile; fileRef = C1580E871396262F00D5D4D8 /* VSPrivateInterfaces.h */; };
@@ -1210,6 +1211,7 @@
 		C155939712B71F1700FD0684 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TKImageExportPreviewView.xib; sourceTree = "<group>"; };
 		C15594F512B75C8600FD0684 /* TKImageExportPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageExportPreview.h; path = TextureFinagler/TKImageExportPreview.h; sourceTree = "<group>"; };
 		C15594F612B75C8600FD0684 /* TKImageExportPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageExportPreview.m; path = TextureFinagler/TKImageExportPreview.m; sourceTree = "<group>"; };
+		C1559F20186A41460052F595 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C1580E871396262F00D5D4D8 /* VSPrivateInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSPrivateInterfaces.h; path = SteamKit/VSPrivateInterfaces.h; sourceTree = "<group>"; };
 		C1580F10139634DA00D5D4D8 /* HLKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HLKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1580F11139634DA00D5D4D8 /* HLKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "HLKit-Info.plist"; path = "HLKit/HLKit-Info.plist"; sourceTree = "<group>"; };
@@ -2515,6 +2517,7 @@
 				C1F153931396638A00E32057 /* HLKit.h */,
 				C1F153B2139663D300E32057 /* HLKitDefines.h */,
 				C1580F11139634DA00D5D4D8 /* HLKit-Info.plist */,
+				C1559F21186A41460052F595 /* Localizable.strings */,
 				C15997DF13C793D500849C73 /* HLKit.exp */,
 				C1F15405139669D100E32057 /* Abstract superclass */,
 				C1F15406139669D500E32057 /* Concrete subclasses */,
@@ -4658,6 +4661,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1559F1F186A41460052F595 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5551,12 +5555,13 @@
 			name = TKImageExportPreviewView.xib;
 			sourceTree = "<group>";
 		};
-		C1583BBA12B3A55E00A4AE2F /* TKImageExportPanel.xib */ = {
+		C1559F21186A41460052F595 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C1583BB812B3A55900A4AE2F /* English */,
+				C1559F20186A41460052F595 /* en */,
 			);
-			name = TKImageExportPanel.xib;
+			name = Localizable.strings;
+			path = HLKit;
 			sourceTree = "<group>";
 		};
 		C15DD651126B205500E44BDB /* VSSourceAddonFinaglerMainMenu.xib */ = {
