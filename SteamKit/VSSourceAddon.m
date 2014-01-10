@@ -1,9 +1,9 @@
 //
 //  VSSourceAddon.m
-//  Source Finagler
+//  Steam Kit
 //
 //  Created by Mark Douma on 11/15/2010.
-//  Copyright 2010 Mark Douma LLC. All rights reserved.
+//  Copyright © 2010-2014 Mark Douma LLC. All rights reserved.
 //
 
 #import "VSSourceAddon.h"

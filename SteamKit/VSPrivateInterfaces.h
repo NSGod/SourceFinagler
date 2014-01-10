@@ -1,6 +1,6 @@
 //
 //  VSPrivateInterfaces.h
-//  Source Finagler
+//  Steam Kit
 //
 //  Created by Mark Douma on 6/1/2011.
 //  Copyright (c) 2011 Mark Douma LLC. All rights reserved.

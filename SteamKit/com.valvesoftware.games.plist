@@ -27,7 +27,7 @@
 				<key>CFBundleExecutable</key>
 				<string>hl2_osx</string>
 				<key>CFBundleGetInfoString</key>
-				<string>Garry&apos;s Mod, (c) 2013 Garry Newman. All rights reserved.</string>
+				<string>Garry&apos;s Mod, (c) 2014 Garry Newman. All rights reserved.</string>
 				<key>CFBundleIdentifier</key>
 				<string>com.garrysmod.GarrysMod</string>
 				<key>CFBundleInfoDictionaryVersion</key>
@@ -45,7 +45,7 @@
 				<key>CFBundleVersion</key>
 				<string>100</string>
 				<key>NSHumanReadableCopyright</key>
-				<string>Copyright (c) 2013 Garry Newman. All rights reserved.</string>
+				<string>Copyright (c) 2014 Garry Newman. All rights reserved.</string>
 			</dict>
 		</dict>
 		<key>com.garrysmod.GarrysMod13Beta</key>
@@ -69,7 +69,7 @@
 				<key>CFBundleExecutable</key>
 				<string>hl2_osx</string>
 				<key>CFBundleGetInfoString</key>
-				<string>Garry&apos;s Mod 13 Beta, (c) 2013 Garry Newman. All rights reserved.</string>
+				<string>Garry&apos;s Mod 13 Beta, (c) 2014 Garry Newman. All rights reserved.</string>
 				<key>CFBundleIdentifier</key>
 				<string>com.garrysmod.GarrysMod13Beta</string>
 				<key>CFBundleInfoDictionaryVersion</key>
@@ -87,7 +87,7 @@
 				<key>CFBundleVersion</key>
 				<string>100</string>
 				<key>NSHumanReadableCopyright</key>
-				<string>Copyright (c) 2013 Garry Newman. All rights reserved.</string>
+				<string>Copyright (c) 2014 Garry Newman. All rights reserved.</string>
 			</dict>
 		</dict>
 		<key>com.valvesoftware.Portal</key>
@@ -113,7 +113,7 @@
 				<key>CFBundleExecutable</key>
 				<string>hl2_osx</string>
 				<key>CFBundleGetInfoString</key>
-				<string>Portal, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Portal, (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 				<key>CFBundleIdentifier</key>
 				<string>com.valvesoftware.Portal</string>
 				<key>CFBundleInfoDictionaryVersion</key>
@@ -131,7 +131,7 @@
 				<key>CFBundleVersion</key>
 				<string>100</string>
 				<key>NSHumanReadableCopyright</key>
-				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Copyright (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 			</dict>
 		</dict>
 		<key>com.valvesoftware.Portal2</key>
@@ -155,7 +155,7 @@
 				<key>CFBundleExecutable</key>
 				<string>portal2_osx</string>
 				<key>CFBundleGetInfoString</key>
-				<string>Portal 2, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Portal 2, (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 				<key>CFBundleIdentifier</key>
 				<string>com.valvesoftware.Portal2</string>
 				<key>CFBundleInfoDictionaryVersion</key>
@@ -173,7 +173,7 @@
 				<key>CFBundleVersion</key>
 				<string>100</string>
 				<key>NSHumanReadableCopyright</key>
-				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Copyright (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 			</dict>
 		</dict>
 		<key>com.valvesoftware.Half-Life2</key>
@@ -199,7 +199,7 @@
 				<key>CFBundleExecutable</key>
 				<string>hl2_osx</string>
 				<key>CFBundleGetInfoString</key>
-				<string>Half-Life 2, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Half-Life 2, (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 				<key>CFBundleIdentifier</key>
 				<string>com.valvesoftware.Half-Life2</string>
 				<key>CFBundleInfoDictionaryVersion</key>
@@ -217,7 +217,7 @@
 				<key>CFBundleVersion</key>
 				<string>100</string>
 				<key>NSHumanReadableCopyright</key>
-				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Copyright (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 			</dict>
 		</dict>
 		<key>com.valvesoftware.Half-Life2-Deathmatch</key>
@@ -243,7 +243,7 @@
 				<key>CFBundleExecutable</key>
 				<string>hl2_osx</string>
 				<key>CFBundleGetInfoString</key>
-				<string>Half-Life 2: Deathmatch, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Half-Life 2: Deathmatch, (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 				<key>CFBundleIdentifier</key>
 				<string>com.valvesoftware.Half-Life2-Deathmatch</string>
 				<key>CFBundleInfoDictionaryVersion</key>
@@ -261,7 +261,7 @@
 				<key>CFBundleVersion</key>
 				<string>100</string>
 				<key>NSHumanReadableCopyright</key>
-				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Copyright (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 			</dict>
 		</dict>
 		<key>com.valvesoftware.Half-Life2-EpisodeOne</key>
@@ -285,7 +285,7 @@
 				<key>CFBundleExecutable</key>
 				<string>hl2_osx</string>
 				<key>CFBundleGetInfoString</key>
-				<string>Half-Life 2: Episode One, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Half-Life 2: Episode One, (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 				<key>CFBundleIdentifier</key>
 				<string>com.valvesoftware.Half-Life2-EpisodeOne</string>
 				<key>CFBundleInfoDictionaryVersion</key>
@@ -303,7 +303,7 @@
 				<key>CFBundleVersion</key>
 				<string>100</string>
 				<key>NSHumanReadableCopyright</key>
-				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Copyright (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 			</dict>
 		</dict>
 		<key>com.valvesoftware.Half-Life2-EpisodeTwo</key>
@@ -327,7 +327,7 @@
 				<key>CFBundleExecutable</key>
 				<string>hl2_osx</string>
 				<key>CFBundleGetInfoString</key>
-				<string>Half-Life 2: Episode Two, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Half-Life 2: Episode Two, (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 				<key>CFBundleIdentifier</key>
 				<string>com.valvesoftware.Half-Life2-EpisodeTwo</string>
 				<key>CFBundleInfoDictionaryVersion</key>
@@ -345,7 +345,7 @@
 				<key>CFBundleVersion</key>
 				<string>100</string>
 				<key>NSHumanReadableCopyright</key>
-				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Copyright (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 			</dict>
 		</dict>
 		<key>com.valvesoftware.TeamFortress2</key>
@@ -371,7 +371,7 @@
 				<key>CFBundleExecutable</key>
 				<string>hl2_osx</string>
 				<key>CFBundleGetInfoString</key>
-				<string>Team Fortress 2, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Team Fortress 2, (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 				<key>CFBundleIdentifier</key>
 				<string>com.valvesoftware.TeamFortress2</string>
 				<key>CFBundleInfoDictionaryVersion</key>
@@ -389,7 +389,7 @@
 				<key>CFBundleVersion</key>
 				<string>100</string>
 				<key>NSHumanReadableCopyright</key>
-				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Copyright (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 			</dict>
 		</dict>
 		<key>com.valvesoftware.TeamFortress2Beta</key>
@@ -413,7 +413,7 @@
 				<key>CFBundleExecutable</key>
 				<string>hl2_osx</string>
 				<key>CFBundleGetInfoString</key>
-				<string>Team Fortress 2 Beta, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Team Fortress 2 Beta, (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 				<key>CFBundleIdentifier</key>
 				<string>com.valvesoftware.TeamFortress2Beta</string>
 				<key>CFBundleInfoDictionaryVersion</key>
@@ -431,7 +431,7 @@
 				<key>CFBundleVersion</key>
 				<string>100</string>
 				<key>NSHumanReadableCopyright</key>
-				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Copyright (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 			</dict>
 		</dict>
 		<key>com.valvesoftware.Left4Dead</key>
@@ -457,7 +457,7 @@
 				<key>CFBundleExecutable</key>
 				<string>hl2_osx</string>
 				<key>CFBundleGetInfoString</key>
-				<string>Left 4 Dead, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Left 4 Dead, (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 				<key>CFBundleIdentifier</key>
 				<string>com.valvesoftware.Left4Dead</string>
 				<key>CFBundleInfoDictionaryVersion</key>
@@ -475,7 +475,7 @@
 				<key>CFBundleVersion</key>
 				<string>100</string>
 				<key>NSHumanReadableCopyright</key>
-				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Copyright (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 			</dict>
 		</dict>
 		<key>com.valvesoftware.Left4Dead2</key>
@@ -501,7 +501,7 @@
 				<key>CFBundleExecutable</key>
 				<string>hl2_osx</string>
 				<key>CFBundleGetInfoString</key>
-				<string>Left 4 Dead 2, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Left 4 Dead 2, (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 				<key>CFBundleIdentifier</key>
 				<string>com.valvesoftware.Left4Dead2</string>
 				<key>CFBundleInfoDictionaryVersion</key>
@@ -519,7 +519,7 @@
 				<key>CFBundleVersion</key>
 				<string>100</string>
 				<key>NSHumanReadableCopyright</key>
-				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Copyright (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 			</dict>
 		</dict>
 		<key>com.valvesoftware.CounterStrikeSource</key>
@@ -545,7 +545,7 @@
 				<key>CFBundleExecutable</key>
 				<string>hl2_osx</string>
 				<key>CFBundleGetInfoString</key>
-				<string>Counter-Strike: Source, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Counter-Strike: Source, (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 				<key>CFBundleIdentifier</key>
 				<string>com.valvesoftware.CounterStrikeSource</string>
 				<key>CFBundleInfoDictionaryVersion</key>
@@ -563,7 +563,7 @@
 				<key>CFBundleVersion</key>
 				<string>100</string>
 				<key>NSHumanReadableCopyright</key>
-				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Copyright (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 			</dict>
 		</dict>
 		<key>com.valvesoftware.DayOfDefeatSource</key>
@@ -589,7 +589,7 @@
 				<key>CFBundleExecutable</key>
 				<string>hl2_osx</string>
 				<key>CFBundleGetInfoString</key>
-				<string>Day of Defeat: Source, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Day of Defeat: Source, (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 				<key>CFBundleIdentifier</key>
 				<string>com.valvesoftware.DayOfDefeatSource</string>
 				<key>CFBundleInfoDictionaryVersion</key>
@@ -607,7 +607,7 @@
 				<key>CFBundleVersion</key>
 				<string>100</string>
 				<key>NSHumanReadableCopyright</key>
-				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Copyright (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 			</dict>
 		</dict>
 		<key>com.valvesoftware.CounterStrikeGlobalOffensive</key>
@@ -631,7 +631,7 @@
 				<key>CFBundleExecutable</key>
 				<string>csgo_osx</string>
 				<key>CFBundleGetInfoString</key>
-				<string>Counter-Strike: Global Offensive, (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Counter-Strike: Global Offensive, (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 				<key>CFBundleIdentifier</key>
 				<string>com.valvesoftware.CounterStrikeGlobalOffensive</string>
 				<key>CFBundleInfoDictionaryVersion</key>
@@ -649,7 +649,7 @@
 				<key>CFBundleVersion</key>
 				<string>100</string>
 				<key>NSHumanReadableCopyright</key>
-				<string>Copyright (c) 2004-2013 Valve Corporation. All rights reserved.</string>
+				<string>Copyright (c) 2004-2014 Valve Corporation. All rights reserved.</string>
 			</dict>
 		</dict>
 	</dict>

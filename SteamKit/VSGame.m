@@ -1,9 +1,9 @@
 //
 //  VSGame.m
-//  Source Finagler
+//  Steam Kit
 //
 //  Created by Mark Douma on 6/13/2010.
-//  Copyright © 2010-2012 Mark Douma LLC. All rights reserved.
+//  Copyright © 2010-2014 Mark Douma LLC. All rights reserved.
 //
 
 
