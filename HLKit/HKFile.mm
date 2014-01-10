@@ -18,12 +18,7 @@
 
 #define HK_DEBUG 0
 
-#define HK_LAZY_INIT 1
-
-
 //#define HK_COPY_BUFFER_SIZE 524288
-
-//#define HK_COPY_BUFFER_SIZE 262144
 
 #define HK_COPY_BUFFER_SIZE 262144
 
@@ -46,46 +41,6 @@ using namespace HLLib::Streams;
 		isVisible = isExtractable;
 		
 		isLeaf = YES;
-		
-#if !(HK_LAZY_INIT)
-		const hlChar *cName = static_cast<const CDirectoryFile *>(_privateData)->GetName();
-		if (cName) name = [[NSString stringWithCString:cName encoding:NSUTF8StringEncoding] retain];
-		nameExtension = [[name pathExtension] retain];
-		
-		hlUInt fileSize = 0;
-		static_cast<const CDirectoryFile *>(_privateData)->GetPackage()->GetFileSize(static_cast<const CDirectoryFile *>(_privateData), fileSize);
-		size = [[NSNumber numberWithUnsignedLongLong:(unsigned long long)fileSize] retain];
-		
-		type = (NSString *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (CFStringRef)nameExtension, NULL);
-		
-		kind = [[[NSWorkspace sharedWorkspace] localizedDescriptionForType:type] retain];
-		
-		if (kind == nil) {
-			LSCopyKindStringForTypeInfo(kLSUnknownType, kLSUnknownCreator, (CFStringRef)nameExtension, (CFStringRef *)&kind);
-		}
-		
-		fileType = HKFileTypeOther;
-		
-		NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
-		
-		if (isExtractable) {
-			if ([workspace type:type conformsToType:(NSString *)kUTTypeHTML]) {
-				fileType = HKFileTypeHTML;
-			} else if ([workspace type:type conformsToType:(NSString *)kUTTypeText]) {
-				fileType = HKFileTypeText;
-			} else if ([workspace type:type conformsToType:(NSString *)kUTTypeImage]) {
-				fileType = HKFileTypeImage;
-			} else if ([workspace type:type conformsToType:(NSString *)kUTTypeAudio]) {
-				fileType = HKFileTypeSound;
-			} else if ([workspace type:type conformsToType:(NSString *)kUTTypeMovie]) {
-				fileType = HKFileTypeMovie;
-			}
-			
-		} else {
-			fileType = HKFileTypeNotExtractable;
-		}
-#endif
-		
 	}
 	return self;
 }
@@ -98,12 +53,8 @@ using namespace HLLib::Streams;
 	[super dealloc];
 }
 
-#if (HK_LAZY_INIT)
 
 - (NSString *)name {
-#if HK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	if (name == nil) {
 		const hlChar *cName = static_cast<const CDirectoryFile *>(_privateData)->GetName();
 		if (cName) name = [[NSString stringWithCString:cName encoding:NSUTF8StringEncoding] retain];
@@ -111,28 +62,22 @@ using namespace HLLib::Streams;
 	return name;
 }
 
+
 - (NSString *)nameExtension {
-#if HK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	if (nameExtension == nil) nameExtension = [[[self name] pathExtension] retain];
 	return nameExtension;
 }
 
+
 - (NSString *)type {
-#if HK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	if (type == nil) {
 		type = (NSString *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (CFStringRef)[self nameExtension], NULL);
 	}
 	return type;
 }
 
+
 - (NSString *)kind {
-#if HK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	if (kind == nil) {
 		kind = [[[NSWorkspace sharedWorkspace] localizedDescriptionForType:[self type]] retain];
 		if (kind == nil) {
@@ -141,11 +86,9 @@ using namespace HLLib::Streams;
 	}
 	return kind;
 }
-		
+
+
 - (NSNumber *)size {
-#if HK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	if (size == nil) {
 		hlUInt fileSize = 0;
 		static_cast<const CDirectoryFile *>(_privateData)->GetPackage()->GetFileSize(static_cast<const CDirectoryFile *>(_privateData), fileSize);
@@ -154,10 +97,8 @@ using namespace HLLib::Streams;
 	return size;
 }
 
+
 - (HKFileType)fileType {
-#if HK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	if (fileType == HKFileTypeNone) {
 		
 		fileType = HKFileTypeOther;
@@ -184,8 +125,6 @@ using namespace HLLib::Streams;
 	}
 	return fileType;
 }
-
-#endif
 
 
 - (BOOL)beginWritingToFile:(NSString *)aPath assureUniqueFilename:(BOOL)assureUniqueFilename resultingPath:(NSString **)resultingPath error:(NSError **)outError {
@@ -243,7 +182,6 @@ using namespace HLLib::Streams;
 #endif
 	if (outError) *outError = nil;
 	
-//	hlByte buffer[HL_DEFAULT_COPY_BUFFER_SIZE];
 	hlByte buffer[HK_COPY_BUFFER_SIZE];
 	
 	unsigned long long currentBytesRead = static_cast<IStream *>(_iS)->Read(buffer, sizeof(buffer));
@@ -252,8 +190,6 @@ using namespace HLLib::Streams;
 		if (partialBytesLength) *partialBytesLength = 0;
 		return NO;
 	}
-	
-//	NSData *writeData = [[NSData alloc] initWithBytes:buffer length:currentBytesRead];
 	
 	NSData *writeData = [[NSData alloc] initWithBytesNoCopy:buffer length:currentBytesRead freeWhenDone:NO];
 	
@@ -355,7 +291,6 @@ using namespace HLLib::Streams;
 	
 	unsigned long long totalBytesWritten = 0;
 	
-//	hlByte buffer[HL_DEFAULT_COPY_BUFFER_SIZE];
 	hlByte buffer[HK_COPY_BUFFER_SIZE];
 	
 	while (hlTrue) {
@@ -400,7 +335,6 @@ using namespace HLLib::Streams;
 			if (pInput->Open(HL_MODE_READ)) {
 				
 				hlUInt totalBytesExtracted = 0;
-//				hlByte buffer[HL_DEFAULT_COPY_BUFFER_SIZE];
 				hlByte buffer[HK_COPY_BUFFER_SIZE];
 				
 				while (hlTrue) {
