@@ -8,7 +8,6 @@
 
 
 #import <SteamKit/VSSteamManager.h>
-#import <SteamKit/VSGame.h>
 #import "VSPrivateInterfaces.h"
 
 #import <HLKit/HLKit.h>
@@ -48,18 +47,14 @@ static NSString * const VSSourceFinaglerAgentNameKey					= @"SourceFinaglerAgent
 
 static NSString * const VSSourceFinaglerAgentBundleIdentifierKey		= @"com.markdouma.SourceFinaglerAgent";
 
-static NSString * const VSTimeMachineDatabaseNameKey				= @"Backups.backupdb";
-
 static NSString * const VSSteamLaunchGameURL						= @"steam://run/";
 
 
-NSString * const VSSourceAddonErrorDomain							= @"com.markdouma.SourceFinagler.SourceAddonErrorDomain";
-NSString * const VSSourceAddonGameIDKey								= @"VSSourceAddonGameID";
-
 NSString * const VSSourceAddonFolderNameKey							= @"addons";
 
-static NSString * const VSSourceAddonInfoNameKey					= @"addoninfo.txt";
-static NSString * const VSSourceAddonSteamAppIDKey					= @"addonSteamAppID";
+// for background thread dictionary
+static NSString * const VSSourceAddonInstallMethodKey				= @"VSSourceAddonInstallMethod";
+static NSString * const VSSourceAddonKey							= @"VSSourceAddon";
 
 
 
@@ -95,9 +90,9 @@ static VSSteamManager *sharedManager = nil;
 
 + (VSSteamManager *)defaultManager {
 	@synchronized(self) {
-	if (sharedManager == nil) {
-		sharedManager = [[super allocWithZone:NULL] init];
-	}
+		if (sharedManager == nil) {
+			sharedManager = [[super allocWithZone:NULL] init];
+		}
 	}
 	return sharedManager;
 }
@@ -532,29 +527,29 @@ static NSUInteger locateSteamAppsCount = 0;
 	if (steamAppsPath) {
 		isOriginalFolder = [proposedPath isEqualToString:steamAppsPath];
 	}
-	// TODO: these strings should be localized
+	
 	if (itemExists && isSteamAppsFolder && !isOriginalFolder && !isOriginalSymbolicLink) {
 		if (errorDescription) {
 			*errorDescription = @"";
 		}
 	} else if (itemExists && isSteamAppsFolder && !isOriginalFolder && isOriginalSymbolicLink) {
 		if (errorDescription) {
-			*errorDescription = [NSString stringWithFormat:@"Cannot choose original %@ shortcut", VSSteamAppsDirectoryNameKey];
+			*errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Cannot choose original %@ shortcut", @""), VSSteamAppsDirectoryNameKey];
 		}
 		isValid = NO;
 	} else if (itemExists && !isSteamAppsFolder) {
 		if (errorDescription) {
-			*errorDescription = [NSString stringWithFormat:@"Folder must be named \"%@\"", VSSteamAppsDirectoryNameKey];
+			*errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Folder must be named \"%@\"", @""), VSSteamAppsDirectoryNameKey];
 		}
 		isValid = NO;
 	} else if (!itemExists) {
 		if (errorDescription) {
-			*errorDescription = @"Item does not exist";
+			*errorDescription = NSLocalizedString(@"Item does not exist", @"");
 		}
 		isValid = NO;
 	} else if (isOriginalFolder) {
 		if (errorDescription) {
-			*errorDescription = [NSString stringWithFormat:@"Cannot choose original %@ folder", VSSteamAppsDirectoryNameKey];
+			*errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Cannot choose original %@ folder", @""), VSSteamAppsDirectoryNameKey];
 		}
 		isValid = NO;
 	}
@@ -579,13 +574,13 @@ static NSUInteger locateSteamAppsCount = 0;
 	
 	if ([[attributes fileType] isEqualToString:NSFileTypeSymbolicLink]) {
 		// item is a broken symbolic link
-		if (![fileManager moveItemAtPath:defaultSteamAppsPath toPath:[[defaultSteamAppsPath stringByAppendingString:@" (Original)"] stringByAssuringUniqueFilename] error:&localError]) {
+		if (![fileManager moveItemAtPath:defaultSteamAppsPath toPath:[[defaultSteamAppsPath stringByAppendingString:NSLocalizedString(@" (Original)", @"")] stringByAssuringUniqueFilename] error:&localError]) {
 			NSLog(@"[%@ %@] error == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), localError);
 			if (outError) *outError = localError;
 		}
 	} else {
 		if ([fileManager fileExistsAtPath:defaultSteamAppsPath]) {
-			if (![fileManager moveItemAtPath:defaultSteamAppsPath toPath:[[defaultSteamAppsPath stringByAppendingString:@" (Original)"] stringByAssuringUniqueFilename] error:&localError]) {
+			if (![fileManager moveItemAtPath:defaultSteamAppsPath toPath:[[defaultSteamAppsPath stringByAppendingString:NSLocalizedString(@" (Original)", @"")] stringByAssuringUniqueFilename] error:&localError]) {
 				NSLog(@"[%@ %@] error == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), localError);
 				if (outError) *outError = localError;
 			}
@@ -683,7 +678,7 @@ static inline NSString *VSMakeLabelFromBundleIdentifier(NSString *bundleIdentifi
 	
 	@synchronized(self) {
 		
-		NSString *bundleIdentifier = [[game infoDictionary] objectForKey:(NSString *)kCFBundleIdentifierKey];
+		NSString *bundleIdentifier = [[game infoDictionary] objectForKey:(id)kCFBundleIdentifierKey];
 		if (bundleIdentifier == nil) {
 			NSLog(@"[%@ %@] *** NOTICE: game.infoDictionary.kCFBundleIdentifierKey == nil!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 			return NO;
@@ -889,12 +884,28 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 	return [gamePathsAndGames objectForKey:VSMakeGamePathKey(aPath)];
 }
 
+
+- (VSGame *)gameWithGameID:(VSGameID)anID {
+#if VS_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (!locatedSteamApps) [self locateSteamApps];
+	for (VSGame *game in self.games) {
+		if (game.gameID == anID) return game;
+	}
+	return nil;
+}
+
+
 - (NSArray *)games {
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if (!locatedSteamApps) [self locateSteamApps];
-	return [[[gamePathsAndGames allValues] copy] autorelease];
+	
+	@synchronized(gamePathsAndGames) {
+		return [[[gamePathsAndGames allValues] copy] autorelease];
+	}
 }
 
 
@@ -903,7 +914,9 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if (!locatedSteamApps) [self locateSteamApps];
-	return [[[runningGamePathsAndGames allValues] copy] autorelease];
+	@synchronized(runningGamePathsAndGames) {
+		return [[[runningGamePathsAndGames allValues] copy] autorelease];
+	}
 }
 
 
@@ -1195,176 +1208,128 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 }
 
 
-
-- (BOOL)installAddonAtPath:(NSString *)sourceFilePath method:(VSSourceAddonInstallMethod)installMethod resultingPath:(NSString **)resultingPath resultingGame:(VSGame **)resultingGame overwrite:(BOOL)overwrite error:(NSError **)outError {
+- (void)installSourceAddon:(VSSourceAddon *)sourceAddon usingMethod:(VSSourceAddonInstallMethod)installMethod {
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (sourceFilePath == nil) {
-		if (resultingPath) *resultingPath = nil;
-		if (resultingGame) *resultingGame = nil;
-		if (outError) *outError = [NSError errorWithDomain:VSSourceAddonErrorDomain code:VSSourceAddonNotAValidAddonFileError userInfo:nil];
-		return NO;
-	}
+	NSParameterAssert(sourceAddon != nil);
 	
-	if (![[[sourceFilePath pathExtension] lowercaseString] isEqualToString:@"vpk"]) {
-		if (resultingPath) *resultingPath = nil;
-		if (resultingGame) *resultingGame = nil;
-		if (outError) *outError = [NSError errorWithDomain:VSSourceAddonErrorDomain code:VSSourceAddonNotAValidAddonFileError userInfo:nil];
-		return NO;
-	}
-	
-	if (resultingPath) *resultingPath = sourceFilePath;
-	if (resultingGame) *resultingGame = nil;
-	if (outError) *outError = nil;
-	
-	if (!locatedSteamApps) [self locateSteamApps];
-	
-	NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
-	BOOL isDir;
-	
-	if (! ([fileManager fileExistsAtPath:sourceFilePath isDirectory:&isDir] && !isDir)) {
-		NSLog(@"[%@ %@] item at path (%@) is a folder, not a file!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sourceFilePath);
-		if (outError) *outError = [NSError errorWithDomain:VSSourceAddonErrorDomain code:VSSourceAddonNotAValidAddonFileError userInfo:nil];
-		return NO;
-	}
-	
-	HKVPKFile *file = [[[HKVPKFile alloc] initWithContentsOfFile:sourceFilePath showInvisibleItems:YES sortDescriptors:nil error:outError] autorelease];
-	HKItem *addonInfoItem = [file itemAtPath:VSSourceAddonInfoNameKey];
+	[NSThread detachNewThreadSelector:@selector(processSourceAddonInBackground:)
+							 toTarget:self
+						   withObject:[NSDictionary dictionaryWithObjectsAndKeys:sourceAddon,VSSourceAddonKey,
+									   [NSNumber numberWithUnsignedInteger:installMethod],VSSourceAddonInstallMethodKey, nil]];
+}
+
+
+- (void)processSourceAddonInBackground:(NSDictionary *)sourceAddonInfo {
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 #if VS_DEBUG
-//	NSLog(@"[%@ %@] addonInfoItem == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), addonInfoItem);
+	NSLog(@"[%@ %@] sourceAddonInfo == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sourceAddonInfo);
 #endif
 	
+	VSSourceAddon *sourceAddon = [sourceAddonInfo objectForKey:VSSourceAddonKey];
+	VSSourceAddonInstallMethod installMethod = [[sourceAddonInfo objectForKey:VSSourceAddonInstallMethodKey] unsignedIntegerValue];
 	
-	if (addonInfoItem == nil || ![addonInfoItem isKindOfClass:[HKFile class]] || [addonInfoItem fileType] != HKFileTypeText) {
-		NSLog(@"[%@ %@] item at path (%@) does not appear to contain a valid addoninfo.txt file!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sourceFilePath);
-		if (outError) *outError = [NSError errorWithDomain:VSSourceAddonErrorDomain code:VSSourceAddonNoAddonInfoFoundError userInfo:nil];
-		return NO;
-	}
-	
-	NSString *stringValue = [(HKFile *)addonInfoItem stringValueByExtractingToTempFile:YES];
-	if (stringValue == nil) {
-		stringValue = [(HKFile *)addonInfoItem stringValue];
-	}
-	
-	if (stringValue == nil) {
-		NSLog(@"[%@ %@] could not determine string encoding of addoninfo.txt file!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-		if (outError) *outError = [NSError errorWithDomain:VSSourceAddonErrorDomain code:VSSourceAddonAddonInfoUnreadableError userInfo:nil];
-		return NO;
-	}
-	
-	
-//	NSData *data = [(HKFile *)addonInfoItem data];
-	
+	switch (sourceAddon.sourceAddonStatus) {
+			
+		case VSSourceAddonValidAddon : {
+			
+			NSURL *originalSourceAddonURL = [[[sourceAddon URL] retain] autorelease];
+			
+			VSGame *game = sourceAddon.game;
+			
+			NSURL *sourceAddonsFolderURL = game.sourceAddonsFolderURL;
+			
+			NSURL *targetSourceAddonURL = [sourceAddonsFolderURL URLByAppendingPathComponent:sourceAddon.URL.lastPathComponent];
+			
+			NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+			NSError *error = nil;
+			
+			NSURL *tempDirURL = [fileManager URLForDirectory:NSItemReplacementDirectory
+													inDomain:NSUserDomainMask
+										   appropriateForURL:targetSourceAddonURL
+													  create:YES
+													   error:&error];
+			
 #if VS_DEBUG
-//	NSLog(@"data == %@", data);
+			NSLog(@"[%@ %@] tempDirURL == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), tempDirURL);
 #endif
-	
-	
-//#if VS_DEBUG
-//	NSLog(@"stringValue == %@", stringValue);
-//#endif
-	
-	NSArray *words = [stringValue componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	
-	NSMutableArray *revisedWords = [NSMutableArray array];
-	
-	for (NSString *word in words) {
-		if (![word isEqualToString:@""]) {
-			[revisedWords addObject:word];
+			
+			if (tempDirURL == nil) {
+				NSLog(@"[%@ %@] ERROR: tempDirURL == nil; error == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), error);
+				
+			}
+			
+			NSURL *tempSourceAddonURL = [tempDirURL URLByAppendingPathComponent:sourceAddon.URL.lastPathComponent];
+			
+			if (![fileManager copyItemAtURL:sourceAddon.URL toURL:tempSourceAddonURL error:&error]) {
+				NSLog(@"[%@ %@] ERROR: failed to copyItemAtURL:toURL:error:; error == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), error);
+				
+				goto cleanup;
+				
+			}
+			
+			NSURL *resultingItemURL = nil;
+			
+			if ([fileManager replaceItemAtURL:targetSourceAddonURL
+								withItemAtURL:tempSourceAddonURL
+							   backupItemName:nil
+									  options:0
+							 resultingItemURL:&resultingItemURL
+										error:&error]) {
+				
+#if VS_DEBUG
+				NSLog(@"[%@ %@] SUCCESS: resultingItemURL == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), resultingItemURL);
+#endif
+				
+				sourceAddon.URL = resultingItemURL;
+				sourceAddon.installed = YES;
+				
+				if (installMethod == VSSourceAddonInstallByMoving) {
+					if (![fileManager removeItemAtURL:originalSourceAddonURL error:&error]) {
+						NSLog(@"[%@ %@] ERROR: failed to removeItemAtURL:error:; error == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), error);
+					}
+				}
+				
+			} else {
+				NSLog(@"[%@ %@] ERROR: failed to replaceItemAtURL::::; error == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), error);
+			}
+			
+		cleanup:
+			
+			if (![fileManager removeItemAtURL:tempDirURL error:&error]) {
+				NSLog(@"[%@ %@] ERROR: failed to remove tempDir; error == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), error);
+			}
 		}
-	}
-	
-	
-	NSUInteger count = [revisedWords count];
-	NSUInteger keyIndex = [revisedWords indexOfObject:VSSourceAddonSteamAppIDKey];
-	
-#if VS_DEBUG
-//	NSLog(@"revisedWords == %@, count == %lu, keyIndex == %lu", revisedWords, count, keyIndex);
-#endif
-	
-	if (keyIndex == NSNotFound || !(keyIndex + 1 < count)) {
-		NSLog(@"[%@ %@] failed to find %@ key and/or value in addoninfo.txt in (%@)!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), VSSourceAddonSteamAppIDKey, sourceFilePath);
-		NSLog(@"[%@ %@] stringValue == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), stringValue);
-		if (outError) *outError = [NSError errorWithDomain:VSSourceAddonErrorDomain code:VSSourceAddonNoGameIDFoundInAddonInfoError userInfo:nil];
-		return NO;
-	}
-	
-	NSString *addonSteamAppIDString = [revisedWords objectAtIndex:keyIndex + 1];
-	NSInteger addonSteamAppID = [addonSteamAppIDString integerValue];
-#if VS_DEBUG
-	NSLog(@"addonSteamAppIDString == %@, addonSteamAppID == %ld", addonSteamAppIDString, (long)addonSteamAppID);
-#endif
-	VSGame *game = nil;
-	
-	NSArray *allGames = [gamePathsAndGames allValues];
-	
-	for (VSGame *potentialGame in allGames) {
-		if ([potentialGame gameID] == addonSteamAppID) {
-			game = potentialGame;
 			break;
+			
+		default:
+			break;
+	}
+	
+	
+	[self performSelectorOnMainThread:@selector(finishProcessingSourceAddonOnMainThread:) withObject:sourceAddon waitUntilDone:NO];
+	
+	[pool release];
+}
+
+
+- (void)finishProcessingSourceAddonOnMainThread:(VSSourceAddon *)sourceAddon {
+#if VS_DEBUG
+	NSLog(@"[%@ %@] sourceAddon == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sourceAddon);
+#endif
+	
+	if (sourceAddon.isInstalled) {
+		if ([delegate respondsToSelector:@selector(didInstallSourceAddon:)]) {
+			[delegate didInstallSourceAddon:sourceAddon];
 		}
-	}
-	
-	if (game == nil) {
-		NSLog(@"[%@ %@] could not find game for gameID == %ld for (%@)!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (long)addonSteamAppID, sourceFilePath);
-		NSLog(@"[%@ %@] stringValue == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), stringValue);
-		
-		if (outError) *outError = [NSError errorWithDomain:VSSourceAddonErrorDomain
-													  code:VSSourceAddonGameNotFoundError
-												  userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:addonSteamAppID],VSSourceAddonGameIDKey, nil]];
-		return NO;
-	}
-	NSString *addonsFolderPath = game.addonsFolderURL.path;
-	if (addonsFolderPath == nil) {
-		NSLog(@"[%@ %@] addonsFolderPath is nil for %@ for (%@)!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), game, sourceFilePath);
-		if (outError) *outError = [NSError errorWithDomain:VSSourceAddonErrorDomain code:VSSourceAddonGameNotFoundError userInfo:nil];
-		return NO;
-	}
-	
-	NSString *destPath = [addonsFolderPath stringByAppendingPathComponent:[sourceFilePath lastPathComponent]];
-	
-	if ([destPath isEqualToString:sourceFilePath]) {
-		NSLog(@"[%@ %@] source and destination item are the same file; not overwriting!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-		if (outError) *outError = [NSError errorWithDomain:VSSourceAddonErrorDomain code:VSSourceAddonSourceFileIsDestinationFileError userInfo:nil];
-		return NO;
-	}
-	
-	NSArray *currentAddonFilenames = [fileManager contentsOfDirectoryAtPath:addonsFolderPath error:outError];
-	
-	if (currentAddonFilenames == nil) {
-		return NO;
-	}
-	
-	if (overwrite == NO && [currentAddonFilenames containsObject:[sourceFilePath lastPathComponent]]) {
-		NSLog(@"[%@ %@] addons folder already contains an item named '%@' && overwrite == NO; not copying item...", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [sourceFilePath lastPathComponent]);
-		return NO;
-	}
-	if ([currentAddonFilenames containsObject:[sourceFilePath lastPathComponent]]) {
-		if (![fileManager removeItemAtPath:destPath error:outError]) {
-//			if (outError) *outError = [NSError errorWithDomain:VSSourceAddonErrorDomain code:VSSourceAddonSourceFileIsDestinationFileError userInfo:nil];
-			return NO;
-		}
-	}
-	
-	if (installMethod == VSSourceAddonInstallByMoving) {
-		if (![fileManager moveItemAtPath:sourceFilePath toPath:destPath error:outError]) {
-			NSLog(@"[%@ %@] failed to move item!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-			return NO;
-		}
-		
 	} else {
-		if (![fileManager copyItemAtPath:sourceFilePath toPath:destPath error:outError]) {
-			NSLog(@"[%@ %@] failed to copy item!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-			return NO;
+		if ([delegate respondsToSelector:@selector(didFailToInstallSourceAddon:)]) {
+			[delegate didFailToInstallSourceAddon:sourceAddon];
 		}
 	}
-	
-	if (resultingPath) *resultingPath = destPath;
-	if (resultingGame) *resultingGame = game;
-	return YES;
-	
+		
 }
 
 

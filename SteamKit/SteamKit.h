@@ -9,4 +9,5 @@
 #import <SteamKit/SteamKitDefines.h>
 #import <SteamKit/VSSteamManager.h>
 #import <SteamKit/VSGame.h>
+#import <SteamKit/VSSourceAddon.h>
 

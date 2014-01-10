@@ -9,16 +9,23 @@
 
 #import <Foundation/NSObject.h>
 #import <SteamKit/SteamKitDefines.h>
+#import <SteamKit/VSGame.h>
 
 
 @class NSString, NSError, NSDictionary, NSMutableDictionary, NSArray;
-@class VSGame;
+@class VSSourceAddon;
 
 
 @protocol VSSteamManagerDelegate <NSObject>
 
+@optional
+
 - (void)gameDidLaunch:(VSGame *)game;
 - (void)gameDidTerminate:(VSGame *)game;
+
+
+- (void)didInstallSourceAddon:(VSSourceAddon *)sourceAddon;
+- (void)didFailToInstallSourceAddon:(VSSourceAddon *)sourceAddon;
 
 @end
 
@@ -104,6 +111,7 @@ typedef NSUInteger VSSourceFinaglerLaunchAgentStatus;
 
 
 - (VSGame *)gameWithPath:(NSString *)aPath;
+- (VSGame *)gameWithGameID:(VSGameID)anID;
 
 
 @property (assign) BOOL monitoringGames;
@@ -144,19 +152,11 @@ typedef NSUInteger VSSourceAddonInstallMethod;
 
 
 
-enum {
-	VSSourceAddonNotAValidAddonFileError				= 6000,
-	VSSourceAddonSourceFileIsDestinationFileError		= 6001,
-	VSSourceAddonNoAddonInfoFoundError					= 6002,
-	VSSourceAddonAddonInfoUnreadableError				= 6003,
-	VSSourceAddonNoGameIDFoundInAddonInfoError			= 6004,
-	VSSourceAddonGameNotFoundError						= 6005
-};
 
+@interface VSSteamManager (VSSourceAddonAdditions)
 
-@interface VSSteamManager (VSAddonsSupport)
-
-- (BOOL)installAddonAtPath:(NSString *)sourceFilePath method:(VSSourceAddonInstallMethod)installMethod resultingPath:(NSString **)resultingPath resultingGame:(VSGame **)resultingGame overwrite:(BOOL)overwriteExisting error:(NSError **)outError;
+// raises an exception if sourceAddon == nil
+- (void)installSourceAddon:(VSSourceAddon *)sourceAddon usingMethod:(VSSourceAddonInstallMethod)installMethod;
 
 @end
 
@@ -173,8 +173,6 @@ enum {
 STEAMKIT_EXTERN NSString * const VSSteamAppsDirectoryNameKey;
 
 
-STEAMKIT_EXTERN NSString * const VSSourceAddonErrorDomain;
-STEAMKIT_EXTERN NSString * const VSSourceAddonGameIDKey;
 STEAMKIT_EXTERN NSString * const VSSourceAddonFolderNameKey;
 
 

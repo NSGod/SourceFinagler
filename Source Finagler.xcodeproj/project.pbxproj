@@ -92,6 +92,7 @@
 		C1224CD513B06EB1009AA0F4 /* HL.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1C12634123A54F0004674B4 /* HL.framework */; };
 		C1224DAA13B09351009AA0F4 /* SourceFinaglerAgent.app in Resources */ = {isa = PBXBuildFile; fileRef = C1224BEC13B06B9A009AA0F4 /* SourceFinaglerAgent.app */; };
 		C1279D3612DCB0EB0065F5D7 /* defaultPresets.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1279D3512DCB0EA0065F5D7 /* defaultPresets.plist */; };
+		C12823CC1880219400452421 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C12823CA1880219400452421 /* Localizable.strings */; };
 		C12B139917C665B50088D25C /* TKAnimationImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C12B139817C665B50088D25C /* TKAnimationImageView.m */; };
 		C12B4DAA13B7179C0096FC0E /* ForEach.h in Headers */ = {isa = PBXBuildFile; fileRef = C12B4DA913B7179B0096FC0E /* ForEach.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C12CFB5A12DFB3AE00A08A4B /* TKDDSImageRep.mm in Sources */ = {isa = PBXBuildFile; fileRef = C12DB4B4125FADE00051A751 /* TKDDSImageRep.mm */; };
@@ -1096,6 +1097,7 @@
 		C122F20614B6A5B200AA08F8 /* userDefineLang.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = userDefineLang.xml; sourceTree = "<group>"; };
 		C1267035125D1A0B00725F14 /* VAS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VAS.icns; path = Resources/VAS.icns; sourceTree = "<group>"; };
 		C1279D3512DCB0EA0065F5D7 /* defaultPresets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = defaultPresets.plist; path = TextureFinagler/defaultPresets.plist; sourceTree = "<group>"; };
+		C12823CB1880219400452421 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = SteamKit/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C129181F12E4F27C008E1878 /* TKVMTMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKVMTMaterial.h; sourceTree = "<group>"; };
 		C129182012E4F27C008E1878 /* TKVMTMaterial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKVMTMaterial.m; sourceTree = "<group>"; };
 		C12A93E211C9A3D9001D8E90 /* MDProcessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDProcessManager.h; path = SourceFinagler/MDProcessManager.h; sourceTree = "<group>"; };
@@ -2403,8 +2405,9 @@
 				C140E76C13889E6B00027DD6 /* SteamKit.h */,
 				C140E76D13889E6B00027DD6 /* SteamKitDefines.h */,
 				C140E63E13889A9400027DD6 /* SteamKit-Info.plist */,
+				C12823CA1880219400452421 /* Localizable.strings */,
 				C140E71A13889B1100027DD6 /* SteamKit_Prefix.pch */,
-				C1551E8A11D8623B00CCEDD3 /* VSSteamManager */,
+				C1551E8A11D8623B00CCEDD3 /* Classes */,
 			);
 			name = "SteamKit framework";
 			sourceTree = "<group>";
@@ -2486,7 +2489,7 @@
 			name = model;
 			sourceTree = "<group>";
 		};
-		C1551E8A11D8623B00CCEDD3 /* VSSteamManager */ = {
+		C1551E8A11D8623B00CCEDD3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				C1034A9111C5619C0054740E /* VSSteamManager.h */,
@@ -2503,7 +2506,7 @@
 				C139C68E137CCEBB00DDA21B /* hl2_osx.app */,
 				C1CB158613BC20A000FCCC7E /* private classes */,
 			);
-			name = VSSteamManager;
+			name = Classes;
 			sourceTree = "<group>";
 		};
 		C155936A12B71D0E00FD0684 /* Resources */ = {
@@ -4654,6 +4657,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C140E72813889BD800027DD6 /* com.valvesoftware.games.plist in Resources */,
+				C12823CC1880219400452421 /* Localizable.strings in Resources */,
 				C140E72B13889BDD00027DD6 /* hl2_osx.app in Resources */,
 				C1B2C1761843CF2B000F715F /* isRunning.png in Resources */,
 			);
@@ -5507,6 +5511,14 @@
 				C122435317B9636800ADC195 /* English */,
 			);
 			name = TKVMTMaterialDocument.xib;
+			sourceTree = "<group>";
+		};
+		C12823CA1880219400452421 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C12823CB1880219400452421 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		C13E77DD11C805D900B10F3C /* MDSteamAppsRelocatorController.xib */ = {

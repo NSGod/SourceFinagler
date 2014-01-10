@@ -6,27 +6,60 @@
 //  Copyright 2010 Mark Douma LLC. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/NSObject.h>
+#import <SteamKit/VSGame.h>
 
-@class VSGame;
+@class NSImage, NSString, NSURL;
+
+
+enum {
+	VSSourceAddonStatusUnknown			= 0,
+	VSSourceAddonNotAnAddonFile,
+	VSSourceAddonNoAddonInfoFound,
+	VSSourceAddonAddonInfoUnreadable,
+	VSSourceAddonNoGameIDFoundInAddonInfo,
+	VSSourceAddonValidAddon,
+	VSSourceAddonGameNotFound,
+	VSSourceAddonAlreadyInstalled,
+};
+typedef NSUInteger VSSourceAddonStatus;
+
+
 
 @interface VSSourceAddon : NSObject {
-	NSString		*path;
-	NSString		*fileName;
-	NSImage			*fileIcon;
-	NSString		*gameName;
-	NSImage			*gameIcon;
-	NSString		*problem;
+	NSURL					*URL;
+	
+	NSString				*fileName;
+	NSImage					*fileIcon;
+	
+	VSGame					*game;
+	
+	VSGameID				sourceAddonGameID;
+	
+	VSSourceAddonStatus		sourceAddonStatus;
+	
+	BOOL					installed;
+	
 }
-+ (id)sourceAddonWithPath:(NSString *)aPath game:(VSGame *)aGame error:(NSError *)inError;
-- (id)initWithPath:(NSString *)aPath game:(VSGame *)game error:(NSError *)inError;
 
-@property (nonatomic, retain) NSString *path;
-@property (nonatomic, retain) NSString *fileName;
-@property (nonatomic, retain) NSImage *fileIcon;
-@property (nonatomic, retain) NSString *gameName;
-@property (nonatomic, retain) NSImage *gameIcon;
-@property (nonatomic, retain) NSString *problem;
++ (id)sourceAddonWithContentsOfURL:(NSURL *)aURL error:(NSError **)outError;
+- (id)initWithContentsOfURL:(NSURL *)aURL error:(NSError **)outError;
+
+
+
+@property (nonatomic, readonly, retain) NSURL *URL;
+
+@property (nonatomic, readonly, retain) NSString *fileName;
+@property (nonatomic, readonly, retain) NSImage *fileIcon;
+
+@property (nonatomic, readonly, retain) VSGame *game;
+
+@property (nonatomic, readonly, assign) VSGameID sourceAddonGameID;
+
+@property (nonatomic, readonly, assign) VSSourceAddonStatus sourceAddonStatus;
+
+@property (nonatomic, readonly, assign, getter=isInstalled) BOOL installed;
+
 
 @end
 

@@ -9,6 +9,7 @@
 
 .objc_class_name_VSGame
 .objc_class_name_VSSteamManager
+.objc_class_name_VSSourceAddon
 
 
 _VSGameIDKey
@@ -22,6 +23,4 @@ _VSSteamAppsDirectoryNameKey
 
 
 _VSSourceAddonFolderNameKey
-_VSSourceAddonErrorDomain
-_VSSourceAddonGameIDKey
 

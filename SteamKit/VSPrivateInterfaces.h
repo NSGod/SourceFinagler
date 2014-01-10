@@ -8,6 +8,7 @@
 
 #import <SteamKit/SteamKitDefines.h>
 #import <SteamKit/VSGame.h>
+#import <SteamKit/VSSourceAddon.h>
 
 
 @interface VSGame ()
@@ -33,7 +34,7 @@
 
 @property (retain) NSURL *appManifestURL;
 
-@property (retain) NSURL *addonsFolderURL;
+@property (retain) NSURL *sourceAddonsFolderURL;
 
 /* Indicates the process identifier (pid) of the application.  Do not rely on this for comparing processes.  Use isEqual: instead.  Not all applications have a pid.  Applications without a pid return -1 from this method. */
 @property (assign) pid_t processIdentifier;
@@ -48,6 +49,16 @@
 
 @property (assign) BOOL running;
 
+
+@end
+
+
+
+@interface VSSourceAddon ()
+
+@property (nonatomic, retain) NSURL *URL;
+
+@property (nonatomic, assign, getter=isInstalled) BOOL installed;
 
 
 @end
