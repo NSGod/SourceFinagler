@@ -169,7 +169,9 @@
 		C14803F7147C26EF00FD7A0A /* NVThread.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C180E37914728E1B0001C07F /* NVThread.framework */; };
 		C14803F8147C271500FD7A0A /* NVThread.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C180E37914728E1B0001C07F /* NVThread.framework */; };
 		C14803F9147C274100FD7A0A /* NVCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA7EA125E5C9600CA78FF /* NVCore.framework */; };
-		C14D700712F9E5C000A2FD7E /* MDTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124D5123A0A8A004674B4 /* MDTextFieldCell.m */; };
+		C1492DF0186B61E800A3E6B2 /* VSSourceAddonFinaglerMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1492DF2186B61E800A3E6B2 /* VSSourceAddonFinaglerMainMenu.xib */; };
+		C14C0CBC186B8C510060623C /* MDTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124D5123A0A8A004674B4 /* MDTextFieldCell.m */; };
+		C14C0CBF186B915D0060623C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C14C0CC1186B915D0060623C /* Localizable.strings */; };
 		C151173B1443064F0042F13E /* TKImageBrowserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C151173A1443064F0042F13E /* TKImageBrowserItem.m */; };
 		C15590CA12B6E04200FD0684 /* SFTI.icns in Resources */ = {isa = PBXBuildFile; fileRef = C15590C912B6E04200FD0684 /* SFTI.icns */; };
 		C1559F1F186A41460052F595 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1559F21186A41460052F595 /* Localizable.strings */; };
@@ -181,7 +183,7 @@
 		C1594EA21384F247009CE606 /* usbOverdriveNote.png in Resources */ = {isa = PBXBuildFile; fileRef = C1594EA11384F247009CE606 /* usbOverdriveNote.png */; };
 		C159969B13C7919200849C73 /* HKFolderAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153CD1396699600E32057 /* HKFolderAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C159969C13C7919300849C73 /* HKFolderAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F153CE1396699600E32057 /* HKFolderAdditions.m */; };
-		C15DD653126B205500E44BDB /* VSSourceAddonFinaglerMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C15DD651126B205500E44BDB /* VSSourceAddonFinaglerMainMenu.xib */; };
+		C15D3EDF1868BE6C004D30FD /* VSSourceAddonTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C15D3EDE1868BE6C004D30FD /* VSSourceAddonTransformer.m */; };
 		C1614336139973D80042B91B /* HLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C161436F139996AE0042B91B /* HLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C16143CA1399975C0042B91B /* HKFileAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153C71396699600E32057 /* HKFileAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -731,7 +733,6 @@
 		C1FEAB80125F660B00CA78FF /* VPK.icns in Resources */ = {isa = PBXBuildFile; fileRef = C1C12479123A0840004674B4 /* VPK.icns */; };
 		C1FEAB81125F661800CA78FF /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C11B279211BDFBB8004D4CC0 /* ApplicationServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1FEAB92125F66BC00CA78FF /* VSSourceAddonFinaglerMain.m in Sources */ = {isa = PBXBuildFile; fileRef = C1FEAB91125F66BC00CA78FF /* VSSourceAddonFinaglerMain.m */; };
-		C1FEABB1125F68B700CA78FF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1C12548123A0EC6004674B4 /* Localizable.strings */; };
 		C1FEABFE125F69BA00CA78FF /* copy.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C1C12469123A0840004674B4 /* copy.m4a */; };
 		C1FF59EB145E317C005F36D5 /* caution.png in Resources */ = {isa = PBXBuildFile; fileRef = C1FF59D5145E2FCB005F36D5 /* caution.png */; };
 		C1FF5A39145E6571005F36D5 /* TKBase.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FF5A37145E6571005F36D5 /* TKBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1163,6 +1164,8 @@
 		C146091814F3373700B7286B /* TKAppKitAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TKAppKitAdditions.m; path = TextureFinagler/TKAppKitAdditions.m; sourceTree = "<group>"; };
 		C146091914F3373700B7286B /* TKFoundationAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TKFoundationAdditions.h; path = TextureFinagler/TKFoundationAdditions.h; sourceTree = "<group>"; };
 		C146091A14F3373700B7286B /* TKFoundationAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TKFoundationAdditions.m; path = TextureFinagler/TKFoundationAdditions.m; sourceTree = "<group>"; };
+		C1492DF1186B61E800A3E6B2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/VSSourceAddonFinaglerMainMenu.xib; sourceTree = "<group>"; };
+		C14C0CC0186B915D0060623C /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C14CAABA1275E80100BD0CCA /* dxtlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dxtlib.h; path = NVTextureTools/dxtlib.h; sourceTree = "<group>"; };
 		C14CAAF51275E90F00BD0CCA /* ConvertColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConvertColor.h; path = NVTextureTools/dds/ConvertColor.h; sourceTree = "<group>"; };
 		C14CAAF61275E90F00BD0CCA /* ddsTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ddsTypes.h; path = NVTextureTools/dds/ddsTypes.h; sourceTree = "<group>"; };
@@ -1231,13 +1234,14 @@
 		C15A9BE01474009100AEA11A /* TKVTFTexture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TKVTFTexture.mm; sourceTree = "<group>"; };
 		C15B07C31254F46800F722B7 /* MDPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPreviewViewController.h; path = SourceFinagler/MDPreviewViewController.h; sourceTree = "<group>"; };
 		C15B07C41254F46800F722B7 /* MDPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPreviewViewController.m; path = SourceFinagler/MDPreviewViewController.m; sourceTree = "<group>"; };
+		C15D3EDD1868BE6C004D30FD /* VSSourceAddonTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSSourceAddonTransformer.h; path = SourceAddonFinagler/VSSourceAddonTransformer.h; sourceTree = "<group>"; };
+		C15D3EDE1868BE6C004D30FD /* VSSourceAddonTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSSourceAddonTransformer.m; path = SourceAddonFinagler/VSSourceAddonTransformer.m; sourceTree = "<group>"; };
 		C15DD10A126952FD00E44BDB /* SMD.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = SMD.icns; path = Resources/SMD.icns; sourceTree = "<group>"; };
 		C15DD21012697F0B00E44BDB /* LMP.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = LMP.icns; path = Resources/LMP.icns; sourceTree = "<group>"; };
 		C15DD37D126A476300E44BDB /* MDCGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCGImage.h; sourceTree = "<group>"; };
 		C15DD37E126A476300E44BDB /* MDCGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCGImage.m; sourceTree = "<group>"; };
 		C15DD47B126AB93000E44BDB /* NUT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = NUT.icns; path = Resources/NUT.icns; sourceTree = "<group>"; };
 		C15DD47C126AB93000E44BDB /* NUC.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = NUC.icns; path = Resources/NUC.icns; sourceTree = "<group>"; };
-		C15DD652126B205500E44BDB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/VSSourceAddonFinaglerMainMenu.xib; sourceTree = "<group>"; };
 		C16476EA124E896A0062B943 /* sound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sound.png; path = Resources/sound.png; sourceTree = "<group>"; };
 		C16476ED124E8BA30062B943 /* exitFullScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exitFullScreen.png; path = Resources/exitFullScreen.png; sourceTree = "<group>"; };
 		C16476EE124E8BA30062B943 /* fitToScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fitToScreen.png; path = Resources/fitToScreen.png; sourceTree = "<group>"; };
@@ -4002,7 +4006,10 @@
 				C1FEAB91125F66BC00CA78FF /* VSSourceAddonFinaglerMain.m */,
 				C1FEAB43125F64A900CA78FF /* VSSourceAddonController.h */,
 				C1FEAB44125F64A900CA78FF /* VSSourceAddonController.m */,
-				C15DD651126B205500E44BDB /* VSSourceAddonFinaglerMainMenu.xib */,
+				C1492DF2186B61E800A3E6B2 /* VSSourceAddonFinaglerMainMenu.xib */,
+				C15D3EDD1868BE6C004D30FD /* VSSourceAddonTransformer.h */,
+				C15D3EDE1868BE6C004D30FD /* VSSourceAddonTransformer.m */,
+				C14C0CC1186B915D0060623C /* Localizable.strings */,
 				C1FEAB33125F633100CA78FF /* Source Addon Finagler-Info.plist */,
 			);
 			name = "Source Addon Finagler";
@@ -4930,10 +4937,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1FEAB7F125F660000CA78FF /* sourceFinagler.icns in Resources */,
+				C14C0CBF186B915D0060623C /* Localizable.strings in Resources */,
 				C1FEAB80125F660B00CA78FF /* VPK.icns in Resources */,
-				C1FEABB1125F68B700CA78FF /* Localizable.strings in Resources */,
+				C1492DF0186B61E800A3E6B2 /* VSSourceAddonFinaglerMainMenu.xib in Resources */,
 				C1FEABFE125F69BA00CA78FF /* copy.m4a in Resources */,
-				C15DD653126B205500E44BDB /* VSSourceAddonFinaglerMainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5296,9 +5303,10 @@
 			files = (
 				C1FEAB45125F64A900CA78FF /* VSSourceAddonController.m in Sources */,
 				C1FEAB92125F66BC00CA78FF /* VSSourceAddonFinaglerMain.m in Sources */,
-				C14D700712F9E5C000A2FD7E /* MDTextFieldCell.m in Sources */,
+				C15D3EDF1868BE6C004D30FD /* VSSourceAddonTransformer.m in Sources */,
 				C146091C14F3377300B7286B /* TKAppKitAdditions.m in Sources */,
 				C146091E14F337BC00B7286B /* TKFoundationAdditions.m in Sources */,
+				C14C0CBC186B8C510060623C /* MDTextFieldCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5545,6 +5553,24 @@
 			name = TKImageDocumentAccessoryView.xib;
 			sourceTree = "<group>";
 		};
+		C1492DF2186B61E800A3E6B2 /* VSSourceAddonFinaglerMainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C1492DF1186B61E800A3E6B2 /* en */,
+			);
+			name = VSSourceAddonFinaglerMainMenu.xib;
+			path = SourceAddonFinagler;
+			sourceTree = "<group>";
+		};
+		C14C0CC1186B915D0060623C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C14C0CC0186B915D0060623C /* en */,
+			);
+			name = Localizable.strings;
+			path = SourceAddonFinagler;
+			sourceTree = "<group>";
+		};
 		C14DB23D123D8CA7002D87FE /* TKPrefs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -5578,12 +5604,12 @@
 			path = HLKit;
 			sourceTree = "<group>";
 		};
-		C15DD651126B205500E44BDB /* VSSourceAddonFinaglerMainMenu.xib */ = {
+		C1583BBA12B3A55E00A4AE2F /* TKImageExportPanel.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C15DD652126B205500E44BDB /* English */,
+				C1583BB812B3A55900A4AE2F /* English */,
 			);
-			name = VSSourceAddonFinaglerMainMenu.xib;
+			name = TKImageExportPanel.xib;
 			sourceTree = "<group>";
 		};
 		C1770FDA1488CA4C00E6F651 /* TKModelDocument.xib */ = {

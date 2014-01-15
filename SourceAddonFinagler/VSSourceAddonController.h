@@ -7,44 +7,56 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <SteamKit/SteamKit.h>
 
-@class VSSteamManager;
 
 
-@interface VSSourceAddonController : NSObject <NSApplicationDelegate, NSTableViewDelegate, NSTableViewDataSource> {
-	IBOutlet NSWindow			*window;
+@interface VSSourceAddonController : NSObject <NSApplicationDelegate, NSTableViewDelegate, VSSteamManagerDelegate> {
+	IBOutlet NSWindow				*window;
 	
-	IBOutlet NSTextField		*resultsField;
+	IBOutlet NSTextField			*resultsField;
 	
-	IBOutlet NSBox				*box;
+	IBOutlet NSSplitView			*splitView;
 	
-	IBOutlet NSView				*comboView;
+	IBOutlet NSView					*installedView;
+	IBOutlet NSTableView			*installedTableView;
 	
-	IBOutlet NSBox				*successBox;
-	IBOutlet NSView				*successView;
-	IBOutlet NSTableView		*successTableView;
-	IBOutlet NSTableColumn		*successFileNameColumn;
+	IBOutlet NSView					*alreadyInstalledView;
+	IBOutlet NSTableView			*alreadyInstalledTableView;
 	
-	
-	IBOutlet NSBox				*problemBox;
-	IBOutlet NSView				*problemView;
-	IBOutlet NSTableView		*problemTableView;
-	IBOutlet NSTableColumn		*problemFileNameColumn;
+	IBOutlet NSView					*problemView;
+	IBOutlet NSTableView			*problemTableView;
 	
 	
-	NSMutableArray				*installedAddons;
-	NSMutableArray				*problemAddons;
+	NSMutableArray					*addons;
+	
+	NSMutableArray					*installedAddons;
+	NSMutableArray					*alreadyInstalledAddons;
+	NSMutableArray					*problemAddons;
 	
 	
-	IBOutlet NSWindow			*prefsWindow;
+	IBOutlet NSArrayController		*installedAddonsController;
+	IBOutlet NSArrayController		*alreadyInstalledAddonsController;
+	IBOutlet NSArrayController		*problemAddonsController;
+	
+	
+	IBOutlet NSWindow				*prefsWindow;
 	
 	IBOutlet NSWindow				*copyProgressWindow;
 	IBOutlet NSProgressIndicator	*progressIndicator;
 
-	
-	VSSteamManager				*steamManager;
-
 }
+
+@property (retain) NSMutableArray *addons;
+@property (retain) NSMutableArray *installedAddons;
+@property (retain) NSMutableArray *alreadyInstalledAddons;
+@property (retain) NSMutableArray *problemAddons;
+
+@property (nonatomic, retain) NSArray *installedAddonsSortDescriptors;
+@property (nonatomic, retain) NSArray *alreadyInstalledAddonsSortDescriptors;
+@property (nonatomic, retain) NSArray *problemAddonsSortDescriptors;
+
+
 
 - (IBAction)showPrefsWindow:(id)sender;
 
