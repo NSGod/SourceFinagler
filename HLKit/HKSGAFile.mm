@@ -23,7 +23,7 @@
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super initWithContentsOfFile:aPath mode:permission showInvisibleItems:showInvisibleItems sortDescriptors:sortDescriptors error:outError])) {
-		fileType = HKArchiveFileSGAType;
+		archiveFileType = HKArchiveFileSGAType;
 		
 		_privateData = new CSGAFile();
 		
@@ -68,7 +68,7 @@
 
 
 - (NSString *)description {
-	NSMutableString *description = [NSMutableString stringWithString:@""];
+	NSMutableString *description = [NSMutableString stringWithFormat:@"%@ -\n", [super description]];
 	[description appendFormat:@"\tfilePath == %@\n", filePath];
 	[description appendFormat:@"\tversion == %@\n", version];
 	return [NSString stringWithFormat:@"%@", description];

@@ -21,7 +21,7 @@ using namespace HLLib;
 
 
 typedef struct HKArchiveFileTest {
-	HKArchiveFileType	fileType;
+	HKArchiveFileType	archiveFileType;
 	NSUInteger			testDataLength;
 	unsigned char		testData[HK_DEFAULT_PACKAGE_TEST_LENGTH];
 } HKArchiveFileTest;
@@ -45,25 +45,35 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 @implementation HKArchiveFile
 
 
-
 @synthesize filePath;
-@synthesize fileType;
+@synthesize archiveFileType;
 @synthesize haveGatheredAllItems;
 @synthesize isReadOnly;
 @synthesize version;
 
 
-+ (HKArchiveFileType)fileTypeForData:(NSData *)aData {
++ (HKArchiveFileType)archiveFileTypeForContentsOfFile:(NSString *)aPath {
 #if HK_DEBUG
-	NSLog(@"[%@ %@] aData == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), aData);
+	NSLog(@"[%@ %@] aPath == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), aPath);
 #endif
-	NSUInteger dataLength = [aData length];
-	if (dataLength == 0) {
+	if ([[[aPath pathExtension] lowercaseString] isEqualToString:@"vpk"]) {
+		return HKArchiveFileVPKType;
+	}
+	
+	NSError *outError = nil;
+	
+	NSData *dataForMagic = [[[NSData alloc] initWithContentsOfFile:aPath options:NSDataReadingMapped | NSDataReadingUncached error:&outError] autorelease];
+	if ([dataForMagic length] < HK_DEFAULT_PACKAGE_TEST_LENGTH) {
+		NSLog(@" dataForMagic length < HK_DEFAULT_PACKAGE_TEST_LENGTH (8)! aPath == %@", aPath);
 		return HKArchiveFileNoType;
 	}
-	for (HKArchiveFileTest *packageTest = HKArchiveFileTestTable; packageTest->fileType != HKArchiveFileNoType; packageTest++) {
-		if (packageTest->testDataLength <= dataLength && memcmp([aData bytes], packageTest->testData, packageTest->testDataLength) == 0) {
-			return packageTest->fileType;
+	NSData *magicData = [dataForMagic subdataWithRange:NSMakeRange(0, 8)];
+	
+	NSUInteger dataLength = [magicData length];
+	
+	for (HKArchiveFileTest *packageTest = HKArchiveFileTestTable; packageTest->archiveFileType != HKArchiveFileNoType; packageTest++) {
+		if (packageTest->testDataLength <= dataLength && memcmp([magicData bytes], packageTest->testData, packageTest->testDataLength) == 0) {
+			return packageTest->archiveFileType;
 		}
 	}
 	return HKArchiveFileNoType;
@@ -96,8 +106,6 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 	
 	if ((self = [super init])) {
 		filePath = [aPath retain];
-		_privateData = 0;
-		haveGatheredAllItems = NO;
 		isReadOnly = !(permission & HL_MODE_WRITE);
 	}
 	return self;
@@ -160,13 +168,13 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 		}
 		allItems = gatheredItems;
 		
-//		allItems = [gatheredItems copy];
-		
 		[pool release];
 		
 		haveGatheredAllItems = YES;
 		
+#if HK_DEBUG
 		NSLog(@"[%@ %@] ****** TIME to gather allItems == %.7f sec, gatheredItems count == %lu, allItems count == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), fabs([startDate timeIntervalSinceNow]), (unsigned long)[gatheredItems count], (unsigned long)[allItems count]);
+#endif
 		
 		[startDate release];
 		startDate = nil;

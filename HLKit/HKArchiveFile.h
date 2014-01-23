@@ -37,7 +37,7 @@ typedef NSUInteger HKArchiveFileType;
 	
 	NSString				*version;
 	
-	HKArchiveFileType		fileType;
+	HKArchiveFileType		archiveFileType;
 	
 	BOOL					haveGatheredAllItems;
 	
@@ -48,22 +48,22 @@ typedef NSUInteger HKArchiveFileType;
 	
 }
 
-+ (HKArchiveFileType)fileTypeForData:(NSData *)aData;
++ (HKArchiveFileType)archiveFileTypeForContentsOfFile:(NSString *)aPath;
 
 
 - (id)initWithContentsOfFile:(NSString *)aPath;
 - (id)initWithContentsOfFile:(NSString *)aPath showInvisibleItems:(BOOL)showInvisibleItems sortDescriptors:(NSArray *)sortDescriptors error:(NSError **)outError;
 
 
-@property (retain, readonly) NSString *filePath;
+@property (nonatomic, readonly, retain) NSString *filePath;
 
-@property (nonatomic, readonly, assign) HKArchiveFileType fileType;
+@property (nonatomic, readonly, assign) HKArchiveFileType archiveFileType;
 
 @property (nonatomic, readonly, assign) BOOL isReadOnly;
 @property (nonatomic, readonly, assign) BOOL haveGatheredAllItems;
 
 
-@property (retain) NSString *version;
+@property (nonatomic, readonly, retain) NSString *version;
 
 
 - (HKFolder *)items;
