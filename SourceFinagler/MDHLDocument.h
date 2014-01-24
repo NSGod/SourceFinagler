@@ -29,7 +29,7 @@ extern NSString * const MDHLDocumentErrorDomain;
 extern NSString * const MDHLDocumentURLKey;
 
 
-@interface MDHLDocument : NSDocument <NSToolbarDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate, NSBrowserDelegate> {
+@interface MDHLDocument : NSDocument <NSToolbarDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate, NSBrowserDelegate, NSMenuDelegate> {
 
 	IBOutlet NSWindow								*hlWindow;
 	
@@ -43,8 +43,11 @@ extern NSString * const MDHLDocumentURLKey;
 	
 	IBOutlet MDStatusImageView						*statusImageView1;
 	IBOutlet MDStatusImageView						*statusImageView2;
+	IBOutlet MDStatusImageView						*statusImageView3;
 	
 	IBOutlet MDBottomBar							*bottomBar;
+	
+	IBOutlet NSButton								*installSourceAddonButton;
 	
 	IBOutlet MDMetalBevelView						*outlineViewView;
 	IBOutlet MDOutlineView							*outlineView;
@@ -114,13 +117,14 @@ extern NSString * const MDHLDocumentURLKey;
 	BOOL						shouldShowInvisibleItems;
 	BOOL						isSearching;
 	BOOL						outlineViewIsReloadingData;
+	BOOL						outlineViewIsSettingUpInitialColumns;
 	
 }
 
 @property (assign) BOOL shouldShowInvisibleItems;
 
 
-- (HKArchiveFile *)file;
+@property (nonatomic, readonly, retain) HKArchiveFile *file;
 
 
 @property (nonatomic, retain) NSImage *image;
@@ -132,6 +136,7 @@ extern NSString * const MDHLDocumentURLKey;
 
 @property (nonatomic, retain) NSPredicate *searchPredicate;
 
+- (IBAction)installSourceAddon:(id)sender;
 
 - (IBAction)find:(id)sender;
 - (IBAction)findAdvanced:(id)sender;
@@ -148,13 +153,14 @@ extern NSString * const MDHLDocumentURLKey;
 
 - (IBAction)browserSelect:(id)sender;
 
-// we define this method and intercept it so that our validateMenuItem: can properly update the menu item as long as a font document is open.
+// we define this method and intercept it so that our validateMenuItem: can properly update the menu item as long as a document is open.
 - (IBAction)toggleShowQuickLook:(id)sender;
 - (IBAction)toggleShowPathBar:(id)sender;
 
 - (NSDate *)fileCreationDate;
 - (NSNumber *)fileSize;
 
+- (void)windowWillClose:(NSNotification *)notification;
 
 @end
 

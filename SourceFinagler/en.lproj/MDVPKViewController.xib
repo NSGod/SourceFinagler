@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
+	<data>
+		<int key="IBDocument.SystemTarget">1060</int>
+		<string key="IBDocument.SystemVersion">13B42</string>
+		<string key="IBDocument.InterfaceBuilderVersion">5037</string>
+		<string key="IBDocument.AppKitVersion">1265</string>
+		<string key="IBDocument.HIToolboxVersion">696.00</string>
+		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
+			<string key="NS.object.0">5037</string>
+		</object>
+		<array key="IBDocument.IntegratedClassDependencies">
+			<string>NSButton</string>
+			<string>NSButtonCell</string>
+			<string>NSCustomObject</string>
+			<string>NSCustomView</string>
+			<string>NSImageCell</string>
+			<string>NSImageView</string>
+			<string>NSTextField</string>
+			<string>NSTextFieldCell</string>
+			<string>NSUserDefaultsController</string>
+		</array>
+		<array key="IBDocument.PluginDependencies">
+			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+		</array>
+		<object class="NSMutableDictionary" key="IBDocument.Metadata">
+			<string key="NS.key.0">PluginDependencyRecalculationVersion</string>
+			<integer value="1" key="NS.object.0"/>
+		</object>
+		<array class="NSMutableArray" key="IBDocument.RootObjects" id="776548396">
+			<object class="NSCustomObject" id="613788835">
+				<string key="NSClassName">MDVPKViewController</string>
+			</object>
+			<object class="NSCustomObject" id="681878523">
+				<string key="NSClassName">FirstResponder</string>
+			</object>
+			<object class="NSCustomObject" id="89632338">
+				<string key="NSClassName">NSApplication</string>
+			</object>
+			<object class="NSCustomView" id="66033378">
+				<reference key="NSNextResponder"/>
+				<int key="NSvFlags">274</int>
+				<array class="NSMutableArray" key="NSSubviews">
+					<object class="NSImageView" id="133797549">
+						<reference key="NSNextResponder" ref="66033378"/>
+						<int key="NSvFlags">292</int>
+						<set class="NSMutableSet" key="NSDragTypes">
+							<string>Apple PDF pasteboard type</string>
+							<string>Apple PICT pasteboard type</string>
+							<string>Apple PNG pasteboard type</string>
+							<string>NSFilenamesPboardType</string>
+							<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
+							<string>NeXT TIFF v4.0 pasteboard type</string>
+						</set>
+						<string key="NSFrame">{{41, 23}, {16, 16}}</string>
+						<reference key="NSSuperview" ref="66033378"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="974499974"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<string key="NSHuggingPriority">{251, 251}</string>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSImageCell" key="NSCell" id="275520862">
+							<int key="NSCellFlags">134217728</int>
+							<int key="NSCellFlags2">33554432</int>
+							<object class="NSCustomResource" key="NSContents">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">NSCaution</string>
+							</object>
+							<string key="NSCellIdentifier">_NS:9</string>
+							<int key="NSAlign">0</int>
+							<int key="NSScale">0</int>
+							<int key="NSStyle">0</int>
+							<bool key="NSAnimates">NO</bool>
+						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+						<bool key="NSEditable">YES</bool>
+					</object>
+					<object class="NSTextField" id="974499974">
+						<reference key="NSNextResponder" ref="66033378"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{59, 22}, {250, 14}}</string>
+						<reference key="NSSuperview" ref="66033378"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="721899145"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<string key="NSAntiCompressionPriority">{250, 750}</string>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSTextFieldCell" key="NSCell" id="265924169">
+							<int key="NSCellFlags">67108864</int>
+							<int key="NSCellFlags2">71434240</int>
+							<string key="NSContents">The Archive Directory file cannot be found.</string>
+							<object class="NSFont" key="NSSupport">
+								<string key="NSName">.LucidaGrandeUI-Bold</string>
+								<double key="NSSize">11</double>
+								<int key="NSfFlags">3357</int>
+							</object>
+							<string key="NSCellIdentifier">_NS:9</string>
+							<reference key="NSControlView" ref="974499974"/>
+							<object class="NSColor" key="NSBackgroundColor" id="435706917">
+								<int key="NSColorSpace">6</int>
+								<string key="NSCatalogName">System</string>
+								<string key="NSColorName">controlColor</string>
+								<object class="NSColor" key="NSColor">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
+								</object>
+							</object>
+							<object class="NSColor" key="NSTextColor" id="192502800">
+								<int key="NSColorSpace">6</int>
+								<string key="NSCatalogName">System</string>
+								<string key="NSColorName">controlTextColor</string>
+								<object class="NSColor" key="NSColor">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MAA</bytes>
+								</object>
+							</object>
+						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+						<double key="NSPreferredMaxLayoutWidth">92</double>
+						<int key="NSTextFieldAlignmentRectInsetsVersion">1</int>
+					</object>
+					<object class="NSTextField" id="493093968">
+						<reference key="NSNextResponder" ref="66033378"/>
+						<int key="NSvFlags">268</int>
+						<string key="NSFrame">{{90, 137}, {432, 68}}</string>
+						<reference key="NSSuperview" ref="66033378"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="425157860"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<string key="NSAntiCompressionPriority">{250, 750}</string>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSTextFieldCell" key="NSCell" id="263647294">
+							<int key="NSCellFlags">69206017</int>
+							<int key="NSCellFlags2">272891904</int>
+							<string key="NSContents">The file “pak01blahblah_000.vpk” is part of a multi-segment Source Valve Package file. Instead of opening this file, you need to open the “pak01blahblah_dir.vpk” Archive Directory file. </string>
+							<object class="NSFont" key="NSSupport">
+								<string key="NSName">.LucidaGrandeUI-Bold</string>
+								<double key="NSSize">13</double>
+								<int key="NSfFlags">2072</int>
+							</object>
+							<string key="NSCellIdentifier">_NS:9</string>
+							<reference key="NSControlView" ref="493093968"/>
+							<reference key="NSBackgroundColor" ref="435706917"/>
+							<reference key="NSTextColor" ref="192502800"/>
+						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+						<double key="NSPreferredMaxLayoutWidth">92</double>
+						<int key="NSTextFieldAlignmentRectInsetsVersion">1</int>
+					</object>
+					<object class="NSButton" id="129820446">
+						<reference key="NSNextResponder" ref="66033378"/>
+						<int key="NSvFlags">268</int>
+						<string key="NSFrame">{{90, 66}, {351, 18}}</string>
+						<reference key="NSSuperview" ref="66033378"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="133797549"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSButtonCell" key="NSCell" id="256479033">
+							<int key="NSCellFlags">-2080374784</int>
+							<int key="NSCellFlags2">268435456</int>
+							<string key="NSContents">Always open the archive’s directory file from now on</string>
+							<object class="NSFont" key="NSSupport" id="638600628">
+								<string key="NSName">.LucidaGrandeUI</string>
+								<double key="NSSize">13</double>
+								<int key="NSfFlags">1044</int>
+							</object>
+							<string key="NSCellIdentifier">_NS:9</string>
+							<reference key="NSControlView" ref="129820446"/>
+							<int key="NSButtonFlags">1211912448</int>
+							<int key="NSButtonFlags2">2</int>
+							<object class="NSCustomResource" key="NSNormalImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">NSSwitch</string>
+							</object>
+							<object class="NSButtonImageSource" key="NSAlternateImage">
+								<string key="NSImageName">NSSwitch</string>
+							</object>
+							<string key="NSAlternateContents"/>
+							<string key="NSKeyEquivalent"/>
+							<int key="NSPeriodicDelay">200</int>
+							<int key="NSPeriodicInterval">25</int>
+						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+					</object>
+					<object class="NSTextField" id="425157860">
+						<reference key="NSNextResponder" ref="66033378"/>
+						<int key="NSvFlags">268</int>
+						<string key="NSFrame">{{90, 101}, {431, 28}}</string>
+						<reference key="NSSuperview" ref="66033378"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="129820446"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<string key="NSAntiCompressionPriority">{250, 750}</string>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSTextFieldCell" key="NSCell" id="552610750">
+							<int key="NSCellFlags">69206017</int>
+							<int key="NSCellFlags2">272760832</int>
+							<string key="NSContents">The Archive Directory file is a file whose name ends with “_dir.vpk”, and contains a reference to all the other segments.</string>
+							<object class="NSFont" key="NSSupport">
+								<string key="NSName">.LucidaGrandeUI</string>
+								<double key="NSSize">11</double>
+								<int key="NSfFlags">3100</int>
+							</object>
+							<string key="NSCellIdentifier">_NS:9</string>
+							<reference key="NSControlView" ref="425157860"/>
+							<reference key="NSBackgroundColor" ref="435706917"/>
+							<reference key="NSTextColor" ref="192502800"/>
+						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+						<double key="NSPreferredMaxLayoutWidth">395</double>
+						<int key="NSTextFieldAlignmentRectInsetsVersion">1</int>
+					</object>
+					<object class="NSButton" id="721899145">
+						<reference key="NSNextResponder" ref="66033378"/>
+						<int key="NSvFlags">289</int>
+						<string key="NSFrame">{{313, 13}, {212, 32}}</string>
+						<reference key="NSSuperview" ref="66033378"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSButtonCell" key="NSCell" id="184926685">
+							<int key="NSCellFlags">-2080374784</int>
+							<int key="NSCellFlags2">134217728</int>
+							<string key="NSContents">Open Archive Directory File</string>
+							<reference key="NSSupport" ref="638600628"/>
+							<string key="NSCellIdentifier">_NS:9</string>
+							<reference key="NSControlView" ref="721899145"/>
+							<int key="NSButtonFlags">-2038284288</int>
+							<int key="NSButtonFlags2">129</int>
+							<string key="NSAlternateContents"/>
+							<string type="base64-UTF8" key="NSKeyEquivalent">DQ</string>
+							<int key="NSPeriodicDelay">200</int>
+							<int key="NSPeriodicInterval">25</int>
+						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+					</object>
+					<object class="NSImageView" id="165155552">
+						<reference key="NSNextResponder" ref="66033378"/>
+						<int key="NSvFlags">268</int>
+						<set class="NSMutableSet" key="NSDragTypes">
+							<string>Apple PDF pasteboard type</string>
+							<string>Apple PICT pasteboard type</string>
+							<string>Apple PNG pasteboard type</string>
+							<string>NSFilenamesPboardType</string>
+							<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
+							<string>NeXT TIFF v4.0 pasteboard type</string>
+						</set>
+						<string key="NSFrame">{{20, 141}, {64, 64}}</string>
+						<reference key="NSSuperview" ref="66033378"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="493093968"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<string key="NSHuggingPriority">{251, 251}</string>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSImageCell" key="NSCell" id="526400776">
+							<int key="NSCellFlags">134217728</int>
+							<int key="NSCellFlags2">33554432</int>
+							<object class="NSCustomResource" key="NSContents">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">NSApplicationIcon</string>
+							</object>
+							<string key="NSCellIdentifier">_NS:9</string>
+							<int key="NSAlign">0</int>
+							<int key="NSScale">0</int>
+							<int key="NSStyle">0</int>
+							<bool key="NSAnimates">NO</bool>
+						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+						<bool key="NSEditable">YES</bool>
+					</object>
+				</array>
+				<string key="NSFrameSize">{540, 225}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView" ref="165155552"/>
+				<string key="NSClassName">NSView</string>
+			</object>
+			<object class="NSUserDefaultsController" id="127403067">
+				<bool key="NSSharedInstance">YES</bool>
+			</object>
+		</array>
+		<object class="IBObjectContainer" key="IBDocument.Objects">
+			<bool key="usesAutoincrementingIDs">NO</bool>
+			<array class="NSMutableArray" key="connectionRecords">
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">view</string>
+						<reference key="source" ref="613788835"/>
+						<reference key="destination" ref="66033378"/>
+					</object>
+					<string key="id">2</string>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openDirectoryFile:</string>
+						<reference key="source" ref="613788835"/>
+						<reference key="destination" ref="721899145"/>
+					</object>
+					<string key="id">XQg-kj-QrM</string>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">messageTextField</string>
+						<reference key="source" ref="613788835"/>
+						<reference key="destination" ref="493093968"/>
+					</object>
+					<string key="id">s4W-gM-SXu</string>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: self.document.file.archiveDirectoryFilePath</string>
+						<reference key="source" ref="721899145"/>
+						<reference key="destination" ref="613788835"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="721899145"/>
+							<reference key="NSDestination" ref="613788835"/>
+							<string key="NSLabel">enabled: self.document.file.archiveDirectoryFilePath</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">self.document.file.archiveDirectoryFilePath</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSIsNotNil</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<string key="id">DiI-xV-y68</string>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.MDVPKAlwaysOpenArchiveDirectoryFile</string>
+						<reference key="source" ref="129820446"/>
+						<reference key="destination" ref="127403067"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="129820446"/>
+							<reference key="NSDestination" ref="127403067"/>
+							<string key="NSLabel">value: values.MDVPKAlwaysOpenArchiveDirectoryFile</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.MDVPKAlwaysOpenArchiveDirectoryFile</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<string key="id">BdM-1I-IWU</string>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: self.document.file.archiveDirectoryFilePath</string>
+						<reference key="source" ref="133797549"/>
+						<reference key="destination" ref="613788835"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="133797549"/>
+							<reference key="NSDestination" ref="613788835"/>
+							<string key="NSLabel">hidden: self.document.file.archiveDirectoryFilePath</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">self.document.file.archiveDirectoryFilePath</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSIsNotNil</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<string key="id">IyF-fQ-3GK</string>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: self.document.file.archiveDirectoryFilePath</string>
+						<reference key="source" ref="974499974"/>
+						<reference key="destination" ref="613788835"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="974499974"/>
+							<reference key="NSDestination" ref="613788835"/>
+							<string key="NSLabel">hidden: self.document.file.archiveDirectoryFilePath</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">self.document.file.archiveDirectoryFilePath</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSIsNotNil</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<string key="id">l4N-9e-cuo</string>
+				</object>
+			</array>
+			<object class="IBMutableOrderedSet" key="objectRecords">
+				<array key="orderedObjects">
+					<object class="IBObjectRecord">
+						<string key="id">0</string>
+						<array key="object" id="0"/>
+						<reference key="children" ref="776548396"/>
+						<nil key="parent"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">-2</string>
+						<reference key="object" ref="613788835"/>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">File's Owner</string>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">-1</string>
+						<reference key="object" ref="681878523"/>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">First Responder</string>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">-3</string>
+						<reference key="object" ref="89632338"/>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">Application</string>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">1</string>
+						<reference key="object" ref="66033378"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="165155552"/>
+							<reference ref="493093968"/>
+							<reference ref="425157860"/>
+							<reference ref="129820446"/>
+							<reference ref="721899145"/>
+							<reference ref="133797549"/>
+							<reference ref="974499974"/>
+						</array>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">view</string>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">C3h-hs-XLX</string>
+						<reference key="object" ref="165155552"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="526400776"/>
+						</array>
+						<reference key="parent" ref="66033378"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">nZO-wc-e5j</string>
+						<reference key="object" ref="526400776"/>
+						<reference key="parent" ref="165155552"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">0sk-0W-9lf</string>
+						<reference key="object" ref="721899145"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="184926685"/>
+						</array>
+						<reference key="parent" ref="66033378"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">oNr-I8-7SN</string>
+						<reference key="object" ref="184926685"/>
+						<reference key="parent" ref="721899145"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">Ums-Ur-yIi</string>
+						<reference key="object" ref="425157860"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="552610750"/>
+						</array>
+						<reference key="parent" ref="66033378"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">hEB-2J-eNE</string>
+						<reference key="object" ref="552610750"/>
+						<reference key="parent" ref="425157860"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">7PY-Q8-yWD</string>
+						<reference key="object" ref="129820446"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="256479033"/>
+						</array>
+						<reference key="parent" ref="66033378"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">sIf-0a-avk</string>
+						<reference key="object" ref="256479033"/>
+						<reference key="parent" ref="129820446"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">AF3-gQ-mjI</string>
+						<reference key="object" ref="493093968"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="263647294"/>
+						</array>
+						<reference key="parent" ref="66033378"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">UYF-PM-mAt</string>
+						<reference key="object" ref="263647294"/>
+						<reference key="parent" ref="493093968"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">Z3G-1h-IyD</string>
+						<reference key="object" ref="127403067"/>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">LbF-2f-wM4</string>
+						<reference key="object" ref="974499974"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="265924169"/>
+						</array>
+						<reference key="parent" ref="66033378"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">Ywh-mq-sde</string>
+						<reference key="object" ref="265924169"/>
+						<reference key="parent" ref="974499974"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">Iiq-E9-Rbi</string>
+						<reference key="object" ref="133797549"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="275520862"/>
+						</array>
+						<reference key="parent" ref="66033378"/>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">leL-tD-CYo</string>
+						<reference key="object" ref="275520862"/>
+						<reference key="parent" ref="133797549"/>
+					</object>
+				</array>
+			</object>
+			<dictionary class="NSMutableDictionary" key="flattenedProperties">
+				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<boolean value="NO" key="-1.showNotes"/>
+				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<boolean value="NO" key="-2.showNotes"/>
+				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<boolean value="NO" key="-3.showNotes"/>
+				<string key="0sk-0W-9lf.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<reference key="1.IBUserGuides" ref="0"/>
+				<boolean value="NO" key="1.showNotes"/>
+				<string key="7PY-Q8-yWD.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="AF3-gQ-mjI.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="C3h-hs-XLX.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="Iiq-E9-Rbi.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="LbF-2f-wM4.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="UYF-PM-mAt.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="Ums-Ur-yIi.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="Ywh-mq-sde.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="Z3G-1h-IyD.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="hEB-2J-eNE.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="leL-tD-CYo.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="nZO-wc-e5j.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="oNr-I8-7SN.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="sIf-0a-avk.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+			</dictionary>
+			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
+			<nil key="activeLocalization"/>
+			<dictionary class="NSMutableDictionary" key="localizations"/>
+			<nil key="sourceID"/>
+		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">MDVPKViewController</string>
+					<string key="superclassName">NSViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">openDirectoryFile:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">openDirectoryFile:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">openDirectoryFile:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">messageTextField</string>
+						<string key="NS.object.0">NSTextField</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">messageTextField</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">messageTextField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/MDVPKViewController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
+		<int key="IBDocument.localizationMode">0</int>
+		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
+		<bool key="IBDocument.previouslyAttemptedUpgradeToXcode5">YES</bool>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
+			<real value="1060" key="NS.object.0"/>
+		</object>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
+			<integer value="4600" key="NS.object.0"/>
+		</object>
+		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
+		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NSApplicationIcon">{128, 128}</string>
+			<string key="NSCaution">{32, 32}</string>
+			<string key="NSSwitch">{15, 15}</string>
+		</dictionary>
+	</data>
+</archive>

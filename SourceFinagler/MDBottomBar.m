@@ -14,9 +14,11 @@
 #pragma mark view
 #define MD_DEBUG 0
 
+#define MD_DEBUG_DRAW 0
+
 
 enum {
-	MDUndeterminedVersion	= -1,
+	MDUndeterminedVersion	= 0,
 	MDCheetah				= 0x1000,
 	MDPuma					= 0x1010,
 	MDJaguar				= 0x1020,
@@ -26,7 +28,7 @@ enum {
 	MDSnowLeopard			= 0x1060,
 	MDLion					= 0x1070,
 	MDMountainLion			= 0x1080,
-	MDUnknownKitty			= 0x1090,
+	MDMavericks				= 0x1090,
 	MDUnknownVersion		= 0x1100
 };
 
@@ -140,19 +142,20 @@ static SInt32 MDSystemVersion = MDUndeterminedVersion;
 		
 	}
 	
-	
-//	BOOL debug = YES;
-//	
-//	if (debug) {
-//		[[NSColor redColor] set];
-//		[NSBezierPath fillRect:rect];
-//	}
-	
+#if MD_DEBUG_DRAW
+	[[NSColor redColor] set];
+	[NSBezierPath fillRect:rect];
+#endif
 	
 	NSString *stringValue = nil;
 	
 	if ([selectedIndexes count] == 0) {
-		if ([totalCount unsignedIntegerValue] == 0 || [totalCount unsignedIntegerValue] >= 2) {
+		
+		if (totalCount == nil) {
+			
+			stringValue = [NSString stringWithFormat:NSLocalizedString(@"%@ available", @""), [formatter stringForObjectValue:freeSpace]];
+			
+		} else if ([totalCount unsignedIntegerValue] == 0 || [totalCount unsignedIntegerValue] >= 2) {
 			
 			stringValue = [NSString stringWithFormat:NSLocalizedString(@"%@ items, %@ available", @""), totalCount, [formatter stringForObjectValue:freeSpace]];
 			

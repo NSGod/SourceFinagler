@@ -12,9 +12,11 @@
 #import "MDBrowserCell.h"
 #import "TKAppKitAdditions.h"
 #import "MDHLDocument.h"
+#import "MDUserDefaults.h"
 
-#pragma mark view
-#define MD_DEBUG 0
+
+
+static NSString * const TKFinderBundleIdentifierKey				= @"com.apple.finder";
 
 
 NSString * const MDBrowserSelectionDidChangeNotification		= @"MDBrowserSelectionDidChange";
@@ -35,7 +37,7 @@ static MDBrowserSortOptionMapping MDBrowserSortOptionMappingTable[] = {
 	{ MDBrowserSortBySize, @"size", @"compare:" },
 	{ MDBrowserSortByKind, @"kind", @"caseInsensitiveCompare:" }
 };
-static const NSUInteger MDBrowserSortOptionMappingTableCount = sizeof(MDBrowserSortOptionMappingTable)/sizeof(MDBrowserSortOptionMapping);
+static const NSUInteger MDBrowserSortOptionMappingTableCount = sizeof(MDBrowserSortOptionMappingTable)/sizeof(MDBrowserSortOptionMappingTable[0]);
 
 static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 	for (NSUInteger i = 0; i < MDBrowserSortOptionMappingTableCount; i++) {
@@ -52,12 +54,57 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 
 @interface MDBrowser (MDPrivate)
 - (void)calculateRowHeight;
+- (void)finishSetup;
 @end
+
+
+
+#pragma mark view
+#define MD_DEBUG 0
+
+
+
+#define MD_DEFAULT_BROWSER_FONT_AND_ICON_SIZE 13
+
 
 
 @implementation MDBrowser
 
-@synthesize sortDescriptors, shouldShowIcons, shouldShowPreview;
+
+@synthesize sortDescriptors;
+@synthesize shouldShowIcons;
+@synthesize shouldShowPreview;
+
+
++ (void)initialize {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	
+	static BOOL initialized = NO;
+	
+	if (initialized == NO) {
+		NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+		
+		NSNumber *finderColumnViewFontAndIconSize = [[[[MDUserDefaults standardUserDefaults] objectForKey:@"StandardViewOptions" forAppIdentifier:TKFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ColumnViewOptions"] objectForKey:@"FontSize"];
+		
+		if (finderColumnViewFontAndIconSize) {
+			[defaults setObject:finderColumnViewFontAndIconSize forKey:MDBrowserFontAndIconSizeKey];
+		} else {
+			[defaults setObject:[NSNumber numberWithInteger:MD_DEFAULT_BROWSER_FONT_AND_ICON_SIZE] forKey:MDBrowserFontAndIconSizeKey];
+		}
+		
+		[defaults setObject:[NSNumber numberWithBool:YES] forKey:MDBrowserShouldShowIconsKey];
+		[defaults setObject:[NSNumber numberWithBool:YES] forKey:MDBrowserShouldShowPreviewKey];
+		
+		[defaults setObject:[NSNumber numberWithInteger:MDBrowserSortByName] forKey:MDBrowserSortByKey];
+		
+		[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+		[[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaults];
+		
+		initialized = YES;
+	}
+}
 
 
 - (id)initWithFrame:(NSRect)frameRect {
@@ -65,11 +112,7 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super initWithFrame:frameRect])) {
-		fontAndIconSize = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserFontAndIconSizeKey] intValue];
-		shouldShowIcons = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserShouldShowIconsKey] boolValue];
-		shouldShowPreview = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserShouldShowPreviewKey] boolValue];
-		NSInteger sortByOption = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserSortByKey] intValue];
-		[self setSortDescriptors:MDSortDescriptorsFromSortOption(sortByOption)];
+		[self finishSetup];
 	}
 	return self;
 }
@@ -81,14 +124,20 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 #endif
 	
 	if ((self = [super initWithCoder:coder])) {
-		fontAndIconSize = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserFontAndIconSizeKey] intValue];
-		shouldShowIcons = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserShouldShowIconsKey] boolValue];
-		shouldShowPreview = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserShouldShowPreviewKey] boolValue];
-		NSInteger sortByOption = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserSortByKey] intValue];
-		[self setSortDescriptors:MDSortDescriptorsFromSortOption(sortByOption)];
+		[self finishSetup];
 	}
 	return self;
 }
+
+
+- (void)finishSetup {
+	fontAndIconSize = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserFontAndIconSizeKey] intValue];
+	shouldShowIcons = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserShouldShowIconsKey] boolValue];
+	shouldShowPreview = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserShouldShowPreviewKey] boolValue];
+	NSInteger sortByOption = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserSortByKey] intValue];
+	[self setSortDescriptors:MDSortDescriptorsFromSortOption(sortByOption)];
+}
+
 
 
 - (void)dealloc {
@@ -223,7 +272,7 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 	return fontAndIconSize;
 }
 
-/* used by MDFontSuitcase when switching from column view to list view */
+/* used by document when switching from column view to list view */
 - (IBAction)deselectAll:(id)sender {
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -300,7 +349,9 @@ enum {
 	NSInteger clickedColumn = [self clickedColumn];
 	NSInteger clickedRow = [self clickedRow];
 	
+#if MD_DEBUG
 	NSLog(@"[%@ %@] clickedColumn == %ld, clickedRow == %ld", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (long)clickedColumn, (long)clickedRow);
+#endif
 	
 	[super rightMouseDown:event];
 }
@@ -318,7 +369,9 @@ enum {
 		NSInteger clickedColumn = [self clickedColumn];
 		NSInteger clickedRow = [self clickedRow];
 		
+#if MD_DEBUG
 		NSLog(@"[%@ %@] clickedColumn == %ld, clickedRow == %ld", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (long)clickedColumn, (long)clickedRow);
+#endif
 		
 	}
 	[super mouseDown:event];

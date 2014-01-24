@@ -108,7 +108,6 @@ extern SInt32		TKSystemVersion;
 
 - (IBAction)resetAllWarningDialogs:(id)sender;
 
-- (NSUndoManager *)globalUndoManager;
 
 @end
 
