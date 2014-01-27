@@ -1101,7 +1101,7 @@
 		C11E9AB21895A5BA00A8FDAB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/TKImageExportPanel.xib; sourceTree = "<group>"; };
 		C121966818846A1B0073AC8F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDHLDocumentLion.xib; sourceTree = "<group>"; };
 		C121966A18846A1B0073AC8F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDHLDocumentSnowLeopard.xib; sourceTree = "<group>"; };
-		C121966E188471C80073AC8F /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = SourceFinagler/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C121966E188471C80073AC8F /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = SourceFinagler/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C1224BEC13B06B9A009AA0F4 /* SourceFinaglerAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SourceFinaglerAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C122F20614B6A5B200AA08F8 /* userDefineLang.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = userDefineLang.xml; sourceTree = "<group>"; };
 		C1267035125D1A0B00725F14 /* VAS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VAS.icns; path = Resources/VAS.icns; sourceTree = "<group>"; };
