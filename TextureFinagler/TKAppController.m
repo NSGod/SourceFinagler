@@ -72,7 +72,6 @@ BOOL	MDPlaySoundEffects = NO;
 
 
 
-SInt32 TKSystemVersion = 0;
 
 BOOL needSpotlightReimport = NO;
 BOOL needSourceAddonFinaglerRegister = NO;
@@ -95,12 +94,6 @@ static NSArray *appClassNames = nil;
 		if (appClassNames == nil) {
 			appClassNames = [[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"TKAppController" ofType:@"plist"]] objectForKey:@"TKAppControllerClassNames"] retain];
 		}
-		
-		SInt32 MDFullSystemVersion = 0;
-		
-		Gestalt(gestaltSystemVersion, &MDFullSystemVersion);
-		TKSystemVersion = MDFullSystemVersion & 0xfffffff0;
-		
 		
 		// need to run it here in case the document isn't created prior to the view options window being instantiated.
 		
@@ -215,7 +208,7 @@ static NSArray *appClassNames = nil;
 	
 	[viewModeAsListMenuItem retain];
 	
-	if (TKSystemVersion < TKSnowLeopard) {
+	if (TKGetSystemVersion() < TKSnowLeopard) {
 		[viewMenu removeItem:viewModeAsColumnsMenuItem];
 		viewModeAsColumnsMenuItem = nil;
 	} else {
@@ -391,10 +384,10 @@ static NSArray *appClassNames = nil;
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	if (TKSystemVersion == TKLeopard) {
+	if (TKGetSystemVersion() == TKLeopard) {
 		[viewMenu setItemArray:[NSArray arrayWithObjects:viewModeAsListMenuItem,[NSMenuItem separatorItem], viewTogglePathBarMenuItem, [NSMenuItem separatorItem], viewToggleToolbarShownMenuItem,viewCustomizeToolbarMenuItem,[NSMenuItem separatorItem],viewOptionsMenuItem, nil]];
 		
-	} else if (TKSystemVersion >= TKSnowLeopard) {
+	} else if (TKGetSystemVersion() >= TKSnowLeopard) {
 		[viewMenu setItemArray:[NSArray arrayWithObjects:viewModeAsListMenuItem,viewModeAsColumnsMenuItem,[NSMenuItem separatorItem], viewTogglePathBarMenuItem, [NSMenuItem separatorItem], viewToggleToolbarShownMenuItem,viewCustomizeToolbarMenuItem,[NSMenuItem separatorItem],viewOptionsMenuItem, nil]];
 		
 	}

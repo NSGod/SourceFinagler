@@ -215,12 +215,6 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:TKImageDocumentDoNotShowWarningAgainKey];
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
 	
-	if (TKSystemVersion == TKUnknownVersion) {
-		SInt32 fullVersion = 0;
-		Gestalt(gestaltSystemVersion, &fullVersion);
-		TKSystemVersion = fullVersion & 0xfffffff0;
-	}
-	
 }
 
 
@@ -339,7 +333,7 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 
 
 - (NSString *)windowNibName {
-	if (TKSystemVersion >= TKLion) {
+	if (TKGetSystemVersion() >= TKLion) {
 		return @"TKImageDocumentLion";
 	}
     return @"TKImageDocument";

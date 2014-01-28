@@ -39,8 +39,6 @@ extern BOOL			MDShouldShowPathBar;
 
 extern BOOL			MDPlaySoundEffects;
 
-extern SInt32		TKSystemVersion;
-
 
 @interface TKAppController : NSObject <NSApplicationDelegate, NSOpenSavePanelDelegate, NSToolbarDelegate, NSSoundDelegate> {
     IBOutlet NSWindow					*window;
