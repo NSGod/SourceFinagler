@@ -72,9 +72,8 @@ BOOL	MDPlaySoundEffects = NO;
 
 
 
-
-BOOL needSpotlightReimport = NO;
-BOOL needSourceAddonFinaglerRegister = NO;
+static BOOL needSpotlightReimport = NO;
+static BOOL needSourceAddonFinaglerRegister = NO;
 
 
 static NSArray *appClassNames = nil;
@@ -88,6 +87,9 @@ static NSArray *appClassNames = nil;
 
 
 + (void)initialize {
+#if TK_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	
 	@synchronized(self) {
 		
@@ -140,7 +142,7 @@ static NSArray *appClassNames = nil;
 		
 		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowViewOptionsKey];
 		
-		[defaultValues setObject:@0 forKey:MDCurrentViewIndexKey];
+		[defaultValues setObject:[NSNumber numberWithUnsignedInteger:0] forKey:MDCurrentViewIndexKey];
 		
 		[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
 		[[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaultValues];
@@ -323,12 +325,14 @@ static NSArray *appClassNames = nil;
 
 - (void)forceSpotlightReimport:(id)sender {
 //#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 //#endif
-//	NSString *spotlightImporterPath = nil;
-//	
-//	spotlightImporterPath = [[[[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Contents"] stringByAppendingPathComponent:@"Library"] stringByAppendingPathComponent:@"Spotlight"] stringByAppendingPathComponent:@"Source.mdimporter"];
-//	
+	NSString *spotlightImporterPath = [NSString pathWithComponents:[NSArray arrayWithObjects:[[NSBundle mainBundle] bundlePath], @"Contents", @"Library", @"Spotlight", @"Source.mdimporter", nil]];
+	
+#if TK_DEBUG
+	NSLog(@"[%@ %@] spotlightImporterPath == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), spotlightImporterPath);
+#endif
+	
 //	NSData *standardOutputData = nil;
 //	NSData *standardErrorData = nil;
 //	NSTask *task = [[[NSTask alloc] init] autorelease];
