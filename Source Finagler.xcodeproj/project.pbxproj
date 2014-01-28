@@ -1436,6 +1436,7 @@
 		C1A92FEE1439649000AFAF4F /* viewMipmapBrowser.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = viewMipmapBrowser.pdf; path = Resources/viewMipmapBrowser.pdf; sourceTree = "<group>"; };
 		C1A92FF21439675000AFAF4F /* selectionLion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selectionLion.png; path = Resources/selectionLion.png; sourceTree = "<group>"; };
 		C1A92FF41439676700AFAF4F /* zoomOutLionTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoomOutLionTemplate.png; path = Resources/zoomOutLionTemplate.png; sourceTree = "<group>"; };
+		C1A9860E17BE8E220043744B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		C1ABAACC12562D8400CAAFEB /* INF.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = INF.icns; path = Resources/INF.icns; sourceTree = "<group>"; };
 		C1ABAB6712563BD800CAAFEB /* MDQuickLookPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDQuickLookPanel.h; path = SourceFinagler/MDQuickLookPanel.h; sourceTree = "<group>"; };
 		C1ABAB6812563BD800CAAFEB /* MDQuickLookPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDQuickLookPanel.m; path = SourceFinagler/MDQuickLookPanel.m; sourceTree = "<group>"; };
@@ -2175,6 +2176,7 @@
 			isa = PBXGroup;
 			children = (
 				C136761913E12AC100B71DA7 /* Acknowledgments.rtf */,
+				C1A9860E17BE8E220043744B /* README.md */,
 				C17319D41298D13800C29732 /* TextureKit framework */,
 				C1580F68139634F900D5D4D8 /* HLKit framework */,
 				C140E63713889A6900027DD6 /* SteamKit framework */,
