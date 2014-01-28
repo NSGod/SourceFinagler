@@ -23,7 +23,6 @@
 
 /* Begin PBXBuildFile section */
 		C108DB17163E363F00DADFCD /* TKImageRepAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C108DB16163E363E00DADFCD /* TKImageRepAdditions.m */; };
-		C108DB18163E370800DADFCD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1082A9D13D4492F0071FA31 /* QuartzCore.framework */; };
 		C1097A83125F9BA300D60D27 /* Box.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FEA8EC125E718D00CA78FF /* Box.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1097A9E125FA11800D60D27 /* NVTextureTools.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FEA96E125E75C000CA78FF /* NVTextureTools.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1097AA1125FA11D00D60D27 /* Context.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FEA96A125E75C000CA78FF /* Context.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -263,9 +262,6 @@
 		C184180E1455AA2A007D8EE6 /* TKImageChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C184180D1455AA2A007D8EE6 /* TKImageChannelCell.m */; };
 		C1862CF41642908B0019B703 /* CompressKernel.cu in Resources */ = {isa = PBXBuildFile; fileRef = C1FEA97E125E763700CA78FF /* CompressKernel.cu */; };
 		C1862CF5164290900019B703 /* ConvolveKernel.cu in Resources */ = {isa = PBXBuildFile; fileRef = C1FEA97F125E763700CA78FF /* ConvolveKernel.cu */; };
-		C186404A159C2F0D009D15FB /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1864047159C2F0C009D15FB /* GLKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		C186404B159C2F0D009D15FB /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1864048159C2F0C009D15FB /* SceneKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		C186404C159C2F0D009D15FB /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1864049159C2F0D009D15FB /* VideoToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C189820C161A377500335863 /* SGA.icns in Resources */ = {isa = PBXBuildFile; fileRef = C189820B161A377500335863 /* SGA.icns */; };
 		C189820F161A37F700335863 /* MDSGADocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C189820E161A37F700335863 /* MDSGADocument.m */; };
 		C1898210161A466E00335863 /* NVThread.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C180E37914728E1B0001C07F /* NVThread.framework */; };
@@ -288,7 +284,6 @@
 		C1968A0414F560BB00ACFD02 /* SourceImage.qlgenerator in Copy QuickLook generator */ = {isa = PBXBuildFile; fileRef = C1C2C661127CBEF7003B24F6 /* SourceImage.qlgenerator */; };
 		C1968A0614F560E400ACFD02 /* Source.mdimporter in Copy Spotlight importer */ = {isa = PBXBuildFile; fileRef = C1C2C63D127CBED1003B24F6 /* Source.mdimporter */; };
 		C1968A0814F5676300ACFD02 /* TKFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C146091A14F3373700B7286B /* TKFoundationAdditions.m */; };
-		C197B529148887CC00B64B1B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C145AC6612BD69D1005D7E21 /* OpenGL.framework */; };
 		C19874C117CE4D6A009D55E8 /* TKImageViewPrivateInterfaces.m in Sources */ = {isa = PBXBuildFile; fileRef = C19874C017CE4D6A009D55E8 /* TKImageViewPrivateInterfaces.m */; };
 		C19B1FC114514BC2005F7902 /* TKGrayscaleFilter.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = C1EEE1C21450AC0800CB8ED6 /* TKGrayscaleFilter.cikernel */; };
 		C19C1C0E1489901500EE2B12 /* TKImageKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C19C1C0C14898DA300EE2B12 /* TKImageKitAdditions.m */; };
@@ -317,6 +312,8 @@
 		C1A92FF51439676700AFAF4F /* zoomOutLionTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = C1A92FF41439676700AFAF4F /* zoomOutLionTemplate.png */; };
 		C1B2C1751843CF2B000F715F /* isRunning.png in Resources */ = {isa = PBXBuildFile; fileRef = C1B2C1741843CF2B000F715F /* isRunning.png */; };
 		C1B2C1761843CF2B000F715F /* isRunning.png in Resources */ = {isa = PBXBuildFile; fileRef = C1B2C1741843CF2B000F715F /* isRunning.png */; };
+		C1B318C1184E724A00480CF7 /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1864048159C2F0C009D15FB /* SceneKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C1B318C2184E72FB00480CF7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1082A9D13D4492F0071FA31 /* QuartzCore.framework */; };
 		C1B95374124E73EC00E83451 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1B95340124E73EC00E83451 /* Error.cpp */; };
 		C1B95375124E73EC00E83451 /* Error.h in Headers */ = {isa = PBXBuildFile; fileRef = C1B95341124E73EC00E83451 /* Error.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1B95376124E73EC00E83451 /* FileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1B95342124E73EC00E83451 /* FileReader.cpp */; };
@@ -1060,7 +1057,7 @@
 		256AC3D90F4B6AC300CF3369 /* TKAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = TKAppController.m; path = TextureFinagler/TKAppController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		256AC3F00F4B6AF500CF3369 /* SourceFinagler_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SourceFinagler_Prefix.pch; path = SourceFinagler/SourceFinagler_Prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SourceFinagler/main.m; sourceTree = "<group>"; };
-		8D1107310486CEB800E47090 /* SourceFinagler.plist */ = {isa = PBXFileReference; explicitFileType = text.plist.info; fileEncoding = 4; name = SourceFinagler.plist; path = SourceFinagler/SourceFinagler.plist; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* SourceFinagler.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; name = SourceFinagler.plist; path = SourceFinagler/SourceFinagler.plist; sourceTree = "<group>"; };
 		C1034A9111C5619C0054740E /* VSSteamManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSSteamManager.h; path = SteamKit/VSSteamManager.h; sourceTree = "<group>"; };
 		C1034A9211C5619C0054740E /* VSSteamManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSSteamManager.m; path = SteamKit/VSSteamManager.m; sourceTree = "<group>"; };
 		C103563611C5AF930054740E /* VSGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSGame.h; path = SteamKit/VSGame.h; sourceTree = "<group>"; };
@@ -1077,7 +1074,6 @@
 		C10E5041147C8F0A00864795 /* TKVMTNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKVMTNode.m; sourceTree = "<group>"; };
 		C11116FD149151360040E4B5 /* TKOBJParts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKOBJParts.h; sourceTree = "<group>"; };
 		C11116FE149151360040E4B5 /* TKOBJParts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKOBJParts.m; sourceTree = "<group>"; };
-		C111985D139AC60E0052E767 /* AppleScriptObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptObjC.framework; path = System/Library/Frameworks/AppleScriptObjC.framework; sourceTree = SDKROOT; };
 		C1137866128072C500C87072 /* MDCopyOperationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCopyOperationViewController.h; path = SourceFinagler/MDCopyOperationViewController.h; sourceTree = "<group>"; };
 		C1137867128072C500C87072 /* MDCopyOperationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCopyOperationViewController.m; path = SourceFinagler/MDCopyOperationViewController.m; sourceTree = "<group>"; };
 		C116F6EB12CFE71D00551787 /* viewMipmapBrowserCapsuleStyle.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = viewMipmapBrowserCapsuleStyle.pdf; path = Resources/viewMipmapBrowserCapsuleStyle.pdf; sourceTree = "<group>"; };
@@ -1156,9 +1152,6 @@
 		C140E76D13889E6B00027DD6 /* SteamKitDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SteamKitDefines.h; path = SteamKit/SteamKitDefines.h; sourceTree = "<group>"; };
 		C140E80A1388A7B800027DD6 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		C140EA3A1388CE9400027DD6 /* noteIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = noteIcon.icns; path = Resources/noteIcon.icns; sourceTree = "<group>"; };
-		C145AC5E12BD69D1005D7E21 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = System/Library/Frameworks/AGL.framework; sourceTree = SDKROOT; };
-		C145AC6012BD69D1005D7E21 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
-		C145AC6212BD69D1005D7E21 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
 		C145AC6412BD69D1005D7E21 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		C145AC6612BD69D1005D7E21 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		C145AD0812BD6DF0005D7E21 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
@@ -1210,8 +1203,6 @@
 		C153014C11C8788C0041BEC8 /* mouse.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = mouse.icns; path = Resources/mouse.icns; sourceTree = "<group>"; };
 		C153017E11C8866E0041BEC8 /* sourceFinagler.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = sourceFinagler.icns; path = Resources/sourceFinagler.icns; sourceTree = "<group>"; };
 		C1537AC21294F80E0056DDE1 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		C1537AC91294F80E0056DDE1 /* VideoDecodeAcceleration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoDecodeAcceleration.framework; path = System/Library/Frameworks/VideoDecodeAcceleration.framework; sourceTree = SDKROOT; };
-		C1537CA512956BA50056DDE1 /* IOSurface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOSurface.framework; path = /System/Library/Frameworks/IOSurface.framework; sourceTree = "<absolute>"; };
 		C1551F6611D941B300CCEDD3 /* steamApps.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = steamApps.icns; path = Resources/steamApps.icns; sourceTree = "<group>"; };
 		C15520FE11D9939D00CCEDD3 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		C15521FD11D9A4D600CCEDD3 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = Resources/dsa_pub.pem; sourceTree = "<group>"; };
@@ -1290,7 +1281,6 @@
 		C16C63DB12D75E5200D6F254 /* TKTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKTexture.h; sourceTree = "<group>"; };
 		C16C63DC12D75E5200D6F254 /* TKTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKTexture.m; sourceTree = "<group>"; };
 		C16D5E38136D3D9900453365 /* TextureKit.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; name = TextureKit.exp; path = TextureKit/TextureKit.exp; sourceTree = "<group>"; };
-		C17025D612847FA70056A23D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C17025F6128486BE0056A23D /* TKImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImage.h; path = TextureKit/TKImage.h; sourceTree = "<group>"; };
 		C17025F7128486BE0056A23D /* TKImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImage.m; path = TextureKit/TKImage.m; sourceTree = "<group>"; };
 		C17026191284BC6F0056A23D /* TKImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageRep.h; path = TextureKit/TKImageRep.h; sourceTree = "<group>"; };
@@ -1305,7 +1295,6 @@
 		C1770FD61488C9FF00E6F651 /* TKModelDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKModelDocument.m; path = TextureFinagler/TKModelDocument.m; sourceTree = "<group>"; };
 		C17845C5148300E700082335 /* TKModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKModel.h; sourceTree = "<group>"; };
 		C17845C6148300E800082335 /* TKModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKModel.m; sourceTree = "<group>"; };
-		C17A6EEA120A0BC40062CBC6 /* Collaboration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Collaboration.framework; path = System/Library/Frameworks/Collaboration.framework; sourceTree = SDKROOT; };
 		C17D74C31443C8EA0048697D /* TKTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKTextFieldCell.h; path = TextureFinagler/TKTextFieldCell.h; sourceTree = "<group>"; };
 		C17D74C41443C8EA0048697D /* TKTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKTextFieldCell.m; path = TextureFinagler/TKTextFieldCell.m; sourceTree = "<group>"; };
 		C17D74E91443D0DA0048697D /* TKTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKTextField.h; path = TextureFinagler/TKTextField.h; sourceTree = "<group>"; };
@@ -1359,7 +1348,6 @@
 		C18418E41455CD05007D8EE6 /* TKImageChannelFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageChannelFilter.m; path = TextureFinagler/TKImageChannelFilter.m; sourceTree = "<group>"; };
 		C1864047159C2F0C009D15FB /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		C1864048159C2F0C009D15FB /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
-		C1864049159C2F0D009D15FB /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		C189820B161A377500335863 /* SGA.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = SGA.icns; path = Resources/SGA.icns; sourceTree = "<group>"; };
 		C189820D161A37F700335863 /* MDSGADocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDSGADocument.h; path = SourceFinagler/MDSGADocument.h; sourceTree = "<group>"; };
 		C189820E161A37F700335863 /* MDSGADocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDSGADocument.m; path = SourceFinagler/MDSGADocument.m; sourceTree = "<group>"; };
@@ -1685,7 +1673,6 @@
 		C1CB12CB13BBF20D00FCCC7E /* MIT.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = MIT.rtf; path = NVTextureTools/MIT.rtf; sourceTree = "<group>"; };
 		C1CBE6FA124E2622006526C1 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		C1CE0253124F9985002E66F8 /* Syntax Definitions */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Syntax Definitions"; path = "SourceFinagler/Syntax Definitions"; sourceTree = "<group>"; };
-		C1CE51C112203985006410E3 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		C1D00790160D302C0045EEC3 /* TKAppController.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = TKAppController.plist; path = TextureFinagler/TKAppController.plist; sourceTree = "<group>"; };
 		C1D00792160D320C0045EEC3 /* TKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKViewController.h; path = TextureFinagler/TKViewController.h; sourceTree = "<group>"; };
 		C1D00793160D320C0045EEC3 /* TKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKViewController.m; path = TextureFinagler/TKViewController.m; sourceTree = "<group>"; };
@@ -1982,8 +1969,7 @@
 				C1E6DFFB12BD1091009D8AD6 /* NVTextureTools.framework in Frameworks */,
 				C1CA27EB13A2E21800235C98 /* Cocoa.framework in Frameworks */,
 				C13C060A146766BC00A64EA3 /* Accelerate.framework in Frameworks */,
-				C197B529148887CC00B64B1B /* OpenGL.framework in Frameworks */,
-				C108DB18163E370800DADFCD /* QuartzCore.framework in Frameworks */,
+				C1B318C2184E72FB00480CF7 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2040,9 +2026,7 @@
 				C1CA27DA13A2E1F900235C98 /* Cocoa.framework in Frameworks */,
 				C1CA285013A2E2C100235C98 /* Quartz.framework in Frameworks */,
 				C1CA2B2B13A2E38D00235C98 /* WebKit.framework in Frameworks */,
-				C186404A159C2F0D009D15FB /* GLKit.framework in Frameworks */,
-				C186404B159C2F0D009D15FB /* SceneKit.framework in Frameworks */,
-				C186404C159C2F0D009D15FB /* VideoToolbox.framework in Frameworks */,
+				C1B318C1184E724A00480CF7 /* SceneKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2158,10 +2142,7 @@
 				C1082A9D13D4492F0071FA31 /* QuartzCore.framework */,
 				C140E80A1388A7B800027DD6 /* ScriptingBridge.framework */,
 				C1537AC21294F80E0056DDE1 /* Accelerate.framework */,
-				C145AC6612BD69D1005D7E21 /* OpenGL.framework */,
-				C1864047159C2F0C009D15FB /* GLKit.framework */,
 				C1864048159C2F0C009D15FB /* SceneKit.framework */,
-				C1864049159C2F0D009D15FB /* VideoToolbox.framework */,
 				C1D44BF0126127D600A027EF /* unused */,
 			);
 			name = "Linked Frameworks";
@@ -2185,7 +2166,6 @@
 				C1FEA8FD125E71A200CA78FF /* NVImage.framework */,
 				C180E37914728E1B0001C07F /* NVThread.framework */,
 				C1FEA930125E72E300CA78FF /* NVTextureTools.framework */,
-				C1C2C613127CBE86003B24F6 /* unimplemented */,
 				C17D8F781642AAC40044039F /* ddsFinagler */,
 			);
 			name = Products;
@@ -3482,13 +3462,6 @@
 			name = Streams;
 			sourceTree = "<group>";
 		};
-		C1C2C613127CBE86003B24F6 /* unimplemented */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = unimplemented;
-			sourceTree = "<group>";
-		};
 		C1C2C831127D2843003B24F6 /* Group */ = {
 			isa = PBXGroup;
 			children = (
@@ -3550,18 +3523,11 @@
 		C1D44BF0126127D600A027EF /* unused */ = {
 			isa = PBXGroup;
 			children = (
-				C145AC5E12BD69D1005D7E21 /* AGL.framework */,
 				C145AD0812BD6DF0005D7E21 /* Carbon.framework */,
-				C17A6EEA120A0BC40062CBC6 /* Collaboration.framework */,
-				C1CE51C112203985006410E3 /* IOKit.framework */,
-				C17025D612847FA70056A23D /* SystemConfiguration.framework */,
-				C1537AC91294F80E0056DDE1 /* VideoDecodeAcceleration.framework */,
-				C1537CA512956BA50056DDE1 /* IOSurface.framework */,
 				C1CBE6FA124E2622006526C1 /* QuickTime.framework */,
-				C145AC6012BD69D1005D7E21 /* CoreAudio.framework */,
-				C145AC6212BD69D1005D7E21 /* CoreAudioKit.framework */,
 				C145AC6412BD69D1005D7E21 /* CoreVideo.framework */,
-				C111985D139AC60E0052E767 /* AppleScriptObjC.framework */,
+				C145AC6612BD69D1005D7E21 /* OpenGL.framework */,
+				C1864047159C2F0C009D15FB /* GLKit.framework */,
 			);
 			name = unused;
 			sourceTree = "<group>";
@@ -4406,7 +4372,6 @@
 			buildConfigurationList = C180E37D14728E1D0001C07F /* Build configuration list for PBXNativeTarget "NVThread" */;
 			buildPhases = (
 				C180E37414728E1B0001C07F /* Headers */,
-				C180E37514728E1B0001C07F /* Resources */,
 				C180E37614728E1B0001C07F /* Sources */,
 				C180E37714728E1B0001C07F /* Frameworks */,
 			);
@@ -4469,6 +4434,7 @@
 				C1C2C543127CBCA0003B24F6 /* Sources */,
 				C1C2C595127CBCA0003B24F6 /* Frameworks */,
 				C1C2C5A0127CBCA0003B24F6 /* Copy Frameworks */,
+				C1963F0C184A817800EB5BFA /* ShellScript */,
 				C1968A0314F5606500ACFD02 /* Copy QuickLook generator */,
 				C1968A0514F560DC00ACFD02 /* Copy Spotlight importer */,
 			);
@@ -4532,7 +4498,6 @@
 			buildConfigurationList = C1FEA7EE125E5C9600CA78FF /* Build configuration list for PBXNativeTarget "NVCore" */;
 			buildPhases = (
 				C1FEA7E5125E5C9600CA78FF /* Headers */,
-				C1FEA7E6125E5C9600CA78FF /* Resources */,
 				C1FEA7E7125E5C9600CA78FF /* Sources */,
 				C1FEA7E8125E5C9600CA78FF /* Frameworks */,
 			);
@@ -4550,7 +4515,6 @@
 			buildConfigurationList = C1FEA8E2125E5DC300CA78FF /* Build configuration list for PBXNativeTarget "NVMath" */;
 			buildPhases = (
 				C1FEA8D9125E5DC300CA78FF /* Headers */,
-				C1FEA8DA125E5DC300CA78FF /* Resources */,
 				C1FEA8DB125E5DC300CA78FF /* Sources */,
 				C1FEA8DC125E5DC300CA78FF /* Frameworks */,
 			);
@@ -4569,7 +4533,6 @@
 			buildConfigurationList = C1FEA901125E71A200CA78FF /* Build configuration list for PBXNativeTarget "NVImage" */;
 			buildPhases = (
 				C1FEA8F8125E71A200CA78FF /* Headers */,
-				C1FEA8F9125E71A200CA78FF /* Resources */,
 				C1FEA8FA125E71A200CA78FF /* Sources */,
 				C1FEA8FB125E71A200CA78FF /* Frameworks */,
 			);
@@ -4632,7 +4595,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
+				CLASSPREFIX = MD;
 				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Mark Douma";
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Source Finagler" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -4704,13 +4669,6 @@
 			files = (
 				C116F72512CFFB1E00551787 /* overlayStop.png in Resources */,
 				C116F72612CFFB2100551787 /* overlayPlay.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C180E37514728E1B0001C07F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4924,27 +4882,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C1FEA7E6125E5C9600CA78FF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C1FEA8DA125E5DC300CA78FF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C1FEA8F9125E71A200CA78FF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C1FEA92C125E72E300CA78FF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4981,6 +4918,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "set -o errexit\n\n[ $BUILD_STYLE = Release ] || { echo Distribution target requires \"'Release'\" build style; false; }\n\nVERSION=$(defaults read \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info\" CFBundleVersion)\nSHORT_VERSION=$(defaults read \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info\" CFBundleShortVersionString)\nDOWNLOAD_BASE_URL=\"http://www.markdouma.com/sourcefinagler\"\nRELEASENOTES_URL=\"http://www.markdouma.com/sourcefinagler/rnotes.html#version-$VERSION\"\n\nARCHIVE_FILENAME=$(echo \"$PROJECT_NAME.zip\" | sed s/\\ //g)\n\nDOWNLOAD_URL=\"$DOWNLOAD_BASE_URL/$ARCHIVE_FILENAME\"\nKEYCHAIN_PRIVKEY_NAME=\"dsa_priv.pem\"\n\nWD=$PWD\ncd \"$BUILT_PRODUCTS_DIR\"\nrm -f \"$ARCHIVE_FILENAME\"\nditto -ck --keepParent --sequesterRsrc \"$PROJECT_NAME.app\" \"$ARCHIVE_FILENAME\"\n\nSIZE=$(stat -f %z \"$ARCHIVE_FILENAME\")\nPUBDATE=$(date +\"%a, %d %b %G %T %z\")\n\n\nSIGNATURE=$(\n\topenssl dgst -sha1 -binary < \"$ARCHIVE_FILENAME\" \\\n\t| openssl dgst -dss1 -sign <(security find-generic-password -g -s \"$KEYCHAIN_PRIVKEY_NAME\" 2>&1 1>/dev/null | perl -pe '($_) = /\"(.+)\"/; s/\\\\012/\\n/g' | perl -MXML::LibXML -e 'print XML::LibXML->new()->parse_file(\"-\")->findvalue(q(//string[preceding-sibling::key[1] = \"NOTE\"]))') \\\n\t| openssl enc -base64\n)\n\n[ $SIGNATURE ] || { echo Unable to load signing private key with name \"'$KEYCHAIN_PRIVKEY_NAME'\" from keychain; false; }\n\ncat <<EOF\n\t\t<item>\n\t\t\t<title>Version $SHORT_VERSION ($VERSION)</title>\n\t\t\t<sparkle:releaseNotesLink>$RELEASENOTES_URL</sparkle:releaseNotesLink>\n\t\t\t<pubDate>$PUBDATE</pubDate>\n\t\t\t<enclosure\n\t\t\t\turl=\"$DOWNLOAD_URL\"\n\t\t\t\tsparkle:version=\"$VERSION\"\n\t\t\t\tsparkle:shortVersionString=\"$SHORT_VERSION\"\n\t\t\t\ttype=\"application/octet-stream\"\n\t\t\t\tlength=\"$SIZE\"\n\t\t\t\tsparkle:dsaSignature=\"$SIGNATURE\"\n\t\t\t/>\n\t\t</item>\nEOF\n\necho scp \"'$HOME/svn/my-cool-app/build/Release/$ARCHIVE_FILENAME'\" www.example.com:download/\necho scp \"'$WD/appcast.xml'\" www.example.com:web/software/my-cool-app/appcast.xml\n";
+		};
+		C1963F0C184A817800EB5BFA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Developer ID Application: Mark Douma\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/Sparkle.framework/Versions/A/Resources/relaunch\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/Sparkle.framework/Versions/A\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -6376,7 +6326,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "MD_BUILDING_FOR_SOURCE_ADDON_FINAGLER=1";
 				INFOPLIST_FILE = "SourceAddonFinagler/Source Addon Finagler-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks @loader_path/../../../";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
