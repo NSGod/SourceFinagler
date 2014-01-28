@@ -230,7 +230,7 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 	if (disclosureButton) [disclosureButton setState:NSOnState];
 	
 	if (viewController == nil) {
-		self.viewController = [[TKMaterialPropertyViewController alloc] init];
+		self.viewController = [[[TKMaterialPropertyViewController alloc] init] autorelease];
 	}
 	
 	NSSize newViewSize = viewController.view.frame.size;

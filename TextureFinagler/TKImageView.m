@@ -199,6 +199,7 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 		self.layer.backgroundColor = patternColorRef;
 		animationImageView.layer.backgroundColor = patternColorRef;
 		CGColorRelease(patternColorRef);
+		CGImageRelease(checkerboardImageRef);
 		
 	} else {
 		CGColorRef grayBackgroundColorRef = TKCreateGrayBackgroundColor();
