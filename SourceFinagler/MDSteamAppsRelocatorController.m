@@ -199,9 +199,9 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	NSOpenPanel *openPanel = [NSOpenPanel openPanelWithTitle:[NSString stringWithFormat:@"Locate %@", VSSteamAppsDirectoryNameKey]
-													 message:[NSString stringWithFormat:@"Locate the copy of your “%@” folder you created in Step 2.", VSSteamAppsDirectoryNameKey]
-										   actionButtonTitle:@"Open"
+	NSOpenPanel *openPanel = [NSOpenPanel openPanelWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Locate %@", @""), VSSteamAppsDirectoryNameKey]
+													 message:[NSString stringWithFormat:NSLocalizedString(@"Locate the copy of your “%@” folder you created in Step 2.", @""), VSSteamAppsDirectoryNameKey]
+										   actionButtonTitle:NSLocalizedString(@"Open", @"")
 									 allowsMultipleSelection:NO
 										canChooseDirectories:YES
 													delegate:self];
@@ -234,7 +234,7 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 #endif
 	NSError *error = nil;
 	if ([steamManager relocateSteamAppsToPath:proposedNewPath error:&error]) {
-		[statusField setStringValue:@"Success"];
+		[statusField setStringValue:NSLocalizedString(@"Success", @"")];
 		[self setCanCreate:NO];
 		[self setCurrentURL:[NSURL fileURLWithPath:proposedNewPath]];
 		[statusField performSelector:@selector(setStringValue:) withObject:@"" afterDelay:10.0];
