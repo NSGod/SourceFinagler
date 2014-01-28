@@ -115,7 +115,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 		}
 	}
 	
-	[[self mutableArrayValueForKey:@"games"] setArray:steamManager.games];
+	[self refresh:self];
 	
 	[VSSteamManager	setDefaultPersistentOptions:VSGameLaunchDefault];
 	[steamManager setMonitoringGames:YES];
