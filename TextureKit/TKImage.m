@@ -8,7 +8,7 @@
 
 #import <TextureKit/TKImage.h>
 #import <TextureKit/TextureKitDefines.h>
-#import "TKFoundationAdditions.h"
+#import "MDFoundationAdditions.h"
 #import <CoreServices/CoreServices.h>
 
 // Notes:

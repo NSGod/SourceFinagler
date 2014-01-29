@@ -1,12 +1,12 @@
 //
-//  TKAppKitAdditions.m
+//  MDAppKitAdditions.m
 //  
 //
 //  Created by Mark Douma on 6/4/2010.
 //  Copyright (c) 2010 Mark Douma LLC. All rights reserved.
 //
 
-#import "TKAppKitAdditions.h"
+#import "MDAppKitAdditions.h"
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1050
 #	import <CoreServices/CoreServices.h>
@@ -15,15 +15,15 @@
 #endif
 
 
-#define TK_DEBUG 0
+#define MD_DEBUG 0
 
 
-@implementation NSAlert (TKAdditions)
+@implementation NSAlert (MDAppKitAdditions)
 
 
 + (NSAlert *)alertWithMessageText:(NSString *)messageText informativeText:(NSString *)informativeText firstButton:(NSString *)firstButtonTitle secondButton:(NSString *)secondButtonTitle thirdButton:(NSString *)thirdButtonTitle {
 	
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSAlert *alert = [[[NSAlert alloc] init] autorelease];
@@ -43,10 +43,10 @@
 
 @end
 
-@implementation NSBundle (TKAppKitAdditions)
+@implementation NSBundle (MDAppKitAdditions)
 
 + (void)runFailedNibLoadAlert:(NSString *)nibName {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSBeep();
@@ -61,18 +61,18 @@
 @end
 
 
-@implementation NSMenu (TKAdditions)
+@implementation NSMenu (MDAppKitAdditions)
 
 
 - (BOOL)containsItem:(NSMenuItem *)aMenuItem {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return (!([self indexOfItem:aMenuItem] == -1));
 }
 
 - (void)setItemArray:(NSArray *)newArray {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -96,7 +96,7 @@
 
 
 //- (void)removeAllItems {
-//#if TK_DEBUG
+//#if MD_DEBUG
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 //#endif
 //	NSArray *currentArray = [self itemArray];
@@ -112,7 +112,7 @@
 @end
 
 
-@implementation NSOpenPanel (TKAdditions)
+@implementation NSOpenPanel (MDAppKitAdditions)
 
 + (NSOpenPanel *)openPanelWithTitle:(NSString *)title
 							message:(NSString *)message
@@ -120,7 +120,7 @@
 			allowsMultipleSelection:(BOOL)allowsMultipleSelection
 			   canChooseDirectories:(BOOL)canChooseDirectories
 						   delegate:(id <NSOpenSavePanelDelegate>)delegate {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -140,10 +140,10 @@
 
 
 
-@implementation NSPopUpButton (TKAdditions)
+@implementation NSPopUpButton (MDAppKitAdditions)
 
 - (void)setItemArray:(NSArray *)value {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	BOOL isPulldown = [self pullsDown];
@@ -169,10 +169,10 @@ static NSView *blankView() {
 	return view;
 } 
 
-@implementation NSWindow (TKAdditions)
+@implementation NSWindow (MDAppKitAdditions)
 
 - (CGFloat)toolbarHeight {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSToolbar *toolbar = [self toolbar];
@@ -188,7 +188,7 @@ static NSView *blankView() {
 
 
 - (void)resizeToSize:(NSSize)newSize {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	CGFloat newHeight = newSize.height + [self toolbarHeight];
@@ -208,7 +208,7 @@ static NSView *blankView() {
 
 
 - (void)switchView:(NSView *)aView newTitle:(NSString *)aString {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ([self contentView] != aView) {
@@ -221,7 +221,7 @@ static NSView *blankView() {
 }
 
 - (void)switchView:(NSView *)aView {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ([self contentView] != aView) {
@@ -237,15 +237,15 @@ static NSView *blankView() {
 
 
 
-@implementation NSWorkspace (TKAdditions)
+@implementation NSWorkspace (MDAppKitAdditions)
 
 
 // TODO: For 10.5+, rewrite to use Scripting Bridge rather than NSAppleScript
 - (BOOL)revealInFinder:(NSArray *)filePaths {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (TKGetSystemVersion() >= TKSnowLeopard) {
+	if (MDGetSystemVersion() >= MDSnowLeopard) {
 		NSMutableArray *URLs = [NSMutableArray array];
 		for (NSString *path in filePaths) {
 			NSURL *URL = [NSURL fileURLWithPath:path];
@@ -305,7 +305,7 @@ static NSView *blankView() {
 
 
 - (NSImage *)iconForApplicationForURL:(NSURL *)aURL {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSImage *image = nil;

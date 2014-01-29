@@ -2,9 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>TKPrefsClassNames</key>
+	<key>MDPrefsClassNames</key>
 	<array>
-		<string>TKPrefsGeneralController</string>
+		<string>MDPrefsGeneralController</string>
 	</array>
 </dict>
 </plist>

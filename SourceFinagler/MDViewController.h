@@ -1,5 +1,5 @@
 //
-//  TKViewController.h
+//  MDViewController.h
 //  Procon Finagler
 //
 //  Created by Mark Douma on 6/9/2012.
@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface TKViewController : NSViewController {
+@interface MDViewController : NSViewController {
 	
 	NSSize					minWinSize;
 	NSSize					maxWinSize;

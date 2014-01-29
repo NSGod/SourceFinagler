@@ -8,7 +8,7 @@
 
 
 #import "MDResource.h"
-#import "TKFoundationAdditions.h"
+#import "MDFoundationAdditions.h"
 
 
 #define MD_DEBUG 0

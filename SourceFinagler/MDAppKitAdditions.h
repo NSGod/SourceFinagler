@@ -1,5 +1,5 @@
 //
-//  TKAppKitAdditions.h
+//  MDAppKitAdditions.h
 //  
 //
 //  Created by Mark Douma on 6/4/2010.
@@ -7,25 +7,25 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "TKFoundationAdditions.h"
+#import "MDFoundationAdditions.h"
 
 
-@interface NSAlert (TKAdditions)
+@interface NSAlert (MDAppKitAdditions)
 + (NSAlert *)alertWithMessageText:(NSString *)messageText informativeText:(NSString *)informativeText firstButton:(NSString *)firstButtonTitle secondButton:(NSString *)secondButtonTitle thirdButton:(NSString *)thirdButtonTitle;
 @end
 
-@interface NSBundle (TKAppKitAdditions)
+@interface NSBundle (MDAppKitAdditions)
 + (void)runFailedNibLoadAlert:(NSString *)nibName;
 @end
 
-@interface NSMenu (TKAdditions)
+@interface NSMenu (MDAppKitAdditions)
 - (BOOL)containsItem:(NSMenuItem *)aMenuItem;
 - (void)setItemArray:(NSArray *)anArray;
 //- (void)removeAllItems;
 @end
 
 
-@interface NSOpenPanel (TKAdditions)
+@interface NSOpenPanel (MDAppKitAdditions)
 + (NSOpenPanel *)openPanelWithTitle:(NSString *)title
 							message:(NSString *)message
 				  actionButtonTitle:(NSString *)actionButtonTitle
@@ -37,12 +37,12 @@
 @end
 
 
-@interface NSPopUpButton (TKAdditions)
+@interface NSPopUpButton (MDAppKitAdditions)
 - (void)setItemArray:(NSArray *)value;
 @end
 
 
-@interface NSWindow (TKAdditions)
+@interface NSWindow (MDAppKitAdditions)
 - (CGFloat)toolbarHeight;
 - (void)resizeToSize:(NSSize)newSize;
 - (void)switchView:(NSView *)aView newTitle:(NSString *)aString;
@@ -50,7 +50,7 @@
 @end
 
 
-@interface NSWorkspace (TKAdditions)
+@interface NSWorkspace (MDAppKitAdditions)
 - (BOOL)revealInFinder:(NSArray *)filePaths;
 - (NSImage *)iconForApplicationForURL:(NSURL *)aURL;
 @end

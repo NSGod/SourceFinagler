@@ -17,8 +17,8 @@
 #import "TKImageKitAdditions.h"
 
 
-#import "TKAppController.h"
-#import "TKAppKitAdditions.h"
+#import "MDAppController.h"
+#import "MDAppKitAdditions.h"
 
 
 #import <Quartz/Quartz.h>
@@ -333,7 +333,7 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 
 
 - (NSString *)windowNibName {
-	if (TKGetSystemVersion() >= TKLion) {
+	if (MDGetSystemVersion() >= MDLion) {
 		return @"TKImageDocumentLion";
 	}
     return @"TKImageDocument";

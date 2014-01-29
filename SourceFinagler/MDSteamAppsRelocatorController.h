@@ -8,13 +8,13 @@
 
 //#if TARGET_CPU_X86 || TARGET_CPU_X86_64
 
-#import "TKViewController.h"
+#import "MDViewController.h"
 
 @class VSSteamManager;
 
 
 
-@interface MDSteamAppsRelocatorController : TKViewController <NSOpenSavePanelDelegate> {
+@interface MDSteamAppsRelocatorController : MDViewController <NSOpenSavePanelDelegate> {
 	
 	IBOutlet NSTextField		*statusField;
 	IBOutlet NSTextField		*newPathField;

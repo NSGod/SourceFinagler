@@ -8,7 +8,7 @@
 
 //#if TARGET_CPU_X86 || TARGET_CPU_X86_64
 
-#import "TKViewController.h"
+#import "MDViewController.h"
 #import <SteamKit/SteamKit.h>
 
 @class MDTableView;
@@ -23,7 +23,7 @@ enum {
 typedef NSUInteger MDMouseSoftware;
 
 
-@interface MDOtherAppsHelperController : TKViewController <NSTableViewDelegate, VSSteamManagerDelegate> {
+@interface MDOtherAppsHelperController : MDViewController <NSTableViewDelegate, VSSteamManagerDelegate> {
 	IBOutlet NSArrayController	*gamesController;
 	IBOutlet NSButton			*helpButton;
 	IBOutlet MDTableView		*tableView;

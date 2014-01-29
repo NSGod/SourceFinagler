@@ -1,43 +1,43 @@
 //
-//  TKPrefsController.m
+//  MDPrefsController.m
 //  Source Finagler
 //
 //  Created by Mark Douma on 9/12/2010.
 //  Copyright 2010 Mark Douma LLC. All rights reserved.
 //
 
-#import "TKPrefsController.h"
-#import "TKPrefsGeneralController.h"
-#import "TKAppKitAdditions.h"
+#import "MDPrefsController.h"
+#import "MDViewController.h"
+#import "MDAppKitAdditions.h"
 
 
 
-#define TK_DEBUG 1
+#define MD_DEBUG 1
 
 
-static NSString * const TKPrefsCurrentViewKey			= @"TKPrefsCurrentView";
+static NSString * const MDPrefsCurrentViewIndexKey			= @"MDPrefsCurrentViewIndex";
 
 static NSArray *prefsClassNames = nil;
 
 
-@implementation TKPrefsController
+@implementation MDPrefsController
 
 
 + (void)initialize {
 	@synchronized(self) {
 		if (prefsClassNames == nil) {
-			prefsClassNames = [[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"TKPrefs" ofType:@"plist"]] objectForKey:@"TKPrefsClassNames"] retain];
+			prefsClassNames = [[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MDPrefs" ofType:@"plist"]] objectForKey:@"MDPrefsClassNames"] retain];
 		}
 		NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
-		[defaults setObject:[NSNumber numberWithUnsignedInteger:TKPrefsGeneralView]	forKey:TKPrefsCurrentViewKey];
+		[defaults setObject:[NSNumber numberWithUnsignedInteger:0]	forKey:MDPrefsCurrentViewIndexKey];
 		[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 	}
 }
 
 
 - (id)init {
-	if ((self = [super initWithWindowNibName:@"TKPrefs"])) {
-		currentView = [[[NSUserDefaults standardUserDefaults] objectForKey:TKPrefsCurrentViewKey] unsignedIntegerValue];
+	if ((self = [super initWithWindowNibName:@"MDPrefs"])) {
+		currentViewIndex = [[[NSUserDefaults standardUserDefaults] objectForKey:MDPrefsCurrentViewIndexKey] unsignedIntegerValue];
 		viewControllers = [[NSMutableArray alloc] init];
 		NSUInteger count = prefsClassNames.count;
 		for (NSUInteger i = 0; i < count; i++) {
@@ -46,7 +46,7 @@ static NSArray *prefsClassNames = nil;
 		[self window];
 		
 	} else {
-		[NSBundle runFailedNibLoadAlert:@"TKPrefs"];
+		[NSBundle runFailedNibLoadAlert:@"MDPrefs"];
 	}
 	return self;
 }
@@ -58,7 +58,7 @@ static NSArray *prefsClassNames = nil;
 
 
 - (void)awakeFromNib {
-#if TK_DEBUG
+#if MD_DEBUG
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[self changeView:self];
@@ -66,31 +66,38 @@ static NSArray *prefsClassNames = nil;
 
 
 - (IBAction)changeView:(id)sender {
-#if TK_DEBUG
+#if MD_DEBUG
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
 	if (sender == self || sender == nil) {
+		
+		NSUInteger count = viewControllers.count;
+		
+		while (currentViewIndex >= count) {
+			currentViewIndex--;
+		}
+		
 		NSArray *toolbarItems = self.window.toolbar.items;
 		for (NSToolbarItem *toolbarItem in toolbarItems) {
-			if (toolbarItem.tag == currentView) {
+			if (toolbarItem.tag == currentViewIndex) {
 				[self.window.toolbar setSelectedItemIdentifier:toolbarItem.itemIdentifier]; break;
 			}
 		}
 	} else {
-		currentView = [(NSToolbarItem *)sender tag];
+		currentViewIndex = [(NSToolbarItem *)sender tag];
 	}
 	
-	TKViewController *viewController = [viewControllers objectAtIndex:currentView];
+	MDViewController *viewController = [viewControllers objectAtIndex:currentViewIndex];
 
 	if ((NSNull *)viewController == [NSNull null]) {
-		NSString *className = [prefsClassNames objectAtIndex:currentView];
+		NSString *className = [prefsClassNames objectAtIndex:currentViewIndex];
 		
 		Class viewControllerClass = NSClassFromString(className);
 		
 		viewController = [[viewControllerClass alloc] init];
 		
-		[viewControllers replaceObjectAtIndex:currentView withObject:viewController];
+		[viewControllers replaceObjectAtIndex:currentViewIndex withObject:viewController];
 		
 		[viewController release];
 		

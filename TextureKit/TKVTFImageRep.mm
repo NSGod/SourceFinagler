@@ -18,7 +18,7 @@
 
 
 #if TK_DEBUG
-//#import "TKFoundationAdditions.h"
+//#import "MDFoundationAdditions.h"
 #endif
 
 using namespace VTFLib;

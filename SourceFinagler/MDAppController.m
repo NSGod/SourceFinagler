@@ -1,5 +1,5 @@
 //
-//  TKAppController.m
+//  MDAppController.m
 //  Source Finagler
 //
 //  Created by Mark Douma on 5/12/2010.
@@ -7,20 +7,20 @@
 //
 
 
-#import "TKAppController.h"
-#import "TKViewController.h"
-#import "TKAppKitAdditions.h"
+#import "MDAppController.h"
+#import "MDViewController.h"
+#import "MDAppKitAdditions.h"
 
-#import "TKAboutWindowController.h"
+#import "MDAboutWindowController.h"
 #import "MDInspectorController.h"
 #import "MDViewOptionsController.h"
 #import "MDQuickLookController.h"
 #import "MDHLDocument.h"
-#import "TKDocumentController.h"
+#import "MDDocumentController.h"
 
 #import "MDUserDefaults.h"
 
-#import "TKPrefsController.h"
+#import "MDPrefsController.h"
 
 #import "TKImageDocument.h"
 #import "TKImageInspectorController.h"
@@ -30,29 +30,29 @@
 
 static NSString * const MDCurrentViewIndexKey						= @"MDCurrentViewIndex";
 
-static NSString * const TKLastVersionRunKey							= @"TKLastVersionRun";
+static NSString * const MDLastVersionRunKey							= @"MDLastVersionRun";
 
-static NSString * const TKLastSpotlightImporterVersionKey			= @"TKLastSpotlightImporterVersion";
-static NSString * const TKLastSourceAddonFinaglerVersionKey			= @"TKLastSourceAddonFinaglerVersion";
-static NSString * const TKSpotlightImporterBundleIdentifierKey		= @"com.markdouma.mdimporter.Source";
+static NSString * const MDLastSpotlightImporterVersionKey			= @"MDLastSpotlightImporterVersion";
+static NSString * const MDLastSourceAddonFinaglerVersionKey			= @"MDLastSourceAddonFinaglerVersion";
+static NSString * const MDSpotlightImporterBundleIdentifierKey		= @"com.markdouma.mdimporter.Source";
 
-NSString * const TKLaunchTimeActionKey								= @"TKLaunchTimeAction";
+NSString * const MDLaunchTimeActionKey								= @"MDLaunchTimeAction";
 
-static NSString * const TKQuitAfterAllWindowsClosedKey				= @"TKQuitAfterAllWindowsClosed";
-NSString * const TKLastWindowDidCloseNotification					= @"TKLastWindowDidClose";
+static NSString * const MDQuitAfterAllWindowsClosedKey				= @"MDQuitAfterAllWindowsClosed";
+NSString * const MDLastWindowDidCloseNotification					= @"MDLastWindowDidClose";
 
 
 /*************		websites & email addresses	*************/
 
-static NSString * const TKWebpage						= @"http://www.markdouma.com/sourcefinagler/";
+static NSString * const MDWebpage						= @"http://www.markdouma.com/sourcefinagler/";
 
-static NSString * const TKEmailStaticURLString			= @"mailto:mark@markdouma.com";
+static NSString * const MDEmailStaticURLString			= @"mailto:mark@markdouma.com";
 
-static NSString * const TKEmailDynamicURLString		= @"mailto:mark@markdouma.com?subject=Source Finagler (%@)&body=Note: creating a unique Subject for your email will help me keep track of your inquiry more easily. Feel free to alter the one provided as you like.";
+static NSString * const MDEmailDynamicURLString		= @"mailto:mark@markdouma.com?subject=Source Finagler (%@)&body=Note: creating a unique Subject for your email will help me keep track of your inquiry more easily. Feel free to alter the one provided as you like.";
 
 
-static NSString * const TKEmailAddress					= @"mark@markdouma.com";
-static NSString * const TKiChatURLString				= @"aim:goim?screenname=MarkDouma46&message=Type+your+message+here.";
+static NSString * const MDEmailAddress					= @"mark@markdouma.com";
+static NSString * const MDiChatURLString				= @"aim:goim?screenname=MarkDouma46&message=Type+your+message+here.";
 
 
 BOOL	MDShouldShowViewOptions = NO;
@@ -66,9 +66,9 @@ BOOL	MDShouldShowPathBar = NO;
 BOOL	MDPlaySoundEffects = NO;
 
 
-#define TK_DEBUG 1
+#define MD_DEBUG 1
 
-#define TK_DEBUG_SPOTLIGHT 0
+#define MD_DEBUG_SPOTLIGHT 0
 
 
 
@@ -79,22 +79,22 @@ static BOOL needSourceAddonFinaglerRegister = NO;
 static NSArray *appClassNames = nil;
 
 
-@interface TKAppController (TKPrivate)
+@interface MDAppController (MDPrivate)
 - (void)forceSpotlightReimport:(id)sender;
 @end
 
-@implementation TKAppController
+@implementation MDAppController
 
 
 + (void)initialize {
-#if TK_DEBUG
+#if MD_DEBUG
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
 	@synchronized(self) {
 		
 		if (appClassNames == nil) {
-			appClassNames = [[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"TKAppController" ofType:@"plist"]] objectForKey:@"TKAppControllerClassNames"] retain];
+			appClassNames = [[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MDAppController" ofType:@"plist"]] objectForKey:@"MDAppControllerClassNames"] retain];
 		}
 		
 		// need to run it here in case the document isn't created prior to the view options window being instantiated.
@@ -122,23 +122,23 @@ static NSArray *appClassNames = nil;
 		
 		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:TKShouldShowImageInspectorKey];
 		
-		[defaultValues setObject:[NSNumber numberWithUnsignedInteger:TKLaunchTimeActionOpenMainWindow] forKey:TKLaunchTimeActionKey];
+		[defaultValues setObject:[NSNumber numberWithUnsignedInteger:MDLaunchTimeActionOpenMainWindow] forKey:MDLaunchTimeActionKey];
 		
-		[defaultValues setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:TKLastVersionRunKey];
+		[defaultValues setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:MDLastVersionRunKey];
 		
-		if ([[NSUserDefaults standardUserDefaults] objectForKey:TKLastSpotlightImporterVersionKey] == nil) {
+		if ([[NSUserDefaults standardUserDefaults] objectForKey:MDLastSpotlightImporterVersionKey] == nil) {
 			needSpotlightReimport = YES;
 			NSLog(@"[%@ %@] needSpotlightReimport = YES", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 		}
-		[defaultValues setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:TKLastSpotlightImporterVersionKey];
+		[defaultValues setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:MDLastSpotlightImporterVersionKey];
 		
-		if ([[NSUserDefaults standardUserDefaults] objectForKey:TKLastSourceAddonFinaglerVersionKey] == nil) {
+		if ([[NSUserDefaults standardUserDefaults] objectForKey:MDLastSourceAddonFinaglerVersionKey] == nil) {
 			needSourceAddonFinaglerRegister = YES;
 			NSLog(@"[%@ %@] needSourceAddonFinaglerRegister = YES", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 		}
-		[defaultValues setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:TKLastSourceAddonFinaglerVersionKey];
+		[defaultValues setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:MDLastSourceAddonFinaglerVersionKey];
 		
-		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:TKQuitAfterAllWindowsClosedKey];
+		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDQuitAfterAllWindowsClosedKey];
 		
 		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowViewOptionsKey];
 		
@@ -152,7 +152,7 @@ static NSArray *appClassNames = nil;
 
 - (id)init {
 	if ((self = [super init])) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lastWindowDidClose:) name:TKLastWindowDidCloseNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lastWindowDidClose:) name:MDLastWindowDidCloseNotification object:nil];
 
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowViewOptionsDidChange:) name:MDShouldShowViewOptionsDidChangeNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowInspectorDidChange:) name:MDShouldShowInspectorDidChangeNotification object:nil];
@@ -195,14 +195,14 @@ static NSArray *appClassNames = nil;
 }
 
 - (void)awakeFromNib {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -210,7 +210,7 @@ static NSArray *appClassNames = nil;
 	
 	[viewModeAsListMenuItem retain];
 	
-	if (TKGetSystemVersion() < TKSnowLeopard) {
+	if (MDGetSystemVersion() < MDSnowLeopard) {
 		[viewMenu removeItem:viewModeAsColumnsMenuItem];
 		viewModeAsColumnsMenuItem = nil;
 	} else {
@@ -228,20 +228,20 @@ static NSArray *appClassNames = nil;
 	
 	// from setupUI, since it only needs to be done once
 	
-	[emailMenuItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"Email: %@", @""), TKEmailAddress]];
-	NSImage *emailAppImage = [[NSWorkspace sharedWorkspace] iconForApplicationForURL:[NSURL URLWithString:TKEmailStaticURLString]];
+	[emailMenuItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"Email: %@", @""), MDEmailAddress]];
+	NSImage *emailAppImage = [[NSWorkspace sharedWorkspace] iconForApplicationForURL:[NSURL URLWithString:MDEmailStaticURLString]];
 	if (emailAppImage) {
 		[emailAppImage setSize:NSMakeSize(16.0,16.0)];
 		[emailMenuItem setImage:emailAppImage];
 	}
 	
-	NSImage *chatAppImage = [[NSWorkspace sharedWorkspace] iconForApplicationForURL:[NSURL URLWithString:TKiChatURLString]];
+	NSImage *chatAppImage = [[NSWorkspace sharedWorkspace] iconForApplicationForURL:[NSURL URLWithString:MDiChatURLString]];
 	if (chatAppImage) {
 		[chatAppImage setSize:NSMakeSize(16.0,16.0)];
 		[chatMenuItem setImage:chatAppImage];
 	}
 	
-	NSImage *webAppImage = [[NSWorkspace sharedWorkspace] iconForApplicationForURL:[NSURL URLWithString:TKWebpage]];
+	NSImage *webAppImage = [[NSWorkspace sharedWorkspace] iconForApplicationForURL:[NSURL URLWithString:MDWebpage]];
 	if (webAppImage) {
 		[webAppImage setSize:NSMakeSize(16.0,16.0)];
 		[webpageMenuItem setImage:webAppImage];
@@ -280,19 +280,19 @@ static NSArray *appClassNames = nil;
 	
 	[NSApp setServicesProvider:self];
 	
-	if ([[[NSUserDefaults standardUserDefaults] objectForKey:TKLaunchTimeActionKey] unsignedIntegerValue] & TKLaunchTimeActionOpenMainWindow) {
+	if ([[[NSUserDefaults standardUserDefaults] objectForKey:MDLaunchTimeActionKey] unsignedIntegerValue] & MDLaunchTimeActionOpenMainWindow) {
 		[window makeKeyAndOrderFront:nil];
 	}
 }
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
 	NSInteger previousVersion = 0, currentVersion = 0;
-	previousVersion = [[[NSUserDefaults standardUserDefaults] objectForKey:TKLastSourceAddonFinaglerVersionKey] integerValue];
+	previousVersion = [[[NSUserDefaults standardUserDefaults] objectForKey:MDLastSourceAddonFinaglerVersionKey] integerValue];
 	currentVersion = [[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] integerValue];
 	
 	if (currentVersion > previousVersion || needSourceAddonFinaglerRegister) {
@@ -302,18 +302,18 @@ static NSArray *appClassNames = nil;
 			if (status) {
 				NSLog(@"[%@ %@] LSRegisterURL() returned %d", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (int)status);
 			} else {
-				[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:currentVersion] forKey:TKLastSourceAddonFinaglerVersionKey];
+				[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:currentVersion] forKey:MDLastSourceAddonFinaglerVersionKey];
 			}
 		}
 	}
 	
 	
-	if (needSpotlightReimport == NO) needSpotlightReimport = TK_DEBUG_SPOTLIGHT;
+	if (needSpotlightReimport == NO) needSpotlightReimport = MD_DEBUG_SPOTLIGHT;
 	
 	previousVersion = 0;
 	currentVersion = 0;
 	
-	previousVersion = [[[NSUserDefaults standardUserDefaults] objectForKey:TKLastSpotlightImporterVersionKey] integerValue];
+	previousVersion = [[[NSUserDefaults standardUserDefaults] objectForKey:MDLastSpotlightImporterVersionKey] integerValue];
 	currentVersion = [[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] integerValue];
 	if (currentVersion > previousVersion || needSpotlightReimport) {
 		[self performSelector:@selector(forceSpotlightReimport:) withObject:nil afterDelay:3.0];
@@ -324,12 +324,12 @@ static NSArray *appClassNames = nil;
 
 
 - (void)forceSpotlightReimport:(id)sender {
-//#if TK_DEBUG
+//#if MD_DEBUG
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 //#endif
 	NSString *spotlightImporterPath = [NSString pathWithComponents:[NSArray arrayWithObjects:[[NSBundle mainBundle] bundlePath], @"Contents", @"Library", @"Spotlight", @"Source.mdimporter", nil]];
 	
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@] spotlightImporterPath == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), spotlightImporterPath);
 #endif
 	
@@ -358,22 +358,22 @@ static NSArray *appClassNames = nil;
 //			NSLog(@"[%@ %@] /usr/bin/mdimport returned %d", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [task terminationStatus]);
 //		}
 //	}
-//	[[NSUserDefaults standardUserDefaults] setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:TKLastSpotlightImporterVersionKey];
+//	[[NSUserDefaults standardUserDefaults] setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey] forKey:MDLastSpotlightImporterVersionKey];
 }
 
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
-	return [[[NSUserDefaults standardUserDefaults] objectForKey:TKQuitAfterAllWindowsClosedKey] boolValue];
+	return [[[NSUserDefaults standardUserDefaults] objectForKey:MDQuitAfterAllWindowsClosedKey] boolValue];
 }
 
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender {
-	return [[[NSUserDefaults standardUserDefaults] objectForKey:TKLaunchTimeActionKey] unsignedIntegerValue] & TKLaunchTimeActionOpenNewDocument;
+	return [[[NSUserDefaults standardUserDefaults] objectForKey:MDLaunchTimeActionKey] unsignedIntegerValue] & MDLaunchTimeActionOpenNewDocument;
 }
 
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
-	for (TKViewController *viewConroller in viewControllers) {
+	for (MDViewController *viewConroller in viewControllers) {
 		if ((NSNull *)viewConroller != [NSNull null]) {
 			[viewConroller cleanup];
 		}
@@ -384,14 +384,14 @@ static NSArray *appClassNames = nil;
 
 // this method is used
 - (void)didSwitchToDocument:(NSNotification *)notification {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	if (TKGetSystemVersion() == TKLeopard) {
+	if (MDGetSystemVersion() == MDLeopard) {
 		[viewMenu setItemArray:[NSArray arrayWithObjects:viewModeAsListMenuItem,[NSMenuItem separatorItem], viewTogglePathBarMenuItem, [NSMenuItem separatorItem], viewToggleToolbarShownMenuItem,viewCustomizeToolbarMenuItem,[NSMenuItem separatorItem],viewOptionsMenuItem, nil]];
 		
-	} else if (TKGetSystemVersion() >= TKSnowLeopard) {
+	} else if (MDGetSystemVersion() >= MDSnowLeopard) {
 		[viewMenu setItemArray:[NSArray arrayWithObjects:viewModeAsListMenuItem,viewModeAsColumnsMenuItem,[NSMenuItem separatorItem], viewTogglePathBarMenuItem, [NSMenuItem separatorItem], viewToggleToolbarShownMenuItem,viewCustomizeToolbarMenuItem,[NSMenuItem separatorItem],viewOptionsMenuItem, nil]];
 		
 	}
@@ -400,7 +400,7 @@ static NSArray *appClassNames = nil;
 
 
 - (IBAction)switchView:(id)sender {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -422,7 +422,7 @@ static NSArray *appClassNames = nil;
 		currentViewIndex = [(NSToolbarItem *)sender tag];
 	}
 	
-	TKViewController *viewController = [viewControllers objectAtIndex:currentViewIndex];
+	MDViewController *viewController = [viewControllers objectAtIndex:currentViewIndex];
 	
 	if ((NSNull *)viewController == [NSNull null]) {
 		NSString *className = [appClassNames objectAtIndex:currentViewIndex];
@@ -443,7 +443,7 @@ static NSArray *appClassNames = nil;
 
 
 - (void)lastWindowDidClose:(NSNotification *)notification {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -453,7 +453,7 @@ static NSArray *appClassNames = nil;
 
 
 - (IBAction)toggleShowInspector:(id)sender {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -470,7 +470,7 @@ static NSArray *appClassNames = nil;
 
 - (void)shouldShowInspectorDidChange:(NSNotification *)notification {
 	if (MDShouldShowInspector == NO) {
-#if TK_DEBUG
+#if MD_DEBUG
 		NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 		[inspectorController release]; inspectorController = nil;
@@ -479,7 +479,7 @@ static NSArray *appClassNames = nil;
 
 
 - (IBAction)toggleShowViewOptions:(id)sender {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -496,7 +496,7 @@ static NSArray *appClassNames = nil;
 
 - (void)shouldShowViewOptionsDidChange:(NSNotification *)notification {
 	if (MDShouldShowViewOptions == NO) {
-#if TK_DEBUG
+#if MD_DEBUG
 		NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 		[viewOptionsController release]; viewOptionsController = nil;
@@ -505,7 +505,7 @@ static NSArray *appClassNames = nil;
 
 
 - (IBAction)toggleShowQuickLook:(id)sender {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	MDShouldShowQuickLook = !MDShouldShowQuickLook;
@@ -521,7 +521,7 @@ static NSArray *appClassNames = nil;
 
 - (void)shouldShowQuickLookDidChange:(NSNotification *)notification {
 	if (MDShouldShowQuickLook == NO) {
-#if TK_DEBUG
+#if MD_DEBUG
 		NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 		[quickLookController release]; quickLookController = nil;
@@ -530,7 +530,7 @@ static NSArray *appClassNames = nil;
 
 
 - (IBAction)toggleShowImageInspector:(id)sender {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -547,7 +547,7 @@ static NSArray *appClassNames = nil;
 
 - (void)shouldShowImageInspectorDidChange:(NSNotification *)notification {
 	if (TKShouldShowImageInspector == NO) {
-#if TK_DEBUG
+#if MD_DEBUG
 		NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 //		[imageInspectorController release]; imageInspectorController = nil;
@@ -562,19 +562,19 @@ static NSArray *appClassNames = nil;
 
 
 - (IBAction)showAboutWindow:(id)sender {
-	if (aboutWindowController == nil) aboutWindowController = [[TKAboutWindowController alloc] init];
+	if (aboutWindowController == nil) aboutWindowController = [[MDAboutWindowController alloc] init];
 	[aboutWindowController showWindow:self];
 }
 
 
 - (IBAction)showPrefsWindow:(id)sender {
-	if (prefsController == nil) prefsController = [[TKPrefsController alloc] init];
+	if (prefsController == nil) prefsController = [[MDPrefsController alloc] init];
 	[prefsController showWindow:self];
 }
 
 
 - (void)menuNeedsUpdate:(NSMenu *)menu {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -618,15 +618,15 @@ static NSArray *appClassNames = nil;
 
 
 - (IBAction)email:(id)sender {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[[NSString stringWithFormat:TKEmailDynamicURLString, NSUserName()] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[[NSString stringWithFormat:MDEmailDynamicURLString, NSUserName()] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
 }
 
 - (IBAction)chat:(id)sender {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:TKiChatURLString]];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:MDiChatURLString]];
 }
 
 - (IBAction)webpage:(id)sender {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:TKWebpage]];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:MDWebpage]];
 }
 
 

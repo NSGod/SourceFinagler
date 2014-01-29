@@ -13,7 +13,7 @@
 #import "TKImageExportPreset.h"
 #import "TKImageExportPreview.h"
 #import "TKImageDocument.h"
-#import "TKAppKitAdditions.h"
+#import "MDAppKitAdditions.h"
 
 
 #define TK_DEBUG 1

@@ -7,7 +7,7 @@
 //
 
 #import "VSSourceAddonController.h"
-#import "TKAppKitAdditions.h"
+#import "MDAppKitAdditions.h"
 
 
 

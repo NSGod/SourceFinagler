@@ -9,7 +9,7 @@
 
 
 #import "MDResourceFile.h"
-#import "TKFoundationAdditions.h"
+#import "MDFoundationAdditions.h"
 #import "MDFileManager.h"
 #import "MDResource.h"
 

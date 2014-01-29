@@ -1,5 +1,5 @@
 //
-//  TKDocumentController.h
+//  MDDocumentController.h
 //  Texture Kit
 //
 //  Created by Mark Douma on 3/16/2009.
@@ -10,9 +10,9 @@
 #import <TextureKit/TextureKitDefines.h>
 
 
-TEXTUREKIT_EXTERN NSString * const TKApplicationBundleIdentifier;
+TEXTUREKIT_EXTERN NSString * const MDApplicationBundleIdentifier;
 
-@interface TKDocumentController : NSDocumentController {
+@interface MDDocumentController : NSDocumentController {
 
 }
 

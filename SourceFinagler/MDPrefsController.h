@@ -1,5 +1,5 @@
 //
-//  TKPrefsController.h
+//  MDPrefsController.h
 //  Source Finagler
 //
 //  Created by Mark Douma on 9/12/2010.
@@ -9,16 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 
-enum {
-	TKPrefsGeneralView	= 0
-};
-typedef NSUInteger TKPrefsView;
-
-
-
-@interface TKPrefsController : NSWindowController <NSToolbarDelegate> {
+@interface MDPrefsController : NSWindowController <NSToolbarDelegate> {
 	NSMutableArray				*viewControllers;
-	TKPrefsView					currentView;
+	NSUInteger					currentViewIndex;
 }
 
 - (IBAction)changeView:(id)sender;

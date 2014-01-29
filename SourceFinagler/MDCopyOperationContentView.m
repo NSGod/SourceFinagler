@@ -9,7 +9,7 @@
 #import "MDCopyOperationContentView.h"
 #import "MDCopyOperationView.h"
 #import "MDCopyOperationSeparatorView.h"
-#import "TKAppKitAdditions.h"
+#import "MDAppKitAdditions.h"
 
 
 #define MD_DEBUG 0

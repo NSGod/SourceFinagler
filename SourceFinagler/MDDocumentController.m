@@ -1,38 +1,38 @@
 //
-//  TKDocumentController.m
+//  MDDocumentController.m
 //  Texture Kit
 //
 //  Created by Mark Douma on 3/16/2009.
 //  Copyright (c) 2009-2012 Mark Douma. All rights reserved.
 //
 
-#import "TKDocumentController.h"
+#import "MDDocumentController.h"
 #import <TextureKit/TextureKit.h>
 
 #import "TKImageDocument.h"
 
 #import <CoreServices/CoreServices.h>
 
-#import "TKFoundationAdditions.h"
+#import "MDFoundationAdditions.h"
 
 
 
-#define TK_DEBUG 1
+#define MD_DEBUG 1
 
 
 
 static NSSet *nonImageUTTypes = nil;
 
-NSString * const TKApplicationBundleIdentifier = @"com.markdouma.SourceFinagler";
+NSString * const MDApplicationBundleIdentifier = @"com.markdouma.SourceFinagler";
 
 
-@implementation TKDocumentController
+@implementation MDDocumentController
 
 
 + (void)initialize {
 	if (nonImageUTTypes == nil) {
 		NSMutableArray *supportedDocTypes = [NSMutableArray array];
-		NSArray *docTypes = [[NSBundle bundleWithIdentifier:TKApplicationBundleIdentifier] objectForInfoDictionaryKey:@"CFBundleDocumentTypes"];
+		NSArray *docTypes = [[NSBundle bundleWithIdentifier:MDApplicationBundleIdentifier] objectForInfoDictionaryKey:@"CFBundleDocumentTypes"];
 //		NSLog(@"[%@ %@] docTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), docTypes);
 	
 		for (NSDictionary *docType in docTypes) {

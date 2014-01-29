@@ -10,7 +10,7 @@
 
 #import "MDCopyOperationController.h"
 #import "MDHLDocument.h"
-#import "TKAppKitAdditions.h"
+#import "MDAppKitAdditions.h"
 #import "MDRolloverButton.h"
 #import "MDCopyOperation.h"
 #import "MDCopyOperationViewController.h"

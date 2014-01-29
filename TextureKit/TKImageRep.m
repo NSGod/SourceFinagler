@@ -15,7 +15,7 @@
 #import <Accelerate/Accelerate.h>
 
 #import "TKPrivateInterfaces.h"
-#import "TKFoundationAdditions.h"
+#import "MDFoundationAdditions.h"
 
 
 
@@ -1003,7 +1003,7 @@ void TKFreeBuffer(vImage_Buffer *buffer) {
 #endif
 //	if ([object isKindOfClass:[self class]]) {
 	if ([object isKindOfClass:[TKImageRep class]]) {
-		if (TKGetSystemVersion() <= TKLeopard) {
+		if (MDGetSystemVersion() <= MDLeopard) {
 #if TK_DEBUG
 			NSLog(@"[%@ %@] (TKImageRepLeopardIsEqualCompatability)", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif

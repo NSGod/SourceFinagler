@@ -10,7 +10,7 @@
 
 
 #import "MDOtherAppsHelperController.h"
-#import "TKAppKitAdditions.h"
+#import "MDAppKitAdditions.h"
 #import "MDProcessManager.h"
 #import "MDTableView.h"
 
@@ -86,7 +86,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	minWinSize = [TKViewController windowSizeForViewWithSize:self.view.frame.size];
+	minWinSize = [MDViewController windowSizeForViewWithSize:self.view.frame.size];
 	maxWinSize = NSMakeSize(FLT_MAX, FLT_MAX);
 	
 	[tableView setTarget:self];

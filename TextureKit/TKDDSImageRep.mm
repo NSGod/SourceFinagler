@@ -11,7 +11,7 @@
 #import <ApplicationServices/ApplicationServices.h>
 #import <NVTextureTools/NVTextureTools.h>
 
-#import "TKFoundationAdditions.h"
+#import "MDFoundationAdditions.h"
 
 
 static NSData *TKImageDataFromNSData(NSData *data, NSUInteger pixelCount, NSUInteger bitsPerPixel, CGBitmapInfo sourceBitmapInfo, CGBitmapInfo destinationBitmapInfo);

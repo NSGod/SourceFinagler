@@ -10,7 +10,7 @@
 #import "MDVPKViewController.h"
 #import "MDInspectorView.h"
 #import <HLKit/HLKit.h>
-#import "TKAppKitAdditions.h"
+#import "MDAppKitAdditions.h"
 #import "MDStatusImageView.h"
 #import <SteamKit/SteamKit.h>
 #import <CoreServices/CoreServices.h>
@@ -48,7 +48,7 @@
 		[outlineViewMenuShowInspectorMenuItem retain];
 		[outlineViewMenuShowViewOptionsMenuItem retain];
 		
-		if (TKGetSystemVersion() >= TKSnowLeopard) {
+		if (MDGetSystemVersion() >= MDSnowLeopard) {
 			[browserMenuShowInspectorMenuItem retain];
 			[browserMenuShowViewOptionsMenuItem retain];
 		}

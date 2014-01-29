@@ -13,7 +13,7 @@
 #if TARGET_CPU_PPC || TARGET_CPU_PPC64
 
 #import <Cocoa/Cocoa.h>
-#import "TKAppKitAdditions.h"
+#import "MDAppKitAdditions.h"
 
 int main(int argc, char *argv[]) {
 	
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 #if TARGET_CPU_X86 || TARGET_CPU_X86_64
 
 #import <Cocoa/Cocoa.h>
-#import "TKAppKitAdditions.h"
+#import "MDAppKitAdditions.h"
 
 
 int main(int argc, char *argv[]) {
@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
 	Gestalt(gestaltSystemVersion, &MDFullSystemVersion);
 	MDSystemVersion = MDFullSystemVersion & 0xfffffff0;
 	
-	if (MDSystemVersion < TKSnowLeopard) {
+	if (MDSystemVersion < MDSnowLeopard) {
 		
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		

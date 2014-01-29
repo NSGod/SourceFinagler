@@ -1,5 +1,5 @@
 //
-//  TKAboutWindowController.h
+//  MDAboutWindowController.h
 //  Source Finagler
 //
 //  Created by Mark Douma on 6/28/2005.
@@ -10,7 +10,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface TKAboutWindowController : NSWindowController {
+@interface MDAboutWindowController : NSWindowController {
 	IBOutlet NSTextField	*nameField;
 	IBOutlet NSTextField	*versionField;
 	IBOutlet NSTextField	*copyrightField;

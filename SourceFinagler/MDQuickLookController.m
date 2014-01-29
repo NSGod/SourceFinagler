@@ -7,14 +7,14 @@
 //
 
 #import "MDQuickLookController.h"
-#import "TKAppController.h"
+#import "MDAppController.h"
 #import "MDHLDocument.h"
 
 #import <HLKit/HLKit.h>
 
 #import <CoreServices/CoreServices.h>
 #import "MDQuickLookPreviewViewController.h"
-#import "TKAppKitAdditions.h"
+#import "MDAppKitAdditions.h"
 
 
 //#define MD_DEBUG 1

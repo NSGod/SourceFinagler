@@ -9,7 +9,7 @@
 //#if TARGET_CPU_X86 || TARGET_CPU_X86_64
 
 #import "MDSteamAppsRelocatorController.h"
-#import "TKAppKitAdditions.h"
+#import "MDAppKitAdditions.h"
 #import "MDFolderManager.h"
 #import "VSSteamManager.h"
 #import "MDProcessManager.h"
@@ -78,7 +78,7 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	minWinSize = [TKViewController windowSizeForViewWithSize:self.view.frame.size];
+	minWinSize = [MDViewController windowSizeForViewWithSize:self.view.frame.size];
 	maxWinSize = NSMakeSize(FLT_MAX, minWinSize.height);
 	
 	if (steamIsRunning) {

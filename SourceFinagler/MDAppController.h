@@ -1,5 +1,5 @@
 //
-//  TKAppController.h
+//  MDAppController.h
 //  Source Finagler
 //
 //  Created by Mark Douma on 5/12/2010.
@@ -8,8 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class TKAboutWindowController;
-@class TKPrefsController;
+@class MDAboutWindowController;
+@class MDPrefsController;
 @class TKImageInspectorController;
 
 @class MDViewOptionsController;
@@ -18,15 +18,15 @@
 
 
 enum {
-	TKLaunchTimeActionNone				= 0,
-	TKLaunchTimeActionOpenMainWindow	= 1,
-	TKLaunchTimeActionOpenNewDocument	= 2
+	MDLaunchTimeActionNone				= 0,
+	MDLaunchTimeActionOpenMainWindow	= 1,
+	MDLaunchTimeActionOpenNewDocument	= 2
 };
-typedef NSUInteger TKLaunchTimeActionType;
+typedef NSUInteger MDLaunchTimeActionType;
 
-extern NSString * const TKLaunchTimeActionKey;
+extern NSString * const MDLaunchTimeActionKey;
 
-extern NSString * const TKLastWindowDidCloseNotification;
+extern NSString * const MDLastWindowDidCloseNotification;
 
 
 extern BOOL			MDShouldShowViewOptions;
@@ -40,7 +40,7 @@ extern BOOL			MDShouldShowPathBar;
 extern BOOL			MDPlaySoundEffects;
 
 
-@interface TKAppController : NSObject <NSApplicationDelegate, NSOpenSavePanelDelegate, NSToolbarDelegate, NSSoundDelegate> {
+@interface MDAppController : NSObject <NSApplicationDelegate, NSOpenSavePanelDelegate, NSToolbarDelegate, NSSoundDelegate> {
     IBOutlet NSWindow					*window;
 	
 	IBOutlet NSMenuItem					*toggleInspectorMenuItem;
@@ -63,12 +63,12 @@ extern BOOL			MDPlaySoundEffects;
 	IBOutlet NSMenuItem					*chatMenuItem;
 	IBOutlet NSMenuItem					*webpageMenuItem;
 	
-	TKAboutWindowController				*aboutWindowController;
+	MDAboutWindowController				*aboutWindowController;
 	MDInspectorController				*inspectorController;
 	MDViewOptionsController				*viewOptionsController;
 	MDQuickLookController				*quickLookController;
 	
-	TKPrefsController					*prefsController;
+	MDPrefsController					*prefsController;
 	
 	
 	NSUndoManager						*globalUndoManager;

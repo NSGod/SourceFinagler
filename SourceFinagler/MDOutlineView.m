@@ -12,7 +12,7 @@
 
 
 
-static NSString * const TKFinderBundleIdentifierKey					= @"com.apple.finder";
+static NSString * const MDFinderBundleIdentifierKey					= @"com.apple.finder";
 
 
 NSString * const MDShouldShowKindColumnKey							= @"MDShouldShowKindColumn";
@@ -56,8 +56,8 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 			
 			MDUserDefaults *userDefaults = [MDUserDefaults standardUserDefaults];
 			
-			NSNumber *finderListViewFontSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:TKFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ListViewOptions"] objectForKey:@"FontSize"];
-			NSNumber *finderListViewIconSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:TKFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ListViewOptions"] objectForKey:@"IconSize"];
+			NSNumber *finderListViewFontSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:MDFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ListViewOptions"] objectForKey:@"FontSize"];
+			NSNumber *finderListViewIconSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:MDFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ListViewOptions"] objectForKey:@"IconSize"];
 			
 			if (finderListViewFontSize) {
 				[defaults setObject:finderListViewFontSize forKey:MDListViewFontSizeKey];

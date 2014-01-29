@@ -1,21 +1,21 @@
 //
-//  TKViewController.m
+//  MDViewController.m
 //  Procon Finagler
 //
 //  Created by Mark Douma on 6/9/2012.
 //  Copyright (c) 2012 Mark Douma LLC. All rights reserved.
 //
 
-#import "TKViewController.h"
+#import "MDViewController.h"
 
 
-#define PC_DEBUG 1
+#define MD_DEBUG 1
 
 
-#define TK_WINDOW_TITLEBAR_HEIGHT 22.0
+#define MD_WINDOW_TITLEBAR_HEIGHT 22.0
 
 
-@implementation TKViewController
+@implementation MDViewController
 
 @synthesize minWinSize;
 @synthesize maxWinSize;
@@ -30,23 +30,23 @@
 }
 
 + (NSSize)windowSizeForViewWithSize:(NSSize)size {
-	return NSMakeSize(size.width, size.height + TK_WINDOW_TITLEBAR_HEIGHT);
+	return NSMakeSize(size.width, size.height + MD_WINDOW_TITLEBAR_HEIGHT);
 }
 
 
 - (void)didSwitchToView:(id)sender {
-#if PC_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
 	if (NSEqualSizes(minWinSize, NSZeroSize) && NSEqualSizes(maxWinSize, NSZeroSize)) {
 		NSRect viewFrame = self.view.frame;
 		if (resizable) {
-			minWinSize = [TKViewController windowSizeForViewWithSize:viewFrame.size];
+			minWinSize = [MDViewController windowSizeForViewWithSize:viewFrame.size];
 			maxWinSize = NSMakeSize(FLT_MAX, FLT_MAX);
 		} else {
-			minWinSize = [TKViewController windowSizeForViewWithSize:viewFrame.size];
-			maxWinSize = [TKViewController windowSizeForViewWithSize:viewFrame.size];
+			minWinSize = [MDViewController windowSizeForViewWithSize:viewFrame.size];
+			maxWinSize = [MDViewController windowSizeForViewWithSize:viewFrame.size];
 		}
 	}
 	
@@ -61,12 +61,12 @@
 	
 	
 - (NSString *)viewControllerViewSizeAutosaveString {
-	return [NSString stringWithFormat:@"TKViewController viewSize %@", self.viewSizeAutosaveName];
+	return [NSString stringWithFormat:@"MDViewController viewSize %@", self.viewSizeAutosaveName];
 }
 
 
 - (void)cleanup {
-#if PC_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -74,7 +74,7 @@
 		NSString *existingSize = [[NSUserDefaults standardUserDefaults] objectForKey:[self viewControllerViewSizeAutosaveString]];
 		NSString *currentSize = NSStringFromSize(self.view.frame.size);
 		
-#if PC_DEBUG
+#if MD_DEBUG
 		NSLog(@"[%@ %@] existingSize == %@, currentSize == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), existingSize, currentSize);
 #endif
 		
@@ -82,7 +82,7 @@
 		
 		NSString *newSavedSize = [[NSUserDefaults standardUserDefaults] objectForKey:[self viewControllerViewSizeAutosaveString]];
 		
-#if PC_DEBUG
+#if MD_DEBUG
 		NSLog(@"[%@ %@] ******* SAVING %@'s viewSize == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [self viewSizeAutosaveName], newSavedSize);
 #endif
 
@@ -94,7 +94,7 @@
 }
 
 - (void)viewDidLoad {
-#if PC_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -102,7 +102,7 @@
 
 
 - (void)loadView {
-#if PC_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[super loadView];
@@ -115,14 +115,14 @@
 			[[NSUserDefaults standardUserDefaults] setObject:NSStringFromSize(self.view.frame.size) forKey:[self viewControllerViewSizeAutosaveString]];
 		}
 		
-#if PC_DEBUG
+#if MD_DEBUG
 //		NSLog(@"[%@ %@] self.view == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), self.view);
 		NSLog(@"[%@ %@] self.view.frame == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(self.view.frame));
 		NSLog(@"[%@ %@] ******* RESTORING %@'s viewSize == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [self viewSizeAutosaveName], [[NSUserDefaults standardUserDefaults] objectForKey:[self viewControllerViewSizeAutosaveString]]);
 #endif
 		[self.view setFrameSize:NSSizeFromString([[NSUserDefaults standardUserDefaults] objectForKey:[self viewControllerViewSizeAutosaveString]])];
 		
-#if PC_DEBUG
+#if MD_DEBUG
 		NSLog(@"[%@ %@] self.view.frame == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(self.view.frame));
 #endif
 		

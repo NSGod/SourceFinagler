@@ -14,7 +14,7 @@
 
 #import <HLKit/HLKit.h>
 
-#import "TKAppController.h"
+#import "MDAppController.h"
 #import "MDViewOptionsController.h"
 
 #import "MDMetalBevelView.h"
@@ -25,7 +25,7 @@
 #import "MDBrowser.h"
 #import "MDBrowserCell.h"
 
-#import "TKAppKitAdditions.h"
+#import "MDAppKitAdditions.h"
 
 #import "MDUserDefaults.h"
 #import "MDBottomBar.h"
@@ -145,7 +145,7 @@ static NSInteger copyTag = 0;
 				
 		copyOperationsAndTags = [[NSMutableDictionary alloc] init];
 		
-		if (TKGetSystemVersion() >= TKLeopard) {
+		if (MDGetSystemVersion() >= MDLeopard) {
 			NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsLeopardKey forAppIdentifier:MDSystemSoundEffectsLeopardBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
 			
 			/*	enabled is an NSNumber, not a YES or NO value. If enabled is nil, we assume the default sound effect setting, which is enabled. Only if enabled is non-nil do we have an actual YES or NO answer to examine	*/
@@ -289,7 +289,7 @@ static NSInteger copyTag = 0;
 
 
 - (NSString *)windowNibName {
-	if (TKGetSystemVersion() >= TKLion) {
+	if (MDGetSystemVersion() >= MDLion) {
 		return @"MDHLDocumentLion";
 	}
 	return @"MDHLDocumentSnowLeopard";
@@ -321,7 +321,7 @@ static NSInteger copyTag = 0;
 	[outlineViewMenuShowViewOptionsMenuItem retain];
 	
 
-	if (TKGetSystemVersion() >= TKSnowLeopard) {
+	if (MDGetSystemVersion() >= MDSnowLeopard) {
 		browserMenuShowQuickLookMenuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Quick Look", @"") action:@selector(toggleShowQuickLook:) keyEquivalent:@""];
 		[browserMenuShowInspectorMenuItem retain];
 		[browserMenuShowViewOptionsMenuItem retain];
@@ -1788,7 +1788,7 @@ static NSInteger copyTag = 0;
 		
 		if ([[NSApp orderedDocuments] count] == 1) {
 			
-			[[NSNotificationCenter defaultCenter] postNotificationName:TKLastWindowDidCloseNotification
+			[[NSNotificationCenter defaultCenter] postNotificationName:MDLastWindowDidCloseNotification
 																object:self
 															  userInfo:nil];
 		}

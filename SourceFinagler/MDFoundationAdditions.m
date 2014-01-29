@@ -1,38 +1,38 @@
 //
-//  TKFoundationAdditions.m
-//  TKFoundationAdditions
+//  MDFoundationAdditions.m
+//  MDFoundationAdditions
 //
 //  Created by Mark Douma on 12/03/2007.
 //  Copyright (c) 2007-2011 Mark Douma LLC. All rights reserved.
 //
 
-#import "TKFoundationAdditions.h"
+#import "MDFoundationAdditions.h"
 #import <sys/syslimits.h>
 #import <openssl/sha.h>
 
-#define TK_DEBUG 0
+#define MD_DEBUG 0
 
 
-static SInt32 TKSystemVersion = TKUnknownVersion;
+static SInt32 MDSystemVersion = MDUndeterminedVersion;
 
 
-SInt32 TKGetSystemVersion() {
-	if (TKSystemVersion == TKUnknownVersion) {
+SInt32 MDGetSystemVersion() {
+	if (MDSystemVersion == MDUndeterminedVersion) {
 		SInt32 fullVersion = 0;
 		Gestalt(gestaltSystemVersion, &fullVersion);
-		TKSystemVersion = fullVersion & 0xfffffff0;
+		MDSystemVersion = fullVersion & 0xfffffff0;
 	}
-	return TKSystemVersion;
+	return MDSystemVersion;
 }
 	
 	
 
 
-@implementation NSString (TKAdditions)
+@implementation NSString (MDFoundationAdditions)
 
 
 + (NSString *)stringWithFSRef:(const FSRef *)anFSRef {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	UInt8 thePath[PATH_MAX + 1];
@@ -49,7 +49,7 @@ SInt32 TKGetSystemVersion() {
 
 
 - (BOOL)getFSRef:(FSRef *)anFSRef error:(NSError **)anError {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if (anError) *anError = nil;
@@ -65,7 +65,7 @@ SInt32 TKGetSystemVersion() {
 /* TODO: I need to make sure that this method doesn't exceed the max 255 character filename limit	(NAME_MAX) */
 
 - (NSString *)stringByAssuringUniqueFilename {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
@@ -127,7 +127,7 @@ SInt32 TKGetSystemVersion() {
 
 
 + (NSString *)stringWithPascalString:(ConstStr255Param )aPStr {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return [(NSString *)CFStringCreateWithPascalString(kCFAllocatorDefault, aPStr, kCFStringEncodingMacRoman) autorelease];
@@ -135,21 +135,21 @@ SInt32 TKGetSystemVersion() {
 
 
 - (BOOL)pascalString:(StringPtr)aBuffer length:(SInt16)aLength {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return CFStringGetPascalString((CFStringRef)self, aBuffer, aLength, kCFStringEncodingMacRoman);
 }
 
 - (NSComparisonResult)caseInsensitiveNumericalCompare:(NSString *)string {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return [self compare:string options: NSLiteralSearch | NSCaseInsensitiveSearch | NSNumericSearch];
 }
 
 - (NSComparisonResult)localizedCaseInsensitiveNumericalCompare:(NSString *)string {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return [self compare:string options:NSLiteralSearch | NSCaseInsensitiveSearch | NSNumericSearch range:NSMakeRange(0, [string length]) locale:[NSLocale currentLocale]];
@@ -157,7 +157,7 @@ SInt32 TKGetSystemVersion() {
 
 
 - (NSString *)stringByReplacing:(NSString *)value with:(NSString *)newValue {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSMutableString *newString = [NSMutableString stringWithString:self];
@@ -167,14 +167,14 @@ SInt32 TKGetSystemVersion() {
 
 
 - (NSString *)slashToColon {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return [self stringByReplacing:@"/" with:@":"];
 }
 
 - (NSString *)colonToSlash {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return [self stringByReplacing:@":" with:@"/"];
@@ -182,7 +182,7 @@ SInt32 TKGetSystemVersion() {
 
 
 - (NSString *)displayPath {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSString *displayPath = nil;
@@ -207,7 +207,7 @@ SInt32 TKGetSystemVersion() {
 
 
 
-@implementation NSUserDefaults (TKSortDescriptorAdditions)
+@implementation NSUserDefaults (MDSortDescriptorAdditions)
 
 - (void)setSortDescriptors:(NSArray *)sortDescriptors forKey:(NSString *)key {
 	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:sortDescriptors];
@@ -222,7 +222,7 @@ SInt32 TKGetSystemVersion() {
 
 @end
 
-@implementation NSDictionary (TKSortDescriptorAdditions)
+@implementation NSDictionary (MDSortDescriptorAdditions)
 
 - (NSArray *)sortDescriptorsForKey:(NSString *)key {
 	return [NSKeyedUnarchiver unarchiveObjectWithData:[self objectForKey:key]];
@@ -230,7 +230,7 @@ SInt32 TKGetSystemVersion() {
 
 @end
 
-@implementation NSMutableDictionary (TKSortDescriptorAdditions)
+@implementation NSMutableDictionary (MDSortDescriptorAdditions)
 
 - (void)setSortDescriptors:(NSArray *)sortDescriptors forKey:(NSString *)key {
 	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:sortDescriptors];
@@ -241,10 +241,10 @@ SInt32 TKGetSystemVersion() {
 
 
 
-@implementation NSIndexSet (TKAdditions)
+@implementation NSIndexSet (MDFoundationAdditions)
 
 + (id)indexSetWithIndexSet:(NSIndexSet *)indexes {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return [[[[self class] alloc] initWithIndexSet:indexes] autorelease];
@@ -252,7 +252,7 @@ SInt32 TKGetSystemVersion() {
 
 
 - (NSIndexSet *)indexesIntersectingIndexes:(NSIndexSet *)indexes {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSMutableIndexSet *intersectingIndexes = [NSMutableIndexSet indexSet];
@@ -273,10 +273,10 @@ SInt32 TKGetSystemVersion() {
 
 
 
-@implementation NSMutableIndexSet (TKAdditions)
+@implementation NSMutableIndexSet (MDFoundationAdditions)
 
 - (void)setIndexes:(NSIndexSet *)indexes {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[self removeAllIndexes];
@@ -288,7 +288,7 @@ SInt32 TKGetSystemVersion() {
 
 
 
-@implementation NSData (TKDescriptionAdditions)
+@implementation NSData (MDDescriptionAdditions)
 
 
 - (NSString *)stringRepresentation {
@@ -354,10 +354,10 @@ SInt32 TKGetSystemVersion() {
 
 
 
-@implementation NSMutableArray (TKAdditions)
+@implementation NSMutableArray (MDFoundationAdditions)
 
 - (void)insertObjectsFromArray:(NSArray *)array atIndex:(NSUInteger)anIndex {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[self insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(anIndex, [array count])]];
@@ -367,10 +367,10 @@ SInt32 TKGetSystemVersion() {
 @end
 
 
-@implementation NSObject (TKDeepMutableCopy)
+@implementation NSObject (MDDeepMutableCopy)
 
 - (id)deepMutableCopy {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -385,10 +385,10 @@ SInt32 TKGetSystemVersion() {
 
 @end
 
-@implementation NSDictionary (TKDeepMutableCopy)
+@implementation NSDictionary (MDDeepMutableCopy)
 
 - (id)deepMutableCopy {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
     NSMutableDictionary *newDictionary = [[NSMutableDictionary alloc] init];
@@ -417,10 +417,10 @@ SInt32 TKGetSystemVersion() {
 @end
 
 
-@implementation NSArray (TKDeepMutableCopy)
+@implementation NSArray (MDDeepMutableCopy)
 
 - (id)deepMutableCopy {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
     NSMutableArray *newArray = [[NSMutableArray alloc] init];
@@ -437,10 +437,10 @@ SInt32 TKGetSystemVersion() {
 
 
 
-@implementation NSSet (TKDeepMutableCopy)
+@implementation NSSet (MDDeepMutableCopy)
 
 - (id)deepMutableCopy {
-#if TK_DEBUG
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
     NSMutableSet *newSet = [[NSMutableSet alloc] init];

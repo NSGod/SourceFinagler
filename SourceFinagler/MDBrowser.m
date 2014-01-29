@@ -15,7 +15,7 @@
 
 
 
-static NSString * const TKFinderBundleIdentifierKey				= @"com.apple.finder";
+static NSString * const MDFinderBundleIdentifierKey				= @"com.apple.finder";
 
 
 NSString * const MDBrowserSelectionDidChangeNotification		= @"MDBrowserSelectionDidChange";
@@ -85,7 +85,7 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 	if (initialized == NO) {
 		NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
 		
-		NSNumber *finderColumnViewFontAndIconSize = [[[[MDUserDefaults standardUserDefaults] objectForKey:@"StandardViewOptions" forAppIdentifier:TKFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ColumnViewOptions"] objectForKey:@"FontSize"];
+		NSNumber *finderColumnViewFontAndIconSize = [[[[MDUserDefaults standardUserDefaults] objectForKey:@"StandardViewOptions" forAppIdentifier:MDFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ColumnViewOptions"] objectForKey:@"FontSize"];
 		
 		if (finderColumnViewFontAndIconSize) {
 			[defaults setObject:finderColumnViewFontAndIconSize forKey:MDBrowserFontAndIconSizeKey];

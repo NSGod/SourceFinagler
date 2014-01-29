@@ -8,7 +8,7 @@
 
 #import "MDCopyOperationViewController.h"
 #import "MDCopyOperation.h"
-#import "TKAppKitAdditions.h"
+#import "MDAppKitAdditions.h"
 
 
 #define MD_DEBUG 0
