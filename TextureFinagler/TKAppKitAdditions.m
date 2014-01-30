@@ -8,10 +8,10 @@
 
 #import "TKAppKitAdditions.h"
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED <= MAC_OS_X_VERSION_10_4
-#include <ApplicationServices/ApplicationServices.h>
-#elif MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
-#include <CoreServices/CoreServices.h>
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 1050
+#	import <CoreServices/CoreServices.h>
+#else
+#	import <ApplicationServices/ApplicationServices.h>
 #endif
 
 
