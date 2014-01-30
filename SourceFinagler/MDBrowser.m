@@ -10,7 +10,6 @@
 
 #import "MDBrowser.h"
 #import "MDBrowserCell.h"
-#import "TKAppKitAdditions.h"
 #import "MDHLDocument.h"
 #import "MDUserDefaults.h"
 
@@ -145,10 +144,10 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 	NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[sortDescriptors release];
-	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:NSStringFromDefaultsKeyPath(MDBrowserFontAndIconSizeKey)];
-	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:NSStringFromDefaultsKeyPath(MDBrowserShouldShowIconsKey)];
-	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:NSStringFromDefaultsKeyPath(MDBrowserShouldShowPreviewKey)];
-	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:NSStringFromDefaultsKeyPath(MDBrowserSortByKey)];
+	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDBrowserFontAndIconSizeKey]];
+	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDBrowserShouldShowIconsKey]];
+	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDBrowserShouldShowPreviewKey]];
+	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDBrowserSortByKey]];
 	[super dealloc];
 }
 
@@ -158,16 +157,16 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 	NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:NSStringFromDefaultsKeyPath(MDBrowserFontAndIconSizeKey)
+	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDBrowserFontAndIconSizeKey]
 																 options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 	
-	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:NSStringFromDefaultsKeyPath(MDBrowserShouldShowIconsKey)
+	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDBrowserShouldShowIconsKey]
 																 options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 	
-	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:NSStringFromDefaultsKeyPath(MDBrowserShouldShowPreviewKey)
+	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDBrowserShouldShowPreviewKey]
 																 options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 	
-	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:NSStringFromDefaultsKeyPath(MDBrowserSortByKey)
+	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDBrowserSortByKey]
 																 options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 	
 	[self setCellClass:[MDBrowserCell class]];
@@ -188,15 +187,15 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if ([keyPath isEqualToString:NSStringFromDefaultsKeyPath(MDBrowserFontAndIconSizeKey)]) {
+	if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDBrowserFontAndIconSizeKey]]) {
 		fontAndIconSize = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserFontAndIconSizeKey] integerValue];
 		[self calculateRowHeight];
 		
-	} else if ([keyPath isEqualToString:NSStringFromDefaultsKeyPath(MDBrowserShouldShowIconsKey)]) {
+	} else if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDBrowserShouldShowIconsKey]]) {
 		shouldShowIcons = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserShouldShowIconsKey] boolValue];
 		[self reloadData];
 		
-	} else if ([keyPath isEqualToString:NSStringFromDefaultsKeyPath(MDBrowserShouldShowPreviewKey)]) {
+	} else if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDBrowserShouldShowPreviewKey]]) {
 		shouldShowPreview = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserShouldShowPreviewKey] boolValue];
 
 		NSInteger selectedColumn = [self selectedColumn];
@@ -210,7 +209,7 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 			}
 		}
 		
-	} else if ([keyPath isEqualToString:NSStringFromDefaultsKeyPath(MDBrowserSortByKey)]) {
+	} else if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDBrowserSortByKey]]) {
 		NSInteger sortByOption = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserSortByKey] integerValue];
 		[self setSortDescriptors:MDSortDescriptorsFromSortOption(sortByOption)];
 		if ([[self delegate] respondsToSelector:@selector(browser:sortDescriptorsDidChange:)]) {

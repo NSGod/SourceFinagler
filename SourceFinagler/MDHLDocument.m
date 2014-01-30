@@ -393,11 +393,11 @@ static NSInteger copyTag = 0;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowQuickLookDidChange:) name:MDShouldShowQuickLookDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowPathBarDidChange:) name:MDShouldShowPathBarDidChangeNotification object:nil];
 	
-	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:NSStringFromDefaultsKeyPath(MDShouldShowInvisibleItemsKey)
 #if MD_DEBUG_TABLE_COLUMNS
 	NSLog(@"[%@ %@] [outlineView sortDescriptors] == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [outlineView sortDescriptors]);
 #endif
 	
+	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDShouldShowInvisibleItemsKey]
 																 options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 	
 	[[file items] setSortDescriptors:(viewMode == MDListViewMode ? [outlineView sortDescriptors] : [browser sortDescriptors]) recursively:YES];
@@ -479,7 +479,7 @@ static NSInteger copyTag = 0;
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if ([keyPath isEqualToString:NSStringFromDefaultsKeyPath(MDShouldShowInvisibleItemsKey)]) {
+	if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDShouldShowInvisibleItemsKey]]) {
 		[self setShouldShowInvisibleItems:[[[NSUserDefaults standardUserDefaults] objectForKey:MDShouldShowInvisibleItemsKey] boolValue]];
 		
 	} else {
@@ -1779,7 +1779,7 @@ static NSInteger copyTag = 0;
 		
 		[[self undoManager] removeAllActionsWithTarget:self];
 		
-		[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:NSStringFromDefaultsKeyPath(MDShouldShowInvisibleItemsKey)];
+		[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDShouldShowInvisibleItemsKey]];
 		
 //		[browserPreviewViewController cleanup];
 		[browserPreviewViewController release];

@@ -18,10 +18,6 @@
 #define TK_DEBUG 0
 
 
-NSString *NSStringFromDefaultsKeyPath(NSString *defaultsKey) {
-	return [NSString stringWithFormat:@"defaults.%@", defaultsKey];
-}
-
 @implementation NSAlert (TKAdditions)
 
 
