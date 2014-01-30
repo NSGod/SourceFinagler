@@ -18,7 +18,7 @@
 static NSString * const kTKUTTypeTGA = @"com.truevision.tga-image";
 static NSString * const kTKUTTypePSD = @"com.adobe.photoshop-image";
 static NSString * const kTKUTTypeOpenEXR = @"com.ilm.openexr-image";
-static NSString * const kTKUTTypeSGI = @"com.sgi.sgi-image";
+//static NSString * const kTKUTTypeSGI = @"com.sgi.sgi-image";
 
 
 

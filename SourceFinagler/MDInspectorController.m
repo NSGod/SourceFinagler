@@ -98,7 +98,6 @@
 			[iconImageView setImage:image];
 			
 			[nameField setStringValue:[item name]];
-//			NSString *path = [[[newDocument fileURL] path] stringByAppendingPathComponent:[[item path] stringByDeletingLastPathComponent]]
 			[whereField setStringValue:[[[newDocument fileURL] path] stringByAppendingPathComponent:[[item path] stringByDeletingLastPathComponent]]];
 			
 			[headerSizeField setObjectValue:[item size]];

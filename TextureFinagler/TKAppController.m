@@ -213,18 +213,6 @@ static NSArray *appClassNames = nil;
 	
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
-//	if ([[userDefaults objectForKey:MDSourceAddonFinaglerIsRegisteredKey] boolValue] == NO) {
-//		NSString *sourceAddonFinaglerPath = [[NSBundle mainBundle] pathForResource:@"Source Addon Finagler" ofType:@"app"];
-//		if (sourceAddonFinaglerPath) {
-//			OSStatus status = LSRegisterURL((CFURLRef)[NSURL fileURLWithPath:sourceAddonFinaglerPath], true);
-//			if (status) {
-//				NSLog(@"[%@ %@] LSRegisterURL() returned %d", NSStringFromClass([self class]), NSStringFromSelector(_cmd), status);
-//			} else {
-//				[userDefaults setObject:[NSNumber numberWithBool:YES] forKey:MDSourceAddonFinaglerIsRegisteredKey];
-//			}
-//		}
-//	}
-	
 	[viewModeAsListMenuItem retain];
 	
 	if (TKSystemVersion < TKSnowLeopard) {
@@ -337,6 +325,7 @@ static NSArray *appClassNames = nil;
 	}
 	
 }
+
 
 
 - (void)forceSpotlightReimport:(id)sender {
@@ -591,7 +580,6 @@ static NSArray *appClassNames = nil;
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	
 	
 }
 

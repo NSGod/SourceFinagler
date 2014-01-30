@@ -1,5 +1,5 @@
 //
-//  MDWADDocument.mm
+//  MDWADDocument.m
 //  Source Finagler
 //
 //  Created by Mark Douma on 9/10/2010.

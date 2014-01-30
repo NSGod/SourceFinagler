@@ -99,7 +99,6 @@ extern SInt32		TKSystemVersion;
 
 - (IBAction)showMainWindow:(id)sender;
 
-//- (IBAction)orderFrontHelpPanel:(id)sender;
 
 
 - (IBAction)email:(id)sender;

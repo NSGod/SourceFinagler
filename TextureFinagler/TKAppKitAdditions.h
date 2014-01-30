@@ -28,19 +28,12 @@ extern NSString *NSStringFromDefaultsKeyPath(NSString *defaultsKey);
 + (void)runFailedNibLoadAlert:(NSString *)nibName;
 @end
 
-@interface NSColor (TKAdditions)
-- (NSString *)hexValue;
-@end
-
-@interface NSFont (TKAdditions)
-- (NSString *)cssRepresentation;
-@end
-
 @interface NSMenu (TKAdditions)
 - (BOOL)containsItem:(NSMenuItem *)aMenuItem;
 - (void)setItemArray:(NSArray *)anArray;
 //- (void)removeAllItems;
 @end
+
 
 @interface NSOpenPanel (TKAdditions)
 + (NSOpenPanel *)openPanelWithTitle:(NSString *)title
@@ -53,25 +46,11 @@ extern NSString *NSStringFromDefaultsKeyPath(NSString *defaultsKey);
 
 @end
 
+
 @interface NSPopUpButton (TKAdditions)
 - (void)setItemArray:(NSArray *)value;
 @end
 
-@interface NSToolbarItem (TKAdditions)
-+ (id)toolbarItemWithItemIdentifier:(NSString *)anIdentifier tag:(NSInteger)aTag image:(NSImage *)anImage label:(NSString *)aLabel paletteLabel:(NSString *)aPaletteLabel target:(id)anObject action:(SEL)anAction;
-@end
-
-@interface NSUserDefaults (TKAdditions)
-- (void)setFont:(NSFont *)aFont forKey:(NSString *)aKey;
-- (NSFont *)fontForKey:(NSString *)aKey;
-- (void)setColor:(NSColor *)aColor forKey:(NSString *)aKey;
-- (NSColor *)colorForKey:(NSString *)aKey;
-@end
-
-@interface NSView (TKAdditions) 
-- (void)setFrameFromString:(NSString *)aString;
-- (NSString *)stringWithSavedFrame;
-@end
 
 @interface NSWindow (TKAdditions)
 - (CGFloat)toolbarHeight;
@@ -80,14 +59,10 @@ extern NSString *NSStringFromDefaultsKeyPath(NSString *defaultsKey);
 - (void)switchView:(NSView *)aView;
 @end
 
+
 @interface NSWorkspace (TKAdditions)
-
 - (BOOL)revealInFinder:(NSArray *)filePaths;
-
 - (NSImage *)iconForApplicationForURL:(NSURL *)aURL;
-- (NSString *)absolutePathForAppBundleWithIdentifier:(NSString *)aBundleIdentifier name:(NSString *)aNameWithDotApp creator:(NSString *)creator;
-- (BOOL)launchApplicationAtPath:(NSString *)path arguments:(NSArray *)argv error:(NSError **)outError;
-
 @end
 
 

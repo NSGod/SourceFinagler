@@ -79,7 +79,7 @@ NSString * const TKShouldShowImageInspectorDidChangeNotification	= @"TKShouldSho
 static NSString * const TKSliceIndexesKey = @"TKSliceIndexes";
 static NSString * const TKFaceIndexesKey = @"TKFaceIndexes";
 static NSString * const TKFrameIndexesKey = @"TKFrameIndexes";
-static NSString * const TKMipmapIndexesKey = @"TKMipmapIndexes";
+//static NSString * const TKMipmapIndexesKey = @"TKMipmapIndexes";
 static NSString * const TKDraggedFilenamesKey = @"TKDraggedFilenames";
 static NSString * const TKImageRepsKey		 = @"TKImageReps";
 
@@ -547,6 +547,9 @@ static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
 }
 
 
+#pragma mark - <NSWindowDelegate>
+
+
 - (void)windowWillClose:(NSNotification *)notification {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -567,6 +570,11 @@ static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
 		}
 	}
 }
+
+
+#pragma mark END <NSWindowDelegate>
+#pragma mark -
+
 
 
 - (void)reloadData {

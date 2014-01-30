@@ -10,7 +10,6 @@
 
 #import "MDSteamAppsRelocatorController.h"
 #import "TKAppKitAdditions.h"
-//#import "MDFolderManager.h"
 #import "MDFolderManager.h"
 #import "VSSteamManager.h"
 #import "MDProcessManager.h"
@@ -100,7 +99,7 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 		if (currentURL == nil) {
 			steamDidLaunch = YES;
 			[self performSelector:@selector(updateSteamPath:) withObject:nil afterDelay:5.0];
-	}
+		}
 	}
 }
 	
@@ -118,7 +117,7 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 		} else {
 			
 			[self performSelector:@selector(updateSteamPath:) withObject:nil afterDelay:5.0];
-}
+		}
 	}
 }
 
@@ -152,23 +151,6 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 }
 
 
-//- (void)appControllerDidLoadNib:(id)sender {
-//#if VS_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	NSUserDefaults *uD = [NSUserDefaults standardUserDefaults];
-//	if ([uD objectForKey:MDSteamAppsRelocatorViewSizeKey] == nil) [uD setObject:[self.view stringWithSavedFrame] forKey:MDSteamAppsRelocatorViewSizeKey];
-//	[self.view setFrameFromString:[uD objectForKey:MDSteamAppsRelocatorViewSizeKey]];
-//	[super appControllerDidLoadNib:self];
-//}
-
-
-//- (void)cleanup {
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//	[[NSUserDefaults standardUserDefaults] setObject:[self.view stringWithSavedFrame] forKey:MDSteamAppsRelocatorViewSizeKey];
-//}
-
-
 - (void)controlTextDidChange:(NSNotification *)notification {
 //	NSLog(@"[%@ %@] newPath == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), newPath);
 	[self setProposedNewPath:[[newPathField stringValue] stringByStandardizingPath]];
@@ -190,10 +172,9 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 #endif
 	if (currentURL) {
 		[[NSWorkspace sharedWorkspace] revealInFinder:[NSArray arrayWithObject:[currentURL path]]];
-		
 	}
-	
 }
+
 
 - (BOOL)panel:(id)sender shouldShowFilename:(NSString *)filename {
 #if VS_DEBUG
@@ -244,8 +225,6 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 			[statusField setStringValue:status];
 		}
 	}
-	
-//	NSInteger result = [openPanel runModalForDirectory:nil file:nil types:nil];
 }
 
 

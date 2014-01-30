@@ -85,6 +85,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
+	
 	minWinSize = [TKViewController windowSizeForViewWithSize:self.view.frame.size];
 	maxWinSize = NSMakeSize(FLT_MAX, FLT_MAX);
 	
@@ -131,26 +132,6 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	return [tableView sortDescriptors];
 }
 
-
-
-//- (void)appControllerDidLoadNib:(id)sender {
-//#if VS_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	NSUserDefaults *uD = [NSUserDefaults standardUserDefaults];
-//	if ([uD objectForKey:MDOtherAppsHelperViewSizeKey] == nil) [uD setObject:[self.view stringWithSavedFrame] forKey:MDOtherAppsHelperViewSizeKey];
-//	[self.view setFrameFromString:[uD objectForKey:MDOtherAppsHelperViewSizeKey]];
-//	[super appControllerDidLoadNib:self];
-//	
-//}
-
-
-//- (void)cleanup {
-//#if VS_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	[[NSUserDefaults standardUserDefaults] setObject:[self.view stringWithSavedFrame] forKey:MDOtherAppsHelperViewSizeKey];
-//}
 
 
 - (void)gameDidLaunch:(VSGame *)game {
@@ -357,6 +338,12 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	}
 	[gamesController setSelectedObjects:selectedObjects];
 	[selectedObjects release];
+	
+#if VS_DEBUG
+	NSLog(@"[%@ %@] games == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), games);
+#endif
+	
+
 }
 
 

@@ -44,79 +44,24 @@ enum {
 	TKUnknownVersion		= 0x1100
 };
 
-	
-	
-TKFOUNDATION_EXTERN BOOL TKMouseInRects(NSPoint inPoint, NSArray *inRects, BOOL isFlipped);
-TKFOUNDATION_EXTERN NSString *NSStringForAppleScriptListFromPaths(NSArray *paths);
 TKFOUNDATION_EXTERN SInt32 TKGetSystemVersion();
-	
 
 
-//	Bookmark Data Creation Options
-//	Options used when creating bookmark data.
-//		Constants
-//	NSURLBookmarkCreationPreferFileIDResolution
-//		Option for specifying that an alias created with the bookmark data prefers resolving with its embedded file ID.
-//		Available in Mac OS X v10.6 and later.
-//		Declared in NSURL.h.
-//		
-//	NSURLBookmarkCreationMinimalBookmark
-//		Option for specifying that an alias created with the bookmark data be created with minimal information, which may make it smaller but still able to resolve in certain ways.
-//		Available in Mac OS X v10.6 and later.
-//		Declared in NSURL.h.
-//	NSURLBookmarkCreationSuitableForBookmarkFile
-//		Option for specifying that the bookmark data include properties required to create Finder alias files.
-//		Available in Mac OS X v10.6 and later.
-//		Declared in NSURL.h.
 
-enum {
-	TKBookmarkCreationDefaultOptions			= 1
-};
-typedef NSUInteger TKBookmarkCreationOptions;
-
-
-//	Constants
-//	NSURLBookmarkResolutionWithoutUI
-//		Option for specifying that no UI feedback accompany resolution of the bookmark data.
-//		Available in Mac OS X v10.6 and later.
-//		Declared in NSURL.h.
-//	NSURLBookmarkResolutionWithoutMounting
-//		Option for specifying that no volume should be mounted during resolution of the bookmark data.
-//		Available in Mac OS X v10.6 and later.
-//		Declared in NSURL.h.
-enum {
-	TKBookmarkResolutionDefaultOptions		= 1,
-	TKBookmarkResolutionWithoutUI = ( 1UL << 8 )
-};
-typedef NSUInteger TKBookmarkResolutionOptions;
-
-
-//@interface NSURL (TKAdditions)
-//- (BOOL)getFSRef:(FSRef *)anFSRef;
-//@end
 
 @interface NSString (TKAdditions)
-+ (id)stringByResolvingBookmarkData:(NSData *)bookmarkData options:(TKBookmarkResolutionOptions)options bookmarkDataIsStale:(BOOL *)isStale error:(NSError **)outError;
-- (NSData *)bookmarkDataWithOptions:(TKBookmarkCreationOptions)options error:(NSError **)outError;
 
-#if (TARGET_CPU_PPC || TARGET_CPU_X86) && MAC_OS_X_VERSION_MIN_REQUIRED <= MAC_OS_X_VERSION_10_4
-+ (NSString *)stringWithFSSpec:(const FSSpec *)anFSSpec;
-#endif
 
 + (NSString *)stringWithFSRef:(const FSRef *)anFSRef;
 - (BOOL)getFSRef:(FSRef *)anFSRef error:(NSError **)anError;
-- (BOOL)boolValue;
+
 - (NSString *)stringByAssuringUniqueFilename;
-- (NSString *)stringByAbbreviatingFilenameTo31Characters;
-- (NSSize)sizeForStringWithSavedFrame;
+
 + (NSString *)stringWithPascalString:(ConstStr255Param)aPStr;
-//- (BOOL)getFSSpec:(FSSpec *)anFSSpec;
 - (BOOL)pascalString:(StringPtr)aBuffer length:(SInt16)aLength;
 
 - (NSComparisonResult)caseInsensitiveNumericalCompare:(NSString *)string;
 - (NSComparisonResult)localizedCaseInsensitiveNumericalCompare:(NSString *)string;
-
-- (BOOL)containsString:(NSString *)aString;
 
 - (NSString *)stringByReplacing:(NSString *)value with:(NSString *)newValue;
 - (NSString *)slashToColon;
@@ -129,32 +74,23 @@ typedef NSUInteger TKBookmarkResolutionOptions;
 
 
 @interface NSUserDefaults (TKSortDescriptorAdditions)
-
 - (void)setSortDescriptors:(NSArray *)sortDescriptors forKey:(NSString *)key;
 - (NSArray *)sortDescriptorsForKey:(NSString *)key;
-
 @end
 
 @interface NSDictionary (TKSortDescriptorAdditions)
-
 - (NSArray *)sortDescriptorsForKey:(NSString *)key;
-
 @end
 
 @interface NSMutableDictionary (TKSortDescriptorAdditions)
-
 - (void)setSortDescriptors:(NSArray *)sortDescriptors forKey:(NSString *)key;
-
 @end
-
 
 
 
 @interface NSIndexSet (TKAdditions)
 + (id)indexSetWithIndexSet:(NSIndexSet *)indexes;
-
 - (NSIndexSet *)indexesIntersectingIndexes:(NSIndexSet *)indexes;
-
 @end
 
 
@@ -164,18 +100,12 @@ typedef NSUInteger TKBookmarkResolutionOptions;
 
 
 @interface NSData (TKDescriptionAdditions)
-
 - (NSString *)stringRepresentation;
 - (NSString *)enhancedDescription;
-
 @end
 
 
 
-//@interface NSArray (TKAdditions)
-//- (BOOL)containsObjectIdenticalTo:(id)object;
-//@end
-//
 @interface NSMutableArray (TKAdditions)
 - (void)insertObjectsFromArray:(NSArray *)array atIndex:(NSUInteger)anIndex;
 @end

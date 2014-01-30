@@ -13,23 +13,6 @@
 #define TK_DEBUG 0
 
 
-
-BOOL TKMouseInRects(NSPoint inPoint, NSArray *inRects, BOOL isFlipped) {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSEnumerator *enumerator = [inRects objectEnumerator];
-	NSValue *rect;
-	
-	while ((rect = [enumerator nextObject])) {
-		if (NSMouseInRect(inPoint, [rect rectValue], isFlipped)) {
-			return YES;
-		}
-	}
-	return NO;
-}
-
-
 static SInt32 TKSystemVersion = TKUnknownVersion;
 
 
@@ -44,40 +27,8 @@ SInt32 TKGetSystemVersion() {
 	
 	
 
-//@implementation NSURL (TKAdditions)
-//
-//- (BOOL)getFSRef:(FSRef *)anFSRef {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	NSString *filePath = [self path];
-//	return [filePath getFSRef:anFSRef];
-//}
-//
-//@end
-
-
 
 @implementation NSString (TKAdditions)
-
-#if (TARGET_CPU_PPC || TARGET_CPU_X86) && MAC_OS_X_VERSION_MIN_REQUIRED <= MAC_OS_X_VERSION_10_4
-
-+ (NSString *)stringWithFSSpec:(const FSSpec *)anFSSpec {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	OSStatus status = noErr;
-	FSRef fileRef;
-	
-	status = FSpMakeFSRef(anFSSpec, &fileRef);
-	
-	if (status == noErr) {
-		return [self stringWithFSRef:&fileRef];
-	} else {
-		return nil;
-	}
-}
-#endif
 
 
 + (NSString *)stringWithFSRef:(const FSRef *)anFSRef {
@@ -108,24 +59,6 @@ SInt32 TKGetSystemVersion() {
 		if (anError) *anError = [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil];
 	}
 	return (status == noErr);
-}
-
-
-- (BOOL)boolValue {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	BOOL value = NO;
-	if (self) {
-		if ([self isEqualToString:@"YES"] || [self isEqualToString:@"yes"]) {
-			value = YES;
-		} else if ([self isEqualToString:@"NO"] || [self isEqualToString:@"no"]) {
-			value = NO;
-}
-	} else {
-		value = NO;
-	}
-	return value;
 }
 
 
@@ -193,105 +126,12 @@ SInt32 TKGetSystemVersion() {
 }
 
 
-- (NSString *)stringByAbbreviatingFilenameTo31Characters {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSString *newFullPath = nil;
-	NSString *filename = [self lastPathComponent];
-	NSString *originalFilename = [[filename copy] autorelease];
-	
-	if ([filename length] > 30) {
-		NSRange nilRange = NSMakeRange(NSNotFound, 0);
-		NSRange pRange = [filename rangeOfString:@"("];
-		
-		if (NSEqualRanges(nilRange, pRange)) {
-			NSArray *components = [filename componentsSeparatedByString:@" "];
-			
-			if ([components count] == 1) {
-				NSString *prefix = [filename substringToIndex:29];
-				NSString *lastCharacter = [filename substringFromIndex:[filename length] - 1];
-				
-				filename = [NSString stringWithFormat:@"%@%C%@", prefix, (unsigned short)0x2026, lastCharacter];				
-				
-			} else if ([components count] > 1) {
-				NSUInteger lastComponentLength = [[components lastObject] length];
-				
-				NSString *suffix = [filename substringFromIndex:[filename length] - lastComponentLength - 1];
-				suffix = [[NSString stringWithFormat:@"%C", (unsigned short)0x2026] stringByAppendingString:suffix];
-				
-				NSString *prefix = [filename substringToIndex:[filename length] - lastComponentLength - 2];
-				
-				NSUInteger allowedPrefixLength = (31 - [suffix length]);
-				
-				prefix = [prefix substringToIndex:allowedPrefixLength];
-				filename = [prefix stringByAppendingString:suffix];
-				
-			}
-			
-		} else {
-			
-			NSString *suffix = [filename substringFromIndex:(pRange.location - 1)];
-			NSString *prefix = [filename substringToIndex:(pRange.location - 1)];
-			
-			suffix = [[NSString stringWithFormat:@"%C", (unsigned short)0x2026] stringByAppendingString:suffix];
-			
-			NSUInteger allowedPrefixLength = (31 - [suffix length]);
-			
-			prefix = [prefix substringToIndex:allowedPrefixLength];
-			
-			filename = [prefix stringByAppendingString:suffix];
-			
-		}
-		
-		if (![originalFilename isEqualToString:filename]) {
-			newFullPath = [[self stringByDeletingLastPathComponent] stringByAppendingPathComponent:filename];
-			
-		} else {
-			newFullPath = self;
-		}
-	} else {
-		newFullPath = self;
-	}
-	return newFullPath;
-}
-
-
-- (NSSize)sizeForStringWithSavedFrame {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSSize size = NSZeroSize;
-	
-	NSArray *boundsArray = [self componentsSeparatedByString:@" "];
-	
-	if ([boundsArray count] != 4) {
-//		NSLog(@"count of bounds array != 4, returning NSZeroSize...");
-	} else {
-		size.width = [[boundsArray objectAtIndex:2] floatValue];
-		size.height = [[boundsArray objectAtIndex:3] floatValue];
-	}
-
-	return size;
-}
-
-
 + (NSString *)stringWithPascalString:(ConstStr255Param )aPStr {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return [(NSString *)CFStringCreateWithPascalString(kCFAllocatorDefault, aPStr, kCFStringEncodingMacRoman) autorelease];
 }
-
-
-
-//- (BOOL)getFSSpec:(FSSpec *)anFSSpec {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	FSRef anFSRef;
-//	return [self getFSRef:&anFSRef] && (FSGetCatalogInfo( &anFSRef, kFSCatInfoNone, NULL, NULL, anFSSpec, NULL ) == noErr);
-//}
 
 
 - (BOOL)pascalString:(StringPtr)aBuffer length:(SInt16)aLength {
@@ -315,13 +155,6 @@ SInt32 TKGetSystemVersion() {
 	return [self compare:string options:NSLiteralSearch | NSCaseInsensitiveSearch | NSNumericSearch range:NSMakeRange(0, [string length]) locale:[NSLocale currentLocale]];
 }
 
-
-- (BOOL)containsString:(NSString *)aString {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	return (!NSEqualRanges([self rangeOfString:aString], NSMakeRange(NSNotFound, 0)));
-}
 
 - (NSString *)stringByReplacing:(NSString *)value with:(NSString *)newValue {
 #if TK_DEBUG
@@ -370,75 +203,6 @@ SInt32 TKGetSystemVersion() {
 	return displayPath;
 }
 
-
-- (NSData *)bookmarkDataWithOptions:(TKBookmarkCreationOptions)options error:(NSError **)outError {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSData *bookmarkData = nil;
-	if (outError) *outError = nil;
-	NSString *path = [[self stringByResolvingSymlinksInPath] stringByStandardizingPath];
-	
-	NSFileManager *fileManager = [[NSFileManager alloc] init];
-	
-	if ([fileManager fileExistsAtPath:path]) {
-		AliasHandle alias = NULL;
-		OSErr err = noErr;
-		FSRef itemRef;
-		if ([path getFSRef:&itemRef error:outError]) {
-			if (options & TKBookmarkCreationDefaultOptions) {
-				err = FSNewAlias(NULL, &itemRef, &alias);
-				if (err == noErr) {
-					HLock((Handle)alias);
-					bookmarkData = [[[NSData dataWithBytes:*alias length:GetHandleSize((Handle)alias)] retain] autorelease];
-					HUnlock((Handle)alias);
-					if (alias) DisposeHandle((Handle)alias);
-					
-				} else {
-					NSLog(@"[%@ %@] FSNewAlias() returned %hi", NSStringFromClass([self class]), NSStringFromSelector(_cmd), err);
-					if (outError) *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:err userInfo:nil];
-				}
-			}
-		}
-	} else {
-		NSLog(@"[%@ %@] no file exists at %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), path);
-		if (outError) *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:fnfErr userInfo:nil];
-	}
-	[fileManager release];
-	return bookmarkData;
-}
-
-
-+ (id)stringByResolvingBookmarkData:(NSData *)bookmarkData options:(TKBookmarkResolutionOptions)options bookmarkDataIsStale:(BOOL *)isStale error:(NSError **)outError {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSString *resolvedPath = nil;
-	if (outError) *outError = nil;
-	if (bookmarkData) {
-		AliasHandle alias = NULL;
-		FSRef resolvedRef;
-		Boolean wasChanged = false;
-		OSErr err = noErr;
-		err = PtrToHand([bookmarkData bytes], (Handle *)&alias, [bookmarkData length]);
-		if (err == noErr) {
-			err = FSResolveAliasWithMountFlags(NULL, alias, &resolvedRef, &wasChanged, (options & TKBookmarkResolutionWithoutUI ? kResolveAliasFileNoUI : 0));
-			if (err == noErr) {
-				resolvedPath = [NSString stringWithFSRef:&resolvedRef];
-				if (isStale) *isStale = wasChanged;
-			} else {
-				NSLog(@"[%@ %@] FSResolveAliasWithMountFlags() returned %hi", NSStringFromClass([self class]), NSStringFromSelector(_cmd), err);
-				if (outError) *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:err userInfo:nil];
-			}
-		} else {
-			NSLog(@"[%@ %@] PtrToHand() returned %hi", NSStringFromClass([self class]), NSStringFromSelector(_cmd), err);
-			if (outError) *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:err userInfo:nil];
-		}
-	}
-	return resolvedPath;
-}
-
-
 @end
 
 
@@ -474,15 +238,6 @@ SInt32 TKGetSystemVersion() {
 }
 
 @end
-
-
-
-
-
-
-
-
-
 
 
 
@@ -599,21 +354,6 @@ SInt32 TKGetSystemVersion() {
 
 
 
-//@implementation NSArray (TKAdditions)
-//
-//- (BOOL)containsObjectIdenticalTo:(id)obj { 
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//    return [self indexOfObjectIdenticalTo: obj] != NSNotFound; 
-//}
-//
-//@end
-//
-//
-//
-
-
 @implementation NSMutableArray (TKAdditions)
 
 - (void)insertObjectsFromArray:(NSArray *)array atIndex:(NSUInteger)anIndex {
@@ -625,8 +365,6 @@ SInt32 TKGetSystemVersion() {
 
 
 @end
-
-
 
 
 @implementation NSObject (TKDeepMutableCopy)
