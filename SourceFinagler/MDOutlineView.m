@@ -18,7 +18,7 @@ NSString * const MDShouldShowSizeColumnKey							= @"MDShouldShowSizeColumn";
 NSString * const MDListViewIconSizeKey								= @"MDListViewIconSize";
 NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 
-#define MD_DEBUG 0
+#define MD_DEBUG 1
 
 @interface MDOutlineView (MDPrivate)
 - (void)calculateRowHeight;

@@ -42,8 +42,8 @@
 
 
 
-//#define MD_DEBUG 1
-#define MD_DEBUG 0
+#define MD_DEBUG 1
+//#define MD_DEBUG 0
 
 
 NSString * const MDHLDocumentErrorDomain			= @"MDHLDocumentErrorDomain";

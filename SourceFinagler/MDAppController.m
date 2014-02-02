@@ -79,7 +79,7 @@ BOOL	MDPerformingBatchOperation = NO;
 
 #define VS_DEBUG 0
 
-#define MD_DEBUG 0
+#define MD_DEBUG 1
 
 #define MD_DEBUG_SPOTLIGHT 0
 
@@ -209,6 +209,10 @@ BOOL needSourceAddonFinaglerRegister = NO;
 }
 
 - (void)dealloc {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	
 	[aboutWindowController release];
 	
 	[inspectorController release];
