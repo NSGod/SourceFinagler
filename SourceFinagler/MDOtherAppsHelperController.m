@@ -10,7 +10,6 @@
 
 
 #import "MDOtherAppsHelperController.h"
-#import "VSSteamManager.h"
 #import "MDAppKitAdditions.h"
 #import "MDProcessManager.h"
 
@@ -107,7 +106,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 		}
 	}
 	
-	[[self mutableArrayValueForKey:@"games"] setArray:[steamManager games]];
+	[self refresh:nil];
 	
 	[VSSteamManager	setDefaultPersistentOptions:VSGameLaunchDefault];
 	[steamManager setMonitoringGames:YES];
@@ -218,7 +217,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	
 	if (selectedGames && [selectedGames count] == 1) {
 		[pboard declareTypes:[NSArray arrayWithObject:NSFilenamesPboardType] owner:self];
-		NSString *filePath = [(VSGame *)[selectedGames objectAtIndex:0] executablePath];
+		NSString *filePath = [(VSGame *)[selectedGames objectAtIndex:0] executableURL].path;
 		if (filePath) {
 			[pboard setPropertyList:[NSArray arrayWithObject:filePath] forType:NSFilenamesPboardType];
 			return YES;
@@ -357,6 +356,11 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	}
 	[gamesController setSelectedObjects:selectedObjects];
 	[selectedObjects release];
+	
+#if VS_DEBUG
+	NSLog(@"[%@ %@] games == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), games);
+#endif
+	
 }
 
 
@@ -368,7 +372,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	NSMutableArray *filePaths = [NSMutableArray array];
 	
 	for (VSGame *game in selectedGames) {
-		NSString *path = [game executablePath];
+		NSString *path = [game executableURL].path;
 		if (path) {
 			[filePaths addObject:path];
 		}
