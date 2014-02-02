@@ -172,7 +172,7 @@ NSString * const VSGameIconNameKey					= @"VSGameIconName";
 	NSMutableString *description = [NSMutableString stringWithFormat:@"%@ -", [super description]];
 	
 	[description appendFormat:@" %@", displayName];
-//	[description appendFormat:@"gameID == %lu\n", gameID];
+	[description appendFormat:@", gameID == %lu", (unsigned long)gameID];
 //	[description appendFormat:@"iconPath == %@\n", iconPath];
 //	[description appendFormat:@"path == %@\n", path];
 	[description appendFormat:@", isHelped == %@", (helped ? @"YES" : @"NO")];

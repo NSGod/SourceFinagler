@@ -1606,10 +1606,10 @@ static NSInteger copyTag = 0;
 			NSUInteger totalItemCount = [[dictionary objectForKey:MDCopyOperationTotalItemCountKey] unsignedIntegerValue];
 			
 			if (totalItemCount == 1) {
-				[copyOperation setInformativeText:[NSString stringWithFormat:NSLocalizedString(@"Preparing to copy %lu item", @""), totalItemCount]];
+				[copyOperation setInformativeText:[NSString stringWithFormat:NSLocalizedString(@"Preparing to copy %lu item", @""), (unsigned long)totalItemCount]];
 				
 			} else {
-				[copyOperation setInformativeText:[NSString stringWithFormat:NSLocalizedString(@"Preparing to copy %lu items", @""), totalItemCount]];
+				[copyOperation setInformativeText:[NSString stringWithFormat:NSLocalizedString(@"Preparing to copy %lu items", @""), (unsigned long)totalItemCount]];
 			}
 			
 			
@@ -1632,9 +1632,9 @@ static NSInteger copyTag = 0;
 			NSNumber *currentBytes = [dictionary objectForKey:MDCopyOperationCurrentBytesKey];
 			
 			if (totalItemCount == 1) {
-				[copyOperation setMessageText:[NSString stringWithFormat:NSLocalizedString(@"Copying %lu item to \"%@\"", @""), totalItemCount - currentItemIndex, destination]];
+				[copyOperation setMessageText:[NSString stringWithFormat:NSLocalizedString(@"Copying %lu item to \"%@\"", @""), (unsigned long)totalItemCount - currentItemIndex, destination]];
 			} else {
-				[copyOperation setMessageText:[NSString stringWithFormat:NSLocalizedString(@"Copying %lu items to \"%@\"", @""), totalItemCount - currentItemIndex, destination]];
+				[copyOperation setMessageText:[NSString stringWithFormat:NSLocalizedString(@"Copying %lu items to \"%@\"", @""), (unsigned long)totalItemCount - currentItemIndex, destination]];
 			}
 			
 			[copyOperation setInformativeText:[NSString stringWithFormat:NSLocalizedString(@"%@ of %@", @""), [fileSizeFormatter stringForObjectValue:currentBytes],

@@ -88,11 +88,11 @@ NSString * const VSSourceAddonInstallMethodKey = @"VSSourceAddonInstallMethod";
 			[resultsField setStringValue:NSLocalizedString(@"1 Source addon was installed.", @"")];
 			
 		} else {
-			[resultsField setStringValue:[NSString stringWithFormat:NSLocalizedString(@"%lu Source addons were installed.", @""), installedAddonsCount]];
+			[resultsField setStringValue:[NSString stringWithFormat:NSLocalizedString(@"%lu Source addons were installed.", @""), (unsigned long)installedAddonsCount]];
 		}
 
 	} else if (installedAddonsCount > 0 && problemAddonsCount > 0) {
-		[resultsField setStringValue:[NSString stringWithFormat:NSLocalizedString(@"%lu of %lu addons were installed.", @""), installedAddonsCount, installedAddonsCount + problemAddonsCount]];
+		[resultsField setStringValue:[NSString stringWithFormat:NSLocalizedString(@"%lu of %lu addons were installed.", @""), (unsigned long)installedAddonsCount, (unsigned long)installedAddonsCount + problemAddonsCount]];
 	} else if (installedAddonsCount == 0 && problemAddonsCount > 0) {
 		[resultsField setStringValue:NSLocalizedString(@"No Source addons were installed.", @"")];
 

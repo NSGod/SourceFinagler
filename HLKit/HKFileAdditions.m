@@ -111,7 +111,7 @@
 		}
 		if (theImage) {
 			NSSize imageSize = [theImage size];
-			[self setDimensions:[NSString stringWithFormat:NSLocalizedString(@"%lu x %lu", @""), (NSUInteger)imageSize.width, (NSUInteger)imageSize.height]];
+			[self setDimensions:[NSString stringWithFormat:NSLocalizedString(@"%lu x %lu", @""), (unsigned long)imageSize.width, (unsigned long)imageSize.height]];
 		}
 	} else if (fileType == HKFileTypeOther ||
 			   fileType == HKFileTypeText ||
