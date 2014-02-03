@@ -34,7 +34,7 @@ static MDBrowserSortOptionMapping MDBrowserSortOptionMappingTable[] = {
 	{ MDBrowserSortBySize, @"size", @"compare:" },
 	{ MDBrowserSortByKind, @"kind", @"caseInsensitiveCompare:" }
 };
-static const NSUInteger MDBrowserSortOptionMappingTableCount = sizeof(MDBrowserSortOptionMappingTable)/sizeof(MDBrowserSortOptionMapping);
+static const NSUInteger MDBrowserSortOptionMappingTableCount = sizeof(MDBrowserSortOptionMappingTable)/sizeof(MDBrowserSortOptionMappingTable[0]);
 
 static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 	for (NSUInteger i = 0; i < MDBrowserSortOptionMappingTableCount; i++) {
@@ -222,7 +222,7 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 	return fontAndIconSize;
 }
 
-/* used by MDFontSuitcase when switching from column view to list view */
+/* used by document when switching from column view to list view */
 - (IBAction)deselectAll:(id)sender {
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -295,12 +295,10 @@ enum {
 - (void)rightMouseDown:(NSEvent *)event {
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	NSInteger clickedColumn = [self clickedColumn];
 	NSInteger clickedRow = [self clickedRow];
-	
 	NSLog(@"[%@ %@] clickedColumn == %ld, clickedRow == %ld", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (long)clickedColumn, (long)clickedRow);
-	
+#endif
 	[super rightMouseDown:event];
 }
 
@@ -314,11 +312,11 @@ enum {
 	if (modifierFlags & NSAlternateKeyMask || modifierFlags & NSCommandKeyMask) {
 		return [super mouseDown:event];
 	} else if (modifierFlags & NSControlKeyMask) {
+#if MD_DEBUG
 		NSInteger clickedColumn = [self clickedColumn];
 		NSInteger clickedRow = [self clickedRow];
-		
 		NSLog(@"[%@ %@] clickedColumn == %ld, clickedRow == %ld", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (long)clickedColumn, (long)clickedRow);
-		
+#endif
 	}
 	[super mouseDown:event];
 }

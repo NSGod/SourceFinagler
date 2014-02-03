@@ -98,7 +98,7 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 #if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"[%@ %@] keyPath == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), keyPath);
 #endif
 		
 	if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDListViewFontSizeKey]]) {
@@ -191,7 +191,9 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
+#if MD_DEBUG
 //	NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	
 	SEL action = [menuItem action];
 	if (action == @selector(revealInFinder:)) {
@@ -210,9 +212,9 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	
 	return YES;
 }
+
 
 - (void)keyDown:(NSEvent *)theEvent {
 #if MD_DEBUG
@@ -228,9 +230,10 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 	}
 }
 
+
 - (void)rightMouseDown:(NSEvent *)event {
 #if MD_DEBUG
-		NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSPoint clickPoint = [self convertPoint:[event locationInWindow] fromView:nil];
 	
@@ -253,13 +256,12 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 	return [super rightMouseDown:event];
 	
 	/*** actually, what's happening I think is that if I have multiple items selected and I right click, do I de-select the current selection and only select the single row, or do I keep the whole selection and call super? */
-	
 }
 
 
 - (void)mouseDown:(NSEvent *)event {
 #if MD_DEBUG
-		NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
 	NSUInteger modifierFlags = [event modifierFlags];
@@ -287,14 +289,12 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 				return [super mouseDown:event];
 			}
 		}
-		
 	}
 	return [super mouseDown:event];
 }
 
 
-#pragma mark -
-#pragma mark NSDraggingSource
+#pragma mark - <NSDraggingSource>
 
 
 
@@ -322,8 +322,7 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 	[super draggedImage:image endedAt:screenPoint operation:operation];
 }
 
-#pragma mark NSDraggingSource
-
+#pragma mark END <NSDraggingSource>
 
 @end
 
