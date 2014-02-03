@@ -814,6 +814,7 @@ static NSData *TKImageDataFromNSData(NSData *inputData, NSUInteger pixelCount, N
 			return newData;
 			
 		}
+		free(vBytes);
 		
 	}
 	return nil;
