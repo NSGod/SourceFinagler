@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class MDTextFieldCell;
 
 extern NSString * const MDShouldShowKindColumnKey;
 extern NSString * const MDShouldShowSizeColumnKey;

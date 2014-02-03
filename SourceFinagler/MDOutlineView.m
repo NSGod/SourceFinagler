@@ -8,7 +8,6 @@
 
 #import "MDOutlineView.h"
 #import "MDHLDocument.h"
-#import "MDTextFieldCell.h"
 
 
 NSString * const MDShouldShowKindColumnKey							= @"MDShouldShowKindColumn";
@@ -107,9 +106,9 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 		fontSize = [[[NSUserDefaults standardUserDefaults] objectForKey:MDListViewFontSizeKey] integerValue];
 		[self calculateRowHeight];
 		
-		[(MDTextFieldCell *)[nameColumn dataCell] setFont:[NSFont systemFontOfSize:(CGFloat)fontSize]];
-		[(MDTextFieldCell *)[sizeColumn dataCell] setFont:[NSFont systemFontOfSize:(CGFloat)fontSize]];
-		[(MDTextFieldCell *)[kindColumn dataCell] setFont:[NSFont systemFontOfSize:(CGFloat)fontSize]];
+		[[nameColumn dataCell] setFont:[NSFont systemFontOfSize:(CGFloat)fontSize]];
+		[[sizeColumn dataCell] setFont:[NSFont systemFontOfSize:(CGFloat)fontSize]];
+		[[kindColumn dataCell] setFont:[NSFont systemFontOfSize:(CGFloat)fontSize]];
 		
 		[self reloadData];
 		
