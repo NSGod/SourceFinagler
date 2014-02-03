@@ -34,7 +34,7 @@ using namespace HLLib;
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super initWithParent:aParent childNodes:nil sortDescriptors:aSortDescriptors container:aContainer])) {
-		_privateData = (__bridge void *)aFolder;
+		_privateData = (void *)aFolder;
 		isLeaf = NO;
 		isExtractable = YES;
 		isVisible = YES;

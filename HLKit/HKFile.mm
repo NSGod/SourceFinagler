@@ -40,7 +40,7 @@ using namespace HLLib::Streams;
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super initWithParent:aParent childNodes:nil sortDescriptors:nil container:aContainer])) {
-		_privateData = (__bridge void *)aFile;
+		_privateData = (void *)aFile;
 		
 		isExtractable = static_cast<const CDirectoryFile *>(_privateData)->GetExtractable();
 		isVisible = isExtractable;
