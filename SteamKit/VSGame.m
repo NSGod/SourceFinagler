@@ -176,6 +176,8 @@ NSString * const VSGameIconNameKey					= @"VSGameIconName";
 //	[description appendFormat:@"path == %@\n", path];
 	[description appendFormat:@", isHelped == %@", (helped ? @"YES" : @"NO")];
 	[description appendFormat:@", isRunning == %@", (running ? @"YES" : @"NO")];
+	[description appendFormat:@", hasUpgradedLocation == %@", (self.hasUpgradedLocation ? @"YES" : @"NO")];
+	[description appendFormat:@", addonsFolderURL == %@", addonsFolderURL];
 	return description;
 }
 
