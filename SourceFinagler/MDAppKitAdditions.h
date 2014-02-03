@@ -9,16 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import "MDFoundationAdditions.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-	
-extern NSString *NSStringFromDefaultsKeyPath(NSString *defaultsKey);
-
-#ifdef __cplusplus
-}
-#endif
-
 	
 @interface NSAlert (MDAdditions)
 + (NSAlert *)alertWithMessageText:(NSString *)messageText informativeText:(NSString *)informativeText firstButton:(NSString *)firstButtonTitle secondButton:(NSString *)secondButtonTitle thirdButton:(NSString *)thirdButtonTitle;
