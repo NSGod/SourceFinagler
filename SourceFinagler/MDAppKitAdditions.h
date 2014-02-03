@@ -10,7 +10,7 @@
 #import "MDFoundationAdditions.h"
 
 	
-@interface NSAlert (MDAdditions)
+@interface NSAlert (MDAppKitAdditions)
 + (NSAlert *)alertWithMessageText:(NSString *)messageText informativeText:(NSString *)informativeText firstButton:(NSString *)firstButtonTitle secondButton:(NSString *)secondButtonTitle thirdButton:(NSString *)thirdButtonTitle;
 @end
 
@@ -18,21 +18,14 @@
 + (void)runFailedNibLoadAlert:(NSString *)nibName;
 @end
 
-@interface NSColor (MDAdditions)
-- (NSString *)hexValue;
-@end
-
-@interface NSFont (MDAdditions)
-- (NSString *)cssRepresentation;
-@end
-
-@interface NSMenu (MDAdditions)
+@interface NSMenu (MDAppKitAdditions)
 - (BOOL)containsItem:(NSMenuItem *)aMenuItem;
 - (void)setItemArray:(NSArray *)anArray;
 - (void)removeAllItems;
 @end
 
-@interface NSOpenPanel (MDAdditions)
+
+@interface NSOpenPanel (MDAppKitAdditions)
 + (NSOpenPanel *)openPanelWithTitle:(NSString *)title
 							message:(NSString *)message
 				  actionButtonTitle:(NSString *)actionButtonTitle
@@ -43,41 +36,29 @@
 
 @end
 
-@interface NSPopUpButton (MDAdditions)
+
+@interface NSPopUpButton (MDAppKitAdditions)
 - (void)setItemArray:(NSArray *)value;
 @end
 
-@interface NSToolbarItem (MDAdditions)
-+ (id)toolbarItemWithItemIdentifier:(NSString *)anIdentifier tag:(NSInteger)aTag image:(NSImage *)anImage label:(NSString *)aLabel paletteLabel:(NSString *)aPaletteLabel target:(id)anObject action:(SEL)anAction;
-@end
 
-@interface NSUserDefaults (MDAdditions)
-- (void)setFont:(NSFont *)aFont forKey:(NSString *)aKey;
-- (NSFont *)fontForKey:(NSString *)aKey;
-- (void)setColor:(NSColor *)aColor forKey:(NSString *)aKey;
-- (NSColor *)colorForKey:(NSString *)aKey;
-@end
-
-@interface NSView (MDAdditions) 
+@interface NSView (MDAppKitAdditions)
 - (void)setFrameFromString:(NSString *)aString;
 - (NSString *)stringWithSavedFrame;
 @end
 
-@interface NSWindow (MDAdditions)
+
+@interface NSWindow (MDAppKitAdditions)
 - (CGFloat)toolbarHeight;
 - (void)resizeToSize:(NSSize)newSize;
 - (void)switchView:(NSView *)aView newTitle:(NSString *)aString;
 - (void)switchView:(NSView *)aView;
 @end
 
-@interface NSWorkspace (MDAdditions)
 
+@interface NSWorkspace (MDAppKitAdditions)
 - (BOOL)revealInFinder:(NSArray *)filePaths;
-
 - (NSImage *)iconForApplicationForURL:(NSURL *)aURL;
-- (NSString *)absolutePathForAppBundleWithIdentifier:(NSString *)aBundleIdentifier name:(NSString *)aNameWithDotApp creator:(NSString *)creator;
-- (BOOL)launchApplicationAtPath:(NSString *)path arguments:(NSArray *)argv error:(NSError **)outError;
-
 @end
 
 

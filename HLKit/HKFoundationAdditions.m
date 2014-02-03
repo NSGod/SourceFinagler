@@ -127,13 +127,6 @@
 }
 
 
-- (BOOL)containsString:(NSString *)aString {
-#if HK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	return (!NSEqualRanges([self rangeOfString:aString], NSMakeRange(NSNotFound, 0)));
-}
-
 - (NSString *)md_stringByReplacing:(NSString *)value with:(NSString *)newValue {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
