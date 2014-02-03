@@ -18,7 +18,6 @@ NSString * const VSGameNameKey						= @"VSGameName";
 NSString * const VSGameShortNameKey					= @"VSGameShortName";
 NSString * const VSGameLongNameKey					= @"VSGameLongName";
 static NSString * const VSGameCreatorCodeKey		= @"VSGameCreatorCode";
-static NSString * const VSGameBundleIdentifierKey	= @"VSGameBundleIdentifier";
 static NSString * const VSGameInfoPlistKey			= @"VSGameInfoPlist";
 
 

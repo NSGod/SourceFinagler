@@ -48,7 +48,6 @@ static NSString * const VSSourceFinaglerAgentNameKey					= @"SourceFinaglerAgent
 
 static NSString * const VSSourceFinaglerAgentBundleIdentifierKey		= @"com.markdouma.SourceFinaglerAgent";
 
-static NSString * const VSTimeMachineDatabaseNameKey				= @"Backups.backupdb";
 
 static NSString * const VSSteamLaunchGameURL						= @"steam://run/";
 
