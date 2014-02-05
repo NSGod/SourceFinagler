@@ -14,8 +14,7 @@
 #import "MDProcessManager.h"
 
 
-//#define VS_DEBUG 0
-#define VS_DEBUG 1
+#define VS_DEBUG 0
 
 NSString * const MDOtherAppsHelperViewSizeKey = @"MDOtherAppsHelperViewSize";
 

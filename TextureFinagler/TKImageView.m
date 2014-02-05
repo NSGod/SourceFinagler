@@ -10,7 +10,7 @@
 #import <TextureKit/TextureKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-#define TK_DEBUG 1
+#define TK_DEBUG 0
 
 
 typedef struct TKZoomMapping {

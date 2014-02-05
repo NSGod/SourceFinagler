@@ -10,7 +10,7 @@
 #import "TKImageView.h"
 #import "TKImageExportPreview.h"
 
-#define TK_DEBUG 1
+#define TK_DEBUG 0
 
 
 @implementation TKImageExportPreviewViewController

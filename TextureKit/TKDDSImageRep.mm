@@ -169,7 +169,7 @@ static inline Quality DDSDXTQualityFromTKDXTCompressionQuality(TKDXTCompressionQ
 }
 
 
-#define TK_DEBUG 1
+#define TK_DEBUG 0
 
 
 NSString * const TKDDSType			= @"com.microsoft.dds";

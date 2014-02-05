@@ -16,6 +16,10 @@ enum {
 
 
 
+#define MD_DEBUG 0
+
+
+
 @implementation MDPrefsController
 
 - (id)init {
@@ -39,7 +43,9 @@ enum {
 //}
 
 - (void)windowDidLoad {
+#if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	if (generalController == nil) {
 		generalController = [[MDPrefsGeneralController alloc] init];
 		if (![NSBundle loadNibNamed:@"MDPrefsGeneral" owner:generalController]) {

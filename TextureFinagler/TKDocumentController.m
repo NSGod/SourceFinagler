@@ -18,7 +18,7 @@
 
 
 
-#define TK_DEBUG 1
+#define TK_DEBUG 0
 
 static NSMutableDictionary *nativeImageTypeIdentifiersAndDisplayNames = nil;
 

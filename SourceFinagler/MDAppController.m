@@ -79,7 +79,7 @@ BOOL	MDPerformingBatchOperation = NO;
 
 #define VS_DEBUG 0
 
-#define MD_DEBUG 1
+#define MD_DEBUG 0
 
 #define MD_DEBUG_SPOTLIGHT 0
 

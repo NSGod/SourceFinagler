@@ -28,7 +28,7 @@ NSString * const TKImageExportFourthPresetKey				= @"TKImageExportFourthPreset";
 
 
 
-#define TK_DEBUG 1
+#define TK_DEBUG 0
 
 enum {
 	TKPreviewMode2Up	= 0,

@@ -12,7 +12,7 @@
 #import <TextureKit/TKDDSImageRep.h>
 #import <TextureKit/TKVTFImageRep.h>
 
-#define TK_DEBUG 1
+#define TK_DEBUG 0
 
 @implementation TKImageExportPreview
 

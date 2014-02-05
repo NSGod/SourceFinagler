@@ -11,7 +11,7 @@
 #import <ApplicationServices/ApplicationServices.h>
 #import <VTF/VTF.h>
 
-#define TK_DEBUG 1
+#define TK_DEBUG 0
 
 #import "TKPrivateInterfaces.h"
 

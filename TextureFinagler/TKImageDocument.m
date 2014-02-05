@@ -33,7 +33,7 @@ NSString * const TKImageDocumentPboardType					= @"TKImageDocumentPboardType";
 NSString * const TKImageDocumentDoNotShowWarningAgainKey		= @"TKImageDocumentDoNotShowWarningAgain";
 
 
-#define TK_DEBUG 1
+#define TK_DEBUG 0
 
 /* 
  Typically, an application that uses NSDocumentController can only
