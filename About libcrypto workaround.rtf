@@ -1,6 +1,0 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf320
-{\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-
-\f0\fs24 \cf0 I've included this dummy copy of the 0.9.7 version of libcrypto to link against, so that when we build against the 10.6 SDK and set a deployment target of OS X 10.5 (or earlier), our code can actually run properly on 10.5 and earlier. By default, Xcode would link against libcrypto.0.9.8.dylib, which wasn't included in any version of OS X before Snow Leopard. That means a likely crash when trying to launch on 10.5 or before. Moreover, if you try to get Xcode to link against the libcrypto from the 10.5 SDK, it apparently craps itself before saying it doesn't want to do that. So, we include this copy of libcrypto inside the project which I've found to be an easy solution. }

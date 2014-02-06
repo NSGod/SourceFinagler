@@ -197,7 +197,6 @@
 		C140E9091388B74700027DD6 /* SteamKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C140E63D13889A9400027DD6 /* SteamKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C140E9261388B77300027DD6 /* SteamKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C140E63D13889A9400027DD6 /* SteamKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C140E9381388B78300027DD6 /* SteamKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C140E63D13889A9400027DD6 /* SteamKit.framework */; };
-		C140E9511388B80300027DD6 /* libcrypto.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C14D2214121B638E00AB4F96 /* libcrypto.0.9.7.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		C140EA3B1388CE9400027DD6 /* noteIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C140EA3A1388CE9400027DD6 /* noteIcon.icns */; };
 		C145AF1712BD8F22005D7E21 /* TextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C145AF5F12BD8F6A005D7E21 /* TextureKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
@@ -497,7 +496,6 @@
 		C1C2C584127CBCA0003B24F6 /* MDQuickLookPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = C1ABAB6812563BD800CAAFEB /* MDQuickLookPanel.m */; };
 		C1C2C585127CBCA0003B24F6 /* MDImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C18250AE1262859600D3F663 /* MDImageView.m */; };
 		C1C2C597127CBCA0003B24F6 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C11B279211BDFBB8004D4CC0 /* ApplicationServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		C1C2C59A127CBCA0003B24F6 /* libcrypto.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C14D2214121B638E00AB4F96 /* libcrypto.0.9.7.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1C2C59B127CBCA0003B24F6 /* HL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1C12634123A54F0004674B4 /* HL.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1C2C5A1127CBCA0003B24F6 /* HL.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C1C12634123A54F0004674B4 /* HL.framework */; };
 		C1C2C5EA127CBE12003B24F6 /* VTF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1B95275124E73B200E83451 /* VTF.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -659,7 +657,6 @@
 		C1FEAB7F125F660000CA78FF /* sourceFinagler.icns in Resources */ = {isa = PBXBuildFile; fileRef = C153017E11C8866E0041BEC8 /* sourceFinagler.icns */; };
 		C1FEAB80125F660B00CA78FF /* VPK.icns in Resources */ = {isa = PBXBuildFile; fileRef = C1C12479123A0840004674B4 /* VPK.icns */; };
 		C1FEAB81125F661800CA78FF /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C11B279211BDFBB8004D4CC0 /* ApplicationServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		C1FEAB89125F667D00CA78FF /* libcrypto.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C14D2214121B638E00AB4F96 /* libcrypto.0.9.7.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1FEAB92125F66BC00CA78FF /* VSSourceAddonFinaglerMain.m in Sources */ = {isa = PBXBuildFile; fileRef = C1FEAB91125F66BC00CA78FF /* VSSourceAddonFinaglerMain.m */; };
 		C1FEABB1125F68B700CA78FF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1C12548123A0EC6004674B4 /* Localizable.strings */; };
 		C1FEABFE125F69BA00CA78FF /* copy.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C1C12469123A0840004674B4 /* copy.m4a */; };
@@ -932,7 +929,6 @@
 		C1034A9211C5619C0054740E /* VSSteamManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSSteamManager.m; path = SteamKit/VSSteamManager.m; sourceTree = "<group>"; };
 		C103563611C5AF930054740E /* VSGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSGame.h; path = SteamKit/VSGame.h; sourceTree = "<group>"; };
 		C103563711C5AF930054740E /* VSGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSGame.m; path = SteamKit/VSGame.m; sourceTree = "<group>"; };
-		C1097B0D125FA1B000D60D27 /* CUDA.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CUDA.framework; path = /Library/Frameworks/CUDA.framework; sourceTree = "<absolute>"; };
 		C10A8A2516026F6F00791BEC /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = Resources/delete.png; sourceTree = "<group>"; };
 		C10BBA65124303EE00994CA0 /* NAV.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = NAV.icns; path = Resources/NAV.icns; sourceTree = "<group>"; };
 		C10BBA66124303EE00994CA0 /* VBSP.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VBSP.icns; path = Resources/VBSP.icns; sourceTree = "<group>"; };
@@ -1046,8 +1042,6 @@
 		C14CCFA3123D33C500610DA6 /* FGD.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = FGD.icns; path = Resources/FGD.icns; sourceTree = "<group>"; };
 		C14CCFA7123D436600610DA6 /* CFG.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CFG.icns; path = Resources/CFG.icns; sourceTree = "<group>"; };
 		C14D206C121B40BC00AB4F96 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
-		C14D2214121B638E00AB4F96 /* libcrypto.0.9.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libcrypto.0.9.7.dylib; sourceTree = "<group>"; };
-		C14D2216121B639600AB4F96 /* About libcrypto workaround.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "About libcrypto workaround.rtf"; sourceTree = "<group>"; };
 		C14DB237123D8C57002D87FE /* MDPrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPrefsController.h; path = SourceFinagler/MDPrefsController.h; sourceTree = "<group>"; };
 		C14DB238123D8C57002D87FE /* MDPrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPrefsController.m; path = SourceFinagler/MDPrefsController.m; sourceTree = "<group>"; };
 		C14DB23B123D8CA3002D87FE /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDPrefs.xib; sourceTree = "<group>"; };
@@ -1648,7 +1642,6 @@
 			files = (
 				C140E72513889B7A00027DD6 /* ApplicationServices.framework in Frameworks */,
 				C140E74513889CFB00027DD6 /* ServiceManagement.framework in Frameworks */,
-				C140E9511388B80300027DD6 /* libcrypto.0.9.7.dylib in Frameworks */,
 				C1614336139973D80042B91B /* HLKit.framework in Frameworks */,
 				C1CA27F013A2E28800235C98 /* Cocoa.framework in Frameworks */,
 			);
@@ -1703,7 +1696,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1C2C597127CBCA0003B24F6 /* ApplicationServices.framework in Frameworks */,
-				C1C2C59A127CBCA0003B24F6 /* libcrypto.0.9.7.dylib in Frameworks */,
 				C1C2C59B127CBCA0003B24F6 /* HL.framework in Frameworks */,
 				C1C2C5EA127CBE12003B24F6 /* VTF.framework in Frameworks */,
 				C1C2C733127CC5AB003B24F6 /* NVCore.framework in Frameworks */,
@@ -1791,7 +1783,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1FEAB81125F661800CA78FF /* ApplicationServices.framework in Frameworks */,
-				C1FEAB89125F667D00CA78FF /* libcrypto.0.9.7.dylib in Frameworks */,
 				C140E9091388B74700027DD6 /* SteamKit.framework in Frameworks */,
 				C161436F139996AE0042B91B /* HLKit.framework in Frameworks */,
 				C1CA27F213A2E28E00235C98 /* Cocoa.framework in Frameworks */,
@@ -1919,7 +1910,6 @@
 			isa = PBXGroup;
 			children = (
 				C17CC5AB1627FF740055D950 /* Sparkle.framework */,
-				C1A115D811D6673D008BBABD /* Workarounds */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 			);
 			name = Frameworks;
@@ -2332,15 +2322,6 @@
 				C181ADAF125579A0006810AB /* schema.strings */,
 			);
 			name = Source.mdimporter;
-			sourceTree = "<group>";
-		};
-		C1A115D811D6673D008BBABD /* Workarounds */ = {
-			isa = PBXGroup;
-			children = (
-				C14D2216121B639600AB4F96 /* About libcrypto workaround.rtf */,
-				C14D2214121B638E00AB4F96 /* libcrypto.0.9.7.dylib */,
-			);
-			name = Workarounds;
 			sourceTree = "<group>";
 		};
 		C1AF851C12C62AFE00027B75 /* Additions */ = {
@@ -3177,7 +3158,6 @@
 				C1FEA952125E755D00CA78FF /* CUDA */,
 				C1FEA953125E756500CA78FF /* Squish */,
 				C1FEA955125E757B00CA78FF /* bc6h */,
-				C1097B0D125FA1B000D60D27 /* CUDA.framework */,
 			);
 			name = NVTextureTools;
 			sourceTree = "<group>";
@@ -3920,6 +3900,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = "Mark Douma";
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Source Finagler" */;
 			compatibilityVersion = "Xcode 3.1";
