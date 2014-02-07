@@ -65,13 +65,13 @@ NSString * const VSGameIconNameKey					= @"VSGameIconName";
 		NSString *iconFilename = [anInfoPlist objectForKey:VSGameIconNameKey];
 		
 		if (shortFolderName) {
-			
-			self.iconURL = [[[[executableURL URLByDeletingLastPathComponent]
-							  URLByAppendingPathComponent:shortFolderName]
-							 URLByAppendingPathComponent:VSResourceNameKey]
-							URLByAppendingPathComponent:iconFilename];
-			
+			self.iconURL = [NSURL fileURLWithPath:[NSString pathWithComponents:
+												   [NSArray arrayWithObjects:[executableURL.path stringByDeletingLastPathComponent],
+													shortFolderName,
+													VSResourceNameKey,
+													iconFilename, nil]]];
 		}
+		
 		NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
 		BOOL isDir;
 		
@@ -88,9 +88,10 @@ NSString * const VSGameIconNameKey					= @"VSGameIconName";
 //			NSLog(@"[%@ %@] file doesn't exist at iconPath == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), iconPath);
 //		}
 		if ([[anInfoPlist objectForKey:VSGameSupportsAddonsKey] boolValue]) {
-			NSURL *addonsURL = [[[executableURL URLByDeletingLastPathComponent]
-								URLByAppendingPathComponent:shortFolderName]
-							   URLByAppendingPathComponent:VSSourceAddonFolderNameKey];
+			NSURL *addonsURL = [NSURL fileURLWithPath:[NSString pathWithComponents:
+													   [NSArray arrayWithObjects:[executableURL.path stringByDeletingLastPathComponent],
+														shortFolderName,
+														VSSourceAddonFolderNameKey, nil]]];
 			
 			if ([fileManager fileExistsAtPath:addonsURL.path isDirectory:&isDir] && isDir) {
 				self.addonsFolderURL = addonsURL;
