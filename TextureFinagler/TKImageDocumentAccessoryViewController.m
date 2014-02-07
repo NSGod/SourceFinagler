@@ -201,11 +201,11 @@ static NSMutableDictionary *displayNameAndUTITypes = nil;
 		if (filenameExtension) [savePanel setAllowedFileTypes:[NSArray arrayWithObject:filenameExtension]];
 	}
 	
-	if ([imageUTType isEqual:TKDDSType] ||
-		[imageUTType isEqual:TKVTFType]) {
+	if ([imageUTType isEqualToString:TKDDSType] ||
+		[imageUTType isEqualToString:TKVTFType]) {
 		
 		
-		if ([imageUTType isEqual:TKDDSType]) {
+		if ([imageUTType isEqualToString:TKDDSType]) {
 			
 			[compressionPopUpButton setMenu:ddsMenu];
 			[compressionPopUpButton selectItemWithTag:[compressionPopUpButton indexOfItemWithTag:ddsFormat]];
@@ -217,27 +217,27 @@ static NSMutableDictionary *displayNameAndUTITypes = nil;
 		
 		[compressionBox setContentView:compressionView];
 		
-	} else if ([imageUTType isEqual:(NSString *)kUTTypeJPEG]) {
+	} else if ([imageUTType isEqualToString:(NSString *)kUTTypeJPEG]) {
 		
 		[compressionBox setContentView:jpegQualityView];
 		
-	} else if ([imageUTType isEqual:(NSString *)kUTTypeJPEG2000]) {
+	} else if ([imageUTType isEqualToString:(NSString *)kUTTypeJPEG2000]) {
 		
 		[compressionBox setContentView:jpeg2000QualityView];
 	
-	} else if ([imageUTType isEqual:(NSString *)kUTTypeTIFF]) {
+	} else if ([imageUTType isEqualToString:(NSString *)kUTTypeTIFF]) {
 
 		[compressionBox setContentView:tiffCompressionView];
 		
-	} else if ([imageUTType isEqual:(NSString *)kUTTypeBMP] ||
-			   [imageUTType isEqual:(NSString *)kUTTypeAppleICNS] ||
-			   [imageUTType isEqual:(NSString *)kUTTypeICO] ||
-			   [imageUTType isEqual:kTKUTTypePSD] ||
-			   [imageUTType isEqual:kTKUTTypeTGA] ||
-			   [imageUTType isEqual:kTKUTTypeOpenEXR] ||
-			   [imageUTType isEqual:(NSString *)kUTTypeGIF] ||
-			   [imageUTType isEqual:(NSString *)kUTTypePDF] ||
-			   [imageUTType isEqual:(NSString *)kUTTypePNG]) {
+	} else if ([imageUTType isEqualToString:(NSString *)kUTTypeBMP] ||
+			   [imageUTType isEqualToString:(NSString *)kUTTypeAppleICNS] ||
+			   [imageUTType isEqualToString:(NSString *)kUTTypeICO] ||
+			   [imageUTType isEqualToString:kTKUTTypePSD] ||
+			   [imageUTType isEqualToString:kTKUTTypeTGA] ||
+			   [imageUTType isEqualToString:kTKUTTypeOpenEXR] ||
+			   [imageUTType isEqualToString:(NSString *)kUTTypeGIF] ||
+			   [imageUTType isEqualToString:(NSString *)kUTTypePDF] ||
+			   [imageUTType isEqualToString:(NSString *)kUTTypePNG]) {
 		
 		[compressionBox setContentView:alphaView];
 		
@@ -254,11 +254,11 @@ static NSMutableDictionary *displayNameAndUTITypes = nil;
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	if ([imageUTType isEqual:TKDDSType]) {
+	if ([imageUTType isEqualToString:TKDDSType]) {
 		
 		self.ddsFormat = [[compressionPopUpButton selectedItem] tag];
 		
-	} else if ([imageUTType isEqual:TKVTFType]) {
+	} else if ([imageUTType isEqualToString:TKVTFType]) {
 		
 		self.vtfFormat = [[compressionPopUpButton selectedItem] tag];
 	}
@@ -267,28 +267,28 @@ static NSMutableDictionary *displayNameAndUTITypes = nil;
 
 - (void)setNilValueForKey:(NSString *)key {
 	
-	if ([key isEqual:@"vtfFormat"]) {
+	if ([key isEqualToString:@"vtfFormat"]) {
 		vtfFormat = [TKVTFImageRep defaultFormat];
 		
-	} else if ([key isEqual:@"ddsFormat"]) {
+	} else if ([key isEqualToString:@"ddsFormat"]) {
 		ddsFormat = [TKDDSImageRep defaultFormat];
 		
-	} else if ([key isEqual:@"compressionQuality"]) {
+	} else if ([key isEqualToString:@"compressionQuality"]) {
 		compressionQuality = [TKImageRep defaultDXTCompressionQuality];
 		
-	} else if ([key isEqual:@"tiffCompression"]) {
+	} else if ([key isEqualToString:@"tiffCompression"]) {
 		tiffCompression = NSTIFFCompressionNone;
 		
-	} else if ([key isEqual:@"jpegQuality"]) {
+	} else if ([key isEqualToString:@"jpegQuality"]) {
 		jpegQuality = 0.0;
 		
-	} else if ([key isEqual:@"jpeg2000Quality"]) {
+	} else if ([key isEqualToString:@"jpeg2000Quality"]) {
 		jpeg2000Quality = 0.0;
 		
-	} else if ([key isEqual:@"saveAlpha"]) {
+	} else if ([key isEqualToString:@"saveAlpha"]) {
 		saveAlpha = NO;
 		
-	} else if ([key isEqual:@"generateMipmaps"]) {
+	} else if ([key isEqualToString:@"generateMipmaps"]) {
 		generateMipmaps = NO;
 		
 	} else if ([super respondsToSelector:@selector(setNilValueForKey:)]) {
@@ -321,34 +321,34 @@ static NSMutableDictionary *displayNameAndUTITypes = nil;
 	
 	BOOL imageHasAlpha = [image hasAlpha];
 	
-	if ([imageUTType isEqual:TKDDSType] || [imageUTType isEqual:TKVTFType]) {
+	if ([imageUTType isEqualToString:TKDDSType] || [imageUTType isEqualToString:TKVTFType]) {
 		
 		
-	} else if ([imageUTType isEqual:(NSString *)kUTTypeJPEG]) {
+	} else if ([imageUTType isEqualToString:(NSString *)kUTTypeJPEG]) {
 		
 		[imgProperties setObject:[NSNumber numberWithDouble:jpegQuality] forKey:(id)kCGImageDestinationLossyCompressionQuality];
 		if (imageHasAlpha && saveAlpha) [imgProperties setObject:TKYES forKey:(id)kCGImagePropertyHasAlpha];
 		
-	} else if ([imageUTType isEqual:(NSString *)kUTTypeJPEG2000]) {
+	} else if ([imageUTType isEqualToString:(NSString *)kUTTypeJPEG2000]) {
 		
 		[imgProperties setObject:[NSNumber numberWithDouble:jpeg2000Quality] forKey:(id)kCGImageDestinationLossyCompressionQuality];
 		if (imageHasAlpha && saveAlpha) [imgProperties setObject:TKYES forKey:(id)kCGImagePropertyHasAlpha];
 		
-	} else if ([imageUTType isEqual:(NSString *)kUTTypeTIFF]) {
+	} else if ([imageUTType isEqualToString:(NSString *)kUTTypeTIFF]) {
 		
 		[imgProperties setObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:tiffCompression],(id)kCGImagePropertyTIFFCompression, nil]
 						  forKey:(id)kCGImagePropertyTIFFDictionary];
 		
 		
-	} else if ([imageUTType isEqual:(NSString *)kUTTypeBMP] ||
-			   [imageUTType isEqual:(NSString *)kUTTypeAppleICNS] ||
-			   [imageUTType isEqual:(NSString *)kUTTypeICO] ||
-			   [imageUTType isEqual:(NSString *)kTKUTTypeTGA] ||
-			   [imageUTType isEqual:(NSString *)kTKUTTypePSD] ||
-			   [imageUTType isEqual:(NSString *)kTKUTTypeOpenEXR] ||
-			   [imageUTType isEqual:(NSString *)kUTTypeGIF] ||
-			   [imageUTType isEqual:(NSString *)kUTTypePDF] ||
-			   [imageUTType isEqual:(NSString *)kUTTypePNG]) {
+	} else if ([imageUTType isEqualToString:(NSString *)kUTTypeBMP] ||
+			   [imageUTType isEqualToString:(NSString *)kUTTypeAppleICNS] ||
+			   [imageUTType isEqualToString:(NSString *)kUTTypeICO] ||
+			   [imageUTType isEqualToString:(NSString *)kTKUTTypeTGA] ||
+			   [imageUTType isEqualToString:(NSString *)kTKUTTypePSD] ||
+			   [imageUTType isEqualToString:(NSString *)kTKUTTypeOpenEXR] ||
+			   [imageUTType isEqualToString:(NSString *)kUTTypeGIF] ||
+			   [imageUTType isEqualToString:(NSString *)kUTTypePDF] ||
+			   [imageUTType isEqualToString:(NSString *)kUTTypePNG]) {
 		
 		if (imageHasAlpha && saveAlpha) [imgProperties setObject:TKYES forKey:(id)kCGImagePropertyHasAlpha];
 		

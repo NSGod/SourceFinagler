@@ -993,13 +993,13 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 		
 		NSString *executableBundleName = nil;
 		
-		if ([executableName isEqual:VSHalfLife2ExecutableNameKey]) {
+		if ([executableName isEqualToString:VSHalfLife2ExecutableNameKey]) {
 			executableBundleName = VSHalfLife2USBOverdriveExecutableNameKey;
 			
-		} else if ([executableName isEqual:VSPortal2ExecutableNameKey]) {
+		} else if ([executableName isEqualToString:VSPortal2ExecutableNameKey]) {
 			executableBundleName = VSPortal2USBOverdriveExecutableNameKey;
 			
-		} else if ([executableName isEqual:VSCounterStrikeGlobalOffensiveExecutableNameKey]) {
+		} else if ([executableName isEqualToString:VSCounterStrikeGlobalOffensiveExecutableNameKey]) {
 			executableBundleName = VSCounterStrikeGlobalOffensiveUSBOverdriveExecutableNameKey;
 			
 		}
@@ -1144,13 +1144,13 @@ static inline NSDictionary *VSMakeLaunchAgentPlist(NSString *jobLabel, NSArray *
 	
 	NSString *executableBundleName = nil;
 	
-	if ([executableName isEqual:VSHalfLife2ExecutableNameKey]) {
+	if ([executableName isEqualToString:VSHalfLife2ExecutableNameKey]) {
 		executableBundleName = VSHalfLife2USBOverdriveExecutableNameKey;
 		
-	} else if ([executableName isEqual:VSPortal2ExecutableNameKey]) {
+	} else if ([executableName isEqualToString:VSPortal2ExecutableNameKey]) {
 		executableBundleName = VSPortal2USBOverdriveExecutableNameKey;
 		
-	} else if ([executableName isEqual:VSCounterStrikeGlobalOffensiveExecutableNameKey]) {
+	} else if ([executableName isEqualToString:VSCounterStrikeGlobalOffensiveExecutableNameKey]) {
 		executableBundleName = VSCounterStrikeGlobalOffensiveUSBOverdriveExecutableNameKey;
 		
 	}
