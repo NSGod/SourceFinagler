@@ -481,7 +481,6 @@
 		C1C2C570127CBCA0003B24F6 /* MDCopyOperationView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C1251B123A0C32004674B4 /* MDCopyOperationView.m */; };
 		C1C2C571127CBCA0003B24F6 /* MDRolloverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C1251D123A0C32004674B4 /* MDRolloverButton.m */; };
 		C1C2C572127CBCA0003B24F6 /* MDAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C12526123A0C81004674B4 /* MDAboutWindowController.m */; };
-		C1C2C573127CBCA0003B24F6 /* MDStash.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C12529123A0CA3004674B4 /* MDStash.m */; };
 		C1C2C574127CBCA0003B24F6 /* MDGCFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C126AA123A7FC3004674B4 /* MDGCFDocument.m */; };
 		C1C2C575127CBCA0003B24F6 /* MDBSPDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C126B3123A807F004674B4 /* MDBSPDocument.m */; };
 		C1C2C576127CBCA0003B24F6 /* MDNCFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C126B7123A80BB004674B4 /* MDNCFDocument.m */; };
@@ -1111,8 +1110,6 @@
 		C1758D62124833D1001B5A46 /* RAD.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = RAD.icns; path = Resources/RAD.icns; sourceTree = "<group>"; };
 		C1758D6412483642001B5A46 /* VDM.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VDM.icns; path = Resources/VDM.icns; sourceTree = "<group>"; };
 		C17CC5AB1627FF740055D950 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		C17D34F212791CCA00962584 /* HLPackageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLPackageManager.h; path = SourceFinagler/HLPackageManager.h; sourceTree = "<group>"; };
-		C17D34F312791CCA00962584 /* HLPackageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HLPackageManager.m; path = SourceFinagler/HLPackageManager.m; sourceTree = "<group>"; };
 		C181AC9912557677006810AB /* Source-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Source-Info.plist"; path = "SourceSpotlightImporter/Source-Info.plist"; sourceTree = "<group>"; };
 		C181AD951255793B006810AB /* GetMetadataForFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GetMetadataForFile.mm; path = SourceSpotlightImporter/GetMetadataForFile.mm; sourceTree = "<group>"; };
 		C181AD971255796E006810AB /* HLSpotlightMain.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = HLSpotlightMain.c; path = SourceSpotlightImporter/HLSpotlightMain.c; sourceTree = "<group>"; };
@@ -1293,8 +1290,6 @@
 		C1C1251D123A0C32004674B4 /* MDRolloverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDRolloverButton.m; path = SourceFinagler/MDRolloverButton.m; sourceTree = "<group>"; };
 		C1C12525123A0C81004674B4 /* MDAboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDAboutWindowController.h; path = SourceFinagler/MDAboutWindowController.h; sourceTree = "<group>"; };
 		C1C12526123A0C81004674B4 /* MDAboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDAboutWindowController.m; path = SourceFinagler/MDAboutWindowController.m; sourceTree = "<group>"; };
-		C1C12528123A0CA3004674B4 /* MDStash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDStash.h; path = SourceFinagler/MDStash.h; sourceTree = "<group>"; };
-		C1C12529123A0CA3004674B4 /* MDStash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDStash.m; path = SourceFinagler/MDStash.m; sourceTree = "<group>"; };
 		C1C1252B123A0CAE004674B4 /* Source Finagler.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.sdef; name = "Source Finagler.sdef"; path = "SourceFinagler/Source Finagler.sdef"; sourceTree = "<group>"; };
 		C1C12549123A0EC6004674B4 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C1C12634123A54F0004674B4 /* HL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2707,8 +2702,6 @@
 				C1C126CF123A977D004674B4 /* Packages */,
 				C1C126CE123A9770004674B4 /* Mappings */,
 				C1C126D0123A9786004674B4 /* Streams */,
-				C17D34F212791CCA00962584 /* HLPackageManager.h */,
-				C17D34F312791CCA00962584 /* HLPackageManager.m */,
 			);
 			name = "HL framework";
 			sourceTree = "<group>";
@@ -4375,7 +4368,6 @@
 				C1C2C570127CBCA0003B24F6 /* MDCopyOperationView.m in Sources */,
 				C1C2C571127CBCA0003B24F6 /* MDRolloverButton.m in Sources */,
 				C1C2C572127CBCA0003B24F6 /* MDAboutWindowController.m in Sources */,
-				C1C2C573127CBCA0003B24F6 /* MDStash.m in Sources */,
 				C1C2C574127CBCA0003B24F6 /* MDGCFDocument.m in Sources */,
 				C1C2C575127CBCA0003B24F6 /* MDBSPDocument.m in Sources */,
 				C1C2C576127CBCA0003B24F6 /* MDNCFDocument.m in Sources */,
