@@ -10,15 +10,11 @@
 
 #import "MDInspectorController.h"
 #import "MDAppController.h"
-
 #import "MDHLDocument.h"
-
 #import "MDAppKitAdditions.h"
-
 #import <HLKit/HLKit.h>
 
 
-//#define MD_DEBUG 1
 #define MD_DEBUG 0
 
 
@@ -53,7 +49,7 @@
 
 - (void)selectedItemsDidChange:(NSNotification *)notification {
 #if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"[%@ %@] notification == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), notification);
 #endif
 	
 	NSArray *newSelectedItems = [[notification userInfo] objectForKey:MDSelectedItemsKey];

@@ -11,10 +11,8 @@
 #import <QTKit/QTKit.h>
 #import "MDTransparentView.h"
 #import "MDHLDocument.h"
-
 #import <HLKit/HLKit.h>
 
-//#define MD_DEBUG 1
 #define MD_DEBUG 0
 
 

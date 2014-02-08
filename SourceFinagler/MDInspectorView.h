@@ -57,8 +57,6 @@ extern NSString * const MDInspectorViewDidHideNotification;
 }
 
 - (IBAction)toggleShown:(id)sender;
-//- (IBAction)show:(id)sender;
-//- (IBAction)hide:(id)sender;
 
 - (BOOL)isShown;
 - (void)setShown:(BOOL)value;
@@ -78,12 +76,6 @@ extern NSString * const MDInspectorViewDidHideNotification;
 
 - (id <MDInspectorViewDelegate>)delegate;
 - (void)setDelegate:(id <MDInspectorViewDelegate>)aDelegate;
-
-
-//@property (assign) IBOutlet NSButton	*titleButton;
-//@property (assign) IBOutlet NSButton	*disclosureButton;
-//@property (copy)			NSString	*autosaveName;
-//@property (assign, setter=setInitiallyShown:) BOOL isInitiallyShown;
 
 
 //- (NSString *)identifier						DEPRECATED_ATTRIBUTE;

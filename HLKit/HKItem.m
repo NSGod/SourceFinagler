@@ -236,16 +236,16 @@ static void HKInitializeIcons() {
 	return nil;
 }
 
-static NSString * const HKFileTypeDescription[] = {
-						@"HKFileTypeNone",
-						@"HKFileTypeHTML",
-						@"HKFileTypeText",
-						@"HKFileTypeImage",
-						@"HKFileTypeSound",
-						@"HKFileTypeMovie",
-						@"HKFileTypeOther",
-						@"HKFileTypeNotExtractable"
-};
+//static NSString * const HKFileTypeDescription[] = {
+//						@"HKFileTypeNone",
+//						@"HKFileTypeHTML",
+//						@"HKFileTypeText",
+//						@"HKFileTypeImage",
+//						@"HKFileTypeSound",
+//						@"HKFileTypeMovie",
+//						@"HKFileTypeOther",
+//						@"HKFileTypeNotExtractable"
+//};
 
 - (NSString *)description {
 //	NSMutableString *description = [NSMutableString stringWithString:[super description]];

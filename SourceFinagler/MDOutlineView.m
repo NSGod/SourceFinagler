@@ -34,7 +34,6 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 
 
 - (void)dealloc {
-	
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif

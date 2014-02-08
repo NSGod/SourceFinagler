@@ -8,25 +8,15 @@
 
 #import "MDQuickLookPreviewViewController.h"
 #import "MDHLDocument.h"
-
 #import <HLKit/HLKit.h>
-
 #import "MDTransparentView.h"
 #import <WebKit/WebKit.h>
 
-//#define MD_DEBUG 1
+
 #define MD_DEBUG 0
 
 
 @implementation MDQuickLookPreviewViewController
-
-
-//- (void)dealloc {
-//#if MD_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	[super dealloc];
-//}
 
 
 - (void)awakeFromNib {
@@ -105,12 +95,6 @@
 	
 }
 
-
-//- (void)cleanup {
-//#if MD_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//}
 
 @end
 

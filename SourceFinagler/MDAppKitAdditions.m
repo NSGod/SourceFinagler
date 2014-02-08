@@ -87,7 +87,9 @@
 			[[self itemAtIndex:i] respondsToSelector:@selector(setHidden:)]) {
 			
 			if ([[self itemAtIndex:i] isHidden]) {
+#if MD_DEBUG
 				NSLog(@"[%@ %@] itemAtIndex %lu is hidden!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)i);
+#endif
 				[[self itemAtIndex:i] setHidden:NO];
 			}
 		}

@@ -227,8 +227,6 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 }
 
 
-//@property (assign, setter=setInitiallyShown:) BOOL isInitiallyShown;
-
 - (BOOL)isInitiallyShown {
     return isInitiallyShown;
 }

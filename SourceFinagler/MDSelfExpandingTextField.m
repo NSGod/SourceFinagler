@@ -7,17 +7,11 @@
 //
 
 #import "MDSelfExpandingTextField.h"
-#import "MDInspectorView.h"
 
 
 #pragma mark view
 #define MD_DEBUG 0
 
-
-
-@interface MDSelfExpandingTextField (Private)
-- (void)changeWindowHeightBy:(CGFloat)value;
-@end
 
 
 @implementation MDSelfExpandingTextField
@@ -27,10 +21,10 @@
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
     if ((self = [super initWithFrame:frame])) {
+#if MD_DEBUG
 		NSUInteger lineBreakMode = [[self cell] lineBreakMode];
-		
-		NSLog(@"lineBreakMode == %lu", (unsigned long)lineBreakMode);
-		
+		NSLog(@"[%@ %@] lineBreakMode == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)lineBreakMode);
+#endif
     }
     return self;
 }
@@ -41,10 +35,10 @@
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super initWithCoder:coder])) {
+#if MD_DEBUG
 		NSUInteger lineBreakMode = [[self cell] lineBreakMode];
-		
-		NSLog(@"lineBreakMode == %lu", (unsigned long)lineBreakMode);
-		
+		NSLog(@"[%@ %@] lineBreakMode == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)lineBreakMode);
+#endif
 	}
 	return self;
 }
@@ -113,8 +107,10 @@ static NSTextContainer *textContainer = nil;
 		[textContainer setLineFragmentPadding:0.0];
 		[textStorage addAttribute:NSFontAttributeName value:[[self cell] font] range:NSMakeRange(0, [textStorage length])];
 		[layoutManager setUsesFontLeading:NO];
+#if MD_DEBUG
 		NSInteger typesetterBehavior = [layoutManager typesetterBehavior];
 		NSLog(@"[%@ %@] typesetterBehavior == %ld", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (long)typesetterBehavior);
+#endif
 	
 	}
 	

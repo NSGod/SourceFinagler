@@ -1381,7 +1381,9 @@ static NSInteger copyTag = 0;
 			unsigned long long currentBytes = 0;
 			
 			
+#if MD_DEBUG
 			NSDate *startDate = [NSDate date];
+#endif
 			
 			
 			for (HKItem *item in allItems) {
@@ -1390,9 +1392,9 @@ static NSInteger copyTag = 0;
 				}
 			}
 			
+#if MD_DEBUG
 			NSTimeInterval elapsedTime = fabs([startDate timeIntervalSinceNow]);
 			
-#if MD_DEBUG
 			NSLog(@"[%@ %@] elapsed time to size %lu items == %.7f sec / %.4f ms", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)[allItems count], elapsedTime, elapsedTime * 1000.0);
 #endif
 			
@@ -1828,8 +1830,10 @@ static NSInteger copyTag = 0;
 				
 				/* get current browser selection, select items in outline view, then switch view to outline view, then deselect items in browser */
 				
+#if MD_DEBUG
 				NSArray *selectionIndexPaths = [browser selectionIndexPaths];
 				NSLog(@"[%@ %@] selectionIndexPaths == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), selectionIndexPaths);
+#endif
 				
 				[[file items] setSortDescriptors:[outlineView sortDescriptors]];
 				[[file items] recursiveSortChildren];

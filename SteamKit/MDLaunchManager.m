@@ -394,7 +394,9 @@ static MDLaunchManager *sharedManager = nil;
 			
 			if (useServiceManagement) {
 				if (agentIsUnloadingSelf && agentLaunchDate) {
+#if MD_DEBUG
 					NSTimeInterval totalElapsedTime = fabs([agentLaunchDate timeIntervalSinceNow]);
+#endif
 					[agentLaunchDate release];
 					agentLaunchDate = nil;
 					
@@ -406,7 +408,9 @@ static MDLaunchManager *sharedManager = nil;
 					success = (BOOL)SMJobRemove(kSMDomainUserLaunchd, (CFStringRef)label, NULL, NO, (CFErrorRef *)outError);
 			} else {
 				if (agentIsUnloadingSelf && agentLaunchDate) {
+#if MD_DEBUG
 					NSTimeInterval totalElapsedTime = fabs([agentLaunchDate timeIntervalSinceNow]);
+#endif
 					[agentLaunchDate release];
 					agentLaunchDate = nil;
 					
