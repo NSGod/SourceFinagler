@@ -9,6 +9,8 @@
 #import "TKImageExportPreviewViewController.h"
 #import "TKImageView.h"
 #import "TKImageExportPreview.h"
+#import "MDFileSizeFormatter.h"
+
 
 #define TK_DEBUG 0
 
@@ -33,6 +35,8 @@
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
+	[imageFileSizeField setFormatter:[[[MDFileSizeFormatter alloc] initWithUnitsType:MDFileSizeFormatterAutomaticUnitsType
+																			   style:MDFileSizeFormatterLogicalStyle] autorelease]];
 	[progressIndicator setUsesThreadedAnimation:YES];
 	[imageView setImage:NULL imageProperties:nil];
 }

@@ -13,6 +13,7 @@
 @interface TKImageExportPreviewViewController : NSViewController {
 	IBOutlet TKImageView			*imageView;
 	IBOutlet NSProgressIndicator	*progressIndicator;
+	IBOutlet NSTextField			*imageFileSizeField;
 }
 
 @end
