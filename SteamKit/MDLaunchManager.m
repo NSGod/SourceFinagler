@@ -33,7 +33,7 @@ enum {
 	MDUnknownVersion		= 0x1100
 };
 
-static SInt32 MDSystemVersion = MDUnknownVersion;
+static SInt32 MDSystemVersion = MDUndeterminedVersion;
 static SInt32 MDFullSystemVersion = 0;
 
 static BOOL useServiceManagement = NO;
