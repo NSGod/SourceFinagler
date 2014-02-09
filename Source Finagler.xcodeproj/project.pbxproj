@@ -22,6 +22,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		C108FAF318A449F000ACA1F3 /* MDGeneralInspectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = C108FAF218A449F000ACA1F3 /* MDGeneralInspectorView.m */; };
+		C108FAF718A459DF00ACA1F3 /* MDMoreInfoInspectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = C108FAF618A459DF00ACA1F3 /* MDMoreInfoInspectorView.m */; };
+		C108FAFA18A45A1E00ACA1F3 /* MDPreviewInspectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = C108FAF918A45A1E00ACA1F3 /* MDPreviewInspectorView.m */; };
 		C1097A83125F9BA300D60D27 /* Box.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FEA8EC125E718D00CA78FF /* Box.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1097A9E125FA11800D60D27 /* NVTextureTools.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FEA96E125E75C000CA78FF /* NVTextureTools.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1097AA1125FA11D00D60D27 /* Context.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FEA96A125E75C000CA78FF /* Context.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -927,6 +930,12 @@
 		C1034A9211C5619C0054740E /* VSSteamManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSSteamManager.m; path = SteamKit/VSSteamManager.m; sourceTree = "<group>"; };
 		C103563611C5AF930054740E /* VSGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSGame.h; path = SteamKit/VSGame.h; sourceTree = "<group>"; };
 		C103563711C5AF930054740E /* VSGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSGame.m; path = SteamKit/VSGame.m; sourceTree = "<group>"; };
+		C108FAF118A449F000ACA1F3 /* MDGeneralInspectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDGeneralInspectorView.h; path = SourceFinagler/MDGeneralInspectorView.h; sourceTree = "<group>"; };
+		C108FAF218A449F000ACA1F3 /* MDGeneralInspectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDGeneralInspectorView.m; path = SourceFinagler/MDGeneralInspectorView.m; sourceTree = "<group>"; };
+		C108FAF518A459DF00ACA1F3 /* MDMoreInfoInspectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDMoreInfoInspectorView.h; path = SourceFinagler/MDMoreInfoInspectorView.h; sourceTree = "<group>"; };
+		C108FAF618A459DF00ACA1F3 /* MDMoreInfoInspectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDMoreInfoInspectorView.m; path = SourceFinagler/MDMoreInfoInspectorView.m; sourceTree = "<group>"; };
+		C108FAF818A45A1E00ACA1F3 /* MDPreviewInspectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPreviewInspectorView.h; path = SourceFinagler/MDPreviewInspectorView.h; sourceTree = "<group>"; };
+		C108FAF918A45A1E00ACA1F3 /* MDPreviewInspectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPreviewInspectorView.m; path = SourceFinagler/MDPreviewInspectorView.m; sourceTree = "<group>"; };
 		C10A8A2516026F6F00791BEC /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete.png; path = Resources/delete.png; sourceTree = "<group>"; };
 		C10BBA65124303EE00994CA0 /* NAV.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = NAV.icns; path = Resources/NAV.icns; sourceTree = "<group>"; };
 		C10BBA66124303EE00994CA0 /* VBSP.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VBSP.icns; path = Resources/VBSP.icns; sourceTree = "<group>"; };
@@ -1935,6 +1944,19 @@
 			name = MDOtherAppsHelper;
 			sourceTree = "<group>";
 		};
+		C108FAF418A449FA00ACA1F3 /* concrete subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				C108FAF118A449F000ACA1F3 /* MDGeneralInspectorView.h */,
+				C108FAF218A449F000ACA1F3 /* MDGeneralInspectorView.m */,
+				C108FAF518A459DF00ACA1F3 /* MDMoreInfoInspectorView.h */,
+				C108FAF618A459DF00ACA1F3 /* MDMoreInfoInspectorView.m */,
+				C108FAF818A45A1E00ACA1F3 /* MDPreviewInspectorView.h */,
+				C108FAF918A45A1E00ACA1F3 /* MDPreviewInspectorView.m */,
+			);
+			name = "concrete subclasses";
+			sourceTree = "<group>";
+		};
 		C116F85C12D5302500551787 /* Accessory View */ = {
 			isa = PBXGroup;
 			children = (
@@ -2600,6 +2622,7 @@
 				C1C124FF123A0BA2004674B4 /* MDInspectorController.m */,
 				C1C12500123A0BA2004674B4 /* MDInspectorView.h */,
 				C1C12501123A0BA3004674B4 /* MDInspectorView.m */,
+				C108FAF418A449FA00ACA1F3 /* concrete subclasses */,
 				C1C12502123A0BA3004674B4 /* MDSelfExpandingTextField.h */,
 				C1C12503123A0BA3004674B4 /* MDSelfExpandingTextField.m */,
 				C1C124B5123A0A0C004674B4 /* MDInspector.xib */,
@@ -4293,6 +4316,7 @@
 				C1C2C54A127CBCA0003B24F6 /* MDOtherAppsHelperController.m in Sources */,
 				C1C2C54B127CBCA0003B24F6 /* MDController.m in Sources */,
 				C1C2C54E127CBCA0003B24F6 /* MDProcessManager.m in Sources */,
+				C108FAF318A449F000ACA1F3 /* MDGeneralInspectorView.m in Sources */,
 				C1C2C552127CBCA0003B24F6 /* MDTableView.m in Sources */,
 				C1C2C554127CBCA0003B24F6 /* MDUserDefaults.m in Sources */,
 				C1C2C556127CBCA0003B24F6 /* MDHLDocument.m in Sources */,
@@ -4319,6 +4343,7 @@
 				C1C2C571127CBCA0003B24F6 /* MDRolloverButton.m in Sources */,
 				C1C2C572127CBCA0003B24F6 /* MDAboutWindowController.m in Sources */,
 				C1C2C574127CBCA0003B24F6 /* MDGCFDocument.m in Sources */,
+				C108FAFA18A45A1E00ACA1F3 /* MDPreviewInspectorView.m in Sources */,
 				C1C2C575127CBCA0003B24F6 /* MDBSPDocument.m in Sources */,
 				C1C2C576127CBCA0003B24F6 /* MDNCFDocument.m in Sources */,
 				C1C2C577127CBCA0003B24F6 /* MDPAKDocument.m in Sources */,
@@ -4335,6 +4360,7 @@
 				C174EED0128A49C000817F81 /* MDCopyOperationViewController.m in Sources */,
 				C116FA0512D5549900551787 /* TKImageDocumentAccessoryViewController.m in Sources */,
 				C12F35F612D7E24B00D28F26 /* TKDocumentController.m in Sources */,
+				C108FAF718A459DF00ACA1F3 /* MDMoreInfoInspectorView.m in Sources */,
 				C12F362212D7E45000D28F26 /* TKImageDocument.m in Sources */,
 				C12F362412D7E45400D28F26 /* TKImageView.m in Sources */,
 				C12F362512D7E45600D28F26 /* TKSplitterView.m in Sources */,
