@@ -43,8 +43,14 @@ static NSString * const MDIdentifierKey							= @"MDIdentifier";
 #define MD_DEBUG 0
 
 
-@interface MDInspectorView (MDPrivate)
+static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosaveName) {
+	return [NSString stringWithFormat:MDInspectorViewIsShownFormatKey, anAutosaveName];
+}
 
+
+
+
+@interface MDInspectorView (MDPrivate)
 
 - (void)hideAndNotify:(BOOL)shouldNotify;
 - (void)showAndNotify:(BOOL)shouldNotify;
@@ -55,12 +61,7 @@ static NSString * const MDIdentifierKey							= @"MDIdentifier";
 @end
 
 
-
 @implementation MDInspectorView
-
-static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosaveName) {
-	return [NSString stringWithFormat:MDInspectorViewIsShownFormatKey, anAutosaveName];
-}
 
 
 - (id)initWithFrame:(NSRect)frame {
@@ -73,17 +74,13 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 		originalHeight = [self frame].size.height;
 		hiddenHeight = 0.0;
 		
-		autosaveName = [@"" retain];
-		
-//		[self setAutosaveName:@""];
-		[self setInitiallyShown:YES];
+		isInitiallyShown = YES;
 		
 //		hiddenHeight = 1.0;
 	} else {
 		[self release];
 		return nil;
 	}
-	
 	return self;
 }
 
@@ -107,8 +104,7 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 		
 		autosaveName = [encodedName retain];
 		
-//		[self setAutosaveName:encodedName];
-		[self setInitiallyShown:[[coder decodeObjectForKey:MDInspectorViewIsIntiallyExpandedKey] boolValue]];
+		isInitiallyShown = [[coder decodeObjectForKey:MDInspectorViewIsIntiallyExpandedKey] boolValue];
 		
 //		hiddenHeight = 1.0;
 	}
@@ -118,7 +114,7 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 
 - (void)encodeWithCoder:(NSCoder *)coder {
 #if MD_DEBUG
-	NSLog(@"\"%@\" [%@ %@]", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"\"%@\" [%@ %@]", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
     [super encodeWithCoder:coder];
 	[coder encodeObject:autosaveName forKey:MDInspectorViewAutosaveNameKey];
@@ -137,24 +133,23 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 
 - (void)awakeFromNib {
 #if MD_DEBUG
-	NSLog(@"\"%@\" [%@ %@] delegate == %@", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd), delegate);
+	NSLog(@"\"%@\" [%@ %@] delegate == %@", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd), delegate);
 #endif
 	
-	isShown = isInitiallyShown;
+	isShown = self.isInitiallyShown;
 	
-	if (autosaveName && ![autosaveName isEqualToString:@""]) {
-		NSNumber *isShownNumber = [[NSUserDefaults standardUserDefaults] objectForKey:NSStringFromInspectorViewAutosaveName(autosaveName)];
+	if (self.autosaveName.length) {
+		NSNumber *isShownNumber = [[NSUserDefaults standardUserDefaults] objectForKey:NSStringFromInspectorViewAutosaveName(self.autosaveName)];
 		if (isShownNumber == nil) {
 			// if no value is present in user defaults, then set the default value of YES (or whatever the present value is by this point)
-			[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isShown] forKey:NSStringFromInspectorViewAutosaveName(autosaveName)];
+			[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isShown] forKey:NSStringFromInspectorViewAutosaveName(self.autosaveName)];
 		}
-		isShown = [[[NSUserDefaults standardUserDefaults] objectForKey:NSStringFromInspectorViewAutosaveName(autosaveName)] boolValue];
+		isShown = [[[NSUserDefaults standardUserDefaults] objectForKey:NSStringFromInspectorViewAutosaveName(self.autosaveName)] boolValue];
 		
-		if (isShown) {
-			NSLog(@"\"%@\" [%@ %@] isShown == YES", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-		} else {
-			NSLog(@"\"%@\" [%@ %@] isShown == NO", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-		}
+#if MD_DEBUG
+		NSLog(@"\"%@\" [%@ %@] isShown == %@", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd), (isShown ? @"YES" : @"NO"));
+#endif
+		
 	}
 	
 	if (!isShown) {
@@ -166,19 +161,17 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 		}
 	} else {
 		if (disclosureButton) [disclosureButton setState:NSOnState];
-
 	}
 	
     if ([self autoresizingMask] & NSViewHeightSizable) {
-//		NSLog(@"\"%@\" [%@ %@] WARNING: You probably don't want this view to be resizeable vertically; you should turn that off in the inspector in IB.", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//		NSLog(@"\"%@\" [%@ %@] WARNING: You probably don't want this view to be resizeable vertically; you should turn that off in the inspector in IB.", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 	}
-	
 }
 
 
 - (void)setNilValueForKey:(NSString *)key {
 #if MD_DEBUG
-	NSLog(@"\"%@\" [%@ %@]", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"\"%@\" [%@ %@]", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ([key isEqualToString:@"isInitiallyShown"]) {
 		isInitiallyShown = YES;
@@ -191,7 +184,7 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 
 - (void)viewWillMoveToWindow:(NSWindow *)newWindow {
 #if MD_DEBUG
-	NSLog(@"\"%@\" [%@ %@]", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"\"%@\" [%@ %@]", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return [super viewWillMoveToWindow:newWindow];
 }
@@ -199,7 +192,7 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 
 - (void)viewDidMoveToWindow {
 #if MD_DEBUG
-	NSLog(@"\"%@\" [%@ %@]", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"\"%@\" [%@ %@]", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[super viewDidMoveToWindow];
 	
@@ -252,7 +245,7 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 
 - (id <MDInspectorViewDelegate>)delegate {
 #if MD_DEBUG
-	NSLog(@"\"%@\" [%@ %@]", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"\"%@\" [%@ %@]", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return delegate;
 }
@@ -260,7 +253,7 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 
 - (void)setDelegate:(id <MDInspectorViewDelegate>)aDelegate {
 #if MD_DEBUG
-	NSLog(@"\"%@\" [%@ %@]", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"\"%@\" [%@ %@]", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	delegate = aDelegate;
 }
@@ -273,22 +266,22 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 
 - (void)setShown:(BOOL)shouldShow {
 #if MD_DEBUG
-	NSLog(@"\"%@\" [%@ %@]", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"\"%@\" [%@ %@]", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
 	if (shouldShow != isShown) {
 		(shouldShow ? [self showAndNotify:YES] : [self hideAndNotify:YES]);
 	}
 	
-	if (autosaveName && ![autosaveName isEqualToString:@""]) {
-		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isShown] forKey:NSStringFromInspectorViewAutosaveName(autosaveName)];
+	if (self.autosaveName.length) {
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isShown] forKey:NSStringFromInspectorViewAutosaveName(self.autosaveName)];
 	}
 }
 
 
 - (IBAction)toggleShown:(id)sender {
 #if MD_DEBUG
-	NSLog(@"\"%@\" [%@ %@]", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"\"%@\" [%@ %@]", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[self setShown:!isShown];
 	
@@ -297,7 +290,7 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 
 - (void)hideAndNotify:(BOOL)shouldNotify {
 #if MD_DEBUG
-	NSLog(@"\"%@\" [%@ %@]", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"\"%@\" [%@ %@]", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
 	if (shouldNotify) {
@@ -379,7 +372,7 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 
 - (void)showAndNotify:(BOOL)shouldNotify {
 #if MD_DEBUG
-	NSLog(@"\"%@\" [%@ %@]", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"\"%@\" [%@ %@]", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
 	if (shouldNotify) {
@@ -444,10 +437,10 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 
 - (void)removeSubviews {
 #if MD_DEBUG
-	NSLog(@"\"%@\" [%@ %@]", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"\"%@\" [%@ %@]", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	NSString *assertString = [NSString stringWithFormat:@"\"%@\" [%@ %@] should have no hidden subviews yet", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
+	NSString *assertString = [NSString stringWithFormat:@"\"%@\" [%@ %@] should have no hidden subviews yet", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
 
     NSAssert(hiddenSubviews == nil, assertString);
 	
@@ -464,10 +457,10 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 
 - (void)restoreSubviews {
 #if MD_DEBUG
-	NSLog(@"\"%@\" [%@ %@]", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"\"%@\" [%@ %@]", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	NSString *assertString = [NSString stringWithFormat:@"\"%@\" [%@ %@] should have no hidden subviews yet", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
+	NSString *assertString = [NSString stringWithFormat:@"\"%@\" [%@ %@] should have no hidden subviews yet", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd)];
 
     NSAssert(hiddenSubviews != nil, assertString);
 
@@ -485,7 +478,7 @@ static inline NSString *NSStringFromInspectorViewAutosaveName(NSString *anAutosa
 
 - (void)changeWindowHeightBy:(CGFloat)value {
 #if MD_DEBUG
-	NSLog(@"\"%@\" [%@ %@]", autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"\"%@\" [%@ %@]", self.autosaveName, NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
     // This turns out to be more complicated than one might expect, because the way that the other views in the window should move is different than the normal case that the AppKit handles.

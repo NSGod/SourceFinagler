@@ -51,7 +51,7 @@ extern NSString * const MDInspectorViewDidHideNotification;
 	IBOutlet NSButton						*titleButton;
 	IBOutlet NSButton						*disclosureButton;
 	
-	IBOutlet id <MDInspectorViewDelegate>	delegate;
+	IBOutlet id <MDInspectorViewDelegate>	delegate;	// non-retained reference
 	
 	NSString								*autosaveName;
 	
