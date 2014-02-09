@@ -361,10 +361,12 @@ static NSInteger copyTag = 0;
 		[searchToolbarItem setMaxSize:NSMakeSize(230.0,22.0)];
 	}
 	
-		
+	[searchInspectorView setInitiallyShown:NO];
 	[searchInspectorView setShown:NO];
 	
 	MDShouldShowPathBar = [[[NSUserDefaults standardUserDefaults] objectForKey:MDShouldShowPathBarKey] boolValue];
+	
+	[pathControlInspectorView setInitiallyShown:NO];
 	
 	[pathControl setURL:[self fileURL]];
 	[pathControl setTarget:self];

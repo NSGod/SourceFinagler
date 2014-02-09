@@ -8,6 +8,7 @@
 
 #import "MDOutlineView.h"
 #import "MDHLDocument.h"
+#import "MDFileSizeFormatter.h"
 
 
 NSString * const MDShouldShowKindColumnKey							= @"MDShouldShowKindColumn";
@@ -51,9 +52,8 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 
 - (void)awakeFromNib {
 	
-	
-	
-	
+	[[sizeColumn dataCell] setFormatter:[[[MDFileSizeFormatter alloc] initWithUnitsType:MDFileSizeFormatterAutomaticUnitsType
+																				  style:MDFileSizeFormatterPhysicalStyle] autorelease]];
 	
 	
 	// from controllers
