@@ -190,7 +190,7 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 #endif
 	
 	// force save of defaults
-	NSDictionary *imageProperties = [accessoryViewController imageProperties];
+	[accessoryViewController imageProperties];
 	
 	
 	BOOL success = NO;
