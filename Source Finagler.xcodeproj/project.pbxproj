@@ -4820,7 +4820,6 @@
 					i386,
 					x86_64,
 				);
-				CODE_SIGN_IDENTITY = "Developer ID Application: Mark Douma";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -4843,7 +4842,6 @@
 					i386,
 					x86_64,
 				);
-				CODE_SIGN_IDENTITY = "Developer ID Application: Mark Douma";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_POSTPROCESSING = YES;
