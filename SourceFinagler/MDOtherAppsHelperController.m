@@ -37,9 +37,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 
 + (void)initialize {
 	NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
-	NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"displayName" ascending:YES selector:@selector(caseInsensitiveNumericalCompare:)] autorelease];
-	NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-//	NSArray *sortDescriptors = [NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES selector:@selector(caseInsensitiveNumericalCompare:)], nil];
+	NSArray *sortDescriptors = [NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"displayName" ascending:YES selector:@selector(caseInsensitiveNumericalCompare:)] autorelease]];
     [defaults setSortDescriptors:sortDescriptors forKey:MDOtherAppsHelperSortDescriptorsKey];
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
@@ -83,9 +81,6 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	[tableView setVerticalMotionCanBeginDrag:NO];
 	
 	[tableView setSortDescriptors:[[NSUserDefaults standardUserDefaults] sortDescriptorsForKey:MDOtherAppsHelperSortDescriptorsKey]];
-	
-	
-//	[gamesController setSortDescriptors:[tableView sortDescriptors]];
 	
 	NSDictionary *usbInfo = MDInfoForProcessWithBundleIdentifier(MDUSBOverdriveHelperBundleIdentifierKey);
 	
