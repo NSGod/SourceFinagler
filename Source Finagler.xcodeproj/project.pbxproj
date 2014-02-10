@@ -199,14 +199,16 @@
 		C140E76F13889E6B00027DD6 /* SteamKitDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = C140E76D13889E6B00027DD6 /* SteamKitDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C140E9091388B74700027DD6 /* SteamKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C140E63D13889A9400027DD6 /* SteamKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C140E9261388B77300027DD6 /* SteamKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C140E63D13889A9400027DD6 /* SteamKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		C140E9381388B78300027DD6 /* SteamKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C140E63D13889A9400027DD6 /* SteamKit.framework */; };
+		C140E9381388B78300027DD6 /* SteamKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C140E63D13889A9400027DD6 /* SteamKit.framework */; };
 		C140EA3B1388CE9400027DD6 /* noteIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C140EA3A1388CE9400027DD6 /* noteIcon.icns */; };
 		C145AF1712BD8F22005D7E21 /* TextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		C145AF5F12BD8F6A005D7E21 /* TextureKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
+		C145AF5F12BD8F6A005D7E21 /* TextureKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
 		C14D700712F9E5C000A2FD7E /* MDTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124D5123A0A8A004674B4 /* MDTextFieldCell.m */; };
+		C152971F18A82CA400BBC10B /* SourceImage.qlgenerator in Copy QuickLook generator */ = {isa = PBXBuildFile; fileRef = C1C2C661127CBEF7003B24F6 /* SourceImage.qlgenerator */; };
+		C152975118A82CD600BBC10B /* Source.mdimporter in Copy Spotlight importer */ = {isa = PBXBuildFile; fileRef = C1C2C63D127CBED1003B24F6 /* Source.mdimporter */; };
 		C15590CA12B6E04200FD0684 /* SFTI.icns in Resources */ = {isa = PBXBuildFile; fileRef = C15590C912B6E04200FD0684 /* SFTI.icns */; };
 		C155C9C813A06907008151E7 /* HLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; };
-		C155C9DC13A06931008151E7 /* HLKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; };
+		C155C9DC13A06931008151E7 /* HLKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; };
 		C1580E891396262F00D5D4D8 /* VSPrivateInterfaces.h in Headers */ = {isa = PBXBuildFile; fileRef = C1580E871396262F00D5D4D8 /* VSPrivateInterfaces.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C1594EA21384F247009CE606 /* usbOverdriveNote.png in Resources */ = {isa = PBXBuildFile; fileRef = C1594EA11384F247009CE606 /* usbOverdriveNote.png */; };
 		C15A76431399DC1200B4F485 /* MDAppKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C11B275511BDE826004D4CC0 /* MDAppKitAdditions.m */; };
@@ -228,7 +230,7 @@
 		C179471012788392008B7EC9 /* NVImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA8FD125E71A200CA78FF /* NVImage.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C179471212788393008B7EC9 /* NVTextureTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA930125E72E300CA78FF /* NVTextureTools.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C17CC5AC1627FF740055D950 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17CC5AB1627FF740055D950 /* Sparkle.framework */; };
-		C17CC69C1628002F0055D950 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C17CC5AB1627FF740055D950 /* Sparkle.framework */; };
+		C17CC69C1628002F0055D950 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C17CC5AB1627FF740055D950 /* Sparkle.framework */; };
 		C187D8A31635900700F30B64 /* TKBase.h in Headers */ = {isa = PBXBuildFile; fileRef = C187D8A11635900700F30B64 /* TKBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C187D8A41635900700F30B64 /* TKBase.m in Sources */ = {isa = PBXBuildFile; fileRef = C187D8A21635900700F30B64 /* TKBase.m */; };
 		C187D97E1635A61400F30B64 /* TextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
@@ -499,7 +501,7 @@
 		C1C2C585127CBCA0003B24F6 /* MDImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C18250AE1262859600D3F663 /* MDImageView.m */; };
 		C1C2C597127CBCA0003B24F6 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C11B279211BDFBB8004D4CC0 /* ApplicationServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1C2C59B127CBCA0003B24F6 /* HL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1C12634123A54F0004674B4 /* HL.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		C1C2C5A1127CBCA0003B24F6 /* HL.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C1C12634123A54F0004674B4 /* HL.framework */; };
+		C1C2C5A1127CBCA0003B24F6 /* HL.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1C12634123A54F0004674B4 /* HL.framework */; };
 		C1C2C5EA127CBE12003B24F6 /* VTF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1B95275124E73B200E83451 /* VTF.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1C2C62A127CBED1003B24F6 /* schema.xml in Resources */ = {isa = PBXBuildFile; fileRef = C181ADAE12557982006810AB /* schema.xml */; };
 		C1C2C62B127CBED1003B24F6 /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = C181ADAF125579A0006810AB /* schema.strings */; };
@@ -512,15 +514,15 @@
 		C1C2C657127CBEF7003B24F6 /* MDCGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C15DD37E126A476300E44BDB /* MDCGImage.m */; };
 		C1C2C659127CBEF7003B24F6 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C11B279211BDFBB8004D4CC0 /* ApplicationServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1C2C681127CBF8C003B24F6 /* VTF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1B95275124E73B200E83451 /* VTF.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		C1C2C6F5127CC539003B24F6 /* VTF.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C1B95275124E73B200E83451 /* VTF.framework */; };
+		C1C2C6F5127CC539003B24F6 /* VTF.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1B95275124E73B200E83451 /* VTF.framework */; };
 		C1C2C733127CC5AB003B24F6 /* NVCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA7EA125E5C9600CA78FF /* NVCore.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1C2C741127CC5B1003B24F6 /* NVMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA8DE125E5DC300CA78FF /* NVMath.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1C2C74F127CC5B9003B24F6 /* NVImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA8FD125E71A200CA78FF /* NVImage.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1C2C761127CC5BC003B24F6 /* NVTextureTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA930125E72E300CA78FF /* NVTextureTools.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		C1C2C763127CC5D3003B24F6 /* NVCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C1FEA7EA125E5C9600CA78FF /* NVCore.framework */; };
-		C1C2C767127CC5D8003B24F6 /* NVMath.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C1FEA8DE125E5DC300CA78FF /* NVMath.framework */; };
-		C1C2C76E127CC5DD003B24F6 /* NVImage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C1FEA8FD125E71A200CA78FF /* NVImage.framework */; };
-		C1C2C777127CC5E5003B24F6 /* NVTextureTools.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C1FEA930125E72E300CA78FF /* NVTextureTools.framework */; };
+		C1C2C763127CC5D3003B24F6 /* NVCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA7EA125E5C9600CA78FF /* NVCore.framework */; };
+		C1C2C767127CC5D8003B24F6 /* NVMath.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA8DE125E5DC300CA78FF /* NVMath.framework */; };
+		C1C2C76E127CC5DD003B24F6 /* NVImage.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA8FD125E71A200CA78FF /* NVImage.framework */; };
+		C1C2C777127CC5E5003B24F6 /* NVTextureTools.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA930125E72E300CA78FF /* NVTextureTools.framework */; };
 		C1CA269713A2E1B900235C98 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA269613A2E1B900235C98 /* QTKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1CA27DA13A2E1F900235C98 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA27D913A2E1F900235C98 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1CA27E813A2E20F00235C98 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA27D913A2E1F900235C98 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -896,23 +898,46 @@
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C1C2C5A0127CBCA0003B24F6 /* CopyFiles */ = {
+		C152971318A82C7900BBC10B /* Copy QuickLook generator */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/QuickLook;
+			dstSubfolderSpec = 1;
+			files = (
+				C152971F18A82CA400BBC10B /* SourceImage.qlgenerator in Copy QuickLook generator */,
+			);
+			name = "Copy QuickLook generator";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C152974018A82CB600BBC10B /* Copy Spotlight importer */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/Spotlight;
+			dstSubfolderSpec = 1;
+			files = (
+				C152975118A82CD600BBC10B /* Source.mdimporter in Copy Spotlight importer */,
+			);
+			name = "Copy Spotlight importer";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C1C2C5A0127CBCA0003B24F6 /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C17CC69C1628002F0055D950 /* Sparkle.framework in CopyFiles */,
-				C155C9DC13A06931008151E7 /* HLKit.framework in CopyFiles */,
-				C140E9381388B78300027DD6 /* SteamKit.framework in CopyFiles */,
-				C145AF5F12BD8F6A005D7E21 /* TextureKit.framework in CopyFiles */,
-				C1C2C5A1127CBCA0003B24F6 /* HL.framework in CopyFiles */,
-				C1C2C6F5127CC539003B24F6 /* VTF.framework in CopyFiles */,
-				C1C2C763127CC5D3003B24F6 /* NVCore.framework in CopyFiles */,
-				C1C2C767127CC5D8003B24F6 /* NVMath.framework in CopyFiles */,
-				C1C2C76E127CC5DD003B24F6 /* NVImage.framework in CopyFiles */,
-				C1C2C777127CC5E5003B24F6 /* NVTextureTools.framework in CopyFiles */,
+				C17CC69C1628002F0055D950 /* Sparkle.framework in Copy Frameworks */,
+				C155C9DC13A06931008151E7 /* HLKit.framework in Copy Frameworks */,
+				C140E9381388B78300027DD6 /* SteamKit.framework in Copy Frameworks */,
+				C145AF5F12BD8F6A005D7E21 /* TextureKit.framework in Copy Frameworks */,
+				C1C2C5A1127CBCA0003B24F6 /* HL.framework in Copy Frameworks */,
+				C1C2C6F5127CC539003B24F6 /* VTF.framework in Copy Frameworks */,
+				C1C2C763127CC5D3003B24F6 /* NVCore.framework in Copy Frameworks */,
+				C1C2C767127CC5D8003B24F6 /* NVMath.framework in Copy Frameworks */,
+				C1C2C76E127CC5DD003B24F6 /* NVImage.framework in Copy Frameworks */,
+				C1C2C777127CC5E5003B24F6 /* NVTextureTools.framework in Copy Frameworks */,
 			);
+			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -3705,8 +3730,9 @@
 				C1C2C4E2127CBCA0003B24F6 /* Resources */,
 				C1C2C543127CBCA0003B24F6 /* Sources */,
 				C1C2C595127CBCA0003B24F6 /* Frameworks */,
-				C1C2C5A0127CBCA0003B24F6 /* CopyFiles */,
-				C1C2C5A4127CBCA0003B24F6 /* ShellScript */,
+				C1C2C5A0127CBCA0003B24F6 /* Copy Frameworks */,
+				C152971318A82C7900BBC10B /* Copy QuickLook generator */,
+				C152974018A82CB600BBC10B /* Copy Spotlight importer */,
 			);
 			buildRules = (
 			);
@@ -3768,7 +3794,6 @@
 			buildConfigurationList = C1FEA7EE125E5C9600CA78FF /* Build configuration list for PBXNativeTarget "NVCore" */;
 			buildPhases = (
 				C1FEA7E5125E5C9600CA78FF /* Headers */,
-				C1FEA7E6125E5C9600CA78FF /* Resources */,
 				C1FEA7E7125E5C9600CA78FF /* Sources */,
 				C1FEA7E8125E5C9600CA78FF /* Frameworks */,
 			);
@@ -3786,7 +3811,6 @@
 			buildConfigurationList = C1FEA8E2125E5DC300CA78FF /* Build configuration list for PBXNativeTarget "NVMath" */;
 			buildPhases = (
 				C1FEA8D9125E5DC300CA78FF /* Headers */,
-				C1FEA8DA125E5DC300CA78FF /* Resources */,
 				C1FEA8DB125E5DC300CA78FF /* Sources */,
 				C1FEA8DC125E5DC300CA78FF /* Frameworks */,
 			);
@@ -3805,7 +3829,6 @@
 			buildConfigurationList = C1FEA901125E71A200CA78FF /* Build configuration list for PBXNativeTarget "NVImage" */;
 			buildPhases = (
 				C1FEA8F8125E71A200CA78FF /* Headers */,
-				C1FEA8F9125E71A200CA78FF /* Resources */,
 				C1FEA8FA125E71A200CA78FF /* Sources */,
 				C1FEA8FB125E71A200CA78FF /* Frameworks */,
 			);
@@ -4102,27 +4125,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C1FEA7E6125E5C9600CA78FF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C1FEA8DA125E5DC300CA78FF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C1FEA8F9125E71A200CA78FF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C1FEA92C125E72E300CA78FF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4160,19 +4162,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "set -o errexit\n\n[ $CONFIGURATION = Release ] || { echo Distribution target requires \"'Release'\" build style; false; }\n\nVERSION=$(defaults read \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info\" CFBundleVersion)\nSHORT_VERSION=$(defaults read \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Info\" CFBundleShortVersionString)\nDOWNLOAD_BASE_URL=\"http://www.markdouma.com/sourcefinagler\"\nRELEASENOTES_URL=\"http://www.markdouma.com/sourcefinagler/rnotes.html#version-$VERSION\"\n\nARCHIVE_FILENAME=$(echo \"$PROJECT_NAME.zip\" | sed s/\\ //g)\n\nDOWNLOAD_URL=\"$DOWNLOAD_BASE_URL/$ARCHIVE_FILENAME\"\nKEYCHAIN_PRIVKEY_NAME=\"dsa_priv.pem\"\n\nWD=$PWD\ncd \"$BUILT_PRODUCTS_DIR\"\nrm -f \"$ARCHIVE_FILENAME\"\nditto -ck --keepParent --sequesterRsrc \"$PROJECT_NAME.app\" \"$ARCHIVE_FILENAME\"\n\nSIZE=$(stat -f %z \"$ARCHIVE_FILENAME\")\nPUBDATE=$(date +\"%a, %d %b %G %T %z\")\n\n\nSIGNATURE=$(\n\topenssl dgst -sha1 -binary < \"$ARCHIVE_FILENAME\" \\\n\t| openssl dgst -dss1 -sign <(security find-generic-password -g -s \"$KEYCHAIN_PRIVKEY_NAME\" 2>&1 1>/dev/null | perl -pe '($_) = /\"(.+)\"/; s/\\\\012/\\n/g' | perl -MXML::LibXML -e 'print XML::LibXML->new()->parse_file(\"-\")->findvalue(q(//string[preceding-sibling::key[1] = \"NOTE\"]))') \\\n\t| openssl enc -base64\n)\n\n[ $SIGNATURE ] || { echo Unable to load signing private key with name \"'$KEYCHAIN_PRIVKEY_NAME'\" from keychain; false; }\n\ncat <<EOF\n\t\t<item>\n\t\t\t<title>Version $SHORT_VERSION ($VERSION)</title>\n\t\t\t<sparkle:releaseNotesLink>$RELEASENOTES_URL</sparkle:releaseNotesLink>\n\t\t\t<pubDate>$PUBDATE</pubDate>\n\t\t\t<enclosure\n\t\t\t\turl=\"$DOWNLOAD_URL\"\n\t\t\t\tsparkle:version=\"$VERSION\"\n\t\t\t\tsparkle:shortVersionString=\"$SHORT_VERSION\"\n\t\t\t\ttype=\"application/octet-stream\"\n\t\t\t\tlength=\"$SIZE\"\n\t\t\t\tsparkle:dsaSignature=\"$SIGNATURE\"\n\t\t\t/>\n\t\t</item>\nEOF\n\necho scp \"'$HOME/svn/my-cool-app/build/Release/$ARCHIVE_FILENAME'\" www.example.com:download/\necho scp \"'$WD/appcast.xml'\" www.example.com:web/software/my-cool-app/appcast.xml\n";
-		};
-		C1C2C5A4127CBCA0003B24F6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "rm -Rf \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Library/QuickLook\"\nmkdir -p \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Library/QuickLook\"\ncp -fR \"$BUILT_PRODUCTS_DIR/SourceImage.qlgenerator\" \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Library/QuickLook\"\n\nrm -Rf \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Library/Spotlight\"\nmkdir -p \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Library/Spotlight\"\ncp -fR \"$BUILT_PRODUCTS_DIR/Source.mdimporter\" \"$BUILT_PRODUCTS_DIR/$PROJECT_NAME.app/Contents/Library/Spotlight\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -4841,6 +4830,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
 				SDKROOT = macosx;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
@@ -4862,7 +4852,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PREBINDING = NO;
 				SDKROOT = macosx;
+				STRIP_STYLE = "non-global";
 			};
 			name = Release;
 		};
@@ -4891,7 +4883,6 @@
 				INFOPLIST_FILE = "SourceFinaglerAgent/SourceFinaglerAgent-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = SourceFinaglerAgent;
-				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
@@ -4911,10 +4902,6 @@
 				GCC_PREFIX_HEADER = SteamKit/SteamKit_Prefix.pch;
 				INFOPLIST_FILE = "SteamKit/SteamKit-Info.plist";
 				INSTALL_PATH = "@rpath/";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
 				PRODUCT_NAME = SteamKit;
 			};
 			name = Debug;
@@ -4932,10 +4919,6 @@
 				GCC_PREFIX_HEADER = SteamKit/SteamKit_Prefix.pch;
 				INFOPLIST_FILE = "SteamKit/SteamKit-Info.plist";
 				INSTALL_PATH = "@rpath/";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
 				PRODUCT_NAME = SteamKit;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -5066,7 +5049,6 @@
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
-				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = NO;
 				GCC_WARN_SHADOW = NO;
 				HEADER_SEARCH_PATHS = "VTF/**";
 				INFOPLIST_FILE = VTF/Info.plist;
@@ -5087,11 +5069,9 @@
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				HEADER_SEARCH_PATHS = "HL/**";
 				INFOPLIST_FILE = HL/HLInfo.plist;
 				INSTALL_PATH = "@rpath/";
-				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_NAME = HL;
 			};
 			name = Debug;
@@ -5105,11 +5085,9 @@
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				HEADER_SEARCH_PATHS = "HL/**";
 				INFOPLIST_FILE = HL/HLInfo.plist;
 				INSTALL_PATH = "@rpath/";
-				LD_RUNPATH_SEARCH_PATHS = "";
 				PRODUCT_NAME = HL;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -5131,10 +5109,6 @@
 				GCC_WARN_SHADOW = NO;
 				INFOPLIST_FILE = SourceFinagler/SourceFinagler.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
 				PRODUCT_NAME = "Source Finagler";
 			};
 			name = Debug;
@@ -5153,10 +5127,6 @@
 				GCC_WARN_SHADOW = NO;
 				INFOPLIST_FILE = SourceFinagler/SourceFinagler.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
 				PRODUCT_NAME = "Source Finagler";
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
@@ -5381,13 +5351,8 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "MD_BUILDING_FOR_SOURCE_ADDON_FINAGLER=1";
 				INFOPLIST_FILE = "SourceAddonFinagler/Source Addon Finagler-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
 				PRODUCT_NAME = "Source Addon Finagler";
 			};
 			name = Debug;
@@ -5403,13 +5368,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "MD_BUILDING_FOR_SOURCE_ADDON_FINAGLER=1";
 				INFOPLIST_FILE = "SourceAddonFinagler/Source Addon Finagler-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
 				PRODUCT_NAME = "Source Addon Finagler";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
