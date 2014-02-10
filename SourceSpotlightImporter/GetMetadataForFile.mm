@@ -11,9 +11,12 @@ extern "C" {
 
 	
 #define MD_DEBUG 0
+
+	
+static NSString * const MDBundleIdentifierKey = @"com.markdouma.mdimporter.Source";
 	
 	
-BOOL MDGetMetadataFromImageWithContentsOfFile(NSString *filePath, NSString *contentTypeUTI, NSMutableDictionary *attributes, NSError **error);
+BOOL MDGetMetadataFromImageAtPath(NSString *filePath, NSString *contentTypeUTI, NSMutableDictionary *attributes, NSError **error);
 
 
 Boolean GetMetadataForURL(void *thisInterface, CFMutableDictionaryRef attributes, CFStringRef contentTypeUTI, CFURLRef url) {
@@ -26,16 +29,16 @@ Boolean GetMetadataForURL(void *thisInterface, CFMutableDictionaryRef attributes
 	if (![(NSString *)contentTypeUTI isEqualToString:TKVTFType] &&
 		![(NSString *)contentTypeUTI isEqualToString:TKDDSType] &&
 		![(NSString *)contentTypeUTI isEqualToString:TKSFTextureImageType]) {
-		NSLog(@"Source.mdimporter; GetMetadataForFile(): contentTypeUTI != vtf or dds or sfti; (contentTypeUTI == %@)", contentTypeUTI);
+		NSLog(@"%@; %s(): contentTypeUTI != vtf or dds or sfti; (contentTypeUTI == \"%@\")", MDBundleIdentifierKey, __FUNCTION__, contentTypeUTI);
 		[pool release];
 		return FALSE;
 	}
 	
 #if MD_DEBUG
-	NSLog(@"Source.mdimporter; GetMetadataForURL() file == %@", [(NSURL *)url path]);
+	NSLog(@"%@; %s(): file == \"%@\")", MDBundleIdentifierKey, __FUNCTION__, [(NSURL *)url path]);
 #endif
 	
-	BOOL result = MDGetMetadataFromImageWithContentsOfFile([(NSURL *)url path], (NSString *)contentTypeUTI, (NSMutableDictionary *)attributes, NULL);
+	BOOL result = MDGetMetadataFromImageAtPath([(NSURL *)url path], (NSString *)contentTypeUTI, (NSMutableDictionary *)attributes, NULL);
 	
 	[pool release];
 	return (Boolean)result;
@@ -45,7 +48,8 @@ Boolean GetMetadataForURL(void *thisInterface, CFMutableDictionaryRef attributes
 using namespace VTFLib;
 using namespace nv;
 	
-BOOL MDGetMetadataFromImageWithContentsOfFile(NSString *filePath, NSString *contentTypeUTI, NSMutableDictionary *attributes, NSError **error) {
+	
+BOOL MDGetMetadataFromImageAtPath(NSString *filePath, NSString *contentTypeUTI, NSMutableDictionary *attributes, NSError **error) {
 	if (attributes == nil || filePath == nil || contentTypeUTI == nil) return NO;
 	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -53,13 +57,13 @@ BOOL MDGetMetadataFromImageWithContentsOfFile(NSString *filePath, NSString *cont
 	NSData *data = [[NSData alloc] initWithContentsOfFile:filePath];
 	
 	if (data == nil) {
-		NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): data == nil for filePath == %@", filePath);
+		NSLog(@"%@; %s(): data == nil for \"%@\")", MDBundleIdentifierKey, __FUNCTION__, filePath);
 		[pool release];
 		return NO;
 	}
 	
 	if ([data length] < sizeof(OSType)) {
-		NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): [data length] < 4 for filePath == %@", filePath);
+		NSLog(@"%@; %s(): [data length] < 4 for \"%@\")", MDBundleIdentifierKey, __FUNCTION__, filePath);
 		[data release];
 		[pool release];
 		return NO;
@@ -74,7 +78,7 @@ BOOL MDGetMetadataFromImageWithContentsOfFile(NSString *filePath, NSString *cont
 		TKImage *sfti = [[TKImage alloc] initWithData:data firstRepresentationOnly:NO];
 		
 		if (sfti == nil) {
-			NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): failed to create a TKImage for file at %@!", filePath);
+			NSLog(@"%@; %s(): failed to create a TKImage for file at \"%@\"!", MDBundleIdentifierKey, __FUNCTION__, filePath);
 			[data release];
 			[pool release];
 			return NO;
@@ -101,7 +105,7 @@ BOOL MDGetMetadataFromImageWithContentsOfFile(NSString *filePath, NSString *cont
 	} else if ([contentTypeUTI isEqualToString:TKVTFType]) {
 		
 		if (magic == TKHTMLErrorMagic) {
-			NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): file at fileURL \"%@\" appears to be an ERROR 404 HTML file rather than a valid VTF", filePath);
+			NSLog(@"%@; %s(): file at \"%@\" appears to be an ERROR 404 HTML file rather than a valid VTF", MDBundleIdentifierKey, __FUNCTION__, filePath);
 			[data release];
 			[pool release];
 			return NO;
@@ -110,7 +114,7 @@ BOOL MDGetMetadataFromImageWithContentsOfFile(NSString *filePath, NSString *cont
 		CVTFFile *file = new CVTFFile();
 		
 		if (file == 0) {
-			NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): CVTFFile() returned NULL (for %@)", filePath);
+			NSLog(@"%@; %s(): CVTFFile() returned NULL for file at \"%@\"", MDBundleIdentifierKey, __FUNCTION__, filePath);
 			[data release];
 			[pool release];
 			return NO;
@@ -118,9 +122,9 @@ BOOL MDGetMetadataFromImageWithContentsOfFile(NSString *filePath, NSString *cont
 		
 		if ( file->Load([data bytes], [data length], vlTrue) == NO) {
 			if (magic == TKVTFMagic) {
-				NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): file->Load() (for %@) failed!", filePath);
+				NSLog(@"%@; %s(): file->Load() failed for file at \"%@\"!", MDBundleIdentifierKey, __FUNCTION__, filePath);
 			} else {
-				NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): file->Load() (for %@) failed! (does not appear to be a valid VTF; magic == 0x%x, %@)", filePath, (unsigned int)magic, NSFileTypeForHFSTypeCode(magic));
+				NSLog(@"%@; %s(): file->Load() failed for file at \"%@\"! Does not appear to be a valid VTF; magic == 0x%x, %@", MDBundleIdentifierKey, __FUNCTION__, filePath, (unsigned int)magic, NSFileTypeForHFSTypeCode(magic));
 			}
 			delete file;
 			[data release];
@@ -163,7 +167,7 @@ BOOL MDGetMetadataFromImageWithContentsOfFile(NSString *filePath, NSString *cont
 	} else if ([contentTypeUTI isEqualToString:TKDDSType]) {
 		
 		if (magic != TKDDSMagic) {
-			NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): file at filePath \"%@\" does not appear to be a valid DDS; magic == 0x%x, %@", filePath, (unsigned int)magic, NSFileTypeForHFSTypeCode(magic));
+			NSLog(@"%@; %s(): file at \"%@\"does not appear to be a valid DDS; magic == 0x%x, %@", MDBundleIdentifierKey, __FUNCTION__, filePath, (unsigned int)magic, NSFileTypeForHFSTypeCode(magic));
 			[data release];
 			[pool release];
 			return NO;
@@ -172,11 +176,11 @@ BOOL MDGetMetadataFromImageWithContentsOfFile(NSString *filePath, NSString *cont
 		DirectDrawSurface *dds = new DirectDrawSurface((unsigned char *)[data bytes], [data length]);
 		if (!dds->isValid() || !dds->isSupported() || (dds->width() > 65535 || (dds->height() > 65535))) {
 			if (!dds->isValid()) {
-				NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): file at filePath \"%@\": dds image is not valid, info follows:", filePath);
+				NSLog(@"%@; %s(): file at \"%@\": dds image is not valid, info follows:", MDBundleIdentifierKey, __FUNCTION__, filePath);
 			} else if (!dds->isSupported()) {
-				NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): file at filePath \"%@\": dds image format is not supported, info follows:", filePath);
+				NSLog(@"%@; %s(): file at \"%@\": dds image format is not supported, info follows:", MDBundleIdentifierKey, __FUNCTION__, filePath);
 			} else {
-				NSLog(@"MDGetMetadataFromImageWithContentsOfFile(): file at filePath \"%@\": dds image dimensions are too large, info follows:", filePath);
+				NSLog(@"%@; %s(): file at \"%@\": dds image dimensions are too large, info follows:", MDBundleIdentifierKey, __FUNCTION__, filePath);
 			}
 			dds->printInfo();
 			delete dds;
