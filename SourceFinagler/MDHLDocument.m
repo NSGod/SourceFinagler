@@ -1300,18 +1300,16 @@ static NSInteger copyTag = 0;
 	
 	if (items && [items count]) {
 		
-		NSDate *startDate = [NSDate date];
-		
 #if MD_DEBUG
-//		NSUInteger dragEventModifiers = [[NSApp currentEvent] modifierFlags];
-//		NSLog(@" \"%@\" [%@ %@] dragEventModifiers == %lu", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)dragEventModifiers);
+		NSDate *startDate = [NSDate date];
 #endif
 		
 		NSDictionary *simplifiedItemsAndPaths = [self simplifiedItemsAndPathsForItems:items resultingNames:&resultingNames];
+		
+#if MD_DEBUG
 		NSTimeInterval elapsedTime = fabs([startDate timeIntervalSinceNow]);
-		
-		NSLog(@"[%@ %@] elapsed time to gather %lu items == %.7f sec / %.4f ms", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)[simplifiedItemsAndPaths count], elapsedTime, elapsedTime * 1000.0);
-		
+		NSLog(@"[%@ %@] elapsed time to gather %lu item(s) == %.7f sec / %.4f ms", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)[simplifiedItemsAndPaths count], elapsedTime, elapsedTime * 1000.0);
+#endif
 		
 		if (simplifiedItemsAndPaths == nil) {
 			return nil;

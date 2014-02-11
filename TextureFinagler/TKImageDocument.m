@@ -82,15 +82,15 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 // Editor or Viewer role.  
 //
 + (NSArray *)readableTypes {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	static NSArray *readableTypes = nil;
+	
 	if (readableTypes == nil) {
 		readableTypes = [(NSArray *)CGImageSourceCopyTypeIdentifiers() autorelease];
 		readableTypes = [[readableTypes arrayByAddingObjectsFromArray:[NSArray arrayWithObjects:TKVTFType, TKDDSType, TKSFTextureImageType, nil]] retain];
+#if TK_DEBUG
+		NSLog(@"[%@ %@] readableTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), readableTypes);
+#endif
 	}
-//	NSLog(@"[%@ %@] readableTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), readableTypes);
 	return readableTypes;
 }
 
@@ -99,21 +99,20 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 // the application.
 //
 + (NSArray *)writableTypes {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	static NSArray *writableTypes = nil;
+	
 	if (writableTypes == nil) {
 		writableTypes = [(NSArray *)CGImageDestinationCopyTypeIdentifiers() autorelease];
 		writableTypes = [[writableTypes arrayByAddingObjectsFromArray:[NSArray arrayWithObjects:TKVTFType, TKDDSType, TKSFTextureImageType, nil]] retain];
+#if TK_DEBUG
+		NSLog(@"[%@ %@] writableTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), writableTypes);
+#endif
 	}
-//	NSLog(@"[%@ %@] writableTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), writableTypes);
 	return writableTypes;
 }
 
 
 // Return YES if instances of this class can be instantiated to play the Editor role.
-//
 + (BOOL)isNativeType:(NSString *)type {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -224,10 +223,8 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 }
 
 
-
 - (void)awakeFromNib {
-//	[self addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
-//	[self bind:(NSString *)binding toObject:imageView withKeyPath:@"zoomFactor" options:(NSDictionary *)options
+	
 }
 
 
@@ -267,7 +264,9 @@ static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
 	[frameBrowserView reloadData];
 	[mipmapBrowserView reloadData];
 	
+#if TK_DEBUG
 	NSLog(@"[%@ %@] reloaded frameBrowserView, setting selection", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	
 	if ([image frameCount] > 0) {
 		[frameBrowserView setSelectionIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
@@ -339,7 +338,7 @@ static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
 	return [accessoryViewController prepareSavePanel:aSavePanel];
 }
 
-
+// disabled in Source Finagler 2.0.3; enabled in 2.5
 - (IBAction)saveDocumentTo:(id)sender {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -363,7 +362,6 @@ static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[NSApp endSheet:[imageExportController window]];
-	
 }
 
 
@@ -590,30 +588,11 @@ static CALayer *MDBlueBackgroundLayerWithFrame(NSRect frame) {
 		
 	} else if (aBrowser == mipmapBrowserView) {
 		images = [visibleMipmapReps objectsAtIndexes:itemIndexes];
-		
 	}
 	
 	if (images && [images count]) {
 		return [self writeImageReps:images toPasteboard:pboard forTypes:[NSArray arrayWithObjects:TKImageDocumentPboardType, NSTIFFPboardType, nil]];
-		
 	}
-	
-//	if (images && [images count]) {
-//		[pboard declareTypes:[NSArray arrayWithObjects:TKImageDocumentPboardType, NSTIFFPboardType, nil] owner:self];
-//		NSData *imageData = [NSKeyedArchiver archivedDataWithRootObject:images];
-//		if (imageData) {
-//			[pboard setData:imageData forType:TKImageDocumentPboardType];
-//		}
-//		TKImageRep *firstImageRep = [images objectAtIndex:0];
-//		NSData *TIFFRepresentation = [firstImageRep TIFFRepresentationUsingCompression:NSTIFFCompressionNone factor:0];
-//		if (TIFFRepresentation) {
-//			[pboard setData:TIFFRepresentation forType:NSTIFFPboardType];
-//		}
-//		
-//		return [images count];
-//		
-//	}
-	
 	return 0;
 	
 }

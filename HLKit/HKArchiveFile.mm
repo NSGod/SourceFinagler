@@ -134,13 +134,12 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 
 
 - (NSArray *)allItems {
-#if HK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	
 	if (!haveGatheredAllItems) {
 		
+#if HK_DEBUG
 		NSDate *startDate = [[NSDate date] retain];
+#endif
 		
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
@@ -160,16 +159,16 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 		}
 		allItems = gatheredItems;
 		
-//		allItems = [gatheredItems copy];
-		
 		[pool release];
 		
 		haveGatheredAllItems = YES;
 		
+#if HK_DEBUG
 		NSLog(@"[%@ %@] ****** TIME to gather allItems == %.7f sec, gatheredItems count == %lu, allItems count == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), fabs([startDate timeIntervalSinceNow]), (unsigned long)[gatheredItems count], (unsigned long)[allItems count]);
 		
 		[startDate release];
-		startDate = nil;
+#endif
+		
 	}
 	return allItems;
 }
