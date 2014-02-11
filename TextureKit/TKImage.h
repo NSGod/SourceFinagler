@@ -17,7 +17,7 @@ enum {
 	TKDDSImageType			= 1, // loaded image is a DDS
 	TKSFTIImageType			= 2, // Source Finagler Texture Image type (NSCoding)
 	TKRegularImageType		= 3, // loaded image is a native type (anything ImageIO.framework supports)
-	TKEmptyImageType		= 4, // when an TKImage is created with initWithSize: ??
+	TKEmptyImageType		= 4, // when an TKImage is created with initWithSize:
 	TKUnknownImageType		= NSNotFound
 };
 typedef NSUInteger TKImageType;
@@ -33,8 +33,6 @@ TEXTUREKIT_EXTERN NSString * const TKSFTextureImagePboardType;
 
 TEXTUREKIT_EXTERN NSData * TKSFTextureImageMagicData;
 
-// 80 / 160
-// 72 / 136
 
 @interface TKImage : NSImage <NSCoding, NSCopying> {
 	
@@ -131,7 +129,7 @@ TEXTUREKIT_EXTERN NSData * TKSFTextureImageMagicData;
 - (void)setRepresentation:(TKImageRep *)representation forFrameIndex:(NSUInteger)frameIndex mipmapIndex:(NSUInteger)mipmapIndex;
 - (void)removeRepresentationForFrameIndex:(NSUInteger)frameIndex mipmapIndex:(NSUInteger)mipmapIndex;
 
-- (NSArray *)representationsForFrameIndexes:(NSIndexSet *)frameIndexes mipmapIndexes:(NSIndexSet *)mipmapIndexes;								/* USED	*/
+- (NSArray *)representationsForFrameIndexes:(NSIndexSet *)frameIndexes mipmapIndexes:(NSIndexSet *)mipmapIndexes;
 - (void)setRepresentations:(NSArray *)representations forFrameIndexes:(NSIndexSet *)frameIndexes mipmapIndexes:(NSIndexSet *)mipmapIndexes;
 - (void)removeRepresentationsForFrameIndexes:(NSIndexSet *)frameIndexes mipmapIndexes:(NSIndexSet *)mipmapIndexes;
 

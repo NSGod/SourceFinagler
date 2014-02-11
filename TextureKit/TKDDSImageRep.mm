@@ -218,43 +218,43 @@ struct TKOutputHandler : public OutputHandler {
 };
 
 
-	
+
 static TKDDSFormat defaultDDSFormat = TKDDSFormatDefault;
 
 @implementation TKDDSImageRep
 
 /* Implemented by subclassers to indicate what UTI-identified data types they can deal with. */
 + (NSArray *)imageUnfilteredTypes {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	static NSArray *types = nil;
-	if (types == nil) types = [[NSArray alloc] initWithObjects:TKDDSType, nil];
-	return types;
+	static NSArray *imageUnfilteredTypes = nil;
+	
+	@synchronized(self) {
+		if (imageUnfilteredTypes == nil) imageUnfilteredTypes = [[NSArray alloc] initWithObjects:TKDDSType, nil];
+	}
+	return imageUnfilteredTypes;
 }
 
 
 + (NSArray *)imageUnfilteredFileTypes {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	static NSArray *fileTypes = nil;
-	if (fileTypes == nil) fileTypes = [[NSArray alloc] initWithObjects:TKDDSFileType, nil];
-	return fileTypes;
+	static NSArray *imageUnfilteredFileTypes = nil;
+	
+	@synchronized(self) {
+		if (imageUnfilteredFileTypes == nil) imageUnfilteredFileTypes = [[NSArray alloc] initWithObjects:TKDDSFileType, nil];
+	}
+	return imageUnfilteredFileTypes;
 }
 
+
 + (NSArray *)imageUnfilteredPasteboardTypes {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	static NSArray *imageUnfilteredPasteboardTypes = nil;
 	
-	if (imageUnfilteredPasteboardTypes == nil) {
-		NSArray *types = [super imageUnfilteredPasteboardTypes];
+	@synchronized(self) {
+		if (imageUnfilteredPasteboardTypes == nil) {
+			imageUnfilteredPasteboardTypes = [super imageUnfilteredPasteboardTypes];
 #if TK_DEBUG
-//		NSLog(@"[%@ %@] super's imageUnfilteredPasteboardTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), types);
+			NSLog(@"[%@ %@] super's %@ == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromSelector(_cmd), imageUnfilteredPasteboardTypes);
 #endif
-		imageUnfilteredPasteboardTypes = [[types arrayByAddingObject:TKDDSPboardType] retain];
+			imageUnfilteredPasteboardTypes = [[imageUnfilteredPasteboardTypes arrayByAddingObject:TKDDSPboardType] retain];
+		}
 	}
 	return imageUnfilteredPasteboardTypes;
 }
@@ -313,14 +313,6 @@ static TKDDSFormat defaultDDSFormat = TKDDSFormatDefault;
 }
 
 
-//+ (NSData *)DDSRepresentationOfImageRepsInArray:(NSArray *)tkImageReps {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	return [[self class] DDSRepresentationOfImageRepsInArray:tkImageReps usingFormat:defaultDDSFormat quality:[[self class] defaultDXTCompressionQuality] createMipmaps:YES];
-//	}
-
-
 + (NSData *)DDSRepresentationOfImageRepsInArray:(NSArray *)tkImageReps options:(NSDictionary *)options {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -333,7 +325,7 @@ static TKDDSFormat defaultDDSFormat = TKDDSFormatDefault;
 #if TK_DEBUG
 	NSLog(@"[%@ %@] tkImageReps == %@, options == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), tkImageReps, options);
 #endif
-	NSParameterAssert([tkImageReps count] != 0);
+	NSParameterAssert([tkImageReps count] > 0);
 	
 	NSNumber *nMipmapType = [options objectForKey:TKImageMipmapGenerationKey];
 	NSNumber *nWrapMode = [options objectForKey:TKImageWrapModeKey];
@@ -568,12 +560,10 @@ static unsigned char *TKCreateRGBADataFromColor32(Color32 *pixels, NSUInteger pi
 	}
 	delete dds;
 	return [[bitmapImageReps copy] autorelease];
-	
 }
 
 
 /* create TKDDSImageRep(s) from NSBitmapImageRep(s) */
-
 + (id)imageRepWithImageRep:(NSBitmapImageRep *)aBitmapImageRep {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -634,11 +624,10 @@ static unsigned char *TKCreateRGBADataFromColor32(Color32 *pixels, NSUInteger pi
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	TKDDSImageRep *copy = (TKDDSImageRep *)[super copyWithZone:zone];
+#if TK_DEBUG
 	NSLog(@"[%@ %@] copy == %@, class == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), copy, NSStringFromClass([copy class]));
+#endif
 	return copy;
 }
 
@@ -658,7 +647,6 @@ static unsigned char *TKCreateRGBADataFromColor32(Color32 *pixels, NSUInteger pi
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[super encodeWithCoder:coder];
-	
 }
 
 

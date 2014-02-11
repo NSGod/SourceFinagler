@@ -94,7 +94,19 @@ static NSString * const TKImageAllMipmapIndexesKey	= @"allIndexes.mipmapIndexes"
 	[NSImageRep registerImageRepClass:[TKImageRep class]];
 }
 
-@synthesize isAnimated, frameCount, mipmapCount, faceCount, sliceCount, hasAlpha, hasMipmaps, version, compression, imageType, isDepthTexture, isCubemap, isSpheremap;
+@synthesize isAnimated;
+@synthesize frameCount;
+@synthesize mipmapCount;
+@synthesize faceCount;
+@synthesize sliceCount;
+@synthesize hasAlpha;
+@synthesize hasMipmaps;
+@synthesize version;
+@synthesize compression;
+@synthesize imageType;
+@synthesize isDepthTexture;
+@synthesize isCubemap;
+@synthesize isSpheremap;
 
 @synthesize allIndexes = _private;
 
@@ -104,10 +116,6 @@ static NSString * const TKImageAllMipmapIndexesKey	= @"allIndexes.mipmapIndexes"
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super initWithSize:aSize])) {
-		
-#if TK_DEBUG
-//	NSLog(@"[%@ %@] TKSFTextureImageMagicData == %@, length == %lu, sizeof(TKSFTextureImageMagic) == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), TKSFTextureImageMagicData, [TKSFTextureImageMagicData length], sizeof(TKSFTextureImageMagic));
-#endif
 		
 		reps = [[NSMutableDictionary alloc] init];
 		
@@ -120,8 +128,6 @@ static NSString * const TKImageAllMipmapIndexesKey	= @"allIndexes.mipmapIndexes"
 		[self setValue:[NSMutableIndexSet indexSet] forKeyPath:TKImageAllFrameIndexesKey];
 		[self setValue:[NSMutableIndexSet indexSet] forKeyPath:TKImageAllMipmapIndexesKey];
 		
-//		NSLog(@"[%@ %@] self.allIndexes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [self allIndexes]);
-	
 	}
 	return self;
 }
@@ -1230,8 +1236,6 @@ static NSString * const TKImageAllMipmapIndexesKey	= @"allIndexes.mipmapIndexes"
 		TKImageRep *rep = [mipmapDict objectForKey:TKImageRepKey];
 		if (rep == nil) return;
 		
-//		NSIndexPath
-		
 		
 		NSUInteger sliceCountBefore = [[self allSliceIndexes] count];
 		NSUInteger faceCountBefore = [[self allFaceIndexes] count];
@@ -1240,19 +1244,6 @@ static NSString * const TKImageAllMipmapIndexesKey	= @"allIndexes.mipmapIndexes"
 		
 		NSMutableIndexSet *sliceIndexes = (NSMutableIndexSet *)[self valueForKeyPath:TKImageAllSliceIndexesKey];
 		[sliceIndexes removeAllIndexes];
-		
-		if (aFace != TKFaceNone) {
-			
-		}
-		
-		if (aFrameIndex != TKFrameIndexNone) {
-			
-		}
-		
-		if (aMipmapIndex != TKMipmapIndexNone) {
-			
-			
-		}
 		
 		
 		if (aFace != TKFaceNone) [(NSMutableIndexSet *)[self valueForKeyPath:TKImageAllFaceIndexesKey] removeIndex:aFace];
@@ -1314,8 +1305,6 @@ static NSString * const TKImageAllMipmapIndexesKey	= @"allIndexes.mipmapIndexes"
 		[super removeRepresentation:rep];
 		
 		[frameDict removeObjectForKey:TKImageKey(aMipmapIndex)];
-		
-//		[mipmapDict removeObjectForKey:TKImageRepKey];
 	}
 	
 	if ([[self representations] count] == 0) {
@@ -1324,213 +1313,8 @@ static NSString * const TKImageAllMipmapIndexesKey	= @"allIndexes.mipmapIndexes"
 }
 
 
-
-//- (void)removeRepresentationForSliceIndex:(NSUInteger)aSliceIndex face:(TKFace)aFace frameIndex:(NSUInteger)aFrameIndex mipmapIndex:(NSUInteger)aMipmapIndex {
-//#if TK_DEBUG
-////	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	if (aSliceIndex != TKSliceIndexNone) {
-//		// it's a depth texture
-//		NSMutableDictionary *sliceDict = [reps objectForKey:TKImageKey(aSliceIndex)];
-//		if (sliceDict) {
-//			TKImageRep *rep = [sliceDict objectForKey:TKImageRepKey];
-//			if (rep) {
-//				[self removeObserverForImageRep:rep];
-//				[super removeRepresentation:rep];
-//			}
-//			[sliceDict removeObjectForKey:TKImageRepKey];
-//		}
-//	} else {
-//		// it's a regular texture
-//		
-//		NSMutableDictionary *sliceDict = [reps objectForKey:TKImageNotApplicableKey];
-//		if (sliceDict) {
-//			NSMutableDictionary *faceDict = [sliceDict objectForKey:TKImageKey(aFace)];
-//			if (faceDict) {
-//				NSMutableDictionary *frameDict = [faceDict objectForKey:TKImageKey(aFrameIndex)];
-//				if (frameDict) {
-//					NSMutableDictionary *mipmapDict = [frameDict objectForKey:TKImageKey(aMipmapIndex)];
-//					if (mipmapDict) {
-//						TKImageRep *rep = [mipmapDict objectForKey:TKImageRepKey];
-//						
-//						if (rep) {
-//							
-//							NSUInteger sliceCountBefore = [[self allSliceIndexes] count];
-//							NSUInteger faceCountBefore = [[self allFaceIndexes] count];
-//							NSUInteger frameCountBefore = [[self allFrameIndexes] count];
-//							NSUInteger mipmapCountBefore = [[self allMipmapIndexes] count];
-//							
-//							NSMutableIndexSet *sliceIndexes = (NSMutableIndexSet *)[self valueForKeyPath:TKImageAllSliceIndexesKey];
-//							[sliceIndexes removeAllIndexes];
-//							
-//							if (aFace != TKFaceNone) [(NSMutableIndexSet *)[self valueForKeyPath:TKImageAllFaceIndexesKey] removeIndex:aFace];
-//							if (aFrameIndex != TKFrameIndexNone) [(NSMutableIndexSet *)[self valueForKeyPath:TKImageAllFrameIndexesKey] removeIndex:aFrameIndex];
-//							if (aMipmapIndex != TKMipmapIndexNone) [(NSMutableIndexSet *)[self valueForKeyPath:TKImageAllMipmapIndexesKey] removeIndex:aMipmapIndex];
-//							
-//							NSUInteger sliceCountAfter = [[self allSliceIndexes] count];
-//							NSUInteger faceCountAfter = [[self allFaceIndexes] count];
-//							NSUInteger frameCountAfter = [[self allFrameIndexes] count];
-//							NSUInteger mipmapCountAfter = [[self allMipmapIndexes] count];
-//							
-//							if (sliceCountAfter < sliceCountBefore) {
-//								[self willChangeValueForKey:@"sliceCount"];
-//								[self willChangeValueForKey:@"isDepthTexture"];
-//								
-//								sliceCount -= 1;
-//								isDepthTexture = (sliceCount > 0);
-//								
-//								[self didChangeValueForKey:@"isDepthTexture"];
-//								[self didChangeValueForKey:@"sliceCount"];
-//							}
-//							
-//							if (faceCountAfter < faceCountBefore) {
-//								[self willChangeValueForKey:@"faceCount"];
-//								[self willChangeValueForKey:@"isCubemap"];
-//								[self willChangeValueForKey:@"isSpheremap"];
-//								
-//								faceCount -= 1;
-//								isCubemap = (faceCount == 6);
-//								isSpheremap = (faceCount == 7);
-//								
-//								[self didChangeValueForKey:@"isSpheremap"];
-//								[self didChangeValueForKey:@"isCubemap"];
-//								[self didChangeValueForKey:@"faceCount"];
-//							}
-//							
-//							if (frameCountAfter < frameCountBefore) {
-//								[self willChangeValueForKey:@"frameCount"];
-//								[self willChangeValueForKey:@"isAnimated"];
-//								
-//								frameCount -= 1;
-//								isAnimated = (frameCount > 0);
-//								
-//								[self didChangeValueForKey:@"isAnimated"];
-//								[self didChangeValueForKey:@"frameCount"];
-//							}
-//							
-//							if (mipmapCountAfter < mipmapCountBefore) {
-//								[self willChangeValueForKey:@"mipmapCount"];
-//								[self willChangeValueForKey:@"hasMipmaps"];
-//								
-//								mipmapCount -= 1;
-//								hasMipmaps = (mipmapCount > 1);
-//								
-//								[self didChangeValueForKey:@"hasMipmaps"];
-//								[self didChangeValueForKey:@"mipmapCount"];
-//							}
-//							
-//							
-//							
-//							[self removeObserverForImageRep:rep];
-//							[super removeRepresentation:rep];
-//						}
-//						
-//						[mipmapDict removeObjectForKey:TKImageRepKey];
-//					}
-//				}
-//			}
-//		}
-//		
-//	}
-//	
-//}
-//
-
 #pragma mark END primary accessors
 #pragma mark -
-
-
-
-//- (void)generateMipmapsUsingFilter:(TKMipmapGenerationType)filterType {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	NSParameterAssert(filterType != TKMipmapGenerationNoMipmaps);
-//	
-//	[self removeMipmaps];
-//	
-//	if (isDepthTexture) {
-//		// illegal operation
-//		
-//	} else if ((isCubemap || isSpheremap) && isAnimated) {
-//		
-//		NSArray *sourceImageReps = [self representationsForFaceIndexes:[self allFaceIndexes] frameIndexes:[self allFrameIndexes] mipmapIndexes:[self firstMipmapIndexSet]];
-//		
-//		for (TKImageRep *imageRep in sourceImageReps) {
-//			NSArray *mipmapImageReps = [imageRep mipmapImageRepsUsingFilter:filterType];
-//			
-//			if (mipmapImageReps) {
-//				[self setRepresentations:mipmapImageReps
-//						  forFaceIndexes:[NSIndexSet indexSetWithIndex:[imageRep face]]
-//							frameIndexes:[NSIndexSet indexSetWithIndex:[imageRep frameIndex]]
-//						   mipmapIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, [mipmapImageReps count])]];
-//			}
-//		}
-//		
-//	} else if ((isCubemap || isSpheremap) && !isAnimated) {
-//		
-//		NSArray *sourceImageReps = [self representationsForFaceIndexes:[self allFaceIndexes] mipmapIndexes:[self firstMipmapIndexSet]];
-//		
-//		for (TKImageRep *imageRep in sourceImageReps) {
-//			NSArray *mipmapImageReps = [imageRep mipmapImageRepsUsingFilter:filterType];
-//			
-//			if (mipmapImageReps) {
-//				[self setRepresentations:mipmapImageReps
-//						  forFaceIndexes:[NSIndexSet indexSetWithIndex:[imageRep face]]
-//						   mipmapIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, [mipmapImageReps count])]];
-//			}
-//		}
-//		
-//	} else if (isAnimated) {
-//		NSArray *sourceImageReps = [self representationsForFrameIndexes:[self allFrameIndexes] mipmapIndexes:[self firstMipmapIndexSet]];
-//		
-//		for (TKImageRep *imageRep in sourceImageReps) {
-//			NSArray *mipmapImageReps = [imageRep mipmapImageRepsUsingFilter:filterType];
-//			
-//			if (mipmapImageReps) {
-//				[self setRepresentations:mipmapImageReps
-//						 forFrameIndexes:[NSIndexSet indexSetWithIndex:[imageRep frameIndex]]
-//						   mipmapIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, [mipmapImageReps count])]];
-//			}
-//		}
-//	} else {
-//		TKImageRep *sourceImageRep = [self representationForMipmapIndex:0];
-//		NSArray *mipmapImageReps = [sourceImageRep mipmapImageRepsUsingFilter:filterType];
-//		if (mipmapImageReps) {
-//			[self setRepresentations:mipmapImageReps forMipmapIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, [mipmapImageReps count])]];
-//		}
-//	}
-//	
-//	
-//}
-//
-//
-//- (void)removeMipmaps {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	if (isDepthTexture) {
-//		// illegal operation
-//		
-//	} else if ((isCubemap || isSpheremap) && isAnimated) {
-//		
-//		[self removeRepresentationsForFaceIndexes:[self allFaceIndexes] frameIndexes:[self allFrameIndexes] mipmapIndexes:[self mipmapIndexes]];
-//		
-//	} else if ((isCubemap || isSpheremap) && !isAnimated) {
-//		
-//		[self removeRepresentationsForFaceIndexes:[self allFaceIndexes] mipmapIndexes:[self mipmapIndexes]];
-//		
-//	} else if (isAnimated) {
-//		
-//		[self removeRepresentationsForFrameIndexes:[self allFrameIndexes] mipmapIndexes:[self mipmapIndexes]];
-//		
-//	} else {
-//		
-//		[self removeRepresentationsForMipmapIndexes:[self mipmapIndexes]];
-//	}
-//}
-//
-
 
 
 - (NSData *)DDSRepresentationWithOptions:(NSDictionary *)options {
@@ -1641,7 +1425,6 @@ static inline NSString *NSStringFromImageType(TKImageType aType) {
 
 
 - (NSString *)description {
-//	NSMutableString *description = [NSMutableString stringWithString:[super description]];
 	NSMutableString *description = [NSMutableString stringWithFormat:@"<%@ %p> size == %@", NSStringFromClass([self class]), self, NSStringFromSize([self size])];
 	[description appendFormat:@"\n"];
 	[description appendFormat:@"imageType == %@\n", NSStringFromImageType(imageType)];

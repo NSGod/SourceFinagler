@@ -109,12 +109,6 @@ enum {
 };
 typedef NSUInteger TKRoundMode;
 
-enum {
-	TKNormalMapLibraryUseNVIDIATextureTools		= 0,
-	TKNormalMapLibraryUseAccelerateFramework	= 1
-};
-typedef NSUInteger TKNormalMapLibrary;
-
 
 
 TEXTUREKIT_EXTERN NSString * const TKImageMipmapGenerationKey;
@@ -174,7 +168,6 @@ TEXTUREKIT_EXTERN NSString * const TKImageRoundModeKey;
 - (NSData *)RGBAData;
 - (NSData *)representationUsingPixelFormat:(TKPixelFormat)aPixelFormat;
 
-//- (NSData *)representationForType:(NSString *)utiType;
 
 - (NSComparisonResult)compare:(TKImageRep *)imageRep;
 
@@ -191,11 +184,5 @@ TEXTUREKIT_EXTERN NSString * const TKImageRoundModeKey;
 + (TKImageRep *)largestRepresentationInArray:(NSArray *)tkImageReps;
 
 @end
-
-
-//TEXTUREKIT_EXTERN NSData *TKImageDataFromNSData(NSData *data, NSUInteger pixelCount, NSUInteger bitsPerPixel, CGBitmapInfo sourceBitmapInfo, CGBitmapInfo destinationBitmapInfo);
-//
-//TEXTUREKIT_EXTERN NSData *TKBGRADataFromImageData(NSData *data, NSUInteger pixelCount, NSUInteger bitsPerPixel, CGBitmapInfo aCGBitmapInfo);
-
 
 

@@ -90,10 +90,13 @@ TKDXTCompressionQuality TKDXTCompressionQualityFromString(NSString *aQuality) {
 
 + (NSArray *)imageRepsWithData:(NSData *)aData firstRepresentationOnly:(BOOL)firstRepOnly;
 - (void)getBitmapInfoAndPixelFormatIfNecessary;
+
 @end
 
-static NSArray *handledUTITypes = nil;
-static NSArray *handledFileTypes = nil;
+
+static NSArray *imageUnfilteredTypes = nil;
+static NSArray *imageUnfilteredFileTypes = nil;
+
 
 static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDefaultQuality;
 
@@ -114,75 +117,64 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 
 /* Implemented by subclassers to indicate what UTI-identified data types they can deal with. */
 + (NSArray *)imageUnfilteredTypes {
+	@synchronized(self) {
+		if (imageUnfilteredTypes == nil) {
+			imageUnfilteredTypes = (NSArray *)CGImageSourceCopyTypeIdentifiers();
 #if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+			NSArray *superTypes = [super imageUnfilteredTypes];
+			NSLog(@"[%@ %@] super's %@ == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromSelector(_cmd), superTypes);
+			NSLog(@"[%@ %@] *** FINAL *** imageUnfilteredTypes (CGImageSourceCopyTypeIdentifiers()) == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), imageUnfilteredTypes);
 #endif
-#if TK_DEBUG
-//	NSArray *superTypes = [super imageUnfilteredTypes];
-//	NSLog(@"[%@ %@] super's imageUnfilteredTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), superTypes);
-#endif
-	
-	if (handledUTITypes == nil) {
-		handledUTITypes = (NSArray *)CGImageSourceCopyTypeIdentifiers();
-#if TK_DEBUG
-//		NSLog(@"[%@ %@] CGImageSourceCopyTypeIdentifiers() == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), handledUTITypes);
-#endif
+		}
 	}
-	return handledUTITypes;
+	return imageUnfilteredTypes;
 }
 
 
 
 + (NSArray *)imageUnfilteredFileTypes {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-//	NSArray *superTypes = [super imageUnfilteredFileTypes];
-//	NSLog(@"[%@ %@] super's imageUnfilteredFileTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), superTypes);
-	
-	if (handledFileTypes == nil) {
-		NSMutableArray *mFileTypes = [NSMutableArray array];
-		
-		NSArray *utiTypes = [(NSArray *)CGImageSourceCopyTypeIdentifiers() autorelease];
-		if (utiTypes && [utiTypes count]) {
-			for (NSString *utiType in utiTypes) {
-				NSDictionary *utiDeclarations = [(NSDictionary *)UTTypeCopyDeclaration((CFStringRef)utiType) autorelease];
-				NSDictionary *utiSpec = [utiDeclarations objectForKey:(NSString *)kUTTypeTagSpecificationKey];
-				if (utiSpec) {
-					id extensions = [utiSpec objectForKey:(NSString *)kUTTagClassFilenameExtension];
-					if ([extensions isKindOfClass:[NSString class]]) {
-						[mFileTypes addObject:extensions];
-					} else {
-						[mFileTypes addObjectsFromArray:extensions];
+	@synchronized(self) {
+		if (imageUnfilteredFileTypes == nil) {
+			NSMutableArray *mFileTypes = [NSMutableArray array];
+			
+			NSArray *utiTypes = [(NSArray *)CGImageSourceCopyTypeIdentifiers() autorelease];
+			if (utiTypes && [utiTypes count]) {
+				for (NSString *utiType in utiTypes) {
+					NSDictionary *utiDeclarations = [(NSDictionary *)UTTypeCopyDeclaration((CFStringRef)utiType) autorelease];
+					NSDictionary *utiSpec = [utiDeclarations objectForKey:(NSString *)kUTTypeTagSpecificationKey];
+					if (utiSpec) {
+						id extensions = [utiSpec objectForKey:(NSString *)kUTTagClassFilenameExtension];
+						if ([extensions isKindOfClass:[NSString class]]) {
+							[mFileTypes addObject:extensions];
+						} else {
+							[mFileTypes addObjectsFromArray:extensions];
+						}
 					}
 				}
 			}
+			imageUnfilteredFileTypes = [mFileTypes copy];
+#if TK_DEBUG
+			NSArray *superTypes = [super imageUnfilteredFileTypes];
+			NSLog(@"[%@ %@] super's %@ == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromSelector(_cmd), superTypes);
+			NSLog(@"[%@ %@] CGImageSourceCopyTypeIdentifiers() == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), utiTypes);
+			NSLog(@"[%@ %@] *** FINAL *** imageUnfilteredFileTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), imageUnfilteredFileTypes);
+#endif
 		}
-		
-//		NSLog(@"[%@ %@] utiTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), utiTypes);
-//		NSLog(@"[%@ %@] fileTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), fileTypes);
-		
-		handledFileTypes = [mFileTypes copy];
-		
 	}
-//	NSLog(@"[%@ %@] handledFileTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), handledFileTypes);
-	
-	return handledFileTypes;
+	return imageUnfilteredFileTypes;
 }
 
 
 + (NSArray *)imageUnfilteredPasteboardTypes {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	static NSArray *imageUnfilteredPasteboardTypes = nil;
 	
-	if (imageUnfilteredPasteboardTypes == nil) {
-		NSArray *types = [super imageUnfilteredPasteboardTypes];
+	@synchronized(self) {
+		if (imageUnfilteredPasteboardTypes == nil) {
+			imageUnfilteredPasteboardTypes = [[super imageUnfilteredPasteboardTypes] retain];
 #if TK_DEBUG
-//		NSLog(@"[%@ %@] super's imageUnfilteredPasteboardTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), types);
+			NSLog(@"[%@ %@] super's %@ == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromSelector(_cmd), imageUnfilteredPasteboardTypes);
 #endif
-		imageUnfilteredPasteboardTypes = [types retain];
+		}
 	}
 	return imageUnfilteredPasteboardTypes;
 }
@@ -208,7 +200,7 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if ([handledUTITypes containsObject:aType]) {
+	if ([imageUnfilteredTypes containsObject:aType]) {
 		return [self class];
 	}
 	return [super imageRepClassForType:aType];
@@ -218,7 +210,7 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if ([handledFileTypes containsObject:fileType]) {
+	if ([imageUnfilteredFileTypes containsObject:fileType]) {
 		return [self class];
 	}
 	return [super imageRepClassForFileType:fileType];
@@ -276,14 +268,6 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 		CGImageRef imageRef = CGImageSourceCreateImageAtIndex(source, i, (CFDictionaryRef)options);
 		
 		if (imageRef) {
-			// Assign user preferred default profiles if image is not tagged with a profile
-			//		imageRef = CGImageCreateCopyWithDefaultSpace(image);
-			
-			
-//#if TK_DEBUG
-//			NSDictionary *metadata = [(NSDictionary *)CGImageSourceCopyPropertiesAtIndex(source, i, (CFDictionaryRef)options) autorelease];
-//			NSLog(@"[%@ %@] metadata == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), metadata);
-//#endif
 			
 			NSDictionary *properties = [(NSDictionary *)CGImageSourceCopyPropertiesAtIndex(source, i, (CFDictionaryRef)options) autorelease];
 			
@@ -307,9 +291,7 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 			return [[imageReps copy] autorelease];
 		}
 	}
-	
 	CFRelease(source);
-
 	return [[imageReps copy] autorelease];
 }
 
@@ -364,7 +346,6 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 
 
 /* create TKImageRep(s) from NSBitmapImageRep(s) */
-
 + (id)imageRepWithImageRep:(NSBitmapImageRep *)aBitmapImageRep {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -459,12 +440,9 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 
 
 - (id)copyWithZone:(NSZone *)zone {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	TKImageRep *copy = (TKImageRep *)[super copyWithZone:zone];
 #if TK_DEBUG
-//	NSLog(@"[%@ %@] copy == %@, class == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), copy, NSStringFromClass([copy class]));
+	NSLog(@"[%@ %@] copy == %@, class == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), copy, NSStringFromClass([copy class]));
 #endif
 	copy->imageProperties = nil;
 	[copy setImageProperties:imageProperties];
@@ -486,46 +464,19 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 	CGImageRef imageRef = [self CGImage];
 	NSData *imageData = (NSData *)CGDataProviderCopyData(CGImageGetDataProvider(imageRef));
 	return [imageData autorelease];
-//	return [(NSData *)CGDataProviderCopyData(CGImageGetDataProvider(imageRef)) autorelease];
 }
 
 
-//- (void)setAlpha:(BOOL)flag {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@] *************** flag == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (flag == YES ? @"YES" : @"NO"));
-//#endif
-//	[super setAlpha:flag];
-//}
-//
-//
-//- (BOOL)hasAlpha {
-//	BOOL supersHasAlpha = [super hasAlpha];
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@] *************** supersHasAlpha == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (supersHasAlpha == YES ? @"YES" : @"NO"));
-//#endif
-//	return supersHasAlpha;
-//}
-
-
 - (void)getBitmapInfoAndPixelFormatIfNecessary {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	if (bitmapInfo == UINT_MAX) {
-#if TK_DEBUG
-//		NSLog(@"[%@ %@] bitmapInfo == UINT_MAX", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
+	if (bitmapInfo == (CGBitmapInfo)UINT_MAX) {
 		CGImageRef imageRef = [self CGImage];
 		[self setBitmapInfo:CGImageGetBitmapInfo(imageRef)];
 	}
-	if (alphaInfo == UINT_MAX) {
+	if (alphaInfo == (CGImageAlphaInfo)UINT_MAX) {
 		CGImageRef imageRef = [self CGImage];
 		[self setAlphaInfo:CGImageGetAlphaInfo(imageRef)];
 	}
 	if (pixelFormat == TKPixelFormatUnknown) {
-#if TK_DEBUG
-//		NSLog(@"[%@ %@] pixelFormat == TKPixelFormatUnknown", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 		CGImageRef imageRef = [self CGImage];
 		[self setPixelFormat:TKPixelFormatFromCGImage(imageRef)];
 	}
@@ -534,52 +485,33 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 
 
 - (CGBitmapInfo)bitmapInfo {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	[self getBitmapInfoAndPixelFormatIfNecessary];
 	return bitmapInfo;
 }
 
 - (void)setBitmapInfo:(CGBitmapInfo)aBitmapInfo {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	bitmapInfo = aBitmapInfo;
 }
 
 
 - (CGImageAlphaInfo)alphaInfo {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	[self getBitmapInfoAndPixelFormatIfNecessary];
 	return alphaInfo;
 }
 
 - (void)setAlphaInfo:(CGImageAlphaInfo)info {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	alphaInfo = info;
 }
 
 
 - (TKPixelFormat)pixelFormat {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	[self getBitmapInfoAndPixelFormatIfNecessary];
 	return pixelFormat;
 }
 
 - (void)setPixelFormat:(TKPixelFormat)aFormat {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	pixelFormat = aFormat;
 }
-
 
 
 - (NSData *)RGBAData {
@@ -597,19 +529,7 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 	
 	CGImageRef imageRef = [self CGImage];
 	TKPixelFormatInfo pixelFormatInfo = TKPixelFormatInfoFromPixelFormat(aPixelFormat);
-	
-	
-	
-	
 //	if (pixelFormatInfo == NULL) return nil;
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	size_t newLength = CGImageGetWidth(imageRef) * (pixelFormatInfo.bitsPerPixel / 8) * CGImageGetHeight(imageRef);
 	
@@ -659,59 +579,11 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 }
 
 
-//- (NSData *)representationForType:(NSString *)utiType {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@] utiType == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), utiType);
-//#endif
-//	NSMutableData *imageData = [NSMutableData data];
-//	
-//	CGImageDestinationRef imageDest = CGImageDestinationCreateWithData((CFMutableDataRef)imageData , (CFStringRef)utiType, 1, NULL);
-//	if (imageDest == NULL) {
-//		return nil;
-//	}
-//	
-//	CGImageRef imageRef = [self CGImage];
-//	CGImageDestinationAddImage(imageDest, imageRef, NULL);
-//	CGImageDestinationFinalize(imageDest);
-//	CFRelease(imageDest);
-//	
-//	return [[imageData copy] autorelease];
-//}
-
-
-
 - (void)setSliceIndex:(NSUInteger)aSliceIndex face:(TKFace)aFace frameIndex:(NSUInteger)aFrameIndex mipmapIndex:(NSUInteger)aMipmapIndex {
 	[self setSliceIndex:aSliceIndex];
 	[self setFace:aFace];
 	[self setFrameIndex:aFrameIndex];
 	[self setMipmapIndex:aMipmapIndex];
-}
-
-
-- (NSArray *)imageRepsByApplyingNormalMapFilterWithHeightEvaluationWeights:(CIVector *)heightEvaluationWeights
-															 filterWeights:(CIVector *)aFilterWeights
-																  wrapMode:(TKWrapMode)aWrapMode
-														  normalizeMipmaps:(BOOL)normalizeMipmaps
-														  normalMapLibrary:(TKNormalMapLibrary)normalMapLibrary {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	TKDDSImageRep *ddsImageRep = [TKDDSImageRep imageRepWithImageRep:self];
-	return [ddsImageRep imageRepsByApplyingNormalMapFilterWithHeightEvaluationWeights:heightEvaluationWeights
-																		filterWeights:aFilterWeights
-																			 wrapMode:aWrapMode
-																	 normalizeMipmaps:normalizeMipmaps
-																	 normalMapLibrary:normalMapLibrary];
-}
-
-
-
-- (NSArray *)mipmapImageRepsUsingFilter:(TKMipmapGenerationType)filterType {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	TKDDSImageRep *ddsImageRep = [TKDDSImageRep imageRepWithImageRep:self];
-	return [ddsImageRep mipmapImageRepsUsingFilter:filterType];
 }
 
 
@@ -723,11 +595,7 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 }
 
 
-
 - (NSComparisonResult)compare:(TKImageRep *)anImageRep {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	NSSize ourSize = [self size];
 	NSSize theirSize = [anImageRep size];
 	
@@ -773,7 +641,6 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 	}
 	return nil;
 }
-
 
 
 - (BOOL)isEqual:(id)object {
@@ -838,13 +705,16 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 	NSUInteger repCount = [imageReps count];
 	if (repCount == 1) return [imageReps objectAtIndex:0];
 	
-	NSDate *theStartDate = [NSDate date];
-	NSArray *sortedImageReps = [imageReps sortedArrayUsingSelector:@selector(compare:)];
-	NSTimeInterval elapsedTime = fabs([theStartDate timeIntervalSinceNow]);
 #if TK_DEBUG
-	NSLog(@"[%@ %@] elapsed time to sort %lu TKImageReps == %.7f sec / %.4f ms", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)repCount, elapsedTime, elapsedTime * 1000.0);
+	NSDate *theStartDate = [NSDate date];
 #endif
 	
+	NSArray *sortedImageReps = [imageReps sortedArrayUsingSelector:@selector(compare:)];
+	
+#if TK_DEBUG
+	NSTimeInterval elapsedTime = fabs([theStartDate timeIntervalSinceNow]);
+	NSLog(@"[%@ %@] elapsed time to sort %lu TKImageReps == %.7f sec / %.4f ms", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)repCount, elapsedTime, elapsedTime * 1000.0);
+#endif
 	return [sortedImageReps objectAtIndex:0];
 }
 
