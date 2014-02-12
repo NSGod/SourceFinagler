@@ -96,6 +96,7 @@
 		C116F72612CFFB2100551787 /* overlayPlay.png in Resources */ = {isa = PBXBuildFile; fileRef = C16476F3124E8BA30062B943 /* overlayPlay.png */; };
 		C116FA0412D5549700551787 /* TKImageDocumentAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C145B3AF12C05BCF005D7E21 /* TKImageDocumentAccessoryView.xib */; };
 		C116FA0512D5549900551787 /* TKImageDocumentAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C116F85912D5301400551787 /* TKImageDocumentAccessoryViewController.m */; };
+		C118590818ABF2B100136EA0 /* MDCGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C118590718ABF2B100136EA0 /* MDCGImage.m */; };
 		C11CA5E713A4E84D006CC348 /* MDCopyOperationSeparatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = C11CA5E613A4E84D006CC348 /* MDCopyOperationSeparatorView.m */; };
 		C11CA69813A4F9FB006CC348 /* MDCopyOperationContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = C11CA69713A4F9FB006CC348 /* MDCopyOperationContentView.m */; };
 		C1224C2D13B06C95009AA0F4 /* SteamKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C140E63D13889A9400027DD6 /* SteamKit.framework */; };
@@ -218,7 +219,6 @@
 		C161436F139996AE0042B91B /* HLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C16143CA1399975C0042B91B /* HKFileAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153C71396699600E32057 /* HKFileAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C16143D11399975C0042B91B /* HKFileAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F153C81396699600E32057 /* HKFileAdditions.m */; };
-		C169D929128A045C00653B05 /* MDCGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C15DD37E126A476300E44BDB /* MDCGImage.m */; };
 		C16A68F41600B62B0038A8B1 /* HLKitDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = C16A68F21600B6170038A8B1 /* HLKitDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C16A68F51600B62C0038A8B1 /* HLKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C16A68F11600B6170038A8B1 /* HLKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C16D5DAC136D39C400453365 /* VTF.h in Headers */ = {isa = PBXBuildFile; fileRef = C1B95367124E73EC00E83451 /* VTF.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -511,7 +511,6 @@
 		C1C2C64F127CBEF7003B24F6 /* GenerateThumbnailForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = C16478F5124E988C0062B943 /* GenerateThumbnailForURL.m */; };
 		C1C2C650127CBEF7003B24F6 /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = C16478F6124E988C0062B943 /* GeneratePreviewForURL.m */; };
 		C1C2C651127CBEF7003B24F6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = C16478F7124E988C0062B943 /* main.c */; };
-		C1C2C657127CBEF7003B24F6 /* MDCGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C15DD37E126A476300E44BDB /* MDCGImage.m */; };
 		C1C2C659127CBEF7003B24F6 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C11B279211BDFBB8004D4CC0 /* ApplicationServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1C2C681127CBF8C003B24F6 /* VTF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1B95275124E73B200E83451 /* VTF.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1C2C6F5127CC539003B24F6 /* VTF.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C1B95275124E73B200E83451 /* VTF.framework */; };
@@ -971,6 +970,8 @@
 		C116F85812D5301400551787 /* TKImageDocumentAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageDocumentAccessoryViewController.h; path = TextureFinagler/TKImageDocumentAccessoryViewController.h; sourceTree = "<group>"; };
 		C116F85912D5301400551787 /* TKImageDocumentAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageDocumentAccessoryViewController.m; path = TextureFinagler/TKImageDocumentAccessoryViewController.m; sourceTree = "<group>"; };
 		C116FAFB12D588A400551787 /* viewFrameBrowserCapsuleStyle.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = viewFrameBrowserCapsuleStyle.pdf; path = Resources/viewFrameBrowserCapsuleStyle.pdf; sourceTree = "<group>"; };
+		C118590618ABF2B100136EA0 /* MDCGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCGImage.h; path = SourceImageQuickLook/MDCGImage.h; sourceTree = "<group>"; };
+		C118590718ABF2B100136EA0 /* MDCGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCGImage.m; path = SourceImageQuickLook/MDCGImage.m; sourceTree = "<group>"; };
 		C11B274B11BDE755004D4CC0 /* MDFolderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDFolderManager.h; path = SteamKit/MDFolderManager.h; sourceTree = "<group>"; };
 		C11B274C11BDE755004D4CC0 /* MDFolderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDFolderManager.m; path = SteamKit/MDFolderManager.m; sourceTree = "<group>"; };
 		C11B274F11BDE7AD004D4CC0 /* MDFoundationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDFoundationAdditions.h; path = SourceFinagler/MDFoundationAdditions.h; sourceTree = "<group>"; };
@@ -1105,8 +1106,6 @@
 		C15B07C41254F46800F722B7 /* MDPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPreviewViewController.m; path = SourceFinagler/MDPreviewViewController.m; sourceTree = "<group>"; };
 		C15DD10A126952FD00E44BDB /* SMD.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = SMD.icns; path = Resources/SMD.icns; sourceTree = "<group>"; };
 		C15DD21012697F0B00E44BDB /* LMP.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = LMP.icns; path = Resources/LMP.icns; sourceTree = "<group>"; };
-		C15DD37D126A476300E44BDB /* MDCGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCGImage.h; sourceTree = "<group>"; };
-		C15DD37E126A476300E44BDB /* MDCGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCGImage.m; sourceTree = "<group>"; };
 		C15DD47B126AB93000E44BDB /* NUT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = NUT.icns; path = Resources/NUT.icns; sourceTree = "<group>"; };
 		C15DD47C126AB93000E44BDB /* NUC.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = NUC.icns; path = Resources/NUC.icns; sourceTree = "<group>"; };
 		C15DD652126B205500E44BDB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/VSSourceAddonFinaglerMainMenu.xib; sourceTree = "<group>"; };
@@ -1937,7 +1936,6 @@
 			children = (
 				C12F364312D7E5C500D28F26 /* TK Application stuff */,
 				C1D541C5129B4B3300504D66 /* unused */,
-				C15DD37C126A471E00E44BDB /* MDCGImage */,
 			);
 			name = "Image Finagler";
 			sourceTree = "<group>";
@@ -2268,20 +2266,13 @@
 			name = TKImageExport;
 			sourceTree = "<group>";
 		};
-		C15DD37C126A471E00E44BDB /* MDCGImage */ = {
-			isa = PBXGroup;
-			children = (
-				C15DD37D126A476300E44BDB /* MDCGImage.h */,
-				C15DD37E126A476300E44BDB /* MDCGImage.m */,
-			);
-			name = MDCGImage;
-			sourceTree = "<group>";
-		};
 		C16478A2124E97190062B943 /* SourceImage.qlgenerator */ = {
 			isa = PBXGroup;
 			children = (
 				C16478F5124E988C0062B943 /* GenerateThumbnailForURL.m */,
 				C16478F6124E988C0062B943 /* GeneratePreviewForURL.m */,
+				C118590618ABF2B100136EA0 /* MDCGImage.h */,
+				C118590718ABF2B100136EA0 /* MDCGImage.m */,
 				C16478F7124E988C0062B943 /* main.c */,
 				C1647893124E96FD0062B943 /* SourceImage-Info.plist */,
 			);
@@ -4345,7 +4336,6 @@
 				C1C2C581127CBCA0003B24F6 /* MDPreviewViewController.m in Sources */,
 				C1C2C584127CBCA0003B24F6 /* MDQuickLookPanel.m in Sources */,
 				C1C2C585127CBCA0003B24F6 /* MDImageView.m in Sources */,
-				C169D929128A045C00653B05 /* MDCGImage.m in Sources */,
 				C174EED0128A49C000817F81 /* MDCopyOperationViewController.m in Sources */,
 				C116FA0512D5549900551787 /* TKImageDocumentAccessoryViewController.m in Sources */,
 				C12F35F612D7E24B00D28F26 /* TKDocumentController.m in Sources */,
@@ -4380,10 +4370,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C118590818ABF2B100136EA0 /* MDCGImage.m in Sources */,
 				C1C2C64F127CBEF7003B24F6 /* GenerateThumbnailForURL.m in Sources */,
 				C1C2C650127CBEF7003B24F6 /* GeneratePreviewForURL.m in Sources */,
 				C1C2C651127CBEF7003B24F6 /* main.c in Sources */,
-				C1C2C657127CBEF7003B24F6 /* MDCGImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
