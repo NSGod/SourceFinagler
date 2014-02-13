@@ -7,9 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
 #import <SteamKit/SteamKit.h>
-
 #import "MDLaunchManager.h"
 
 
@@ -19,7 +17,10 @@
 int main (int argc, const char * argv[]) {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	
+#if VS_DEBUG
 	NSLog(@"SourceFinaglerAgentMain()");
+#endif
+	
 	
 	NSArray *arguments = [[NSProcessInfo processInfo] arguments];
 	if ([arguments count] < 2) {
@@ -38,9 +39,11 @@ int main (int argc, const char * argv[]) {
 	
 	VSSteamManager *steamManager = [VSSteamManager defaultManager];
 	
-	NSArray *games = [steamManager games];
+	NSArray *games = steamManager.games;
 	
+#if VS_DEBUG
 	NSLog(@"games == %@", games);
+#endif
 	
 	VSGame *game = [steamManager gameWithPath:gamePath];
 	
