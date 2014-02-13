@@ -137,8 +137,6 @@ HLKIT_EXTERN NSString * const HKSystemErrorMessageKey;
 - (NSArray *)descendants;
 - (NSArray *)visibleDescendants;
 
-//- (id)parentFromArray:(NSArray *)array;
-//- (NSIndexPath *)indexPathInArray:(NSArray *)array;
 
 @end
 
