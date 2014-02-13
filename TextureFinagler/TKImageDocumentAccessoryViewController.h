@@ -100,7 +100,5 @@
 
 @end
 
-//TEXTUREKIT_EXTERN NSString * const TKImageDocumentLastSavedFormatTypeKey;
-
 
 
