@@ -21,22 +21,21 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
-#include <NVCore/StrLib.h>
-#include <NVCore/StdStream.h>
+#include <nvcore/StrLib.h>
+#include <nvcore/StdStream.h>
 
-#include <NVImage/Image.h>
+#include <nvimage/Image.h>
+#include <nvimage/DirectDrawSurface.h>
 
-#include <NVImage/DirectDrawSurface.h>
 
+#define GLEW_STATIC
+#include <GL/glew.h>
 
-//#define GLEW_STATIC
-//#include <GL/glew.h>
-
-//#if NV_OS_DARWIN
+#if NV_OS_DARWIN
 #include <GLUT/glut.h>
-//#else
-//#include <GL/glut.h>
-//#endif
+#else
+#include <GL/glut.h>
+#endif
 
 
 
@@ -57,17 +56,17 @@ bool keys[256];
 
 void initOpengl()
 {
-//    glewInit();
-//	glutInit
-//    if (!glewIsSupported(
-//        "GL_VERSION_2_0 "
-//        "GL_ARB_vertex_program "
-//        "GL_ARB_fragment_program "
-//        ))
-//    {
-//        printf("Unable to load required extension\n");
-//        exit(-1);
-//    }
+    glewInit();
+
+    if (!glewIsSupported(
+        "GL_VERSION_2_0 "
+        "GL_ARB_vertex_program "
+        "GL_ARB_fragment_program "
+        ))
+    {
+        printf("Unable to load required extension\n");
+        exit(-1);
+    }
 
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -106,7 +105,7 @@ GLuint createTexture(nv::DirectDrawSurface & dds)
     else {
         // Add support for cubemaps.
     }
-	return tex;
+    return tex;
 }
 
 void drawQuad()

@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2011 Ignacio Castano <castano@gmail.com>
 // Copyright (c) 2007-2009 NVIDIA Corporation -- Ignacio Castano <icastano@nvidia.com>
-//
+// 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
 // files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
 // copies of the Software, and to permit persons to whom the
 // Software is furnished to do so, subject to the following
 // conditions:
-//
+// 
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-//
+// 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 // OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -22,10 +22,14 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
-#include <NVTextureTools/TextureTools.h>
-#include <NVTextureTools/CompressorDX10.h>
-#include <NVTextureTools/QuickCompressDXT.h>
-#include <NVTextureTools/OptimalCompressDXT.h>
+#include "CompressorDX10.h"
+#include "QuickCompressDXT.h"
+#include "OptimalCompressDXT.h"
+
+#include "nvtt.h"
+
+#include "nvimage/ColorBlock.h"
+#include "nvimage/BlockDXT.h"
 
 #include <new> // placement new
 
@@ -35,7 +39,7 @@ using namespace nvtt;
 
 void FastCompressorBC4::compressBlock(ColorBlock & rgba, nvtt::AlphaMode alphaMode, const nvtt::CompressionOptions::Private & compressionOptions, void * output)
 {
-	BlockATI1 * block = new (output)BlockATI1;
+	BlockATI1 * block = new(output) BlockATI1;
 	
 	rgba.swizzle(0, 1, 2, 0); // Copy red to alpha
 	QuickCompress::compressDXT5A(rgba, &block->alpha);
@@ -43,7 +47,7 @@ void FastCompressorBC4::compressBlock(ColorBlock & rgba, nvtt::AlphaMode alphaMo
 
 void FastCompressorBC5::compressBlock(ColorBlock & rgba, nvtt::AlphaMode alphaMode, const nvtt::CompressionOptions::Private & compressionOptions, void * output)
 {
-	BlockATI2 * block = new (output)BlockATI2;
+	BlockATI2 * block = new(output) BlockATI2;
 	
 	rgba.swizzle(0, 1, 2, 0); // Copy red to alpha
 	QuickCompress::compressDXT5A(rgba, &block->x);
@@ -55,15 +59,15 @@ void FastCompressorBC5::compressBlock(ColorBlock & rgba, nvtt::AlphaMode alphaMo
 
 void ProductionCompressorBC4::compressBlock(ColorBlock & rgba, nvtt::AlphaMode alphaMode, const nvtt::CompressionOptions::Private & compressionOptions, void * output)
 {
-	BlockATI1 * block = new (output)BlockATI1;
-	
+	BlockATI1 * block = new(output) BlockATI1;
+
 	rgba.swizzle(0, 1, 2, 0); // Copy red to alpha
 	OptimalCompress::compressDXT5A(rgba, &block->alpha);
 }
 
 void ProductionCompressorBC5::compressBlock(ColorBlock & rgba, nvtt::AlphaMode alphaMode, const nvtt::CompressionOptions::Private & compressionOptions, void * output)
 {
-	BlockATI2 * block = new (output)BlockATI2;
+	BlockATI2 * block = new(output) BlockATI2;
 	
 	rgba.swizzle(0, 1, 2, 0); // Copy red to alpha
 	OptimalCompress::compressDXT5A(rgba, &block->x);

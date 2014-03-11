@@ -4,19 +4,19 @@
 #ifndef NV_CORE_LIBRARY_H
 #define NV_CORE_LIBRARY_H
 
-#include <NVCore/CoreDefines.h>
+#include "nvcore.h"
 
 #if NV_OS_WIN32
-#define LIBRARY_NAME(name)      # name ".dll"
+#define LIBRARY_NAME(name)	#name ".dll"
 #elif NV_OS_DARWIN
-#define NV_LIBRARY_NAME(name)   "lib" # name ".dylib"
+#define NV_LIBRARY_NAME(name)	"lib" #name ".dylib"
 #else
-#define NV_LIBRARY_NAME(name)   "lib" # name ".so"
+#define NV_LIBRARY_NAME(name)	"lib" #name ".so"
 #endif
 
-NVCORE_API void *nvLoadLibrary(const char * name);
-NVCORE_API void nvUnloadLibrary(void *lib);
-NVCORE_API void *nvBindSymbol(void *lib, const char *symbol);
+NVCORE_API void * nvLoadLibrary(const char * name);
+NVCORE_API void nvUnloadLibrary(void * lib);
+NVCORE_API void * nvBindSymbol(void * lib, const char * symbol);
 
 class NVCORE_CLASS Library
 {
@@ -44,7 +44,7 @@ public:
 	}
 	
 private:
-	void *handle;
+	void * handle;
 };
 
 

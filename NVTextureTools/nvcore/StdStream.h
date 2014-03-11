@@ -1,16 +1,15 @@
 // This code is in the public domain -- Ignacio Castaño <castano@gmail.com>
 
-#pragma once
-#ifndef NV_CORE_STDSTREAM_H
-#define NV_CORE_STDSTREAM_H
+//#pragma once
+//#ifndef NV_CORE_STDSTREAM_H
+//#define NV_CORE_STDSTREAM_H
 
-#include <NVCore/CoreDefines.h>
-#include <NVCore/Stream.h>
-#include <NVCore/Array.h>
+#include "nvcore.h"
+#include "Stream.h"
+#include "Array.h"
 
 #include <stdio.h> // fopen
 #include <string.h> // memcpy
-#include <exception> // std::exception
 
 namespace nv
 {
@@ -72,7 +71,7 @@ namespace nv
 #if NV_OS_WIN32
             return _ftell_nolock(m_fp);
 #else
-            return ftell(m_fp);
+            return (uint)ftell(m_fp);
 #endif
         }
 
@@ -85,10 +84,10 @@ namespace nv
             uint end = _ftell_nolock(m_fp);
             _fseek_nolock(m_fp, pos, SEEK_SET);
 #else
-            uint pos = ftell(m_fp);
+            uint pos = (uint)ftell(m_fp);
             fseek(m_fp, 0, SEEK_END);
-            uint end = ftell(m_fp);
-            fseek(m_fp, pos, SEEK_SET);            
+            uint end = (uint)ftell(m_fp);
+            fseek(m_fp, pos, SEEK_SET);
 #endif
             return end;
         }
@@ -104,10 +103,25 @@ namespace nv
             clearerr(m_fp);
         }
 
+        // @@ The original implementation uses feof, which only returns true when we attempt to read *past* the end of the stream. 
+        // That is, if we read the last byte of a file, then isAtEnd would still return false, even though the stream pointer is at the file end. This is not the intent and was inconsistent with the implementation of the MemoryStream, a better 
+        // implementation uses use ftell and fseek to determine our location within the file.
         virtual bool isAtEnd() const
         {
             nvDebugCheck(m_fp != NULL);
-            return feof( m_fp ) != 0;
+            //return feof( m_fp ) != 0;
+#if NV_OS_WIN32
+            uint pos = _ftell_nolock(m_fp);
+            _fseek_nolock(m_fp, 0, SEEK_END);
+            uint end = _ftell_nolock(m_fp);
+            _fseek_nolock(m_fp, pos, SEEK_SET);
+#else
+            uint pos = (uint)ftell(m_fp);
+            fseek(m_fp, 0, SEEK_END);
+            uint end = (uint)ftell(m_fp);
+            fseek(m_fp, pos, SEEK_SET);
+#endif
+            return pos == end;
         }
 
         /// Always true.
@@ -326,7 +340,7 @@ namespace nv
             return len;
         }
 
-        virtual void seek( uint pos ) { /*Not implemented*/ }
+        virtual void seek( uint /*pos*/ ) { /*Not implemented*/ }
         virtual uint tell() const { return m_buffer.size(); }
         virtual uint size() const { return m_buffer.size(); }
 
@@ -378,7 +392,7 @@ namespace nv
             len = m_s->serialize( data, len );
 
             if( m_s->isError() ) {
-                throw std::exception();
+                throw;
             }
 
             return len;
@@ -389,7 +403,7 @@ namespace nv
             m_s->seek( pos );
 
             if( m_s->isError() ) {
-                throw std::exception();
+                throw;
             }
         }
 
@@ -445,4 +459,4 @@ namespace nv
 } // nv namespace
 
 
-#endif // NV_CORE_STDSTREAM_H
+//#endif // NV_CORE_STDSTREAM_H

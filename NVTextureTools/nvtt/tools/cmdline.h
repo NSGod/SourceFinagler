@@ -51,13 +51,14 @@ struct MyMessageHandler : public nv::MessageHandler {
 struct MyAssertHandler : public nv::AssertHandler {
     MyAssertHandler() {
         nv::debug::setAssertHandler( this );
+        nv::debug::enableSigHandler(/*interactive=*/true);
     }
     ~MyAssertHandler() {
         nv::debug::resetAssertHandler();
     }
 
     // Handler method, note that func might be NULL!
-    virtual int assertion( const char *exp, const char *file, int line, const char *func ) {
+    virtual int assertion( const char *exp, const char *file, int line, const char *func, const char *msg, va_list arg ) {
         fprintf(stderr, "Assertion failed: %s\nIn %s:%d\n", exp, file, line);
         nv::debug::dumpInfo();
         exit(1);

@@ -25,10 +25,16 @@
 #include "CudaCompressorDXT.h"
 #include "CudaUtils.h"
 
-#include "NVTextureTools/CompressionOptions.h"
-#include "NVTextureTools/OutputOptions.h"
-#include "NVTextureTools/QuickCompressDXT.h"
-#include "NVTextureTools/OptimalCompressDXT.h"
+#include "nvcore/Debug.h"
+#include "nvmath/Color.h"
+#include "nvmath/Vector.inl"
+#include "nvimage/Image.h"
+#include "nvimage/ColorBlock.h"
+#include "nvimage/BlockDXT.h"
+#include "nvtt/CompressionOptions.h"
+#include "nvtt/OutputOptions.h"
+#include "nvtt/QuickCompressDXT.h"
+#include "nvtt/OptimalCompressDXT.h"
 
 #include <time.h>
 #include <stdio.h>
@@ -38,6 +44,7 @@
 
 #define MAX_BLOCKS 8192U // 32768, 65535 // @@ Limit number of blocks on slow devices to prevent hitting the watchdog timer.
 
+extern "C" void setupOMatchTables(const void * OMatch5Src, size_t OMatch5Size, const void * OMatch6Src, size_t OMatch6Size);
 extern "C" void setupCompressKernel(const float weights[3]);
 extern "C" void bindTextureToArray(cudaArray * d_data);
 
@@ -82,9 +89,7 @@ CudaContext::CudaContext() :
     cudaMalloc((void**) &result, MAX_BLOCKS * 8U);
 
     // Init single color lookup contant tables.
-    cudaMemcpyToSymbol("OMatch5", OMatch5, sizeof(OMatch5), 0, cudaMemcpyHostToDevice);
-    cudaMemcpyToSymbol("OMatch6", OMatch6, sizeof(OMatch6), 0, cudaMemcpyHostToDevice);
-
+	setupOMatchTables(OMatch5, sizeof(OMatch5), OMatch6, sizeof(OMatch6));
 #endif
 }
 
@@ -120,8 +125,9 @@ CudaCompressor::CudaCompressor(CudaContext & ctx) : m_ctx(ctx)
 
 }
 
-void CudaCompressor::compress(nvtt::AlphaMode alphaMode, uint w, uint h, const float * data, nvtt::TaskDispatcher * dispatcher, const nvtt::CompressionOptions::Private & compressionOptions, const nvtt::OutputOptions::Private & outputOptions)
+void CudaCompressor::compress(nvtt::AlphaMode alphaMode, uint w, uint h, uint d, const float * data, nvtt::TaskDispatcher * dispatcher, const nvtt::CompressionOptions::Private & compressionOptions, const nvtt::OutputOptions::Private & outputOptions)
 {
+    nvDebugCheck(d == 1);
     nvDebugCheck(cuda::isHardwarePresent());
 
 #if defined HAVE_CUDA

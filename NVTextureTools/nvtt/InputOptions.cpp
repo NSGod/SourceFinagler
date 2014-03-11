@@ -22,10 +22,15 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
+#include "InputOptions.h"
 
-#include <NVTextureTools/InputOptions.h>
+#include "nvmath/Vector.inl"
 
-#include <string.h> // memcpy
+#include "nvcore/Utils.h" // nextPowerOfTwo
+#include "nvcore/Memory.h"
+
+#include <string.h> // memcpy, memset
+
 
 
 using namespace nv;
@@ -172,9 +177,6 @@ void InputOptions::resetTextureLayout()
 // Copies the data to our internal structures.
 bool InputOptions::setMipmapData(const void * data, int width, int height, int depth /*= 1*/, int face /*= 0*/, int mipLevel /*= 0*/)
 {
-    if (depth != 1) {
-        return false;
-    }
     if (uint(face) >= m.faceCount) {
         return false;
     }

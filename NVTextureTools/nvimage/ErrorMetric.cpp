@@ -1,7 +1,10 @@
 
-#include <NVImage/ErrorMetric.h>
-#include <NVImage/FloatImage.h>
-#include <NVImage/Filter.h>
+#include "ErrorMetric.h"
+#include "FloatImage.h"
+#include "Filter.h"
+
+#include "nvmath/Matrix.h"
+#include "nvmath/Vector.inl"
 
 #include <float.h> // FLT_MAX
 
@@ -9,15 +12,15 @@ using namespace nv;
 
 float nv::rmsColorError(const FloatImage * img, const FloatImage * ref, bool alphaWeight)
 {
-    if (img == NULL || ref == NULL || img->width() != ref->width() || img->height() != ref->height()) {
+    if (!sameLayout(img, ref)) {
         return FLT_MAX;
     }
-    nvDebugCheck(img->componentNum() == 4);
-    nvDebugCheck(ref->componentNum() == 4);
+    nvDebugCheck(img->componentCount() == 4);
+    nvDebugCheck(ref->componentCount() == 4);
 
     double mse = 0;
 
-    const uint count = img->width() * img->height();
+    const uint count = img->pixelCount();
     for (uint i = 0; i < count; i++)
     {
         float r0 = img->pixel(i + count * 0);
@@ -46,14 +49,14 @@ float nv::rmsColorError(const FloatImage * img, const FloatImage * ref, bool alp
 
 float nv::rmsAlphaError(const FloatImage * img, const FloatImage * ref)
 {
-    if (img == NULL || ref == NULL || img->width() != ref->width() || img->height() != ref->height()) {
+    if (!sameLayout(img, ref)) {
         return FLT_MAX;
     }
-    nvDebugCheck(img->componentNum() == 4 && ref->componentNum() == 4);
+    nvDebugCheck(img->componentCount() == 4 && ref->componentCount() == 4);
 
     double mse = 0;
 
-    const uint count = img->width() * img->height();
+    const uint count = img->pixelCount();
     for (uint i = 0; i < count; i++)
     {
         float a0 = img->pixel(i + count * 3);
@@ -70,15 +73,15 @@ float nv::rmsAlphaError(const FloatImage * img, const FloatImage * ref)
 
 float nv::averageColorError(const FloatImage * img, const FloatImage * ref, bool alphaWeight)
 {
-    if (img == NULL || ref == NULL || img->width() != ref->width() || img->height() != ref->height()) {
+    if (!sameLayout(img, ref)) {
         return FLT_MAX;
     }
-    nvDebugCheck(img->componentNum() == 4);
-    nvDebugCheck(ref->componentNum() == 4);
+    nvDebugCheck(img->componentCount() == 4);
+    nvDebugCheck(ref->componentCount() == 4);
 
     double mae = 0;
 
-    const uint count = img->width() * img->height();
+    const uint count = img->pixelCount();
     for (uint i = 0; i < count; i++)
     {
         float r0 = img->pixel(i + count * 0);
@@ -110,7 +113,7 @@ float nv::averageAlphaError(const FloatImage * img, const FloatImage * ref)
     if (img == NULL || ref == NULL || img->width() != ref->width() || img->height() != ref->height()) {
         return FLT_MAX;
     }
-    nvDebugCheck(img->componentNum() == 4 && ref->componentNum() == 4);
+    nvDebugCheck(img->componentCount() == 4 && ref->componentCount() == 4);
 
     double mae = 0;
 
@@ -128,6 +131,9 @@ float nv::averageAlphaError(const FloatImage * img, const FloatImage * ref)
     return float(mae / count);
 }
 
+
+// Color space conversions based on:
+// http://www.brucelindbloom.com/
 
 // Assumes input is in *linear* sRGB color space.
 static Vector3 rgbToXyz(Vector3::Arg c)
@@ -173,7 +179,7 @@ static float f(float t)
 {
     const float epsilon = powf(6.0f/29.0f, 3);
 
-    if (t < epsilon) {
+    if (t > epsilon) {
         return powf(t, 1.0f/3.0f);
     }
     else {
@@ -183,16 +189,13 @@ static float f(float t)
 
 static float finv(float t)
 {
-//    const float epsilon = powf(6.0f/29.0f, 3);
-
     if (t > 6.0f / 29.0f) {
-        return powf(t, 3.0f);
-    }
-    else {
         return 3.0f * powf(6.0f / 29.0f, 2) * (t - 4.0f / 29.0f);
     }
+    else {
+        return powf(t, 3.0f);
+    }
 }
-
 
 static Vector3 xyzToCieLab(Vector3::Arg c)
 {
@@ -221,11 +224,17 @@ static Vector3 rgbToCieLab(Vector3::Arg c)
     return xyzToCieLab(rgbToXyz(toLinear(c)));
 }
 
+// h is hue-angle in radians
+static Vector3 cieLabToLCh(Vector3::Arg c)
+{
+    return Vector3(c.x, sqrtf(c.y*c.y + c.z*c.z), atan2f(c.y, c.z));
+}
+
 static void rgbToCieLab(const FloatImage * rgbImage, FloatImage * LabImage)
 {
     nvDebugCheck(rgbImage != NULL && LabImage != NULL);
     nvDebugCheck(rgbImage->width() == LabImage->width() && rgbImage->height() == LabImage->height());
-    nvDebugCheck(rgbImage->componentNum() >= 3 && LabImage->componentNum() >= 3);
+    nvDebugCheck(rgbImage->componentCount() >= 3 && LabImage->componentCount() >= 3);
 
     const uint w = rgbImage->width();
     const uint h = LabImage->height();
@@ -252,13 +261,8 @@ static void rgbToCieLab(const FloatImage * rgbImage, FloatImage * LabImage)
 // Assumes input images are in linear sRGB space.
 float nv::cieLabError(const FloatImage * img0, const FloatImage * img1)
 {
-    if (img0 == NULL || img1 == NULL || img0->width() != img1->width() || img0->height() != img1->height()) {
-        return FLT_MAX;
-    }
-    nvDebugCheck(img0->componentNum() == 4 && img0->componentNum() == 4);
-
-    uint w = img0->width();
-    uint h = img0->height();
+    if (!sameLayout(img0, img1)) return FLT_MAX;
+    nvDebugCheck(img0->componentCount() == 4 && img0->componentCount() == 4);
 
     const float * r0 = img0->channel(0);
     const float * g0 = img0->channel(1);
@@ -270,7 +274,7 @@ float nv::cieLabError(const FloatImage * img0, const FloatImage * img1)
 
     double error = 0.0f;
 
-    const uint count = w*h;
+    const uint count = img0->pixelCount();
     for (uint i = 0; i < count; i++)
     {
         Vector3 lab0 = rgbToCieLab(Vector3(r0[i], g0[i], b0[i]));
@@ -285,19 +289,72 @@ float nv::cieLabError(const FloatImage * img0, const FloatImage * img1)
     return float(error / count);
 }
 
+// Assumes input images are in linear sRGB space.
+float nv::cieLab94Error(const FloatImage * img0, const FloatImage * img1)
+{
+    if (!sameLayout(img0, img1)) return FLT_MAX;
+    nvDebugCheck(img0->componentCount() == 4 && img0->componentCount() == 4);
+
+    const float kL = 1;
+    const float kC = 1;
+    const float kH = 1;
+    const float k1 = 0.045f;
+    const float k2 = 0.015f;
+
+    const float sL = 1;
+
+    const float * r0 = img0->channel(0);
+    const float * g0 = img0->channel(1);
+    const float * b0 = img0->channel(2);
+
+    const float * r1 = img1->channel(0);
+    const float * g1 = img1->channel(1);
+    const float * b1 = img1->channel(2);
+
+    double error = 0.0f;
+
+    const uint count = img0->pixelCount();
+    for (uint i = 0; i < count; ++i)
+    {
+        Vector3 lab0 = rgbToCieLab(Vector3(r0[i], g0[i], b0[i]));
+        Vector3 lch0 = cieLabToLCh(lab0);
+        Vector3 lab1 = rgbToCieLab(Vector3(r1[i], g1[i], b1[i]));
+        Vector3 lch1 = cieLabToLCh(lab1);
+
+        const float sC = 1 + k1*lch0.x;
+        const float sH = 1 + k2*lch0.x;
+
+        // @@ Measure Delta E using the 1994 definition
+        Vector3 labDelta = lab0 - lab1;
+        Vector3 lchDelta = lch0 - lch1;
+
+        double deltaLsq = powf(lchDelta.x / (kL*sL), 2);
+        double deltaCsq = powf(lchDelta.y / (kC*sC), 2);
+
+        // avoid possible sqrt of negative value by computing (deltaH/(kH*sH))^2
+        double deltaHsq = powf(labDelta.y, 2) + powf(labDelta.z, 2) - powf(lchDelta.y, 2);
+        deltaHsq /= powf(kH*sH, 2);
+
+        error += sqrt(deltaLsq + deltaCsq + deltaHsq);
+    }
+
+    return float(error / count);
+}
+
 float nv::spatialCieLabError(const FloatImage * img0, const FloatImage * img1)
 {
     if (img0 == NULL || img1 == NULL || img0->width() != img1->width() || img0->height() != img1->height()) {
         return FLT_MAX;
     }
-    nvDebugCheck(img0->componentNum() == 4 && img0->componentNum() == 4);
+    nvDebugCheck(img0->componentCount() == 4 && img0->componentCount() == 4);
 
     uint w = img0->width();
     uint h = img0->height();
+    uint d = img0->depth();
 
     FloatImage lab0, lab1; // Original images in CIE-Lab space.
-    lab0.allocate(3, w, h);
-    lab1.allocate(3, w, h);
+    lab0.allocate(3, w, h, d);
+    lab1.allocate(3, w, h, d);
 
     // Convert input images to CIE-Lab.
     rgbToCieLab(img0, &lab0);
@@ -319,7 +376,7 @@ float nv::spatialCieLabError(const FloatImage * img0, const FloatImage * img1)
     */
     // @@ Measure Delta E between lab0 and lab1.
 
-	return FLT_MAX;
+    return 0.0f;
 }
 
 
@@ -329,7 +386,7 @@ float nv::averageAngularError(const FloatImage * img0, const FloatImage * img1)
     if (img0 == NULL || img1 == NULL || img0->width() != img1->width() || img0->height() != img1->height()) {
         return FLT_MAX;
     }
-    nvDebugCheck(img0->componentNum() == 4 && img0->componentNum() == 4);
+    nvDebugCheck(img0->componentCount() == 4 && img0->componentCount() == 4);
 
     uint w = img0->width();
     uint h = img0->height();
@@ -350,8 +407,8 @@ float nv::averageAngularError(const FloatImage * img0, const FloatImage * img1)
         Vector3 n0 = Vector3(x0[i], y0[i], z0[i]);
         Vector3 n1 = Vector3(x1[i], y1[i], z1[i]);
 
-        n0 = 2 * n0 - Vector3(1);
-        n1 = 2 * n1 - Vector3(1);
+        n0 = 2.0f * n0 - Vector3(1);
+        n1 = 2.0f * n1 - Vector3(1);
 
         n0 = normalizeSafe(n0, Vector3(0), 0.0f);
         n1 = normalizeSafe(n1, Vector3(0), 0.0f);
@@ -367,7 +424,7 @@ float nv::rmsAngularError(const FloatImage * img0, const FloatImage * img1)
     if (img0 == NULL || img1 == NULL || img0->width() != img1->width() || img0->height() != img1->height()) {
         return FLT_MAX;
     }
-    nvDebugCheck(img0->componentNum() == 4 && img0->componentNum() == 4);
+    nvDebugCheck(img0->componentCount() == 4 && img0->componentCount() == 4);
 
     uint w = img0->width();
     uint h = img0->height();
@@ -388,8 +445,8 @@ float nv::rmsAngularError(const FloatImage * img0, const FloatImage * img1)
         Vector3 n0 = Vector3(x0[i], y0[i], z0[i]);
         Vector3 n1 = Vector3(x1[i], y1[i], z1[i]);
 
-        n0 = 2 * n0 - Vector3(1);
-        n1 = 2 * n1 - Vector3(1);
+        n0 = 2.0f * n0 - Vector3(1);
+        n1 = 2.0f * n1 - Vector3(1);
 
         n0 = normalizeSafe(n0, Vector3(0), 0.0f);
         n1 = normalizeSafe(n1, Vector3(0), 0.0f);

@@ -2,6 +2,7 @@
 #error "Do not include this file directly."
 #endif
 
+#include <stdint.h> // uint8_t, int8_t, ... uintptr_t
 #include <cstddef> // operator new, size_t, NULL
 
 // Function linkage
@@ -26,6 +27,7 @@
 #define NV_FASTCALL     __attribute__((fastcall))
 #define NV_FORCEINLINE  __attribute__((always_inline))
 #define NV_DEPRECATED   __attribute__((deprecated))
+#define NV_THREAD_LOCAL __thread 
 
 
 #if __GNUC__ > 2

@@ -22,8 +22,8 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
-#include <NVTextureTools/TextureTools.h>
-#include <NVTextureTools/nvtt_wrapper.h>
+#include "nvtt.h"
+#include "nvtt_wrapper.h"
 
 
 // InputOptions class.
@@ -150,9 +150,9 @@ void nvttSetCompressionOptionsColorWeights(NvttCompressionOptions * compressionO
 }
 
 /*void nvttEnableCompressionOptionsCudaCompression(NvttCompressionOptions * compressionOptions, NvttBoolean enable)
-   {
-        compressionOptions->enableCudaCompression(enable != NVTT_False);
-   }*/
+{
+	compressionOptions->enableCudaCompression(enable != NVTT_False);
+}*/
 
 void nvttSetCompressionOptionsPixelFormat(NvttCompressionOptions * compressionOptions, unsigned int bitcount, unsigned int rmask, unsigned int gmask, unsigned int bmask, unsigned int amask)
 {
@@ -186,15 +186,15 @@ void nvttSetOutputOptionsOutputHeader(NvttOutputOptions * outputOptions, NvttBoo
 	outputOptions->setOutputHeader(b != NVTT_False);
 }
 /*
-   void nvttSetOutputOptionsErrorHandler(NvttOutputOptions * outputOptions, nvttErrorHandler errorHandler)
-   {
-        outputOptions->setErrorHandler(errorHandler);
-   }
+void nvttSetOutputOptionsErrorHandler(NvttOutputOptions * outputOptions, nvttErrorHandler errorHandler)
+{
+	outputOptions->setErrorHandler(errorHandler);
+}
 
-   void nvttSetOutputOptionsOutputHandler(NvttOutputOptions * outputOptions, nvttOutputHandler outputHandler, nvttImageHandler imageHandler)
-   {
-   }
- */
+void nvttSetOutputOptionsOutputHandler(NvttOutputOptions * outputOptions, nvttOutputHandler outputHandler, nvttImageHandler imageHandler)
+{
+}
+*/
 
 
 // Compressor class.

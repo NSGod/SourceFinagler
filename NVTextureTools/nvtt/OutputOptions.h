@@ -25,7 +25,11 @@
 #ifndef NV_TT_OUTPUTOPTIONS_H
 #define NV_TT_OUTPUTOPTIONS_H
 
-#include <NVTextureTools/TextureTools.h>
+#include "nvtt.h"
+
+#include "nvcore/StrLib.h" // Path
+#include "nvcore/StdStream.h"
+
 
 namespace nvtt
 {
@@ -33,6 +37,7 @@ namespace nvtt
 	struct DefaultOutputHandler : public nvtt::OutputHandler
 	{
 		DefaultOutputHandler(const char * fileName) : stream(fileName) {}
+        DefaultOutputHandler(FILE * fp) : stream(fp, false) {}
 		
 		virtual ~DefaultOutputHandler() {}
 		
@@ -50,6 +55,11 @@ namespace nvtt
 			return true;
 		}
 
+		virtual void endImage()
+		{
+			// ignore.
+		}
+
 		nv::StdOutputStream stream;
 	};
 
@@ -57,6 +67,7 @@ namespace nvtt
 	struct OutputOptions::Private
 	{
 		nv::Path fileName;
+        FILE * fileHandle;
 		
 		OutputHandler * outputHandler;
 		ErrorHandler * errorHandler;
@@ -65,11 +76,13 @@ namespace nvtt
 		Container container;
         int version;
         bool srgb;
+        bool deleteOutputHandler;
 		
 		bool hasValidOutputHandler() const;
 
 		void beginImage(int size, int width, int height, int depth, int face, int miplevel) const;
 		bool writeData(const void * data, int size) const;
+        void endImage() const;
 		void error(Error e) const;
 	};
 

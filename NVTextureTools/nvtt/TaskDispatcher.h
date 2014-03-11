@@ -1,5 +1,5 @@
 
-#include <NVTextureTools/TextureTools.h>
+#include "nvtt.h"
 
 // OpenMP
 // http://en.wikipedia.org/wiki/OpenMP
@@ -18,7 +18,6 @@
 // http://msdn.microsoft.com/en-us/library/dd504870.aspx
 #if NV_OS_WIN32 && _MSC_VER >= 1600
 #define HAVE_PPL 1
-//#include <array>
 #include <ppl.h>
 #endif
 
@@ -27,6 +26,8 @@
 #if defined(HAVE_TBB)
 #include <tbb/parallel_for.h>
 #endif
+
+#include "nvthread/ParallelFor.h"
 
 
 namespace nvtt {
@@ -39,6 +40,15 @@ namespace nvtt {
             }
         }
     };
+
+    struct ParallelTaskDispatcher : public TaskDispatcher
+    {
+        virtual void dispatch(Task * task, void * context, int count) {
+            nv::ParallelFor parallelFor(task, context);
+            parallelFor.run(count); // @@ Add support for custom grain.
+        }
+    };
+
 
 #if defined(HAVE_OPENMP)
 
@@ -100,7 +110,7 @@ namespace nvtt {
         }
     };
 
-#endif // HAVE_PPL
+#endif
 
 #if defined(HAVE_TBB)
 
@@ -132,7 +142,8 @@ namespace nvtt {
 #elif defined(HAVE_GCD)
     typedef AppleTaskDispatcher         ConcurrentTaskDispatcher;
 #else
-    typedef SequentialTaskDispatcher    ConcurrentTaskDispatcher;
+    //typedef SequentialTaskDispatcher    ConcurrentTaskDispatcher;
+    typedef ParallelTaskDispatcher        ConcurrentTaskDispatcher;
 #endif
 
 } // namespace nvtt

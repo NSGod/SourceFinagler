@@ -1,11 +1,12 @@
 // This code is in the public domain -- castanyo@yahoo.es
 
-#include <NVMath/Plane.h>
-#include <NVMath/Matrix.h>
+#include "Plane.h"
+#include "Plane.inl"
+#include "Matrix.inl"
 
 namespace nv
 {
-    Plane transformPlane(const Matrix& m, Plane::Arg p)
+    Plane transformPlane(const Matrix & m, const Plane & p)
     {
         Vector3 newVec = transformVector(m, p.vector());
 
@@ -15,7 +16,7 @@ namespace nv
         return Plane(newVec, ptInPlane);
     }
 
-    Vector3 planeIntersection(Plane::Arg a, Plane::Arg b, Plane::Arg c)
+    Vector3 planeIntersection(const Plane & a, const Plane & b, const Plane & c)
     {
         return dot(a.vector(), cross(b.vector(), c.vector())) * (
             a.offset() * cross(b.vector(), c.vector()) + 

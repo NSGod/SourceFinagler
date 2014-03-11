@@ -22,7 +22,9 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
-#include <NVTextureTools/CompressionOptions.h>
+#include "CompressionOptions.h"
+#include "nvimage/DirectDrawSurface.h"
+#include "nvmath/Vector.inl"
 
 using namespace nv;
 using namespace nvtt;
@@ -136,7 +138,7 @@ void CompressionOptions::setPixelFormat(uint bitCount, uint rmask, uint gmask, u
 
 void CompressionOptions::setPixelFormat(uint8 rsize, uint8 gsize, uint8 bsize, uint8 asize)
 {
-    nvCheck(rsize <= 32 || gsize <= 32 || bsize <= 32 || asize <= 32);
+    nvCheck(rsize <= 32 && gsize <= 32 && bsize <= 32 && asize <= 32);
 
     m.bitcount = 0;
     m.rmask = 0;

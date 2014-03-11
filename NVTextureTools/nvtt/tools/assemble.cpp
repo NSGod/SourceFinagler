@@ -21,17 +21,17 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
-#include <NVCore/StrLib.h>
-#include <NVCore/StdStream.h>
-
-#include <nvmath/Color.h>
-
-#include <NVImage/Image.h>
-
-#include <NVImage/ImageIO.h>
-#include <NVImage/DirectDrawSurface.h>
-
 #include "cmdline.h"
+
+#include "nvimage/Image.h"
+#include "nvimage/ImageIO.h"
+#include "nvimage/DirectDrawSurface.h"
+
+#include "nvmath/Color.h"
+
+#include "nvcore/Array.inl"
+#include "nvcore/StrLib.h"
+#include "nvcore/StdStream.h"
 
 // @@ Add decent error messages.
 // @@ Add option to resize images.
@@ -59,13 +59,13 @@ int main(int argc, char *argv[])
 			assembleVolume = false;
 			assembleTextureArray = false;
 		}
-		/*if (strcmp("-volume", argv[i]) == 0)
+		if (strcmp("-volume", argv[i]) == 0)
 		{
 			assembleCubeMap = false;
 			assembleVolume = true;
 			assembleTextureArray = false;
 		}
-		if (strcmp("-array", argv[i]) == 0)
+		/*if (strcmp("-array", argv[i]) == 0)
 		{
 			assembleCubeMap = false;
 			assembleVolume = false;
@@ -82,6 +82,10 @@ int main(int argc, char *argv[])
 		else if (argv[i][0] != '-')
 		{
 			files.append(argv[i]);
+		}
+		else
+		{
+			printf("Warning: unrecognized option \"%s\"\n", argv[i]);
 		}
 	}
 	

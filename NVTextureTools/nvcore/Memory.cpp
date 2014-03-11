@@ -1,7 +1,7 @@
 // This code is in the public domain -- Ignacio Castaño <castano@gmail.com>
 
-#include <NVCore/Memory.h>
-#include <NVCore/Debug.h>
+#include "Memory.h"
+#include "Debug.h"
 
 #include <stdlib.h>
 
@@ -114,5 +114,6 @@ void operator delete(void* p, const std::nothrow_t&) throw()
 
 #endif // 0
 
-
 #endif // NV_OVERRIDE_ALLOC
+
+

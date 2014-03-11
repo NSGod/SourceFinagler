@@ -23,15 +23,15 @@
 
 #include "cmdline.h"
 
-#include <NVTextureTools/NVTextureTools.h>
+#include <nvtt/nvtt.h>
 
 #include <nvimage/Image.h>    // @@ It might be a good idea to use FreeImage directly instead of ImageIO.
 #include <nvimage/ImageIO.h>
 #include <nvimage/FloatImage.h>
 #include <nvimage/DirectDrawSurface.h>
 
-#include <NVCore/Ptr.h>
-#include <NVCore/StrLib.h>
+#include <nvcore/Ptr.h> // AutoPtr
+#include <nvcore/StrLib.h> // Path
 #include <nvcore/StdStream.h>
 #include <nvcore/FileSystem.h>
 #include <nvcore/Timer.h>
@@ -54,6 +54,11 @@ struct MyOutputHandler : public nvtt::OutputHandler
     virtual void beginImage(int size, int width, int height, int depth, int face, int miplevel)
     {
         // ignore.
+    }
+
+    virtual void endImage()
+    {
+        // Ignore.
     }
 
     // Output data.
@@ -256,6 +261,14 @@ int main(int argc, char *argv[])
         {
             format = nvtt::Format_BC5;
         }
+        else if (strcmp("-bc6", argv[i]) == 0)
+        {
+            format = nvtt::Format_BC6;
+        }
+        else if (strcmp("-bc7", argv[i]) == 0)
+        {
+            format = nvtt::Format_BC7;
+        }
 
         // Undocumented option. Mainly used for testing.
         else if (strcmp("-ext", argv[i]) == 0)
@@ -264,6 +277,11 @@ int main(int argc, char *argv[])
                 externalCompressor = argv[i+1];
                 i++;
             }
+        }
+        else if (strcmp("-pause", argv[i]) == 0)
+        {
+            printf("Press ENTER\n"); fflush(stdout);
+            getchar();
         }
 
         // Output options
@@ -292,6 +310,10 @@ int main(int argc, char *argv[])
 
             break;
         }
+		else
+		{
+			printf("Warning: unrecognized option \"%s\"\n", argv[i]);
+		}
     }
 
     const uint version = nvtt::version();
@@ -304,7 +326,7 @@ int main(int argc, char *argv[])
 
     if (input.isNull())
     {
-        printf("usage: nvcompress [options] infile [outfile]\n\n");
+        printf("usage: nvcompress [options] infile [outfile.dds]\n\n");
 
         printf("Input options:\n");
         printf("  -color     \tThe input image is a color map (default).\n");
@@ -330,11 +352,13 @@ int main(int argc, char *argv[])
         printf("  -bc3     \tBC3 format (DXT5)\n");
         printf("  -bc3n    \tBC3 normal map format (DXT5nm)\n");
         printf("  -bc4     \tBC4 format (ATI1)\n");
-        printf("  -bc5     \tBC5 format (3Dc/ATI2)\n\n");
+        printf("  -bc5     \tBC5 format (3Dc/ATI2)\n");
+        printf("  -bc6     \tBC6 format\n");
+        printf("  -bc7     \tBC7 format\n\n");
 
         printf("Output options:\n");
         printf("  -silent  \tDo not output progress messages\n");
-        printf("  -dds10   \tUse DirectX 10 DDS format\n\n");
+        printf("  -dds10   \tUse DirectX 10 DDS format (enabled by default for BC6/7)\n\n");
 
         return EXIT_FAILURE;
     }
@@ -359,7 +383,7 @@ int main(int argc, char *argv[])
             return EXIT_FAILURE;
         }
 
-        if (!dds.isSupported() || dds.isTexture3D())
+        if (!dds.isSupported())
         {
             fprintf(stderr, "The file '%s' is not a supported DDS file.\n", input.str());
             return EXIT_FAILURE;
@@ -370,6 +394,13 @@ int main(int argc, char *argv[])
         {
             inputOptions.setTextureLayout(nvtt::TextureType_2D, dds.width(), dds.height());
             faceCount = 1;
+        }
+        else if (dds.isTexture3D())
+        {
+            inputOptions.setTextureLayout(nvtt::TextureType_3D, dds.width(), dds.height(), dds.depth());
+            faceCount = 1;
+
+            nvDebugBreak();
         }
         else 
         {
@@ -388,7 +419,7 @@ int main(int argc, char *argv[])
             {
                 dds.mipmap(&mipmap, f, m); // @@ Load as float.
 
-                inputOptions.setMipmapData(mipmap.pixels(), mipmap.width(), mipmap.height(), 1, f, m);
+                inputOptions.setMipmapData(mipmap.pixels(), mipmap.width(), mipmap.height(), mipmap.depth(), f, m);
             }
         }
     }
@@ -453,7 +484,7 @@ int main(int argc, char *argv[])
     // Block compressed textures with mipmaps must be powers of two.
     if (!noMipmaps && format != nvtt::Format_RGB)
     {
-        inputOptions.setRoundMode(nvtt::RoundMode_ToNearestPowerOfTwo);
+        inputOptions.setRoundMode(nvtt::RoundMode_ToPreviousPowerOfTwo);
     }
 
     if (normal)
@@ -487,11 +518,11 @@ int main(int argc, char *argv[])
 
     if (format == nvtt::Format_BC2) {
         // Dither alpha when using BC2.
-        compressionOptions.setQuantization(false, true, false);
+        compressionOptions.setQuantization(/*color dithering*/false, /*alpha dithering*/true, /*binary alpha*/false);
     }
     else if (format == nvtt::Format_BC1a) {
         // Binary alpha when using BC1a.
-        compressionOptions.setQuantization(false, true, true, 127);
+        compressionOptions.setQuantization(/*color dithering*/false, /*alpha dithering*/true, /*binary alpha*/true, 127);
     }
     else if (format == nvtt::Format_RGBA)
     {
@@ -523,6 +554,11 @@ int main(int argc, char *argv[])
     {
         compressionOptions.setColorWeights(1, 1, 0);
     }
+
+    
+    //compressionOptions.setColorWeights(0.2126, 0.7152, 0.0722);
+    //compressionOptions.setColorWeights(0.299, 0.587, 0.114);
+    //compressionOptions.setColorWeights(3, 4, 2);
 
     if (externalCompressor != NULL)
     {
@@ -558,6 +594,12 @@ int main(int argc, char *argv[])
     //outputOptions.setFileName(output);
     outputOptions.setOutputHandler(&outputHandler);
     outputOptions.setErrorHandler(&errorHandler);
+
+	// Automatically use dds10 if compressing to BC6 or BC7
+	if (format == nvtt::Format_BC6 || format == nvtt::Format_BC7)
+	{
+		dds10 = true;
+	}
 
     if (dds10)
     {

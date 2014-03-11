@@ -129,7 +129,7 @@ texture<> image;
 // Combined convolution filter
 ////////////////////////////////////////////////////////////////////////////////
 
-__global__ void convolve(float4 *output)
+__global__ void convolve(float4 * output)
 {
 	// @@ Use morton order to assing threads.
 	int x = threadIdx.x;

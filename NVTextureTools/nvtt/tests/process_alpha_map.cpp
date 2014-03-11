@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     context.enableCudaAcceleration(false);
 
     // Load color map.
-    nvtt::TexImage colorMap;
+    nvtt::Surface colorMap;
     if (!colorMap.load(inputFileNameColor)) {
         printf("Image '%s' could not be loaded.\n", inputFileNameColor);
         return EXIT_FAILURE;
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
     colorOutputOptions.setFileName(outputFileNameColor.str());
 
     // Load normal map.
-    nvtt::TexImage normalMap;
+    nvtt::Surface normalMap;
     if (inputFileNameNormal != NULL) {
         if (!normalMap.load(inputFileNameColor)) {
             printf("Image '%s' could not be loaded.\n", inputFileNameNormal);
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
     // Output header and first mipmap.
     context.outputHeader(colorMap, colorMap.countMipmaps(), colorCompressionOptions, colorOutputOptions);
 
-    colorMap.flipVertically();
+    colorMap.flipY();
     colorMap.setAlphaMode(nvtt::AlphaMode_Transparency);
 
     context.compress(colorMap, 0, 0, colorCompressionOptions, colorOutputOptions);
@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
     if (inputFileNameNormal != NULL) {
         context.outputHeader(normalMap, normalMap.countMipmaps(), normalCompressionOptions, normalOutputOptions);
 
-        normalMap.flipVertically();
+        normalMap.flipY();
         normalMap.setAlphaMode(nvtt::AlphaMode_Transparency);
         normalMap.normalizeNormalMap();
         normalMap.copyChannel(colorMap, 3); // Copy alpha channel from color to normal map.
@@ -114,16 +114,16 @@ int main(int argc, char *argv[])
     const float gamma = 2.2f;
     colorMap.toLinear(gamma);
 
-    const float alphaRef = 0.95;
+    const float alphaRef = 0.95f;
     const float coverage = colorMap.alphaTestCoverage(alphaRef);
 
     // Build and output mipmaps.
-	int m = 1;
+    int m = 1;
     while (colorMap.buildNextMipmap(nvtt::MipmapFilter_Kaiser))
     {
         colorMap.scaleAlphaToCoverage(coverage, alphaRef);
             
-        nvtt::TexImage tmpColorMap = colorMap;
+        nvtt::Surface tmpColorMap = colorMap;
         tmpColorMap.toGamma(gamma);
 
         context.compress(tmpColorMap, 0, m, colorCompressionOptions, colorOutputOptions);
@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
             context.compress(normalMap, 0, m, normalCompressionOptions, normalOutputOptions);            
         }
 
-		m++;
+        m++;
     }
 
     return EXIT_SUCCESS;

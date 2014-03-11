@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2011 Ignacio Castano <castano@gmail.com>
 // Copyright (c) 2007-2009 NVIDIA Corporation -- Ignacio Castano <icastano@nvidia.com>
-//
+// 
 // Permission is hereby granted, free of charge, to any person
 // obtaining a copy of this software and associated documentation
 // files (the "Software"), to deal in the Software without
@@ -9,10 +9,10 @@
 // copies of the Software, and to permit persons to whom the
 // Software is furnished to do so, subject to the following
 // conditions:
-//
+// 
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-//
+// 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 // OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -25,7 +25,9 @@
 #ifndef NV_TT_OPTIMALCOMPRESSDXT_H
 #define NV_TT_OPTIMALCOMPRESSDXT_H
 
-#include <NVTextureTools/TextureToolsBase.h>
+#include <nvimage/nvimage.h>
+
+#include <nvmath/Color.h>
 
 namespace nv
 {
@@ -35,16 +37,19 @@ namespace nv
 	struct BlockDXT5;
 	struct AlphaBlockDXT3;
 	struct AlphaBlockDXT5;
-	
+
 	namespace OptimalCompress
 	{
-		void compressDXT1(Color32 rgba, BlockDXT1 *dxtBlock);
-		void compressDXT1a(Color32 rgba, uint alphaMask, BlockDXT1 *dxtBlock);
-		void compressDXT1G(uint8 g, BlockDXT1 *dxtBlock);
+		void compressDXT1(Color32 rgba, BlockDXT1 * dxtBlock);
+		void compressDXT1a(Color32 rgba, uint alphaMask, BlockDXT1 * dxtBlock);
+		void compressDXT1G(uint8 g, BlockDXT1 * dxtBlock);
 		
-		void compressDXT1G(const ColorBlock &rgba, BlockDXT1 *block);
-		void compressDXT3A(const ColorBlock &rgba, AlphaBlockDXT3 *dxtBlock);
-		void compressDXT5A(const ColorBlock &rgba, AlphaBlockDXT5 *dxtBlock);
+		void compressDXT1G(const ColorBlock & rgba, BlockDXT1 * block);
+		void compressDXT3A(const ColorBlock & rgba, AlphaBlockDXT3 * dxtBlock);
+		void compressDXT5A(const ColorBlock & rgba, AlphaBlockDXT5 * dxtBlock);
+
+        void compressDXT1_Luma(const ColorBlock & rgba, BlockDXT1 * block);
+
 	}
 } // nv namespace
 

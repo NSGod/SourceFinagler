@@ -1,7 +1,12 @@
 // This code is in the public domain -- Ignacio Castaño <castano@gmail.com>
 
-#include <NVCore/Debug.h>
-#include <NVCore/StrLib.h>
+#include "Debug.h"
+#include "Array.inl"
+#include "StrLib.h" // StringBuilder
+
+#include "StdStream.h" // fileOpen
+
+#include <stdlib.h>
 
 // Extern
 #if NV_OS_WIN32 //&& NV_CC_MSVC
@@ -35,7 +40,7 @@
 #   include <signal.h>
 #endif
 
-#if NV_OS_LINUX || NV_OS_DARWIN || NV_OS_FREEBSD
+#if NV_OS_UNIX
 #   include <unistd.h> // getpid
 #endif
 
@@ -46,10 +51,13 @@
 #   endif
 #endif
 
-#if NV_OS_DARWIN || NV_OS_FREEBSD
+#if NV_OS_DARWIN || NV_OS_FREEBSD || NV_OS_OPENBSD
 #   include <sys/types.h>
+#   include <sys/param.h>
 #   include <sys/sysctl.h> // sysctl
-#   include <sys/ucontext.h>
+#   if !defined(NV_OS_OPENBSD)
+#       include <sys/ucontext.h>
+#   endif
 #   if defined(HAVE_EXECINFO_H) // only after OSX 10.5
 #       include <execinfo.h> // backtrace
 #       if NV_CC_GNUC // defined(HAVE_CXXABI_H)
@@ -57,6 +65,9 @@
 #       endif
 #   endif
 #endif
+
+#define NV_USE_SEPARATE_THREAD 1
+
 
 using namespace nv;
 
@@ -67,6 +78,7 @@ namespace
     static AssertHandler * s_assert_handler = NULL;
 
     static bool s_sig_handler_enabled = false;
+    static bool s_interactive = true;
 
 #if NV_OS_WIN32 && NV_CC_MSVC
 
@@ -86,33 +98,165 @@ namespace
 
 #if NV_OS_WIN32 && NV_CC_MSVC
 
+    // We should try to simplify the top level filter as much as possible.
+    // http://www.nynaeve.net/?p=128
+
+#if NV_USE_SEPARATE_THREAD
+
+    // The critical section enforcing the requirement that only one exception be
+    // handled by a handler at a time.
+    static CRITICAL_SECTION s_handler_critical_section;
+
+    // Semaphores used to move exception handling between the exception thread
+    // and the handler thread.  handler_start_semaphore_ is signalled by the
+    // exception thread to wake up the handler thread when an exception occurs.
+    // handler_finish_semaphore_ is signalled by the handler thread to wake up
+    // the exception thread when handling is complete.
+    static HANDLE s_handler_start_semaphore = NULL;
+    static HANDLE s_handler_finish_semaphore = NULL;
+
+    // The exception handler thread.
+    static HANDLE s_handler_thread = NULL;
+
+    static DWORD s_requesting_thread_id = 0;
+    static EXCEPTION_POINTERS * s_exception_info = NULL;
+
+#endif // NV_USE_SEPARATE_THREAD
+
+
+    struct MinidumpCallbackContext {
+        ULONG64 memory_base;
+        ULONG memory_size;
+        bool finished;
+    };
+
+    // static
+    static BOOL CALLBACK miniDumpWriteDumpCallback(PVOID context, const PMINIDUMP_CALLBACK_INPUT callback_input, PMINIDUMP_CALLBACK_OUTPUT callback_output)
+    {
+        switch (callback_input->CallbackType)
+        {
+        case MemoryCallback: {
+            MinidumpCallbackContext* callback_context = reinterpret_cast<MinidumpCallbackContext*>(context);
+            if (callback_context->finished)
+                return FALSE;
+
+            // Include the specified memory region.
+            callback_output->MemoryBase = callback_context->memory_base;
+            callback_output->MemorySize = callback_context->memory_size;
+            callback_context->finished = true;
+            return TRUE;
+        }
+
+        // Include all modules.
+        case IncludeModuleCallback:
+        case ModuleCallback:
+            return TRUE;
+
+        // Include all threads.
+        case IncludeThreadCallback:
+        case ThreadCallback:
+            return TRUE;
+
+        // Stop receiving cancel callbacks.
+        case CancelCallback:
+            callback_output->CheckCancel = FALSE;
+            callback_output->Cancel = FALSE;
+            return TRUE;
+        }
+
+        // Ignore other callback types.
+        return FALSE;
+    }
+
     static bool writeMiniDump(EXCEPTION_POINTERS * pExceptionInfo)
     {
         // create the file
-        HANDLE hFile = CreateFile("crash.dmp", GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+        HANDLE hFile = CreateFileA("crash.dmp", GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
         if (hFile == INVALID_HANDLE_VALUE) {
-            nvDebug("*** Failed to create dump file.\n");
+            //nvDebug("*** Failed to create dump file.\n");
             return false;
         }
 
-        MINIDUMP_EXCEPTION_INFORMATION ExInfo;
-        ExInfo.ThreadId = ::GetCurrentThreadId();
-        ExInfo.ExceptionPointers = pExceptionInfo;
-        ExInfo.ClientPointers = NULL;
+        MINIDUMP_EXCEPTION_INFORMATION * pExInfo = NULL;
+        MINIDUMP_CALLBACK_INFORMATION * pCallback = NULL;
+
+        if (pExceptionInfo != NULL) {
+            MINIDUMP_EXCEPTION_INFORMATION ExInfo;
+            ExInfo.ThreadId = ::GetCurrentThreadId();
+            ExInfo.ExceptionPointers = pExceptionInfo;
+            ExInfo.ClientPointers = NULL;
+            pExInfo = &ExInfo;
+
+            MINIDUMP_CALLBACK_INFORMATION callback;
+            MinidumpCallbackContext context;
+
+            // Find a memory region of 256 bytes centered on the
+            // faulting instruction pointer.
+            const ULONG64 instruction_pointer = 
+            #if defined(_M_IX86)
+                pExceptionInfo->ContextRecord->Eip;
+            #elif defined(_M_AMD64)
+                pExceptionInfo->ContextRecord->Rip;
+            #else
+                #error Unsupported platform
+            #endif
+
+            MEMORY_BASIC_INFORMATION info;
+            
+            if (VirtualQuery(reinterpret_cast<LPCVOID>(instruction_pointer), &info, sizeof(MEMORY_BASIC_INFORMATION)) != 0 && info.State == MEM_COMMIT)
+            {
+                // Attempt to get 128 bytes before and after the instruction
+                // pointer, but settle for whatever's available up to the
+                // boundaries of the memory region.
+                const ULONG64 kIPMemorySize = 256;
+                context.memory_base = max(reinterpret_cast<ULONG64>(info.BaseAddress), instruction_pointer - (kIPMemorySize / 2));
+                ULONG64 end_of_range = min(instruction_pointer + (kIPMemorySize / 2), reinterpret_cast<ULONG64>(info.BaseAddress) + info.RegionSize);
+                context.memory_size = static_cast<ULONG>(end_of_range - context.memory_base);
+                context.finished = false;
+
+                callback.CallbackRoutine = miniDumpWriteDumpCallback;
+                callback.CallbackParam = reinterpret_cast<void*>(&context);
+                pCallback = &callback;
+            }
+        }
+
+        MINIDUMP_TYPE miniDumpType = (MINIDUMP_TYPE)(MiniDumpNormal|MiniDumpWithHandleData|MiniDumpWithThreadInfo);
 
         // write the dump
-        BOOL ok = MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hFile, MiniDumpNormal, &ExInfo, NULL, NULL) != 0;
+        BOOL ok = MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hFile, miniDumpType, pExInfo, NULL, pCallback) != 0;
         CloseHandle(hFile);
 
         if (ok == FALSE) {
-            nvDebug("*** Failed to save dump file.\n");
+            //nvDebug("*** Failed to save dump file.\n");
             return false;
         }
 
-        nvDebug("\nDump file saved.\n");
+        //nvDebug("\nDump file saved.\n");
 
         return true;
     }
+
+#if NV_USE_SEPARATE_THREAD
+
+    static DWORD WINAPI ExceptionHandlerThreadMain(void* lpParameter) {
+        nvDebugCheck(s_handler_start_semaphore != NULL);
+        nvDebugCheck(s_handler_finish_semaphore != NULL);
+
+        while (true) {
+            if (WaitForSingleObject(s_handler_start_semaphore, INFINITE) == WAIT_OBJECT_0) {
+                writeMiniDump(s_exception_info);
+
+                // Allow the requesting thread to proceed.
+                ReleaseSemaphore(s_handler_finish_semaphore, 1, NULL);
+            }
+        }
+
+        // This statement is not reached when the thread is unconditionally
+        // terminated by the ExceptionHandler destructor.
+        return 0;
+    }
+
+#endif // NV_USE_SEPARATE_THREAD
 
     static bool hasStackTrace() {
         return true;
@@ -195,12 +339,12 @@ namespace
     }
 #pragma warning(pop)
 
-    static NV_NOINLINE void printStackTrace(void * trace[], int size, int start=0)
+    static NV_NOINLINE void writeStackTrace(void * trace[], int size, int start, Array<const char *> & lines)
     {
+        StringBuilder builder(512);
+
         HANDLE hProcess = GetCurrentProcess();
     	
-        nvDebug( "\nDumping stacktrace:\n" );
-
 	    // Resolve PC to function names
 	    for (int i = start; i < size; i++)
 	    {
@@ -243,7 +387,9 @@ namespace
 			    DWORD dwDisplacement;
 			    if (!SymGetLineFromAddr64(hProcess, ip, &dwDisplacement, &theLine))
 			    {
-				    nvDebug("unknown(%08X) : %s\n", (uint32)ip, pFunc);
+                    // Do not print unknown symbols anymore.
+                    break;
+                    //builder.format("unknown(%08X) : %s\n", (uint32)ip, pFunc);
 			    }
 			    else
 			    {
@@ -256,25 +402,118 @@ namespace
     				
 				    int line = theLine.LineNumber;
     				
-				    nvDebug("%s(%d) : %s\n", pFile, line, pFunc);
+                    builder.format("%s(%d) : %s\n", pFile, line, pFunc);
 			    }
+
+                lines.append(builder.release());
+
+                if (pFunc != NULL && strcmp(pFunc, "WinMain") == 0) {
+                    break;
+                }
 		    }
 	    }
     }
 
 
     // Write mini dump and print stack trace.
-    static LONG WINAPI topLevelFilter(EXCEPTION_POINTERS * pExceptionInfo)
+    static LONG WINAPI handleException(EXCEPTION_POINTERS * pExceptionInfo)
     {
+        EnterCriticalSection(&s_handler_critical_section);
+#if NV_USE_SEPARATE_THREAD
+        s_requesting_thread_id = GetCurrentThreadId();
+        s_exception_info = pExceptionInfo;
+
+        // This causes the handler thread to call writeMiniDump.
+        ReleaseSemaphore(s_handler_start_semaphore, 1, NULL);
+
+        // Wait until WriteMinidumpWithException is done and collect its return value.
+        WaitForSingleObject(s_handler_finish_semaphore, INFINITE);
+        //bool status = s_handler_return_value;
+
+        // Clean up.
+        s_requesting_thread_id = 0;
+        s_exception_info = NULL;
+#else
+        // First of all, write mini dump.
+        writeMiniDump(pExceptionInfo);
+#endif
+        LeaveCriticalSection(&s_handler_critical_section);
+
+        nvDebug("\nDump file saved.\n");
+
+        // Try to attach to debugger.
+        if (s_interactive && debug::attachToDebugger()) {
+            nvDebugBreak();
+            return EXCEPTION_CONTINUE_EXECUTION;
+        }
+
+        // If that fails, then try to pretty print a stack trace and terminate.
         void * trace[64];
         
         int size = backtraceWithSymbols(pExceptionInfo->ContextRecord, trace, 64);
-        printStackTrace(trace, size, 0);
 
-        writeMiniDump(pExceptionInfo);
+        // @@ Use win32's CreateFile?
+        FILE * fp = fileOpen("crash.txt", "wb");
+        if (fp != NULL) {
+            Array<const char *> lines;
+            writeStackTrace(trace, size, 0, lines);
 
-        return EXCEPTION_CONTINUE_SEARCH;
+            for (uint i = 0; i < lines.count(); i++) {
+                fputs(lines[i], fp);
+                delete lines[i];
+            }
+
+            // @@ Add more info to crash.txt?
+
+            fclose(fp);
+        }
+
+        // This should terminate the process and set the error exit code.
+        TerminateProcess(GetCurrentProcess(), EXIT_FAILURE + 2);
+
+        return EXCEPTION_EXECUTE_HANDLER;   // Terminate app. In case terminate process did not succeed.
     }
+
+    static void handlePureVirtualCall() {
+        nvDebugBreak();
+        TerminateProcess(GetCurrentProcess(), EXIT_FAILURE + 8);
+    }
+
+    static void handleInvalidParameter(const wchar_t * expresion, const wchar_t * function, const wchar_t * file, unsigned int line, uintptr_t reserved) {
+
+        size_t convertedCharCount = 0;
+        StringBuilder tmp;
+
+        if (expresion != NULL) {
+            uint size = toU32(wcslen(expresion) + 1);
+            tmp.reserve(size);
+            wcstombs_s(&convertedCharCount, tmp.str(), size, expresion, _TRUNCATE);
+
+            nvDebug("*** Invalid parameter: %s\n", tmp.str());
+
+            if (file != NULL) {
+                size = toU32(wcslen(file) + 1);
+                tmp.reserve(size);
+                wcstombs_s(&convertedCharCount, tmp.str(), size, file, _TRUNCATE);
+
+                nvDebug("    On file: %s\n", tmp.str());
+
+                if (function != NULL) {
+                    size = toU32(wcslen(function) + 1);
+                    tmp.reserve(size);
+                    wcstombs_s(&convertedCharCount, tmp.str(), size, function, _TRUNCATE);
+
+                    nvDebug("    On function: %s\n", tmp.str());
+                }
+
+                nvDebug("    On line: %u\n", line);
+            }
+        }
+
+        nvDebugBreak();
+        TerminateProcess(GetCurrentProcess(), EXIT_FAILURE + 8);
+    }
+
 
 #elif !NV_OS_WIN32 && defined(HAVE_SIGNAL_H) // NV_OS_LINUX || NV_OS_DARWIN
 
@@ -288,38 +527,71 @@ namespace
 #endif
     }
 
-    static void printStackTrace(void * trace[], int size, int start=0) {
+
+    static void writeStackTrace(void * trace[], int size, int start, Array<const char *> & lines) {
+        StringBuilder builder(512);
         char ** string_array = backtrace_symbols(trace, size);
 
-        nvDebug( "\nDumping stacktrace:\n" );
         for(int i = start; i < size-1; i++ ) {
 #       if NV_CC_GNUC // defined(HAVE_CXXABI_H)
+            // @@ Write a better parser for the possible formats.
             char * begin = strchr(string_array[i], '(');
-            char * end = strchr(string_array[i], '+');
+            char * end = strrchr(string_array[i], '+');
+            char * module = string_array[i];
+
+            if (begin == 0 && end != 0) {
+                *(end - 1) = '\0';
+                begin = strrchr(string_array[i], ' ');
+                module = NULL; // Ignore module.
+            }
+
             if (begin != 0 && begin < end) {
                 int stat;
                 *end = '\0';
                 *begin = '\0';
-                char * module = string_array[i];
                 char * name = abi::__cxa_demangle(begin+1, 0, 0, &stat);
-                if (name == NULL || stat != 0) {
-                    nvDebug( "  In: [%s] '%s'\n", module, begin+1 );
+                if (module == NULL) {
+                    if (name == NULL || stat != 0) {
+                        builder.format("  In: '%s'\n", begin+1);
+                    }
+                    else {
+                        builder.format("  In: '%s'\n", name);
+                    }
                 }
                 else {
-                    nvDebug( "  In: [%s] '%s'\n", module, name );
+                    if (name == NULL || stat != 0) {
+                        builder.format("  In: [%s] '%s'\n", module, begin+1);
+                    }
+                    else {
+                        builder.format("  In: [%s] '%s'\n", module, name);
+                    }
                 }
                 free(name);
             }
             else {
-                nvDebug( "  In: '%s'\n", string_array[i] );
+                builder.format("  In: '%s'\n", string_array[i]);
             }
 #       else
-            nvDebug( "  In: '%s'\n", string_array[i] );
+            builder.format("  In: '%s'\n", string_array[i]);
 #       endif
+            lines.append(builder.release());
         }
-        nvDebug("\n");
 
         free(string_array);
+    }
+
+    static void printStackTrace(void * trace[], int size, int start=0) {
+        nvDebug( "\nDumping stacktrace:\n" );
+
+        Array<const char *> lines;
+        writeStackTrace(trace, size, 1, lines);
+
+        for (uint i = 0; i < lines.count(); i++) {
+            nvDebug(lines[i]);
+            delete lines[i];
+        }
+
+        nvDebug("\n");
     }
 
 #endif // defined(HAVE_EXECINFO_H)
@@ -364,6 +636,16 @@ namespace
 #    else
 #      error "Unknown CPU"
 #    endif
+#elif NV_OS_OPENBSD
+#  if NV_CPU_X86_64
+        ucontext_t * ucp = (ucontext_t *)secret;
+        return (void *)ucp->sc_rip;
+#  elif NV_CPU_X86
+        ucontext_t * ucp = (ucontext_t *)secret;
+        return (void *)ucp->sc_eip;
+#  else
+#       error "Unknown CPU"
+#  endif        
 #else
 #  if NV_CPU_X86_64
         // #define REG_RIP REG_INDEX(rip) // seems to be 16
@@ -448,70 +730,67 @@ namespace
     /** Win32 assert handler. */
     struct Win32AssertHandler : public AssertHandler 
     {
-        // Code from Daniel Vogel.
-        static bool isDebuggerPresent()
-        {
-            HINSTANCE kernel32 = GetModuleHandle("kernel32.dll");
-            if (kernel32) {
-                FARPROC IsDebuggerPresent = GetProcAddress(kernel32, "IsDebuggerPresent");
-                if (IsDebuggerPresent != NULL && IsDebuggerPresent()) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         // Flush the message queue. This is necessary for the message box to show up.
         static void flushMessageQueue()
         {
             MSG msg;
             while( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) ) {
-                if( msg.message == WM_QUIT ) break;
+                //if( msg.message == WM_QUIT ) break;
                 TranslateMessage( &msg );
                 DispatchMessage( &msg );
             }
         }
 
         // Assert handler method.
-        virtual int assertion( const char * exp, const char * file, int line, const char * func/*=NULL*/ )
+        virtual int assertion(const char * exp, const char * file, int line, const char * func, const char * msg, va_list arg)
         {
             int ret = NV_ABORT_EXIT;
 
             StringBuilder error_string;
-            if( func != NULL ) {
-                error_string.format( "*** Assertion failed: %s\n    On file: %s\n    On function: %s\n    On line: %d\n ", exp, file, func, line );
-                nvDebug( error_string.str() );
+            error_string.format("*** Assertion failed: %s\n    On file: %s\n    On line: %d\n", exp, file, line );
+            if (func != NULL) {
+                error_string.appendFormat("    On function: %s\n", func);
             }
-            else {
-                error_string.format( "*** Assertion failed: %s\n    On file: %s\n    On line: %d\n ", exp, file, line );
-                nvDebug( error_string.str() );
+            if (msg != NULL) {
+                error_string.append("    Message: ");
+                va_list tmp;
+                va_copy(tmp, arg);
+                error_string.appendFormatList(msg, tmp);
+                va_end(tmp);
+                error_string.append("\n");
             }
+            nvDebug( error_string.str() );
 
-            if (isDebuggerPresent()) {
+            // Print stack trace:
+            debug::dumpInfo();
+
+            if (debug::isDebuggerPresent()) {
                 return NV_ABORT_DEBUG;
             }
 
-            flushMessageQueue();
-            int action = MessageBoxA(NULL, error_string.str(), "Assertion failed", MB_ABORTRETRYIGNORE|MB_ICONERROR);
-            switch( action ) {
-            case IDRETRY:
-                ret = NV_ABORT_DEBUG;
-                break;
-            case IDIGNORE:
-                ret = NV_ABORT_IGNORE;
-                break;
-            case IDABORT:
-            default:
-                ret = NV_ABORT_EXIT;
-                break;
+            if (s_interactive) {
+                flushMessageQueue();
+                int action = MessageBoxA(NULL, error_string.str(), "Assertion failed", MB_ABORTRETRYIGNORE|MB_ICONERROR);
+                switch( action ) {
+                case IDRETRY:
+                    ret = NV_ABORT_DEBUG;
+                    break;
+                case IDIGNORE:
+                    ret = NV_ABORT_IGNORE;
+                    break;
+                case IDABORT:
+                default:
+                    ret = NV_ABORT_EXIT;
+                    break;
+                }
+                /*if( _CrtDbgReport( _CRT_ASSERT, file, line, module, exp ) == 1 ) {
+                    return NV_ABORT_DEBUG;
+                }*/
             }
-            /*if( _CrtDbgReport( _CRT_ASSERT, file, line, module, exp ) == 1 ) {
-                return NV_ABORT_DEBUG;
-            }*/
 
-            if( ret == NV_ABORT_EXIT ) {
-                 // Exit cleanly.
-                throw "Assertion failed";
+            if (ret == NV_ABORT_EXIT) {
+                // Exit cleanly.
+                exit(EXIT_FAILURE + 1);
             }
 
             return ret;
@@ -522,17 +801,8 @@ namespace
     /** Xbox360 assert handler. */
     struct Xbox360AssertHandler : public AssertHandler 
     {
-        static bool isDebuggerPresent()
-        {
-#ifdef _DEBUG
-            return DmIsDebuggerPresent() == TRUE;
-#else
-            return false;
-#endif
-        }
-
         // Assert handler method.
-        virtual int assertion( const char * exp, const char * file, int line, const char * func/*=NULL*/ )
+        virtual int assertion(const char * exp, const char * file, int line, const char * func, const char * msg, va_list arg)
         {
             int ret = NV_ABORT_EXIT;
 
@@ -546,45 +816,25 @@ namespace
                 nvDebug( error_string.str() );
             }
 
-            if (isDebuggerPresent()) {
+            if (debug::isDebuggerPresent()) {
                 return NV_ABORT_DEBUG;
             }
 
             if( ret == NV_ABORT_EXIT ) {
                  // Exit cleanly.
-                throw "Assertion failed";
+                exit(EXIT_FAILURE + 1);
             }
 
             return ret;
         }
     };
-#else
+#elif NV_OS_ORBIS
 
-    /** Unix assert handler. */
-    struct UnixAssertHandler : public AssertHandler
+    /** Orbis assert handler. */
+    struct OrbisAssertHandler : public AssertHandler
     {
-        bool isDebuggerPresent()
-        {
-#if NV_OS_DARWIN
-            int mib[4];
-            struct kinfo_proc info;
-            size_t size;
-            mib[0] = CTL_KERN;
-            mib[1] = KERN_PROC;
-            mib[2] = KERN_PROC_PID;
-            mib[3] = getpid();
-            size = sizeof(info);
-            info.kp_proc.p_flag = 0;
-            sysctl(mib,4,&info,&size,NULL,0);
-            return ((info.kp_proc.p_flag & P_TRACED) == P_TRACED);
-#else
-            // if ppid != sid, some process spawned our app, probably a debugger. 
-            return getsid(getpid()) != getppid();
-#endif
-        }
-
         // Assert handler method.
-        virtual int assertion(const char * exp, const char * file, int line, const char * func)
+        virtual int assertion(const char * exp, const char * file, int line, const char * func, const char * msg, va_list arg)
         {
             if( func != NULL ) {
                 nvDebug( "*** Assertion failed: %s\n    On file: %s\n    On function: %s\n    On line: %d\n ", exp, file, func, line );
@@ -593,8 +843,41 @@ namespace
                 nvDebug( "*** Assertion failed: %s\n    On file: %s\n    On line: %d\n ", exp, file, line );
             }
 
+            //SBtodoORBIS print stack trace
+            /*if (hasStackTrace())
+            {
+                void * trace[64];
+                int size = backtrace(trace, 64);
+                printStackTrace(trace, size, 2);
+            }*/
+            
+            //SBtodoORBIS check for debugger present
+            //if (debug::isDebuggerPresent())
+                nvDebugBreak();
+
+            return NV_ABORT_DEBUG;
+        }
+    };
+
+#else
+
+    /** Unix assert handler. */
+    struct UnixAssertHandler : public AssertHandler
+    {
+        // Assert handler method.
+        virtual int assertion(const char * exp, const char * file, int line, const char * func, const char * msg, va_list arg)
+        {
+            int ret = NV_ABORT_EXIT;            
+            
+            if( func != NULL ) {
+                nvDebug( "*** Assertion failed: %s\n    On file: %s\n    On function: %s\n    On line: %d\n ", exp, file, func, line );
+            }
+            else {
+                nvDebug( "*** Assertion failed: %s\n    On file: %s\n    On line: %d\n ", exp, file, line );
+            }
+
 #if _DEBUG
-            if (isDebuggerPresent()) {
+            if (debug::isDebuggerPresent()) {
                 return NV_ABORT_DEBUG;
             }
 #endif
@@ -608,8 +891,12 @@ namespace
             }
 #endif
 
+            if( ret == NV_ABORT_EXIT ) {
             // Exit cleanly.
-            throw "Assertion failed";
+            exit(EXIT_FAILURE + 1);
+        }
+            
+            return ret;
         }
     };
 
@@ -619,22 +906,61 @@ namespace
 
 
 /// Handle assertion through the assert handler.
-int nvAbort(const char * exp, const char * file, int line, const char * func/*=NULL*/)
+int nvAbort(const char * exp, const char * file, int line, const char * func/*=NULL*/, const char * msg/*= NULL*/, ...)
 {
 #if NV_OS_WIN32 //&& NV_CC_MSVC
     static Win32AssertHandler s_default_assert_handler;
 #elif NV_OS_XBOX
     static Xbox360AssertHandler s_default_assert_handler;
+#elif NV_OS_ORBIS
+    static OrbisAssertHandler s_default_assert_handler;
 #else
     static UnixAssertHandler s_default_assert_handler;
 #endif
 
-    if (s_assert_handler != NULL) {
-        return s_assert_handler->assertion( exp, file, line, func );
+    va_list arg;
+    va_start(arg,msg);
+
+    AssertHandler * handler = s_assert_handler != NULL ? s_assert_handler : &s_default_assert_handler;
+    int result = handler->assertion(exp, file, line, func, msg, arg);
+
+    va_end(arg);
+
+    return result;
+}
+
+// Abnormal termination. Create mini dump and output call stack.
+void debug::terminate(int code)
+{
+#if NV_OS_WIN32
+    EnterCriticalSection(&s_handler_critical_section);
+
+    writeMiniDump(NULL);
+
+    const int max_stack_size = 64;
+    void * trace[max_stack_size];
+    int size = backtrace(trace, max_stack_size);
+
+    // @@ Use win32's CreateFile?
+    FILE * fp = fileOpen("crash.txt", "wb");
+    if (fp != NULL) {
+        Array<const char *> lines;
+        writeStackTrace(trace, size, 0, lines);
+
+        for (uint i = 0; i < lines.count(); i++) {
+            fputs(lines[i], fp);
+            delete lines[i];
+        }
+
+        // @@ Add more info to crash.txt?
+
+        fclose(fp);
     }
-    else {
-        return s_default_assert_handler.assertion( exp, file, line, func );
-    }
+
+    LeaveCriticalSection(&s_handler_critical_section);
+#endif
+
+    exit(code);
 }
 
 
@@ -658,7 +984,36 @@ void debug::dumpInfo()
     {
         void * trace[64];
         int size = backtrace(trace, 64);
-        printStackTrace(trace, size, 1);
+
+        nvDebug( "\nDumping stacktrace:\n" );
+
+        Array<const char *> lines;
+        writeStackTrace(trace, size, 1, lines);
+
+        for (uint i = 0; i < lines.count(); i++) {
+            nvDebug(lines[i]);
+            delete lines[i];
+        }
+    }
+#endif
+}
+
+/// Dump callstack using the specified handler.
+void debug::dumpCallstack(MessageHandler *messageHandler, int callstackLevelsToSkip /*= 0*/)
+{
+#if (NV_OS_WIN32 && NV_CC_MSVC) || (defined(HAVE_SIGNAL_H) && defined(HAVE_EXECINFO_H))
+    if (hasStackTrace())
+    {
+        void * trace[64];
+        int size = backtrace(trace, 64);
+
+        Array<const char *> lines;
+        writeStackTrace(trace, size, callstackLevelsToSkip + 1, lines);     // + 1 to skip the call to dumpCallstack
+
+        for (uint i = 0; i < lines.count(); i++) {
+            messageHandler->log(lines[i], NULL);
+            delete lines[i];
+        }
     }
 #endif
 }
@@ -688,21 +1043,95 @@ void debug::resetAssertHandler()
     s_assert_handler = NULL;
 }
 
+#if NV_OS_WIN32
+#if NV_USE_SEPARATE_THREAD
 
-/// Enable signal handler.
-void debug::enableSigHandler()
+static void initHandlerThread()
+{
+    static const int kExceptionHandlerThreadInitialStackSize = 64 * 1024;
+
+    // Set synchronization primitives and the handler thread.  Each
+    // ExceptionHandler object gets its own handler thread because that's the
+    // only way to reliably guarantee sufficient stack space in an exception,
+    // and it allows an easy way to get a snapshot of the requesting thread's
+    // context outside of an exception.
+    InitializeCriticalSection(&s_handler_critical_section);
+    
+    s_handler_start_semaphore = CreateSemaphore(NULL, 0, 1, NULL);
+    nvDebugCheck(s_handler_start_semaphore != NULL);
+
+    s_handler_finish_semaphore = CreateSemaphore(NULL, 0, 1, NULL);
+    nvDebugCheck(s_handler_finish_semaphore != NULL);
+
+    // Don't attempt to create the thread if we could not create the semaphores.
+    if (s_handler_finish_semaphore != NULL && s_handler_start_semaphore != NULL) {
+        DWORD thread_id;
+        s_handler_thread = CreateThread(NULL,         // lpThreadAttributes
+                                        kExceptionHandlerThreadInitialStackSize,
+                                        ExceptionHandlerThreadMain,
+                                        NULL,         // lpParameter
+                                        0,            // dwCreationFlags
+                                        &thread_id);
+        nvDebugCheck(s_handler_thread != NULL);
+    }
+
+    /* @@ We should avoid loading modules in the exception handler!
+    dbghelp_module_ = LoadLibrary(L"dbghelp.dll");
+    if (dbghelp_module_) {
+        minidump_write_dump_ = reinterpret_cast<MiniDumpWriteDump_type>(GetProcAddress(dbghelp_module_, "MiniDumpWriteDump"));
+    }
+    */
+}
+
+static void shutHandlerThread() {
+    // @@ Free stuff. Terminate thread.
+}
+
+#endif // NV_USE_SEPARATE_THREAD
+#endif // NV_OS_WIN32
+
+
+// Enable signal handler.
+void debug::enableSigHandler(bool interactive)
 {
     nvCheck(s_sig_handler_enabled != true);
     s_sig_handler_enabled = true;
+    s_interactive = interactive;
 
 #if NV_OS_WIN32 && NV_CC_MSVC
+    if (interactive) {
+        // Do not display message boxes on error.
+        // http://msdn.microsoft.com/en-us/library/windows/desktop/ms680621(v=vs.85).aspx
+        SetErrorMode(SEM_FAILCRITICALERRORS|SEM_NOGPFAULTERRORBOX|SEM_NOOPENFILEERRORBOX);
 
-    s_old_exception_filter = ::SetUnhandledExceptionFilter( topLevelFilter );
+        // CRT reports errors to debug output only.
+        // http://msdn.microsoft.com/en-us/library/1y71x448(v=vs.80).aspx
+        _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+        _CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
+        _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_DEBUG);
+    }
+
+
+#if NV_USE_SEPARATE_THREAD
+    initHandlerThread();
+#endif
+
+    s_old_exception_filter = ::SetUnhandledExceptionFilter( handleException );
+
+#if _MSC_VER >= 1400  // MSVC 2005/8
+    _set_invalid_parameter_handler(handleInvalidParameter);
+#endif  // _MSC_VER >= 1400
+
+    _set_purecall_handler(handlePureVirtualCall);
+
 
     // SYMOPT_DEFERRED_LOADS make us not take a ton of time unless we actual log traces
     SymSetOptions(SYMOPT_DEFERRED_LOADS|SYMOPT_FAIL_CRITICAL_ERRORS|SYMOPT_LOAD_LINES|SYMOPT_UNDNAME);
 
-    SymInitialize(GetCurrentProcess(), NULL, TRUE);
+    if (!SymInitialize(GetCurrentProcess(), NULL, TRUE)) {
+        DWORD error = GetLastError();
+        nvDebug("SymInitialize returned error : %d\n", error);
+    }
 
 #elif !NV_OS_WIN32 && defined(HAVE_SIGNAL_H)
 
@@ -743,3 +1172,83 @@ void debug::disableSigHandler()
 #endif
 }
 
+
+bool debug::isDebuggerPresent()
+{
+#if NV_OS_WIN32
+    HINSTANCE kernel32 = GetModuleHandleA("kernel32.dll");
+    if (kernel32) {
+        FARPROC IsDebuggerPresent = GetProcAddress(kernel32, "IsDebuggerPresent");
+        if (IsDebuggerPresent != NULL && IsDebuggerPresent()) {
+            return true;
+        }
+    }
+    return false;
+#elif NV_OS_XBOX
+#ifdef _DEBUG
+    return DmIsDebuggerPresent() == TRUE;
+#else
+    return false;
+#endif
+#elif NV_OS_DARWIN
+    int mib[4];
+    struct kinfo_proc info;
+    size_t size;
+    mib[0] = CTL_KERN;
+    mib[1] = KERN_PROC;
+    mib[2] = KERN_PROC_PID;
+    mib[3] = getpid();
+    size = sizeof(info);
+    info.kp_proc.p_flag = 0;
+    sysctl(mib,4,&info,&size,NULL,0);
+    return ((info.kp_proc.p_flag & P_TRACED) == P_TRACED);
+#else
+    // if ppid != sid, some process spawned our app, probably a debugger. 
+    return getsid(getpid()) != getppid();
+#endif
+}
+
+bool debug::attachToDebugger()
+{
+#if NV_OS_WIN32
+    if (isDebuggerPresent() == FALSE) {
+        Path process(1024);
+        process.copy("\"");
+        GetSystemDirectoryA(process.str() + 1, 1024 - 1);
+
+        process.appendSeparator();
+
+        process.appendFormat("VSJitDebugger.exe\" -p %lu", ::GetCurrentProcessId());
+
+        STARTUPINFOA sSi;
+        memset(&sSi, 0, sizeof(sSi));
+
+        PROCESS_INFORMATION sPi;
+        memset(&sPi, 0, sizeof(sPi));
+        
+        BOOL b = CreateProcessA(NULL, process.str(), NULL, NULL, FALSE, 0, NULL, NULL, &sSi, &sPi);
+        if (b != FALSE) {
+            ::WaitForSingleObject(sPi.hProcess, INFINITE);
+            
+            DWORD dwExitCode;
+            ::GetExitCodeProcess(sPi.hProcess, &dwExitCode);
+            if (dwExitCode != 0) //if exit code is zero, a debugger was selected
+                b = FALSE;
+        }
+
+        if (sPi.hThread != NULL) ::CloseHandle(sPi.hThread);
+        if (sPi.hProcess != NULL) ::CloseHandle(sPi.hProcess);
+
+        if (b == FALSE)
+            return false;
+
+        for (int i = 0; i < 5*60; i++) {
+            if (isDebuggerPresent())
+                break;
+            ::Sleep(200);
+        }
+    }
+#endif // NV_OS_WIN32
+
+    return true;
+}

@@ -1,9 +1,13 @@
 // This code is in the public domain -- Ignacio Castaño <castano@gmail.com>
 
-#include <NVCore/StrLib.h>
+#include "StrLib.h"
+
+#include "Memory.h"
+#include "Utils.h" // swap
 
 #include <math.h>   // log
 #include <stdio.h>  // vsnprintf
+#include <string.h> // strlen, strcmp, etc.
 
 #if NV_CC_MSVC
 #include <stdarg.h> // vsnprintf
@@ -66,6 +70,12 @@ namespace
 
 }
 
+uint nv::strLen(const char * str)
+{
+    nvDebugCheck(str != NULL);
+    return toU32(strlen(str));
+}
+
 int nv::strCmp(const char * s1, const char * s2)
 {
     nvDebugCheck(s1 != NULL);
@@ -84,7 +94,36 @@ int nv::strCaseCmp(const char * s1, const char * s2)
 #endif
 }
 
-void nv::strCpy(char * dst, int size, const char * src)
+bool nv::strEqual(const char * s1, const char * s2)
+{
+    if (s1 == s2) return true;
+    if (s1 == NULL || s2 == NULL) return false;
+    return strCmp(s1, s2) == 0;
+}
+
+bool nv::strCaseEqual(const char * s1, const char * s2)
+{
+    if (s1 == s2) return true;
+    if (s1 == NULL || s2 == NULL) return false;
+    return strCaseCmp(s1, s2) == 0;
+}
+
+bool nv::strBeginsWith(const char * str, const char * prefix)
+{
+    //return strstr(str, prefix) == dst;
+    return strncmp(str, prefix, strlen(prefix)) == 0;
+}
+
+bool nv::strEndsWith(const char * str, const char * suffix)
+{
+    uint ml = strLen(str);
+    uint sl = strLen(suffix);
+    if (ml < sl) return false;
+    return strncmp(str + ml - sl, suffix, sl) == 0;
+}
+
+
+void nv::strCpy(char * dst, uint size, const char * src)
 {
     nvDebugCheck(dst != NULL);
     nvDebugCheck(src != NULL);
@@ -96,7 +135,7 @@ void nv::strCpy(char * dst, int size, const char * src)
 #endif
 }
 
-void nv::strCpy(char * dst, int size, const char * src, int len)
+void nv::strCpy(char * dst, uint size, const char * src, uint len)
 {
     nvDebugCheck(dst != NULL);
     nvDebugCheck(src != NULL);
@@ -108,7 +147,7 @@ void nv::strCpy(char * dst, int size, const char * src, int len)
 #endif
 }
 
-void nv::strCat(char * dst, int size, const char * src)
+void nv::strCat(char * dst, uint size, const char * src)
 {
     nvDebugCheck(dst != NULL);
     nvDebugCheck(src != NULL);
@@ -189,7 +228,7 @@ StringBuilder::StringBuilder() : m_size(0), m_str(NULL)
 }
 
 /** Preallocate space. */
-StringBuilder::StringBuilder( int size_hint ) : m_size(size_hint)
+StringBuilder::StringBuilder( uint size_hint ) : m_size(size_hint)
 {
     nvDebugCheck(m_size > 0);
     m_str = strAlloc(m_size);
@@ -203,9 +242,15 @@ StringBuilder::StringBuilder( const StringBuilder & s ) : m_size(0), m_str(NULL)
 }
 
 /** Copy string. */
-StringBuilder::StringBuilder( const char * s, int extra_size_hint/*=0*/ ) : m_size(0), m_str(NULL)
+StringBuilder::StringBuilder(const char * s) : m_size(0), m_str(NULL)
 {
-    copy(s, extra_size_hint);
+    copy(s);
+}
+
+/** Copy string. */
+StringBuilder::StringBuilder(const char * s, uint len) : m_size(0), m_str(NULL)
+{
+    copy(s, len);
 }
 
 /** Delete the string. */
@@ -288,7 +333,7 @@ StringBuilder & StringBuilder::append( const char * s )
     if (m_str == NULL) {
         m_size = slen + 1;
         m_str = strAlloc(m_size);
-        memcpy(m_str, s, m_size + 1);
+        memcpy(m_str, s, m_size);
     }
     else {
         const uint len = uint(strlen( m_str ));
@@ -338,6 +383,28 @@ StringBuilder & StringBuilder::appendFormatList( const char * fmt, va_list arg )
     }
 
     va_end(tmp);
+
+    return *this;
+}
+
+// Append n spaces.
+StringBuilder & StringBuilder::appendSpace(uint n)
+{
+    if (m_str == NULL) {
+        m_size = n + 1;
+        m_str = strAlloc(m_size);
+        memset(m_str, ' ', m_size);
+        m_str[n] = '\0';
+    }
+    else {
+        const uint len = strLen(m_str);
+        if (m_size < len + n + 1) {
+            m_size = len + n + 1;
+            m_str = strReAlloc(m_str, m_size);
+        }
+        memset(m_str + len, ' ', n);
+        m_str[len+n] = '\0';
+    }
 
     return *this;
 }
@@ -396,12 +463,22 @@ StringBuilder & StringBuilder::reserve( uint size_hint )
 
 
 /** Copy a string safely. */
-StringBuilder & StringBuilder::copy( const char * s, int extra_size/*=0*/ )
+StringBuilder & StringBuilder::copy(const char * s)
 {
     nvCheck( s != NULL );
     const uint str_size = uint(strlen( s )) + 1;
-    reserve(str_size + extra_size);
+    reserve(str_size);
     memcpy(m_str, s, str_size);
+    return *this;
+}
+
+/** Copy a string safely. */
+StringBuilder & StringBuilder::copy(const char * s, uint len)
+{
+    nvCheck( s != NULL );
+    const uint str_size = len + 1;
+    reserve(str_size);
+    strCpy(m_str, str_size, s, len);
     return *this;
 }
 
@@ -452,6 +529,13 @@ char * StringBuilder::release()
     return str;
 }
 
+// Swap strings.
+void nv::swap(StringBuilder & a, StringBuilder & b) {
+    swap(a.m_size, b.m_size);
+    swap(a.m_str, b.m_str);
+}
+
+
 /// Get the file name from a path.
 const char * Path::fileName() const
 {
@@ -467,13 +551,25 @@ const char * Path::extension() const
 
 
 /// Toggles path separators (ie. \\ into /).
-void Path::translatePath(char pathSeparator /*= NV_PATH_SEPARATOR*/)
+void Path::translatePath(char pathSeparator/*=NV_PATH_SEPARATOR*/)
 {
     nvCheck( m_str != NULL );
 
     for (int i = 0; ; i++) {
         if (m_str[i] == '\0') break;
         if (m_str[i] == '\\' || m_str[i] == '/') m_str[i] = pathSeparator;
+    }
+}
+
+void Path::appendSeparator(char pathSeparator/*=NV_PATH_SEPARATOR*/)
+{
+    nvCheck(!isNull());
+
+    const uint l = length();
+    
+    if (m_str[l] != '\\' && m_str[l] != '/') {
+        char separatorString[] = { pathSeparator, '\0' };
+        append(separatorString);
     }
 }
 
@@ -576,7 +672,7 @@ void String::setString(const char * str)
     }
 }
 
-void String::setString(const char * str, int length)
+void String::setString(const char * str, uint length)
 {
     nvDebugCheck(str != NULL);
 
@@ -594,3 +690,44 @@ void String::setString(const StringBuilder & str)
         addRef();
     }
 }	
+
+// Add reference count.
+void String::addRef()
+{
+    if (data != NULL)
+    {
+        setRefCount(getRefCount() + 1);
+    }
+}
+
+// Decrease reference count.
+void String::release()
+{
+    if (data != NULL)
+    {
+        const uint16 count = getRefCount();
+        setRefCount(count - 1);
+        if (count - 1 == 0) {
+            free(data - 2);
+            data = NULL;
+        }
+    }
+}
+
+void String::allocString(const char * str, uint len)
+{
+    const char * ptr = malloc<char>(2 + len + 1);
+
+    setData( ptr );
+    setRefCount( 0 );
+
+    // Copy string.
+    strCpy(const_cast<char *>(data), len+1, str, len);
+
+    // Add terminating character.
+    const_cast<char *>(data)[len] = '\0';
+}
+
+void nv::swap(String & a, String & b) {
+    swap(a.data, b.data);
+}

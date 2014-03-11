@@ -9,12 +9,11 @@ SET(NVTT_SRCS
     nvtt_wrapper.h nvtt_wrapper.cpp
     ClusterFit.h ClusterFit.cpp
     Compressor.h
-    CompressorDXT.h CompressorDXT.cpp
+    BlockCompressor.h BlockCompressor.cpp
     CompressorDX9.h CompressorDX9.cpp
     CompressorDX10.h CompressorDX10.cpp
 #    CompressorDX11.h CompressorDX11.cpp
     CompressorRGB.h CompressorRGB.cpp
-    CompressorRGBE.h CompressorRGBE.cpp
     Context.h Context.cpp
     QuickCompressDXT.h QuickCompressDXT.cpp
     OptimalCompressDXT.h OptimalCompressDXT.cpp
@@ -22,14 +21,13 @@ SET(NVTT_SRCS
     CompressionOptions.h CompressionOptions.cpp
     InputOptions.h InputOptions.cpp
     OutputOptions.h OutputOptions.cpp
-    TaskDispatcher.h TaskDispatcher.cpp
-    TexImage.h TexImage.cpp
-    cuda/CudaUtils.h
-    cuda/CudaUtils.cpp
+    TaskDispatcher.h #TaskDispatcher.cpp
+    Surface.h Surface.cpp
+    CubeSurface.h CubeSurface.cpp
+    cuda/CudaUtils.h cuda/CudaUtils.cpp
     cuda/CudaMath.h
     cuda/BitmapTable.h
-    cuda/CudaCompressorDXT.h
-    cuda/CudaCompressorDXT.cpp)
+    cuda/CudaCompressorDXT.h cuda/CudaCompressorDXT.cpp)
 
 IF (CUDA_FOUND)
     ADD_DEFINITIONS(-DHAVE_CUDA)
@@ -49,7 +47,7 @@ ELSE(NVTT_SHARED)
     ADD_LIBRARY(nvtt ${NVTT_SRCS})
 ENDIF(NVTT_SHARED)
 
-TARGET_LINK_LIBRARIES(nvtt ${LIBS} nvcore nvmath nvimage squish)
+TARGET_LINK_LIBRARIES(nvtt ${LIBS} nvcore nvmath nvimage nvthread squish)
 
 INSTALL(TARGETS nvtt 
     RUNTIME DESTINATION bin

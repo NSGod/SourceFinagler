@@ -33,7 +33,10 @@
  * http://www.dspguide.com/ch16.htm
  */
 
-#include <NVImage/Filter.h>
+#include "Filter.h"
+
+#include "nvmath/Vector.h" // Vector4
+#include "nvcore/Utils.h" // swap
 
 #include <string.h> // memset
 
@@ -109,22 +112,25 @@ float Filter::sampleDelta(float x, float scale) const
 
 float Filter::sampleBox(float x, float scale, int samples) const
 {
-    float sum = 0;
+    double sum = 0;
     float isamples = 1.0f / float(samples);
 
     for(int s = 0; s < samples; s++)
     {
         float p = (x + (float(s) + 0.5f) * isamples) * scale;
         float value = evaluate(p);
+
+        //printf("%f: %.8f (%X)\n", p, value, *(uint32 *)&value);
+
         sum += value;
     }
 
-    return sum * isamples;
+    return float(sum * isamples);
 }
 
 float Filter::sampleTriangle(float x, float scale, int samples) const
 {
-    float sum = 0;
+    double sum = 0;
     float isamples = 1.0f / float(samples);
 
     for(int s = 0; s < samples; s++)
@@ -139,7 +145,7 @@ float Filter::sampleTriangle(float x, float scale, int samples) const
         sum += value * weight;
     }
 
-    return 2 * sum * isamples;
+    return float(2 * sum * isamples);
 }
 
 
@@ -277,7 +283,6 @@ void GaussianFilter::setParameters(float variance)
 
 
 
-/// Ctor.
 Kernel1::Kernel1(const Filter & f, int iscale, int samples/*= 32*/)
 {
     nvDebugCheck(iscale > 1);
@@ -306,13 +311,12 @@ Kernel1::Kernel1(const Filter & f, int iscale, int samples/*= 32*/)
     }
 }
 
-/// Dtor.
 Kernel1::~Kernel1()
 {
     delete m_data;
 }
 
-/// Print the kernel for debugging purposes.
+// Print the kernel for debugging purposes.
 void Kernel1::debugPrint()
 {
     for (int i = 0; i < m_windowSize; i++) {
@@ -322,13 +326,18 @@ void Kernel1::debugPrint()
 
 
 
-/// Ctor.
 Kernel2::Kernel2(uint ws) : m_windowSize(ws)
 {
     m_data = new float[m_windowSize * m_windowSize];
 }
 
-/// Copy ctor.
+Kernel2::Kernel2(uint ws, const float * data) : m_windowSize(ws)
+{
+    m_data = new float[m_windowSize * m_windowSize];
+
+    memcpy(m_data, data, sizeof(float) * m_windowSize * m_windowSize);
+}
+
 Kernel2::Kernel2(const Kernel2 & k) : m_windowSize(k.m_windowSize)
 {
     m_data = new float[m_windowSize * m_windowSize];
@@ -338,13 +347,12 @@ Kernel2::Kernel2(const Kernel2 & k) : m_windowSize(k.m_windowSize)
 }
 
 
-/// Dtor.
 Kernel2::~Kernel2()
 {
     delete m_data;
 }
 
-/// Normalize the filter.
+// Normalize the filter.
 void Kernel2::normalize()
 {
     float total = 0.0f;
@@ -358,7 +366,7 @@ void Kernel2::normalize()
     }
 }
 
-/// Transpose the kernel.
+// Transpose the kernel.
 void Kernel2::transpose()
 {
     for(uint i = 0; i < m_windowSize; i++) {
@@ -368,7 +376,7 @@ void Kernel2::transpose()
     }
 }
 
-/// Init laplacian filter, usually used for sharpening.
+// Init laplacian filter, usually used for sharpening.
 void Kernel2::initLaplacian()
 {
     nvDebugCheck(m_windowSize == 3);
@@ -386,7 +394,7 @@ void Kernel2::initLaplacian()
 }
 
 
-/// Init simple edge detection filter.
+// Init simple edge detection filter.
 void Kernel2::initEdgeDetection()
 {
     nvCheck(m_windowSize == 3);
@@ -395,7 +403,7 @@ void Kernel2::initEdgeDetection()
     m_data[6] = 0; m_data[7] = 0; m_data[8] = 0;
 }
 
-/// Init sobel filter.
+// Init sobel filter.
 void Kernel2::initSobel()
 {
     if (m_windowSize == 3)
@@ -454,7 +462,7 @@ void Kernel2::initSobel()
     }
 }
 
-/// Init prewitt filter.
+// Init prewitt filter.
 void Kernel2::initPrewitt()
 {
     if (m_windowSize == 3)
@@ -480,7 +488,7 @@ void Kernel2::initPrewitt()
     }
 }
 
-/// Init blended sobel filter.
+// Init blended sobel filter.
 void Kernel2::initBlendedSobel(const Vector4 & scale)
 {
     nvCheck(m_windowSize == 9);
@@ -583,6 +591,8 @@ PolyphaseKernel::PolyphaseKernel(const Filter & f, uint srcLength, uint dstLengt
         {
             const float sample = f.sampleBox(left + j - center, scale, samples);
 
+            //printf("%f %X\n", sample, *(uint32 *)&sample);
+
             m_data[i * m_windowSize + j] = sample;
             total += sample;
         }
@@ -601,7 +611,7 @@ PolyphaseKernel::~PolyphaseKernel()
 }
 
 
-/// Print the kernel for debugging purposes.
+// Print the kernel for debugging purposes.
 void PolyphaseKernel::debugPrint() const
 {
     for (uint i = 0; i < m_length; i++)

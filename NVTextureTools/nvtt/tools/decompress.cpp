@@ -21,14 +21,13 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
-#include <NVCore/StrLib.h>
-#include <NVCore/StdStream.h>
+#include <nvcore/StrLib.h>
+#include <nvcore/StdStream.h>
 
-#include <NVImage/Image.h>
+#include <nvimage/Image.h>
+#include <nvimage/DirectDrawSurface.h>
 
-#include <NVImage/DirectDrawSurface.h>
-
-#include <NVImage/ImageIO.h>
+#include <nvimage/ImageIO.h>
 
 #include "cmdline.h"
 
@@ -67,6 +66,8 @@ int main(int argc, char *argv[])
 			if (i+1 == argc) break;
 			i++;
 
+			// !!!UNDONE: Support at least one HDR output format
+
 #ifdef HAVE_PNG
 			if (strcmp("png", argv[i]) == 0) savePNG = true;
 			else 
@@ -93,13 +94,17 @@ int main(int argc, char *argv[])
 
 			break;
 		}
+		else
+		{
+			printf("Warning: unrecognized option \"%s\"\n", argv[i]);
+		}
 	}
 	
 	printf("NVIDIA Texture Tools - Copyright NVIDIA Corporation 2007\n\n");
 
 	if (input.isNull())
 	{
-		printf("usage: nvdecompress [options] infile [outfile]\n\n");
+		printf("usage: nvdecompress [options] infile.dds [outfile]\n\n");
 
 		printf("Note: the .tga or .png extension is forced on outfile\n\n");
 
@@ -113,6 +118,8 @@ int main(int argc, char *argv[])
  	}
 
 	// Load surface.
+	// !!! DirectDrawSurface API doesn't support float images, so BC6 will be converted to 8-bit on load.
+	// Should use nvtt::Surface instead.
 	nv::DirectDrawSurface dds(input.str());
 	if (!dds.isValid())
 	{

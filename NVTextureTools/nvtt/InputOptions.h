@@ -25,7 +25,10 @@
 #ifndef NVTT_INPUTOPTIONS_H
 #define NVTT_INPUTOPTIONS_H
 
-#include <NVTextureTools/TextureTools.h>
+#include "nvtt.h"
+
+#include "nvmath/Vector.h"
+
 
 namespace nvtt
 {

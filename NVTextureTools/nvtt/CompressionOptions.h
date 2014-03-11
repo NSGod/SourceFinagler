@@ -25,7 +25,9 @@
 #ifndef NV_TT_COMPRESSIONOPTIONS_H
 #define NV_TT_COMPRESSIONOPTIONS_H
 
-#include <NVTextureTools/TextureTools.h>
+#include "nvtt.h"
+#include "nvmath/Vector.h"
+#include "nvcore/StrLib.h"
 
 namespace nvtt
 {

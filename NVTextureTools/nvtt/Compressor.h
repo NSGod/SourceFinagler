@@ -25,15 +25,15 @@
 #ifndef NVTT_COMPRESSOR_H
 #define NVTT_COMPRESSOR_H
 
-#include <NVTextureTools/TextureTools.h>
-
+#include "nvtt.h"
+#include "nvcore/nvcore.h" // uint
 
 namespace nv
 {
     struct CompressorInterface
     {
         virtual ~CompressorInterface() {}
-        virtual void compress(nvtt::AlphaMode alphaMode, uint w, uint h, const float * rgba, nvtt::TaskDispatcher * dispatcher, const nvtt::CompressionOptions::Private & compressionOptions, const nvtt::OutputOptions::Private & outputOptions) = 0;
+        virtual void compress(nvtt::AlphaMode alphaMode, uint w, uint h, uint d, const float * rgba, nvtt::TaskDispatcher * dispatcher, const nvtt::CompressionOptions::Private & compressionOptions, const nvtt::OutputOptions::Private & outputOptions) = 0;
     };
 
 } // nv namespace

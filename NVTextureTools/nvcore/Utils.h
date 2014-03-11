@@ -1,38 +1,125 @@
-// This code is in the public domain -- Ignacio Casta–o <castano@gmail.com>
+// This code is in the public domain -- Ignacio Castaño <castano@gmail.com>
 
 #pragma once
 #ifndef NV_CORE_UTILS_H
 #define NV_CORE_UTILS_H
 
-#include <NVCore/CoreDefines.h>
-#include <NVCore/Debug.h> // nvDebugCheck
+#include "Debug.h" // nvDebugCheck
+
+#include <new> // for placement new
+
+
+// Just in case. Grrr.
+#undef min
+#undef max
+
+#define NV_INT8_MIN    (-128)
+#define NV_INT8_MAX    127
+#define NV_UINT8_MAX    255
+#define NV_INT16_MIN    (-32767-1)
+#define NV_INT16_MAX    32767
+#define NV_UINT16_MAX   0xffff
+#define NV_INT32_MIN    (-2147483647-1)
+#define NV_INT32_MAX    2147483647
+#define NV_UINT32_MAX   0xffffffff
+#define NV_INT64_MAX    POSH_I64(9223372036854775807)
+#define NV_INT64_MIN    (-POSH_I64(9223372036854775807)-1)
+#define NV_UINT64_MAX   POSH_U64(0xffffffffffffffff)
+
+#define NV_HALF_MAX     65504.0F
+#define NV_FLOAT_MAX    3.402823466e+38F
+
 
 namespace nv
 {
+    // Less error prone than casting. From CB:
+    // http://cbloomrants.blogspot.com/2011/06/06-17-11-c-casting-is-devil.html
 
+    // uint32 casts:
+    template <typename T> inline uint32 toU32(T x) { return x; }
+    template <> inline uint32 toU32<uint64>(uint64 x) { nvDebugCheck(x <= NV_UINT32_MAX); return (uint32)x; }
+    template <> inline uint32 toU32<int64>(int64 x) { nvDebugCheck(x >= 0 && x <= NV_UINT32_MAX); return (uint32)x; }
+    //template <> inline uint32 toU32<uint32>(uint32 x) { return x; }
+    template <> inline uint32 toU32<int32>(int32 x) { nvDebugCheck(x >= 0); return (uint32)x; }
+    //template <> inline uint32 toU32<uint16>(uint16 x) { return x; }
+    template <> inline uint32 toU32<int16>(int16 x) { nvDebugCheck(x >= 0); return (uint32)x; }
+    //template <> inline uint32 toU32<uint8>(uint8 x) { return x; }
+    template <> inline uint32 toU32<int8>(int8 x) { nvDebugCheck(x >= 0); return (uint32)x; }
+
+    // int32 casts:
+    template <typename T> inline int32 toI32(T x) { return x; }
+    template <> inline int32 toI32<uint64>(uint64 x) { nvDebugCheck(x <= NV_INT32_MAX); return (int32)x; }
+    template <> inline int32 toI32<int64>(int64 x) { nvDebugCheck(x >= NV_INT32_MIN && x <= NV_UINT32_MAX); return (int32)x; }
+    template <> inline int32 toI32<uint32>(uint32 x) { nvDebugCheck(x <= NV_INT32_MAX); return (int32)x; }
+    //template <> inline int32 toI32<int32>(int32 x) { return x; }
+    //template <> inline int32 toI32<uint16>(uint16 x) { return x; }
+    //template <> inline int32 toI32<int16>(int16 x) { return x; }
+    //template <> inline int32 toI32<uint8>(uint8 x) { return x; }
+    //template <> inline int32 toI32<int8>(int8 x) { return x; }
+
+    // uint16 casts:
+    template <typename T> inline uint16 toU16(T x) { return x; }
+    template <> inline uint16 toU16<uint64>(uint64 x) { nvDebugCheck(x <= NV_UINT16_MAX); return (uint16)x; }
+    template <> inline uint16 toU16<int64>(int64 x) { nvDebugCheck(x >= 0 && x <= NV_UINT16_MAX); return (uint16)x; }
+    template <> inline uint16 toU16<uint32>(uint32 x) { nvDebugCheck(x <= NV_UINT16_MAX); return (uint16)x; }
+    template <> inline uint16 toU16<int32>(int32 x) { nvDebugCheck(x >= 0 && x <= NV_UINT16_MAX); return (uint16)x; }
+    //template <> inline uint16 toU16<uint16>(uint16 x) { return x; }
+    template <> inline uint16 toU16<int16>(int16 x) { nvDebugCheck(x >= 0); return (uint16)x; }
+    //template <> inline uint16 toU16<uint8>(uint8 x) { return x; }
+    template <> inline uint16 toU16<int8>(int8 x) { nvDebugCheck(x >= 0); return (uint16)x; }
+
+    // int16 casts:
+    template <typename T> inline int16 toI16(T x) { return x; }
+    template <> inline int16 toI16<uint64>(uint64 x) { nvDebugCheck(x <= NV_INT16_MAX); return (int16)x; }
+    template <> inline int16 toI16<int64>(int64 x) { nvDebugCheck(x >= NV_INT16_MIN && x <= NV_UINT16_MAX); return (int16)x; }
+    template <> inline int16 toI16<uint32>(uint32 x) { nvDebugCheck(x <= NV_INT16_MAX); return (int16)x; }
+    template <> inline int16 toI16<int32>(int32 x) { nvDebugCheck(x >= NV_INT16_MIN && x <= NV_UINT16_MAX); return (int16)x; }
+    template <> inline int16 toI16<uint16>(uint16 x) { nvDebugCheck(x <= NV_INT16_MAX); return (int16)x; }
+    //template <> inline int16 toI16<int16>(int16 x) { return x; }
+    //template <> inline int16 toI16<uint8>(uint8 x) { return x; }
+    //template <> inline int16 toI16<int8>(int8 x) { return x; }
+
+    // uint8 casts:
+    template <typename T> inline uint8 toU8(T x) { return x; }
+    template <> inline uint8 toU8<uint64>(uint64 x) { nvDebugCheck(x <= NV_UINT8_MAX); return (uint8)x; }
+    template <> inline uint8 toU8<int64>(int64 x) { nvDebugCheck(x >= 0 && x <= NV_UINT8_MAX); return (uint8)x; }
+    template <> inline uint8 toU8<uint32>(uint32 x) { nvDebugCheck(x <= NV_UINT8_MAX); return (uint8)x; }
+    template <> inline uint8 toU8<int32>(int32 x) { nvDebugCheck(x >= 0 && x <= NV_UINT8_MAX); return (uint8)x; }
+    template <> inline uint8 toU8<uint16>(uint16 x) { nvDebugCheck(x <= NV_UINT8_MAX); return (uint8)x; }
+    template <> inline uint8 toU8<int16>(int16 x) { nvDebugCheck(x >= 0 && x <= NV_UINT8_MAX); return (uint8)x; }
+    //template <> inline uint8 toU8<uint8>(uint8 x) { return x; }
+    template <> inline uint8 toU8<int8>(int8 x) { nvDebugCheck(x >= 0); return (uint8)x; }
+
+    // int8 casts:
+    template <typename T> inline int8 toI8(T x) { return x; }
+    template <> inline int8 toI8<uint64>(uint64 x) { nvDebugCheck(x <= NV_INT8_MAX); return (int8)x; }
+    template <> inline int8 toI8<int64>(int64 x) { nvDebugCheck(x >= NV_INT8_MIN && x <= NV_UINT8_MAX); return (int8)x; }
+    template <> inline int8 toI8<uint32>(uint32 x) { nvDebugCheck(x <= NV_INT8_MAX); return (int8)x; }
+    template <> inline int8 toI8<int32>(int32 x) { nvDebugCheck(x >= NV_INT8_MIN && x <= NV_UINT8_MAX); return (int8)x; }
+    template <> inline int8 toI8<uint16>(uint16 x) { nvDebugCheck(x <= NV_INT8_MAX); return (int8)x; }
+    template <> inline int8 toI8<int16>(int16 x) { nvDebugCheck(x >= NV_INT8_MIN && x <= NV_UINT8_MAX); return (int8)x; }
+    template <> inline int8 toI8<uint8>(uint8 x) { nvDebugCheck(x <= NV_INT8_MAX); return (int8)x; }
+    //template <> inline int8 toI8<int8>(int8 x) { return x; }
+    
     /// Swap two values.
     template <typename T> 
     inline void swap(T & a, T & b)
     {
-        T temp = a; 
+        T temp(a);
         a = b; 
         b = temp;
     }
 
-    /// Return the maximum of the two arguments.
+    /// Return the maximum of the two arguments. For floating point values, it returns the second value if the first is NaN.
     template <typename T> 
     inline const T & max(const T & a, const T & b)
     {
-        //return std::max(a, b);
-        if( a < b ) {
-            return b; 
-        }
-        return a;
+        return (b < a) ? a : b;
     }
 
     /// Return the maximum of the three arguments.
     template <typename T> 
-    inline const T & max(const T & a, const T & b, const T & c)
+    inline const T & max3(const T & a, const T & b, const T & c)
     {
         return max(a, max(b, c));
     }
@@ -41,16 +128,12 @@ namespace nv
     template <typename T> 
     inline const T & min(const T & a, const T & b)
     {
-        //return std::min(a, b);
-        if( b < a ) {
-            return b; 
-        }
-        return a;
+        return (a < b) ? a : b;
     }
 
     /// Return the maximum of the three arguments.
     template <typename T> 
-    inline const T & min(const T & a, const T & b, const T & c)
+    inline const T & min3(const T & a, const T & b, const T & c)
     {
         return min(a, min(b, c));
     }
@@ -95,58 +178,74 @@ namespace nv
     }
 
 
-    inline uint sdbmHash(const void * data_in, uint size, uint h = 5381)
+    // @@ Move this to utils?
+    /// Delete all the elements of a container.
+    template <typename T>
+    void deleteAll(T & container)
     {
-        const uint8 * data = (const uint8 *) data_in;
-        uint i = 0;
-        while (i < size) {
-            h = (h << 16) + (h << 6) - h + (uint) data[i++];
+        for (typename T::PseudoIndex i = container.start(); !container.isDone(i); container.advance(i))
+        {
+            delete container[i];
         }
-        return h;
     }
 
-    // Note that this hash does not handle NaN properly.
-    inline uint sdbmFloatHash(const float * f, uint count, uint h = 5381)
-    {
+
+
+    // @@ Specialize these methods for numeric, pointer, and pod types.
+
+    template <typename T>
+    void construct_range(T * restrict ptr, uint new_size, uint old_size) {
+        for (uint i = old_size; i < new_size; i++) {
+            new(ptr+i) T; // placement new
+        }
+    }
+
+    template <typename T>
+    void construct_range(T * restrict ptr, uint new_size, uint old_size, const T & elem) {
+        for (uint i = old_size; i < new_size; i++) {
+            new(ptr+i) T(elem); // placement new
+        }
+    }
+
+    template <typename T>
+    void construct_range(T * restrict ptr, uint new_size, uint old_size, const T * src) {
+        for (uint i = old_size; i < new_size; i++) {
+            new(ptr+i) T(src[i]); // placement new
+        }
+    }
+
+    template <typename T>
+    void destroy_range(T * restrict ptr, uint new_size, uint old_size) {
+        for (uint i = new_size; i < old_size; i++) {
+            nvDebugCheck(ptr != NULL && isValidPtr(ptr));
+            (ptr+i)->~T(); // Explicit call to the destructor
+        }
+    }
+
+    template <typename T>
+    void fill(T * restrict dst, uint count, const T & value) {
         for (uint i = 0; i < count; i++) {
-            //nvDebugCheck(nv::isFinite(*f));
-            union { float f; uint32 i; } x = { *f };
-            if (x.i == 0x80000000) x.i = 0;
-            h = sdbmHash(&x, 4, h);
+            dst[i] = value;
         }
-        return h;
     }
 
-
-    // Some hash functors:
-    template <typename Key> struct Hash 
-    {
-        uint operator()(const Key & k) const {
-            return sdbmHash(&k, sizeof(Key));
+    template <typename T>
+    void copy_range(T * restrict dst, const T * restrict src, uint count) {
+        for (uint i = 0; i < count; i++) {
+            dst[i] = src[i];
         }
-    };
-    template <> struct Hash<int>
-    {
-        uint operator()(int x) const { return x; }
-    };
-    template <> struct Hash<uint>
-    {
-        uint operator()(uint x) const { return x; }
-    };
-    template <> struct Hash<float>
-    {
-        uint operator()(float f) const {
-            return sdbmFloatHash(&f, 1);
-        }
-    };
+    }
 
-    template <typename Key> struct Equal
-    {
-        bool operator()(const Key & k0, const Key & k1) const {
-            return k0 == k1;
+    template <typename T>
+    bool find(const T & element, const T * restrict ptr, uint begin, uint end, uint * index) {
+        for (uint i = begin; i < end; i++) {
+            if (ptr[i] == element) {
+                if (index != NULL) *index = i;
+                return true;
+            }
         }
-    };
-
+        return false;
+    }
 
 } // nv namespace
 
