@@ -1234,7 +1234,7 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 
 //
 // Destroy()
-// Frees all resources associated with the curret image.
+// Frees all resources associated with the current image.
 //
 vlVoid CVTFFile::Destroy()
 {
@@ -1584,7 +1584,7 @@ vlBool CVTFFile::Load(IO::Readers::IReader *Reader, vlBool bHeaderOnly)
 
 //
 // Save()
-// Saves the curret image.  Basic format checking is done.
+// Saves the current image.  Basic format checking is done.
 //
 vlBool CVTFFile::Save(IO::Writers::IWriter *Writer) const
 {
@@ -3444,7 +3444,7 @@ vlUInt CVTFFile::ComputeDataOffset(vlUInt uiFrame, vlUInt uiFace, vlUInt uiSlice
 // ConvertToRGBA8888( vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt uiHeight, VTFImageFormat SourceFormat )
 //
 // Converts data from the source format to RGBA8888 format. Data is read from *src
-// and written to *dst. Width and height are needed to it knows how much data to process
+// and written to *dst. Width and height are needed so it knows how much data to process
 //-----------------------------------------------------------------------------------------------------
 vlBool CVTFFile::ConvertToRGBA8888(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, vlUInt uiHeight, VTFImageFormat SourceFormat)
 {
@@ -3459,7 +3459,7 @@ vlBool CVTFFile::ConvertToRGBA8888(vlByte *lpSource, vlByte *lpDest, vlUInt uiWi
 // DecompressDXT1(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt uiHeight)
 //
 // Converts data from the DXT1 to RGBA8888 format. Data is read from *src
-// and written to *dst. Width and height are needed to it knows how much data to process
+// and written to *dst. Width and height are needed so it knows how much data to process
 //-----------------------------------------------------------------------------------------------------
 vlBool CVTFFile::DecompressDXT1(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt uiHeight)
 {
@@ -3554,7 +3554,7 @@ vlBool CVTFFile::DecompressDXT1(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt
 // DecompressDXT3(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt uiHeight)
 //
 // Converts data from the DXT3 to RGBA8888 format. Data is read from *src
-// and written to *dst. Width and height are needed to it knows how much data to process
+// and written to *dst. Width and height are needed so it knows how much data to process
 //-----------------------------------------------------------------------------------------------------
 vlBool CVTFFile::DecompressDXT3(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt uiHeight)
 {
@@ -3649,7 +3649,7 @@ vlBool CVTFFile::DecompressDXT3(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt
 // DecompressDXT5(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt uiHeight)
 //
 // Converts data from the DXT5 to RGBA8888 format. Data is read from *src
-// and written to *dst. Width and height are needed to it knows how much data to process
+// and written to *dst. Width and height are needed so it knows how much data to process
 //-----------------------------------------------------------------------------------------------------
 vlBool CVTFFile::DecompressDXT5(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt uiHeight)
 {
