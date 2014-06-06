@@ -6,5 +6,5 @@
 *.xcworkspacedata
 *.xcuserstate
 *.xccheckout
-Source Finagler.xcodeproj/xcuserdata
+xcuserdata
 build
