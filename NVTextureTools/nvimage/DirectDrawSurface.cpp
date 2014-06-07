@@ -1527,40 +1527,40 @@ uint DirectDrawSurface::offset(const uint face, const uint mipmap)
 
 void DirectDrawSurface::printInfo() const
 {
-    printf("Flags: 0x%.8X\n", header.flags);
-    if (header.flags & DDSD_CAPS) printf("\tDDSD_CAPS\n");
-    if (header.flags & DDSD_PIXELFORMAT) printf("\tDDSD_PIXELFORMAT\n");
-    if (header.flags & DDSD_WIDTH) printf("\tDDSD_WIDTH\n");
-    if (header.flags & DDSD_HEIGHT) printf("\tDDSD_HEIGHT\n");
-    if (header.flags & DDSD_DEPTH) printf("\tDDSD_DEPTH\n");
-    if (header.flags & DDSD_PITCH) printf("\tDDSD_PITCH\n");
-    if (header.flags & DDSD_LINEARSIZE) printf("\tDDSD_LINEARSIZE\n");
-    if (header.flags & DDSD_MIPMAPCOUNT) printf("\tDDSD_MIPMAPCOUNT\n");
+    printf("\tFlags: 0x%.8X\n", header.flags);
+    if (header.flags & DDSD_CAPS) printf("\t\tDDSD_CAPS\n");
+    if (header.flags & DDSD_PIXELFORMAT) printf("\t\tDDSD_PIXELFORMAT\n");
+    if (header.flags & DDSD_WIDTH) printf("\t\tDDSD_WIDTH\n");
+    if (header.flags & DDSD_HEIGHT) printf("\t\tDDSD_HEIGHT\n");
+    if (header.flags & DDSD_DEPTH) printf("\t\tDDSD_DEPTH\n");
+    if (header.flags & DDSD_PITCH) printf("\t\tDDSD_PITCH\n");
+    if (header.flags & DDSD_LINEARSIZE) printf("\t\tDDSD_LINEARSIZE\n");
+    if (header.flags & DDSD_MIPMAPCOUNT) printf("\t\tDDSD_MIPMAPCOUNT\n");
 
-    printf("Height: %d\n", header.height);
-    printf("Width: %d\n", header.width);
-    printf("Depth: %d\n", header.depth);
-    if (header.flags & DDSD_PITCH) printf("Pitch: %d\n", header.pitch);
-    else if (header.flags & DDSD_LINEARSIZE) printf("Linear size: %d\n", header.pitch);
-    printf("Mipmap count: %d\n", header.mipmapcount);
+    printf("\tHeight: %d\n", header.height);
+    printf("\tWidth: %d\n", header.width);
+    printf("\tDepth: %d\n", header.depth);
+    if (header.flags & DDSD_PITCH) printf("\tPitch: %d\n", header.pitch);
+    else if (header.flags & DDSD_LINEARSIZE) printf("\tLinear size: %d\n", header.pitch);
+    printf("\tMipmap count: %d\n", header.mipmapcount);
 
-    printf("Pixel Format:\n");
-    printf("\tFlags: 0x%.8X\n", header.pf.flags);
-    if (header.pf.flags & DDPF_RGB) printf("\t\tDDPF_RGB\n");
-    if (header.pf.flags & DDPF_LUMINANCE) printf("\t\tDDPF_LUMINANCE\n");
-    if (header.pf.flags & DDPF_FOURCC) printf("\t\tDDPF_FOURCC\n");
-    if (header.pf.flags & DDPF_ALPHAPIXELS) printf("\t\tDDPF_ALPHAPIXELS\n");
-    if (header.pf.flags & DDPF_ALPHA) printf("\t\tDDPF_ALPHA\n");
-    if (header.pf.flags & DDPF_PALETTEINDEXED1) printf("\t\tDDPF_PALETTEINDEXED1\n");
-    if (header.pf.flags & DDPF_PALETTEINDEXED2) printf("\t\tDDPF_PALETTEINDEXED2\n");
-    if (header.pf.flags & DDPF_PALETTEINDEXED4) printf("\t\tDDPF_PALETTEINDEXED4\n");
-    if (header.pf.flags & DDPF_PALETTEINDEXED8) printf("\t\tDDPF_PALETTEINDEXED8\n");
-    if (header.pf.flags & DDPF_ALPHAPREMULT) printf("\t\tDDPF_ALPHAPREMULT\n");
-    if (header.pf.flags & DDPF_NORMAL) printf("\t\tDDPF_NORMAL\n");
+    printf("\tPixel Format:\n");
+    printf("\t\tFlags: 0x%.8X\n", header.pf.flags);
+    if (header.pf.flags & DDPF_RGB) printf("\t\t\tDDPF_RGB\n");
+    if (header.pf.flags & DDPF_LUMINANCE) printf("\t\t\tDDPF_LUMINANCE\n");
+    if (header.pf.flags & DDPF_FOURCC) printf("\t\t\tDDPF_FOURCC\n");
+    if (header.pf.flags & DDPF_ALPHAPIXELS) printf("\t\t\tDDPF_ALPHAPIXELS\n");
+    if (header.pf.flags & DDPF_ALPHA) printf("\t\t\tDDPF_ALPHA\n");
+    if (header.pf.flags & DDPF_PALETTEINDEXED1) printf("\t\t\tDDPF_PALETTEINDEXED1\n");
+    if (header.pf.flags & DDPF_PALETTEINDEXED2) printf("\t\t\tDDPF_PALETTEINDEXED2\n");
+    if (header.pf.flags & DDPF_PALETTEINDEXED4) printf("\t\t\tDDPF_PALETTEINDEXED4\n");
+    if (header.pf.flags & DDPF_PALETTEINDEXED8) printf("\t\t\tDDPF_PALETTEINDEXED8\n");
+    if (header.pf.flags & DDPF_ALPHAPREMULT) printf("\t\t\tDDPF_ALPHAPREMULT\n");
+    if (header.pf.flags & DDPF_NORMAL) printf("\t\t\tDDPF_NORMAL\n");
 
     if (header.pf.fourcc != 0) { 
         // Display fourcc code even when DDPF_FOURCC flag not set.
-        printf("\tFourCC: '%c%c%c%c' (0x%.8X)\n",
+        printf("\t\tFourCC: '%c%c%c%c' (0x%.8X)\n",
             ((header.pf.fourcc >> 0) & 0xFF),
             ((header.pf.fourcc >> 8) & 0xFF),
             ((header.pf.fourcc >> 16) & 0xFF),
@@ -1570,7 +1570,7 @@ void DirectDrawSurface::printInfo() const
 
     if ((header.pf.flags & DDPF_FOURCC) && (header.pf.bitcount != 0))
     {
-        printf("\tSwizzle: '%c%c%c%c' (0x%.8X)\n", 
+        printf("\t\tSwizzle: '%c%c%c%c' (0x%.8X)\n", 
             (header.pf.bitcount >> 0) & 0xFF,
             (header.pf.bitcount >> 8) & 0xFF,
             (header.pf.bitcount >> 16) & 0xFF,
@@ -1579,46 +1579,46 @@ void DirectDrawSurface::printInfo() const
     }
     else
     {
-        printf("\tBit count: %d\n", header.pf.bitcount);
+        printf("\t\tBit count: %d\n", header.pf.bitcount);
     }
 
-    printf("\tRed mask:   0x%.8X\n", header.pf.rmask);
-    printf("\tGreen mask: 0x%.8X\n", header.pf.gmask);
-    printf("\tBlue mask:  0x%.8X\n", header.pf.bmask);
-    printf("\tAlpha mask: 0x%.8X\n", header.pf.amask);
+    printf("\t\tRed mask:   0x%.8X\n", header.pf.rmask);
+    printf("\t\tGreen mask: 0x%.8X\n", header.pf.gmask);
+    printf("\t\tBlue mask:  0x%.8X\n", header.pf.bmask);
+    printf("\t\tAlpha mask: 0x%.8X\n", header.pf.amask);
 
-    printf("Caps:\n");
-    printf("\tCaps 1: 0x%.8X\n", header.caps.caps1);
-    if (header.caps.caps1 & DDSCAPS_COMPLEX) printf("\t\tDDSCAPS_COMPLEX\n");
-    if (header.caps.caps1 & DDSCAPS_TEXTURE) printf("\t\tDDSCAPS_TEXTURE\n");
-    if (header.caps.caps1 & DDSCAPS_MIPMAP) printf("\t\tDDSCAPS_MIPMAP\n");
+    printf("\tCaps:\n");
+    printf("\t\tCaps 1: 0x%.8X\n", header.caps.caps1);
+    if (header.caps.caps1 & DDSCAPS_COMPLEX) printf("\t\t\tDDSCAPS_COMPLEX\n");
+    if (header.caps.caps1 & DDSCAPS_TEXTURE) printf("\t\t\tDDSCAPS_TEXTURE\n");
+    if (header.caps.caps1 & DDSCAPS_MIPMAP) printf("\t\t\tDDSCAPS_MIPMAP\n");
 
-    printf("\tCaps 2: 0x%.8X\n", header.caps.caps2);
-    if (header.caps.caps2 & DDSCAPS2_VOLUME) printf("\t\tDDSCAPS2_VOLUME\n");
+    printf("\t\tCaps 2: 0x%.8X\n", header.caps.caps2);
+    if (header.caps.caps2 & DDSCAPS2_VOLUME) printf("\t\t\tDDSCAPS2_VOLUME\n");
     else if (header.caps.caps2 & DDSCAPS2_CUBEMAP)
     {
-        printf("\t\tDDSCAPS2_CUBEMAP\n");
-        if ((header.caps.caps2 & DDSCAPS2_CUBEMAP_ALL_FACES) == DDSCAPS2_CUBEMAP_ALL_FACES) printf("\t\tDDSCAPS2_CUBEMAP_ALL_FACES\n");
+        printf("\t\t\tDDSCAPS2_CUBEMAP\n");
+        if ((header.caps.caps2 & DDSCAPS2_CUBEMAP_ALL_FACES) == DDSCAPS2_CUBEMAP_ALL_FACES) printf("\t\t\tDDSCAPS2_CUBEMAP_ALL_FACES\n");
         else {
-            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEX) printf("\t\tDDSCAPS2_CUBEMAP_POSITIVEX\n");
-            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEX) printf("\t\tDDSCAPS2_CUBEMAP_NEGATIVEX\n");
-            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEY) printf("\t\tDDSCAPS2_CUBEMAP_POSITIVEY\n");
-            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEY) printf("\t\tDDSCAPS2_CUBEMAP_NEGATIVEY\n");
-            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEZ) printf("\t\tDDSCAPS2_CUBEMAP_POSITIVEZ\n");
-            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEZ) printf("\t\tDDSCAPS2_CUBEMAP_NEGATIVEZ\n");
+            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEX) printf("\t\t\tDDSCAPS2_CUBEMAP_POSITIVEX\n");
+            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEX) printf("\t\t\tDDSCAPS2_CUBEMAP_NEGATIVEX\n");
+            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEY) printf("\t\t\tDDSCAPS2_CUBEMAP_POSITIVEY\n");
+            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEY) printf("\t\t\tDDSCAPS2_CUBEMAP_NEGATIVEY\n");
+            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEZ) printf("\t\t\tDDSCAPS2_CUBEMAP_POSITIVEZ\n");
+            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEZ) printf("\t\t\tDDSCAPS2_CUBEMAP_NEGATIVEZ\n");
         }
     }
 
-    printf("\tCaps 3: 0x%.8X\n", header.caps.caps3);
-    printf("\tCaps 4: 0x%.8X\n", header.caps.caps4);
+    printf("\t\tCaps 3: 0x%.8X\n", header.caps.caps3);
+    printf("\t\tCaps 4: 0x%.8X\n", header.caps.caps4);
 
     if (header.hasDX10Header())
     {
-        printf("DX10 Header:\n");
-        printf("\tDXGI Format: %u (%s)\n", header.header10.dxgiFormat, getDxgiFormatString((DXGI_FORMAT)header.header10.dxgiFormat));
-        printf("\tResource dimension: %u (%s)\n", header.header10.resourceDimension, getD3d10ResourceDimensionString((DDS_DIMENSION)header.header10.resourceDimension));
-        printf("\tMisc flag: %u\n", header.header10.miscFlag);
-        printf("\tArray size: %u\n", header.header10.arraySize);
+        printf("\tDX10 Header:\n");
+        printf("\t\tDXGI Format: %u (%s)\n", header.header10.dxgiFormat, getDxgiFormatString((DXGI_FORMAT)header.header10.dxgiFormat));
+        printf("\t\tResource dimension: %u (%s)\n", header.header10.resourceDimension, getD3d10ResourceDimensionString((DDS_DIMENSION)header.header10.resourceDimension));
+        printf("\t\tMisc flag: %u\n", header.header10.miscFlag);
+        printf("\t\tArray size: %u\n", header.header10.arraySize);
     }
 
     if (header.reserved[9] == FOURCC_NVTT)
@@ -1627,13 +1627,13 @@ void DirectDrawSurface::printInfo() const
         int minor = (header.reserved[10] >> 8) & 0xFF;
         int revision= header.reserved[10] & 0xFF;
 
-        printf("Version:\n");
-        printf("\tNVIDIA Texture Tools %d.%d.%d\n", major, minor, revision);
+        printf("\tVersion:\n");
+        printf("\t\tNVIDIA Texture Tools %d.%d.%d\n", major, minor, revision);
     }
 
     if (header.reserved[7] == FOURCC_UVER)
     {
-        printf("User Version: %d\n", header.reserved[8]);
+        printf("\tUser Version: %d\n", header.reserved[8]);
     }
 }
 
