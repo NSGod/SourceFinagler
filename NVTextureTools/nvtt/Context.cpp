@@ -461,21 +461,21 @@ bool Compressor::Private::outputHeader(nvtt::TextureType textureType, int w, int
                 {
                     if (compressionOptions.rsize == 16)
                     {
-                        header.setDX10Format(56); // R16_UNORM
+                        header.setDX10Format(56); // DXGI_FORMAT_R16_UNORM
                     }
                     else
                     {
-                        // B5G6R5_UNORM
-                        // B5G5R5A1_UNORM
+                        // DXGI_FORMAT_B5G6R5_UNORM
+                        // DXGI_FORMAT_B5G5R5A1_UNORM
                         supported = false;
                     }
                 }
                 else if (bitcount == 32)
                 {
-                    // B8G8R8A8_UNORM
-                    // B8G8R8X8_UNORM
-                    // R8G8B8A8_UNORM
-                    // R10G10B10A2_UNORM
+                    // DXGI_FORMAT_B8G8R8A8_UNORM
+                    // DXGI_FORMAT_B8G8R8X8_UNORM
+                    // DXGI_FORMAT_R8G8B8A8_UNORM
+                    // DXGI_FORMAT_R10G10B10A2_UNORM
                     supported = false;
                 }
                 else {
