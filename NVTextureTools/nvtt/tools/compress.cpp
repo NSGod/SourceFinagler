@@ -570,7 +570,7 @@ int main(int argc, char *argv[])
     MyOutputHandler outputHandler(output.str());
     if (outputHandler.stream->isError())
     {
-        fprintf(stderr, "Error opening '%s' for writting\n", output.str());
+        fprintf(stderr, "Error opening '%s' for writing\n", output.str());
         return EXIT_FAILURE;
     }
 

@@ -1478,7 +1478,7 @@ uint DirectDrawSurface::surfaceSize(uint mipmap) const
 
     if (blockSize == 0) {
         uint bitCount = header.pixelSize();
-        uint pitch = computeBytePitch(w, bitCount, 1); // Asuming 1 byte alignment, which is the same D3DX expects.
+        uint pitch = computeBytePitch(w, bitCount, 1); // Assuming 1 byte alignment, which is the same D3DX expects.
         return pitch * h * d;
     }
     else {
