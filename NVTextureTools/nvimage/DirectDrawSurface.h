@@ -41,62 +41,99 @@ namespace nv
 
     enum DDPF
     {
-        DDPF_ALPHAPIXELS = 0x00000001U,
-        DDPF_ALPHA = 0x00000002U,
-        DDPF_FOURCC = 0x00000004U,
-        DDPF_RGB = 0x00000040U,
-        DDPF_PALETTEINDEXED1 = 0x00000800U,
-        DDPF_PALETTEINDEXED2 = 0x00001000U,
-        DDPF_PALETTEINDEXED4 = 0x00000008U,
-        DDPF_PALETTEINDEXED8 = 0x00000020U,
-        DDPF_LUMINANCE = 0x00020000U,
-        DDPF_ALPHAPREMULT = 0x00008000U,
-
+        DDPF_ALPHAPIXELS		= 0x00000001U,
+        DDPF_ALPHA				= 0x00000002U,
+        DDPF_FOURCC				= 0x00000004U,
+        DDPF_RGB				= 0x00000040U,
+        DDPF_PALETTEINDEXED1	= 0x00000800U,
+        DDPF_PALETTEINDEXED2	= 0x00001000U,
+        DDPF_PALETTEINDEXED4	= 0x00000008U,
+        DDPF_PALETTEINDEXED8	= 0x00000020U,
+        DDPF_LUMINANCE			= 0x00020000U,
+        DDPF_ALPHAPREMULT		= 0x00008000U,
+		
+		// Not sure about the following 2:
+		DDPF_BUMP_LUMINANCE		= 0x00040000U,
+		DDPF_BUMP_DUDV			= 0x00080000U,
+	
+	
         // Custom NVTT flags.
-        DDPF_NORMAL = 0x80000000U,
-        DDPF_SRGB = 0x40000000U,
+        DDPF_NORMAL =			0x80000000U,
+        DDPF_SRGB =				0x40000000U,
     };
 
+	
+#define DDPF_RGBA			DDPF_RGB | DDPF_ALPHAPIXELS
+#define DDPF_LA				DDPF_LUMINANCE | DDPF_ALPHAPIXELS
+#define DDPF_BUMP_DUDV_A	DDPF_BUMP_DUDV | DDPF_ALPHAPIXELS
 
+	
     enum D3DFORMAT
     {
+	
+		D3DFMT_UNKNOWN              =  0,
+	
         // 32 bit RGB formats.
-        D3DFMT_R8G8B8 = 20,
-        D3DFMT_A8R8G8B8 = 21,
-        D3DFMT_X8R8G8B8 = 22,
-        D3DFMT_R5G6B5 = 23,
-        D3DFMT_X1R5G5B5 = 24,
-        D3DFMT_A1R5G5B5 = 25,
-        D3DFMT_A4R4G4B4 = 26,
-        D3DFMT_R3G3B2 = 27,
-        D3DFMT_A8 = 28,
-        D3DFMT_A8R3G3B2 = 29,
-        D3DFMT_X4R4G4B4 = 30,
-        D3DFMT_A2B10G10R10 = 31,
-        D3DFMT_A8B8G8R8 = 32,
-        D3DFMT_X8B8G8R8 = 33,
-        D3DFMT_G16R16 = 34,
-        D3DFMT_A2R10G10B10 = 35,
-
-        D3DFMT_A16B16G16R16 = 36,
+        D3DFMT_R8G8B8				= 20,
+        D3DFMT_A8R8G8B8				= 21,
+        D3DFMT_X8R8G8B8				= 22,
+        D3DFMT_R5G6B5				= 23,
+        D3DFMT_X1R5G5B5				= 24,
+        D3DFMT_A1R5G5B5				= 25,
+        D3DFMT_A4R4G4B4				= 26,
+        D3DFMT_R3G3B2				= 27,
+        D3DFMT_A8					= 28,
+        D3DFMT_A8R3G3B2				= 29,
+        D3DFMT_X4R4G4B4				= 30,
+	
+        D3DFMT_A2B10G10R10			= 31,
+        D3DFMT_A8B8G8R8				= 32,
+        D3DFMT_X8B8G8R8				= 33,
+        D3DFMT_G16R16				= 34,
+        D3DFMT_A2R10G10B10			= 35,
+        D3DFMT_A16B16G16R16			= 36,
 
         // Palette formats.
-        D3DFMT_A8P8 = 40,
-        D3DFMT_P8 = 41,
+        D3DFMT_A8P8					= 40,
+        D3DFMT_P8					= 41,
 
         // Luminance formats.
-        D3DFMT_L8 = 50,
-        D3DFMT_A8L8 = 51,
-        D3DFMT_A4L4 = 52,
-        D3DFMT_L16 = 81,
+        D3DFMT_L8					= 50,
+        D3DFMT_A8L8					= 51,
+        D3DFMT_A4L4					= 52,
 
+		D3DFMT_UYVY                 = MAKEFOURCC('U', 'Y', 'V', 'Y'),
+		D3DFMT_R8G8_B8G8            = MAKEFOURCC('R', 'G', 'B', 'G'),
+		D3DFMT_YUY2                 = MAKEFOURCC('Y', 'U', 'Y', '2'),
+		D3DFMT_G8R8_G8B8            = MAKEFOURCC('G', 'R', 'G', 'B'),
+		D3DFMT_DXT1                 = MAKEFOURCC('D', 'X', 'T', '1'),
+		D3DFMT_DXT2                 = MAKEFOURCC('D', 'X', 'T', '2'),
+		D3DFMT_DXT3                 = MAKEFOURCC('D', 'X', 'T', '3'),
+		D3DFMT_DXT4                 = MAKEFOURCC('D', 'X', 'T', '4'),
+		D3DFMT_DXT5                 = MAKEFOURCC('D', 'X', 'T', '5'),
+	
+		D3DFMT_V8U8                 = 60,
+		D3DFMT_L6V5U5               = 61,
+		D3DFMT_X8L8V8U8             = 62,
+		D3DFMT_Q8W8V8U8             = 63,
+		D3DFMT_V16U16               = 64,
+		D3DFMT_A2W10V10U10          = 67,
+	
+        D3DFMT_L16					= 81,
+
+		D3DFMT_Q16W16V16U16         = 110,
+	
         // Floating point formats
-        D3DFMT_R16F = 111,
-        D3DFMT_G16R16F = 112,
-        D3DFMT_A16B16G16R16F = 113,
-        D3DFMT_R32F = 114,
-        D3DFMT_G32R32F = 115,
-        D3DFMT_A32B32G32R32F = 116,
+        D3DFMT_R16F					= 111,
+        D3DFMT_G16R16F				= 112,
+        D3DFMT_A16B16G16R16F		= 113,
+	
+        D3DFMT_R32F					= 114,
+        D3DFMT_G32R32F				= 115,
+        D3DFMT_A32B32G32R32F		= 116,
+	
+		D3DFMT_CxV8U8               = 117,
+	
     };
 
     enum FOURCC
@@ -114,6 +151,10 @@ namespace nv
         FOURCC_A2XY = MAKEFOURCC('A', '2', 'X', 'Y'),
         FOURCC_DX10 = MAKEFOURCC('D', 'X', '1', '0'),
         FOURCC_UVER = MAKEFOURCC('U', 'V', 'E', 'R'),
+	
+		FOURCC_BC4U	= MAKEFOURCC('B', 'C', '4', 'U'),
+		FOURCC_BC5U	= MAKEFOURCC('B', 'C', '5', 'U'),
+	
     };
 
 
@@ -261,11 +302,30 @@ namespace nv
         DXGI_FORMAT_BC7_TYPELESS = 97,
         DXGI_FORMAT_BC7_UNORM = 98,
         DXGI_FORMAT_BC7_UNORM_SRGB = 99,
+	
+		DXGI_FORMAT_AYUV                        = 100,
+		DXGI_FORMAT_Y410                        = 101,
+		DXGI_FORMAT_Y416                        = 102,
+		DXGI_FORMAT_NV12                        = 103,
+		DXGI_FORMAT_P010                        = 104,
+		DXGI_FORMAT_P016                        = 105,
+		DXGI_FORMAT_420_OPAQUE                  = 106,
+		DXGI_FORMAT_YUY2                        = 107,
+		DXGI_FORMAT_Y210                        = 108,
+		DXGI_FORMAT_Y216                        = 109,
+		DXGI_FORMAT_NV11                        = 110,
+		DXGI_FORMAT_AI44                        = 111,
+		DXGI_FORMAT_IA44                        = 112,
+		DXGI_FORMAT_P8                          = 113,
+		DXGI_FORMAT_A8P8                        = 114,
+	
+		DXGI_FORMAT_B4G4R4A4_UNORM              = 115,
+	
     };
 
 
 
-    extern uint findD3D9Format(uint bitcount, uint rmask, uint gmask, uint bmask, uint amask);
+    extern uint findD3D9Format(uint pixelFormatFlags, uint bitcount, uint rmask, uint gmask, uint bmask, uint amask);
 
     struct NVIMAGE_CLASS DDSPixelFormat
     {
@@ -362,6 +422,7 @@ namespace nv
         DirectDrawSurface();
         DirectDrawSurface(const char * file);
         DirectDrawSurface(Stream * stream);
+		DirectDrawSurface(unsigned char *mem, uint size);
         ~DirectDrawSurface();
 
         bool load(const char * filename);

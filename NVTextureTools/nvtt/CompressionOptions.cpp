@@ -214,9 +214,24 @@ unsigned int CompressionOptions::d3d9Format() const
                 bmask = ((1 << m.bsize) - 1) << m.asize;
                 amask = ((1 << m.asize) - 1) << 0;
             }
-
+			
+			uint pixelFormatFlags = 0;
+			
+			if (rmask != 0 || gmask != 0 || bmask != 0) {
+				if (gmask == 0 && bmask == 0) {
+					pixelFormatFlags = DDPF_LUMINANCE;
+				} else {
+					pixelFormatFlags = DDPF_RGB;
+				}
+				
+				if (amask) pixelFormatFlags |= DDPF_ALPHAPIXELS;
+				
+			} else if (amask != 0) {
+				pixelFormatFlags |= DDPF_ALPHA;
+			}
+			
             if (bitcount <= 32) {
-                return nv::findD3D9Format(bitcount, rmask, gmask, bmask, amask);
+                return nv::findD3D9Format(pixelFormatFlags, bitcount, rmask, gmask, bmask, amask);
             }
             else {
                 //if (m.rsize == 16 && m.gsize == 16 && m.bsize == 0 && m.asize == 0) return D3DFMT_G16R16;
