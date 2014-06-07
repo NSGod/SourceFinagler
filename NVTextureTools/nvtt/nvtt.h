@@ -37,7 +37,7 @@
 #  endif
 #endif
 
-#if defined __GNUC__ >= 4
+#if __GNUC__ >= 4
 #  ifdef NVTT_EXPORTS
 #    define NVTT_API __attribute__((visibility("default")))
 #  endif
