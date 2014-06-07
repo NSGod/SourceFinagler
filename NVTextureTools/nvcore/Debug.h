@@ -134,6 +134,8 @@
 #else
 #  if NV_CC_MSVC
 #   define nvUnreachable() __assume(0)
+#  elif !defined(NV_CC_CLANG)
+#	define nvUnreachable() 
 #  else
 #   define nvUnreachable() __builtin_unreachable()
 #  endif
