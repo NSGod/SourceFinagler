@@ -67,7 +67,7 @@ struct Pattern
 	int transformed;		// if 0, deltas are unsigned and no transform; otherwise, signed and transformed
 	int mode;				// associated mode value
 	int modebits;			// number of mode bits
-	char *encoding;			// verilog description of encoding for this mode
+	const char *encoding;			// verilog description of encoding for this mode
 };
 
 #define	NPATTERNS 1
@@ -243,8 +243,8 @@ static void write_header(const IntEndptsRGB_2 endpts[NREGIONS], int shapeindex, 
 
 static void read_header(Bits &in, IntEndptsRGB_2 endpts[NREGIONS], int &shapeindex, Pattern &p, int &pat_index)
 {
-	int mode = AVPCL::getmode(in);
-
+	AVPCL::getmode(in);
+	
 	pat_index = 0;
 	nvAssert (pat_index >= 0 && pat_index < NPATTERNS);
 	nvAssert (in.getptr() == patterns[pat_index].modebits);
@@ -580,7 +580,6 @@ static float exhaustive(const Vector4 colors[], int np, int ch, const RegionPrec
 	int bhigh = min((1<<bprec)-1, opt_endpts.B[ch] + bdelta);
 
 	// now there's no need to swap the ordering of A and B
-	bool a_le_b = opt_endpts.A[ch] <= opt_endpts.B[ch];
 
 	int amin, bmin;
 

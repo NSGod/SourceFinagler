@@ -87,7 +87,7 @@ struct Pattern
 	int transform_mode;		// x0 means alpha channel not transformed, x1 otherwise. 0x rgb not transformed, 1x otherwise.
 	int mode;				// associated mode value
 	int modebits;			// number of mode bits
-	char *encoding;			// verilog description of encoding for this mode
+	const char *encoding;	// verilog description of encoding for this mode
 };
 
 #define	TRANSFORM_MODE_ALPHA	1
@@ -250,7 +250,7 @@ static void write_header(const IntEndptsRGBA endpts[NREGIONS], int shapeindex, c
 
 static void read_header(Bits &in, IntEndptsRGBA endpts[NREGIONS], int &shapeindex, int &rotatemode, int &indexmode, Pattern &p, int &pat_index)
 {
-	int mode = AVPCL::getmode(in);
+	AVPCL::getmode(in);
 
 	pat_index = 0;
 
@@ -783,7 +783,6 @@ static float exhaustive(const Vector4 colors[], int np, int rotatemode, int inde
 	int bhigh = min((1<<bprec)-1, opt_endpts.B[ch] + bdelta);
 
 	// now there's no need to swap the ordering of A and B
-	bool a_le_b = opt_endpts.A[ch] <= opt_endpts.B[ch];
 
 	int amin, bmin;
 

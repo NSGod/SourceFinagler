@@ -1027,7 +1027,7 @@ static FloatImage * loadFloatTIFF(const char * fileName, Stream & s)
     AutoPtr<FloatImage> fimage(new FloatImage());
     fimage->allocate(spp, width, height);
 
-    int linesize = TIFFScanlineSize(tif);
+    tmsize_t linesize = TIFFScanlineSize(tif);
     tdata_t buf = malloc<uint8>(linesize);
 
     for (uint y = 0; y < height; y++)
@@ -1918,8 +1918,9 @@ bool nv::ImageIO::saveFloat(const char * fileName, const FloatImage * fimage, ui
     if (baseComponent + componentCount < fimage->componentCount()) {
         return false;
     }
-
+#if (defined(HAVE_OPENEXR) || defined(HAVE_TIFF))
     const char * extension = Path::extension(fileName);
+#endif
 
 #if defined(HAVE_OPENEXR)
     if (strCaseCmp(extension, ".exr") == 0) {

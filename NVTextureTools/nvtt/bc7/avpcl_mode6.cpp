@@ -26,6 +26,7 @@ See the License for the specific language governing permissions and limitations 
 #include <cstring>
 #include <float.h>
 
+
 using namespace nv;
 using namespace AVPCL;
 
@@ -62,7 +63,7 @@ struct Pattern
 	ChanBits chan[NCHANNELS_RGBA];//  bit patterns used per channel
 	int mode;				// associated mode value
 	int modebits;			// number of mode bits
-	char *encoding;			// verilog description of encoding for this mode
+	const char *encoding;			// verilog description of encoding for this mode
 };
 
 #define	NPATTERNS 1
@@ -260,7 +261,7 @@ static void write_header(const IntEndptsRGBA_2 endpts[NREGIONS], int shapeindex,
 
 static void read_header(Bits &in, IntEndptsRGBA_2 endpts[NREGIONS], int &shapeindex, Pattern &p, int &pat_index)
 {
-	int mode = AVPCL::getmode(in);
+	AVPCL::getmode(in);
 
 	pat_index = 0;
 
@@ -578,7 +579,6 @@ static float exhaustive(const Vector4 colors[], int np, int ch, const RegionPrec
 	int bhigh = min((1<<bprec)-1, opt_endpts.B[ch] + bdelta);
 
 	// now there's no need to swap the ordering of A and B
-	bool a_le_b = opt_endpts.A[ch] <= opt_endpts.B[ch];
 
 	int amin, bmin;
 

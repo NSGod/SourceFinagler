@@ -587,7 +587,7 @@ namespace
         writeStackTrace(trace, size, 1, lines);
 
         for (uint i = 0; i < lines.count(); i++) {
-            nvDebug(lines[i]);
+            nvDebug("%s", lines[i]);
             delete lines[i];
         }
 
@@ -991,7 +991,7 @@ void debug::dumpInfo()
         writeStackTrace(trace, size, 1, lines);
 
         for (uint i = 0; i < lines.count(); i++) {
-            nvDebug(lines[i]);
+            nvDebug("%s", lines[i]);
             delete lines[i];
         }
     }
