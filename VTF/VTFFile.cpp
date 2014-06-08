@@ -63,11 +63,12 @@
 
 #ifdef USE_NVTT
 
-#	include <NVTextureTools/NVTextureTools.h>
-//#	include <NVMath/NVMath.h>
+#include <NVTextureTools/NVTextureTools.h>
 
 using namespace nv;
 using namespace nvtt;
+
+#include <assert.h>
 
 #endif
 
@@ -198,7 +199,7 @@ public:
 public:
 	
 	NVOutputHandler(SNVCompressionUserData *aUserData) : userData(aUserData), mipmapIndex(0), currentData(0), currentOffset(0), currentLength(0) {
-		nvAssert(userData != 0);
+		assert(userData != 0);
 	}
 	
 	virtual ~NVOutputHandler() {
@@ -228,7 +229,7 @@ public:
     virtual bool writeData(const void * data, int aSize) {
 //		printf("NVOutputHandler::writeData()\n");
 		
-		nvAssert(this->userData != 0);
+		assert(this->userData != 0);
 		
 		if (this->currentOffset + aSize <= this->currentLength) {
 			memcpy(this->currentData + this->currentOffset, (vlByte *)data, aSize);
@@ -253,7 +254,7 @@ public:
 					if (this->userData->pVTFFile->GetFormat() == this->userData->ImageFormat) {
 						this->userData->pVTFFile->SetData(this->userData->uiFrame, this->userData->uiFace, this->userData->uiSlice, this->mipmapIndex, this->currentData);
 					} else {
-						nvAssert(this->userData->pVTFFile->GetFormat() != IMAGE_FORMAT_DXT1 &&
+						assert(this->userData->pVTFFile->GetFormat() != IMAGE_FORMAT_DXT1 &&
 							   this->userData->pVTFFile->GetFormat() != IMAGE_FORMAT_DXT1_ONEBITALPHA &&
 							   this->userData->pVTFFile->GetFormat() != IMAGE_FORMAT_DXT3 &&
 							   this->userData->pVTFFile->GetFormat() != IMAGE_FORMAT_DXT5);
@@ -813,8 +814,8 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 				break;
 			}
 
-			nvAssert((uiNewWidth & (uiNewWidth - 1)) == 0);
-			nvAssert((uiNewHeight & (uiNewHeight - 1)) == 0);
+			assert((uiNewWidth & (uiNewWidth - 1)) == 0);
+			assert((uiNewHeight & (uiNewHeight - 1)) == 0);
 
 			// Resize the input.
 			if(uiWidth != uiNewWidth || uiHeight != uiNewHeight)
@@ -2478,9 +2479,9 @@ vlBool CVTFFile::GenerateMipmaps(vlUInt uiFace, vlUInt uiFrame, VTFMipmapFilter 
 		return vlFalse;
 	}
 
-	nvAssert(MipmapFilter >= 0 && MipmapFilter < MIPMAP_FILTER_COUNT);
+	assert(MipmapFilter >= 0 && MipmapFilter < MIPMAP_FILTER_COUNT);
 
-	nvAssert(SharpenFilter >= 0 && SharpenFilter < SHARPEN_FILTER_COUNT);
+	assert(SharpenFilter >= 0 && SharpenFilter < SHARPEN_FILTER_COUNT);
 
 	if(this->Header->MipCount == 1)
 	{
@@ -3239,7 +3240,7 @@ static SVTFImageFormatInfo VTFImageFormatInfo[] =
 
 SVTFImageFormatInfo const &CVTFFile::GetImageFormatInfo(VTFImageFormat ImageFormat)
 {
-	nvAssert(ImageFormat >= 0 && ImageFormat < IMAGE_FORMAT_COUNT);
+	assert(ImageFormat >= 0 && ImageFormat < IMAGE_FORMAT_COUNT);
 
 	return VTFImageFormatInfo[ImageFormat];
 }
@@ -3287,7 +3288,7 @@ vlUInt CVTFFile::ComputeImageSize(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiDept
 {
 	vlUInt uiImageSize = 0;
 
-	nvAssert(uiWidth != 0 && uiHeight != 0 && uiDepth != 0);
+	assert(uiWidth != 0 && uiHeight != 0 && uiDepth != 0);
 
 	for(vlUInt i = 0; i < uiMipmaps; i++)
 	{
@@ -3319,7 +3320,7 @@ vlUInt CVTFFile::ComputeMipmapCount(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiDe
 {
 	vlUInt uiCount = 0;
 
-	nvAssert(uiWidth != 0 && uiHeight != 0 && uiDepth != 0);
+	assert(uiWidth != 0 && uiHeight != 0 && uiDepth != 0);
 
 	while(vlTrue)
 	{
@@ -3435,7 +3436,7 @@ vlUInt CVTFFile::ComputeDataOffset(vlUInt uiFrame, vlUInt uiFace, vlUInt uiSlice
 	uiOffset += uiTemp1 * uiFace * uiSliceCount;
 	uiOffset += uiTemp2 * uiSlice;
 
-	nvAssert(uiOffset < this->uiImageBufferSize);
+	assert(uiOffset < this->uiImageBufferSize);
 	
 	return uiOffset;
 }
@@ -3975,6 +3976,8 @@ vlBool CVTFFile::ConvertRGBA8888toBGRA8888(vlByte *sourceBytes, vlByte *destByte
 #if MD_DEBUG
 	printf("\nCVTFFile::ConvertRGBA8888toBGRA8888()\n\n");
 #endif
+	assert(sourceBytes != 0);
+	
 	if (sourceBytes == 0 || destBytes == 0 || pixelCount == 0) {
 		LastError.Set("Invalid parameters to CVTFFile::ConvertRGBA8888toBGRA8888()");
 		return vlFalse;
@@ -4404,11 +4407,11 @@ vlBool ConvertTemplated(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, vlUInt
 
 vlBool CVTFFile::Convert(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, vlUInt uiHeight, VTFImageFormat SourceFormat, VTFImageFormat DestFormat)
 {
-	nvAssert(lpSource != 0);
-	nvAssert(lpDest != 0);
+	assert(lpSource != 0);
+	assert(lpDest != 0);
 
-	nvAssert(SourceFormat >= 0 && SourceFormat < IMAGE_FORMAT_COUNT);
-	nvAssert(DestFormat >= 0 && DestFormat < IMAGE_FORMAT_COUNT);
+	assert(SourceFormat >= 0 && SourceFormat < IMAGE_FORMAT_COUNT);
+	assert(DestFormat >= 0 && DestFormat < IMAGE_FORMAT_COUNT);
 
 	const SVTFImageConvertInfo& SourceInfo = VTFImageConvertInfo[SourceFormat];
 	const SVTFImageConvertInfo& DestInfo = VTFImageConvertInfo[DestFormat];
@@ -4574,9 +4577,9 @@ vlBool CVTFFile::Convert(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, vlUIn
 
 vlBool CVTFFile::ConvertToNormalMap(vlByte *lpSourceRGBA8888, vlByte *lpDestRGBA8888, vlUInt uiWidth, vlUInt uiHeight, VTFKernelFilter KernelFilter, VTFHeightConversionMethod HeightConversionMethod, VTFNormalAlphaResult NormalAlphaResult, vlByte bMinimumZ, vlSingle sScale, vlBool bWrap, vlBool bInvertX, vlBool bInvertY, vlBool bInvertZ)
 {
-	nvAssert(KernelFilter >= 0 && KernelFilter < KERNEL_FILTER_COUNT);
-	nvAssert(HeightConversionMethod >= 0 && HeightConversionMethod < HEIGHT_CONVERSION_METHOD_COUNT);
-	nvAssert(NormalAlphaResult >= 0 && NormalAlphaResult < NORMAL_ALPHA_RESULT_COUNT);
+	assert(KernelFilter >= 0 && KernelFilter < KERNEL_FILTER_COUNT);
+	assert(HeightConversionMethod >= 0 && HeightConversionMethod < HEIGHT_CONVERSION_METHOD_COUNT);
+	assert(NormalAlphaResult >= 0 && NormalAlphaResult < NORMAL_ALPHA_RESULT_COUNT);
 
 #ifdef USE_NVDXT
 	nvCompressionOptions Options = nvCompressionOptions();
@@ -4652,8 +4655,8 @@ vlBool CVTFFile::ConvertToNormalMap(vlByte *lpSourceRGBA8888, vlByte *lpDestRGBA
 
 vlBool CVTFFile::Resize(vlByte *lpSourceRGBA8888, vlByte *lpDestRGBA8888, vlUInt uiSourceWidth, vlUInt uiSourceHeight, vlUInt uiDestWidth, vlUInt uiDestHeight, VTFMipmapFilter ResizeFilter, VTFSharpenFilter SharpenFilter)
 {
-	nvAssert(ResizeFilter >= 0 && ResizeFilter < MIPMAP_FILTER_COUNT);
-	nvAssert(SharpenFilter >= 0 && SharpenFilter < SHARPEN_FILTER_COUNT);
+	assert(ResizeFilter >= 0 && ResizeFilter < MIPMAP_FILTER_COUNT);
+	assert(SharpenFilter >= 0 && SharpenFilter < SHARPEN_FILTER_COUNT);
 
 #ifdef USE_NVDXT
 	nvCompressionOptions Options = nvCompressionOptions();
