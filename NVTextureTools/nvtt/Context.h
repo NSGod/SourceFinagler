@@ -27,8 +27,8 @@
 
 #include "nvcore/Ptr.h"
 
-#include "nvtt/Compressor.h"
-#include "nvtt/cuda/CudaCompressorDXT.h"
+#include "Compressor.h"
+#include "cuda/CudaCompressorDXT.h"
 #include "nvtt.h"
 #include "TaskDispatcher.h"
 

@@ -48,9 +48,9 @@
 #include <NVCore/ForEach.h>
 #endif
 
-//#ifndef NV_CORE_HASH_H
-//#include <NVCore/Hash.h>
-//#endif
+#ifndef NV_CORE_HASH_H
+#include <NVCore/Hash.h>
+#endif
 
 #ifndef NV_CORE_LIBRARY_H
 #include <NVCore/Library.h>
@@ -268,9 +268,9 @@
 #include <NVTextureTools/CompressorRGB.h>
 #endif
 
-#ifndef NV_TT_CONTEXT_H
-#include <NVTextureTools/Context.h>
-#endif
+//#ifndef NV_TT_CONTEXT_H
+//#include <NVTextureTools/Context.h>
+//#endif
 
 #ifndef NV_TT_QUICKCOMPRESSDXT_H
 #include <NVTextureTools/QuickCompressDXT.h>
