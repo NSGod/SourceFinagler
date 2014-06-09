@@ -371,6 +371,30 @@ NSString *NSStringForAppleScriptListFromPaths(NSArray *paths) {
 }
 
 
+- (NSString *)enhancedFloatDescriptionForComponentCount:(NSUInteger)numComponents {
+	NSParameterAssert(self.length % sizeof(float) == 0);
+	
+	NSMutableString *string = [NSMutableString stringWithString:@"\n"];
+	
+	NSUInteger floatCount = self.length / sizeof(float);
+	
+	float *floatBytes = (float *)[self bytes];
+	
+	for (NSUInteger i = 0; i < floatCount; i++) {
+		
+		[string appendFormat:@"%0.4f  ", floatBytes[i]];
+		
+		if (((i + 1) % numComponents) == 0) {
+			[string appendFormat:@"\n"];
+		}
+		
+	}
+	
+	return string;
+}
+
+
+
 @end
 
 

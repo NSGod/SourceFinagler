@@ -101,8 +101,12 @@ MDFOUNDATION_EXTERN NSString *NSStringForAppleScriptListFromPaths(NSArray *paths
 
 
 @interface NSData (MDDescriptionAdditions)
+
 - (NSString *)stringRepresentation;
 - (NSString *)enhancedDescription;
+
+- (NSString *)enhancedFloatDescriptionForComponentCount:(NSUInteger)numComponents; // R32F = 1, RGB32F = 3, RGBA32F = 4
+
 @end
 
 

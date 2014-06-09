@@ -74,11 +74,13 @@
 		C10A898D16026EB200791BEC /* HKFolderAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153CD1396699600E32057 /* HKFolderAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C10A898E16026EB300791BEC /* HKFolderAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F153CE1396699600E32057 /* HKFolderAdditions.m */; };
 		C10A8A2616026F6F00791BEC /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = C10A8A2516026F6F00791BEC /* delete.png */; };
+		C1139D0818BEC31600D3FF7C /* TKPrivateInterfaces.m in Sources */ = {isa = PBXBuildFile; fileRef = C1139D0718BEC31600D3FF7C /* TKPrivateInterfaces.m */; };
 		C115A09C18F9AA0400D11686 /* overlayStop.png in Resources */ = {isa = PBXBuildFile; fileRef = C16476F5124E8BA30062B943 /* overlayStop.png */; };
 		C115A09D18F9AA0700D11686 /* overlayPlay.png in Resources */ = {isa = PBXBuildFile; fileRef = C16476F3124E8BA30062B943 /* overlayPlay.png */; };
 		C116FA0412D5549700551787 /* TKImageDocumentAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C145B3AF12C05BCF005D7E21 /* TKImageDocumentAccessoryView.xib */; };
 		C116FA0512D5549900551787 /* TKImageDocumentAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C116F85912D5301400551787 /* TKImageDocumentAccessoryViewController.m */; };
 		C118590818ABF2B100136EA0 /* MDCGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C118590718ABF2B100136EA0 /* MDCGImage.m */; };
+		C11B0BB118D4C767005B52C1 /* TKPrivateCPPInterfaces.h in Headers */ = {isa = PBXBuildFile; fileRef = C11B0BB018D4C6C2005B52C1 /* TKPrivateCPPInterfaces.h */; };
 		C11CA5E713A4E84D006CC348 /* MDCopyOperationSeparatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = C11CA5E613A4E84D006CC348 /* MDCopyOperationSeparatorView.m */; };
 		C11CA69813A4F9FB006CC348 /* MDCopyOperationContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = C11CA69713A4F9FB006CC348 /* MDCopyOperationContentView.m */; };
 		C1224C2D13B06C95009AA0F4 /* SteamKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C140E63D13889A9400027DD6 /* SteamKit.framework */; };
@@ -92,6 +94,7 @@
 		C1275F62129182C40041ACD7 /* VSSourceAddon.m in Sources */ = {isa = PBXBuildFile; fileRef = C1275F61129182C40041ACD7 /* VSSourceAddon.m */; };
 		C1279D3612DCB0EB0065F5D7 /* defaultPresets.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1279D3512DCB0EA0065F5D7 /* defaultPresets.plist */; };
 		C12B4DAA13B7179C0096FC0E /* ForEach.h in Headers */ = {isa = PBXBuildFile; fileRef = C12B4DA913B7179B0096FC0E /* ForEach.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C12CE52B1912D9B20067DA65 /* Linear Grayscale Profile.icc in Resources */ = {isa = PBXBuildFile; fileRef = C12CE52A1912D9B20067DA65 /* Linear Grayscale Profile.icc */; };
 		C12CFB5A12DFB3AE00A08A4B /* TKDDSImageRep.mm in Sources */ = {isa = PBXBuildFile; fileRef = C12DB4B4125FADE00051A751 /* TKDDSImageRep.mm */; };
 		C12CFB7512DFBCB400A08A4B /* TKFoundationAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1AF851812C6294B00027B75 /* TKFoundationAdditions.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C12CFB7612DFBCB400A08A4B /* TKFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AF851912C6294B00027B75 /* TKFoundationAdditions.m */; };
@@ -143,6 +146,7 @@
 		C135198B13947C730074B5EA /* LGPL.txt in Resources */ = {isa = PBXBuildFile; fileRef = C135198813947C190074B5EA /* LGPL.txt */; };
 		C13519A113947CB00074B5EA /* LGPL.txt in Resources */ = {isa = PBXBuildFile; fileRef = C135199F13947CA40074B5EA /* LGPL.txt */; };
 		C13519A213947CB10074B5EA /* Readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = C13519A013947CA40074B5EA /* Readme.txt */; };
+		C138042218BC18960098AD2D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C138042018BC18960098AD2D /* Localizable.strings */; };
 		C13B4E741620EFBD00D07CB3 /* TKImageRepAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C13B4E731620EF5200D07CB3 /* TKImageRepAdditions.m */; };
 		C13FE24E1394303C00C0D27C /* isRunning.png in Resources */ = {isa = PBXBuildFile; fileRef = C1908B5D13935F1000656A78 /* isRunning.png */; };
 		C140E72513889B7A00027DD6 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C11B279211BDFBB8004D4CC0 /* ApplicationServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -198,8 +202,6 @@
 		C179471212788393008B7EC9 /* NVTextureTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FEA930125E72E300CA78FF /* NVTextureTools.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C17CC5AC1627FF740055D950 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17CC5AB1627FF740055D950 /* Sparkle.framework */; };
 		C17CC69C1628002F0055D950 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C17CC5AB1627FF740055D950 /* Sparkle.framework */; };
-		C187D8A31635900700F30B64 /* TKBase.h in Headers */ = {isa = PBXBuildFile; fileRef = C187D8A11635900700F30B64 /* TKBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C187D8A41635900700F30B64 /* TKBase.m in Sources */ = {isa = PBXBuildFile; fileRef = C187D8A21635900700F30B64 /* TKBase.m */; };
 		C187D97E1635A61400F30B64 /* TextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
 		C190888813932B2800656A78 /* VSGameAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C190888713932B2800656A78 /* VSGameAdditions.m */; };
 		C1908B5813935CD000656A78 /* MDImageTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1908B5713935CD000656A78 /* MDImageTextCell.m */; };
@@ -535,6 +537,7 @@
 		C1CA2B2913A2E36000235C98 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA2B2013A2E32300235C98 /* QuickLook.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1CA2B2B13A2E38D00235C98 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA2B2A13A2E38D00235C98 /* WebKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1CA329213A4576E00235C98 /* TextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
+		C1DC1B4218BEF75B006ADE5E /* MDFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C11B275011BDE7AD004D4CC0 /* MDFoundationAdditions.m */; };
 		C1E1503116286A01000CBA7A /* TKPrivateInterfaces.h in Headers */ = {isa = PBXBuildFile; fileRef = C1E1503016286A01000CBA7A /* TKPrivateInterfaces.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C1E6DABF12BC22BA009D8AD6 /* TKImage.h in Headers */ = {isa = PBXBuildFile; fileRef = C17025F6128486BE0056A23D /* TKImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1E6DAC012BC22BB009D8AD6 /* TKImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C17025F7128486BE0056A23D /* TKImage.m */; };
@@ -588,6 +591,8 @@
 		C1F157DE1396B05700E32057 /* HKFoundationAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F157DC1396B05700E32057 /* HKFoundationAdditions.h */; };
 		C1F157DF1396B05700E32057 /* HKFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F157DD1396B05700E32057 /* HKFoundationAdditions.m */; };
 		C1F9282C16492B790089FBA4 /* caution.png in Resources */ = {isa = PBXBuildFile; fileRef = C1F9282B16492B790089FBA4 /* caution.png */; };
+		C1FA236E18FF1A9F00BF8919 /* TKError.h in Headers */ = {isa = PBXBuildFile; fileRef = C120D7BF18FF174800D62C41 /* TKError.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C1FA236F18FF1AA500BF8919 /* TKError.m in Sources */ = {isa = PBXBuildFile; fileRef = C120D7C018FF174800D62C41 /* TKError.m */; };
 		C1FEA9B2125E889F00CA78FF /* posh.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FEA948125E739700CA78FF /* posh.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1FEA9B3125E88A000CA78FF /* posh.c in Sources */ = {isa = PBXBuildFile; fileRef = C1FEA947125E739700CA78FF /* posh.c */; };
 		C1FEA9B4125E88A400CA78FF /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FEA8BE125E5D7E00CA78FF /* Debug.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -946,12 +951,14 @@
 		C10BBA67124303EE00994CA0 /* VMF.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VMF.icns; path = Resources/VMF.icns; sourceTree = "<group>"; };
 		C1137866128072C500C87072 /* MDCopyOperationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCopyOperationViewController.h; path = SourceFinagler/MDCopyOperationViewController.h; sourceTree = "<group>"; };
 		C1137867128072C500C87072 /* MDCopyOperationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCopyOperationViewController.m; path = SourceFinagler/MDCopyOperationViewController.m; sourceTree = "<group>"; };
+		C1139D0718BEC31600D3FF7C /* TKPrivateInterfaces.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKPrivateInterfaces.m; path = TextureKit/TKPrivateInterfaces.m; sourceTree = "<group>"; };
 		C116F6EB12CFE71D00551787 /* viewMipmapBrowserCapsuleStyle.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = viewMipmapBrowserCapsuleStyle.pdf; path = Resources/viewMipmapBrowserCapsuleStyle.pdf; sourceTree = "<group>"; };
 		C116F85812D5301400551787 /* TKImageDocumentAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageDocumentAccessoryViewController.h; path = TextureFinagler/TKImageDocumentAccessoryViewController.h; sourceTree = "<group>"; };
 		C116F85912D5301400551787 /* TKImageDocumentAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageDocumentAccessoryViewController.m; path = TextureFinagler/TKImageDocumentAccessoryViewController.m; sourceTree = "<group>"; };
 		C116FAFB12D588A400551787 /* viewFrameBrowserCapsuleStyle.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = viewFrameBrowserCapsuleStyle.pdf; path = Resources/viewFrameBrowserCapsuleStyle.pdf; sourceTree = "<group>"; };
 		C118590618ABF2B100136EA0 /* MDCGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCGImage.h; path = SourceImageQuickLook/MDCGImage.h; sourceTree = "<group>"; };
 		C118590718ABF2B100136EA0 /* MDCGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCGImage.m; path = SourceImageQuickLook/MDCGImage.m; sourceTree = "<group>"; };
+		C11B0BB018D4C6C2005B52C1 /* TKPrivateCPPInterfaces.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TKPrivateCPPInterfaces.h; path = TextureKit/TKPrivateCPPInterfaces.h; sourceTree = "<group>"; };
 		C11B274B11BDE755004D4CC0 /* MDFolderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDFolderManager.h; path = SteamKit/MDFolderManager.h; sourceTree = "<group>"; };
 		C11B274C11BDE755004D4CC0 /* MDFolderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDFolderManager.m; path = SteamKit/MDFolderManager.m; sourceTree = "<group>"; };
 		C11B274F11BDE7AD004D4CC0 /* MDFoundationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDFoundationAdditions.h; path = SourceFinagler/MDFoundationAdditions.h; sourceTree = "<group>"; };
@@ -964,6 +971,8 @@
 		C11CA5E613A4E84D006CC348 /* MDCopyOperationSeparatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCopyOperationSeparatorView.m; path = SourceFinagler/MDCopyOperationSeparatorView.m; sourceTree = "<group>"; };
 		C11CA69613A4F9FB006CC348 /* MDCopyOperationContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCopyOperationContentView.h; path = SourceFinagler/MDCopyOperationContentView.h; sourceTree = "<group>"; };
 		C11CA69713A4F9FB006CC348 /* MDCopyOperationContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCopyOperationContentView.m; path = SourceFinagler/MDCopyOperationContentView.m; sourceTree = "<group>"; };
+		C120D7BF18FF174800D62C41 /* TKError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TKError.h; path = TextureKit/TKError.h; sourceTree = "<group>"; };
+		C120D7C018FF174800D62C41 /* TKError.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TKError.m; path = TextureKit/TKError.m; sourceTree = "<group>"; };
 		C1224BEC13B06B9A009AA0F4 /* SourceFinaglerAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SourceFinaglerAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1267035125D1A0B00725F14 /* VAS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VAS.icns; path = Resources/VAS.icns; sourceTree = "<group>"; };
 		C1275F60129182C40041ACD7 /* VSSourceAddon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSSourceAddon.h; path = SourceAddonFinagler/VSSourceAddon.h; sourceTree = "<group>"; };
@@ -984,6 +993,7 @@
 		C12C8E3112922C7600C8E667 /* zoomIn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoomIn.png; path = Resources/zoomIn.png; sourceTree = "<group>"; };
 		C12C8E3212922C7600C8E667 /* zoomOut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoomOut.png; path = Resources/zoomOut.png; sourceTree = "<group>"; };
 		C12C8E6312922E5C00C8E667 /* zoomToFit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoomToFit.png; path = Resources/zoomToFit.png; sourceTree = "<group>"; };
+		C12CE52A1912D9B20067DA65 /* Linear Grayscale Profile.icc */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Linear Grayscale Profile.icc"; path = "TextureKit/Linear Grayscale Profile.icc"; sourceTree = "<group>"; };
 		C12D372B12E14CD200397411 /* MDScopeBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDScopeBarView.h; path = SourceFinagler/MDScopeBarView.h; sourceTree = "<group>"; };
 		C12D372C12E14CD200397411 /* MDScopeBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDScopeBarView.m; path = SourceFinagler/MDScopeBarView.m; sourceTree = "<group>"; };
 		C12DB4B3125FADE00051A751 /* TKDDSImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKDDSImageRep.h; path = TextureKit/TKDDSImageRep.h; sourceTree = "<group>"; };
@@ -1004,6 +1014,7 @@
 		C135198813947C190074B5EA /* LGPL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LGPL.txt; path = VTF/LGPL.txt; sourceTree = "<group>"; };
 		C135199F13947CA40074B5EA /* LGPL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LGPL.txt; path = HL/LGPL.txt; sourceTree = "<group>"; };
 		C13519A013947CA40074B5EA /* Readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Readme.txt; path = HL/Readme.txt; sourceTree = "<group>"; };
+		C138042118BC18960098AD2D /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = TextureKit/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C139C68E137CCEBB00DDA21B /* hl2_osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper; name = hl2_osx.app; path = SteamKit/hl2_osx.app; sourceTree = "<group>"; };
 		C13B4E721620EF5200D07CB3 /* TKImageRepAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TKImageRepAdditions.h; path = TextureFinagler/TKImageRepAdditions.h; sourceTree = "<group>"; };
 		C13B4E731620EF5200D07CB3 /* TKImageRepAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TKImageRepAdditions.m; path = TextureFinagler/TKImageRepAdditions.m; sourceTree = "<group>"; };
@@ -1118,8 +1129,6 @@
 		C181ADCC12557F28006810AB /* SCR.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = SCR.icns; path = Resources/SCR.icns; sourceTree = "<group>"; };
 		C18250AD1262859600D3F663 /* MDImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDImageView.h; path = SourceFinagler/MDImageView.h; sourceTree = "<group>"; };
 		C18250AE1262859600D3F663 /* MDImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDImageView.m; path = SourceFinagler/MDImageView.m; sourceTree = "<group>"; };
-		C187D8A11635900700F30B64 /* TKBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKBase.h; path = TextureKit/TKBase.h; sourceTree = "<group>"; };
-		C187D8A21635900700F30B64 /* TKBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKBase.m; path = TextureKit/TKBase.m; sourceTree = "<group>"; };
 		C190888613932B2800656A78 /* VSGameAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSGameAdditions.h; path = SteamKit/VSGameAdditions.h; sourceTree = "<group>"; };
 		C190888713932B2800656A78 /* VSGameAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSGameAdditions.m; path = SteamKit/VSGameAdditions.m; sourceTree = "<group>"; };
 		C1908B5613935CD000656A78 /* MDImageTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDImageTextCell.h; path = SourceFinagler/MDImageTextCell.h; sourceTree = "<group>"; };
@@ -1493,6 +1502,7 @@
 		C1F157DC1396B05700E32057 /* HKFoundationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKFoundationAdditions.h; path = HLKit/HKFoundationAdditions.h; sourceTree = "<group>"; };
 		C1F157DD1396B05700E32057 /* HKFoundationAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKFoundationAdditions.m; path = HLKit/HKFoundationAdditions.m; sourceTree = "<group>"; };
 		C1F9282B16492B790089FBA4 /* caution.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = caution.png; path = Resources/caution.png; sourceTree = "<group>"; };
+		C1FA237018FF23F900BF8919 /* TextureKit_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextureKit_Prefix.pch; path = TextureKit/TextureKit_Prefix.pch; sourceTree = "<group>"; };
 		C1FEA7EA125E5C9600CA78FF /* NVCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NVCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1FEA7EB125E5C9600CA78FF /* NVCore-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "NVCore-Info.plist"; path = "NVTextureTools/NVCore-Info.plist"; sourceTree = "<group>"; };
 		C1FEA8BB125E5D7E00CA78FF /* Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Array.h; path = NVTextureTools/nvcore/Array.h; sourceTree = "<group>"; };
@@ -2108,6 +2118,15 @@
 			name = MDResourceFile;
 			sourceTree = "<group>";
 		};
+		C128849119057214009CA973 /* auxiliary */ = {
+			isa = PBXGroup;
+			children = (
+				C16D5E38136D3D9900453365 /* TextureKit.exp */,
+				C1FA237018FF23F900BF8919 /* TextureKit_Prefix.pch */,
+			);
+			name = auxiliary;
+			sourceTree = "<group>";
+		};
 		C129D5711255C7CB004C6EDA /* MDPreviewViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2117,6 +2136,15 @@
 				C1C124DD123A0AEC004674B4 /* MDQuickLookPreviewViewController.m */,
 			);
 			name = MDPreviewViewController;
+			sourceTree = "<group>";
+		};
+		C12CE5291912D9980067DA65 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C138042018BC18960098AD2D /* Localizable.strings */,
+				C12CE52A1912D9B20067DA65 /* Linear Grayscale Profile.icc */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		C12F364312D7E5C500D28F26 /* TK Application stuff */ = {
@@ -2299,18 +2327,19 @@
 			children = (
 				C1E6DB0812BC2408009D8AD6 /* TextureKit.h */,
 				C1E6DFCC12BD0B00009D8AD6 /* TextureKitDefines.h */,
-				C16D5E38136D3D9900453365 /* TextureKit.exp */,
+				C12CE5291912D9980067DA65 /* Resources */,
 				C17319B31298D11400C29732 /* TextureKit-Info.plist */,
-				C187D8A11635900700F30B64 /* TKBase.h */,
-				C187D8A21635900700F30B64 /* TKBase.m */,
-				C1E1503016286A01000CBA7A /* TKPrivateInterfaces.h */,
+				C128849119057214009CA973 /* auxiliary */,
 				C17025F6128486BE0056A23D /* TKImage.h */,
 				C17025F7128486BE0056A23D /* TKImage.m */,
 				C17026191284BC6F0056A23D /* TKImageRep.h */,
 				C170261A1284BC6F0056A23D /* TKImageRep.m */,
 				C145EC72126895C500C34A08 /* DDS */,
 				C145EC71126895BE00C34A08 /* VTF */,
+				C120D7BF18FF174800D62C41 /* TKError.h */,
+				C120D7C018FF174800D62C41 /* TKError.m */,
 				C1AF851C12C62AFE00027B75 /* Additions */,
+				C1FA236D18FF1A5100BF8919 /* private interfaces */,
 			);
 			name = "TextureKit framework";
 			sourceTree = "<group>";
@@ -3055,6 +3084,16 @@
 			name = HKFolder;
 			sourceTree = "<group>";
 		};
+		C1FA236D18FF1A5100BF8919 /* private interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				C1E1503016286A01000CBA7A /* TKPrivateInterfaces.h */,
+				C1139D0718BEC31600D3FF7C /* TKPrivateInterfaces.m */,
+				C11B0BB018D4C6C2005B52C1 /* TKPrivateCPPInterfaces.h */,
+			);
+			name = "private interfaces";
+			sourceTree = "<group>";
+		};
 		C1FEA7B0125E5BDD00CA78FF /* NVTextureTools framework */ = {
 			isa = PBXGroup;
 			children = (
@@ -3447,11 +3486,12 @@
 				C1E6DAC112BC22BB009D8AD6 /* TKImageRep.h in Headers */,
 				C1E6DAC312BC22C2009D8AD6 /* TKVTFImageRep.h in Headers */,
 				C1E6DAC512BC22C7009D8AD6 /* TKDDSImageRep.h in Headers */,
+				C1FA236E18FF1A9F00BF8919 /* TKError.h in Headers */,
 				C1E6DB0A12BC2408009D8AD6 /* TextureKit.h in Headers */,
 				C1E6DFEE12BD102D009D8AD6 /* TextureKitDefines.h in Headers */,
 				C12CFB7512DFBCB400A08A4B /* TKFoundationAdditions.h in Headers */,
+				C11B0BB118D4C767005B52C1 /* TKPrivateCPPInterfaces.h in Headers */,
 				C1E1503116286A01000CBA7A /* TKPrivateInterfaces.h in Headers */,
-				C187D8A31635900700F30B64 /* TKBase.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3974,6 +4014,7 @@
 				Japanese,
 				French,
 				German,
+				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Steam Helper */;
 			projectDirPath = "";
@@ -4029,6 +4070,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C12CE52B1912D9B20067DA65 /* Linear Grayscale Profile.icc in Resources */,
+				C138042218BC18960098AD2D /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4283,9 +4326,11 @@
 				C1E6DAC012BC22BB009D8AD6 /* TKImage.m in Sources */,
 				C1E6DAC212BC22BC009D8AD6 /* TKImageRep.m in Sources */,
 				C1E6DAC412BC22C3009D8AD6 /* TKVTFImageRep.mm in Sources */,
+				C1139D0818BEC31600D3FF7C /* TKPrivateInterfaces.m in Sources */,
 				C12CFB5A12DFB3AE00A08A4B /* TKDDSImageRep.mm in Sources */,
+				C1FA236F18FF1AA500BF8919 /* TKError.m in Sources */,
 				C12CFB7612DFBCB400A08A4B /* TKFoundationAdditions.m in Sources */,
-				C187D8A41635900700F30B64 /* TKBase.m in Sources */,
+				C1DC1B4218BEF75B006ADE5E /* MDFoundationAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4737,6 +4782,14 @@
 			name = TKImageDocument.xib;
 			sourceTree = "<group>";
 		};
+		C138042018BC18960098AD2D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C138042118BC18960098AD2D /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		C13E77DD11C805D900B10F3C /* MDSteamAppsRelocatorView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -5068,12 +5121,13 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
+				EXPORTED_SYMBOLS_FILE = TextureKit/TextureKit.exp;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
+				GCC_PREFIX_HEADER = TextureKit/TextureKit_Prefix.pch;
 				INFOPLIST_FILE = "TextureKit/TextureKit-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = TextureKit;
@@ -5091,7 +5145,7 @@
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
+				GCC_PREFIX_HEADER = TextureKit/TextureKit_Prefix.pch;
 				INFOPLIST_FILE = "TextureKit/TextureKit-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = TextureKit;

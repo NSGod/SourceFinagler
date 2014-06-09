@@ -3,7 +3,7 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 12/25/2010.
-//  Copyright (c) 2010-2013 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2014 Mark Douma LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

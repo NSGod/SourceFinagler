@@ -3,7 +3,7 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 12/17/2010.
-//  Copyright (c) 2010-2013 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2014 Mark Douma LLC. All rights reserved.
 //
 
 #ifndef _TEXTUREKITDEFINES_H
@@ -23,10 +23,10 @@
 
 #if defined(__cplusplus)
 	#define TEXTUREKIT_EXTERN		extern "C"
-	#define TEXTUREKIT_PRIVATE_EXTERN	__private_extern__
+	#define TEXTUREKIT_PRIVATE_EXTERN	__attribute__((visibility("hidden"))) extern "C" 
 #else
 	#define TEXTUREKIT_EXTERN				extern
-	#define TEXTUREKIT_PRIVATE_EXTERN	__private_extern__
+	#define TEXTUREKIT_PRIVATE_EXTERN	__attribute__((visibility("hidden"))) extern
 #endif
 
 #if !defined(TEXTUREKIT_INLINE)
