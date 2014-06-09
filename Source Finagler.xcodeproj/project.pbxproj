@@ -132,6 +132,7 @@
 		C12F363512D7E46B00D28F26 /* TKImageExportPreset.m in Sources */ = {isa = PBXBuildFile; fileRef = C1583BC012B3ABA700A4AE2F /* TKImageExportPreset.m */; };
 		C12F363612D7E46C00D28F26 /* TKImageExportPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1583BBA12B3A55E00A4AE2F /* TKImageExportPanel.xib */; };
 		C12F363712D7E46D00D28F26 /* TKImageExportController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1583BB612B3A51300A4AE2F /* TKImageExportController.m */; };
+		C13000F518E8EF210042C449 /* NVThread.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C191BAB918C79E7D00CEE633 /* NVThread.framework */; };
 		C1305B8C12F08EF200D68170 /* ErrorMetric.h in Headers */ = {isa = PBXBuildFile; fileRef = C1305B7812F08E6E00D68170 /* ErrorMetric.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1305B8D12F08EF300D68170 /* ErrorMetric.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1305B7712F08E6E00D68170 /* ErrorMetric.cpp */; };
 		C1305BD012F08F8100D68170 /* TaskDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = C1305BCE12F08F8100D68170 /* TaskDispatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -546,7 +547,7 @@
 		C1E6DAC312BC22C2009D8AD6 /* TKVTFImageRep.h in Headers */ = {isa = PBXBuildFile; fileRef = C1647768124E91DB0062B943 /* TKVTFImageRep.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1E6DAC412BC22C3009D8AD6 /* TKVTFImageRep.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1647769124E91DB0062B943 /* TKVTFImageRep.mm */; };
 		C1E6DAC512BC22C7009D8AD6 /* TKDDSImageRep.h in Headers */ = {isa = PBXBuildFile; fileRef = C12DB4B3125FADE00051A751 /* TKDDSImageRep.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C1E6DACA12BC232F009D8AD6 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C11B279211BDFBB8004D4CC0 /* ApplicationServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		C1E6DACA12BC232F009D8AD6 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C11B279211BDFBB8004D4CC0 /* ApplicationServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C1E6DB0312BC236C009D8AD6 /* VTF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1B95275124E73B200E83451 /* VTF.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1E6DB0A12BC2408009D8AD6 /* TextureKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C1E6DB0812BC2408009D8AD6 /* TextureKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1E6DFB012BCEF08009D8AD6 /* MENU.icns in Resources */ = {isa = PBXBuildFile; fileRef = C1E6DFAD12BCEF08009D8AD6 /* MENU.icns */; };
@@ -1018,6 +1019,7 @@
 		C139C68E137CCEBB00DDA21B /* hl2_osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper; name = hl2_osx.app; path = SteamKit/hl2_osx.app; sourceTree = "<group>"; };
 		C13B4E721620EF5200D07CB3 /* TKImageRepAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TKImageRepAdditions.h; path = TextureFinagler/TKImageRepAdditions.h; sourceTree = "<group>"; };
 		C13B4E731620EF5200D07CB3 /* TKImageRepAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TKImageRepAdditions.m; path = TextureFinagler/TKImageRepAdditions.m; sourceTree = "<group>"; };
+		C13D2DC818F35B9F006B3B75 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		C13E77DE11C805D900B10F3C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDSteamAppsRelocatorView.xib; sourceTree = "<group>"; };
 		C13E77E111C8061500B10F3C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDOtherAppsHelperView.xib; sourceTree = "<group>"; };
 		C140E63D13889A9400027DD6 /* SteamKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SteamKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1706,6 +1708,7 @@
 				C1E6E13E12BD50DF009D8AD6 /* NVImage.framework in Frameworks */,
 				C1E6E13F12BD50E0009D8AD6 /* NVMath.framework in Frameworks */,
 				C1E6E14012BD50E1009D8AD6 /* NVCore.framework in Frameworks */,
+				C13000F518E8EF210042C449 /* NVThread.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1937,6 +1940,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C13D2DC818F35B9F006B3B75 /* Accelerate.framework */,
 				C17CC5AB1627FF740055D950 /* Sparkle.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 			);
