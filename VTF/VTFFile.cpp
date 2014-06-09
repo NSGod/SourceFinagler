@@ -432,8 +432,10 @@ CVTFFile::CVTFFile(const CVTFFile &VTFFile, VTFImageFormat ImageFormat)
 			vlUInt uiFaces = VTFFile.GetFaceCount();
 			vlUInt uiMipmaps = VTFFile.GetMipmapCount();
 			vlUInt uiSlices = VTFFile.GetDepth();
-
-			this->uiImageBufferSize = this->ComputeImageSize(this->Header->Width, this->Header->Height, uiMipmaps, this->Header->ImageFormat) * uiFrames * uiFaces;
+			
+		// BUG:
+//			this->uiImageBufferSize = this->ComputeImageSize(this->Header->Width, this->Header->Height, uiMipmaps, this->Header->ImageFormat) * uiFrames * uiFaces;
+			this->uiImageBufferSize = this->ComputeImageSize(this->Header->Width, this->Header->Height, uiSlices, uiMipmaps, this->Header->ImageFormat) * uiFrames * uiFaces;
 			this->lpImageData = new vlByte[this->uiImageBufferSize];
 
 			//vlByte *lpImageData = new vlByte[this->ComputeImageSize(this->Header->Width, this->Header->Height, 1, IMAGE_FORMAT_RGBA8888)];
