@@ -98,13 +98,17 @@
 		NSData *data = [self data];
 		if (data) {
 			if ([type isEqualToString:TKVTFType]) {
-				theImage = [[[TKImage alloc] initWithData:data firstRepresentationOnly:YES] autorelease];
-				if (theImage) {
-					[self setVersion:[(TKImage *)theImage version]];
-					[self setCompression:[(TKImage *)theImage compression]];
-					[self setHasMipmaps:([(TKImage *)theImage hasMipmaps] ? NSLocalizedString(@"Yes", @"") : NSLocalizedString(@"No", @""))];
-					[self setAlpha:([(TKImage *)theImage hasAlpha] ? NSLocalizedString(@"Yes", @"") : NSLocalizedString(@"No", @""))];
+				NSError *outError = nil;
+				theImage = [[[TKImage alloc] initWithData:data error:&outError] autorelease];
+//				theImage = [[[TKImage alloc] initWithData:data firstRepresentationOnly:YES error:&outError] autorelease];
+				if (theImage == nil) {
+					NSLog(@"[%@ %@] failed to create TKImage! error == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), outError);
+					return nil;
 				}
+				[self setVersion:[(TKImage *)theImage version]];
+				[self setCompression:[(TKImage *)theImage compression]];
+				[self setHasMipmaps:([(TKImage *)theImage hasMipmaps] ? NSLocalizedString(@"Yes", @"") : NSLocalizedString(@"No", @""))];
+				[self setAlpha:([(TKImage *)theImage hasAlpha] ? NSLocalizedString(@"Yes", @"") : NSLocalizedString(@"No", @""))];
 			} else {
 				theImage = [[[NSImage alloc] initWithData:data] autorelease];
 			}
