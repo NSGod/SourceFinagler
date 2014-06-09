@@ -528,7 +528,7 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 	// Check if height is valid (power of 2 and fits in a short).
 	if(!this->IsPowerOfTwo(uiSlices) || uiSlices > 0xffff)
 	{
-		if(uiHeight == 0)
+		if(uiSlices == 0)
 		{
 			LastError.Set("Invalid image depth.  Depth must be nonzero.");
 		}
