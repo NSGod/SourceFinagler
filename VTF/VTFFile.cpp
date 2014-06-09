@@ -2545,7 +2545,14 @@ vlBool CVTFFile::GenerateMipmaps(vlUInt uiFace, vlUInt uiFrame, VTFMipmapFilter 
 	}
 
 	nvCompressionOptions Options = nvCompressionOptions();
-#pragma mark --BUG
+	
+#pragma mark --BUG?
+	/* SNVCompressionUserData() constructor is defined as:
+	 
+	 SNVCompressionUserData(CVTFFile *pVTFFile, vlUInt uiFrame, vlUInt uiFace, vlUInt uiSlice, VTFImageFormat ImageFormat)
+	 
+	 In other words, `uiFrame` second, `uiFace` third, yet the following code is passing in `uiFace` second and `uiFrame` third... */
+	
 	SNVCompressionUserData UserData = SNVCompressionUserData(this, uiFace, uiFrame, 0, MipmapImageFormat);
 
 	// Don't generate mipmaps.	// MD ??
