@@ -1,6 +1,6 @@
 //
 //  TKImageView.m
-//  Texture Kit
+//  Source Finagler
 //
 //  Created by Mark Douma on 11/15/2010.
 //  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
@@ -9,8 +9,12 @@
 #import "TKImageView.h"
 #import <TextureKit/TextureKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "TKAnimationImageView.h"
+#import "TKImageViewPrivateInterfaces.h"
 
-#define TK_DEBUG 0
+
+
+#define TK_DEBUG 1
 
 
 typedef struct TKZoomMapping {
@@ -68,21 +72,16 @@ static inline CGFloat TKNextZoomFactorForZoomFactorAndOperation(CGFloat currentZ
 
 @interface TKImageView ()
 
-- (void)setImageKitLayerIfNeeded;
-
-- (void)loadAnimationImageReps;
-- (void)unloadAnimationImageReps;
+@property (nonatomic, retain) TKAnimationImageView *animationImageView;
 
 @end
 
 
 @implementation TKImageView
 
-@dynamic imageKitLayer;
+@synthesize animationImageView = _TK__private;
 
-@synthesize animationImageLayer;
-
-@synthesize animationImageReps;
+@dynamic animationImageReps;
 
 
 - (id)initWithFrame:(NSRect)frameRect {
@@ -94,99 +93,55 @@ static inline CGFloat TKNextZoomFactorForZoomFactorAndOperation(CGFloat currentZ
 
 
 - (void)dealloc {
-	[imageKitLayer release];
-	[animationImageReps release];
-	[animationImageLayer release];
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	self.animationImageView.imageView = nil;
+	[_TK__private release];
 	[super dealloc];
 }
 
 
 - (void)awakeFromNib {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	
 	[self setCurrentToolMode:IKToolModeMove];
-}
-
-
-- (void)setImageKitLayerIfNeeded {
-	if (imageKitLayer == nil) self.imageKitLayer = [self layer];
-}
-
-- (CALayer *)imageKitLayer {
-	[self setImageKitLayerIfNeeded];
-    return imageKitLayer;
-}
-
-- (void)setImageKitLayer:(CALayer *)aLayer {
-	[aLayer retain];
-	[imageKitLayer release];
-	imageKitLayer = aLayer;
-}
-
-
-#define TK_FRAMES_PER_SECOND 0.75
-#define TK_TIME_INTERVAL_PER_FRAME 1.0
-
-- (void)loadAnimationImageReps {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	
 	
 #if TK_DEBUG
-//		NSLog(@"[%@ %@] animationImageReps == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), animationImageReps);
+//	NSColor *backgroundColor = [self backgroundColor];
+//	NSLog(@"[%@ %@] backgroundColor == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), backgroundColor);
+//	CGColorRef colorRef = [backgroundColor CGColor];
+//	NSLog(@"colorRef == %@", colorRef);
+	
 #endif
-		
-	if ([animationImageReps count]) {
-		
-		[self setImageKitLayerIfNeeded];
-		
-		
-		NSMutableArray *imageRefs = [NSMutableArray array];
-		for (TKImageRep *imageRep in animationImageReps) {
-			[imageRefs addObject:(id)[imageRep CGImage]];
-		}
-		
-		CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:@"contents"];
-		anim.duration = TK_FRAMES_PER_SECOND; // frame rate == [animationImageReps count] / duration
-		anim.calculationMode = kCAAnimationDiscrete;
-		anim.repeatCount = HUGE_VAL;
-		anim.values = imageRefs;
-		
+
+}
+
+
+
+- (TKAnimationImageView *)animationImageView {
 #if TK_DEBUG
-		NSLog(@"[%@ %@] zoomFactor == %.3f", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [self zoomFactor]);
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-		
-		TKImageRep *largestRep = [TKImageRep largestRepresentationInArray:animationImageReps];
-		
-		if (animationImageLayer == nil) animationImageLayer = [[CALayer layer] retain];
-		
-		animationImageLayer.frame = NSRectToCGRect(NSMakeRect(0.0, 0.0, [largestRep size].width, [largestRep size].height));
-		animationImageLayer.position = NSPointToCGPoint(NSMakePoint([self bounds].size.width/2.0, [self bounds].size.height/2.0));
-		
-		[animationImageLayer setValue:[NSNumber numberWithDouble:[self zoomFactor]] forKeyPath:@"transform.scale"];
-		
-		self.layer = animationImageLayer;
-		
-		[self.layer addAnimation:anim forKey:@"animation"];
+	if (_TK__private == nil) {
+		_TK__private = [[TKAnimationImageView alloc] initWithFrame:NSMakeRect(0.0, 0.0, self.bounds.size.width, self.bounds.size.height)];
+		[(TKAnimationImageView *)_TK__private setImageView:self];
+		[(TKAnimationImageView *)_TK__private setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+		[[(TKAnimationImageView *)_TK__private layer] setBackgroundColor:self.layer.backgroundColor];
 	}
+	return _TK__private;
 }
 
 
-- (void)unloadAnimationImageReps {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	[self.layer removeAnimationForKey:@"animation"];
-	
-	self.layer = imageKitLayer;
-	
-//	[imageKitLayer release];
-//	imageKitLayer = nil;
-	
-//	[animationImageReps release];
-//	animationImageReps = nil;
-//	
-//	animationImageLayer = nil;
-	
+- (void)setAnimationImageReps:(NSArray *)animationImageReps {
+	self.animationImageView.animationImageReps = animationImageReps;
+}
+
+- (NSArray *)animationImageReps {
+	return self.animationImageView.animationImageReps;
 }
 
 
@@ -194,11 +149,13 @@ static inline CGFloat TKNextZoomFactorForZoomFactorAndOperation(CGFloat currentZ
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (isAnimating) return;
 	
-	[self loadAnimationImageReps];
+	if (self.isAnimating) return;
 	
-	isAnimating = YES;
+	if (self.animationImageView.animationImageReps.count) {
+		[self.animationImageView startAnimating];
+		[self addSubview:self.animationImageView];
+	}
 }
 
 
@@ -206,37 +163,17 @@ static inline CGFloat TKNextZoomFactorForZoomFactorAndOperation(CGFloat currentZ
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (isAnimating == NO) return;
+	if (self.isAnimating == NO) return;
 	
-	[self unloadAnimationImageReps];
+	[self.animationImageView removeFromSuperview];
+	[self.animationImageView stopAnimating];
 	
-	isAnimating = NO;
 }
 
 
 - (BOOL)isAnimating {
-	return isAnimating;
+	return self.animationImageView.isAnimating;
 }
-
-
-
-//- (IBAction)togglePlay:(id)sender {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	CALayer *layer = [self layer];
-//	NSLog(@"[%@ %@] layer == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), layer);
-//	
-//	if (playing) {
-//		
-//		[self unloadAnimatedImageReps];
-//	} else {
-//		[self loadAnimatedImageReps];
-//	}
-//	
-//	[self setPlaying:!playing];
-//	[self setNeedsDisplay:YES];
-//}
 
 
 
@@ -282,6 +219,7 @@ static inline CGFloat TKNextZoomFactorForZoomFactorAndOperation(CGFloat currentZ
 	[super zoomOut:sender];
 }
 
+
 - (void)scrollWheel:(NSEvent *)event {
 	
 	CGFloat deltaY = [event deltaY];
@@ -296,38 +234,5 @@ static inline CGFloat TKNextZoomFactorForZoomFactorAndOperation(CGFloat currentZ
 }
 
 
-//#define TK_ZOOM_FACTOR_MIN 0.125
-//#define TK_ZOOM_FACTOR_MAX 32.0
-//
-//
-//- (void)scrollWheel:(NSEvent *)event {
-//	
-//	CGFloat deltaX = [event deltaX];
-//	CGFloat deltaY = [event deltaY];
-//	CGFloat deltaZ = [event deltaZ];
-//	
-//	CGFloat currentZoomFactor = [self zoomFactor];
-//	
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@] currentZoomFactor == %.3f, deltaX == %.3f, deltaY == %.3f, deltaZ == %.3f", NSStringFromClass([self class]), NSStringFromSelector(_cmd), currentZoomFactor, deltaX, deltaY, deltaZ);
-//#endif
-//	
-//	// resulting zoom factor should always be greater than 0, and less than, say, 16 (1600%) -- let's do 32
-//	
-//	if (currentZoomFactor > TK_ZOOM_FACTOR_MIN && currentZoomFactor <= TK_ZOOM_FACTOR_MAX) {
-//		CGFloat zoomOperation = 10 * deltaY;
-//		currentZoomFactor += zoomOperation;
-//		if (currentZoomFactor < 0.0) {
-//			currentZoomFactor = TK_ZOOM_FACTOR_MIN;
-//		} else if (currentZoomFactor > TK_ZOOM_FACTOR_MAX) {
-//			currentZoomFactor = TK_ZOOM_FACTOR_MAX;
-//		}
-//		[self setZoomFactor:currentZoomFactor];
-//		//		[self setImageZoomFactor:currentZoomFactor centerPoint:[self convertViewPointToImagePoint:[self convertPoint:[event locationInWindow] fromView:nil]]];
-//		//		[self setZoomFactor:(CGFloat)
-//	}
-//}
-
-
-
 @end
+

@@ -34,33 +34,6 @@
 }
 
 
-- (NSDictionary *)imageProperties {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	CGImageRef imageRef = [self CGImage];
-	CGDataProviderRef provider = CGImageGetDataProvider(imageRef);
-	CGImageSourceRef imageSource = CGImageSourceCreateWithDataProvider(provider, NULL);
-	
-	NSDictionary *theImageProperties = [(NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL) autorelease];
-	
-#if TK_DEBUG
-	NSLog(@"[%@ %@] imageProperties == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), theImageProperties);
-#endif
-	
-	CFRelease(imageSource);
-	
-//	NSMutableDictionary *imageProperties = [NSMutableDictionary dictionary];
-//	[imageProperties setObject:[NSNumber numberWithInteger:(NSInteger)[self size].width] forKey:(NSString *)kCGImagePropertyPixelWidth];
-//	[imageProperties setObject:[NSNumber numberWithInteger:(NSInteger)[self size].height] forKey:(NSString *)kCGImagePropertyPixelHeight];
-//	[imageProperties setObject:[NSNumber numberWithBool:[self hasAlpha]] forKey:(NSString *)kCGImagePropertyHasAlpha];
-//	[imageProperties setObject:(NSString *)kCGImagePropertyColorModelRGB forKey:(NSString *)kCGImagePropertyColorModel];
-	
-	return theImageProperties;
-}
-
-
-
 @end
 
 

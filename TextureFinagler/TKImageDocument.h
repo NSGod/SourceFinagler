@@ -1,6 +1,6 @@
 //
 //  TKImageDocument.h
-//  Texture Kit
+//  Source Finagler
 //
 //  Created by Mark Douma on 10/15/2010.
 //  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
@@ -17,27 +17,45 @@ TEXTUREKIT_EXTERN NSString *TKImageIOLocalizedString(NSString *key);
 
 @class IKImageBrowserView, TKImage, IKSaveOptions, TKImageExportController, TKImageDocumentAccessoryViewController;
 
+@class TKBlueBackgroundView;
 
-@interface TKImageDocument : NSDocument <NSMenuDelegate, NSToolbarDelegate, NSWindowDelegate, NSUserInterfaceValidations> {
+
+@interface TKImageDocument : NSDocument <NSSplitViewDelegate, NSMenuDelegate, NSWindowDelegate> {
+	
 	IBOutlet NSWindow							*imageWindow;
+	
+	IBOutlet NSSplitView						*mainSplitView;
+	
 	IBOutlet TKImageView						*imageView;
+	
+	IBOutlet NSSplitView						*facesMipmapsSplitView;
+	
+	IBOutlet IKImageBrowserView					*faceBrowserView;
+	IBOutlet TKBlueBackgroundView				*faceBrowserViewView;
+	
 	IBOutlet IKImageBrowserView					*frameBrowserView;
+	IBOutlet TKBlueBackgroundView				*frameBrowserViewView;
+	
 	IBOutlet IKImageBrowserView					*mipmapBrowserView;
+	IBOutlet TKBlueBackgroundView				*mipmapBrowserViewView;
+	
 	
 	IBOutlet NSSegmentedControl					*viewControl;
 	IBOutlet NSToolbarItem						*togglePlayToolbarItem;
 	IBOutlet NSSegmentedControl					*togglePlaySegmentedControl;
 	
-	IBOutlet NSView								*frameBrowserViewView;
 	
-	IBOutlet NSView								*mipmapBrowserViewView;
 	
 	TKImage										*image;
 	
 	NSDictionary								*metadata;
 	NSString									*dimensions;
 	
+	NSMutableArray								*visibleFaceBrowserItems;
+	NSMutableArray								*visibleFrameBrowserItems;
+	
 	NSMutableArray								*visibleMipmapReps;
+	
 	
 	IKSaveOptions								*saveOptions;
 	
@@ -45,21 +63,27 @@ TEXTUREKIT_EXTERN NSString *TKImageIOLocalizedString(NSString *key);
 	
 	TKImageDocumentAccessoryViewController		*accessoryViewController;
 	
-	BOOL										shouldShowFrameBrowserView;
-	BOOL										shouldShowMipmapBrowserView;
 	
+	
+	CGFloat										faceBrowserWidth;
 	CGFloat										frameBrowserHeight;
 	CGFloat										mipmapBrowserWidth;
 	
+	BOOL										shouldShowFaceBrowserView;
+	BOOL										shouldShowFrameBrowserView;
+	BOOL										shouldShowMipmapBrowserView;
+	
+	
 }
 
-@property (retain) TKImage *image;
+@property (nonatomic, retain) TKImage *image;
 
-@property (retain) NSString *dimensions;
+@property (nonatomic, retain) NSString *dimensions;
 
 
-@property (assign) BOOL shouldShowFrameBrowserView;
-@property (assign) BOOL shouldShowMipmapBrowserView;
+@property (nonatomic, assign) BOOL shouldShowFaceBrowserView;
+@property (nonatomic, assign) BOOL shouldShowFrameBrowserView;
+@property (nonatomic, assign) BOOL shouldShowMipmapBrowserView;
 
 
 - (IBAction)cancel:(id)sender;
@@ -77,6 +101,7 @@ TEXTUREKIT_EXTERN NSString *TKImageIOLocalizedString(NSString *key);
 
 @end
 
+TEXTUREKIT_EXTERN NSString * const TKImageDocumentShowFaceBrowserViewKey;
 TEXTUREKIT_EXTERN NSString * const TKImageDocumentShowFrameBrowserViewKey;
 TEXTUREKIT_EXTERN NSString * const TKImageDocumentShowMipmapBrowserViewKey;
 TEXTUREKIT_EXTERN NSString * const TKImageDocumentDoNotShowWarningAgainKey;

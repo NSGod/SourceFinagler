@@ -1,6 +1,6 @@
 //
 //  TKImageExportPreset.m
-//  Texture Kit
+//  Source Finagler
 //
 //  Created by Mark Douma on 12/11/2010.
 //  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.

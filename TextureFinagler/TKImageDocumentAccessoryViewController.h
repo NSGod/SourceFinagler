@@ -1,6 +1,6 @@
 //
 //  TKImageDocumentAccessoryViewController.h
-//  Texture Kit
+//  Source Finagler
 //
 //  Created by Mark Douma on 1/5/2011.
 //  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
@@ -10,16 +10,19 @@
 #import <TextureKit/TextureKit.h>
 
 
-@class TKImage, TKImageDocument;
+@class TKImageDocument;
 
 
-@interface TKImageDocumentAccessoryViewController : NSViewController {
+@interface TKImageDocumentAccessoryViewController : NSViewController <NSMenuDelegate> {
 	
 	TKImageDocument					*document;		// non-retained
 	
 	NSSavePanel						*savePanel;		// non-retained
 	
 	TKImage							*image;			// non-retained
+	
+	TKImage							*previewImage;
+	
 	
 	IBOutlet NSObjectController		*mediator;
 	
@@ -29,6 +32,18 @@
 	
 	IBOutlet NSView					*compressionView;
 	IBOutlet NSPopUpButton			*compressionPopUpButton;
+	
+	IBOutlet NSTextField			*compressionQualityTextField;
+	IBOutlet NSPopUpButton			*compressionQualityPopUpButton;
+	
+	IBOutlet NSButton				*ddsContainerCheckbox;
+	
+	IBOutlet NSTextField			*originalImageWidthField;
+	IBOutlet NSTextField			*originalImageHeightField;
+	
+	IBOutlet NSImageView			*previewImageView;
+	IBOutlet NSTextField			*previewImageWidthField;
+	IBOutlet NSTextField			*previewImageHeightField;
 	
 	IBOutlet NSView					*tiffCompressionView;
 	
@@ -45,15 +60,24 @@
 	IBOutlet NSView					*blankView;
 	
 	
-	NSArray							*imageUTTypes;
-	
 	NSString						*imageUTType;
 	
 	TKVTFFormat						vtfFormat;
 	
-	TKDDSFormat						ddsFormat;
+	TKDDSFormat						dds9Format;
+	
+	TKDDSFormat						dds10Format;
+	
+	TKDDSContainer					ddsContainer;
+	
 	
 	TKDXTCompressionQuality			compressionQuality;
+	
+	BOOL							generateMipmaps;
+	TKMipmapGenerationType			mipmapGenerationType;
+	
+	TKResizeMode					resizeMode;
+	
 	
 	NSTIFFCompression				tiffCompression;
 	
@@ -62,7 +86,7 @@
 	
 	BOOL							saveAlpha;
 	
-	BOOL							generateMipmaps;
+	
 }
 
 - (id)initWithImageDocument:(TKImageDocument *)aDocument;
@@ -70,33 +94,59 @@
 - (void)cleanup;
 
 
-@property (assign) TKImageDocument *document;
-@property (assign) NSSavePanel *savePanel;
-@property (assign) TKImage *image;
+@property (nonatomic, assign) TKImageDocument *document;
+@property (nonatomic, assign) NSSavePanel *savePanel;
+@property (nonatomic, assign) TKImage *image;
+
+@property (nonatomic, retain) TKImage *previewImage;
 
 
-@property (retain) NSString *imageUTType;
-@property (readonly) NSDictionary *imageProperties;
+@property (nonatomic, retain) NSString *imageUTType;
 
-@property (assign) TKVTFFormat vtfFormat;
-@property (assign) TKDDSFormat ddsFormat;
-@property (assign) TKDXTCompressionQuality compressionQuality;
+/* The following returns a properties dictionary suitable for passing to `TKImage`'s `representationUsingImageType:properties:` method. */
+@property (readonly, nonatomic, retain) NSDictionary *imageProperties;
 
-@property (assign) NSTIFFCompression tiffCompression;
-@property (assign) CGFloat jpegQuality;
-@property (assign) CGFloat jpeg2000Quality;
+@property (nonatomic, assign) TKVTFFormat vtfFormat;
 
-@property (assign) BOOL saveAlpha;
+@property (nonatomic, assign) TKDDSFormat dds9Format;
+@property (nonatomic, assign) TKDDSFormat dds10Format;
 
-@property (assign) BOOL generateMipmaps;
+@property (nonatomic, assign) TKDDSContainer ddsContainer;
+
+
+@property (nonatomic, assign) TKDXTCompressionQuality compressionQuality;
+
+@property (nonatomic, assign) BOOL generateMipmaps;
+@property (nonatomic, assign) TKMipmapGenerationType mipmapGenerationType;
+
+@property (nonatomic, assign) TKResizeMode resizeMode;
+
+
+/* The following returns an options dictionary suitable for passing to `TKImage`'s *RepresentationWithOptions: methods. It will contain 
+ the key/value pairs based on the current selected options for creating mipmaps, resizing, etc. */
+@property (readonly, nonatomic, retain) NSDictionary *options;
+
+
+@property (nonatomic, assign) NSTIFFCompression tiffCompression;
+@property (nonatomic, assign) CGFloat jpegQuality;
+@property (nonatomic, assign) CGFloat jpeg2000Quality;
+
+@property (nonatomic, assign) BOOL saveAlpha;
+
+
 
 
 - (BOOL)prepareSavePanel:(NSSavePanel *)aSavePanel;
 
-// save accessory panel
 - (IBAction)changeFormat:(id)sender;
 - (IBAction)changeCompression:(id)sender;
+- (IBAction)changeResizeMode:(id)sender;
 
+- (IBAction)changeDDSContainer:(id)sender;
+
+
+// save accessory panel
+- (void)saveDefaults;
 
 @end
 

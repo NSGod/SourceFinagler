@@ -22,14 +22,9 @@
 //- (NSString *)imageSubtitle;
 //- (BOOL)isSelectable;
 
-- (NSDictionary *)imageProperties;
 
 @end
 
-
-//@interface TKImageRep (IKImageProperties)
-//- (NSDictionary *)imageProperties;
-//@end
 
 
 

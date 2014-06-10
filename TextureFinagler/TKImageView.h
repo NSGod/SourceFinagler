@@ -1,6 +1,6 @@
 //
 //  TKImageView.h
-//  Texture Kit
+//  Source Finagler
 //
 //  Created by Mark Douma on 11/15/2010.
 //  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
@@ -10,7 +10,7 @@
 #import <Quartz/Quartz.h>
 
 
-@class TKImageView, CALayer;
+@class TKImageView;
 
 enum {
 	TKImageViewZoomOutTag			= -1,
@@ -20,31 +20,21 @@ enum {
 
 
 @interface TKImageView : IKImageView {
+	@private
+	id	_TK__private;
 	
-	
-	CALayer									*imageKitLayer;
-	
-	CALayer									*animationImageLayer;
-	
-	NSArray									*animationImageReps;
-	BOOL									isAnimating;
 	
 }
 
-@property (retain) CALayer *imageKitLayer;
-
-@property (retain) CALayer *animationImageLayer;
 
 @property (copy) NSArray *animationImageReps;
 
 
 - (void)startAnimating;
 - (void)stopAnimating;
+
 - (BOOL)isAnimating;
 
-
-
-//- (IBAction)togglePlay:(id)sender;
 
 - (IBAction)zoom:(id)sender;
 

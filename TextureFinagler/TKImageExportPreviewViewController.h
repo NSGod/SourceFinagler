@@ -1,6 +1,6 @@
 //
 //  TKImageExportPreviewViewController.h
-//  Texture Kit
+//  Source Finagler
 //
 //  Created by Mark Douma on 12/13/2010.
 //  Copyright (c) 2010-2011 Mark Douma LLC. All rights reserved.
