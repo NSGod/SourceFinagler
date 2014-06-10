@@ -132,6 +132,8 @@
 		C12F363512D7E46B00D28F26 /* TKImageExportPreset.m in Sources */ = {isa = PBXBuildFile; fileRef = C1583BC012B3ABA700A4AE2F /* TKImageExportPreset.m */; };
 		C12F363612D7E46C00D28F26 /* TKImageExportPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1583BBA12B3A55E00A4AE2F /* TKImageExportPanel.xib */; };
 		C12F363712D7E46D00D28F26 /* TKImageExportController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1583BB612B3A51300A4AE2F /* TKImageExportController.m */; };
+		C13000F318E8EEF70042C449 /* NVThread.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C191BAB918C79E7D00CEE633 /* NVThread.framework */; };
+		C13000F418E8EF0A0042C449 /* NVThread.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C191BAB918C79E7D00CEE633 /* NVThread.framework */; };
 		C13000F518E8EF210042C449 /* NVThread.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C191BAB918C79E7D00CEE633 /* NVThread.framework */; };
 		C1305B8C12F08EF200D68170 /* ErrorMetric.h in Headers */ = {isa = PBXBuildFile; fileRef = C1305B7812F08E6E00D68170 /* ErrorMetric.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1305B8D12F08EF300D68170 /* ErrorMetric.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1305B7712F08E6E00D68170 /* ErrorMetric.cpp */; };
@@ -887,6 +889,7 @@
 				C12F1190147B75E300F398DE /* NVMath.framework in Copy Frameworks */,
 				C12F11AF147B75E700F398DE /* NVImage.framework in Copy Frameworks */,
 				C12F11D5147B75ED00F398DE /* NVTextureTools.framework in Copy Frameworks */,
+				C13000F418E8EF0A0042C449 /* NVThread.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -928,6 +931,7 @@
 				C1C2C763127CC5D3003B24F6 /* NVCore.framework in Copy Frameworks */,
 				C1C2C767127CC5D8003B24F6 /* NVMath.framework in Copy Frameworks */,
 				C1C2C76E127CC5DD003B24F6 /* NVImage.framework in Copy Frameworks */,
+				C13000F318E8EEF70042C449 /* NVThread.framework in Copy Frameworks */,
 				C1C2C777127CC5E5003B24F6 /* NVTextureTools.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
@@ -5050,7 +5054,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
@@ -5072,7 +5075,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
@@ -5088,7 +5090,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "SourceFinaglerAgent/SourceFinaglerAgent-Info.plist";
@@ -5107,7 +5108,6 @@
 				INFOPLIST_FILE = "SourceFinaglerAgent/SourceFinaglerAgent-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = SourceFinaglerAgent;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5121,7 +5121,6 @@
 				EXPORTED_SYMBOLS_FILE = SteamKit/SteamKit.exp;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SteamKit/SteamKit_Prefix.pch;
 				INFOPLIST_FILE = "SteamKit/SteamKit-Info.plist";
@@ -5144,8 +5143,6 @@
 				INFOPLIST_FILE = "SteamKit/SteamKit-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = SteamKit;
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5178,8 +5175,6 @@
 				EXPORTED_SYMBOLS_FILE = HLKit/HLKit.exp;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "HLKit/HLKit-Info.plist";
@@ -5197,14 +5192,11 @@
 				DYLIB_CURRENT_VERSION = 1.0;
 				EXPORTED_SYMBOLS_FILE = HLKit/HLKit.exp;
 				FRAMEWORK_VERSION = A;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "HLKit/HLKit-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = HLKit;
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5218,8 +5210,6 @@
 				EXPORTED_SYMBOLS_FILE = TextureKit/TextureKit.exp;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = TextureKit/TextureKit_Prefix.pch;
 				INFOPLIST_FILE = "TextureKit/TextureKit-Info.plist";
@@ -5237,14 +5227,11 @@
 				DYLIB_CURRENT_VERSION = 1.0;
 				EXPORTED_SYMBOLS_FILE = TextureKit/TextureKit.exp;
 				FRAMEWORK_VERSION = A;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = TextureKit/TextureKit_Prefix.pch;
 				INFOPLIST_FILE = "TextureKit/TextureKit-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = TextureKit;
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5294,7 +5281,6 @@
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = (
 					"VTF/**",
 					"\"$(SRCROOT)/NVTextureTools\"",
@@ -5313,7 +5299,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
-				GCC_MODEL_TUNING = G5;
 				GCC_WARN_SHADOW = NO;
 				HEADER_SEARCH_PATHS = (
 					"VTF/**",
@@ -5322,8 +5307,6 @@
 				INFOPLIST_FILE = VTF/Info.plist;
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = VTF;
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5336,7 +5319,6 @@
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = "HL/**";
 				INFOPLIST_FILE = HL/HLInfo.plist;
 				INSTALL_PATH = "@rpath/";
@@ -5352,13 +5334,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
-				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = "HL/**";
 				INFOPLIST_FILE = HL/HLInfo.plist;
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = HL;
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5396,7 +5375,6 @@
 				INFOPLIST_FILE = SourceFinagler/SourceFinagler.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "Source Finagler";
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5406,8 +5384,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "SourceSpotlightImporter/Source-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
 				PRODUCT_NAME = Source;
@@ -5420,11 +5396,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = "SourceSpotlightImporter/Source-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
 				PRODUCT_NAME = Source;
-				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Release;
@@ -5435,7 +5409,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "SourceImageQuickLook/SourceImage-Info.plist";
@@ -5455,7 +5428,6 @@
 				INFOPLIST_FILE = "SourceImageQuickLook/SourceImage-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
 				PRODUCT_NAME = SourceImage;
-				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = qlgenerator;
 			};
 			name = Release;
@@ -5469,8 +5441,6 @@
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NVCORE_SHARED=1",
 					"NVCORE_EXPORTS=1",
@@ -5489,7 +5459,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
-				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NVCORE_SHARED=1",
 					"NVCORE_EXPORTS=1",
@@ -5497,8 +5466,6 @@
 				INFOPLIST_FILE = "NVTextureTools/NVCore-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = NVCore;
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5511,8 +5478,6 @@
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NVMATH_SHARED=1",
 					"NVMATH_EXPORTS=1",
@@ -5532,7 +5497,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
-				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NVMATH_SHARED=1",
 					"NVMATH_EXPORTS=1",
@@ -5541,8 +5505,6 @@
 				INFOPLIST_FILE = "NVTextureTools/NVMath-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = NVMath;
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5555,8 +5517,6 @@
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NVIMAGE_SHARED=1",
 					"NVIMAGE_EXPORTS=1",
@@ -5576,7 +5536,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
-				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NVIMAGE_SHARED=1",
 					"NVIMAGE_EXPORTS=1",
@@ -5585,8 +5544,6 @@
 				INFOPLIST_FILE = "NVTextureTools/NVImage-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = NVImage;
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5599,8 +5556,6 @@
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NVTT_SHARED=1",
 					"NVTT_EXPORTS=1",
@@ -5620,7 +5575,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0;
 				FRAMEWORK_VERSION = A;
-				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NVTT_SHARED=1",
 					"NVTT_EXPORTS=1",
@@ -5629,8 +5583,6 @@
 				INFOPLIST_FILE = "NVTextureTools/NVTextureTools-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = NVTextureTools;
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -5644,7 +5596,6 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "SourceAddonFinagler/Source Addon Finagler-Info.plist";
@@ -5667,8 +5618,6 @@
 				INFOPLIST_FILE = "SourceAddonFinagler/Source Addon Finagler-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
 				PRODUCT_NAME = "Source Addon Finagler";
-				SKIP_INSTALL = YES;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
