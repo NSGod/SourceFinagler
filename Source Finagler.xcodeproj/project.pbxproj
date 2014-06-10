@@ -185,6 +185,7 @@
 		C145AF1712BD8F22005D7E21 /* TextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C145AF5F12BD8F6A005D7E21 /* TextureKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
 		C14D700712F9E5C000A2FD7E /* MDTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C124D5123A0A8A004674B4 /* MDTextFieldCell.m */; };
+		C1492DF0186B61E800A3E6B2 /* VSSourceAddonFinaglerMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1492DF2186B61E800A3E6B2 /* VSSourceAddonFinaglerMainMenu.xib */; };
 		C15048C818EB1D5600D39938 /* TKBlueBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = C15048C318EB1D5600D39938 /* TKBlueBackgroundView.m */; };
 		C15048C918EB1D5600D39938 /* TKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C15048C518EB1D5600D39938 /* TKTextField.m */; };
 		C15048CA18EB1D5600D39938 /* TKTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C15048C718EB1D5600D39938 /* TKTextFieldCell.m */; };
@@ -197,7 +198,6 @@
 		C1594EA21384F247009CE606 /* usbOverdriveNote.png in Resources */ = {isa = PBXBuildFile; fileRef = C1594EA11384F247009CE606 /* usbOverdriveNote.png */; };
 		C15A76431399DC1200B4F485 /* MDAppKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C11B275511BDE826004D4CC0 /* MDAppKitAdditions.m */; };
 		C15A76441399DC1300B4F485 /* MDFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C11B275011BDE7AD004D4CC0 /* MDFoundationAdditions.m */; };
-		C15DD653126B205500E44BDB /* VSSourceAddonFinaglerMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C15DD651126B205500E44BDB /* VSSourceAddonFinaglerMainMenu.xib */; };
 		C1614336139973D80042B91B /* HLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C16143CA1399975C0042B91B /* HKFileAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153C71396699600E32057 /* HKFileAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C16143D11399975C0042B91B /* HKFileAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F153C81396699600E32057 /* HKFileAdditions.m */; };
@@ -1059,6 +1059,7 @@
 		C145E8B51248D6CC00AF2D35 /* SND.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = SND.icns; path = Resources/SND.icns; sourceTree = "<group>"; };
 		C145E9691248DD3D00AF2D35 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		C145EDC51268D7BA00C34A08 /* DDS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = DDS.icns; path = Resources/DDS.icns; sourceTree = "<group>"; };
+		C1492DF1186B61E800A3E6B2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/VSSourceAddonFinaglerMainMenu.xib; sourceTree = "<group>"; };
 		C14CAABA1275E80100BD0CCA /* dxtlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dxtlib.h; path = NVTextureTools/dxtlib.h; sourceTree = "<group>"; };
 		C14CAAF51275E90F00BD0CCA /* ConvertColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConvertColor.h; path = NVTextureTools/dds/ConvertColor.h; sourceTree = "<group>"; };
 		C14CAAF61275E90F00BD0CCA /* ddsTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ddsTypes.h; path = NVTextureTools/dds/ddsTypes.h; sourceTree = "<group>"; };
@@ -1123,7 +1124,6 @@
 		C15DD21012697F0B00E44BDB /* LMP.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = LMP.icns; path = Resources/LMP.icns; sourceTree = "<group>"; };
 		C15DD47B126AB93000E44BDB /* NUT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = NUT.icns; path = Resources/NUT.icns; sourceTree = "<group>"; };
 		C15DD47C126AB93000E44BDB /* NUC.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = NUC.icns; path = Resources/NUC.icns; sourceTree = "<group>"; };
-		C15DD652126B205500E44BDB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/VSSourceAddonFinaglerMainMenu.xib; sourceTree = "<group>"; };
 		C16476EA124E896A0062B943 /* sound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sound.png; path = Resources/sound.png; sourceTree = "<group>"; };
 		C16476F3124E8BA30062B943 /* overlayPlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = overlayPlay.png; path = Resources/overlayPlay.png; sourceTree = "<group>"; };
 		C16476F5124E8BA30062B943 /* overlayStop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = overlayStop.png; path = Resources/overlayStop.png; sourceTree = "<group>"; };
@@ -3513,7 +3513,7 @@
 				C1FEAB44125F64A900CA78FF /* VSSourceAddonController.m */,
 				C1275F60129182C40041ACD7 /* VSSourceAddon.h */,
 				C1275F61129182C40041ACD7 /* VSSourceAddon.m */,
-				C15DD651126B205500E44BDB /* VSSourceAddonFinaglerMainMenu.xib */,
+				C1492DF2186B61E800A3E6B2 /* VSSourceAddonFinaglerMainMenu.xib */,
 				C1FEAB33125F633100CA78FF /* Source Addon Finagler-Info.plist */,
 				C1E6DE9712BCA0E6009D8AD6 /* addoninfo.txt */,
 			);
@@ -4339,8 +4339,8 @@
 				C1FEAB7F125F660000CA78FF /* sourceFinagler.icns in Resources */,
 				C1FEAB80125F660B00CA78FF /* VPK.icns in Resources */,
 				C1FEABB1125F68B700CA78FF /* Localizable.strings in Resources */,
+				C1492DF0186B61E800A3E6B2 /* VSSourceAddonFinaglerMainMenu.xib in Resources */,
 				C1FEABFE125F69BA00CA78FF /* copy.m4a in Resources */,
-				C15DD653126B205500E44BDB /* VSSourceAddonFinaglerMainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4912,6 +4912,15 @@
 			name = TKImageDocumentAccessoryView.xib;
 			sourceTree = "<group>";
 		};
+		C1492DF2186B61E800A3E6B2 /* VSSourceAddonFinaglerMainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C1492DF1186B61E800A3E6B2 /* en */,
+			);
+			name = VSSourceAddonFinaglerMainMenu.xib;
+			path = SourceAddonFinagler;
+			sourceTree = "<group>";
+		};
 		C14DB23D123D8CA7002D87FE /* MDPrefs.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -4942,14 +4951,6 @@
 				C1583BB812B3A55900A4AE2F /* English */,
 			);
 			name = TKImageExportPanel.xib;
-			sourceTree = "<group>";
-		};
-		C15DD651126B205500E44BDB /* VSSourceAddonFinaglerMainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C15DD652126B205500E44BDB /* English */,
-			);
-			name = VSSourceAddonFinaglerMainMenu.xib;
 			sourceTree = "<group>";
 		};
 		C181ADAF125579A0006810AB /* schema.strings */ = {
