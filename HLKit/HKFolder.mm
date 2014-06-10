@@ -90,7 +90,6 @@ using namespace HLLib;
 		isLeaf = NO;
 		isExtractable = YES;
 		isVisible = YES;
-		size = [[NSNumber numberWithLongLong:-1] retain];
 		countOfVisibleChildNodes = NSNotFound;
 		[self setShowInvisibleItems:showInvisibles];
 		
@@ -145,10 +144,25 @@ using namespace HLLib;
 }
 
 
-- (HKFileType)fileType {
+- (NSNumber *)size {
 #if HK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
+	if (size == nil) {
+		unsigned long long totalSize = 0;
+		
+		NSArray *ourDescendants = self.descendants;
+		
+		for (HKItem *item in ourDescendants) {
+			totalSize += [item.size unsignedLongLongValue];
+		}
+		size = [[NSNumber numberWithUnsignedLongLong:totalSize] retain];
+	}
+	return size;
+}
+
+
+- (HKFileType)fileType {
 	if (fileType == HKFileTypeNone) fileType = HKFileTypeOther;
 	return fileType;
 }

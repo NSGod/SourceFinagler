@@ -126,9 +126,7 @@
 			unsigned long long totalSize = 0;
 			
 			for (HKItem *item in newSelectedItems) {
-				if ([item isLeaf]) {
-					totalSize += [[item size] unsignedLongLongValue];
-				}
+				totalSize += [[item size] unsignedLongLongValue];
 			}
 			
 			[sizeField setObjectValue:[NSNumber numberWithUnsignedLongLong:totalSize]];
