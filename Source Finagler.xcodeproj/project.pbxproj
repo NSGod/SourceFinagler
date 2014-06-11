@@ -201,6 +201,7 @@
 		C1614336139973D80042B91B /* HLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C16143CA1399975C0042B91B /* HKFileAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153C71396699600E32057 /* HKFileAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C16143D11399975C0042B91B /* HKFileAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F153C81396699600E32057 /* HKFileAdditions.m */; };
+		C168E8F01947AF7900818540 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C168E8EE1947AF7900818540 /* Localizable.strings */; };
 		C16A68F41600B62B0038A8B1 /* HLKitDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = C16A68F21600B6170038A8B1 /* HLKitDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C16A68F51600B62C0038A8B1 /* HLKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C16A68F11600B6170038A8B1 /* HLKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C16D5DAC136D39C400453365 /* VTF.h in Headers */ = {isa = PBXBuildFile; fileRef = C1B95367124E73EC00E83451 /* VTF.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1136,6 +1137,7 @@
 		C16478F5124E988C0062B943 /* GenerateThumbnailForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenerateThumbnailForURL.m; path = SourceImageQuickLook/GenerateThumbnailForURL.m; sourceTree = "<group>"; };
 		C16478F6124E988C0062B943 /* GeneratePreviewForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GeneratePreviewForURL.m; path = SourceImageQuickLook/GeneratePreviewForURL.m; sourceTree = "<group>"; };
 		C16478F7124E988C0062B943 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = SourceImageQuickLook/main.c; sourceTree = "<group>"; };
+		C168E8EF1947AF7900818540 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = HLKit/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C169D9D0128A0A4A00653B05 /* TKImageDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageDocument.m; path = TextureFinagler/TKImageDocument.m; sourceTree = "<group>"; };
 		C169E27B1243825A0009C66E /* VDF.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VDF.icns; path = Resources/VDF.icns; sourceTree = "<group>"; };
 		C16A68F11600B6170038A8B1 /* HLKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HLKit.h; path = HLKit/HLKit.h; sourceTree = "<group>"; };
@@ -2372,6 +2374,7 @@
 				C16A68F21600B6170038A8B1 /* HLKitDefines.h */,
 				C12F1056147B724400F398DE /* HLKit.exp */,
 				C1580F11139634DA00D5D4D8 /* HLKit-Info.plist */,
+				C168E8EE1947AF7900818540 /* Localizable.strings */,
 				C1F15405139669D100E32057 /* Abstract superclass */,
 				C1F15406139669D500E32057 /* Concrete subclasses */,
 				C1F15404139669A600E32057 /* Model */,
@@ -4154,6 +4157,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C168E8F01947AF7900818540 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4951,6 +4955,14 @@
 				C1583BB812B3A55900A4AE2F /* English */,
 			);
 			name = TKImageExportPanel.xib;
+			sourceTree = "<group>";
+		};
+		C168E8EE1947AF7900818540 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C168E8EF1947AF7900818540 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		C181ADAF125579A0006810AB /* schema.strings */ = {
