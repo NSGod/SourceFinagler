@@ -176,8 +176,9 @@
 
 
 - (void)_removeChildrenIdenticalTo:(NSArray *)theChildren {
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-	
+#if HK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	[theChildren makeObjectsPerformSelector:@selector(setParent:) withObject:nil];
 	for (HKNode *child in theChildren) {
 		[childNodes removeObjectIdenticalTo:child];
@@ -188,7 +189,9 @@
 
 
 - (void)removeChildNode:(HKNode *)child {
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#if HK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
     NSUInteger index = [self indexOfChildNode:child];
     if (index != NSNotFound) {
         [self _removeChildrenIdenticalTo:[NSArray arrayWithObject:[self childNodeAtIndex:index]]];
@@ -357,7 +360,9 @@
 
 
 - (void)recursiveSortChildren {
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#if HK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	if (!isLeaf) {
 		if (childNodes) {
 #if HK_DEBUG

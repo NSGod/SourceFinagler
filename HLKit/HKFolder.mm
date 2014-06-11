@@ -65,15 +65,14 @@
 
 #import "HKPrivateInterfaces.h"
 
+
 using namespace HLLib;
 
 #define HK_DEBUG 0
 
-#define HK_LAZY_INIT 1
 
 
-
-@interface HKFolder (Private)
+@interface HKFolder (HKPrivate)
 - (void)populateChildrenIfNeeded;
 @end
 
@@ -92,24 +91,12 @@ using namespace HLLib;
 		isVisible = YES;
 		countOfVisibleChildNodes = NSNotFound;
 		[self setShowInvisibleItems:showInvisibles];
-		
-#if !(HK_LAZY_INIT)
-		const hlChar *cName = static_cast<const CDirectoryFolder *>(_privateData)->GetName();
-		if (cName) name = [[NSString stringWithCString:cName encoding:NSUTF8StringEncoding] retain];
-		nameExtension = [[name pathExtension] retain];
-		kind = [NSLocalizedString(@"Folder", @"") retain];
-		fileType = HKFileTypeOther;
-#endif
 	}
 	return self;
 }
 
-#if (HK_LAZY_INIT)
 
 - (NSString *)name {
-#if HK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	if (name == nil) {
 		const hlChar *cName = static_cast<const CDirectoryFile *>(_privateData)->GetName();
 		if (cName) name = [[NSString stringWithCString:cName encoding:NSUTF8StringEncoding] retain];
@@ -117,28 +104,14 @@ using namespace HLLib;
 	return name;
 }
 
+
 - (NSString *)nameExtension {
-#if HK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	if (nameExtension == nil) nameExtension = [[[self name] pathExtension] retain];
 	return nameExtension;
 }
 
-//- (NSString *)type {
-//#if HK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	if (type == nil) {
-//		type = (NSString *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (CFStringRef)[self nameExtension], NULL);
-//	}
-//	return type;
-//}
 
 - (NSString *)kind {
-#if HK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	if (kind == nil) kind = [NSLocalizedString(@"Folder", @"") retain];
 	return kind;
 }
@@ -167,12 +140,11 @@ using namespace HLLib;
 	return fileType;
 }
 
-#endif
-
 
 - (NSUInteger)countOfChildNodes {
 	return (NSUInteger)static_cast<const CDirectoryFolder *>(_privateData)->GetCount();
 }
+
 
 - (NSUInteger)countOfVisibleChildNodes {
 	if (countOfVisibleChildNodes == NSNotFound) {
@@ -192,6 +164,7 @@ using namespace HLLib;
 	}
 	return countOfVisibleChildNodes;
 }
+
 
 - (void)populateChildrenIfNeeded {
 #if HK_DEBUG
