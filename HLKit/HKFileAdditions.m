@@ -7,6 +7,7 @@
 //
 
 #import <HLKit/HKFileAdditions.h>
+#import <HLKit/HKArchiveFile.h>
 #import "HKFoundationAdditions.h"
 
 #import <Cocoa/Cocoa.h>
@@ -35,7 +36,7 @@
 		return nil;
 	}
 	
-	NSString *stringValue = nil;
+	NSString *containerFilePath = [(HKArchiveFile *)container filePath];
 	
 	if (shouldExtractToTempFile) {
 		NSString *tempPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"com.markdouma.SourceAddonFinagler"] stringByAssuringUniqueFilename];
@@ -45,13 +46,23 @@
 			return nil;
 		}
 		
-		NSString *writePath = [tempPath stringByAppendingPathComponent:@"temp.txt"];
+		NSString *writePath = nil;
+		
+		if (containerFilePath) {
+			writePath = [tempPath stringByAppendingPathComponent:[[containerFilePath lastPathComponent] stringByAppendingString:@".txt"]];
+		} else {
+			writePath = [tempPath stringByAppendingPathComponent:@"temp.txt"];
+		}
+		
+		NSString *stringValue = nil;
+		
 		if ([textData writeToFile:writePath atomically:NO]) {
 			NSStringEncoding usedEncoding = NSUTF8StringEncoding;
 			NSError *stringError = nil;
 			stringValue = [NSString stringWithContentsOfFile:writePath usedEncoding:&usedEncoding error:&stringError];
-			
-			NSLog(@"[%@ %@] usedEncoding == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [NSString localizedNameOfStringEncoding:usedEncoding]);
+#if HK_DEBUG
+			NSLog(@"[%@ %@] <%@> usedEncoding == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [writePath lastPathComponent],[NSString localizedNameOfStringEncoding:usedEncoding]);
+#endif
 			if (stringValue == nil) {
 				NSLog(@"[%@ %@] string creation error == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), stringError);
 			}
@@ -60,24 +71,26 @@
 			NSLog(@"[%@ %@] failed to cleanup temp folder!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 		}
 		
+		return stringValue;
 	} else {
-		stringValue = [[[NSString alloc] initWithData:textData encoding:NSUTF8StringEncoding] autorelease];
+		NSString *stringValue = [[[NSString alloc] initWithData:textData encoding:NSUTF8StringEncoding] autorelease];
 		if (stringValue == nil) {
-			NSLog(@"[%@ %@] failed to create string with NSUTF8StringEncoding", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+			NSLog(@"[%@ %@] <%@> failed to create string with NSUTF8StringEncoding", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [containerFilePath lastPathComponent]);
 			
 			stringValue = [[[NSString alloc] initWithData:textData encoding:NSASCIIStringEncoding] autorelease];
 			if (stringValue == nil) {
-				NSLog(@"[%@ %@] failed to create string with NSASCIIStringEncoding", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+				NSLog(@"[%@ %@] <%@> failed to create string with NSASCIIStringEncoding", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [containerFilePath lastPathComponent]);
 				
 				stringValue = [[[NSString alloc] initWithData:textData encoding:NSISOLatin1StringEncoding] autorelease];
 				if (stringValue == nil) {
-					NSLog(@"[%@ %@] failed to create string with NSISOLatin1StringEncoding, data == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), textData);
+					NSLog(@"[%@ %@] <%@> failed to create string with NSISOLatin1StringEncoding, data == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [containerFilePath lastPathComponent], textData);
 					stringValue = @"<failed to create string using UTF8, ASCII, or ISO Latin 1 encodings>";
 				}
 			}
 		}
+		return stringValue;
 	}
-	return stringValue;
+	return nil;
 }
 
 

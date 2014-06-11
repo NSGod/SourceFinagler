@@ -26,7 +26,7 @@ using namespace HLLib;
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super initWithContentsOfFile:aPath mode:permission showInvisibleItems:showInvisibleItems sortDescriptors:sortDescriptors error:outError])) {
-		fileType = HKArchiveFileBSPType;
+		archiveFileType = HKArchiveFileBSPType;
 		
 		_privateData = new CBSPFile();
 		
@@ -56,7 +56,7 @@ using namespace HLLib;
 
 
 - (NSString *)description {
-	NSMutableString *description = [NSMutableString stringWithString:@""];
+	NSMutableString *description = [NSMutableString stringWithFormat:@"%@ -\n", [super description]];
 	[description appendFormat:@"\tfilePath == %@\n", filePath];
 	return [NSString stringWithFormat:@"%@", description];
 }

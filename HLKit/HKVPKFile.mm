@@ -27,7 +27,7 @@ using namespace HLLib;
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super initWithContentsOfFile:aPath mode:permission showInvisibleItems:showInvisibleItems sortDescriptors:sortDescriptors error:outError])) {
-		fileType = HKArchiveFileVPKType;
+		archiveFileType = HKArchiveFileVPKType;
 		
 		_privateData = new CVPKFile();
 		
@@ -63,7 +63,7 @@ using namespace HLLib;
 
 
 - (NSString *)description {
-	NSMutableString *description = [NSMutableString stringWithString:@""];
+	NSMutableString *description = [NSMutableString stringWithFormat:@"\n\n%@ -\n", [super description]];
 	[description appendFormat:@"\tfilePath == %@\n", filePath];
 	[description appendFormat:@"\tarchiveCount== %lu\n", (unsigned long)archiveCount];
 	return [NSString stringWithFormat:@"%@", description];

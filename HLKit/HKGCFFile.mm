@@ -29,7 +29,7 @@
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super initWithContentsOfFile:aPath mode:permission showInvisibleItems:showInvisibleItems sortDescriptors:sortDescriptors error:outError])) {
-		fileType = HKArchiveFileGCFType;
+		archiveFileType = HKArchiveFileGCFType;
 		
 		_privateData = new CGCFFile();
 		
@@ -88,7 +88,7 @@
 
 
 - (NSString *)description {
-	NSMutableString *description = [NSMutableString stringWithString:@""];
+	NSMutableString *description = [NSMutableString stringWithFormat:@"%@ -\n", [super description]];
 	[description appendFormat:@"\tfilePath == %@\n", filePath];
 	[description appendFormat:@"\tpackageID == %lu\n", (unsigned long)packageID];
 	[description appendFormat:@"\tblockSize == %lu\n", (unsigned long)blockSize];
