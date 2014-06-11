@@ -201,7 +201,7 @@ static void HKInitializeIcons() {
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	if (parent == referenceItem) return name;
+	if (parent == referenceItem) return self.name;
 	
 	NSString *relativePath = nil;
 	
@@ -210,12 +210,12 @@ static void HKInitializeIcons() {
 	while ((theItem = (HKItem *)[theItem parent])) {
 		if (theItem == referenceItem) {
 			// **
-			if (relativePath == nil) relativePath = name;
+			if (relativePath == nil) relativePath = self.name;
 			break;
 		}
 		NSString *itemName = [theItem name];
 		//**
-		if (relativePath == nil) relativePath = name;
+		if (relativePath == nil) relativePath = self.name;
 		
 		if (itemName) relativePath = [itemName stringByAppendingPathComponent:relativePath];
 	}
@@ -286,7 +286,7 @@ static void HKInitializeIcons() {
 
 - (NSString *)description {
 //	NSMutableString *description = [NSMutableString stringWithString:[super description]];
-	NSMutableString *description = [NSMutableString stringWithFormat:@"<%@> %@", NSStringFromClass([self class]), name];
+	NSMutableString *description = [NSMutableString stringWithFormat:@"<%@> %@", NSStringFromClass([self class]), self.name];
 //	[description appendFormat:@", %@", name];
 //	[description appendFormat:@", %@", [self path]];
 	
