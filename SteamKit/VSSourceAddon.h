@@ -21,11 +21,12 @@
 + (id)sourceAddonWithPath:(NSString *)aPath game:(VSGame *)aGame error:(NSError *)inError;
 - (id)initWithPath:(NSString *)aPath game:(VSGame *)game error:(NSError *)inError;
 
-@property (retain) NSString *path;
-@property (retain) NSString *fileName;
-@property (retain) NSImage *fileIcon;
-@property (retain) NSString *gameName;
-@property (retain) NSImage *gameIcon;
-@property (retain) NSString *problem;
+@property (nonatomic, retain) NSString *path;
+@property (nonatomic, retain) NSString *fileName;
+@property (nonatomic, retain) NSImage *fileIcon;
+@property (nonatomic, retain) NSString *gameName;
+@property (nonatomic, retain) NSImage *gameIcon;
+@property (nonatomic, retain) NSString *problem;
 
 @end
+
