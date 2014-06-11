@@ -93,6 +93,8 @@
 		C1224DAA13B09351009AA0F4 /* SourceFinaglerAgent.app in Resources */ = {isa = PBXBuildFile; fileRef = C1224BEC13B06B9A009AA0F4 /* SourceFinaglerAgent.app */; };
 		C126830918C3B52100BAB3E2 /* TGA_32_uncompressed.tga in Resources */ = {isa = PBXBuildFile; fileRef = C126830718C3B4FE00BAB3E2 /* TGA_32_uncompressed.tga */; };
 		C1279D3612DCB0EB0065F5D7 /* defaultPresets.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1279D3512DCB0EA0065F5D7 /* defaultPresets.plist */; };
+		C12823CC1880219400452421 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C12823CA1880219400452421 /* Localizable.strings */; };
+		C1284A7C192BB47400F07C9B /* VSSourceAddonInstallOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C1284A7B192BB2D300F07C9B /* VSSourceAddonInstallOperation.m */; };
 		C12B4DAA13B7179C0096FC0E /* ForEach.h in Headers */ = {isa = PBXBuildFile; fileRef = C12B4DA913B7179B0096FC0E /* ForEach.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C12BFAE818EC9C6900BE8B29 /* TKImageBrowserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C12BFAE718EC9C6900BE8B29 /* TKImageBrowserItem.m */; };
 		C12CE52B1912D9B20067DA65 /* Linear Grayscale Profile.icc in Resources */ = {isa = PBXBuildFile; fileRef = C12CE52A1912D9B20067DA65 /* Linear Grayscale Profile.icc */; };
@@ -993,6 +995,9 @@
 		C1267035125D1A0B00725F14 /* VAS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VAS.icns; path = Resources/VAS.icns; sourceTree = "<group>"; };
 		C126830718C3B4FE00BAB3E2 /* TGA_32_uncompressed.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = TGA_32_uncompressed.tga; sourceTree = "<group>"; };
 		C1279D3512DCB0EA0065F5D7 /* defaultPresets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = defaultPresets.plist; path = TextureFinagler/defaultPresets.plist; sourceTree = "<group>"; };
+		C12823CB1880219400452421 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = SteamKit/en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C1284A7A192BB2D300F07C9B /* VSSourceAddonInstallOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VSSourceAddonInstallOperation.h; path = SteamKit/VSSourceAddonInstallOperation.h; sourceTree = "<group>"; };
+		C1284A7B192BB2D300F07C9B /* VSSourceAddonInstallOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VSSourceAddonInstallOperation.m; path = SteamKit/VSSourceAddonInstallOperation.m; sourceTree = "<group>"; };
 		C12A93E211C9A3D9001D8E90 /* MDProcessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDProcessManager.h; path = SourceFinagler/MDProcessManager.h; sourceTree = "<group>"; };
 		C12A93E311C9A3D9001D8E90 /* MDProcessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDProcessManager.m; path = SourceFinagler/MDProcessManager.m; sourceTree = "<group>"; };
 		C12A944811C9CDED001D8E90 /* MDResourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDResourceFile.h; path = SteamKit/MDResourceFile.h; sourceTree = "<group>"; };
@@ -1919,7 +1924,7 @@
 				C1351911139479C40074B5EA /* Acknowledgments.rtf */,
 				C17319D41298D13800C29732 /* TextureKit framework */,
 				C1580F68139634F900D5D4D8 /* HLKit framework */,
-				C140E63713889A6900027DD6 /* SteamKit Framework */,
+				C140E63713889A6900027DD6 /* SteamKit framework */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				C1C9ADD7139A6D8400C32D8A /* SourceFinaglerAgent */,
@@ -2235,27 +2240,37 @@
 			name = DXT;
 			sourceTree = "<group>";
 		};
-		C140E63713889A6900027DD6 /* SteamKit Framework */ = {
+		C140E63713889A6900027DD6 /* SteamKit framework */ = {
 			isa = PBXGroup;
 			children = (
 				C140E76C13889E6B00027DD6 /* SteamKit.h */,
 				C140E76D13889E6B00027DD6 /* SteamKitDefines.h */,
 				C140E63E13889A9400027DD6 /* SteamKit-Info.plist */,
-				C140E71A13889B1100027DD6 /* SteamKit_Prefix.pch */,
-				C1551E8A11D8623B00CCEDD3 /* VSSteamManager */,
+				C12823CA1880219400452421 /* Localizable.strings */,
+				C140E73C13889C4E00027DD6 /* auxiliary */,
+				C1034A9111C5619C0054740E /* VSSteamManager.h */,
+				C1034A9211C5619C0054740E /* VSSteamManager.m */,
+				C103563611C5AF930054740E /* VSGame.h */,
+				C103563711C5AF930054740E /* VSGame.m */,
 				C1CA277E18621F7200E5A603 /* VSSourceAddon.h */,
 				C1CA277F18621F7200E5A603 /* VSSourceAddon.m */,
+				C1580E871396262F00D5D4D8 /* VSPrivateInterfaces.h */,
+				C1A1096C11D4F149008BBABD /* com.valvesoftware.games.plist */,
 				C11D81221948C4BF003EDCC8 /* addoninfo.txt */,
+				C1E6DE6F12BC8CA1009D8AD6 /* packageIDs.txt */,
+				C139C68E137CCEBB00DDA21B /* hl2_osx.app */,
+				C1CB158613BC20A000FCCC7E /* private classes */,
 			);
-			name = "SteamKit Framework";
+			name = "SteamKit framework";
 			sourceTree = "<group>";
 		};
-		C140E73C13889C4E00027DD6 /* auxilliary */ = {
+		C140E73C13889C4E00027DD6 /* auxiliary */ = {
 			isa = PBXGroup;
 			children = (
+				C140E71A13889B1100027DD6 /* SteamKit_Prefix.pch */,
 				C140E73D13889C4E00027DD6 /* SteamKit.exp */,
 			);
-			name = auxilliary;
+			name = auxiliary;
 			sourceTree = "<group>";
 		};
 		C145EC71126895BE00C34A08 /* VTF */ = {
@@ -2343,23 +2358,6 @@
 				C12BFAE718EC9C6900BE8B29 /* TKImageBrowserItem.m */,
 			);
 			name = model;
-			sourceTree = "<group>";
-		};
-		C1551E8A11D8623B00CCEDD3 /* VSSteamManager */ = {
-			isa = PBXGroup;
-			children = (
-				C1034A9111C5619C0054740E /* VSSteamManager.h */,
-				C1034A9211C5619C0054740E /* VSSteamManager.m */,
-				C103563611C5AF930054740E /* VSGame.h */,
-				C103563711C5AF930054740E /* VSGame.m */,
-				C1580E871396262F00D5D4D8 /* VSPrivateInterfaces.h */,
-				C1A1096C11D4F149008BBABD /* com.valvesoftware.games.plist */,
-				C1E6DE6F12BC8CA1009D8AD6 /* packageIDs.txt */,
-				C140E73C13889C4E00027DD6 /* auxilliary */,
-				C139C68E137CCEBB00DDA21B /* hl2_osx.app */,
-				C1CB158613BC20A000FCCC7E /* private classes */,
-			);
-			name = VSSteamManager;
 			sourceTree = "<group>";
 		};
 		C155936A12B71D0E00FD0684 /* Resources */ = {
@@ -3110,6 +3108,8 @@
 		C1CB158613BC20A000FCCC7E /* private classes */ = {
 			isa = PBXGroup;
 			children = (
+				C1284A7A192BB2D300F07C9B /* VSSourceAddonInstallOperation.h */,
+				C1284A7B192BB2D300F07C9B /* VSSourceAddonInstallOperation.m */,
 				C11DFB5D18A6C4AE003F3AA5 /* MDResourceFile */,
 				C1BB6F5A11FCA90300B88BBE /* MDLaunchManager.h */,
 				C1BB6F5B11FCA90300B88BBE /* MDLaunchManager.m */,
@@ -4150,6 +4150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C140E72813889BD800027DD6 /* com.valvesoftware.games.plist in Resources */,
+				C12823CC1880219400452421 /* Localizable.strings in Resources */,
 				C140E72B13889BDD00027DD6 /* hl2_osx.app in Resources */,
 				C13FE24E1394303C00C0D27C /* isRunning.png in Resources */,
 			);
@@ -4389,6 +4390,7 @@
 				C140E73313889C0800027DD6 /* MDFolderManager.m in Sources */,
 				C1CA278118621F8F00E5A603 /* VSSourceAddon.m in Sources */,
 				C140E73613889C0E00027DD6 /* MDFileManager.m in Sources */,
+				C1284A7C192BB47400F07C9B /* VSSourceAddonInstallOperation.m in Sources */,
 				C140E73913889C2500027DD6 /* MDLaunchManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4884,6 +4886,14 @@
 				C101A6D7125281C700BD8091 /* English */,
 			);
 			name = TKImageDocument.xib;
+			sourceTree = "<group>";
+		};
+		C12823CA1880219400452421 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C12823CB1880219400452421 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		C138042018BC18960098AD2D /* Localizable.strings */ = {

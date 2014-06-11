@@ -14,8 +14,11 @@
 			<string>garrysmod</string>
 			<key>VSGameLongName</key>
 			<string>GarrysMod</string>
-			<key>VSGameIconName</key>
-			<string>game.ico</string>
+			<key>VSGameIconNames</key>
+			<array>
+				<string>game.icns</string>
+				<string>game.ico</string>
+			</array>
 			<key>VSGameCreatorCode</key>
 			<integer>1196248900</integer>
 			<key>VSGameBundleIdentifier</key>
@@ -56,8 +59,11 @@
 			<string>garry&apos;s mod beta</string>
 			<key>VSGameShortName</key>
 			<string>hl2</string>
-			<key>VSGameIconName</key>
-			<string>game.icns</string>
+			<key>VSGameIconNames</key>
+			<array>
+				<string>game.icns</string>
+				<string>game.ico</string>
+			</array>
 			<key>VSGameCreatorCode</key>
 			<integer>1196248900</integer>
 			<key>VSGameBundleIdentifier</key>
@@ -100,8 +106,10 @@
 			<string>portal</string>
 			<key>VSGameLongName</key>
 			<string>Portal</string>
-			<key>VSGameIconName</key>
-			<string>game.icns</string>
+			<key>VSGameIconNames</key>
+			<array>
+				<string>game.icns</string>
+			</array>
 			<key>VSGameCreatorCode</key>
 			<integer>1146244944</integer>
 			<key>VSGameBundleIdentifier</key>
@@ -142,8 +150,10 @@
 			<string>Portal 2</string>
 			<key>VSGameShortName</key>
 			<string>portal2</string>
-			<key>VSGameIconName</key>
-			<string>game.icns</string>
+			<key>VSGameIconNames</key>
+			<array>
+				<string>game.icns</string>
+			</array>
 			<key>VSGameCreatorCode</key>
 			<integer>1146245170</integer>
 			<key>VSGameBundleIdentifier</key>
@@ -186,8 +196,10 @@
 			<string>hl2</string>
 			<key>VSGameLongName</key>
 			<string>Half-Life 2</string>
-			<key>VSGameIconName</key>
-			<string>game.icns</string>
+			<key>VSGameIconNames</key>
+			<array>
+				<string>game.icns</string>
+			</array>
 			<key>VSGameCreatorCode</key>
 			<integer>1212566578</integer>
 			<key>VSGameBundleIdentifier</key>
@@ -230,8 +242,10 @@
 			<string>hl2</string>
 			<key>VSGameLongName</key>
 			<string>Half-Life 2 Deathmatch</string>
-			<key>VSGameIconName</key>
-			<string>game.icns</string>
+			<key>VSGameIconNames</key>
+			<array>
+				<string>game.icns</string>
+			</array>
 			<key>VSGameCreatorCode</key>
 			<integer>1212953165</integer>
 			<key>VSGameBundleIdentifier</key>
@@ -272,8 +286,10 @@
 			<string>half-life 2 episode one</string>
 			<key>VSGameShortName</key>
 			<string>hl2</string>
-			<key>VSGameIconName</key>
-			<string>game.icns</string>
+			<key>VSGameIconNames</key>
+			<array>
+				<string>game.icns</string>
+			</array>
 			<key>VSGameCreatorCode</key>
 			<integer>1212953137</integer>
 			<key>VSGameBundleIdentifier</key>
@@ -314,8 +330,10 @@
 			<string>half-life 2 episode two</string>
 			<key>VSGameShortName</key>
 			<string>hl2</string>
-			<key>VSGameIconName</key>
-			<string>game.icns</string>
+			<key>VSGameIconNames</key>
+			<array>
+				<string>game.icns</string>
+			</array>
 			<key>VSGameCreatorCode</key>
 			<integer>1212953138</integer>
 			<key>VSGameBundleIdentifier</key>
@@ -358,8 +376,10 @@
 			<string>tf</string>
 			<key>VSGameLongName</key>
 			<string>Team Fortress 2</string>
-			<key>VSGameIconName</key>
-			<string>game.icns</string>
+			<key>VSGameIconNames</key>
+			<array>
+				<string>game.icns</string>
+			</array>
 			<key>VSGameCreatorCode</key>
 			<integer>1413886584</integer>
 			<key>VSGameBundleIdentifier</key>
@@ -400,8 +420,10 @@
 			<string>team fortress 2 beta</string>
 			<key>VSGameShortName</key>
 			<string>tf_beta</string>
-			<key>VSGameIconName</key>
-			<string>game.icns</string>
+			<key>VSGameIconNames</key>
+			<array>
+				<string>game.icns</string>
+			</array>
 			<key>VSGameCreatorCode</key>
 			<integer>1413886562</integer>
 			<key>VSGameBundleIdentifier</key>
@@ -444,8 +466,10 @@
 			<string>left 4 dead</string>
 			<key>VSGameShortName</key>
 			<string>left4dead</string>
-			<key>VSGameIconName</key>
-			<string>game.icns</string>
+			<key>VSGameIconNames</key>
+			<array>
+				<string>game.icns</string>
+			</array>
 			<key>VSGameCreatorCode</key>
 			<integer>1278493745</integer>
 			<key>VSGameBundleIdentifier</key>
@@ -488,8 +512,10 @@
 			<string>left 4 dead 2</string>
 			<key>VSGameShortName</key>
 			<string>left4dead2</string>
-			<key>VSGameIconName</key>
-			<string>game.icns</string>
+			<key>VSGameIconNames</key>
+			<array>
+				<string>game.icns</string>
+			</array>
 			<key>VSGameCreatorCode</key>
 			<integer>1278493746</integer>
 			<key>VSGameBundleIdentifier</key>
@@ -532,8 +558,10 @@
 			<string>cstrike</string>
 			<key>VSGameLongName</key>
 			<string>Counter-Strike Source</string>
-			<key>VSGameIconName</key>
-			<string>game.icns</string>
+			<key>VSGameIconNames</key>
+			<array>
+				<string>game.icns</string>
+			</array>
 			<key>VSGameCreatorCode</key>
 			<integer>1129527891</integer>
 			<key>VSGameBundleIdentifier</key>
@@ -576,8 +604,10 @@
 			<string>dod</string>
 			<key>VSGameLongName</key>
 			<string>Day of Defeat Source</string>
-			<key>VSGameIconName</key>
-			<string>game.icns</string>
+			<key>VSGameIconNames</key>
+			<array>
+				<string>game.icns</string>
+			</array>
 			<key>VSGameCreatorCode</key>
 			<integer>1145322067</integer>
 			<key>VSGameBundleIdentifier</key>
@@ -618,8 +648,10 @@
 			<string>Counter-Strike Global Offensive</string>
 			<key>VSGameShortName</key>
 			<string>csgo</string>
-			<key>VSGameIconName</key>
-			<string>game.icns</string>
+			<key>VSGameIconNames</key>
+			<array>
+				<string>game.icns</string>
+			</array>
 			<key>VSGameCreatorCode</key>
 			<integer>1129531215</integer>
 			<key>VSGameBundleIdentifier</key>

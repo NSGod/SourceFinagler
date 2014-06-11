@@ -1,13 +1,24 @@
 //
 //  VSPrivateInterfaces.h
-//  Source Finagler
+//  SteamKit
 //
 //  Created by Mark Douma on 6/1/2011.
-//  Copyright (c) 2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2014 Mark Douma LLC. All rights reserved.
 //
 
 #import <SteamKit/SteamKitDefines.h>
 #import <SteamKit/VSGame.h>
+#import <SteamKit/VSSourceAddon.h>
+
+
+
+STEAMKIT_PRIVATE_EXTERN NSString * const VSGameIDKey;
+STEAMKIT_PRIVATE_EXTERN NSString * const VSGameNameKey;
+STEAMKIT_PRIVATE_EXTERN NSString * const VSGameShortNameKey;
+STEAMKIT_PRIVATE_EXTERN NSString * const VSGameLongNameKey;
+
+STEAMKIT_PRIVATE_EXTERN NSString * const VSGameIconNamesKey;
+
 
 
 @interface VSGame ()
@@ -33,7 +44,7 @@
 
 @property (retain) NSURL *appManifestURL;
 
-@property (retain) NSURL *addonsFolderURL;
+@property (retain) NSURL *sourceAddonsFolderURL;
 
 /* Indicates the process identifier (pid) of the application.  Do not rely on this for comparing processes.  Use isEqual: instead.  Not all applications have a pid.  Applications without a pid return -1 from this method. */
 @property (assign) pid_t processIdentifier;
@@ -49,5 +60,32 @@
 @property (assign) BOOL running;
 
 
+@end
+
+
+
+@interface VSSourceAddon ()
+
+@property (retain) NSURL *URL;
+
+@property (assign, getter=isInstalled) BOOL installed;
+
 
 @end
+
+
+@class VSSourceAddonInstallOperation;
+
+
+@interface VSSteamManager ()
+
+- (void)beginProcessingSourceAddonInstallOperationOnMainThread:(VSSourceAddonInstallOperation *)operation;
+- (void)finishProcessingSourceAddonInstallOperationOnMainThread:(VSSourceAddonInstallOperation *)operation;
+
+@end
+
+
+
+
+
+

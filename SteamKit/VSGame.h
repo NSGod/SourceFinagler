@@ -1,9 +1,9 @@
 //
 //  VSGame.h
-//  Source Finagler
+//  SteamKit
 //
 //  Created by Mark Douma on 6/13/2010.
-//  Copyright © 2010-2012 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2014 Mark Douma LLC. All rights reserved.
 //
 
 
@@ -15,15 +15,6 @@
 
 
 typedef NSUInteger VSGameID;
-
-
-STEAMKIT_EXTERN NSString * const VSGameIDKey;
-STEAMKIT_EXTERN NSString * const VSGameNameKey;
-STEAMKIT_EXTERN NSString * const VSGameShortNameKey;
-STEAMKIT_EXTERN NSString * const VSGameLongNameKey;
-
-STEAMKIT_EXTERN NSString * const VSGameIconNameKey;
-
 
 
 @interface VSGame : NSObject <NSCopying> {
@@ -41,7 +32,7 @@ STEAMKIT_EXTERN NSString * const VSGameIconNameKey;
 	
 	NSURL					*appManifestURL;
 	
-	NSURL					*addonsFolderURL;
+	NSURL					*sourceAddonsFolderURL;
 	
 	pid_t					processIdentifier;
 	
@@ -66,27 +57,27 @@ STEAMKIT_EXTERN NSString * const VSGameIconNameKey;
 /* Returns the icon of the game. */
 @property (readonly, retain) NSImage *icon;
 
-/* Returns the path to the icon of the game. */
+/* Returns the URL to the icon of the game. */
 @property (readonly, retain) NSURL *iconURL;
 
-/* A dictionary, constructed from the game's Info.plist file, that contains information about the game */
+/* A dictionary, constructed from the game's Info.plist file (or 'plst' resource), that contains information about the game */
 @property (readonly, retain) NSDictionary *infoDictionary;
 
-/* The path to the game's addons directory, or nil if the game doesn't support addons. */
-@property (readonly, retain) NSURL *addonsFolderURL;
+/* The URL to the game's addons directory, or nil if the game doesn't support addons. */
+@property (readonly, retain) NSURL *sourceAddonsFolderURL;
 
-@property (readonly) VSGameID gameID;
+@property (readonly, assign) VSGameID gameID;
 
-@property (readonly) OSType creatorCode;
+@property (readonly, assign) OSType creatorCode;
 
 /* Indicates whether the game is currently helped. This is observable through KVO. */
-@property (readonly, getter=isHelped) BOOL helped;
+@property (readonly, assign, getter=isHelped) BOOL helped;
 
 /* Indicates whether the game is currently running. This is observable through KVO. */
-@property (readonly, getter=isRunning) BOOL running;
+@property (readonly, assign, getter=isRunning) BOOL running;
 
 /* Indicates the process identifier (pid) of the game. Do not rely on this for comparing processes. Use isEqual: instead. Not all games have a pid. Games without a pid return -1 from this method. */
-@property (readonly) pid_t processIdentifier;
+@property (readonly, assign) pid_t processIdentifier;
 
 
 @property (readonly, assign) BOOL hasUpgradedLocation;

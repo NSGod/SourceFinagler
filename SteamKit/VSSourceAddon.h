@@ -1,32 +1,72 @@
 //
 //  VSSourceAddon.h
-//  Source Finagler
+//  SteamKit
 //
 //  Created by Mark Douma on 11/15/2010.
-//  Copyright 2010 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2014 Mark Douma LLC. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/NSObject.h>
+#import <SteamKit/VSGame.h>
 
-@class VSGame;
+@class NSImage, NSString, NSURL;
+
+
+enum {
+	VSSourceAddonStatusUnknown			= 0,
+	VSSourceAddonNotAnAddonFile,
+	VSSourceAddonNoAddonInfoFound,
+	VSSourceAddonAddonInfoUnreadable,
+	VSSourceAddonNoGameIDFoundInAddonInfo,
+	VSSourceAddonValidAddon,
+	VSSourceAddonGameNotFound,
+	VSSourceAddonAlreadyInstalled,
+};
+typedef NSUInteger VSSourceAddonStatus;
+
+
 
 @interface VSSourceAddon : NSObject {
-	NSString		*path;
-	NSString		*fileName;
-	NSImage			*fileIcon;
-	NSString		*gameName;
-	NSImage			*gameIcon;
-	NSString		*problem;
+	NSURL					*URL;			// can change if source addon is installed
+	NSURL					*originalURL;
+	
+	NSNumber				*fileSize;
+	
+	NSString				*fileName;
+	NSImage					*fileIcon;
+	
+	VSGame					*game;
+	
+	VSGameID				sourceAddonGameID;
+	
+	VSSourceAddonStatus		sourceAddonStatus;
+	
+	BOOL					installed;
+	
 }
-+ (id)sourceAddonWithPath:(NSString *)aPath game:(VSGame *)aGame error:(NSError *)inError;
-- (id)initWithPath:(NSString *)aPath game:(VSGame *)game error:(NSError *)inError;
 
-@property (nonatomic, retain) NSString *path;
-@property (nonatomic, retain) NSString *fileName;
-@property (nonatomic, retain) NSImage *fileIcon;
-@property (nonatomic, retain) NSString *gameName;
-@property (nonatomic, retain) NSImage *gameIcon;
-@property (nonatomic, retain) NSString *problem;
++ (id)sourceAddonWithContentsOfURL:(NSURL *)aURL error:(NSError **)outError;
+- (id)initWithContentsOfURL:(NSURL *)aURL error:(NSError **)outError;
+
+
+
+@property (readonly, retain) NSURL *URL;	// can change if source addon is installed
+
+@property (readonly, retain) NSURL *originalURL;
+
+@property (readonly, retain) NSNumber *fileSize;
+
+@property (readonly, retain) NSString *fileName;
+@property (readonly, retain) NSImage *fileIcon;
+
+@property (readonly, retain) VSGame *game;
+
+@property (readonly, assign) VSGameID sourceAddonGameID;
+
+@property (readonly, assign) VSSourceAddonStatus sourceAddonStatus;
+
+@property (readonly, assign, getter=isInstalled) BOOL installed;
+
 
 @end
 

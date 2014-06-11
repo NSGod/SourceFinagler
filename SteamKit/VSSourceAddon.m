@@ -1,98 +1,126 @@
 //
 //  VSSourceAddon.m
-//  Source Finagler
+//  SteamKit
 //
 //  Created by Mark Douma on 11/15/2010.
-//  Copyright 2010 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2014 Mark Douma LLC. All rights reserved.
 //
 
 #import "VSSourceAddon.h"
-#import <SteamKit/SteamKit.h>
+#import <Cocoa/Cocoa.h>
+#import <HLKit/HLKit.h>
+#import "VSSteamManager.h"
+#import "VSPrivateInterfaces.h"
+
+
+
+#define VS_DEBUG 0
+
 
 
 @implementation VSSourceAddon
 
-@synthesize path, fileName, fileIcon, gameName, gameIcon, problem;
+@synthesize URL;
+@synthesize originalURL;
+@synthesize fileSize;
+@synthesize fileName;
+@synthesize fileIcon;
+@synthesize game;
+@synthesize sourceAddonGameID;
+@synthesize sourceAddonStatus;
+@synthesize installed;
 
-+ (id)sourceAddonWithPath:(NSString *)aPath game:(VSGame *)aGame error:(NSError *)inError {
-	return [[[[self class] alloc] initWithPath:aPath game:aGame error:inError] autorelease];
+
++ (id)sourceAddonWithContentsOfURL:(NSURL *)aURL error:(NSError **)outError {
+	return [[(VSSourceAddon *)[[self class] alloc] initWithContentsOfURL:aURL error:outError] autorelease];
 }
 
-- (id)initWithPath:(NSString *)aPath game:(VSGame *)game error:(NSError *)inError {
+
+- (id)initWithContentsOfURL:(NSURL *)aURL error:(NSError **)outError {
 	if ((self = [super init])) {
-		path = [aPath retain];
-		fileName = [[path lastPathComponent] retain];
 		
-		NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile:path];
-		if (icon) [icon setSize:NSMakeSize(16.0, 16.0)];
-		[self setFileIcon:icon];
+		if (outError) *outError = nil;
 		
-		if (game) {
-			if ([game displayName]) {
-				[self setGameName:[game displayName]];
-			}
-			NSImage *icon = [game icon];
-			if (icon) [icon setSize:NSMakeSize(16.0, 16.0)];
-			[self setGameIcon:icon];
+		URL = [aURL retain];
+		originalURL = [URL retain];
+		
+		fileName = [[URL.path lastPathComponent] retain];
+		
+		NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile:URL.path];
+		[icon setSize:NSMakeSize(16.0, 16.0)];
+		fileIcon = [icon retain];
+		
+		HKVPKFile *file = [[[HKVPKFile alloc] initWithContentsOfFile:URL.path showInvisibleItems:YES sortDescriptors:nil error:outError] autorelease];
+		
+		switch (file.sourceAddonStatus) {
+				
+			case HKSourceAddonNotAnAddonFile : sourceAddonStatus = VSSourceAddonNotAnAddonFile;
+				break;
+				
+			case HKSourceAddonNoAddonInfoFound : sourceAddonStatus = VSSourceAddonNoAddonInfoFound;
+				break;
+				
+			case HKSourceAddonAddonInfoUnreadable : sourceAddonStatus = VSSourceAddonAddonInfoUnreadable;
+				break;
+				
+			case HKSourceAddonNoGameIDFoundInAddonInfo : sourceAddonStatus = VSSourceAddonGameNotFound;
+				break;
+				
+			case HKSourceAddonValidAddon : sourceAddonStatus = VSSourceAddonValidAddon;
+				break;
+				
+			default:
+				break;
 		}
 		
-		if (inError) {
-//			NSString *domain = [inError domain];
-			NSInteger errorCode = [inError code];
+		fileSize = [file.fileSize retain];
+		
+		sourceAddonGameID = file.sourceAddonGameID;
+		
+		if (sourceAddonStatus == VSSourceAddonValidAddon) {
+			game = [[[VSSteamManager defaultManager] gameWithGameID:file.sourceAddonGameID] retain];
 			
-			switch (errorCode) {
-				case VSSourceAddonNotAValidAddonFileError : {
-					[self setProblem:NSLocalizedString(@"Not a valid Source Addon file", @"")];
-					break;
+			if (game) {
+				
+				if ([[URL.path stringByDeletingLastPathComponent] isEqualToString:game.sourceAddonsFolderURL.path]) {
+					installed = YES;
+					sourceAddonStatus = VSSourceAddonAlreadyInstalled;
 				}
-					
-				case VSSourceAddonSourceFileIsDestinationFileError : {
-					[self setProblem:NSLocalizedString(@"This Addon file is already installed", @"")];
-					break;
-				}
-					
-				case VSSourceAddonNoAddonInfoFoundError : {
-					[self setProblem:NSLocalizedString(@"No addoninfo.txt file could be found inside the Source Addon file", @"")];
-					break;
-				}
-					
-				case VSSourceAddonAddonInfoUnreadableError : {
-					[self setProblem:NSLocalizedString(@"Couldn't read the addoninfo.txt file inside the Source Addon file", @"")];
-					break;
-				}
-					
-				case VSSourceAddonNoGameIDFoundInAddonInfoError : {
-					[self setProblem:NSLocalizedString(@"Didn't find a valid game ID in the addoninfo.txt file inside the Source Addon file", @"")];
-					break;
-				}
-					
-				case VSSourceAddonGameNotFoundError : {
-					NSInteger gameID = [[[inError userInfo] objectForKey:VSSourceAddonGameIDKey] integerValue];
-					[self setProblem:[NSString stringWithFormat:NSLocalizedString(@"Could not locate installed game for Steam Game ID %ld", @""), (long)gameID]];
-					break;
-				}
-					
-				default:
-					[self setProblem:NSLocalizedString(@"Unknown error", @"")];
-					break;
+				
+			} else {
+				sourceAddonStatus = VSSourceAddonGameNotFound;
 			}
 		}
-		
 	}
 	return self;
 }
 
 
 - (void)dealloc {
-	[path release];
+	[URL release];
+	[originalURL release];
+	[fileSize release];
 	[fileName release];
 	[fileIcon release];
-	[gameName release];
-	[gameIcon release];
-	[problem release];
+	[game release];
 	[super dealloc];
 }
 
 
+- (NSString *)description {
+	NSMutableString *description = [NSMutableString stringWithFormat:@"%@ -", [super description]];
+	
+	[description appendFormat:@" %@", fileName];
+	[description appendFormat:@", game == %@", game];
+	if (game == nil) {
+		[description appendFormat:@", sourceAddonGameID == %lu", (unsigned long)sourceAddonGameID];
+	}
+	[description appendFormat:@", isInstalled == %@", (installed ? @"YES" : @"NO")];
+	return description;
+}
+
 
 @end
+
+
+
