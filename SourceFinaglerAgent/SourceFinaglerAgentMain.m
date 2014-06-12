@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import <SteamKit/SteamKit.h>
-#import "MDLaunchManager.h"
 
 
 #define VS_DEBUG 1
@@ -23,7 +22,13 @@ int main (int argc, const char * argv[]) {
 	
 	
 	NSArray *arguments = [[NSProcessInfo processInfo] arguments];
+	
+#if VS_DEBUG
+	NSLog(@"arguments == %@", arguments);
+#endif
+	
 	if ([arguments count] < 2) {
+		[pool release];
 		exit(EXIT_FAILURE);
 	}
 	
@@ -34,16 +39,16 @@ int main (int argc, const char * argv[]) {
 	
 	if (! ([fileManager fileExistsAtPath:gamePath isDirectory:&isDir] && !isDir)) {
 		NSLog(@"no game found at %@, exiting...", gamePath);
+		[pool release];
 		exit(EXIT_SUCCESS);
 	}
 	
 	VSSteamManager *steamManager = [VSSteamManager defaultManager];
 	
-	NSArray *games = steamManager.games;
-	
-#if VS_DEBUG
-	NSLog(@"games == %@", games);
-#endif
+//#if VS_DEBUG
+//	NSArray *games = steamManager.games;
+//	NSLog(@"games == %@", games);
+//#endif
 	
 	VSGame *game = [steamManager gameWithPath:gamePath];
 	
@@ -51,8 +56,9 @@ int main (int argc, const char * argv[]) {
 	
 	if (game && ![game isHelped]) {
 		if (![steamManager helpGame:game forUSBOverdrive:YES updateLaunchAgent:NO error:&outError]) {
-			NSLog(@"failed to help game!");
-			
+			NSLog(@" *** ERROR: failed to help game! error == %@", outError);
+		} else {
+			NSLog(@"helping game at %@", game.executableURL.path);
 		}
 	}
 	
