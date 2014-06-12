@@ -2,7 +2,6 @@
 #include <QuickLook/QuickLook.h>
 #import <Cocoa/Cocoa.h>
 #import "MDCGImage.h"
-#import <TextureKit/TextureKit.h>
 
 
 /* -----------------------------------------------------------------------------
@@ -13,149 +12,57 @@
 	
 	
 #define MD_DEBUG 0
-	
 
-	
-OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thumbnail, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options, CGSize maxImageSize) {
+
+
+OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thumbnail, CFURLRef URL, CFStringRef contentTypeUTI, CFDictionaryRef options, CGSize maxImageSize) {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	if (![(NSString *)contentTypeUTI isEqualToString:TKVTFType] &&
-		![(NSString *)contentTypeUTI isEqualToString:TKDDSType] &&
-		![(NSString *)contentTypeUTI isEqualToString:TKSFTextureImageType]) {
-		
-		NSLog(@"SourceImage.qlgenerator; GenerateThumbnailForURL(): contentTypeUTI != VTF or DDS or SFTI; (contentTypeUTI == %@)", contentTypeUTI);
-		[pool release];
-		return noErr;
-	}
+	NSError *outError = nil;
 	
-#if MD_DEBUG
-	NSLog(@"GenerateThumbnailForURL(): %@", [(NSURL *)url path]);
-#endif
-	
-	NSData *imageData = [[NSData alloc] initWithContentsOfURL:(NSURL *)url];
-	
-	if (imageData == nil || [imageData length] < sizeof(OSType)) {
-		NSLog(@"GenerateThumbnailForURL(): data %@ for file == %@", (imageData == nil ? @"== nil" : @"length < 4"), [(NSURL *)url path]);
-		[imageData release];
-		[pool release];
-		return noErr;
-	}
-	
-	OSType magic = 0;
-	[imageData getBytes:&magic length:sizeof(magic)];
-	magic = NSSwapBigIntToHost(magic);
-	
-	if (magic == TKHTMLErrorMagic) {
-		NSLog(@"GenerateThumbnailForURL(): file at path \"%@\" appears to be an ERROR 404 HTML file rather than a valid VTF", [(NSURL *)url path]);
-		[imageData release];
-		[pool release];
-		return noErr;
-	}
-	
-	CGImageRef imageRef = NULL;
-	
-	if ([(NSString *)contentTypeUTI isEqualToString:TKVTFType]) {
-		
-		imageRef = [[TKVTFImageRep imageRepWithData:imageData] CGImage];
-		
-	} else if ([(NSString *)contentTypeUTI isEqualToString:TKDDSType]) {
-		
-		imageRef = [[TKDDSImageRep imageRepWithData:imageData] CGImage];
-		
-	} else if ([(NSString *)contentTypeUTI isEqualToString:TKSFTextureImageType]) {
-		
-		TKImage *tkImage = [[TKImage alloc] initWithData:imageData firstRepresentationOnly:NO];
-		
-		if (tkImage) {
-			
-		TKImageRep *tkImageRep = nil;
-			
-			if ([tkImage sliceCount]) {
-				
-				
-			} else if ([tkImage faceCount] && [tkImage frameCount]) {
-				
-				NSArray *aTKImageReps = [tkImage representationsForFaceIndexes:[tkImage firstFaceIndexSet]
-																  frameIndexes:[tkImage firstFrameIndexSet]
-																 mipmapIndexes:[tkImage firstMipmapIndexSet]];
-				
-				if ([aTKImageReps count]) tkImageRep = [aTKImageReps objectAtIndex:0];
-				
-			} else if ([tkImage faceCount]) {
-				
-				NSArray *aTKImageReps = [tkImage representationsForFaceIndexes:[tkImage firstFaceIndexSet]
-																 mipmapIndexes:[tkImage firstMipmapIndexSet]];
-				
-				if ([aTKImageReps count]) tkImageRep = [aTKImageReps objectAtIndex:0];
-				
-				
-			} else if ([tkImage frameCount]) {
-				
-				NSArray *aTKImageReps = [tkImage representationsForFrameIndexes:[tkImage firstFrameIndexSet]
-																  mipmapIndexes:[tkImage firstMipmapIndexSet]];
-				
-				if ([aTKImageReps count]) tkImageRep = [aTKImageReps objectAtIndex:0];
-				
-			} else {
-				if ([tkImage mipmapCount]) {
-					tkImageRep = [tkImage representationForMipmapIndex:0];
-				}
-			}
-			
-			imageRef = [tkImageRep CGImage];
-			
-			[tkImage release];
-		}
-		
-	}
+	CGImageRef imageRef = MDCGImageCreateFromURL((NSURL *)URL, (NSString *)contentTypeUTI, &outError);
 	
 	if (imageRef == NULL) {
-		NSLog(@"SourceImage.qlgenerator; GenerateThumbnailForURL(): MDCGImageCreateWithData() returned NULL for file %@", [(NSURL *)url path]);
-		[imageData release];
+		NSLog(@"%@; MDCGImageCreateFromURL() returned NULL for file \"%@\". error == %@", MDSourceQuickLookBundleIdentifier, [(NSURL *)URL path], outError);
 		[pool release];
 		return noErr;
 	}
 	
-#if MD_DEBUG
-	NSLog(@"GenerateThumbnailForURL(): created imageRef");
-#endif
+	NSSize imageSize = NSMakeSize(CGImageGetWidth(imageRef), CGImageGetHeight(imageRef));
 	
-	CGSize theMaxImageSize = QLThumbnailRequestGetMaximumSize(thumbnail);
+	NSSize contextSize = NSSizeFromCGSize(maxImageSize);
 	
-	if (CGImageGetWidth(imageRef) > theMaxImageSize.width || CGImageGetHeight(imageRef) > theMaxImageSize.height) {
-		CGSize newSize = theMaxImageSize;
-		if (newSize.width < newSize.height) {
-			newSize.height = newSize.width;
-		} else {
-			newSize.width = newSize.height;
-		}
-		
-		newSize.height = newSize.width * (CGFloat)CGImageGetHeight(imageRef)/(CGFloat)CGImageGetWidth(imageRef);
-		
-#if MD_DEBUG
-	NSLog(@"GenerateThumbnailForURL(): going to call CGCreateCopyWithSize()");
-#endif
-		CGImageRef newImage = MDCGImageCreateCopyWithSize(imageRef, newSize);
-		QLThumbnailRequestSetImage(thumbnail, newImage, NULL);
-		CGImageRelease(newImage);
+	if (imageSize.width >= imageSize.height) {
+		contextSize.height *= (imageSize.width / imageSize.height);
 	} else {
-		QLThumbnailRequestSetImage(thumbnail, imageRef, NULL);
-		
+		contextSize.width *= (imageSize.width / imageSize.height);
 	}
 	
 #if MD_DEBUG
-	NSLog(@"GenerateThumbnailForURL(): set thumbnail image");
+	NSLog(@"%@; %s(): \"%@\", maxImageSize == %@, QLThumbnailRequestGetMaximumSize() == %@, contextSize == %@", MDSourceQuickLookBundleIdentifier, __FUNCTION__, [(NSURL *)URL path], NSStringFromSize(NSSizeFromCGSize(maxImageSize)), NSStringFromSize(NSSizeFromCGSize(QLThumbnailRequestGetMaximumSize(thumbnail))), NSStringFromSize(contextSize));
 #endif
 	
-	[imageData release];
+	CGContextRef qlContext = QLThumbnailRequestCreateContext(thumbnail, NSSizeToCGSize(contextSize), true, NULL);
+	if (qlContext == NULL) {
+		NSLog(@"%@; QLThumbnailRequestCreateContext() returned NULL for file \"%@\".", MDSourceQuickLookBundleIdentifier, [(NSURL *)URL path]);
+		CGImageRelease(imageRef);
+		[pool release];
+		return noErr;
+	}
+	
+	CGContextSaveGState(qlContext);
+	CGContextDrawImage(qlContext, CGRectMake(0.0, 0.0, contextSize.width, contextSize.height), imageRef);
+	CGContextRestoreGState(qlContext);
+	QLThumbnailRequestFlushContext(thumbnail, qlContext);
+	CGContextRelease(qlContext);
+	
+	CGImageRelease(imageRef);
 	
 	[pool release];
 	return noErr;
 }
-	
-void CancelThumbnailGeneration(void* thisInterface, QLThumbnailRequestRef thumbnail) {
-//	NSLog(@"SourceImage.qlgenerator; CancelThumbnailGeneration()");
 
+void CancelThumbnailGeneration(void* thisInterface, QLThumbnailRequestRef thumbnail) {
 	// implement only if supported
 }
 

@@ -5375,7 +5375,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SourceFinagler/SourceFinagler_Prefix.pch;
 				INFOPLIST_FILE = "SourceImageQuickLook/SourceImage-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../../Frameworks/ @loader_path/../../../";
 				PRODUCT_NAME = SourceImage;
 				WRAPPER_EXTENSION = qlgenerator;
 			};
