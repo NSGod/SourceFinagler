@@ -21,7 +21,7 @@
 @interface NSMenu (MDAppKitAdditions)
 - (BOOL)containsItem:(NSMenuItem *)aMenuItem;
 - (void)setItemArray:(NSArray *)anArray;
-- (void)removeAllItems;
+- (void)md__removeAllItems;
 @end
 
 
