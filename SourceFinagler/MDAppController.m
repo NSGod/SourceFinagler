@@ -24,8 +24,6 @@
 #import "MDUserDefaults.h"
 
 #import "MDPrefsController.h"
-#import "MDBrowser.h"
-#import "MDOutlineView.h"
 
 #import <Sparkle/Sparkle.h>
 
@@ -48,7 +46,6 @@ NSString * const MDLaunchTimeActionKey						= @"MDLaunchTimeAction";
 NSString * const MDQuitAfterAllWindowsClosedKey				= @"MDQuitAfterAllWindowsClosed";
 NSString * const MDLastWindowDidCloseNotification			= @"MDLastWindowDidClose";
 
-NSString * const MDFinderBundleIdentifierKey = @"com.apple.finder";
 
 
 /*************		websites & email addresses	*************/
@@ -79,13 +76,10 @@ BOOL	MDPerformingBatchOperation = NO;
 
 #define VS_DEBUG 0
 
-#define MD_DEBUG 0
+#define MD_DEBUG 1
 
 #define MD_DEBUG_SPOTLIGHT 0
 
-#define defaultFontSize 12
-#define defaultIconSize 16
-#define defaultBrowserViewFontAndIconSize 13
 
 
 SInt32 MDSystemVersion = 0;
@@ -125,47 +119,9 @@ BOOL needSourceAddonFinaglerRegister = NO;
 	
 	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
 	
-	NSNumber *finderListViewFontSize = nil;
-	NSNumber *finderListViewIconSize = nil;
-	NSNumber *finderColumnViewFontAndIconSize = nil;
-	
-	MDUserDefaults *userDefaults = [MDUserDefaults standardUserDefaults];
-	
-		
-	finderListViewFontSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:MDFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ListViewOptions"] objectForKey:@"FontSize"];
-	finderListViewIconSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:MDFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ListViewOptions"] objectForKey:@"IconSize"];
-	
-	finderColumnViewFontAndIconSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:MDFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ColumnViewOptions"] objectForKey:@"FontSize"];
-	
 	[defaultValues setObject:[NSNumber numberWithInteger:MDListViewMode] forKey:MDDocumentViewModeKey];
 	
-	if (finderListViewFontSize) {
-		[defaultValues setObject:finderListViewFontSize forKey:MDListViewFontSizeKey];
-	} else {
-		[defaultValues setObject:[NSNumber numberWithInteger:defaultFontSize] forKey:MDListViewFontSizeKey];
-	}
-	
-	if (finderListViewIconSize) {
-		[defaultValues setObject:finderListViewIconSize forKey:MDListViewIconSizeKey];
-	} else {
-		[defaultValues setObject:[NSNumber numberWithInteger:defaultIconSize] forKey:MDListViewIconSizeKey];
-	}
-	
-	if (finderColumnViewFontAndIconSize) {
-		[defaultValues setObject:finderColumnViewFontAndIconSize forKey:MDBrowserFontAndIconSizeKey];
-	} else {
-		[defaultValues setObject:[NSNumber numberWithInteger:defaultBrowserViewFontAndIconSize] forKey:MDBrowserFontAndIconSizeKey];
-	}
-	
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowInvisibleItemsKey];
-	
-	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:MDShouldShowKindColumnKey];
-	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:MDShouldShowSizeColumnKey];
-	
-	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:MDBrowserShouldShowIconsKey];
-	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:MDBrowserShouldShowPreviewKey];
-	
-	[defaultValues setObject:[NSNumber numberWithInteger:MDBrowserSortByName] forKey:MDBrowserSortByKey];
 	
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowInspectorKey];
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowQuickLookKey];
@@ -413,16 +369,8 @@ BOOL needSourceAddonFinaglerRegister = NO;
 	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedInteger:currentView] forKey:MDCurrentViewKey];
 }
 
-- (NSUndoManager *)globalUndoManager {
-#if MD_DEBUG
-	NSLog(@"[%@ %@] *****************", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	if (globalUndoManager == nil) globalUndoManager = [[NSUndoManager alloc] init];
-	return globalUndoManager;
-}
 
-
-	// this method is used 
+// this method is used 
 - (void)didSwitchTo:(NSNotification *)notification {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));

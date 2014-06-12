@@ -42,7 +42,8 @@
 
 
 
-#define MD_DEBUG 0
+#define MD_DEBUG 1
+#define MD_DEBUG_TABLE_COLUMNS 1
 
 
 
@@ -107,35 +108,22 @@ NSString * const MDViewNameKey										= @"MDViewName";
 
 @end
 
+
 static NSInteger copyTag = 0;
+
+
 
 @implementation MDHLDocument
 
-@synthesize image, kind, outlineViewIsReloadingData, version, isSearching;
-@dynamic shouldShowInvisibleItems, searchPredicate;
+@synthesize file;
+@synthesize image;
+@synthesize kind;
+@synthesize outlineViewIsReloadingData;
+@synthesize version;
+@synthesize isSearching;
 
-+ (void)initialize {
-	SInt32 MDFullSystemVersion = 0;
-	Gestalt(gestaltSystemVersion, &MDFullSystemVersion);
-	MDSystemVersion = MDFullSystemVersion & 0xfffffff0;
-}
-
-
-+ (NSString *)calculateNewUniqueID {
-	static NSUInteger	gIDCounter;
-	static BOOL			gUniqueInited = NO;
-	NSString *theID = nil;
-	
-	if (!gUniqueInited) {
-		gIDCounter = 0;
-		gUniqueInited = YES;
-	}
-	gIDCounter++;
-	
-	theID = [NSString stringWithFormat:@"%lu", (unsigned long)gIDCounter];
-	
-	return theID;
-}
+@dynamic shouldShowInvisibleItems;
+@dynamic searchPredicate;
 
 
 - (id)init {
@@ -145,6 +133,8 @@ static NSInteger copyTag = 0;
     
     if ((self = [super init])) {
 		
+		outlineViewIsSettingUpInitialColumns = YES;
+		
 		shouldShowInvisibleItems = [[[NSUserDefaults standardUserDefaults] objectForKey:MDShouldShowInvisibleItemsKey] boolValue];
 		
 		[self setSearching:NO];
@@ -153,17 +143,15 @@ static NSInteger copyTag = 0;
 				
 		copyOperationsAndTags = [[NSMutableDictionary alloc] init];
 		
-		if (MDSystemVersion >= MDLeopard) {
-			if (!MDPerformingBatchOperation) {
-				NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsLeopardKey forAppIdentifier:MDSystemSoundEffectsLeopardBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
-				
-				/*	enabled is an NSNumber, not a YES or NO value. If enabled is nil, we assume the default sound effect setting, which is enabled. Only if enabled is non-nil do we have an actual YES or NO answer to examine	*/
-				
-				if (enabled) {
-					MDPlaySoundEffects = (BOOL)[enabled intValue];
-				} else {
-					MDPlaySoundEffects = YES;
-				}
+		if (MDGetSystemVersion() >= MDLeopard) {
+			NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsLeopardKey forAppIdentifier:MDSystemSoundEffectsLeopardBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
+			
+			/*	enabled is an NSNumber, not a YES or NO value. If enabled is nil, we assume the default sound effect setting, which is enabled. Only if enabled is non-nil do we have an actual YES or NO answer to examine	*/
+			
+			if (enabled) {
+				MDPlaySoundEffects = (BOOL)[enabled intValue];
+			} else {
+				MDPlaySoundEffects = YES;
 			}
 		}
 		
@@ -182,17 +170,11 @@ static NSInteger copyTag = 0;
 	
 	if (outError) *outError = nil;
 		
-	NSData *dataForMagic = [[[NSData alloc] initWithContentsOfFile:[url path] options:NSDataReadingMapped | NSDataReadingUncached error:outError] autorelease];
-	if ([dataForMagic length] < 8) {
-		NSLog(@" dataForMagic length < 8! [%@ %@] url == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), url);
-		return NO;
-	}
-	NSData *magicData = [dataForMagic subdataWithRange:NSMakeRange(0, 8)];
+	HKArchiveFileType archiveFileType = [HKArchiveFile archiveFileTypeForContentsOfFile:url.path];
 	
-	HKArchiveFileType fileType = [HKArchiveFile fileTypeForData:magicData];
+	NSAssert(archiveFileType != HKArchiveFileNoType, @"archiveFileType != HKArchiveFileNoType");
 	
-	
-	switch (fileType) {
+	switch (archiveFileType) {
 			
 		case (HKArchiveFileGCFType) : {
 			[self setKind:NSLocalizedString(@"Steam Cache file", @"")];
@@ -201,7 +183,7 @@ static NSInteger copyTag = 0;
 		}
 			
 		case (HKArchiveFileVPKType) : {
-			[self setKind:NSLocalizedString(@"Source Addon file", @"")];
+			[self setKind:NSLocalizedString(@"Source Valve Package file", @"")];
 			file = [[HKVPKFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
@@ -282,7 +264,6 @@ static NSInteger copyTag = 0;
 	[browserMenuShowInspectorMenuItem release];
 	[browserMenuShowViewOptionsMenuItem release];
 	
-	
 	[actionButtonActionImageItem release];
 	[actionButtonShowInspectorMenuItem release];
 	[actionButtonShowQuickLookMenuItem release];
@@ -306,9 +287,9 @@ static NSInteger copyTag = 0;
 
 
 - (NSString *)windowNibName {
-	if (MDSystemVersion >= MDSnowLeopard) {
-	return @"MDHLDocumentSnowLeopard";
-}
+	if (MDGetSystemVersion() >= MDSnowLeopard) {
+		return @"MDHLDocumentSnowLeopard";
+	}
 	return @"MDHLDocumentLeopard";
 }
 
@@ -320,12 +301,17 @@ static NSInteger copyTag = 0;
 	
     [super windowControllerDidLoadNib:aController];
 	
-	[outlineView setTarget:nil];
+	[scrollView setBorderType:NSNoBorder];
+	
+	[outlineView setTarget:self];
 	[outlineView setDoubleAction:@selector(toggleShowQuickLook:)];
+	[outlineView registerForDraggedTypes:[NSArray arrayWithObjects:MDDraggedItemsPboardType, NSFilenamesPboardType, nil]];
+	
+	
 	[browser setDoubleAction:@selector(toggleShowQuickLook:)];
 	
-	[self setUndoManager:[[NSApp delegate] globalUndoManager]];
-		
+	[self setHasUndoManager:NO];
+	
 	outlineViewMenuShowQuickLookMenuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Quick Look", @"") action:@selector(toggleShowQuickLook:) keyEquivalent:@""];
 	
 	[outlineViewMenuHelpMenuItem retain];
@@ -333,15 +319,12 @@ static NSInteger copyTag = 0;
 	[outlineViewMenuShowViewOptionsMenuItem retain];
 	
 
-	if (MDSystemVersion >= MDSnowLeopard) {
+	if (MDGetSystemVersion() >= MDSnowLeopard) {
 		browserMenuShowQuickLookMenuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Quick Look", @"") action:@selector(toggleShowQuickLook:) keyEquivalent:@""];
 		[browserMenuShowInspectorMenuItem retain];
 		[browserMenuShowViewOptionsMenuItem retain];
 	}
 	
-	
-	[outlineView setTarget:self];
-	[scrollView setBorderType:NSNoBorder];
 	
 	NSMenu *actionButtonMenu = [actionButton menu];
 	
@@ -395,27 +378,24 @@ static NSInteger copyTag = 0;
 	if (savedFrame) [hlWindow setFrameFromString:savedFrame];
 	
 	if (file) {
-		
 		statusImageViewTag1 = [statusImageView1 addToolTipRect:[statusImageView1 visibleRect] owner:self userData:nil];
-		
-		[statusImageView2 setImage:[NSImage imageNamed:@"readOnlyIndicator"]];
-		
 		statusImageViewTag2 = [statusImageView2 addToolTipRect:[statusImageView2 visibleRect] owner:self userData:nil];
-		
 	}
 	
 	
 	/*		for preventing re-ordering of first table column	*/
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outlineViewColumnDidMove:) name:NSOutlineViewColumnDidMoveNotification object:outlineView];
+//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outlineViewColumnDidMove:) name:NSOutlineViewColumnDidMoveNotification object:outlineView];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(browserSelectionDidChange:) name:MDBrowserSelectionDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowViewOptionsDidChange:) name:MDShouldShowViewOptionsDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowInspectorDidChange:) name:MDShouldShowInspectorDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowQuickLookDidChange:) name:MDShouldShowQuickLookDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowPathBarDidChange:) name:MDShouldShowPathBarDidChangeNotification object:nil];
-
-//	NSLog(@"[%@ %@] [outlineView sortDescriptors] == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [outlineView sortDescriptors]);
+	
+#if MD_DEBUG_TABLE_COLUMNS
+	NSLog(@"[%@ %@] [outlineView sortDescriptors] == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [outlineView sortDescriptors]);
+#endif
 	
 	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDShouldShowInvisibleItemsKey]
 																 options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
@@ -439,6 +419,19 @@ static NSInteger copyTag = 0;
 	[self setVersion:[file version]];
 	
 	[progressIndicator setUsesThreadedAnimation:YES];
+	
+	[self performSelector:@selector(setUpOutlineViewColumn:) withObject:nil afterDelay:1.0];
+}
+
+
+- (void)setUpOutlineViewColumn:(id)sender {
+#if MD_DEBUG_TABLE_COLUMNS
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	outlineViewIsSettingUpInitialColumns = NO;
+	
+	/*		for preventing re-ordering of first table column	*/
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outlineViewColumnDidMove:) name:NSOutlineViewColumnDidMoveNotification object:outlineView];
 	
 }
 
@@ -550,6 +543,8 @@ static NSInteger copyTag = 0;
 }
 
 
+#pragma mark - key value coding
+
 - (NSDate *)fileCreationDate {
 #if MD_DEBUG
 //	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -633,14 +628,6 @@ static NSInteger copyTag = 0;
 	
 }
 
-- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)aWindow {
-	return [[NSApp delegate] globalUndoManager];
-}
-
-
-- (NSUndoManager *)undoManager {
-	return [super undoManager];
-}
 
 
 - (IBAction)find:(id)sender {
@@ -874,6 +861,14 @@ static NSInteger copyTag = 0;
 }
 
 
+- (IBAction)installSourceAddon:(id)sender {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	// do nothing; subclasses can override
+}
+
+
 - (IBAction)browserSelect:(id)sender {
 #if MD_DEBUG
 //	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -1046,7 +1041,7 @@ static NSInteger copyTag = 0;
 	
 }
 
-	
+
 - (id)outlineView:(NSOutlineView *)anOutlineView child:(NSInteger)index ofItem:(id)item {
 	HKItem *node = nil;
 	
@@ -1158,7 +1153,7 @@ static NSInteger copyTag = 0;
 
 /*		to prevent re-ordering of first table column	*/
 - (void)tableView:(NSTableView *)aTableView mouseDownInHeaderOfTableColumn:(NSTableColumn *)aTableColumn {
-#if MD_DEBUG
+#if MD_DEBUG_TABLE_COLUMNS
 	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
@@ -1171,27 +1166,33 @@ static NSInteger copyTag = 0;
 
 
 - (void)outlineViewColumnDidMove:(NSNotification *)notification {
-#if MD_DEBUG
-	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	if (outlineViewIsSettingUpInitialColumns == NO) {
+		if (notification.object == outlineView) {
+#if MD_DEBUG_TABLE_COLUMNS
+			NSLog(@" \"%@\" [%@ %@] notification == %@", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), notification);
 #endif
-	
-	if ([notification object] == outlineView) {
-		NSDictionary *userInfo = [notification userInfo];
-		
-		if ([[userInfo objectForKey:@"NSOldColumn"] intValue] == 0) {
-			[[NSNotificationCenter defaultCenter] removeObserver:self name:NSOutlineViewColumnDidMoveNotification object:outlineView];
+			NSDictionary *userInfo = [notification userInfo];
 			
-			[outlineView moveColumn:[[userInfo objectForKey:@"NSNewColumn"] intValue] toColumn:0];
-			
-			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outlineViewColumnDidMove:) name:NSOutlineViewColumnDidMoveNotification object:outlineView];
-			
-		} else if ([[userInfo objectForKey:@"NSNewColumn"] intValue] == 0) {
-			[[NSNotificationCenter defaultCenter] removeObserver:self name:NSOutlineViewColumnDidMoveNotification object:outlineView];
-			
-			[outlineView moveColumn:0 toColumn:[[userInfo objectForKey:@"NSOldColumn"] intValue]];
-			
-			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outlineViewColumnDidMove:) name:NSOutlineViewColumnDidMoveNotification object:outlineView];
+			if ([[userInfo objectForKey:@"NSOldColumn"] intValue] == 0) {
+				[[NSNotificationCenter defaultCenter] removeObserver:self name:NSOutlineViewColumnDidMoveNotification object:outlineView];
+				
+				[outlineView moveColumn:[[userInfo objectForKey:@"NSNewColumn"] intValue] toColumn:0];
+				
+				[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outlineViewColumnDidMove:) name:NSOutlineViewColumnDidMoveNotification object:outlineView];
+				
+			} else if ([[userInfo objectForKey:@"NSNewColumn"] intValue] == 0) {
+				[[NSNotificationCenter defaultCenter] removeObserver:self name:NSOutlineViewColumnDidMoveNotification object:outlineView];
+				
+				[outlineView moveColumn:0 toColumn:[[userInfo objectForKey:@"NSOldColumn"] intValue]];
+				
+				[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outlineViewColumnDidMove:) name:NSOutlineViewColumnDidMoveNotification object:outlineView];
+			}
 		}
+	} else {
+#if MD_DEBUG_TABLE_COLUMNS
+		NSLog(@" \"%@\" [%@ %@] *** IGNORING ***", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+		
 	}
 }
 /*		to prevent re-ordering of first table column	*/
@@ -1589,9 +1590,9 @@ static NSInteger copyTag = 0;
 			NSNumber *currentBytes = [dictionary objectForKey:MDCopyOperationCurrentBytesKey];
 			
 			if (totalItemCount == 1) {
-				[copyOperation setMessageText:[NSString stringWithFormat:NSLocalizedString(@"Copying %lu item to \"%@\"", @""), (unsigned long)totalItemCount - currentItemIndex, destination]];
+				[copyOperation setMessageText:[NSString stringWithFormat:NSLocalizedString(@"Copying %lu item to \"%@\"", @""), (unsigned long)(totalItemCount - currentItemIndex), destination]];
 			} else {
-				[copyOperation setMessageText:[NSString stringWithFormat:NSLocalizedString(@"Copying %lu items to \"%@\"", @""), (unsigned long)totalItemCount - currentItemIndex, destination]];
+				[copyOperation setMessageText:[NSString stringWithFormat:NSLocalizedString(@"Copying %lu items to \"%@\"", @""), (unsigned long)(totalItemCount - currentItemIndex), destination]];
 			}
 			
 			[copyOperation setInformativeText:[NSString stringWithFormat:NSLocalizedString(@"%@ of %@", @""), [fileSizeFormatter stringForObjectValue:currentBytes],
@@ -1934,7 +1935,7 @@ static NSInteger copyTag = 0;
 	
 	NSUInteger modifierFlags = [currentEvent modifierFlags];
 	
-	HKArchiveFileType fileType = [file fileType];
+	HKArchiveFileType archiveFileType = [file archiveFileType];
 	
 	
 	if (modifierFlags & NSCommandKeyMask) {
@@ -1945,7 +1946,7 @@ static NSInteger copyTag = 0;
 		
 		if (tag == statusImageViewTag1) {
 			
-			switch (fileType) {
+			switch (archiveFileType) {
 				case HKArchiveFileBSPType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that the items in this window are inside a %@", @""), NSLocalizedString(@"Source Level", @"")];
 					break;
@@ -1968,7 +1969,7 @@ static NSInteger copyTag = 0;
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that the items in this window are inside a %@", @""), NSLocalizedString(@"Steam Non-Cache file", @"")];
 					break;
 				case HKArchiveFileVPKType :
-					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that the items in this window are inside a %@", @""), NSLocalizedString(@"Source Addon file", @"")];
+					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that the items in this window are inside a %@", @""), NSLocalizedString(@"Source Valve Package file", @"")];
 					break;
 					
 				default:
@@ -1978,7 +1979,7 @@ static NSInteger copyTag = 0;
 			
 		} else if (tag == statusImageViewTag2) {
 			
-			switch (fileType) {
+			switch (archiveFileType) {
 				case HKArchiveFileBSPType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that you cannot add or change the contents of this %@", @""), NSLocalizedString(@"Source Level", @"")];
 					break;
@@ -2001,7 +2002,7 @@ static NSInteger copyTag = 0;
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that you cannot add or change the contents of this %@", @""), NSLocalizedString(@"Steam Non-Cache file", @"")];
 					break;
 				case HKArchiveFileVPKType :
-					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that you cannot add or change the contents of this %@", @""), NSLocalizedString(@"Source Addon file", @"")];
+					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Indicates that you cannot add or change the contents of this %@", @""), NSLocalizedString(@"Source Valve Package file", @"")];
 					break;
 					
 				default:
@@ -2013,7 +2014,7 @@ static NSInteger copyTag = 0;
 	} else {
 		if (tag == statusImageViewTag1) {
 			
-			switch (fileType) {
+			switch (archiveFileType) {
 				case HKArchiveFileBSPType :
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Inside %@", @""), NSLocalizedString(@"Source Level", @"")];
 					break;
@@ -2036,7 +2037,7 @@ static NSInteger copyTag = 0;
 					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Inside %@", @""), NSLocalizedString(@"Steam Non-Cache file", @"")];
 					break;
 				case HKArchiveFileVPKType :
-					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Inside %@", @""), NSLocalizedString(@"Source Addon file", @"")];
+					toolTip = [NSString stringWithFormat:NSLocalizedString(@"Inside %@", @""), NSLocalizedString(@"Source Valve Package file", @"")];
 					break;
 					
 				default:
@@ -2074,6 +2075,8 @@ static NSInteger copyTag = 0;
 	[[NSNotificationCenter defaultCenter] postNotificationName:MDShouldShowPathBarDidChangeNotification object:self userInfo:nil];
 }
 
+
+#pragma mark - <NSMenuDelegate>
 
 - (void)menuNeedsUpdate:(NSMenu *)menu {
 #if MD_DEBUG
@@ -2261,7 +2264,13 @@ static NSInteger copyTag = 0;
 		
 	} else if (action == @selector(saveDocument:) ||
 			   action == @selector(saveDocumentAs:) ||
-			   action == @selector(saveDocumentTo:)) {
+			   action == @selector(saveDocumentTo:) ||
+			   action == @selector(duplicateDocument:) ||
+			   action == @selector(renameDocument:) ||
+			   action == @selector(moveDocument:) ||
+			   action == @selector(revertDocumentToSaved:)
+			   
+			   ) {
 		return NO;
 		
 	} else if (action == @selector(revealInFinder:)) {
@@ -2281,6 +2290,10 @@ static NSInteger copyTag = 0;
 	
 	return YES;
 }
+
+
+#pragma mark END <NSMenuDelegate>
+#pragma mark -
 
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem {

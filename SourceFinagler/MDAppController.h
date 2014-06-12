@@ -136,7 +136,6 @@ extern SInt32 MDSystemVersion;
 
 - (IBAction)resetAllWarningDialogs:(id)sender;
 
-- (NSUndoManager *)globalUndoManager;
 
 @end
 

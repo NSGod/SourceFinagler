@@ -2,17 +2,17 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
   <data>
     <int key="IBDocument.SystemTarget">1060</int>
-    <string key="IBDocument.SystemVersion">13B42</string>
+    <string key="IBDocument.SystemVersion">13C1021</string>
     <string key="IBDocument.InterfaceBuilderVersion">851</string>
-    <string key="IBDocument.AppKitVersion">1265</string>
-    <string key="IBDocument.HIToolboxVersion">696.00</string>
+    <string key="IBDocument.AppKitVersion">1265.19</string>
+    <string key="IBDocument.HIToolboxVersion">697.40</string>
     <object class="NSMutableDictionary" key="IBDocument.PluginVersions">
       <string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
       <string key="NS.object.0">851</string>
     </object>
     <object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
       <bool key="EncodedWithXMLCoder">YES</bool>
-      <integer value="83"/>
+      <integer value="1274"/>
     </object>
     <object class="NSArray" key="IBDocument.PluginDependencies">
       <bool key="EncodedWithXMLCoder">YES</bool>
@@ -2499,13 +2499,69 @@
               <int key="NSvFlags">290</int>
               <object class="NSMutableArray" key="NSSubviews">
                 <bool key="EncodedWithXMLCoder">YES</bool>
+                <object class="NSButton" id="20740625">
+                  <reference key="NSNextResponder" ref="680559639"/>
+                  <int key="NSvFlags">-2147483359</int>
+                  <string key="NSFrame">{{395, 4}, {134, 17}}</string>
+                  <reference key="NSSuperview" ref="680559639"/>
+                  <string key="NSReuseIdentifierKey">_NS:2460</string>
+                  <bool key="NSEnabled">YES</bool>
+                  <object class="NSButtonCell" key="NSCell" id="219168462">
+                    <int key="NSCellFlags">-2080374784</int>
+                    <int key="NSCellFlags2">134348800</int>
+                    <string key="NSContents">Install Source Addon</string>
+                    <reference key="NSSupport" ref="26"/>
+                    <string key="NSCellIdentifier">_NS:2460</string>
+                    <reference key="NSControlView" ref="20740625"/>
+                    <int key="NSButtonFlags">-2038153216</int>
+                    <int key="NSButtonFlags2">164</int>
+                    <string key="NSAlternateContents"/>
+                    <string key="NSKeyEquivalent"/>
+                    <int key="NSPeriodicDelay">400</int>
+                    <int key="NSPeriodicInterval">75</int>
+                  </object>
+                  <bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+                </object>
                 <object class="NSProgressIndicator" id="1015496635">
                   <reference key="NSNextResponder" ref="680559639"/>
                   <int key="NSvFlags">1313</int>
-                  <string key="NSFrame">{{510, 5}, {16, 16}}</string>
+                  <string key="NSFrame">{{534, 5}, {16, 16}}</string>
                   <reference key="NSSuperview" ref="680559639"/>
                   <int key="NSpiFlags">28938</int>
                   <double key="NSMaxValue">100</double>
+                </object>
+                <object class="NSImageView" id="986490516">
+                  <reference key="NSNextResponder" ref="680559639"/>
+                  <int key="NSvFlags">-2147483356</int>
+                  <object class="NSMutableSet" key="NSDragTypes">
+                    <bool key="EncodedWithXMLCoder">YES</bool>
+                    <object class="NSArray" key="set.sortedObjects">
+                      <bool key="EncodedWithXMLCoder">YES</bool>
+                      <string>Apple PDF pasteboard type</string>
+                      <string>Apple PICT pasteboard type</string>
+                      <string>Apple PNG pasteboard type</string>
+                      <string>NSFilenamesPboardType</string>
+                      <string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
+                      <string>NeXT TIFF v4.0 pasteboard type</string>
+                    </object>
+                  </object>
+                  <string key="NSFrame">{{40, 4}, {16, 16}}</string>
+                  <reference key="NSSuperview" ref="680559639"/>
+                  <bool key="NSEnabled">YES</bool>
+                  <object class="NSImageCell" key="NSCell" id="376376306">
+                    <int key="NSCellFlags">0</int>
+                    <int key="NSCellFlags2">33554432</int>
+                    <object class="NSCustomResource" key="NSContents">
+                      <string key="NSClassName">NSImage</string>
+                      <string key="NSResourceName">sourceAddonIndicator</string>
+                    </object>
+                    <int key="NSAlign">0</int>
+                    <int key="NSScale">0</int>
+                    <int key="NSStyle">0</int>
+                    <bool key="NSAnimates">NO</bool>
+                  </object>
+                  <bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+                  <bool key="NSEditable">YES</bool>
                 </object>
                 <object class="NSImageView" id="531820651">
                   <reference key="NSNextResponder" ref="680559639"/>
@@ -3535,6 +3591,30 @@
           </object>
           <int key="connectionID">2315</int>
         </object>
+        <object class="IBConnectionRecord">
+          <object class="IBOutletConnection" key="connection">
+            <string key="label">installSourceAddonButton</string>
+            <reference key="source" ref="668368473"/>
+            <reference key="destination" ref="20740625"/>
+          </object>
+          <int key="connectionID">2318</int>
+        </object>
+        <object class="IBConnectionRecord">
+          <object class="IBOutletConnection" key="connection">
+            <string key="label">statusImageView3</string>
+            <reference key="source" ref="668368473"/>
+            <reference key="destination" ref="986490516"/>
+          </object>
+          <int key="connectionID">2321</int>
+        </object>
+        <object class="IBConnectionRecord">
+          <object class="IBActionConnection" key="connection">
+            <string key="label">installSourceAddon:</string>
+            <reference key="source" ref="668368473"/>
+            <reference key="destination" ref="20740625"/>
+          </object>
+          <int key="connectionID">2322</int>
+        </object>
       </object>
       <object class="IBMutableOrderedSet" key="objectRecords">
         <object class="NSArray" key="orderedObjects">
@@ -4019,8 +4099,11 @@
               <reference ref="137165423"/>
               <reference ref="531820651"/>
               <reference ref="1015496635"/>
+              <reference ref="20740625"/>
+              <reference ref="986490516"/>
             </object>
             <reference key="parent" ref="972827338"/>
+            <string key="objectName">bottomBar</string>
           </object>
           <object class="IBObjectRecord">
             <int key="objectID">1275</int>
@@ -4044,6 +4127,7 @@
             <int key="objectID">1277</int>
             <reference key="object" ref="1015496635"/>
             <reference key="parent" ref="680559639"/>
+            <string key="objectName">progressIndicator</string>
           </object>
           <object class="IBObjectRecord">
             <int key="objectID">1278</int>
@@ -4502,6 +4586,35 @@
             <reference key="object" ref="717480695"/>
             <reference key="parent" ref="883854889"/>
           </object>
+          <object class="IBObjectRecord">
+            <int key="objectID">2316</int>
+            <reference key="object" ref="20740625"/>
+            <object class="NSMutableArray" key="children">
+              <bool key="EncodedWithXMLCoder">YES</bool>
+              <reference ref="219168462"/>
+            </object>
+            <reference key="parent" ref="680559639"/>
+            <string key="objectName">installSourceAddonButton</string>
+          </object>
+          <object class="IBObjectRecord">
+            <int key="objectID">2317</int>
+            <reference key="object" ref="219168462"/>
+            <reference key="parent" ref="20740625"/>
+          </object>
+          <object class="IBObjectRecord">
+            <int key="objectID">2319</int>
+            <reference key="object" ref="986490516"/>
+            <object class="NSMutableArray" key="children">
+              <bool key="EncodedWithXMLCoder">YES</bool>
+              <reference ref="376376306"/>
+            </object>
+            <reference key="parent" ref="680559639"/>
+          </object>
+          <object class="IBObjectRecord">
+            <int key="objectID">2320</int>
+            <reference key="object" ref="376376306"/>
+            <reference key="parent" ref="986490516"/>
+          </object>
         </object>
       </object>
       <object class="NSMutableDictionary" key="flattenedProperties">
@@ -4535,6 +4648,7 @@
           <string>1276.CustomClassName</string>
           <string>1276.IBAttributePlaceholdersKey</string>
           <string>1276.IBPluginDependency</string>
+          <string>1276.IBViewBoundsToFrameTransform</string>
           <string>1276.ImportedFromIB2</string>
           <string>1277.IBPluginDependency</string>
           <string>1277.ImportedFromIB2</string>
@@ -4598,6 +4712,15 @@
           <string>2205.IBPluginDependency</string>
           <string>2312.IBViewBoundsToFrameTransform</string>
           <string>2314.IBViewBoundsToFrameTransform</string>
+          <string>2316.IBPluginDependency</string>
+          <string>2316.IBViewBoundsToFrameTransform</string>
+          <string>2317.IBPluginDependency</string>
+          <string>2319.CustomClassName</string>
+          <string>2319.IBAttributePlaceholdersKey</string>
+          <string>2319.IBPluginDependency</string>
+          <string>2319.IBViewBoundsToFrameTransform</string>
+          <string>2319.ImportedFromIB2</string>
+          <string>2320.IBPluginDependency</string>
           <string>340.IBEditorWindowLastContentRect</string>
           <string>340.IBPluginDependency</string>
           <string>340.ImportedFromIB2</string>
@@ -4728,6 +4851,9 @@
             </object>
           </object>
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+          <object class="NSAffineTransform">
+            <bytes key="NSTransformStruct">AUHAAABAgAAAA</bytes>
+          </object>
           <integer value="1"/>
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
           <integer value="1"/>
@@ -4805,6 +4931,25 @@
           <object class="NSAffineTransform">
             <bytes key="NSTransformStruct">AcGgAADBoAAAA</bytes>
           </object>
+          <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+          <object class="NSAffineTransform">
+            <bytes key="NSTransformStruct">P4AAAL+AAABDxYAAwZgAAA</bytes>
+          </object>
+          <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+          <string>MDStatusImageView</string>
+          <object class="NSMutableDictionary">
+            <bool key="EncodedWithXMLCoder">YES</bool>
+            <reference key="dict.sortedKeys" ref="0"/>
+            <object class="NSMutableArray" key="dict.values">
+              <bool key="EncodedWithXMLCoder">YES</bool>
+            </object>
+          </object>
+          <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+          <object class="NSAffineTransform">
+            <bytes key="NSTransformStruct">AUIgAABAgAAAA</bytes>
+          </object>
+          <integer value="1"/>
+          <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
           <string>{{551, 642}, {196, 83}}</string>
           <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
           <integer value="1"/>
@@ -4925,7 +5070,7 @@
         </object>
       </object>
       <nil key="sourceID"/>
-      <int key="maxID">2315</int>
+      <int key="maxID">2322</int>
     </object>
     <object class="IBClassDescriber" key="IBDocument.Classes">
       <object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5225,6 +5370,7 @@
               <string>browserSelect:</string>
               <string>find:</string>
               <string>findAdvanced:</string>
+              <string>installSourceAddon:</string>
               <string>revealInFinder:</string>
               <string>revealParentInFinder:</string>
               <string>search:</string>
@@ -5245,6 +5391,7 @@
               <string>id</string>
               <string>id</string>
               <string>id</string>
+              <string>id</string>
             </object>
           </object>
           <object class="NSMutableDictionary" key="actionInfosByName">
@@ -5254,6 +5401,7 @@
               <string>browserSelect:</string>
               <string>find:</string>
               <string>findAdvanced:</string>
+              <string>installSourceAddon:</string>
               <string>revealInFinder:</string>
               <string>revealParentInFinder:</string>
               <string>search:</string>
@@ -5274,6 +5422,10 @@
               </object>
               <object class="IBActionInfo">
                 <string key="name">findAdvanced:</string>
+                <string key="candidateClassName">id</string>
+              </object>
+              <object class="IBActionInfo">
+                <string key="name">installSourceAddon:</string>
                 <string key="candidateClassName">id</string>
               </object>
               <object class="IBActionInfo">
@@ -5321,6 +5473,7 @@
               <string>browserMenuShowViewOptionsMenuItem</string>
               <string>browserView</string>
               <string>hlWindow</string>
+              <string>installSourceAddonButton</string>
               <string>mainBox</string>
               <string>nameColumn</string>
               <string>outlineView</string>
@@ -5341,6 +5494,7 @@
               <string>searchToolbarItem</string>
               <string>statusImageView1</string>
               <string>statusImageView2</string>
+              <string>statusImageView3</string>
               <string>viewSwitcherControl</string>
             </object>
             <object class="NSMutableArray" key="dict.values">
@@ -5356,6 +5510,7 @@
               <string>NSMenuItem</string>
               <string>MDMetalBevelView</string>
               <string>NSWindow</string>
+              <string>NSButton</string>
               <string>NSBox</string>
               <string>NSTableColumn</string>
               <string>MDOutlineView</string>
@@ -5376,6 +5531,7 @@
               <string>NSToolbarItem</string>
               <string>MDStatusImageView</string>
               <string>MDStatusImageView</string>
+              <string>MDStatusImageView</string>
               <string>NSSegmentedControl</string>
             </object>
           </object>
@@ -5394,6 +5550,7 @@
               <string>browserMenuShowViewOptionsMenuItem</string>
               <string>browserView</string>
               <string>hlWindow</string>
+              <string>installSourceAddonButton</string>
               <string>mainBox</string>
               <string>nameColumn</string>
               <string>outlineView</string>
@@ -5414,6 +5571,7 @@
               <string>searchToolbarItem</string>
               <string>statusImageView1</string>
               <string>statusImageView2</string>
+              <string>statusImageView3</string>
               <string>viewSwitcherControl</string>
             </object>
             <object class="NSMutableArray" key="dict.values">
@@ -5461,6 +5619,10 @@
               <object class="IBToOneOutletInfo">
                 <string key="name">hlWindow</string>
                 <string key="candidateClassName">NSWindow</string>
+              </object>
+              <object class="IBToOneOutletInfo">
+                <string key="name">installSourceAddonButton</string>
+                <string key="candidateClassName">NSButton</string>
               </object>
               <object class="IBToOneOutletInfo">
                 <string key="name">mainBox</string>
@@ -5540,6 +5702,10 @@
               </object>
               <object class="IBToOneOutletInfo">
                 <string key="name">statusImageView2</string>
+                <string key="candidateClassName">MDStatusImageView</string>
+              </object>
+              <object class="IBToOneOutletInfo">
+                <string key="name">statusImageView3</string>
                 <string key="candidateClassName">MDStatusImageView</string>
               </object>
               <object class="IBToOneOutletInfo">
@@ -6774,7 +6940,7 @@
       <integer value="3000" key="NS.object.0"/>
     </object>
     <bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-    <string key="IBDocument.LastKnownRelativeProjectPath">../Source Finagler.xcodeproj</string>
+    <string key="IBDocument.LastKnownRelativeProjectPath">../../Source Finagler.xcodeproj</string>
     <int key="IBDocument.defaultPropertyAccessControl">3</int>
     <object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
       <bool key="EncodedWithXMLCoder">YES</bool>
@@ -6790,6 +6956,7 @@
         <string>NSToolbarCustomize</string>
         <string>fileIndicator</string>
         <string>readOnlyIndicator</string>
+        <string>sourceAddonIndicator</string>
       </object>
       <object class="NSMutableArray" key="dict.values">
         <bool key="EncodedWithXMLCoder">YES</bool>
@@ -6801,6 +6968,7 @@
         <string>{10, 3}</string>
         <string>{21, 16}</string>
         <string>{32, 32}</string>
+        <string>{16, 16}</string>
         <string>{16, 16}</string>
         <string>{16, 16}</string>
       </object>

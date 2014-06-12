@@ -9,8 +9,21 @@
 #import "MDHLDocument.h"
 
 
-@interface MDVPKDocument : MDHLDocument {
+@class MDVPKViewController;
 
+
+@interface MDVPKDocument : MDHLDocument {
+	MDVPKViewController		*viewController;
+	
+	NSToolTipTag			statusImageViewTag3;
+	
 }
 
+@property (nonatomic, retain) MDVPKViewController *viewController;
+
+
+- (IBAction)openDirectoryFile:(id)sender;
+
+
 @end
+

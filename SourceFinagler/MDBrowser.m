@@ -11,9 +11,11 @@
 #import "MDBrowser.h"
 #import "MDBrowserCell.h"
 #import "MDHLDocument.h"
+#import "MDUserDefaults.h"
 
-#pragma mark view
-#define MD_DEBUG 0
+
+
+static NSString * const MDFinderBundleIdentifierKey				= @"com.apple.finder";
 
 
 NSString * const MDBrowserSelectionDidChangeNotification		= @"MDBrowserSelectionDidChange";
@@ -51,12 +53,57 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 
 @interface MDBrowser (MDPrivate)
 - (void)calculateRowHeight;
+- (void)finishSetup;
 @end
+
+
+
+#pragma mark view
+#define MD_DEBUG 0
+
+
+
+#define MD_DEFAULT_BROWSER_FONT_AND_ICON_SIZE 13
+
 
 
 @implementation MDBrowser
 
-@synthesize sortDescriptors, shouldShowIcons, shouldShowPreview;
+
+@synthesize sortDescriptors;
+@synthesize shouldShowIcons;
+@synthesize shouldShowPreview;
+
+
++ (void)initialize {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	
+	static BOOL initialized = NO;
+	
+	if (initialized == NO) {
+		NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+		
+		NSNumber *finderColumnViewFontAndIconSize = [[[[MDUserDefaults standardUserDefaults] objectForKey:@"StandardViewOptions" forAppIdentifier:MDFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ColumnViewOptions"] objectForKey:@"FontSize"];
+		
+		if (finderColumnViewFontAndIconSize) {
+			[defaults setObject:finderColumnViewFontAndIconSize forKey:MDBrowserFontAndIconSizeKey];
+		} else {
+			[defaults setObject:[NSNumber numberWithInteger:MD_DEFAULT_BROWSER_FONT_AND_ICON_SIZE] forKey:MDBrowserFontAndIconSizeKey];
+		}
+		
+		[defaults setObject:[NSNumber numberWithBool:YES] forKey:MDBrowserShouldShowIconsKey];
+		[defaults setObject:[NSNumber numberWithBool:YES] forKey:MDBrowserShouldShowPreviewKey];
+		
+		[defaults setObject:[NSNumber numberWithInteger:MDBrowserSortByName] forKey:MDBrowserSortByKey];
+		
+		[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+		[[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaults];
+		
+		initialized = YES;
+	}
+}
 
 
 - (id)initWithFrame:(NSRect)frameRect {
@@ -64,11 +111,7 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super initWithFrame:frameRect])) {
-		fontAndIconSize = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserFontAndIconSizeKey] intValue];
-		shouldShowIcons = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserShouldShowIconsKey] boolValue];
-		shouldShowPreview = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserShouldShowPreviewKey] boolValue];
-		NSInteger sortByOption = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserSortByKey] intValue];
-		[self setSortDescriptors:MDSortDescriptorsFromSortOption(sortByOption)];
+		[self finishSetup];
 	}
 	return self;
 }
@@ -80,14 +123,20 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 #endif
 	
 	if ((self = [super initWithCoder:coder])) {
-		fontAndIconSize = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserFontAndIconSizeKey] intValue];
-		shouldShowIcons = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserShouldShowIconsKey] boolValue];
-		shouldShowPreview = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserShouldShowPreviewKey] boolValue];
-		NSInteger sortByOption = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserSortByKey] intValue];
-		[self setSortDescriptors:MDSortDescriptorsFromSortOption(sortByOption)];
+		[self finishSetup];
 	}
 	return self;
 }
+
+
+- (void)finishSetup {
+	fontAndIconSize = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserFontAndIconSizeKey] intValue];
+	shouldShowIcons = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserShouldShowIconsKey] boolValue];
+	shouldShowPreview = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserShouldShowPreviewKey] boolValue];
+	NSInteger sortByOption = [[[NSUserDefaults standardUserDefaults] objectForKey:MDBrowserSortByKey] intValue];
+	[self setSortDescriptors:MDSortDescriptorsFromSortOption(sortByOption)];
+}
+
 
 
 - (void)dealloc {

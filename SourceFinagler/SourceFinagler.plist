@@ -106,11 +106,11 @@
 			<key>CFBundleTypeIconFile</key>
 			<string>VPK</string>
 			<key>CFBundleTypeName</key>
-			<string>Source Addon file</string>
+			<string>Source Valve Package file</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
-			<string>Default</string>
+			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.valvesoftware.source.vpk</string>
@@ -841,7 +841,7 @@
 				<string>public.archive </string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Source Addon file</string>
+			<string>Source Valve Package file</string>
 			<key>UTTypeIconFile</key>
 			<string>VPK</string>
 			<key>UTTypeIdentifier</key>

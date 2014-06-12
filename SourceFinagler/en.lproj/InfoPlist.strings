@@ -4,7 +4,7 @@
 com.valvesoftware.source.vtf = "Source VTF Image";
 com.microsoft.dds = "Microsoft DDS Image";
 com.valvesoftware.source.gcf = "Steam Cache file";
-com.valvesoftware.source.vpk = "Source Addon file";
+com.valvesoftware.source.vpk = "Source Valve Package file";
 com.valvesoftware.source.ncf = "Steam Non-Cache file";
 com.valvesoftware.source.bsp = "Source Level";
 com.valvesoftware.source.pak = "Source Package file";

@@ -83,6 +83,8 @@
 		C11B0BB118D4C767005B52C1 /* TKPrivateCPPInterfaces.h in Headers */ = {isa = PBXBuildFile; fileRef = C11B0BB018D4C6C2005B52C1 /* TKPrivateCPPInterfaces.h */; };
 		C11CA5E713A4E84D006CC348 /* MDCopyOperationSeparatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = C11CA5E613A4E84D006CC348 /* MDCopyOperationSeparatorView.m */; };
 		C11CA69813A4F9FB006CC348 /* MDCopyOperationContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = C11CA69713A4F9FB006CC348 /* MDCopyOperationContentView.m */; };
+		C121966C18846A1B0073AC8F /* MDHLDocumentSnowLeopard.xib in Resources */ = {isa = PBXBuildFile; fileRef = C121966918846A1B0073AC8F /* MDHLDocumentSnowLeopard.xib */; };
+		C121966F188471C80073AC8F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C121966D188471C80073AC8F /* InfoPlist.strings */; };
 		C1224C2D13B06C95009AA0F4 /* SteamKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C140E63D13889A9400027DD6 /* SteamKit.framework */; };
 		C1224C4513B06CA6009AA0F4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA27D913A2E1F900235C98 /* Cocoa.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1224C5B13B06CE7009AA0F4 /* SourceFinaglerAgentMain.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C9AE21139A70E600C32D8A /* SourceFinaglerAgentMain.m */; };
@@ -150,6 +152,9 @@
 		C135198B13947C730074B5EA /* LGPL.txt in Resources */ = {isa = PBXBuildFile; fileRef = C135198813947C190074B5EA /* LGPL.txt */; };
 		C13519A113947CB00074B5EA /* LGPL.txt in Resources */ = {isa = PBXBuildFile; fileRef = C135199F13947CA40074B5EA /* LGPL.txt */; };
 		C13519A213947CB10074B5EA /* Readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = C13519A013947CA40074B5EA /* Readme.txt */; };
+		C136D57319391C5000D4B93C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C14A17C9186CB6580026FD0C /* Localizable.strings */; };
+		C13757DB185BCD6A00CDDC95 /* MDVPKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C13757D9185BCD6A00CDDC95 /* MDVPKViewController.m */; };
+		C13757DD185BCD9B00CDDC95 /* MDVPKViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C13757DF185BCD9B00CDDC95 /* MDVPKViewController.xib */; };
 		C138042218BC18960098AD2D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C138042018BC18960098AD2D /* Localizable.strings */; };
 		C139541618FCBB2500DC70DA /* nvconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FEA94B125E73B700CA78FF /* nvconfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C13B4E741620EFBD00D07CB3 /* TKImageRepAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C13B4E731620EF5200D07CB3 /* TKImageRepAdditions.m */; };
@@ -204,6 +209,7 @@
 		C1614336139973D80042B91B /* HLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1580F10139634DA00D5D4D8 /* HLKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C16143CA1399975C0042B91B /* HKFileAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F153C71396699600E32057 /* HKFileAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C16143D11399975C0042B91B /* HKFileAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F153C81396699600E32057 /* HKFileAdditions.m */; };
+		C1622E2C1888777D00723096 /* sourceAddonIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = C1622E2B1888777C00723096 /* sourceAddonIndicator.png */; };
 		C168E8F01947AF7900818540 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C168E8EE1947AF7900818540 /* Localizable.strings */; };
 		C16A68F41600B62B0038A8B1 /* HLKitDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = C16A68F21600B6170038A8B1 /* HLKitDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C16A68F51600B62C0038A8B1 /* HLKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C16A68F11600B6170038A8B1 /* HLKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -270,7 +276,6 @@
 		C191BB1818C7A5CE00CEE633 /* CubeSurface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C191BAD518C7A16D00CEE633 /* CubeSurface.cpp */; };
 		C191BB1918C7AE6000CEE633 /* Hash.h in Headers */ = {isa = PBXBuildFile; fileRef = C191BA8518C79BDD00CEE633 /* Hash.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C19D4B5718EB3E180061587F /* viewFaceBrowserCapsuleStyle.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C19D4B5618EB3E180061587F /* viewFaceBrowserCapsuleStyle.pdf */; };
-		C1AF8A8512CE653F00027B75 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1C12548123A0EC6004674B4 /* Localizable.strings */; };
 		C1B95374124E73EC00E83451 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1B95340124E73EC00E83451 /* Error.cpp */; };
 		C1B95375124E73EC00E83451 /* Error.h in Headers */ = {isa = PBXBuildFile; fileRef = C1B95341124E73EC00E83451 /* Error.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1B95376124E73EC00E83451 /* FileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1B95342124E73EC00E83451 /* FileReader.cpp */; };
@@ -395,7 +400,6 @@
 		C1C12752123A97FB004674B4 /* NullStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1C12744123A97FB004674B4 /* NullStream.cpp */; };
 		C1C12753123A97FB004674B4 /* ProcStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C1C12745123A97FB004674B4 /* ProcStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1C12754123A97FB004674B4 /* ProcStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1C12746123A97FB004674B4 /* ProcStream.cpp */; };
-		C1C2C4E3127CBCA0003B24F6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		C1C2C4E4127CBCA0003B24F6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		C1C2C4E5127CBCA0003B24F6 /* config.icns in Resources */ = {isa = PBXBuildFile; fileRef = C1A15A7211C48F87008E5361 /* config.icns */; };
 		C1C2C4E6127CBCA0003B24F6 /* MDSteamAppsRelocatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C13E77DD11C805D900B10F3C /* MDSteamAppsRelocatorView.xib */; };
@@ -429,7 +433,6 @@
 		C1C2C503127CBCA0003B24F6 /* MDCopyOperationWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1C124AB123A0A0C004674B4 /* MDCopyOperationWindow.xib */; };
 		C1C2C504127CBCA0003B24F6 /* MDHLColumnPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1C124AD123A0A0C004674B4 /* MDHLColumnPreviewView.xib */; };
 		C1C2C505127CBCA0003B24F6 /* MDHLDocumentLeopard.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1C124B1123A0A0C004674B4 /* MDHLDocumentLeopard.xib */; };
-		C1C2C506127CBCA0003B24F6 /* MDHLDocumentSnowLeopard.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1C124B3123A0A0C004674B4 /* MDHLDocumentSnowLeopard.xib */; };
 		C1C2C507127CBCA0003B24F6 /* MDInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1C124B5123A0A0C004674B4 /* MDInspector.xib */; };
 		C1C2C508127CBCA0003B24F6 /* MDQuickLook.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1C124B7123A0A0C004674B4 /* MDQuickLook.xib */; };
 		C1C2C509127CBCA0003B24F6 /* MDViewOptions.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1C124B9123A0A0C004674B4 /* MDViewOptions.xib */; };
@@ -945,7 +948,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		256AC3D80F4B6AC300CF3369 /* MDAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MDAppController.h; path = SourceFinagler/MDAppController.h; sourceTree = "<group>"; };
 		256AC3D90F4B6AC300CF3369 /* MDAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MDAppController.m; path = SourceFinagler/MDAppController.m; sourceTree = "<group>"; };
@@ -992,6 +994,8 @@
 		C11D81221948C4BF003EDCC8 /* addoninfo.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = addoninfo.txt; path = SteamKit/addoninfo.txt; sourceTree = "<group>"; };
 		C120D7BF18FF174800D62C41 /* TKError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TKError.h; path = TextureKit/TKError.h; sourceTree = "<group>"; };
 		C120D7C018FF174800D62C41 /* TKError.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TKError.m; path = TextureKit/TKError.m; sourceTree = "<group>"; };
+		C121966A18846A1B0073AC8F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDHLDocumentSnowLeopard.xib; sourceTree = "<group>"; };
+		C121966E188471C80073AC8F /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = SourceFinagler/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C1224BEC13B06B9A009AA0F4 /* SourceFinaglerAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SourceFinaglerAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1267035125D1A0B00725F14 /* VAS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VAS.icns; path = Resources/VAS.icns; sourceTree = "<group>"; };
 		C126830718C3B4FE00BAB3E2 /* TGA_32_uncompressed.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = TGA_32_uncompressed.tga; sourceTree = "<group>"; };
@@ -1037,6 +1041,9 @@
 		C135198813947C190074B5EA /* LGPL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LGPL.txt; path = VTF/LGPL.txt; sourceTree = "<group>"; };
 		C135199F13947CA40074B5EA /* LGPL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LGPL.txt; path = HL/LGPL.txt; sourceTree = "<group>"; };
 		C13519A013947CA40074B5EA /* Readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Readme.txt; path = HL/Readme.txt; sourceTree = "<group>"; };
+		C13757D8185BCD6A00CDDC95 /* MDVPKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDVPKViewController.h; path = SourceFinagler/MDVPKViewController.h; sourceTree = "<group>"; };
+		C13757D9185BCD6A00CDDC95 /* MDVPKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDVPKViewController.m; path = SourceFinagler/MDVPKViewController.m; sourceTree = "<group>"; };
+		C13757DE185BCD9B00CDDC95 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MDVPKViewController.xib; sourceTree = "<group>"; };
 		C138042118BC18960098AD2D /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = TextureKit/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C139C68E137CCEBB00DDA21B /* hl2_osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper; name = hl2_osx.app; path = SteamKit/hl2_osx.app; sourceTree = "<group>"; };
 		C13B4E721620EF5200D07CB3 /* TKImageRepAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TKImageRepAdditions.h; path = TextureFinagler/TKImageRepAdditions.h; sourceTree = "<group>"; };
@@ -1067,6 +1074,7 @@
 		C145E9691248DD3D00AF2D35 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		C145EDC51268D7BA00C34A08 /* DDS.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = DDS.icns; path = Resources/DDS.icns; sourceTree = "<group>"; };
 		C1492DF1186B61E800A3E6B2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/VSSourceAddonFinaglerMainMenu.xib; sourceTree = "<group>"; };
+		C14A17C8186CB6580026FD0C /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C14C0CC0186B915D0060623C /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C14CAABA1275E80100BD0CCA /* dxtlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dxtlib.h; path = NVTextureTools/dxtlib.h; sourceTree = "<group>"; };
 		C14CAAF51275E90F00BD0CCA /* ConvertColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConvertColor.h; path = NVTextureTools/dds/ConvertColor.h; sourceTree = "<group>"; };
@@ -1134,6 +1142,7 @@
 		C15DD21012697F0B00E44BDB /* LMP.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = LMP.icns; path = Resources/LMP.icns; sourceTree = "<group>"; };
 		C15DD47B126AB93000E44BDB /* NUT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = NUT.icns; path = Resources/NUT.icns; sourceTree = "<group>"; };
 		C15DD47C126AB93000E44BDB /* NUC.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = NUC.icns; path = Resources/NUC.icns; sourceTree = "<group>"; };
+		C1622E2B1888777C00723096 /* sourceAddonIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sourceAddonIndicator.png; path = Resources/sourceAddonIndicator.png; sourceTree = "<group>"; };
 		C16476EA124E896A0062B943 /* sound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sound.png; path = Resources/sound.png; sourceTree = "<group>"; };
 		C16476F3124E8BA30062B943 /* overlayPlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = overlayPlay.png; path = Resources/overlayPlay.png; sourceTree = "<group>"; };
 		C16476F5124E8BA30062B943 /* overlayStop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = overlayStop.png; path = Resources/overlayStop.png; sourceTree = "<group>"; };
@@ -1351,8 +1360,7 @@
 		C1C124AA123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDCopyOperationView.xib; sourceTree = "<group>"; };
 		C1C124AC123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDCopyOperationWindow.xib; sourceTree = "<group>"; };
 		C1C124AE123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDHLColumnPreviewView.xib; sourceTree = "<group>"; };
-		C1C124B2123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDHLDocumentLeopard.xib; sourceTree = "<group>"; };
-		C1C124B4123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDHLDocumentSnowLeopard.xib; sourceTree = "<group>"; };
+		C1C124B2123A0A0C004674B4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDHLDocumentLeopard.xib; sourceTree = "<group>"; };
 		C1C124B6123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDInspector.xib; sourceTree = "<group>"; };
 		C1C124B8123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDQuickLook.xib; sourceTree = "<group>"; };
 		C1C124BA123A0A0C004674B4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MDViewOptions.xib; sourceTree = "<group>"; };
@@ -1401,7 +1409,6 @@
 		C1C12525123A0C81004674B4 /* MDAboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDAboutWindowController.h; path = SourceFinagler/MDAboutWindowController.h; sourceTree = "<group>"; };
 		C1C12526123A0C81004674B4 /* MDAboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDAboutWindowController.m; path = SourceFinagler/MDAboutWindowController.m; sourceTree = "<group>"; };
 		C1C1252B123A0CAE004674B4 /* Source Finagler.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.sdef; name = "Source Finagler.sdef"; path = "SourceFinagler/Source Finagler.sdef"; sourceTree = "<group>"; };
-		C1C12549123A0EC6004674B4 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C1C12634123A54F0004674B4 /* HL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C126A9123A7FC3004674B4 /* MDGCFDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MDGCFDocument.h; path = SourceFinagler/MDGCFDocument.h; sourceTree = "<group>"; };
 		C1C126AA123A7FC3004674B4 /* MDGCFDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MDGCFDocument.m; path = SourceFinagler/MDGCFDocument.m; sourceTree = "<group>"; };
@@ -1868,7 +1875,7 @@
 				256AC3D80F4B6AC300CF3369 /* MDAppController.h */,
 				256AC3D90F4B6AC300CF3369 /* MDAppController.m */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
-				C1C12548123A0EC6004674B4 /* Localizable.strings */,
+				C14A17C9186CB6580026FD0C /* Localizable.strings */,
 				C11DFB5B18A6C1F7003F3AA5 /* Source Finagler */,
 				C101A6D21252817100BD8091 /* Image Finagler */,
 				C1C1243F1239F3DD004674B4 /* GCF Finagler */,
@@ -1969,7 +1976,7 @@
 				C132DF73124D521B00A8DE04 /* LGPL.rtf */,
 				C1C1252B123A0CAE004674B4 /* Source Finagler.sdef */,
 				8D1107310486CEB800E47090 /* SourceFinagler.plist */,
-				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				C121966D188471C80073AC8F /* InfoPlist.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -2200,6 +2207,16 @@
 				C13B4E731620EF5200D07CB3 /* TKImageRepAdditions.m */,
 			);
 			name = "TK Application stuff";
+			sourceTree = "<group>";
+		};
+		C13757D7185BCCAB00CDDC95 /* MDVPKViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C13757D8185BCD6A00CDDC95 /* MDVPKViewController.h */,
+				C13757D9185BCD6A00CDDC95 /* MDVPKViewController.m */,
+				C13757DF185BCD9B00CDDC95 /* MDVPKViewController.xib */,
+			);
+			name = MDVPKViewController;
 			sourceTree = "<group>";
 		};
 		C13C124818E1DBDB00164BA2 /* Compressors */ = {
@@ -2672,7 +2689,7 @@
 				C1C1269E123A7D6B004674B4 /* Abstract superclass */,
 				C1C1269F123A7D76004674B4 /* Concrete subclasses */,
 				C1C124B1123A0A0C004674B4 /* MDHLDocumentLeopard.xib */,
-				C1C124B3123A0A0C004674B4 /* MDHLDocumentSnowLeopard.xib */,
+				C121966918846A1B0073AC8F /* MDHLDocumentSnowLeopard.xib */,
 				C1C124D3123A0A7C004674B4 /* Views */,
 				C1C12512123A0BEA004674B4 /* MDCopyOperation */,
 				C129D5711255C7CB004C6EDA /* MDPreviewViewController */,
@@ -2756,6 +2773,7 @@
 			children = (
 				C1C1246C123A0840004674B4 /* fileIndicator.png */,
 				C1C12477123A0840004674B4 /* readOnlyIndicator.png */,
+				C1622E2B1888777C00723096 /* sourceAddonIndicator.png */,
 			);
 			name = "status indicator images";
 			sourceTree = "<group>";
@@ -2969,6 +2987,7 @@
 				C1BEA1FB161B781900464170 /* MDSGADocument.m */,
 				C1C126BE123A8155004674B4 /* MDVPKDocument.h */,
 				C1C126BF123A8155004674B4 /* MDVPKDocument.m */,
+				C13757D7185BCCAB00CDDC95 /* MDVPKViewController */,
 				C1C126C2123A8217004674B4 /* MDWADDocument.h */,
 				C1C126C3123A8217004674B4 /* MDWADDocument.m */,
 				C1C126C6123A8250004674B4 /* MDXZPDocument.h */,
@@ -4202,8 +4221,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1C2C4E3127CBCA0003B24F6 /* InfoPlist.strings in Resources */,
 				C1C2C4E4127CBCA0003B24F6 /* MainMenu.xib in Resources */,
+				C121966F188471C80073AC8F /* InfoPlist.strings in Resources */,
 				C1C2C4E5127CBCA0003B24F6 /* config.icns in Resources */,
 				C1C2C4E6127CBCA0003B24F6 /* MDSteamAppsRelocatorView.xib in Resources */,
 				C1C2C4E7127CBCA0003B24F6 /* MDOtherAppsHelperView.xib in Resources */,
@@ -4236,10 +4255,11 @@
 				C1C2C503127CBCA0003B24F6 /* MDCopyOperationWindow.xib in Resources */,
 				C1C2C504127CBCA0003B24F6 /* MDHLColumnPreviewView.xib in Resources */,
 				C1C2C505127CBCA0003B24F6 /* MDHLDocumentLeopard.xib in Resources */,
-				C1C2C506127CBCA0003B24F6 /* MDHLDocumentSnowLeopard.xib in Resources */,
 				C1C2C507127CBCA0003B24F6 /* MDInspector.xib in Resources */,
+				C1622E2C1888777D00723096 /* sourceAddonIndicator.png in Resources */,
 				C1C2C508127CBCA0003B24F6 /* MDQuickLook.xib in Resources */,
 				C1C2C509127CBCA0003B24F6 /* MDViewOptions.xib in Resources */,
+				C121966C18846A1B0073AC8F /* MDHLDocumentSnowLeopard.xib in Resources */,
 				C1C2C50A127CBCA0003B24F6 /* Source Finagler.sdef in Resources */,
 				C1C2C50C127CBCA0003B24F6 /* VTF.icns in Resources */,
 				C1C2C50D127CBCA0003B24F6 /* VMT.icns in Resources */,
@@ -4286,11 +4306,12 @@
 				C1C2C542127CBCA0003B24F6 /* VTA.icns in Resources */,
 				C15590CA12B6E04200FD0684 /* SFTI.icns in Resources */,
 				C1E6DFB012BCEF08009D8AD6 /* MENU.icns in Resources */,
+				C136D57319391C5000D4B93C /* Localizable.strings in Resources */,
 				C115A09C18F9AA0400D11686 /* overlayStop.png in Resources */,
 				C1E6DFB112BCEF08009D8AD6 /* STYLES.icns in Resources */,
 				C1E6DFB212BCEF08009D8AD6 /* LAYOUT.icns in Resources */,
 				C1E6DFB512BCFB27009D8AD6 /* INSTALLED.icns in Resources */,
-				C1AF8A8512CE653F00027B75 /* Localizable.strings in Resources */,
+				C13757DD185BCD9B00CDDC95 /* MDVPKViewController.xib in Resources */,
 				C116FA0412D5549700551787 /* TKImageDocumentAccessoryView.xib in Resources */,
 				C12F362312D7E45100D28F26 /* TKImageDocument.xib in Resources */,
 				C12F362612D7E45800D28F26 /* zoomToFit.png in Resources */,
@@ -4559,6 +4580,7 @@
 				C1C2C56F127CBCA0003B24F6 /* MDCopyOperation.m in Sources */,
 				C1C2C570127CBCA0003B24F6 /* MDCopyOperationView.m in Sources */,
 				C1C2C571127CBCA0003B24F6 /* MDRolloverButton.m in Sources */,
+				C13757DB185BCD6A00CDDC95 /* MDVPKViewController.m in Sources */,
 				C1C2C572127CBCA0003B24F6 /* MDAboutWindowController.m in Sources */,
 				C1C2C574127CBCA0003B24F6 /* MDGCFDocument.m in Sources */,
 				C108FAFA18A45A1E00ACA1F3 /* MDPreviewInspectorView.m in Sources */,
@@ -4872,14 +4894,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				089C165DFE840E0CC02AAC07 /* English */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		1DDD58140DA1D0A300B32029 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -4896,12 +4910,37 @@
 			name = TKImageDocument.xib;
 			sourceTree = "<group>";
 		};
+		C121966918846A1B0073AC8F /* MDHLDocumentSnowLeopard.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C121966A18846A1B0073AC8F /* en */,
+			);
+			name = MDHLDocumentSnowLeopard.xib;
+			sourceTree = "<group>";
+		};
+		C121966D188471C80073AC8F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C121966E188471C80073AC8F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		C12823CA1880219400452421 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C12823CB1880219400452421 /* en */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		C13757DF185BCD9B00CDDC95 /* MDVPKViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C13757DE185BCD9B00CDDC95 /* en */,
+			);
+			name = MDVPKViewController.xib;
+			path = SourceFinagler;
 			sourceTree = "<group>";
 		};
 		C138042018BC18960098AD2D /* Localizable.strings */ = {
@@ -4943,6 +4982,15 @@
 			);
 			name = VSSourceAddonFinaglerMainMenu.xib;
 			path = SourceAddonFinagler;
+			sourceTree = "<group>";
+		};
+		C14A17C9186CB6580026FD0C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C14A17C8186CB6580026FD0C /* en */,
+			);
+			name = Localizable.strings;
+			path = SourceFinagler;
 			sourceTree = "<group>";
 		};
 		C14C0CC1186B915D0060623C /* Localizable.strings */ = {
@@ -5037,17 +5085,9 @@
 		C1C124B1123A0A0C004674B4 /* MDHLDocumentLeopard.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C1C124B2123A0A0C004674B4 /* English */,
+				C1C124B2123A0A0C004674B4 /* en */,
 			);
 			name = MDHLDocumentLeopard.xib;
-			sourceTree = "<group>";
-		};
-		C1C124B3123A0A0C004674B4 /* MDHLDocumentSnowLeopard.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C1C124B4123A0A0C004674B4 /* English */,
-			);
-			name = MDHLDocumentSnowLeopard.xib;
 			sourceTree = "<group>";
 		};
 		C1C124B5123A0A0C004674B4 /* MDInspector.xib */ = {

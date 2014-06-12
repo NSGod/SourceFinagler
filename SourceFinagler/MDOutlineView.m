@@ -9,6 +9,11 @@
 #import "MDOutlineView.h"
 #import "MDHLDocument.h"
 #import "MDFileSizeFormatter.h"
+#import "MDUserDefaults.h"
+
+
+
+static NSString * const MDFinderBundleIdentifierKey					= @"com.apple.finder";
 
 
 NSString * const MDShouldShowKindColumnKey							= @"MDShouldShowKindColumn";
@@ -17,27 +22,77 @@ NSString * const MDShouldShowSizeColumnKey							= @"MDShouldShowSizeColumn";
 NSString * const MDListViewIconSizeKey								= @"MDListViewIconSize";
 NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 
-#define MD_DEBUG 0
+
 
 @interface MDOutlineView (MDPrivate)
 - (void)calculateRowHeight;
 @end
 
+
+#define MD_DEBUG 0
+#define MD_DEBUG_TABLE_COLUMNS 1
+
+
+#define MD_DEFAULT_FONT_SIZE 12
+#define MD_DEFAULT_ICON_SIZE 16
+
+
+
 @implementation MDOutlineView
 
 
-- (id)init {
-	if ((self = [super init])) {
-
++ (void)initialize {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	
+	@synchronized(self) {
+		static BOOL initialized = NO;
+		
+		if (initialized == NO) {
+			
+			NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+			[defaults setObject:[NSNumber numberWithBool:YES] forKey:MDShouldShowKindColumnKey];
+			[defaults setObject:[NSNumber numberWithBool:YES] forKey:MDShouldShowSizeColumnKey];
+			
+			MDUserDefaults *userDefaults = [MDUserDefaults standardUserDefaults];
+			
+			NSNumber *finderListViewFontSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:MDFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ListViewOptions"] objectForKey:@"FontSize"];
+			NSNumber *finderListViewIconSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:MDFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ListViewOptions"] objectForKey:@"IconSize"];
+			
+			if (finderListViewFontSize) {
+				[defaults setObject:finderListViewFontSize forKey:MDListViewFontSizeKey];
+			} else {
+				[defaults setObject:[NSNumber numberWithInteger:MD_DEFAULT_FONT_SIZE] forKey:MDListViewFontSizeKey];
+			}
+			
+			if (finderListViewIconSize) {
+				[defaults setObject:finderListViewIconSize forKey:MDListViewIconSizeKey];
+			} else {
+				[defaults setObject:[NSNumber numberWithInteger:MD_DEFAULT_ICON_SIZE] forKey:MDListViewIconSizeKey];
+			}
+			
+			[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+			[[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaults];
+			
+			initialized = YES;
+		}
 	}
-	return self;
 }
 
 
 - (void)dealloc {
 #if MD_DEBUG
-	NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
+	
+#if MD_DEBUG_TABLE_COLUMNS
+	NSArray *tableColumns = self.tableColumns;
+	NSArray *sortDescriptors = self.sortDescriptors;
+	NSLog(@"[%@ %@] (CLOSING) tableColumns == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), tableColumns);
+	NSLog(@"[%@ %@] (CLOSING) sortDescriptors == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sortDescriptors);
+#endif
+	
 	[kindColumn release];
 	[sizeColumn release];
 	
@@ -51,10 +106,33 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 
 
 - (void)awakeFromNib {
-	
+#if MD_DEBUG
+//    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+
 	[[sizeColumn dataCell] setFormatter:[[[MDFileSizeFormatter alloc] initWithUnitsType:MDFileSizeFormatterAutomaticUnitsType
 																				  style:MDFileSizeFormatterPhysicalStyle] autorelease]];
 	
+	/* The following code is a hack to workaround a bug (or at least what seems to be a bug to me)
+	 in OS X 10.9 that causes outline view columns to be restored in incorrect order. */
+
+	NSArray *tableColumns = self.tableColumns;
+	NSArray *sortDescriptors = self.sortDescriptors;
+	
+#if MD_DEBUG_TABLE_COLUMNS
+	NSLog(@"[%@ %@] (OPENING) tableColumns == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), tableColumns);
+	NSLog(@"[%@ %@] (OPENING) sortDescriptors == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sortDescriptors);
+#endif
+	
+	if (tableColumns.count >= 3 && [tableColumns objectAtIndex:0] != nameColumn) {
+		
+		NSLog(@"[%@ %@] NOTICE: rearranging table columns; prior tableColumns == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), tableColumns);
+		
+		NSInteger currentNameColumnIndex = [self columnWithIdentifier:[nameColumn identifier]];
+		if (currentNameColumnIndex != -1) {
+			[self moveColumn:currentNameColumnIndex toColumn:0];
+		}
+	}
 	
 	// from controllers
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -76,7 +154,6 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 	shouldShowSizeColumn = [[userDefaults objectForKey:MDShouldShowSizeColumnKey] boolValue];
 	if (!shouldShowSizeColumn) [self removeTableColumn:sizeColumn];
 	
-	[self registerForDraggedTypes:[NSArray arrayWithObjects:MDDraggedItemsPboardType, NSFilenamesPboardType, nil]];
 	[self setVerticalMotionCanBeginDrag:NO];
 	
 	
@@ -99,7 +176,7 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 #if MD_DEBUG
 	NSLog(@"[%@ %@] keyPath == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), keyPath);
 #endif
-		
+	
 	if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDListViewFontSizeKey]]) {
 		
 		fontSize = [[[NSUserDefaults standardUserDefaults] objectForKey:MDListViewFontSizeKey] integerValue];
@@ -139,6 +216,30 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 }
 
 
+- (void)addTableColumn:(NSTableColumn *)tableColumn {
+#if MD_DEBUG_TABLE_COLUMNS
+	NSLog(@"[%@ %@] tableColumn == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), tableColumn);
+#endif
+	[super addTableColumn:tableColumn];
+}
+
+
+- (void)removeTableColumn:(NSTableColumn *)tableColumn {
+#if MD_DEBUG_TABLE_COLUMNS
+	NSLog(@"[%@ %@] tableColumn == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), tableColumn);
+#endif
+	[super removeTableColumn:tableColumn];
+}
+
+
+- (void)moveColumn:(NSInteger)oldIndex toColumn:(NSInteger)newIndex {
+#if MD_DEBUG_TABLE_COLUMNS
+	NSLog(@"[%@ %@] oldIndex == %ld, newIndex == %ld", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (long)oldIndex, (long)newIndex);
+#endif
+	[super moveColumn:oldIndex toColumn:newIndex];
+}
+
+
 - (void)calculateRowHeight {
 	if (iconSize == 16) {
 		if (fontSize <= 13) {
@@ -156,6 +257,7 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 - (NSInteger)iconSize {
 	return iconSize;
 }
+
 
 - (NSArray *)itemsAtRowIndexes:(NSIndexSet *)rowIndexes {
 #if MD_DEBUG
@@ -236,7 +338,7 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 #endif
 	NSPoint clickPoint = [self convertPoint:[event locationInWindow] fromView:nil];
 	
-	NSInteger rowIndex		= [self rowAtPoint:clickPoint];
+	NSInteger rowIndex = [self rowAtPoint:clickPoint];
 	
 	NSIndexSet *selectedRowIndexes = [self selectedRowIndexes];
 	if (rowIndex >= 0) {
@@ -313,7 +415,7 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 
 - (void)draggedImage:(NSImage *)image endedAt:(NSPoint)screenPoint operation:(NSDragOperation)operation {
 #if MD_DEBUG
-		NSLog(@" \"%@\" [%@ %@] forwarding to MDHLDocument...", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@" \"%@\" [%@ %@] forwarding to MDHLDocument...", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ([[self delegate] respondsToSelector:@selector(draggedImage:endedAt:operation:)]) {
 		[(MDHLDocument *)[self delegate] draggedImage:image endedAt:screenPoint operation:operation];
