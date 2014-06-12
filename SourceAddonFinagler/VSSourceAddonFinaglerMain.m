@@ -1,6 +1,6 @@
 //
 //  main.m
-//  Source Finagler
+//  Source Addon Finagler
 //
 //  Created by Mark Douma on 5/12/2010.
 //  Copyright 2010 Mark Douma LLC. All rights reserved.
@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 	
 	[NSApplication sharedApplication];
 	
-	NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Source Finagler is only intended for Intel-based Macs!", @"")
+	NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Source Addon Finagler is only intended for Intel-based Macs!", @"")
 								   informativeText:NSLocalizedString(@"Sorry, but you need at least Mac OS X 10.5 on an Intel-based Mac to run this application!", @"")
 									   firstButton:NSLocalizedString(@"Quit", @"")
 									  secondButton:nil
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
 		
 		[NSApplication sharedApplication];
 
-		NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Source Finagler only works with Mac OS X 10.5 or greater!", @"")
+		NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Source Addon Finagler only works with Mac OS X 10.5 or greater!", @"")
 									   informativeText:NSLocalizedString(@"Sorry, but you need at least Mac OS X 10.5 on an Intel-based Mac to run this application!", @"")
 										   firstButton:NSLocalizedString(@"Quit", @"")
 										  secondButton:nil
