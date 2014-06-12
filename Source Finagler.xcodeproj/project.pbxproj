@@ -507,7 +507,6 @@
 		C1C2C56A127CBCA0003B24F6 /* MDSelfExpandingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C12503123A0BA3004674B4 /* MDSelfExpandingTextField.m */; };
 		C1C2C56B127CBCA0003B24F6 /* MDViewOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C12509123A0BC1004674B4 /* MDViewOptionsController.m */; };
 		C1C2C56C127CBCA0003B24F6 /* MDQuickLookController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C1250D123A0BE1004674B4 /* MDQuickLookController.m */; };
-		C1C2C56D127CBCA0003B24F6 /* MDQuickLookControlButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C1250F123A0BE1004674B4 /* MDQuickLookControlButton.m */; };
 		C1C2C56E127CBCA0003B24F6 /* MDCopyOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C12514123A0C03004674B4 /* MDCopyOperationController.m */; };
 		C1C2C56F127CBCA0003B24F6 /* MDCopyOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C12518123A0C18004674B4 /* MDCopyOperation.m */; };
 		C1C2C570127CBCA0003B24F6 /* MDCopyOperationView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C1251B123A0C32004674B4 /* MDCopyOperationView.m */; };
@@ -1396,8 +1395,6 @@
 		C1C12509123A0BC1004674B4 /* MDViewOptionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDViewOptionsController.m; path = SourceFinagler/MDViewOptionsController.m; sourceTree = "<group>"; };
 		C1C1250C123A0BE1004674B4 /* MDQuickLookController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDQuickLookController.h; path = SourceFinagler/MDQuickLookController.h; sourceTree = "<group>"; };
 		C1C1250D123A0BE1004674B4 /* MDQuickLookController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDQuickLookController.m; path = SourceFinagler/MDQuickLookController.m; sourceTree = "<group>"; };
-		C1C1250E123A0BE1004674B4 /* MDQuickLookControlButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDQuickLookControlButton.h; path = SourceFinagler/MDQuickLookControlButton.h; sourceTree = "<group>"; };
-		C1C1250F123A0BE1004674B4 /* MDQuickLookControlButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDQuickLookControlButton.m; path = SourceFinagler/MDQuickLookControlButton.m; sourceTree = "<group>"; };
 		C1C12513123A0C03004674B4 /* MDCopyOperationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCopyOperationController.h; path = SourceFinagler/MDCopyOperationController.h; sourceTree = "<group>"; };
 		C1C12514123A0C03004674B4 /* MDCopyOperationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCopyOperationController.m; path = SourceFinagler/MDCopyOperationController.m; sourceTree = "<group>"; };
 		C1C12517123A0C18004674B4 /* MDCopyOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCopyOperation.h; path = SourceFinagler/MDCopyOperation.h; sourceTree = "<group>"; };
@@ -2894,8 +2891,6 @@
 				C1C1250D123A0BE1004674B4 /* MDQuickLookController.m */,
 				C1ABAB6712563BD800CAAFEB /* MDQuickLookPanel.h */,
 				C1ABAB6812563BD800CAAFEB /* MDQuickLookPanel.m */,
-				C1C1250E123A0BE1004674B4 /* MDQuickLookControlButton.h */,
-				C1C1250F123A0BE1004674B4 /* MDQuickLookControlButton.m */,
 				C164771D124E8C470062B943 /* MDTransparentView.h */,
 				C164771E124E8C470062B943 /* MDTransparentView.m */,
 				C18250AD1262859600D3F663 /* MDImageView.h */,
@@ -4575,7 +4570,6 @@
 				C1C2C56A127CBCA0003B24F6 /* MDSelfExpandingTextField.m in Sources */,
 				C1C2C56B127CBCA0003B24F6 /* MDViewOptionsController.m in Sources */,
 				C1C2C56C127CBCA0003B24F6 /* MDQuickLookController.m in Sources */,
-				C1C2C56D127CBCA0003B24F6 /* MDQuickLookControlButton.m in Sources */,
 				C1C2C56E127CBCA0003B24F6 /* MDCopyOperationController.m in Sources */,
 				C1C2C56F127CBCA0003B24F6 /* MDCopyOperation.m in Sources */,
 				C1C2C570127CBCA0003B24F6 /* MDCopyOperationView.m in Sources */,

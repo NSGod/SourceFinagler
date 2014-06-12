@@ -137,7 +137,7 @@ static MDQuickLookController *sharedQuickLookController = nil;
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	// We need to check this notification to see if it is being sent by a suitcase document that 
+	// We need to check this notification to see if it is being sent by a document that 
 	// is being closed. When a document is closed, it posts this notification, with itself
 	// as the object, and -- this is unique to a "document-that-is-closing" -- a nil userInfo dictionary.
 	// If the notification's object is the same document as our currently retained document, and

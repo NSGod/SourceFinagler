@@ -66,6 +66,7 @@
 						break;
 						
 					case HKFileTypeImage :
+					case HKFileTypeOther :
 						[box setContentView:imageViewView];
 						break;
 						
@@ -77,10 +78,6 @@
 						
 					case HKFileTypeMovie :
 						[box setContentView:movieViewView];
-						break;
-						
-					case HKFileTypeOther :
-						[box setContentView:imageViewView];
 						break;
 						
 					default:
