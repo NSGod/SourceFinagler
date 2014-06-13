@@ -1020,6 +1020,7 @@
 		C12C8E3212922C7600C8E667 /* zoomOut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoomOut.png; path = Resources/zoomOut.png; sourceTree = "<group>"; };
 		C12C8E6312922E5C00C8E667 /* zoomToFit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoomToFit.png; path = Resources/zoomToFit.png; sourceTree = "<group>"; };
 		C12CE52A1912D9B20067DA65 /* Linear Grayscale Profile.icc */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Linear Grayscale Profile.icc"; path = "TextureKit/Linear Grayscale Profile.icc"; sourceTree = "<group>"; };
+		C12D190C18A8A25300B15F9D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		C12D372B12E14CD200397411 /* MDScopeBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDScopeBarView.h; path = SourceFinagler/MDScopeBarView.h; sourceTree = "<group>"; };
 		C12D372C12E14CD200397411 /* MDScopeBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDScopeBarView.m; path = SourceFinagler/MDScopeBarView.m; sourceTree = "<group>"; };
 		C12DB4B3125FADE00051A751 /* TKDDSImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKDDSImageRep.h; path = TextureKit/TKDDSImageRep.h; sourceTree = "<group>"; };
@@ -1930,6 +1931,7 @@
 			isa = PBXGroup;
 			children = (
 				C1351911139479C40074B5EA /* Acknowledgments.rtf */,
+				C12D190C18A8A25300B15F9D /* README.md */,
 				C17319D41298D13800C29732 /* TextureKit framework */,
 				C1580F68139634F900D5D4D8 /* HLKit framework */,
 				C140E63713889A6900027DD6 /* SteamKit framework */,
