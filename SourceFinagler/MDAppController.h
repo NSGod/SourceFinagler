@@ -72,7 +72,7 @@ extern BOOL			MDPerformingBatchOperation;
 extern SInt32 MDSystemVersion;
 
 
-@interface MDAppController : NSObject <NSApplicationDelegate, NSOpenSavePanelDelegate, NSToolbarDelegate, NSSoundDelegate> {
+@interface MDAppController : NSObject <NSApplicationDelegate, NSOpenSavePanelDelegate, NSToolbarDelegate, NSSoundDelegate, NSMenuDelegate> {
     IBOutlet NSWindow					*window;
 	
 	IBOutlet NSMenuItem					*toggleInspectorMenuItem;

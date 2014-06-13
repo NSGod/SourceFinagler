@@ -547,11 +547,15 @@ BOOL needSourceAddonFinaglerRegister = NO;
 }
 
 
+
+#pragma mark - <NSMenuDelegate>
+
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
-//	NSLog(@"[%@ %@] %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), menuItem);
+#if MD_DEBUG
+//	NSLog(@"[%@ %@] menuItem == %@, action == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), menuItem, NSStringFromSelector(menuItem.action));
+#endif
 	
 	SEL action = [menuItem action];
-//	NSInteger tag = [menuItem tag];
 	
 	if (action == @selector(switchView:)) {
 	} else if (action == @selector(showPrefsWindow:)) {
