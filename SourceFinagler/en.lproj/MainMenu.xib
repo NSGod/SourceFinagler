@@ -12,7 +12,7 @@
     </object>
     <array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
       <integer value="371"/>
-      <integer value="296"/>
+      <integer value="29"/>
     </array>
     <array key="IBDocument.PluginDependencies">
       <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1244,7 +1244,7 @@
             <reference ref="701687061"/>
             <reference ref="1041065408"/>
           </array>
-          <array class="NSMutableArray" key="NSToolbarIBDefaultItems">
+          <array key="NSToolbarIBDefaultItems">
             <reference ref="431842003"/>
             <reference ref="85920042"/>
             <reference ref="1041065408"/>
@@ -1270,7 +1270,7 @@
         <string key="NSClassName">MDAppController</string>
       </object>
       <object class="NSCustomObject" id="1013809338">
-        <string key="NSClassName">TKDocumentController</string>
+        <string key="NSClassName">MDDocumentController</string>
       </object>
       <object class="NSCustomObject" id="607737096">
         <string key="NSClassName">SUUpdater</string>
@@ -2622,7 +2622,7 @@
             <int key="objectID">983</int>
             <reference key="object" ref="1013809338"/>
             <reference key="parent" ref="0"/>
-            <string key="objectName">TKDocumentController</string>
+            <string key="objectName">MDDocumentController</string>
           </object>
           <object class="IBObjectRecord">
             <int key="objectID">984</int>
@@ -2851,6 +2851,7 @@
         <string key="201.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="203.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="204.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+        <string key="205.IBEditorWindowLastContentRect">{{822, 893}, {240, 243}}</string>
         <string key="205.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="206.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="207.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2864,11 +2865,12 @@
         <string key="23.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="236.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="239.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+        <string key="24.IBEditorWindowLastContentRect">{{916, 1033}, {194, 103}}</string>
         <string key="24.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-        <string key="29.IBEditorWindowLastContentRect">{{618, 1110}, {410, 20}}</string>
+        <string key="29.IBEditorWindowLastContentRect">{{638, 1136}, {410, 20}}</string>
         <string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="295.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-        <string key="296.IBEditorWindowLastContentRect">{{846, 767}, {234, 343}}</string>
+        <string key="296.IBEditorWindowLastContentRect">{{866, 793}, {234, 343}}</string>
         <string key="296.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="297.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="298.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2897,11 +2899,13 @@
         <string key="465.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="466.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="490.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+        <string key="491.IBEditorWindowLastContentRect">{{987, 1013}, {296, 123}}</string>
         <string key="491.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="492.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="494.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="56.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+        <string key="57.IBEditorWindowLastContentRect">{{650, 923}, {240, 213}}</string>
         <string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="586.IBEditorWindowLastContentRect">{{101, 1033}, {616, 0}}</string>
@@ -2922,7 +2926,7 @@
         <string key="78.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="79.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="80.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-        <string key="81.IBEditorWindowLastContentRect">{{370, 794}, {204, 333}}</string>
+        <string key="81.IBEditorWindowLastContentRect">{{780, 803}, {204, 333}}</string>
         <string key="81.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="82.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="83.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3174,6 +3178,7 @@
             <string key="browserSelect:">id</string>
             <string key="find:">id</string>
             <string key="findAdvanced:">id</string>
+            <string key="installSourceAddon:">id</string>
             <string key="revealInFinder:">id</string>
             <string key="revealParentInFinder:">id</string>
             <string key="search:">id</string>
@@ -3193,6 +3198,10 @@
             </object>
             <object class="IBActionInfo" key="findAdvanced:">
               <string key="name">findAdvanced:</string>
+              <string key="candidateClassName">id</string>
+            </object>
+            <object class="IBActionInfo" key="installSourceAddon:">
+              <string key="name">installSourceAddon:</string>
               <string key="candidateClassName">id</string>
             </object>
             <object class="IBActionInfo" key="revealInFinder:">
@@ -3236,6 +3245,7 @@
             <string key="browserMenuShowViewOptionsMenuItem">NSMenuItem</string>
             <string key="browserView">MDMetalBevelView</string>
             <string key="hlWindow">NSWindow</string>
+            <string key="installSourceAddonButton">NSButton</string>
             <string key="mainBox">NSBox</string>
             <string key="nameColumn">NSTableColumn</string>
             <string key="outlineView">MDOutlineView</string>
@@ -3256,6 +3266,7 @@
             <string key="searchToolbarItem">NSToolbarItem</string>
             <string key="statusImageView1">MDStatusImageView</string>
             <string key="statusImageView2">MDStatusImageView</string>
+            <string key="statusImageView3">MDStatusImageView</string>
             <string key="viewSwitcherControl">NSSegmentedControl</string>
           </dictionary>
           <dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -3302,6 +3313,10 @@
             <object class="IBToOneOutletInfo" key="hlWindow">
               <string key="name">hlWindow</string>
               <string key="candidateClassName">NSWindow</string>
+            </object>
+            <object class="IBToOneOutletInfo" key="installSourceAddonButton">
+              <string key="name">installSourceAddonButton</string>
+              <string key="candidateClassName">NSButton</string>
             </object>
             <object class="IBToOneOutletInfo" key="mainBox">
               <string key="name">mainBox</string>
@@ -3381,6 +3396,10 @@
             </object>
             <object class="IBToOneOutletInfo" key="statusImageView2">
               <string key="name">statusImageView2</string>
+              <string key="candidateClassName">MDStatusImageView</string>
+            </object>
+            <object class="IBToOneOutletInfo" key="statusImageView3">
+              <string key="name">statusImageView3</string>
               <string key="candidateClassName">MDStatusImageView</string>
             </object>
             <object class="IBToOneOutletInfo" key="viewSwitcherControl">
@@ -3680,14 +3699,6 @@
           </object>
         </object>
         <object class="IBPartialClassDescription">
-          <string key="className">TKDocumentController</string>
-          <string key="superclassName">NSDocumentController</string>
-          <object class="IBClassDescriptionSource" key="sourceIdentifier">
-            <string key="majorKey">IBProjectSource</string>
-            <string key="minorKey">TextureFinagler/TKDocumentController.h</string>
-          </object>
-        </object>
-        <object class="IBPartialClassDescription">
           <string key="className">TKImageDocument</string>
           <string key="superclassName">NSDocument</string>
           <dictionary class="NSMutableDictionary" key="actions">
@@ -3795,7 +3806,7 @@
           </dictionary>
           <object class="IBClassDescriptionSource" key="sourceIdentifier">
             <string key="majorKey">IBProjectSource</string>
-            <string key="minorKey">TextureFinagler/TKImageDocument.h</string>
+            <string key="minorKey">SourceFinagler/TKImageDocument.h</string>
           </object>
         </object>
         <object class="IBPartialClassDescription">
@@ -3814,7 +3825,7 @@
           </object>
           <object class="IBClassDescriptionSource" key="sourceIdentifier">
             <string key="majorKey">IBProjectSource</string>
-            <string key="minorKey">TextureFinagler/TKImageView.h</string>
+            <string key="minorKey">SourceFinagler/TKImageView.h</string>
           </object>
         </object>
       </array>
@@ -5110,7 +5121,7 @@
       <integer value="3200" key="NS.object.0"/>
     </object>
     <bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-    <string key="IBDocument.LastKnownRelativeProjectPath">../Source Finagler.xcodeproj</string>
+    <string key="IBDocument.LastKnownRelativeProjectPath">../../Source Finagler.xcodeproj</string>
     <int key="IBDocument.defaultPropertyAccessControl">3</int>
     <dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
       <string key="NSMenuCheckmark">{11, 11}</string>

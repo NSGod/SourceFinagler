@@ -1,5 +1,5 @@
 //
-//  TKDocumentController.h
+//  MDDocumentController.h
 //  Source Finagler
 //
 //  Created by Mark Douma on 3/16/2009.
@@ -7,12 +7,9 @@
 //
 
 #import <AppKit/NSDocumentController.h>
-#import <TextureKit/TextureKitDefines.h>
 
 
-TEXTUREKIT_EXTERN NSString * const TKApplicationBundleIdentifier;
-
-@interface TKDocumentController : NSDocumentController {
+@interface MDDocumentController : NSDocumentController {
 
 }
 

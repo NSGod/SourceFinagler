@@ -19,7 +19,7 @@
 #import "MDViewOptionsController.h"
 #import "MDQuickLookController.h"
 #import "MDHLDocument.h"
-#import "TKDocumentController.h"
+#import "MDDocumentController.h"
 
 #import "MDUserDefaults.h"
 
