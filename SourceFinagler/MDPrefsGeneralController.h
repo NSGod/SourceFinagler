@@ -6,10 +6,10 @@
 //  Copyright 2010 Mark Douma LLC. All rights reserved.
 //
 
-#import "MDController.h"
+#import "MDViewController.h"
 
 
-@interface MDPrefsGeneralController : MDController {
+@interface MDPrefsGeneralController : MDViewController {
 	IBOutlet NSButton		*openMainWindowCheckbox;
 	IBOutlet NSButton		*openDocumentCheckbox;
 	
