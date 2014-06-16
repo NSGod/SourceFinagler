@@ -1,27 +1,40 @@
 //
-//  MDController.h
-//  Source Finagler
+//  MDViewController.h
+//  Procon Finagler
 //
-//  Created by Mark Douma on 3/02/2006.
-//  Copyright © 2006 Mark Douma. All rights reserved.
-//  
+//  Created by Mark Douma on 6/9/2012.
+//  Copyright (c) 2012 Mark Douma LLC. All rights reserved.
+//
 
 #import <Cocoa/Cocoa.h>
 
-
-@interface MDController : NSObject {
-	IBOutlet NSView		*view;
+@interface MDViewController : NSViewController {
 	
-	BOOL				resizable;
-	NSSize				minWinSize;
-	NSSize				maxWinSize;
+	NSSize					minWinSize;
+	NSSize					maxWinSize;
 	
+	BOOL					resizable;
 }
-- (void)appControllerDidLoadNib:(id)sender;
-- (NSView *)view;
-- (void)didSwitchToView:(id)sender;
-- (void)cleanup;
-@end
 
+@property (nonatomic, assign) NSSize minWinSize;
+@property (nonatomic, assign) NSSize maxWinSize;
+
+@property (nonatomic, assign, getter=isResizable) BOOL resizable;
+
+
+- (void)didSwitchToView:(id)sender;
+
+- (void)cleanup;
+
+- (NSString *)viewControllerViewSizeAutosaveString;
+
+- (NSString *)viewSizeAutosaveName;
+
+- (void)viewDidLoad;
+
+
++ (NSSize)windowSizeForViewWithSize:(NSSize)size;
+
+@end
 
 
