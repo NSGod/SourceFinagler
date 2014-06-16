@@ -529,8 +529,8 @@
 		C1CA2B2B13A2E38D00235C98 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA2B2A13A2E38D00235C98 /* WebKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1CA329213A4576E00235C98 /* TextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
 		C1CAD257194F4559000B5549 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD255194F4559000B5549 /* MainMenu.xib */; };
-		C1CAD25A194F45A9000B5549 /* MDSteamAppsRelocatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD258194F45A9000B5549 /* MDSteamAppsRelocatorView.xib */; };
-		C1CAD25D194F45EA000B5549 /* MDOtherAppsHelperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD25B194F45EA000B5549 /* MDOtherAppsHelperView.xib */; };
+		C1CAD25A194F45A9000B5549 /* MDSteamAppsRelocatorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD258194F45A9000B5549 /* MDSteamAppsRelocatorController.xib */; };
+		C1CAD25D194F45EA000B5549 /* MDOtherAppsHelperController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD25B194F45EA000B5549 /* MDOtherAppsHelperController.xib */; };
 		C1CAD260194F4619000B5549 /* TKImageDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD25E194F4619000B5549 /* TKImageDocument.xib */; };
 		C1CAD263194F4642000B5549 /* TKImageDocumentAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD261194F4642000B5549 /* TKImageDocumentAccessoryView.xib */; };
 		C1CAD266194F4661000B5549 /* TKImageExportPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD264194F4661000B5549 /* TKImageExportPanel.xib */; };
@@ -542,7 +542,7 @@
 		C1CAD278194F4723000B5549 /* MDInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD276194F4723000B5549 /* MDInspector.xib */; };
 		C1CAD27B194F473B000B5549 /* MDViewOptions.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD279194F473B000B5549 /* MDViewOptions.xib */; };
 		C1CAD27E194F4757000B5549 /* MDPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD27C194F4757000B5549 /* MDPrefs.xib */; };
-		C1CAD281194F4769000B5549 /* MDPrefsGeneral.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD27F194F4769000B5549 /* MDPrefsGeneral.xib */; };
+		C1CAD281194F4769000B5549 /* MDPrefsGeneralController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD27F194F4769000B5549 /* MDPrefsGeneralController.xib */; };
 		C1CAD284194F4776000B5549 /* MDAboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD282194F4776000B5549 /* MDAboutWindow.xib */; };
 		C1CAD287194F47BF000B5549 /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD285194F47BF000B5549 /* schema.strings */; };
 		C1CAD28A194F4D16000B5549 /* MDDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CAD289194F4D16000B5549 /* MDDocumentController.m */; };
@@ -1468,8 +1468,8 @@
 		C1CA2BDC13A2E3E600235C98 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C1CA2BDE13A2E3E600235C98 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C1CAD256194F4559000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		C1CAD259194F45A9000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDSteamAppsRelocatorView.xib; sourceTree = "<group>"; };
-		C1CAD25C194F45EA000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDOtherAppsHelperView.xib; sourceTree = "<group>"; };
+		C1CAD259194F45A9000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDSteamAppsRelocatorController.xib; sourceTree = "<group>"; };
+		C1CAD25C194F45EA000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDOtherAppsHelperController.xib; sourceTree = "<group>"; };
 		C1CAD25F194F4619000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/TKImageDocument.xib; sourceTree = "<group>"; };
 		C1CAD262194F4642000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/TKImageDocumentAccessoryView.xib; sourceTree = "<group>"; };
 		C1CAD265194F4661000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/TKImageExportPanel.xib; sourceTree = "<group>"; };
@@ -1481,7 +1481,7 @@
 		C1CAD277194F4723000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDInspector.xib; sourceTree = "<group>"; };
 		C1CAD27A194F473B000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDViewOptions.xib; sourceTree = "<group>"; };
 		C1CAD27D194F4757000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDPrefs.xib; sourceTree = "<group>"; };
-		C1CAD280194F4769000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDPrefsGeneral.xib; sourceTree = "<group>"; };
+		C1CAD280194F4769000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDPrefsGeneralController.xib; sourceTree = "<group>"; };
 		C1CAD283194F4776000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDAboutWindow.xib; sourceTree = "<group>"; };
 		C1CAD286194F47BF000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = SourceSpotlightImporter/en.lproj/schema.strings; sourceTree = "<group>"; };
 		C1CAD288194F4D16000B5549 /* MDDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDDocumentController.h; path = SourceFinagler/MDDocumentController.h; sourceTree = "<group>"; };
@@ -2003,7 +2003,7 @@
 			children = (
 				C1A16F5511C5351B008E5361 /* MDSteamAppsRelocatorController.h */,
 				C1A16F5611C5351B008E5361 /* MDSteamAppsRelocatorController.m */,
-				C1CAD258194F45A9000B5549 /* MDSteamAppsRelocatorView.xib */,
+				C1CAD258194F45A9000B5549 /* MDSteamAppsRelocatorController.xib */,
 			);
 			name = MDSteamAppsRelocator;
 			sourceTree = "<group>";
@@ -2013,7 +2013,7 @@
 			children = (
 				C1A16F5C11C53539008E5361 /* MDOtherAppsHelperController.h */,
 				C1A16F5D11C53539008E5361 /* MDOtherAppsHelperController.m */,
-				C1CAD25B194F45EA000B5549 /* MDOtherAppsHelperView.xib */,
+				C1CAD25B194F45EA000B5549 /* MDOtherAppsHelperController.xib */,
 				C1A117DC11D695EA008BBABD /* MDTableView.h */,
 				C1A117DD11D695EA008BBABD /* MDTableView.m */,
 				C1908B5613935CD000656A78 /* MDImageTextCell.h */,
@@ -2340,7 +2340,7 @@
 			children = (
 				C14DB242123D8EF5002D87FE /* MDPrefsGeneralController.h */,
 				C14DB243123D8EF5002D87FE /* MDPrefsGeneralController.m */,
-				C1CAD27F194F4769000B5549 /* MDPrefsGeneral.xib */,
+				C1CAD27F194F4769000B5549 /* MDPrefsGeneralController.xib */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -4249,7 +4249,7 @@
 				C1C2C4FF127CBCA0003B24F6 /* XZP.icns in Resources */,
 				C1C2C505127CBCA0003B24F6 /* MDHLDocumentLeopard.xib in Resources */,
 				C1622E2C1888777D00723096 /* sourceAddonIndicator.png in Resources */,
-				C1CAD25A194F45A9000B5549 /* MDSteamAppsRelocatorView.xib in Resources */,
+				C1CAD25A194F45A9000B5549 /* MDSteamAppsRelocatorController.xib in Resources */,
 				C1CAD278194F4723000B5549 /* MDInspector.xib in Resources */,
 				C121966C18846A1B0073AC8F /* MDHLDocumentSnowLeopard.xib in Resources */,
 				C1C2C50A127CBCA0003B24F6 /* Source Finagler.sdef in Resources */,
@@ -4270,7 +4270,7 @@
 				C1C2C517127CBCA0003B24F6 /* VVD.icns in Resources */,
 				C1C2C518127CBCA0003B24F6 /* QC.icns in Resources */,
 				C1C2C519127CBCA0003B24F6 /* ANI.icns in Resources */,
-				C1CAD25D194F45EA000B5549 /* MDOtherAppsHelperView.xib in Resources */,
+				C1CAD25D194F45EA000B5549 /* MDOtherAppsHelperController.xib in Resources */,
 				C1CAD269194F4672000B5549 /* TKImageExportPreviewView.xib in Resources */,
 				C1C2C51A127CBCA0003B24F6 /* FGD.icns in Resources */,
 				C1C2C51B127CBCA0003B24F6 /* CFG.icns in Resources */,
@@ -4332,7 +4332,7 @@
 				C10A8A2616026F6F00791BEC /* delete.png in Resources */,
 				C1BEA200161B788F00464170 /* MMT.icns in Resources */,
 				C1BEA202161B789A00464170 /* PRT.icns in Resources */,
-				C1CAD281194F4769000B5549 /* MDPrefsGeneral.xib in Resources */,
+				C1CAD281194F4769000B5549 /* MDPrefsGeneralController.xib in Resources */,
 				C1BEA204161B78A400464170 /* SGA.icns in Resources */,
 				C1F9282C16492B790089FBA4 /* caution.png in Resources */,
 				C1CAD27E194F4757000B5549 /* MDPrefs.xib in Resources */,
@@ -4982,20 +4982,20 @@
 			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
-		C1CAD258194F45A9000B5549 /* MDSteamAppsRelocatorView.xib */ = {
+		C1CAD258194F45A9000B5549 /* MDSteamAppsRelocatorController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C1CAD259194F45A9000B5549 /* en */,
 			);
-			name = MDSteamAppsRelocatorView.xib;
+			name = MDSteamAppsRelocatorController.xib;
 			sourceTree = "<group>";
 		};
-		C1CAD25B194F45EA000B5549 /* MDOtherAppsHelperView.xib */ = {
+		C1CAD25B194F45EA000B5549 /* MDOtherAppsHelperController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C1CAD25C194F45EA000B5549 /* en */,
 			);
-			name = MDOtherAppsHelperView.xib;
+			name = MDOtherAppsHelperController.xib;
 			sourceTree = "<group>";
 		};
 		C1CAD25E194F4619000B5549 /* TKImageDocument.xib */ = {
@@ -5086,12 +5086,12 @@
 			name = MDPrefs.xib;
 			sourceTree = "<group>";
 		};
-		C1CAD27F194F4769000B5549 /* MDPrefsGeneral.xib */ = {
+		C1CAD27F194F4769000B5549 /* MDPrefsGeneralController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C1CAD280194F4769000B5549 /* en */,
 			);
-			name = MDPrefsGeneral.xib;
+			name = MDPrefsGeneralController.xib;
 			sourceTree = "<group>";
 		};
 		C1CAD282194F4776000B5549 /* MDAboutWindow.xib */ = {
