@@ -8,11 +8,14 @@
 
 //#if TARGET_CPU_X86 || TARGET_CPU_X86_64
 
-#import "MDController.h"
+#import "MDViewController.h"
 
 @class VSSteamManager;
 
-@interface MDSteamAppsRelocatorController : MDController <NSOpenSavePanelDelegate> {
+
+
+@interface MDSteamAppsRelocatorController : MDViewController <NSOpenSavePanelDelegate> {
+	
 	IBOutlet NSTextField		*statusField;
 	IBOutlet NSTextField		*newPathField;
 	

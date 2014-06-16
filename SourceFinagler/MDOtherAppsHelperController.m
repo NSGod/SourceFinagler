@@ -14,13 +14,14 @@
 #import "MDProcessManager.h"
 
 
-#define VS_DEBUG 0
 
-NSString * const MDOtherAppsHelperViewSizeKey = @"MDOtherAppsHelperViewSize";
+//#define VS_DEBUG 0
+#define VS_DEBUG 1
 
 static NSString * const MDUSBOverdriveHelperBundleIdentifierKey		= @"com.montalcini.usboverdrivehelper";
 static NSString * const MDSteerMouseBundleIdentifierKey				= @"jp.plentycom.boa.SteerMouse";
 static NSString * const MDLogitechBundleIdentifierKey				= @"com.Logitech.Control Center.Daemon";
+
 
 
 static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelperSortDescriptors";
@@ -31,8 +32,8 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 
 @synthesize enableSourceFinaglerAgent;
 
-
 @dynamic sortDescriptors;
+
 
 
 + (void)initialize {
@@ -43,12 +44,13 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 }
 
 
+
 - (id)init {
 	if ((self = [super init])) {
 		games = [[NSMutableArray alloc] init];
 		steamManager = [[VSSteamManager defaultManager] retain];
 		[steamManager setDelegate:self];
-		resizable = YES;
+
 		if ([steamManager sourceFinaglerLaunchAgentStatus] == VSSourceFinaglerLaunchAgentUpdateNeeded) {
 			[steamManager updateSourceFinaglerLaunchAgentWithError:NULL];
 		}
@@ -61,18 +63,30 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 
 - (void)dealloc {
 	[games release];
+	[steamManager setDelegate:nil];
 	[steamManager release];
 	[super dealloc];
 }
+
+
+- (NSString *)title {
+	return NSLocalizedString(@"Other Apps Helper", @"");
+}
+
+
+- (NSString *)viewSizeAutosaveName {
+	return @"otherAppsHelperView";
+}
+
 
 
 - (void)awakeFromNib {
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	minWinSize = [view frame].size;
-	maxWinSize = NSMakeSize(16000, 16000);
 	
+	minWinSize = [MDViewController windowSizeForViewWithSize:self.view.frame.size];
+	maxWinSize = NSMakeSize(FLT_MAX, FLT_MAX);
 	
 	[tableView setTarget:self];
 	[tableView setDoubleAction:@selector(launchGame:)];
@@ -106,17 +120,6 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	
 }
 
-- (void)appControllerDidLoadNib:(id)sender {
-#if VS_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSUserDefaults *uD = [NSUserDefaults standardUserDefaults];
-	if ([uD objectForKey:MDOtherAppsHelperViewSizeKey] == nil) [uD setObject:[view stringWithSavedFrame] forKey:MDOtherAppsHelperViewSizeKey];
-	[view setFrameFromString:[uD objectForKey:MDOtherAppsHelperViewSizeKey]];
-	[super appControllerDidLoadNib:self];
-	
-}
-
 
 - (void)setSortDescriptors:(NSArray *)aSortDescriptors {
 	[tableView setSortDescriptors:aSortDescriptors];
@@ -127,13 +130,6 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	return [tableView sortDescriptors];
 }
 
-
-- (void)cleanup {
-#if VS_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	[[NSUserDefaults standardUserDefaults] setObject:[view stringWithSavedFrame] forKey:MDOtherAppsHelperViewSizeKey];
-}
 
 
 - (void)gameDidLaunch:(VSGame *)game {
@@ -156,6 +152,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 #if VS_DEBUG
 	NSLog(@"[%@ %@] sender's state == %ld; enableSourceFinaglerAgent == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (long)[(NSButton *)sender state], (enableSourceFinaglerAgent ? @"YES" : @"NO"));
 #endif
+	
 	NSError *outError = nil;
 	
 	if (enableSourceFinaglerAgent) {
@@ -226,7 +223,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	[NSApp beginSheet:usbOverdriveWindow modalForWindow:[view window] modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+	[NSApp beginSheet:usbOverdriveWindow modalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
 	
 }
 
@@ -333,7 +330,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 #endif
 	[steamManager locateSteamApps];
 	
-	NSArray *theGames = [steamManager games];
+	NSArray *theGames = steamManager.games;
 	NSArray *selectedObjects = [[gamesController selectedObjects] retain];
 	if (theGames) {
 		[[self mutableArrayValueForKey:@"games"] setArray:theGames];
@@ -345,6 +342,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	NSLog(@"[%@ %@] games == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), games);
 #endif
 	
+
 }
 
 
@@ -352,6 +350,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
+	
 	NSArray *selectedGames = [gamesController selectedObjects];
 	NSMutableArray *filePaths = [NSMutableArray array];
 	
@@ -370,6 +369,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	}
 	
 }
+
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
 	SEL action = [menuItem action];

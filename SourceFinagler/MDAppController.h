@@ -8,29 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class MDAboutWindowController, MDViewOptionsController, MDInspectorController, MDQuickLookController;
+@class MDAboutWindowController;
 @class MDPrefsController;
-@class MDSteamAppsRelocatorController, MDOtherAppsHelperController;
+
 @class SUUpdater;
 
-enum {
-	MDSteamAppsRelocatorView			= 1,
-	MDOtherAppsHelperView				= 2
-};
-
-
-extern NSString * const MDCurrentViewKey;
-
-extern NSString * const MDLastVersionRunKey;
-
-extern NSString * const MDLastSpotlightImporterVersionKey;
-extern NSString * const MDLastSourceAddonFinaglerVersionKey;
-extern NSString * const MDSpotlightImporterBundleIdentifierKey;
-
-
-extern NSString * const MDSteamAppsRelocatorIdentifierKey;
-extern NSString * const MDOtherAppsHelperIdentifierKey;
-extern NSString * const MDConfigCopyIdentifierKey;
+@class MDViewOptionsController;
+@class MDInspectorController;
+@class MDQuickLookController;
 
 
 enum {
@@ -42,34 +27,18 @@ typedef NSUInteger MDLaunchTimeActionType;
 
 extern NSString * const MDLaunchTimeActionKey;
 
-
-extern NSString * const MDQuitAfterAllWindowsClosedKey;
 extern NSString * const MDLastWindowDidCloseNotification;
-
-extern NSString * const MDFinderBundleIdentifierKey;
-
-
-/*************		websites & email addresses	*************/
-
-extern NSString * const MDWebpage;
-extern NSString * const MDEmailStaticURLString;
-extern NSString * const MDEmailDynamicURLString;
-extern NSString * const MDEmailAddress;
-extern NSString * const MDiChatURLString;
 
 
 extern BOOL			MDShouldShowViewOptions;
 extern BOOL			MDShouldShowInspector;
 extern BOOL			MDShouldShowQuickLook;
 
+extern BOOL			TKShouldShowImageInspector;
+
 extern BOOL			MDShouldShowPathBar;
 
 extern BOOL			MDPlaySoundEffects;
-
-extern BOOL			MDPerformingBatchOperation;
-
-
-extern SInt32 MDSystemVersion;
 
 
 @interface MDAppController : NSObject <NSApplicationDelegate, NSOpenSavePanelDelegate, NSToolbarDelegate, NSSoundDelegate, NSMenuDelegate> {
@@ -104,14 +73,10 @@ extern SInt32 MDSystemVersion;
 		
 	IBOutlet SUUpdater					*sparkleUpdater;
 	
-	NSUndoManager						*globalUndoManager;
 	
+	NSMutableArray						*viewControllers;
 	
-	MDSteamAppsRelocatorController		*steamAppsRelocatorController;
-	MDOtherAppsHelperController			*otherAppsHelperController;
-
-	NSInteger currentView;
-	
+	NSUInteger							currentViewIndex;
 	
 }
 
@@ -127,7 +92,6 @@ extern SInt32 MDSystemVersion;
 
 - (IBAction)showMainWindow:(id)sender;
 
-//- (IBAction)orderFrontHelpPanel:(id)sender;
 
 
 - (IBAction)email:(id)sender;

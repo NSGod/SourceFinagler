@@ -10,16 +10,12 @@
 
 #import "MDSteamAppsRelocatorController.h"
 #import "MDAppKitAdditions.h"
-#import "MDFoundationAdditions.h"
 #import "MDFolderManager.h"
 #import "VSSteamManager.h"
 #import "MDProcessManager.h"
 
 
-#define VS_DEBUG 0
-
-
-static NSString * const MDSteamAppsRelocatorViewSizeKey = @"MDSteamAppsRelocatorViewSize";
+#define VS_DEBUG 1
 
 
 // default "SteamApps" path is now
@@ -27,6 +23,8 @@ static NSString * const MDSteamAppsRelocatorViewSizeKey = @"MDSteamAppsRelocator
 
 
 NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
+
+
 
 @implementation MDSteamAppsRelocatorController
 
@@ -40,8 +38,6 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 
 - (id)init {
 	if ((self = [super init])) {
-		resizable = YES;
-		
 		steamManager = [[VSSteamManager defaultManager] retain];
 		
 		NSString *currentPath = [steamManager steamAppsPath];
@@ -68,13 +64,22 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 }
 
 
+- (NSString *)title {
+	return NSLocalizedString(@"Steam Apps Re-locator", @"");
+}
+
+
+- (NSString *)viewSizeAutosaveName {
+	return @"steamAppsRelocatorView";
+}
+
+
 - (void)awakeFromNib {
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	minWinSize = [view frame].size;
-	minWinSize.height += 22.0;
-	maxWinSize = NSMakeSize(16000, minWinSize.height);
+	minWinSize = [MDViewController windowSizeForViewWithSize:self.view.frame.size];
+	maxWinSize = NSMakeSize(FLT_MAX, minWinSize.height);
 	
 	if (steamIsRunning) {
 		[statusField setStringValue:NSLocalizedString(@"Steam cannot be running", @"")];
@@ -97,7 +102,7 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 		}
 	}
 }
-
+	
 
 - (void)updateSteamPath:(id)sender {
 #if VS_DEBUG
@@ -146,24 +151,6 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 }
 
 
-- (void)appControllerDidLoadNib:(id)sender {
-#if VS_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSUserDefaults *uD = [NSUserDefaults standardUserDefaults];
-	if ([uD objectForKey:MDSteamAppsRelocatorViewSizeKey] == nil) [uD setObject:[view stringWithSavedFrame] forKey:MDSteamAppsRelocatorViewSizeKey];
-	[view setFrameFromString:[uD objectForKey:MDSteamAppsRelocatorViewSizeKey]];
-	[super appControllerDidLoadNib:self];
-}
-
-- (void)cleanup {
-#if VS_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	[[NSUserDefaults standardUserDefaults] setObject:[view stringWithSavedFrame] forKey:MDSteamAppsRelocatorViewSizeKey];
-}
-
-
 - (void)controlTextDidChange:(NSNotification *)notification {
 //	NSLog(@"[%@ %@] newPath == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), newPath);
 	[self setProposedNewPath:[[newPathField stringValue] stringByStandardizingPath]];
@@ -188,6 +175,7 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 	}
 }
 
+
 - (BOOL)panel:(id)sender shouldShowFilename:(NSString *)filename {
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -211,20 +199,20 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	NSOpenPanel *openPanel = [NSOpenPanel openPanelWithTitle:[NSString stringWithFormat:@"Locate %@", VSSteamAppsDirectoryNameKey]
-													 message:[NSString stringWithFormat:@"Locate the copy of your “%@” folder you created in Step 2.", VSSteamAppsDirectoryNameKey]
-										   actionButtonTitle:@"Open"
+	NSOpenPanel *openPanel = [NSOpenPanel openPanelWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Locate %@", @""), VSSteamAppsDirectoryNameKey]
+													 message:[NSString stringWithFormat:NSLocalizedString(@"Locate the copy of your “%@” folder you created in Step 2.", @""), VSSteamAppsDirectoryNameKey]
+										   actionButtonTitle:NSLocalizedString(@"Open", @"")
 									 allowsMultipleSelection:NO
 										canChooseDirectories:YES
 													delegate:self];
 	[openPanel setResolvesAliases:NO];
 	
-	NSInteger result = [openPanel runModalForDirectory:nil file:nil types:nil];
+	NSInteger result = [openPanel runModal];
 	
-	if (result == NSOKButton) {
-		NSArray *filePaths = [openPanel filenames];
-		NSString *filePath = [filePaths objectAtIndex:0];
-		if (filePaths && [filePaths count]) {
+	if (result == NSFileHandlingPanelOKButton) {
+		NSArray *fileURLs = [openPanel URLs];
+		if (fileURLs && [fileURLs count]) {
+			NSString *filePath = [[fileURLs objectAtIndex:0] path];
 			[self setProposedNewPath:filePath];
 		}
 		
@@ -246,7 +234,7 @@ NSString * const MDSteamBundleIdentifierKey = @"com.valvesoftware.steam";
 #endif
 	NSError *error = nil;
 	if ([steamManager relocateSteamAppsToPath:proposedNewPath error:&error]) {
-		[statusField setStringValue:@"Success"];
+		[statusField setStringValue:NSLocalizedString(@"Success", @"")];
 		[self setCanCreate:NO];
 		[self setCurrentURL:[NSURL fileURLWithPath:proposedNewPath]];
 		[statusField performSelector:@selector(setStringValue:) withObject:@"" afterDelay:10.0];

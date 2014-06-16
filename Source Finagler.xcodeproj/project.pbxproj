@@ -609,6 +609,7 @@
 		C1F1579F13969EAB00E32057 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1A112E511D66720008BBABD /* CoreServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1F157DE1396B05700E32057 /* HKFoundationAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F157DC1396B05700E32057 /* HKFoundationAdditions.h */; };
 		C1F157DF1396B05700E32057 /* HKFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F157DD1396B05700E32057 /* HKFoundationAdditions.m */; };
+		C1F79B72194F840500C466E5 /* MDAppController.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1F79B71194F840500C466E5 /* MDAppController.plist */; };
 		C1F9282C16492B790089FBA4 /* caution.png in Resources */ = {isa = PBXBuildFile; fileRef = C1F9282B16492B790089FBA4 /* caution.png */; };
 		C1FA236E18FF1A9F00BF8919 /* TKError.h in Headers */ = {isa = PBXBuildFile; fileRef = C120D7BF18FF174800D62C41 /* TKError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1FA236F18FF1AA500BF8919 /* TKError.m in Sources */ = {isa = PBXBuildFile; fileRef = C120D7C018FF174800D62C41 /* TKError.m */; };
@@ -1548,6 +1549,7 @@
 		C1F153E21396699600E32057 /* HKXZPFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HKXZPFile.mm; sourceTree = "<group>"; };
 		C1F157DC1396B05700E32057 /* HKFoundationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKFoundationAdditions.h; path = HLKit/HKFoundationAdditions.h; sourceTree = "<group>"; };
 		C1F157DD1396B05700E32057 /* HKFoundationAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKFoundationAdditions.m; path = HLKit/HKFoundationAdditions.m; sourceTree = "<group>"; };
+		C1F79B71194F840500C466E5 /* MDAppController.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = MDAppController.plist; path = SourceFinagler/MDAppController.plist; sourceTree = "<group>"; };
 		C1F9282B16492B790089FBA4 /* caution.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = caution.png; path = Resources/caution.png; sourceTree = "<group>"; };
 		C1FA237018FF23F900BF8919 /* TextureKit_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextureKit_Prefix.pch; path = TextureKit/TextureKit_Prefix.pch; sourceTree = "<group>"; };
 		C1FEA7EA125E5C9600CA78FF /* NVCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NVCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1872,6 +1874,7 @@
 			children = (
 				256AC3D80F4B6AC300CF3369 /* MDAppController.h */,
 				256AC3D90F4B6AC300CF3369 /* MDAppController.m */,
+				C1F79B71194F840500C466E5 /* MDAppController.plist */,
 				C1CAD255194F4559000B5549 /* MainMenu.xib */,
 				C14A17C9186CB6580026FD0C /* Localizable.strings */,
 				C11DFB5B18A6C1F7003F3AA5 /* Source Finagler */,
@@ -4282,6 +4285,7 @@
 				C1C2C523127CBCA0003B24F6 /* VDM.icns in Resources */,
 				C1C2C524127CBCA0003B24F6 /* DAT.icns in Resources */,
 				C1C2C526127CBCA0003B24F6 /* AIN.icns in Resources */,
+				C1F79B72194F840500C466E5 /* MDAppController.plist in Resources */,
 				C1C2C527127CBCA0003B24F6 /* IMAGE.icns in Resources */,
 				C1C2C528127CBCA0003B24F6 /* PCF.icns in Resources */,
 				C1C2C529127CBCA0003B24F6 /* SND.icns in Resources */,

@@ -12,7 +12,7 @@
     </object>
     <array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
       <integer value="371"/>
-      <integer value="29"/>
+      <integer value="491"/>
     </array>
     <array key="IBDocument.PluginDependencies">
       <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1136,7 +1136,7 @@
               <string key="NSToolbarItemMaxSize">{0, 0}</string>
               <bool key="NSToolbarItemEnabled">YES</bool>
               <bool key="NSToolbarItemAutovalidates">YES</bool>
-              <int key="NSToolbarItemTag">2</int>
+              <int key="NSToolbarItemTag">1</int>
               <bool key="NSToolbarIsUserRemovable">YES</bool>
               <int key="NSToolbarItemVisibilityPriority">0</int>
             </object>
@@ -1158,7 +1158,7 @@
               <string key="NSToolbarItemMaxSize">{0, 0}</string>
               <bool key="NSToolbarItemEnabled">YES</bool>
               <bool key="NSToolbarItemAutovalidates">YES</bool>
-              <int key="NSToolbarItemTag">1</int>
+              <int key="NSToolbarItemTag">0</int>
               <bool key="NSToolbarIsUserRemovable">YES</bool>
               <int key="NSToolbarItemVisibilityPriority">0</int>
             </object>
@@ -2829,6 +2829,7 @@
         <string key="1067.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="1068.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="124.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+        <string key="125.IBEditorWindowLastContentRect">{{731, 1073}, {143, 23}}</string>
         <string key="125.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="126.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="129.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2851,7 +2852,7 @@
         <string key="201.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="203.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="204.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-        <string key="205.IBEditorWindowLastContentRect">{{822, 893}, {240, 243}}</string>
+        <string key="205.IBEditorWindowLastContentRect">{{569, 893}, {240, 243}}</string>
         <string key="205.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="206.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="207.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2865,12 +2866,12 @@
         <string key="23.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="236.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="239.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-        <string key="24.IBEditorWindowLastContentRect">{{916, 1033}, {194, 103}}</string>
+        <string key="24.IBEditorWindowLastContentRect">{{663, 1033}, {194, 103}}</string>
         <string key="24.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-        <string key="29.IBEditorWindowLastContentRect">{{638, 1136}, {410, 20}}</string>
+        <string key="29.IBEditorWindowLastContentRect">{{385, 1136}, {410, 20}}</string>
         <string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="295.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-        <string key="296.IBEditorWindowLastContentRect">{{866, 793}, {234, 343}}</string>
+        <string key="296.IBEditorWindowLastContentRect">{{613, 793}, {234, 343}}</string>
         <string key="296.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="297.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="298.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2880,9 +2881,9 @@
         <string key="350.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="351.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="354.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-        <string key="371.IBEditorWindowLastContentRect">{{21, 623}, {776, 410}}</string>
+        <string key="371.IBEditorWindowLastContentRect">{{189, 598}, {776, 410}}</string>
         <string key="371.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-        <string key="371.IBWindowTemplateEditedContentRect">{{21, 623}, {776, 410}}</string>
+        <string key="371.IBWindowTemplateEditedContentRect">{{189, 598}, {776, 410}}</string>
         <boolean value="NO" key="371.NSWindowTemplate.visibleAtLaunch"/>
         <boolean value="YES" key="371.windowTemplate.hasMinSize"/>
         <string key="371.windowTemplate.minSize">{664, 308}</string>
@@ -2899,7 +2900,7 @@
         <string key="465.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="466.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="490.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-        <string key="491.IBEditorWindowLastContentRect">{{987, 1013}, {296, 123}}</string>
+        <string key="491.IBEditorWindowLastContentRect">{{734, 1013}, {296, 123}}</string>
         <string key="491.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="492.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="494.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2908,25 +2909,23 @@
         <string key="57.IBEditorWindowLastContentRect">{{650, 923}, {240, 213}}</string>
         <string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-        <string key="586.IBEditorWindowLastContentRect">{{101, 1033}, {616, 0}}</string>
+        <string key="586.IBEditorWindowLastContentRect">{{269, 1008}, {616, 0}}</string>
         <string key="586.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="590.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="591.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="592.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="594.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-        <string key="594.designableToolbarItemIdentifier">MDSteamAppsRelocatorIdentifier</string>
         <boolean value="YES" key="594.toolbarItem.selectable"/>
         <string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="73.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="732.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-        <string key="732.designableToolbarItemIdentifier">MDOtherAppsHelperIdentifier</string>
         <boolean value="YES" key="732.toolbarItem.selectable"/>
         <string key="75.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="77.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="78.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="79.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="80.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-        <string key="81.IBEditorWindowLastContentRect">{{780, 803}, {204, 333}}</string>
+        <string key="81.IBEditorWindowLastContentRect">{{527, 803}, {204, 333}}</string>
         <string key="81.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="82.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
         <string key="83.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3139,36 +3138,11 @@
           </object>
         </object>
         <object class="IBPartialClassDescription">
-          <string key="className">MDController</string>
-          <string key="superclassName">NSObject</string>
-          <dictionary class="NSMutableDictionary" key="actions">
-            <string key="appControllerDidLoadNib:">id</string>
-            <string key="didSwitchToView:">id</string>
-          </dictionary>
-          <dictionary class="NSMutableDictionary" key="actionInfosByName">
-            <object class="IBActionInfo" key="appControllerDidLoadNib:">
-              <string key="name">appControllerDidLoadNib:</string>
-              <string key="candidateClassName">id</string>
-            </object>
-            <object class="IBActionInfo" key="didSwitchToView:">
-              <string key="name">didSwitchToView:</string>
-              <string key="candidateClassName">id</string>
-            </object>
-          </dictionary>
-          <object class="NSMutableDictionary" key="outlets">
-            <string key="NS.key.0">view</string>
-            <string key="NS.object.0">NSView</string>
-          </object>
-          <object class="NSMutableDictionary" key="toOneOutletInfosByName">
-            <string key="NS.key.0">view</string>
-            <object class="IBToOneOutletInfo" key="NS.object.0">
-              <string key="name">view</string>
-              <string key="candidateClassName">NSView</string>
-            </object>
-          </object>
+          <string key="className">MDDocumentController</string>
+          <string key="superclassName">NSDocumentController</string>
           <object class="IBClassDescriptionSource" key="sourceIdentifier">
             <string key="majorKey">IBProjectSource</string>
-            <string key="minorKey">SourceFinagler/MDController.h</string>
+            <string key="minorKey">SourceFinagler/MDDocumentController.h</string>
           </object>
         </object>
         <object class="IBPartialClassDescription">
@@ -3460,7 +3434,7 @@
         </object>
         <object class="IBPartialClassDescription">
           <string key="className">MDOtherAppsHelperController</string>
-          <string key="superclassName">MDController</string>
+          <string key="superclassName">MDViewController</string>
           <dictionary class="NSMutableDictionary" key="actions">
             <string key="helpApps:">id</string>
             <string key="launchGame:">id</string>
@@ -3594,7 +3568,7 @@
         </object>
         <object class="IBPartialClassDescription">
           <string key="className">MDSteamAppsRelocatorController</string>
-          <string key="superclassName">MDController</string>
+          <string key="superclassName">MDViewController</string>
           <dictionary class="NSMutableDictionary" key="actions">
             <string key="browse:">id</string>
             <string key="createSteamAppsShortcut:">id</string>
@@ -3658,6 +3632,25 @@
           </object>
         </object>
         <object class="IBPartialClassDescription">
+          <string key="className">MDViewController</string>
+          <string key="superclassName">NSViewController</string>
+          <object class="NSMutableDictionary" key="actions">
+            <string key="NS.key.0">didSwitchToView:</string>
+            <string key="NS.object.0">id</string>
+          </object>
+          <object class="NSMutableDictionary" key="actionInfosByName">
+            <string key="NS.key.0">didSwitchToView:</string>
+            <object class="IBActionInfo" key="NS.object.0">
+              <string key="name">didSwitchToView:</string>
+              <string key="candidateClassName">id</string>
+            </object>
+          </object>
+          <object class="IBClassDescriptionSource" key="sourceIdentifier">
+            <string key="majorKey">IBProjectSource</string>
+            <string key="minorKey">SourceFinagler/MDViewController.h</string>
+          </object>
+        </object>
+        <object class="IBPartialClassDescription">
           <string key="className">NSMenu</string>
           <object class="IBClassDescriptionSource" key="sourceIdentifier" id="1006181928">
             <string key="majorKey">IBProjectSource</string>
@@ -3680,10 +3673,6 @@
         </object>
         <object class="IBPartialClassDescription">
           <string key="className">NSPopUpButton</string>
-          <reference key="sourceIdentifier" ref="1006181928"/>
-        </object>
-        <object class="IBPartialClassDescription">
-          <string key="className">NSView</string>
           <reference key="sourceIdentifier" ref="1006181928"/>
         </object>
         <object class="IBPartialClassDescription">
@@ -4797,6 +4786,25 @@
           <string key="className">NSView</string>
           <string key="superclassName">NSResponder</string>
           <reference key="sourceIdentifier" ref="236443138"/>
+        </object>
+        <object class="IBPartialClassDescription">
+          <string key="className">NSViewController</string>
+          <string key="superclassName">NSResponder</string>
+          <object class="NSMutableDictionary" key="outlets">
+            <string key="NS.key.0">view</string>
+            <string key="NS.object.0">NSView</string>
+          </object>
+          <object class="NSMutableDictionary" key="toOneOutletInfosByName">
+            <string key="NS.key.0">view</string>
+            <object class="IBToOneOutletInfo" key="NS.object.0">
+              <string key="name">view</string>
+              <string key="candidateClassName">NSView</string>
+            </object>
+          </object>
+          <object class="IBClassDescriptionSource" key="sourceIdentifier">
+            <string key="majorKey">IBFrameworkSource</string>
+            <string key="minorKey">AppKit.framework/Headers/NSViewController.h</string>
+          </object>
         </object>
         <object class="IBPartialClassDescription">
           <string key="className">NSWindow</string>
