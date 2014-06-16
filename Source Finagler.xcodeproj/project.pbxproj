@@ -459,7 +459,7 @@
 		C1C2C548127CBCA0003B24F6 /* MDAppKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C11B275511BDE826004D4CC0 /* MDAppKitAdditions.m */; };
 		C1C2C549127CBCA0003B24F6 /* MDSteamAppsRelocatorController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1A16F5611C5351B008E5361 /* MDSteamAppsRelocatorController.m */; };
 		C1C2C54A127CBCA0003B24F6 /* MDOtherAppsHelperController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1A16F5D11C53539008E5361 /* MDOtherAppsHelperController.m */; };
-		C1C2C54B127CBCA0003B24F6 /* MDController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1A16F7F11C535F6008E5361 /* MDController.m */; };
+		C1C2C54B127CBCA0003B24F6 /* MDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1A16F7F11C535F6008E5361 /* MDViewController.m */; };
 		C1C2C54E127CBCA0003B24F6 /* MDProcessManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C12A93E311C9A3D9001D8E90 /* MDProcessManager.m */; };
 		C1C2C552127CBCA0003B24F6 /* MDTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1A117DD11D695EA008BBABD /* MDTableView.m */; };
 		C1C2C554127CBCA0003B24F6 /* MDUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BB6F5D11FCA90300B88BBE /* MDUserDefaults.m */; };
@@ -1231,8 +1231,8 @@
 		C1A16F5611C5351B008E5361 /* MDSteamAppsRelocatorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDSteamAppsRelocatorController.m; path = SourceFinagler/MDSteamAppsRelocatorController.m; sourceTree = "<group>"; };
 		C1A16F5C11C53539008E5361 /* MDOtherAppsHelperController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDOtherAppsHelperController.h; path = SourceFinagler/MDOtherAppsHelperController.h; sourceTree = "<group>"; };
 		C1A16F5D11C53539008E5361 /* MDOtherAppsHelperController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDOtherAppsHelperController.m; path = SourceFinagler/MDOtherAppsHelperController.m; sourceTree = "<group>"; };
-		C1A16F7E11C535F6008E5361 /* MDController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDController.h; path = SourceFinagler/MDController.h; sourceTree = "<group>"; };
-		C1A16F7F11C535F6008E5361 /* MDController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDController.m; path = SourceFinagler/MDController.m; sourceTree = "<group>"; };
+		C1A16F7E11C535F6008E5361 /* MDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDViewController.h; path = SourceFinagler/MDViewController.h; sourceTree = "<group>"; };
+		C1A16F7F11C535F6008E5361 /* MDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDViewController.m; path = SourceFinagler/MDViewController.m; sourceTree = "<group>"; };
 		C1ABAACC12562D8400CAAFEB /* INF.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = INF.icns; path = Resources/INF.icns; sourceTree = "<group>"; };
 		C1ABAB6712563BD800CAAFEB /* MDQuickLookPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDQuickLookPanel.h; path = SourceFinagler/MDQuickLookPanel.h; sourceTree = "<group>"; };
 		C1ABAB6812563BD800CAAFEB /* MDQuickLookPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDQuickLookPanel.m; path = SourceFinagler/MDQuickLookPanel.m; sourceTree = "<group>"; };
@@ -2125,8 +2125,8 @@
 		C11CE9BF119B7FE3000E26D2 /* Extras */ = {
 			isa = PBXGroup;
 			children = (
-				C1A16F7E11C535F6008E5361 /* MDController.h */,
-				C1A16F7F11C535F6008E5361 /* MDController.m */,
+				C1A16F7E11C535F6008E5361 /* MDViewController.h */,
+				C1A16F7F11C535F6008E5361 /* MDViewController.m */,
 				C11B274F11BDE7AD004D4CC0 /* MDFoundationAdditions.h */,
 				C11B275011BDE7AD004D4CC0 /* MDFoundationAdditions.m */,
 				C11B275411BDE826004D4CC0 /* MDAppKitAdditions.h */,
@@ -4550,7 +4550,7 @@
 				C1CAD293194F4D8C000B5549 /* TKImageExportController.m in Sources */,
 				C1C2C549127CBCA0003B24F6 /* MDSteamAppsRelocatorController.m in Sources */,
 				C1C2C54A127CBCA0003B24F6 /* MDOtherAppsHelperController.m in Sources */,
-				C1C2C54B127CBCA0003B24F6 /* MDController.m in Sources */,
+				C1C2C54B127CBCA0003B24F6 /* MDViewController.m in Sources */,
 				C1C2C54E127CBCA0003B24F6 /* MDProcessManager.m in Sources */,
 				C108FAF318A449F000ACA1F3 /* MDGeneralInspectorView.m in Sources */,
 				C1C2C552127CBCA0003B24F6 /* MDTableView.m in Sources */,
