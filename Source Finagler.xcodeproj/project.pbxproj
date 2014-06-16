@@ -545,7 +545,7 @@
 		C1CAD281194F4769000B5549 /* MDPrefsGeneral.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD27F194F4769000B5549 /* MDPrefsGeneral.xib */; };
 		C1CAD284194F4776000B5549 /* MDAboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD282194F4776000B5549 /* MDAboutWindow.xib */; };
 		C1CAD287194F47BF000B5549 /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD285194F47BF000B5549 /* schema.strings */; };
-		C1CAD28A194F4D16000B5549 /* TKDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CAD289194F4D16000B5549 /* TKDocumentController.m */; };
+		C1CAD28A194F4D16000B5549 /* MDDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CAD289194F4D16000B5549 /* MDDocumentController.m */; };
 		C1CAD28D194F4D2C000B5549 /* TKImageDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CAD28C194F4D2C000B5549 /* TKImageDocument.m */; };
 		C1CAD290194F4D63000B5549 /* TKImageDocumentAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CAD28F194F4D63000B5549 /* TKImageDocumentAccessoryViewController.m */; };
 		C1CAD293194F4D8C000B5549 /* TKImageExportController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CAD292194F4D8C000B5549 /* TKImageExportController.m */; };
@@ -1484,8 +1484,8 @@
 		C1CAD280194F4769000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDPrefsGeneral.xib; sourceTree = "<group>"; };
 		C1CAD283194F4776000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDAboutWindow.xib; sourceTree = "<group>"; };
 		C1CAD286194F47BF000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = SourceSpotlightImporter/en.lproj/schema.strings; sourceTree = "<group>"; };
-		C1CAD288194F4D16000B5549 /* TKDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKDocumentController.h; path = SourceFinagler/TKDocumentController.h; sourceTree = "<group>"; };
-		C1CAD289194F4D16000B5549 /* TKDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKDocumentController.m; path = SourceFinagler/TKDocumentController.m; sourceTree = "<group>"; };
+		C1CAD288194F4D16000B5549 /* MDDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDDocumentController.h; path = SourceFinagler/MDDocumentController.h; sourceTree = "<group>"; };
+		C1CAD289194F4D16000B5549 /* MDDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDDocumentController.m; path = SourceFinagler/MDDocumentController.m; sourceTree = "<group>"; };
 		C1CAD28B194F4D2C000B5549 /* TKImageDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageDocument.h; path = SourceFinagler/TKImageDocument.h; sourceTree = "<group>"; };
 		C1CAD28C194F4D2C000B5549 /* TKImageDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKImageDocument.m; path = SourceFinagler/TKImageDocument.m; sourceTree = "<group>"; };
 		C1CAD28E194F4D63000B5549 /* TKImageDocumentAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKImageDocumentAccessoryViewController.h; path = SourceFinagler/TKImageDocumentAccessoryViewController.h; sourceTree = "<group>"; };
@@ -2201,8 +2201,8 @@
 		C12F364312D7E5C500D28F26 /* TK Application stuff */ = {
 			isa = PBXGroup;
 			children = (
-				C1CAD288194F4D16000B5549 /* TKDocumentController.h */,
-				C1CAD289194F4D16000B5549 /* TKDocumentController.m */,
+				C1CAD288194F4D16000B5549 /* MDDocumentController.h */,
+				C1CAD289194F4D16000B5549 /* MDDocumentController.m */,
 				C116F88812D539C000551787 /* TKImageDocument */,
 			);
 			name = "TK Application stuff";
@@ -4603,7 +4603,7 @@
 				C174EED0128A49C000817F81 /* MDCopyOperationViewController.m in Sources */,
 				C12BFAE818EC9C6900BE8B29 /* TKImageBrowserItem.m in Sources */,
 				C108FAF718A459DF00ACA1F3 /* MDMoreInfoInspectorView.m in Sources */,
-				C1CAD28A194F4D16000B5549 /* TKDocumentController.m in Sources */,
+				C1CAD28A194F4D16000B5549 /* MDDocumentController.m in Sources */,
 				C12D372D12E14CD200397411 /* MDScopeBarView.m in Sources */,
 				C190888813932B2800656A78 /* VSGameAdditions.m in Sources */,
 				C1908B5813935CD000656A78 /* MDImageTextCell.m in Sources */,
