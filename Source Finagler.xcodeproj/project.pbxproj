@@ -81,6 +81,15 @@
 		C11B0BB118D4C767005B52C1 /* TKPrivateCPPInterfaces.h in Headers */ = {isa = PBXBuildFile; fileRef = C11B0BB018D4C6C2005B52C1 /* TKPrivateCPPInterfaces.h */; };
 		C11CA5E713A4E84D006CC348 /* MDCopyOperationSeparatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = C11CA5E613A4E84D006CC348 /* MDCopyOperationSeparatorView.m */; };
 		C11CA69813A4F9FB006CC348 /* MDCopyOperationContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = C11CA69713A4F9FB006CC348 /* MDCopyOperationContentView.m */; };
+		C11E9AA11895A52200A8FDAB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C11E9A9F1895A52200A8FDAB /* MainMenu.xib */; };
+		C11E9AA41895A54600A8FDAB /* MDSteamAppsRelocatorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C11E9AA21895A54600A8FDAB /* MDSteamAppsRelocatorController.xib */; };
+		C11E9AA71895A55C00A8FDAB /* MDOtherAppsHelperController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C11E9AA51895A55B00A8FDAB /* MDOtherAppsHelperController.xib */; };
+		C11F46F61898320500B84757 /* MDAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = C11F46F51898320500B84757 /* MDAppController.m */; };
+		C11F46F81898322200B84757 /* MDAppController.plist in Resources */ = {isa = PBXBuildFile; fileRef = C11F46F71898322200B84757 /* MDAppController.plist */; };
+		C11F475C189837A600B84757 /* MDPrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = C11F475B189837A600B84757 /* MDPrefsController.m */; };
+		C11F475E189837BD00B84757 /* MDPrefs.plist in Resources */ = {isa = PBXBuildFile; fileRef = C11F475D189837BD00B84757 /* MDPrefs.plist */; };
+		C11F4761189837CF00B84757 /* MDPrefsGeneralController.m in Sources */ = {isa = PBXBuildFile; fileRef = C11F4760189837CF00B84757 /* MDPrefsGeneralController.m */; };
+		C11F4764189837E600B84757 /* MDAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = C11F4763189837E600B84757 /* MDAboutWindowController.m */; };
 		C121966C18846A1B0073AC8F /* MDHLDocumentSnowLeopard.xib in Resources */ = {isa = PBXBuildFile; fileRef = C121966918846A1B0073AC8F /* MDHLDocumentSnowLeopard.xib */; };
 		C121966F188471C80073AC8F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C121966D188471C80073AC8F /* InfoPlist.strings */; };
 		C1224C2D13B06C95009AA0F4 /* SteamKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C140E63D13889A9400027DD6 /* SteamKit.framework */; };
@@ -454,7 +463,6 @@
 		C1C2C541127CBCA0003B24F6 /* NUC.icns in Resources */ = {isa = PBXBuildFile; fileRef = C15DD47C126AB93000E44BDB /* NUC.icns */; };
 		C1C2C542127CBCA0003B24F6 /* VTA.icns in Resources */ = {isa = PBXBuildFile; fileRef = C1C8E9EA1279A0CE00DAAF7C /* VTA.icns */; };
 		C1C2C544127CBCA0003B24F6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
-		C1C2C545127CBCA0003B24F6 /* MDAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* MDAppController.m */; };
 		C1C2C547127CBCA0003B24F6 /* MDFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C11B275011BDE7AD004D4CC0 /* MDFoundationAdditions.m */; };
 		C1C2C548127CBCA0003B24F6 /* MDAppKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C11B275511BDE826004D4CC0 /* MDAppKitAdditions.m */; };
 		C1C2C549127CBCA0003B24F6 /* MDSteamAppsRelocatorController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1A16F5611C5351B008E5361 /* MDSteamAppsRelocatorController.m */; };
@@ -484,7 +492,6 @@
 		C1C2C56F127CBCA0003B24F6 /* MDCopyOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C12518123A0C18004674B4 /* MDCopyOperation.m */; };
 		C1C2C570127CBCA0003B24F6 /* MDCopyOperationView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C1251B123A0C32004674B4 /* MDCopyOperationView.m */; };
 		C1C2C571127CBCA0003B24F6 /* MDRolloverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C1251D123A0C32004674B4 /* MDRolloverButton.m */; };
-		C1C2C572127CBCA0003B24F6 /* MDAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C12526123A0C81004674B4 /* MDAboutWindowController.m */; };
 		C1C2C574127CBCA0003B24F6 /* MDGCFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C126AA123A7FC3004674B4 /* MDGCFDocument.m */; };
 		C1C2C575127CBCA0003B24F6 /* MDBSPDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C126B3123A807F004674B4 /* MDBSPDocument.m */; };
 		C1C2C576127CBCA0003B24F6 /* MDNCFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C126B7123A80BB004674B4 /* MDNCFDocument.m */; };
@@ -492,8 +499,6 @@
 		C1C2C578127CBCA0003B24F6 /* MDVPKDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C126BF123A8155004674B4 /* MDVPKDocument.m */; };
 		C1C2C579127CBCA0003B24F6 /* MDWADDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C126C3123A8217004674B4 /* MDWADDocument.m */; };
 		C1C2C57A127CBCA0003B24F6 /* MDXZPDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C126C7123A8250004674B4 /* MDXZPDocument.m */; };
-		C1C2C57B127CBCA0003B24F6 /* MDPrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14DB238123D8C57002D87FE /* MDPrefsController.m */; };
-		C1C2C57C127CBCA0003B24F6 /* MDPrefsGeneralController.m in Sources */ = {isa = PBXBuildFile; fileRef = C14DB243123D8EF5002D87FE /* MDPrefsGeneralController.m */; };
 		C1C2C57D127CBCA0003B24F6 /* MDTransparentView.m in Sources */ = {isa = PBXBuildFile; fileRef = C164771E124E8C470062B943 /* MDTransparentView.m */; };
 		C1C2C581127CBCA0003B24F6 /* MDPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C15B07C41254F46800F722B7 /* MDPreviewViewController.m */; };
 		C1C2C584127CBCA0003B24F6 /* MDQuickLookPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = C1ABAB6812563BD800CAAFEB /* MDQuickLookPanel.m */; };
@@ -528,9 +533,6 @@
 		C1CA2B2913A2E36000235C98 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA2B2013A2E32300235C98 /* QuickLook.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1CA2B2B13A2E38D00235C98 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA2B2A13A2E38D00235C98 /* WebKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1CA329213A4576E00235C98 /* TextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C17319B21298D11400C29732 /* TextureKit.framework */; };
-		C1CAD257194F4559000B5549 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD255194F4559000B5549 /* MainMenu.xib */; };
-		C1CAD25A194F45A9000B5549 /* MDSteamAppsRelocatorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD258194F45A9000B5549 /* MDSteamAppsRelocatorController.xib */; };
-		C1CAD25D194F45EA000B5549 /* MDOtherAppsHelperController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD25B194F45EA000B5549 /* MDOtherAppsHelperController.xib */; };
 		C1CAD260194F4619000B5549 /* TKImageDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD25E194F4619000B5549 /* TKImageDocument.xib */; };
 		C1CAD263194F4642000B5549 /* TKImageDocumentAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD261194F4642000B5549 /* TKImageDocumentAccessoryView.xib */; };
 		C1CAD266194F4661000B5549 /* TKImageExportPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD264194F4661000B5549 /* TKImageExportPanel.xib */; };
@@ -541,9 +543,6 @@
 		C1CAD275194F46FD000B5549 /* MDQuickLook.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD273194F46FD000B5549 /* MDQuickLook.xib */; };
 		C1CAD278194F4723000B5549 /* MDInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD276194F4723000B5549 /* MDInspector.xib */; };
 		C1CAD27B194F473B000B5549 /* MDViewOptions.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD279194F473B000B5549 /* MDViewOptions.xib */; };
-		C1CAD27E194F4757000B5549 /* MDPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD27C194F4757000B5549 /* MDPrefs.xib */; };
-		C1CAD281194F4769000B5549 /* MDPrefsGeneralController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD27F194F4769000B5549 /* MDPrefsGeneralController.xib */; };
-		C1CAD284194F4776000B5549 /* MDAboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD282194F4776000B5549 /* MDAboutWindow.xib */; };
 		C1CAD287194F47BF000B5549 /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1CAD285194F47BF000B5549 /* schema.strings */; };
 		C1CAD28A194F4D16000B5549 /* MDDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CAD289194F4D16000B5549 /* MDDocumentController.m */; };
 		C1CAD28D194F4D2C000B5549 /* TKImageDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CAD28C194F4D2C000B5549 /* TKImageDocument.m */; };
@@ -609,11 +608,12 @@
 		C1F1579F13969EAB00E32057 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1A112E511D66720008BBABD /* CoreServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C1F157DE1396B05700E32057 /* HKFoundationAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F157DC1396B05700E32057 /* HKFoundationAdditions.h */; };
 		C1F157DF1396B05700E32057 /* HKFoundationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F157DD1396B05700E32057 /* HKFoundationAdditions.m */; };
-		C1F79B70194F73E400C466E5 /* MDPrefs.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1F79B6F194F73E400C466E5 /* MDPrefs.plist */; };
-		C1F79B72194F840500C466E5 /* MDAppController.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1F79B71194F840500C466E5 /* MDAppController.plist */; };
 		C1F9282C16492B790089FBA4 /* caution.png in Resources */ = {isa = PBXBuildFile; fileRef = C1F9282B16492B790089FBA4 /* caution.png */; };
 		C1FA236E18FF1A9F00BF8919 /* TKError.h in Headers */ = {isa = PBXBuildFile; fileRef = C120D7BF18FF174800D62C41 /* TKError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1FA236F18FF1AA500BF8919 /* TKError.m in Sources */ = {isa = PBXBuildFile; fileRef = C120D7C018FF174800D62C41 /* TKError.m */; };
+		C1FDD6BA189482E800CFEE73 /* MDPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FDD6B8189482E800CFEE73 /* MDPrefs.xib */; };
+		C1FDD6BD1894831100CFEE73 /* MDPrefsGeneralController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FDD6BB1894831100CFEE73 /* MDPrefsGeneralController.xib */; };
+		C1FDD6C01894833000CFEE73 /* MDAboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FDD6BE1894833000CFEE73 /* MDAboutWindow.xib */; };
 		C1FEA9B2125E889F00CA78FF /* posh.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FEA948125E739700CA78FF /* posh.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1FEA9B3125E88A000CA78FF /* posh.c in Sources */ = {isa = PBXBuildFile; fileRef = C1FEA947125E739700CA78FF /* posh.c */; };
 		C1FEA9B4125E88A400CA78FF /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = C1FEA8BE125E5D7E00CA78FF /* Debug.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -949,8 +949,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		256AC3D80F4B6AC300CF3369 /* MDAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MDAppController.h; path = SourceFinagler/MDAppController.h; sourceTree = "<group>"; };
-		256AC3D90F4B6AC300CF3369 /* MDAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MDAppController.m; path = SourceFinagler/MDAppController.m; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* SourceFinagler_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SourceFinagler_Prefix.pch; path = SourceFinagler/SourceFinagler_Prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SourceFinagler/main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* SourceFinagler.plist */ = {isa = PBXFileReference; explicitFileType = text.plist.info; fileEncoding = 4; name = SourceFinagler.plist; path = SourceFinagler/SourceFinagler.plist; sourceTree = "<group>"; };
@@ -988,6 +986,19 @@
 		C11CA69613A4F9FB006CC348 /* MDCopyOperationContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCopyOperationContentView.h; path = SourceFinagler/MDCopyOperationContentView.h; sourceTree = "<group>"; };
 		C11CA69713A4F9FB006CC348 /* MDCopyOperationContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCopyOperationContentView.m; path = SourceFinagler/MDCopyOperationContentView.m; sourceTree = "<group>"; };
 		C11D81221948C4BF003EDCC8 /* addoninfo.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = addoninfo.txt; path = SteamKit/addoninfo.txt; sourceTree = "<group>"; };
+		C11E9AA01895A52200A8FDAB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		C11E9AA31895A54600A8FDAB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDSteamAppsRelocatorController.xib; sourceTree = "<group>"; };
+		C11E9AA61895A55B00A8FDAB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDOtherAppsHelperController.xib; sourceTree = "<group>"; };
+		C11F46F41898320500B84757 /* MDAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MDAppController.h; path = SourceFinagler/MDAppController.h; sourceTree = "<group>"; };
+		C11F46F51898320500B84757 /* MDAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MDAppController.m; path = SourceFinagler/MDAppController.m; sourceTree = "<group>"; };
+		C11F46F71898322200B84757 /* MDAppController.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = MDAppController.plist; path = SourceFinagler/MDAppController.plist; sourceTree = "<group>"; };
+		C11F475A189837A600B84757 /* MDPrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPrefsController.h; path = SourceFinagler/MDPrefsController.h; sourceTree = "<group>"; };
+		C11F475B189837A600B84757 /* MDPrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPrefsController.m; path = SourceFinagler/MDPrefsController.m; sourceTree = "<group>"; };
+		C11F475D189837BD00B84757 /* MDPrefs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = MDPrefs.plist; path = SourceFinagler/MDPrefs.plist; sourceTree = "<group>"; };
+		C11F475F189837CF00B84757 /* MDPrefsGeneralController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPrefsGeneralController.h; path = SourceFinagler/MDPrefsGeneralController.h; sourceTree = "<group>"; };
+		C11F4760189837CF00B84757 /* MDPrefsGeneralController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPrefsGeneralController.m; path = SourceFinagler/MDPrefsGeneralController.m; sourceTree = "<group>"; };
+		C11F4762189837E600B84757 /* MDAboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDAboutWindowController.h; path = SourceFinagler/MDAboutWindowController.h; sourceTree = "<group>"; };
+		C11F4763189837E600B84757 /* MDAboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDAboutWindowController.m; path = SourceFinagler/MDAboutWindowController.m; sourceTree = "<group>"; };
 		C120D7BF18FF174800D62C41 /* TKError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TKError.h; path = TextureKit/TKError.h; sourceTree = "<group>"; };
 		C120D7C018FF174800D62C41 /* TKError.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TKError.m; path = TextureKit/TKError.m; sourceTree = "<group>"; };
 		C121966A18846A1B0073AC8F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDHLDocumentSnowLeopard.xib; sourceTree = "<group>"; };
@@ -1089,10 +1100,6 @@
 		C14CCFA3123D33C500610DA6 /* FGD.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = FGD.icns; path = Resources/FGD.icns; sourceTree = "<group>"; };
 		C14CCFA7123D436600610DA6 /* CFG.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CFG.icns; path = Resources/CFG.icns; sourceTree = "<group>"; };
 		C14D206C121B40BC00AB4F96 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
-		C14DB237123D8C57002D87FE /* MDPrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPrefsController.h; path = SourceFinagler/MDPrefsController.h; sourceTree = "<group>"; };
-		C14DB238123D8C57002D87FE /* MDPrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPrefsController.m; path = SourceFinagler/MDPrefsController.m; sourceTree = "<group>"; };
-		C14DB242123D8EF5002D87FE /* MDPrefsGeneralController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPrefsGeneralController.h; path = SourceFinagler/MDPrefsGeneralController.h; sourceTree = "<group>"; };
-		C14DB243123D8EF5002D87FE /* MDPrefsGeneralController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPrefsGeneralController.m; path = SourceFinagler/MDPrefsGeneralController.m; sourceTree = "<group>"; };
 		C15048C218EB1D5600D39938 /* TKBlueBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKBlueBackgroundView.h; path = SourceFinagler/TKBlueBackgroundView.h; sourceTree = "<group>"; };
 		C15048C318EB1D5600D39938 /* TKBlueBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TKBlueBackgroundView.m; path = SourceFinagler/TKBlueBackgroundView.m; sourceTree = "<group>"; };
 		C15048C418EB1D5600D39938 /* TKTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TKTextField.h; path = SourceFinagler/TKTextField.h; sourceTree = "<group>"; };
@@ -1369,8 +1376,6 @@
 		C1C1251B123A0C32004674B4 /* MDCopyOperationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCopyOperationView.m; path = SourceFinagler/MDCopyOperationView.m; sourceTree = "<group>"; };
 		C1C1251C123A0C32004674B4 /* MDRolloverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDRolloverButton.h; path = SourceFinagler/MDRolloverButton.h; sourceTree = "<group>"; };
 		C1C1251D123A0C32004674B4 /* MDRolloverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDRolloverButton.m; path = SourceFinagler/MDRolloverButton.m; sourceTree = "<group>"; };
-		C1C12525123A0C81004674B4 /* MDAboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDAboutWindowController.h; path = SourceFinagler/MDAboutWindowController.h; sourceTree = "<group>"; };
-		C1C12526123A0C81004674B4 /* MDAboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDAboutWindowController.m; path = SourceFinagler/MDAboutWindowController.m; sourceTree = "<group>"; };
 		C1C1252B123A0CAE004674B4 /* Source Finagler.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.sdef; name = "Source Finagler.sdef"; path = "SourceFinagler/Source Finagler.sdef"; sourceTree = "<group>"; };
 		C1C12634123A54F0004674B4 /* HL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C126A9123A7FC3004674B4 /* MDGCFDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MDGCFDocument.h; path = SourceFinagler/MDGCFDocument.h; sourceTree = "<group>"; };
@@ -1469,9 +1474,6 @@
 		C1CA2BDA13A2E3E600235C98 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		C1CA2BDC13A2E3E600235C98 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C1CA2BDE13A2E3E600235C98 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		C1CAD256194F4559000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		C1CAD259194F45A9000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDSteamAppsRelocatorController.xib; sourceTree = "<group>"; };
-		C1CAD25C194F45EA000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDOtherAppsHelperController.xib; sourceTree = "<group>"; };
 		C1CAD25F194F4619000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/TKImageDocument.xib; sourceTree = "<group>"; };
 		C1CAD262194F4642000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/TKImageDocumentAccessoryView.xib; sourceTree = "<group>"; };
 		C1CAD265194F4661000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/TKImageExportPanel.xib; sourceTree = "<group>"; };
@@ -1482,9 +1484,6 @@
 		C1CAD274194F46FD000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDQuickLook.xib; sourceTree = "<group>"; };
 		C1CAD277194F4723000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDInspector.xib; sourceTree = "<group>"; };
 		C1CAD27A194F473B000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDViewOptions.xib; sourceTree = "<group>"; };
-		C1CAD27D194F4757000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDPrefs.xib; sourceTree = "<group>"; };
-		C1CAD280194F4769000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDPrefsGeneralController.xib; sourceTree = "<group>"; };
-		C1CAD283194F4776000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDAboutWindow.xib; sourceTree = "<group>"; };
 		C1CAD286194F47BF000B5549 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = SourceSpotlightImporter/en.lproj/schema.strings; sourceTree = "<group>"; };
 		C1CAD288194F4D16000B5549 /* MDDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDDocumentController.h; path = SourceFinagler/MDDocumentController.h; sourceTree = "<group>"; };
 		C1CAD289194F4D16000B5549 /* MDDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDDocumentController.m; path = SourceFinagler/MDDocumentController.m; sourceTree = "<group>"; };
@@ -1550,10 +1549,11 @@
 		C1F153E21396699600E32057 /* HKXZPFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HKXZPFile.mm; sourceTree = "<group>"; };
 		C1F157DC1396B05700E32057 /* HKFoundationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKFoundationAdditions.h; path = HLKit/HKFoundationAdditions.h; sourceTree = "<group>"; };
 		C1F157DD1396B05700E32057 /* HKFoundationAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKFoundationAdditions.m; path = HLKit/HKFoundationAdditions.m; sourceTree = "<group>"; };
-		C1F79B6F194F73E400C466E5 /* MDPrefs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = MDPrefs.plist; path = SourceFinagler/MDPrefs.plist; sourceTree = "<group>"; };
-		C1F79B71194F840500C466E5 /* MDAppController.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = MDAppController.plist; path = SourceFinagler/MDAppController.plist; sourceTree = "<group>"; };
 		C1F9282B16492B790089FBA4 /* caution.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = caution.png; path = Resources/caution.png; sourceTree = "<group>"; };
 		C1FA237018FF23F900BF8919 /* TextureKit_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextureKit_Prefix.pch; path = TextureKit/TextureKit_Prefix.pch; sourceTree = "<group>"; };
+		C1FDD6B9189482E800CFEE73 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDPrefs.xib; sourceTree = "<group>"; };
+		C1FDD6BC1894831100CFEE73 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDPrefsGeneralController.xib; sourceTree = "<group>"; };
+		C1FDD6BF1894833000CFEE73 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = SourceFinagler/en.lproj/MDAboutWindow.xib; sourceTree = "<group>"; };
 		C1FEA7EA125E5C9600CA78FF /* NVCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NVCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1FEA7EB125E5C9600CA78FF /* NVCore-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "NVCore-Info.plist"; path = "NVTextureTools/NVCore-Info.plist"; sourceTree = "<group>"; };
 		C1FEA8BB125E5D7E00CA78FF /* Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Array.h; path = NVTextureTools/nvcore/Array.h; sourceTree = "<group>"; };
@@ -1874,12 +1874,12 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				256AC3D80F4B6AC300CF3369 /* MDAppController.h */,
-				256AC3D90F4B6AC300CF3369 /* MDAppController.m */,
-				C1F79B71194F840500C466E5 /* MDAppController.plist */,
-				C1CAD255194F4559000B5549 /* MainMenu.xib */,
+				C11F46F41898320500B84757 /* MDAppController.h */,
+				C11F46F51898320500B84757 /* MDAppController.m */,
+				C11F46F71898322200B84757 /* MDAppController.plist */,
+				C11E9A9F1895A52200A8FDAB /* MainMenu.xib */,
 				C14A17C9186CB6580026FD0C /* Localizable.strings */,
-				C11DFB5B18A6C1F7003F3AA5 /* Source Finagler */,
+				C1A9860F17BE8F510043744B /* Source Finagler */,
 				C101A6D21252817100BD8091 /* Image Finagler */,
 				C1C1243F1239F3DD004674B4 /* GCF Finagler */,
 				C14DB21C123D8BCD002D87FE /* MDPrefs */,
@@ -2010,7 +2010,7 @@
 			children = (
 				C1A16F5511C5351B008E5361 /* MDSteamAppsRelocatorController.h */,
 				C1A16F5611C5351B008E5361 /* MDSteamAppsRelocatorController.m */,
-				C1CAD258194F45A9000B5549 /* MDSteamAppsRelocatorController.xib */,
+				C11E9AA21895A54600A8FDAB /* MDSteamAppsRelocatorController.xib */,
 			);
 			name = MDSteamAppsRelocator;
 			sourceTree = "<group>";
@@ -2020,7 +2020,7 @@
 			children = (
 				C1A16F5C11C53539008E5361 /* MDOtherAppsHelperController.h */,
 				C1A16F5D11C53539008E5361 /* MDOtherAppsHelperController.m */,
-				C1CAD25B194F45EA000B5549 /* MDOtherAppsHelperController.xib */,
+				C11E9AA51895A55B00A8FDAB /* MDOtherAppsHelperController.xib */,
 				C1A117DC11D695EA008BBABD /* MDTableView.h */,
 				C1A117DD11D695EA008BBABD /* MDTableView.m */,
 				C1908B5613935CD000656A78 /* MDImageTextCell.h */,
@@ -2144,15 +2144,6 @@
 				C1BB6F5D11FCA90300B88BBE /* MDUserDefaults.m */,
 			);
 			name = Extras;
-			sourceTree = "<group>";
-		};
-		C11DFB5B18A6C1F7003F3AA5 /* Source Finagler */ = {
-			isa = PBXGroup;
-			children = (
-				C10355FB11C5AA930054740E /* MDSteamAppsRelocator */,
-				C10355FC11C5AAAF0054740E /* MDOtherAppsHelper */,
-			);
-			name = "Source Finagler";
 			sourceTree = "<group>";
 		};
 		C11DFB5C18A6C208003F3AA5 /* images */ = {
@@ -2324,10 +2315,10 @@
 		C14DB21C123D8BCD002D87FE /* MDPrefs */ = {
 			isa = PBXGroup;
 			children = (
-				C14DB237123D8C57002D87FE /* MDPrefsController.h */,
-				C14DB238123D8C57002D87FE /* MDPrefsController.m */,
-				C1CAD27C194F4757000B5549 /* MDPrefs.xib */,
-				C1F79B6F194F73E400C466E5 /* MDPrefs.plist */,
+				C11F475A189837A600B84757 /* MDPrefsController.h */,
+				C11F475B189837A600B84757 /* MDPrefsController.m */,
+				C1FDD6B8189482E800CFEE73 /* MDPrefs.xib */,
+				C11F475D189837BD00B84757 /* MDPrefs.plist */,
 				C14DB37E123DC9E7002D87FE /* General */,
 			);
 			name = MDPrefs;
@@ -2336,9 +2327,9 @@
 		C14DB37E123DC9E7002D87FE /* General */ = {
 			isa = PBXGroup;
 			children = (
-				C14DB242123D8EF5002D87FE /* MDPrefsGeneralController.h */,
-				C14DB243123D8EF5002D87FE /* MDPrefsGeneralController.m */,
-				C1CAD27F194F4769000B5549 /* MDPrefsGeneralController.xib */,
+				C11F475F189837CF00B84757 /* MDPrefsGeneralController.h */,
+				C11F4760189837CF00B84757 /* MDPrefsGeneralController.m */,
+				C1FDD6BB1894831100CFEE73 /* MDPrefsGeneralController.xib */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -2553,6 +2544,15 @@
 			);
 			name = bc7;
 			path = NVTextureTools/nvtt/bc7;
+			sourceTree = "<group>";
+		};
+		C1A9860F17BE8F510043744B /* Source Finagler */ = {
+			isa = PBXGroup;
+			children = (
+				C10355FB11C5AA930054740E /* MDSteamAppsRelocator */,
+				C10355FC11C5AAAF0054740E /* MDOtherAppsHelper */,
+			);
+			name = "Source Finagler";
 			sourceTree = "<group>";
 		};
 		C1AF851C12C62AFE00027B75 /* Additions */ = {
@@ -2919,9 +2919,9 @@
 		C1C12521123A0C5D004674B4 /* MDAboutWindow */ = {
 			isa = PBXGroup;
 			children = (
-				C1C12525123A0C81004674B4 /* MDAboutWindowController.h */,
-				C1C12526123A0C81004674B4 /* MDAboutWindowController.m */,
-				C1CAD282194F4776000B5549 /* MDAboutWindow.xib */,
+				C11F4762189837E600B84757 /* MDAboutWindowController.h */,
+				C11F4763189837E600B84757 /* MDAboutWindowController.m */,
+				C1FDD6BE1894833000CFEE73 /* MDAboutWindow.xib */,
 			);
 			name = MDAboutWindow;
 			sourceTree = "<group>";
@@ -4262,9 +4262,9 @@
 				C1C2C4FE127CBCA0003B24F6 /* WAD.icns in Resources */,
 				C1C2C4FF127CBCA0003B24F6 /* XZP.icns in Resources */,
 				C1C2C505127CBCA0003B24F6 /* MDHLDocumentLeopard.xib in Resources */,
-				C1F79B70194F73E400C466E5 /* MDPrefs.plist in Resources */,
+				C11F475E189837BD00B84757 /* MDPrefs.plist in Resources */,
 				C1622E2C1888777D00723096 /* sourceAddonIndicator.png in Resources */,
-				C1CAD25A194F45A9000B5549 /* MDSteamAppsRelocatorController.xib in Resources */,
+				C11E9AA41895A54600A8FDAB /* MDSteamAppsRelocatorController.xib in Resources */,
 				C1CAD278194F4723000B5549 /* MDInspector.xib in Resources */,
 				C121966C18846A1B0073AC8F /* MDHLDocumentSnowLeopard.xib in Resources */,
 				C1C2C50A127CBCA0003B24F6 /* Source Finagler.sdef in Resources */,
@@ -4272,7 +4272,7 @@
 				C1C2C50D127CBCA0003B24F6 /* VMT.icns in Resources */,
 				C1C2C50E127CBCA0003B24F6 /* VCD.icns in Resources */,
 				C1C2C50F127CBCA0003B24F6 /* BIK.icns in Resources */,
-				C1CAD284194F4776000B5549 /* MDAboutWindow.xib in Resources */,
+				C1FDD6C01894833000CFEE73 /* MDAboutWindow.xib in Resources */,
 				C1CAD263194F4642000B5549 /* TKImageDocumentAccessoryView.xib in Resources */,
 				C1C2C510127CBCA0003B24F6 /* LST.icns in Resources */,
 				C1C2C511127CBCA0003B24F6 /* MDL.icns in Resources */,
@@ -4285,7 +4285,7 @@
 				C1C2C517127CBCA0003B24F6 /* VVD.icns in Resources */,
 				C1C2C518127CBCA0003B24F6 /* QC.icns in Resources */,
 				C1C2C519127CBCA0003B24F6 /* ANI.icns in Resources */,
-				C1CAD25D194F45EA000B5549 /* MDOtherAppsHelperController.xib in Resources */,
+				C11E9AA71895A55C00A8FDAB /* MDOtherAppsHelperController.xib in Resources */,
 				C1CAD269194F4672000B5549 /* TKImageExportPreviewView.xib in Resources */,
 				C1C2C51A127CBCA0003B24F6 /* FGD.icns in Resources */,
 				C1C2C51B127CBCA0003B24F6 /* CFG.icns in Resources */,
@@ -4297,7 +4297,7 @@
 				C1C2C523127CBCA0003B24F6 /* VDM.icns in Resources */,
 				C1C2C524127CBCA0003B24F6 /* DAT.icns in Resources */,
 				C1C2C526127CBCA0003B24F6 /* AIN.icns in Resources */,
-				C1F79B72194F840500C466E5 /* MDAppController.plist in Resources */,
+				C11F46F81898322200B84757 /* MDAppController.plist in Resources */,
 				C1C2C527127CBCA0003B24F6 /* IMAGE.icns in Resources */,
 				C1C2C528127CBCA0003B24F6 /* PCF.icns in Resources */,
 				C1C2C529127CBCA0003B24F6 /* SND.icns in Resources */,
@@ -4305,7 +4305,7 @@
 				C1CAD260194F4619000B5549 /* TKImageDocument.xib in Resources */,
 				C1C2C52B127CBCA0003B24F6 /* sound.png in Resources */,
 				C1C2C535127CBCA0003B24F6 /* pause.png in Resources */,
-				C1CAD257194F4559000B5549 /* MainMenu.xib in Resources */,
+				C11E9AA11895A52200A8FDAB /* MainMenu.xib in Resources */,
 				C1C2C538127CBCA0003B24F6 /* SCR.icns in Resources */,
 				C1C2C539127CBCA0003B24F6 /* INF.icns in Resources */,
 				C1C2C53A127CBCA0003B24F6 /* VFE.icns in Resources */,
@@ -4348,10 +4348,10 @@
 				C10A8A2616026F6F00791BEC /* delete.png in Resources */,
 				C1BEA200161B788F00464170 /* MMT.icns in Resources */,
 				C1BEA202161B789A00464170 /* PRT.icns in Resources */,
-				C1CAD281194F4769000B5549 /* MDPrefsGeneralController.xib in Resources */,
+				C1FDD6BD1894831100CFEE73 /* MDPrefsGeneralController.xib in Resources */,
 				C1BEA204161B78A400464170 /* SGA.icns in Resources */,
 				C1F9282C16492B790089FBA4 /* caution.png in Resources */,
-				C1CAD27E194F4757000B5549 /* MDPrefs.xib in Resources */,
+				C1FDD6BA189482E800CFEE73 /* MDPrefs.xib in Resources */,
 				C126830918C3B52100BAB3E2 /* TGA_32_uncompressed.tga in Resources */,
 				C19D4B5718EB3E180061587F /* viewFaceBrowserCapsuleStyle.pdf in Resources */,
 			);
@@ -4560,7 +4560,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1C2C544127CBCA0003B24F6 /* main.m in Sources */,
-				C1C2C545127CBCA0003B24F6 /* MDAppController.m in Sources */,
+				C11F46F61898320500B84757 /* MDAppController.m in Sources */,
 				C1C2C547127CBCA0003B24F6 /* MDFoundationAdditions.m in Sources */,
 				C1C2C548127CBCA0003B24F6 /* MDAppKitAdditions.m in Sources */,
 				C1CAD293194F4D8C000B5549 /* TKImageExportController.m in Sources */,
@@ -4599,7 +4599,7 @@
 				C1C2C570127CBCA0003B24F6 /* MDCopyOperationView.m in Sources */,
 				C1C2C571127CBCA0003B24F6 /* MDRolloverButton.m in Sources */,
 				C13757DB185BCD6A00CDDC95 /* MDVPKViewController.m in Sources */,
-				C1C2C572127CBCA0003B24F6 /* MDAboutWindowController.m in Sources */,
+				C11F4764189837E600B84757 /* MDAboutWindowController.m in Sources */,
 				C1C2C574127CBCA0003B24F6 /* MDGCFDocument.m in Sources */,
 				C108FAFA18A45A1E00ACA1F3 /* MDPreviewInspectorView.m in Sources */,
 				C1C2C575127CBCA0003B24F6 /* MDBSPDocument.m in Sources */,
@@ -4608,8 +4608,8 @@
 				C1C2C578127CBCA0003B24F6 /* MDVPKDocument.m in Sources */,
 				C1C2C579127CBCA0003B24F6 /* MDWADDocument.m in Sources */,
 				C1C2C57A127CBCA0003B24F6 /* MDXZPDocument.m in Sources */,
-				C1C2C57B127CBCA0003B24F6 /* MDPrefsController.m in Sources */,
-				C1C2C57C127CBCA0003B24F6 /* MDPrefsGeneralController.m in Sources */,
+				C11F475C189837A600B84757 /* MDPrefsController.m in Sources */,
+				C11F4761189837CF00B84757 /* MDPrefsGeneralController.m in Sources */,
 				C1C2C57D127CBCA0003B24F6 /* MDTransparentView.m in Sources */,
 				C1C2C581127CBCA0003B24F6 /* MDPreviewViewController.m in Sources */,
 				C1C2C584127CBCA0003B24F6 /* MDQuickLookPanel.m in Sources */,
@@ -4906,6 +4906,30 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		C11E9A9F1895A52200A8FDAB /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C11E9AA01895A52200A8FDAB /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		C11E9AA21895A54600A8FDAB /* MDSteamAppsRelocatorController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C11E9AA31895A54600A8FDAB /* en */,
+			);
+			name = MDSteamAppsRelocatorController.xib;
+			sourceTree = "<group>";
+		};
+		C11E9AA51895A55B00A8FDAB /* MDOtherAppsHelperController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C11E9AA61895A55B00A8FDAB /* en */,
+			);
+			name = MDOtherAppsHelperController.xib;
+			sourceTree = "<group>";
+		};
 		C121966918846A1B0073AC8F /* MDHLDocumentSnowLeopard.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -4990,30 +5014,6 @@
 			name = MDHLDocumentLeopard.xib;
 			sourceTree = "<group>";
 		};
-		C1CAD255194F4559000B5549 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C1CAD256194F4559000B5549 /* en */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-		C1CAD258194F45A9000B5549 /* MDSteamAppsRelocatorController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C1CAD259194F45A9000B5549 /* en */,
-			);
-			name = MDSteamAppsRelocatorController.xib;
-			sourceTree = "<group>";
-		};
-		C1CAD25B194F45EA000B5549 /* MDOtherAppsHelperController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C1CAD25C194F45EA000B5549 /* en */,
-			);
-			name = MDOtherAppsHelperController.xib;
-			sourceTree = "<group>";
-		};
 		C1CAD25E194F4619000B5549 /* TKImageDocument.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -5094,36 +5094,36 @@
 			name = MDViewOptions.xib;
 			sourceTree = "<group>";
 		};
-		C1CAD27C194F4757000B5549 /* MDPrefs.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C1CAD27D194F4757000B5549 /* en */,
-			);
-			name = MDPrefs.xib;
-			sourceTree = "<group>";
-		};
-		C1CAD27F194F4769000B5549 /* MDPrefsGeneralController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C1CAD280194F4769000B5549 /* en */,
-			);
-			name = MDPrefsGeneralController.xib;
-			sourceTree = "<group>";
-		};
-		C1CAD282194F4776000B5549 /* MDAboutWindow.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C1CAD283194F4776000B5549 /* en */,
-			);
-			name = MDAboutWindow.xib;
-			sourceTree = "<group>";
-		};
 		C1CAD285194F47BF000B5549 /* schema.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C1CAD286194F47BF000B5549 /* en */,
 			);
 			name = schema.strings;
+			sourceTree = "<group>";
+		};
+		C1FDD6B8189482E800CFEE73 /* MDPrefs.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C1FDD6B9189482E800CFEE73 /* en */,
+			);
+			name = MDPrefs.xib;
+			sourceTree = "<group>";
+		};
+		C1FDD6BB1894831100CFEE73 /* MDPrefsGeneralController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C1FDD6BC1894831100CFEE73 /* en */,
+			);
+			name = MDPrefsGeneralController.xib;
+			sourceTree = "<group>";
+		};
+		C1FDD6BE1894833000CFEE73 /* MDAboutWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C1FDD6BF1894833000CFEE73 /* en */,
+			);
+			name = MDAboutWindow.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

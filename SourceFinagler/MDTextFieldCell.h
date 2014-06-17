@@ -60,21 +60,38 @@
 
 
 @interface MDTextFieldCell : NSTextFieldCell <NSCoding, NSCopying> {
-	NSImage			*image;
-	CGFloat			leftEdgePadding;
-	BOOL			centerImageVertically;
+	NSImage					*image;
+	
+	NSMutableDictionary		*highlightedActiveEnabledAttributes;
+	NSMutableDictionary		*highlightedActiveDisabledAttributes;
+	
+	NSMutableDictionary		*highlightedInactiveEnabledAttributes;
+	NSMutableDictionary		*highlightedInactiveDisabledAttributes;
+	
+	NSMutableDictionary		*enabledAttributes;
+	NSMutableDictionary		*disabledAttributes;
+	
+	CGFloat					leftEdgePadding;
+	BOOL					centerImageVertically;
 
 }
 
-- (void)drawWithFrame:(NSRect)cellFrame inImage:(NSImage *)dragImage;
 
-- (NSArray *)hitRectsForFrame:(NSRect)cellFrame isFlipped:(BOOL)isFlipped;
+@property (nonatomic, assign) CGFloat leftEdgePadding;
+@property (nonatomic, assign) BOOL centerImageVertically;
 
-- (void)setLeftEdgePadding:(CGFloat)aPadding;
-- (CGFloat)leftEdgePadding;
 
-- (BOOL)centerImageVertically;
-- (void)setCenterImageVertically:(BOOL)value;
+@property (nonatomic, retain) NSMutableDictionary *highlightedActiveEnabledAttributes;
+@property (nonatomic, retain) NSMutableDictionary *highlightedActiveDisabledAttributes;
+
+@property (nonatomic, retain) NSMutableDictionary *highlightedInactiveEnabledAttributes;
+@property (nonatomic, retain) NSMutableDictionary *highlightedInactiveDisabledAttributes;
+
+@property (nonatomic, retain) NSMutableDictionary *enabledAttributes;
+@property (nonatomic, retain) NSMutableDictionary *disabledAttributes;
+
 
 @end
+
+
 
