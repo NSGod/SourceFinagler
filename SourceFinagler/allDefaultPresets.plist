@@ -4,6 +4,10 @@
 <array>
 	<dict>
 		<key>TKImageExportName</key>
+		<string>Original</string>
+	</dict>
+	<dict>
+		<key>TKImageExportName</key>
 		<string>DDS DXT1</string>
 		<key>TKImageExportFileType</key>
 		<string>DDS</string>

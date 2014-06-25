@@ -5,24 +5,16 @@
 	<key>0</key>
 	<dict>
 		<key>TKImageExportName</key>
+		<string>Original</string>
+	</dict>
+	<key>1</key>
+	<dict>
+		<key>TKImageExportName</key>
 		<string>DDS DXT5</string>
 		<key>TKImageExportFileType</key>
 		<string>DDS</string>
 		<key>TKImageExportFormat</key>
 		<string>DXT5</string>
-		<key>TKImageExportDXTCompressionQuality</key>
-		<string>High</string>
-		<key>TKImageExportMipmaps</key>
-		<true/>
-	</dict>
-	<key>1</key>
-	<dict>
-		<key>TKImageExportName</key>
-		<string>DDS DXT1</string>
-		<key>TKImageExportFileType</key>
-		<string>DDS</string>
-		<key>TKImageExportFormat</key>
-		<string>DXT1</string>
 		<key>TKImageExportDXTCompressionQuality</key>
 		<string>High</string>
 		<key>TKImageExportMipmaps</key>

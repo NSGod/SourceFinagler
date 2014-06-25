@@ -167,45 +167,6 @@
 
 
 
-@implementation NSView (MDAppKitAdditions)
-
-- (void)setFrameFromString:(NSString *)aString {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSRect boundsRect;
-	NSArray *boundsArray = [aString componentsSeparatedByString:@" "];
-	
-	if ([boundsArray count] != 4) {
-		NSLog(@"[%@ %@] count of bounds array != 4, aborting...", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-	} else {
-		boundsRect.origin.x = 0.0;
-		boundsRect.origin.y = 0.0;
-		boundsRect.size.width = [[boundsArray objectAtIndex:2] floatValue];
-		boundsRect.size.height = [[boundsArray objectAtIndex:3] floatValue];
-		
-		[self setFrame:boundsRect];
-	}
-	
-}
-
-
-- (NSString *)stringWithSavedFrame {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	NSRect frameRect = [self frame];
-	
-	NSString *dimensionString = [NSString stringWithFormat:@"%ld %ld %ld %ld", (long)frameRect.origin.x, (long)frameRect.origin.y, (long)frameRect.size.width, (long)frameRect.size.height];
-	
-	return dimensionString;
-}
-
-@end
-
-
-
-
 static NSView *blankView() {
 	static NSView *view = nil;
 	if (!view) {
@@ -371,7 +332,7 @@ static NSView *blankView() {
 	return image;
 }
 
-		
+
 @end
 
 

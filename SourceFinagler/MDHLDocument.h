@@ -127,14 +127,14 @@ extern NSString * const MDHLDocumentURLKey;
 @property (nonatomic, readonly, retain) HKArchiveFile *file;
 
 
-@property (retain) NSImage *image;
+@property (nonatomic, retain) NSImage *image;
 @property (assign) BOOL outlineViewIsReloadingData;
 
-@property (retain) NSString *version;
+@property (nonatomic, retain) NSString *version;
 @property (assign, setter=setSearching:) BOOL isSearching;
-@property (retain) NSString *kind;
+@property (nonatomic, retain) NSString *kind;
 
-@property (retain) NSPredicate *searchPredicate;
+@property (nonatomic, retain) NSPredicate *searchPredicate;
 
 - (IBAction)installSourceAddon:(id)sender;
 

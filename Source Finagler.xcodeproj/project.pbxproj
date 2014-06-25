@@ -1998,7 +1998,9 @@
 		C101A6D21252817100BD8091 /* Image Finagler */ = {
 			isa = PBXGroup;
 			children = (
-				C12F364312D7E5C500D28F26 /* TK Application stuff */,
+				C1CAD288194F4D16000B5549 /* MDDocumentController.h */,
+				C1CAD289194F4D16000B5549 /* MDDocumentController.m */,
+				C116F88812D539C000551787 /* TKImageDocument */,
 			);
 			name = "Image Finagler";
 			sourceTree = "<group>";
@@ -2061,12 +2063,12 @@
 				C1CAD28B194F4D2C000B5549 /* TKImageDocument.h */,
 				C1CAD28C194F4D2C000B5549 /* TKImageDocument.m */,
 				C1CAD25E194F4619000B5549 /* TKImageDocument.xib */,
+				C1CAD29D194F4DD9000B5549 /* TKImageRepAdditions.h */,
+				C1CAD29E194F4DD9000B5549 /* TKImageRepAdditions.m */,
 				C15048CE18EB1DB100D39938 /* model */,
 				C170261B1284BCBE0056A23D /* views */,
 				C116F85C12D5302500551787 /* Accessory View */,
 				C1583BBE12B3AB7700A4AE2F /* TKImageExport */,
-				C1CAD29D194F4DD9000B5549 /* TKImageRepAdditions.h */,
-				C1CAD29E194F4DD9000B5549 /* TKImageRepAdditions.m */,
 			);
 			name = TKImageDocument;
 			sourceTree = "<group>";
@@ -2201,16 +2203,6 @@
 				C12CE52A1912D9B20067DA65 /* Linear Grayscale Profile.icc */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		C12F364312D7E5C500D28F26 /* TK Application stuff */ = {
-			isa = PBXGroup;
-			children = (
-				C1CAD288194F4D16000B5549 /* MDDocumentController.h */,
-				C1CAD289194F4D16000B5549 /* MDDocumentController.m */,
-				C116F88812D539C000551787 /* TKImageDocument */,
-			);
-			name = "TK Application stuff";
 			sourceTree = "<group>";
 		};
 		C13757D7185BCCAB00CDDC95 /* MDVPKViewController */ = {
@@ -2422,13 +2414,8 @@
 				C1CAD291194F4D8B000B5549 /* TKImageExportController.h */,
 				C1CAD292194F4D8C000B5549 /* TKImageExportController.m */,
 				C1CAD264194F4661000B5549 /* TKImageExportPanel.xib */,
-				C1CAD294194F4DB6000B5549 /* TKImageExportPreset.h */,
-				C1CAD295194F4DB6000B5549 /* TKImageExportPreset.m */,
-				C1CAD296194F4DB6000B5549 /* TKImageExportPreview.h */,
-				C1CAD297194F4DB6000B5549 /* TKImageExportPreview.m */,
-				C1CAD298194F4DB6000B5549 /* TKImageExportPreviewViewController.h */,
-				C1CAD299194F4DB6000B5549 /* TKImageExportPreviewViewController.m */,
-				C1CAD267194F4672000B5549 /* TKImageExportPreviewView.xib */,
+				C1F79B6D194F700900C466E5 /* views/controllers */,
+				C1F79B6E194F702A00C466E5 /* model */,
 				C155936A12B71D0E00FD0684 /* Resources */,
 				C1CAD2A3194F4E27000B5549 /* allDefaultPresets.plist */,
 				C1CAD2A4194F4E27000B5549 /* defaultPresets.plist */,
@@ -2454,9 +2441,9 @@
 			children = (
 				C15048B018EB1D2A00D39938 /* TKImageView */,
 				C15048B118EB1D3600D39938 /* TKBlueBackgroundView */,
+				C116FB1812D5894B00551787 /* images */,
 				C1418BA418EB66D8007C566B /* TKImageKitAdditions.h */,
 				C1418BA518EB66D8007C566B /* TKImageKitAdditions.m */,
-				C116FB1812D5894B00551787 /* images */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -3223,6 +3210,27 @@
 				C1F153CE1396699600E32057 /* HKFolderAdditions.m */,
 			);
 			name = HKFolder;
+			sourceTree = "<group>";
+		};
+		C1F79B6D194F700900C466E5 /* views/controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C1CAD298194F4DB6000B5549 /* TKImageExportPreviewViewController.h */,
+				C1CAD299194F4DB6000B5549 /* TKImageExportPreviewViewController.m */,
+				C1CAD267194F4672000B5549 /* TKImageExportPreviewView.xib */,
+			);
+			name = views/controllers;
+			sourceTree = "<group>";
+		};
+		C1F79B6E194F702A00C466E5 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				C1CAD294194F4DB6000B5549 /* TKImageExportPreset.h */,
+				C1CAD295194F4DB6000B5549 /* TKImageExportPreset.m */,
+				C1CAD296194F4DB6000B5549 /* TKImageExportPreview.h */,
+				C1CAD297194F4DB6000B5549 /* TKImageExportPreview.m */,
+			);
+			name = model;
 			sourceTree = "<group>";
 		};
 		C1FA236D18FF1A5100BF8919 /* private interfaces */ = {

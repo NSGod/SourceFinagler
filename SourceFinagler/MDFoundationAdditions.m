@@ -15,7 +15,7 @@
 
 static SInt32 MDSystemVersion = MDUndeterminedVersion;
 
-	
+
 SInt32 MDGetSystemVersion() {
 	if (MDSystemVersion == MDUndeterminedVersion) {
 		SInt32 fullVersion = 0;

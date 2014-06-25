@@ -121,7 +121,6 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	
 	if ((self = [super initWithCoder:coder])) {
 		[self finishSetup];
 	}

@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MDFoundationAdditions.h"
 
-	
+
 @interface NSAlert (MDAppKitAdditions)
 + (NSAlert *)alertWithMessageText:(NSString *)messageText informativeText:(NSString *)informativeText firstButton:(NSString *)firstButtonTitle secondButton:(NSString *)secondButtonTitle thirdButton:(NSString *)thirdButtonTitle;
 @end
@@ -39,12 +39,6 @@
 
 @interface NSPopUpButton (MDAppKitAdditions)
 - (void)setItemArray:(NSArray *)value;
-@end
-
-
-@interface NSView (MDAppKitAdditions)
-- (void)setFrameFromString:(NSString *)aString;
-- (NSString *)stringWithSavedFrame;
 @end
 
 
