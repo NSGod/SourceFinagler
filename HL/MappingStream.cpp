@@ -15,9 +15,9 @@
 using namespace HLLib;
 using namespace HLLib::Streams;
 
-CMappingStream::CMappingStream(Mapping::CMapping &Mapping, hlULongLong ullMappingOffset, hlULongLong ullMappingSize, hlULongLong ullViewSize) : bOpened(hlFalse), uiMode(HL_MODE_INVALID), Mapping(Mapping), ullMappingOffset(ullMappingOffset), ullMappingSize(ullMappingSize), ullViewSize(ullViewSize), pView(0), ullPointer(0), ullLength(0)
+CMappingStream::CMappingStream(Mapping::CMapping &Mapping, hlULongLong uiMappingOffset, hlULongLong uiMappingSize, hlULongLong uiViewSize) : bOpened(hlFalse), uiMode(HL_MODE_INVALID), Mapping(Mapping), uiMappingOffset(uiMappingOffset), uiMappingSize(uiMappingSize), uiViewSize(uiViewSize), pView(0), uiPointer(0), uiLength(0)
 {
-	if(this->ullViewSize == 0)
+	if(this->uiViewSize == 0)
 	{
 		switch(this->Mapping.GetType())
 		{
@@ -25,11 +25,11 @@ CMappingStream::CMappingStream(Mapping::CMapping &Mapping, hlULongLong ullMappin
 			if(this->Mapping.GetMode() & HL_MODE_QUICK_FILEMAPPING)
 			{
 		case HL_MAPPING_MEMORY:
-				this->ullViewSize = this->ullMappingSize;
+				this->uiViewSize = this->uiMappingSize;
 				break;
 			}
 		default:
-			this->ullViewSize = HL_DEFAULT_VIEW_SIZE;
+			this->uiViewSize = HL_DEFAULT_VIEW_SIZE;
 			break;
 		}
 	}
@@ -87,8 +87,8 @@ hlBool CMappingStream::Open(hlUInt uiMode)
 		return hlFalse;
 	}
 
-	this->ullPointer = 0;
-	this->ullLength = (uiMode & HL_MODE_READ) ? this->ullMappingSize : 0;
+	this->uiPointer = 0;
+	this->uiLength = (uiMode & HL_MODE_READ) ? this->uiMappingSize : 0;
 
 	this->bOpened = hlTrue;
 	this->uiMode = uiMode;
@@ -103,21 +103,21 @@ hlVoid CMappingStream::Close()
 
 	this->Mapping.Unmap(this->pView);
 
-	this->ullPointer = 0;
-	this->ullLength = 0;
+	this->uiPointer = 0;
+	this->uiLength = 0;
 }
 
 hlULongLong CMappingStream::GetStreamSize() const
 {
-	return this->ullLength;
+	return this->uiLength;
 }
 
 hlULongLong CMappingStream::GetStreamPointer() const
 {
-	return this->ullPointer;
+	return this->uiPointer;
 }
 
-hlULongLong CMappingStream::Seek(hlLongLong llOffset, HLSeekMode eSeekMode)
+hlULongLong CMappingStream::Seek(hlLongLong iOffset, HLSeekMode eSeekMode)
 {
 	if(!this->bOpened)
 	{
@@ -127,30 +127,30 @@ hlULongLong CMappingStream::Seek(hlLongLong llOffset, HLSeekMode eSeekMode)
 	switch(eSeekMode)
 	{
 		case HL_SEEK_BEGINNING:
-			this->ullPointer = 0;
+			this->uiPointer = 0;
 			break;
 		case HL_SEEK_CURRENT:
 
 			break;
 		case HL_SEEK_END:
-			this->ullPointer = this->ullLength;
+			this->uiPointer = this->uiLength;
 			break;
 	}
 
-	hlLongLong llPointer = static_cast<hlLongLong>(this->ullPointer) + llOffset;
+	hlLongLong iPointer = static_cast<hlLongLong>(this->uiPointer) + iOffset;
 
-	if(llPointer < 0)
+	if(iPointer < 0)
 	{
-		llPointer = 0;
+		iPointer = 0;
 	}
-	else if(llPointer > static_cast<hlLongLong>(this->ullLength))
+	else if(iPointer > static_cast<hlLongLong>(this->uiLength))
 	{
-		llPointer = static_cast<hlLongLong>(this->ullLength);
+		iPointer = static_cast<hlLongLong>(this->uiLength);
 	}
 
-	this->ullPointer = static_cast<hlULongLong>(llPointer);
+	this->uiPointer = static_cast<hlULongLong>(iPointer);
 
-	return this->ullPointer;
+	return this->uiPointer;
 }
 
 hlBool CMappingStream::Read(hlChar &cChar)
@@ -166,20 +166,20 @@ hlBool CMappingStream::Read(hlChar &cChar)
 		return 0;
 	}
 
-	if(this->ullPointer < this->ullLength)
+	if(this->uiPointer < this->uiLength)
 	{
-		if(!this->Map(this->ullPointer))
+		if(!this->Map(this->uiPointer))
 		{
 			return 0;
 		}
 
-		hlULongLong ullViewPointer = this->ullPointer - (this->pView->GetAllocationOffset() + this->pView->GetOffset() - this->ullMappingOffset);
-		hlULongLong ullViewBytes = this->pView->GetLength() - ullViewPointer;
+		hlULongLong uiViewPointer = this->uiPointer - (this->pView->GetAllocationOffset() + this->pView->GetOffset() - this->uiMappingOffset);
+		hlULongLong uiViewBytes = this->pView->GetLength() - uiViewPointer;
 
-		if(ullViewBytes >= 1)
+		if(uiViewBytes >= 1)
 		{
-			cChar = *(static_cast<const hlChar *>(this->pView->GetView()) + ullViewPointer);
-			this->ullPointer++;
+			cChar = *(static_cast<const hlChar *>(this->pView->GetView()) + uiViewPointer);
+			this->uiPointer++;
 			return 1;
 		}
 	}
@@ -187,7 +187,7 @@ hlBool CMappingStream::Read(hlChar &cChar)
 	return 0;
 }
 
-hlULongLong CMappingStream::Read(hlVoid *lpData, hlULongLong ullBytes)
+hlUInt CMappingStream::Read(hlVoid *lpData, hlUInt uiBytes)
 {
 	if(!this->bOpened)
 	{
@@ -200,40 +200,40 @@ hlULongLong CMappingStream::Read(hlVoid *lpData, hlULongLong ullBytes)
 		return 0;
 	}
 
-	if(this->ullPointer == this->ullLength)
+	if(this->uiPointer == this->uiLength)
 	{
 		return 0;
 	}
 	else
 	{
-		hlULongLong ullOffset = 0;
-		while(ullBytes && this->ullPointer < this->ullLength)
+		hlULongLong uiOffset = 0;
+		while(uiBytes && this->uiPointer < this->uiLength)
 		{
-			if(!this->Map(this->ullPointer))
+			if(!this->Map(this->uiPointer))
 			{
 				break;
 			}
 
-			hlULongLong ullViewPointer = this->ullPointer - (this->pView->GetAllocationOffset() + this->pView->GetOffset() - this->ullMappingOffset);
-			hlULongLong ullViewBytes = this->pView->GetLength() - ullViewPointer;
+			hlULongLong uiViewPointer = this->uiPointer - (this->pView->GetAllocationOffset() + this->pView->GetOffset() - this->uiMappingOffset);
+			hlULongLong uiViewBytes = this->pView->GetLength() - uiViewPointer;
 
-			if(ullViewBytes >= ullBytes)
+			if(uiViewBytes >= uiBytes)
 			{
-				memcpy(static_cast<hlByte *>(lpData) + ullOffset, static_cast<const hlByte *>(this->pView->GetView()) + ullViewPointer, ullBytes);
-				this->ullPointer += static_cast<hlULongLong>(ullBytes);
-				ullOffset += ullBytes;
+				memcpy(static_cast<hlByte *>(lpData) + uiOffset, static_cast<const hlByte *>(this->pView->GetView()) + uiViewPointer, uiBytes);
+				this->uiPointer += static_cast<hlULongLong>(uiBytes);
+				uiOffset += uiBytes;
 				break;
 			}
 			else
 			{
-				memcpy(static_cast<hlByte *>(lpData) + ullOffset, static_cast<const hlByte *>(this->pView->GetView()) + ullViewPointer, static_cast<size_t>(ullViewBytes));
-				this->ullPointer += ullViewBytes;
-				ullOffset += ullViewBytes;
-				ullBytes -= static_cast<hlULongLong>(ullViewBytes);
+				memcpy(static_cast<hlByte *>(lpData) + uiOffset, static_cast<const hlByte *>(this->pView->GetView()) + uiViewPointer, static_cast<size_t>(uiViewBytes));
+				this->uiPointer += uiViewBytes;
+				uiOffset += uiViewBytes;
+				uiBytes -= static_cast<hlUInt>(uiViewBytes);
 			}
 		}
 
-		return static_cast<hlULongLong>(ullOffset);
+		return static_cast<hlUInt>(uiOffset);
 	}
 }
 
@@ -250,24 +250,24 @@ hlBool CMappingStream::Write(hlChar cChar)
 		return 0;
 	}
 
-	if(this->ullPointer < this->ullMappingSize)
+	if(this->uiPointer < this->uiMappingSize)
 	{
-		if(!this->Map(this->ullPointer))
+		if(!this->Map(this->uiPointer))
 		{
 			return 0;
 		}
 
-		hlULongLong ullViewPointer = this->ullPointer - (this->pView->GetAllocationOffset() + this->pView->GetOffset() - this->ullMappingOffset);
-		hlULongLong ullViewBytes = this->pView->GetLength() - ullViewPointer;
+		hlULongLong uiViewPointer = this->uiPointer - (this->pView->GetAllocationOffset() + this->pView->GetOffset() - this->uiMappingOffset);
+		hlULongLong uiViewBytes = this->pView->GetLength() - uiViewPointer;
 
-		if(ullViewBytes >= 1)
+		if(uiViewBytes >= 1)
 		{
-			*(static_cast<hlChar *>(const_cast<hlVoid *>(this->pView->GetView())) + ullViewPointer) = cChar;
-			this->ullPointer++;
+			*(static_cast<hlChar *>(const_cast<hlVoid *>(this->pView->GetView())) + uiViewPointer) = cChar;
+			this->uiPointer++;
 
-			if(this->ullPointer > this->ullLength)
+			if(this->uiPointer > this->uiLength)
 			{
-				this->ullLength = this->ullPointer;
+				this->uiLength = this->uiPointer;
 			}
 
 			return 1;
@@ -277,7 +277,7 @@ hlBool CMappingStream::Write(hlChar cChar)
 	return 0;
 }
 
-hlULongLong CMappingStream::Write(const hlVoid *lpData, hlULongLong ullBytes)
+hlUInt CMappingStream::Write(const hlVoid *lpData, hlUInt uiBytes)
 {
 	if(!this->bOpened)
 	{
@@ -290,61 +290,61 @@ hlULongLong CMappingStream::Write(const hlVoid *lpData, hlULongLong ullBytes)
 		return 0;
 	}
 
-	if(this->ullPointer == this->ullMappingSize)
+	if(this->uiPointer == this->uiMappingSize)
 	{
 		return 0;
 	}
 	else
 	{
-		hlULongLong ullOffset = 0;
-		while(ullBytes && this->ullPointer < this->ullMappingSize)
+		hlULongLong uiOffset = 0;
+		while(uiBytes && this->uiPointer < this->uiMappingSize)
 		{
-			if(!this->Map(this->ullPointer))
+			if(!this->Map(this->uiPointer))
 			{
 				break;
 			}
 
-			hlULongLong ullViewPointer = this->ullPointer - (this->pView->GetAllocationOffset() + this->pView->GetOffset() - this->ullMappingOffset);
-			hlULongLong ullViewBytes = this->pView->GetLength() - ullViewPointer;
+			hlULongLong uiViewPointer = this->uiPointer - (this->pView->GetAllocationOffset() + this->pView->GetOffset() - this->uiMappingOffset);
+			hlULongLong uiViewBytes = this->pView->GetLength() - uiViewPointer;
 
-			if(ullViewBytes >= ullBytes)
+			if(uiViewBytes >= uiBytes)
 			{
-				memcpy(static_cast<hlByte *>(const_cast<hlVoid *>(this->pView->GetView())) + ullViewPointer, static_cast<const hlByte *>(lpData) + ullOffset, ullBytes);
-				this->ullPointer += static_cast<hlULongLong>(ullBytes);
-				ullOffset += ullBytes;
+				memcpy(static_cast<hlByte *>(const_cast<hlVoid *>(this->pView->GetView())) + uiViewPointer, static_cast<const hlByte *>(lpData) + uiOffset, uiBytes);
+				this->uiPointer += static_cast<hlULongLong>(uiBytes);
+				uiOffset += uiBytes;
 				break;
 			}
 			else
 			{
-				memcpy(static_cast<hlByte *>(const_cast<hlVoid *>(this->pView->GetView())) + ullViewPointer, static_cast<const hlByte *>(lpData) + ullOffset, static_cast<size_t>(ullViewBytes));
-				this->ullPointer += ullViewBytes;
-				ullOffset += ullViewBytes;
-				ullBytes -= static_cast<hlULongLong>(ullViewBytes);
+				memcpy(static_cast<hlByte *>(const_cast<hlVoid *>(this->pView->GetView())) + uiViewPointer, static_cast<const hlByte *>(lpData) + uiOffset, static_cast<size_t>(uiViewBytes));
+				this->uiPointer += uiViewBytes;
+				uiOffset += uiViewBytes;
+				uiBytes -= static_cast<hlUInt>(uiViewBytes);
 			}
 		}
 
-		if(this->ullPointer > this->ullLength)
+		if(this->uiPointer > this->uiLength)
 		{
-			this->ullLength = this->ullPointer;
+			this->uiLength = this->uiPointer;
 		}
 
-		return static_cast<hlULongLong>(ullOffset);
+		return static_cast<hlUInt>(uiOffset);
 	}
 }
 
-hlBool CMappingStream::Map(hlULongLong ullPointer)
+hlBool CMappingStream::Map(hlULongLong uiPointer)
 {
-	ullPointer = (ullPointer / this->ullViewSize) * this->ullViewSize;
+	uiPointer = (uiPointer / this->uiViewSize) * this->uiViewSize;
 
 	if(this->pView)
 	{
-		if(this->pView->GetAllocationOffset() - this->ullMappingOffset == ullPointer)
+		if(this->pView->GetAllocationOffset() - this->uiMappingOffset == uiPointer)
 		{
 			return hlTrue;
 		}
 	}
 
-	hlULongLong ullLength = ullPointer + this->ullViewSize > this->ullMappingSize ? this->ullMappingSize - ullPointer : this->ullViewSize;
+	hlULongLong uiLength = uiPointer + this->uiViewSize > this->uiMappingSize ? this->uiMappingSize - uiPointer : this->uiViewSize;
 
-	return this->Mapping.Map(this->pView, this->ullMappingOffset + ullPointer, ullLength);
+	return this->Mapping.Map(this->pView, this->uiMappingOffset + uiPointer, uiLength);
 }

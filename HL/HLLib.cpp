@@ -59,31 +59,31 @@ namespace HLLib
 		}
 	}
 
-	hlVoid hlExtractFileProgress(const HLDirectoryItem *pFile, hlULongLong ullBytesExtracted, hlULongLong ullBytesTotal, hlBool *pCancel)
+	hlVoid hlExtractFileProgress(const HLDirectoryItem *pFile, hlULongLong uiBytesExtracted, hlULongLong uiBytesTotal, hlBool *pCancel)
 	{
 		if(pExtractFileProgressProc)
 		{
-			pExtractFileProgressProc(pFile, static_cast<hlUInt>(ullBytesExtracted), static_cast<hlUInt>(ullBytesTotal), pCancel);
+			pExtractFileProgressProc(pFile, static_cast<hlUInt>(uiBytesExtracted), static_cast<hlUInt>(uiBytesTotal), pCancel);
 		}
 	}
 
-	hlVoid hlValidateFileProgress(const HLDirectoryItem *pFile, hlULongLong ullBytesValidated, hlULongLong ullBytesTotal, hlBool *pCancel)
+	hlVoid hlValidateFileProgress(const HLDirectoryItem *pFile, hlULongLong uiBytesValidated, hlULongLong uiBytesTotal, hlBool *pCancel)
 	{
 		if(pValidateFileProgressProc)
 		{
-			pValidateFileProgressProc(pFile, static_cast<hlUInt>(ullBytesValidated), static_cast<hlUInt>(ullBytesTotal), pCancel);
+			pValidateFileProgressProc(pFile, static_cast<hlUInt>(uiBytesValidated), static_cast<hlUInt>(uiBytesTotal), pCancel);
 		}
 	}
 
-	hlVoid hlDefragmentProgress(const HLDirectoryItem *pFile, hlUInt uiFilesDefragmented, hlUInt uiFilesTotal, hlULongLong ullBytesDefragmented, hlULongLong ullBytesTotal, hlBool *pCancel)
+	hlVoid hlDefragmentProgress(const HLDirectoryItem *pFile, hlUInt uiFilesDefragmented, hlUInt uiFilesTotal, hlULongLong uiBytesDefragmented, hlULongLong uiBytesTotal, hlBool *pCancel)
 	{
 		if(pDefragmentProgressProc)
 		{
-			pDefragmentProgressProc(pFile, uiFilesDefragmented, uiFilesTotal, static_cast<hlUInt>(ullBytesDefragmented), static_cast<hlUInt>(ullBytesTotal), pCancel);
+			pDefragmentProgressProc(pFile, uiFilesDefragmented, uiFilesTotal, static_cast<hlUInt>(uiBytesDefragmented), static_cast<hlUInt>(uiBytesTotal), pCancel);
 		}
 		if(pDefragmentProgressExProc)
 		{
-			pDefragmentProgressExProc(pFile, uiFilesDefragmented, uiFilesTotal, ullBytesDefragmented, ullBytesTotal, pCancel);
+			pDefragmentProgressExProc(pFile, uiFilesDefragmented, uiFilesTotal, uiBytesDefragmented, uiBytesTotal, pCancel);
 		}
 	}
 }

@@ -29,12 +29,12 @@ namespace HLLib
 			Mapping::CMapping &Mapping;
 			Mapping::CView *pView;
 
-			hlULongLong ullMappingOffset;
-			hlULongLong ullMappingSize;
-			hlULongLong ullViewSize;
+			hlULongLong uiMappingOffset;
+			hlULongLong uiMappingSize;
+			hlULongLong uiViewSize;
 
-			hlULongLong ullPointer;
-			hlULongLong ullLength;
+			hlULongLong uiPointer;
+			hlULongLong uiLength;
 
 		public:
 			CMappingStream(Mapping::CMapping &Mapping, hlULongLong uiMappingOffset, hlULongLong uiMappingSize, hlULongLong uiViewSize = 0);
@@ -54,13 +54,13 @@ namespace HLLib
 			virtual hlULongLong GetStreamSize() const;
 			virtual hlULongLong GetStreamPointer() const;
 
-			virtual hlULongLong Seek(hlLongLong llOffset, HLSeekMode eSeekMode);
+			virtual hlULongLong Seek(hlLongLong iOffset, HLSeekMode eSeekMode);
 
 			virtual hlBool Read(hlChar &cChar);
-			virtual hlULongLong Read(hlVoid *lpData, hlULongLong ullBytes);
+			virtual hlUInt Read(hlVoid *lpData, hlUInt uiBytes);
 
 			virtual hlBool Write(hlChar cChar);
-			virtual hlULongLong Write(const hlVoid *lpData, hlULongLong ullBytes);
+			virtual hlUInt Write(const hlVoid *lpData, hlUInt uiBytes);
 
 		private:
 			hlBool Map(hlULongLong uiPointer);

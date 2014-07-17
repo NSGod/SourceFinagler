@@ -25,11 +25,11 @@ namespace HLLib
 			hlBool bOpened;
 			hlUInt uiMode;
 
-			hlVoid		*lpData;
-			hlULongLong ullBufferSize;
+			hlVoid *lpData;
+			hlULongLong uiBufferSize;
 
-			hlULongLong ullPointer;
-			hlULongLong ullLength;
+			hlULongLong uiPointer;
+			hlULongLong uiLength;
 
 		public:
 			CMemoryStream(hlVoid *lpData, hlULongLong uiBufferSize);
@@ -50,13 +50,13 @@ namespace HLLib
 			virtual hlULongLong GetStreamSize() const;
 			virtual hlULongLong GetStreamPointer() const;
 
-			virtual hlULongLong Seek(hlLongLong llOffset, HLSeekMode eSeekMode);
+			virtual hlULongLong Seek(hlLongLong iOffset, HLSeekMode eSeekMode);
 
 			virtual hlBool Read(hlChar &cChar);
-			virtual hlULongLong Read(hlVoid *lpData, hlULongLong ullBytes);
+			virtual hlUInt Read(hlVoid *lpData, hlUInt uiBytes);
 
 			virtual hlBool Write(hlChar iChar);
-			virtual hlULongLong Write(const hlVoid *lpData, hlULongLong ullBytes);
+			virtual hlUInt Write(const hlVoid *lpData, hlUInt uiBytes);
 		};
 	}
 }

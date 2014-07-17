@@ -43,9 +43,9 @@ namespace HLLib
 
 	hlVoid hlExtractItemStart(const HLDirectoryItem *pItem);
 	hlVoid hlExtractItemEnd(const HLDirectoryItem *pItem, hlBool bSuccess);
-	hlVoid hlExtractFileProgress(const HLDirectoryItem *pFile, hlULongLong ullBytesExtracted, hlULongLong ullBytesTotal, hlBool *pCancel);
-	hlVoid hlValidateFileProgress(const HLDirectoryItem *pFile, hlULongLong ullBytesValidated, hlULongLong ullBytesTotal, hlBool *pCancel);
-	hlVoid hlDefragmentProgress(const HLDirectoryItem *pFile, hlUInt uiFilesDefragmented, hlUInt uiFilesTotal, hlULongLong ullBytesDefragmented, hlULongLong ullBytesTotal, hlBool *pCancel);
+	hlVoid hlExtractFileProgress(const HLDirectoryItem *pFile, hlULongLong uiBytesExtracted, hlULongLong uiBytesTotal, hlBool *pCancel);
+	hlVoid hlValidateFileProgress(const HLDirectoryItem *pFile, hlULongLong uiBytesValidated, hlULongLong uiBytesTotal, hlBool *pCancel);
+	hlVoid hlDefragmentProgress(const HLDirectoryItem *pFile, hlUInt uiFilesDefragmented, hlUInt uiFilesTotal, hlULongLong uiBytesDefragmented, hlULongLong uiBytesTotal, hlBool *pCancel);
 
 	extern CPackage *pPackage;
 	extern CPackageVector *pPackageVector;

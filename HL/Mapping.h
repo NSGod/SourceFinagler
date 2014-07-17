@@ -18,11 +18,8 @@ namespace HLLib
 {
 	namespace Mapping
 	{
-		
 		class CMapping;
 
-
-		
 		class HLLIB_API CView
 		{
 			friend class CMapping;
@@ -50,13 +47,8 @@ namespace HLLib
 			hlULongLong GetAllocationLength() const;
 		};
 
-		
-		
 		typedef std::list<CView *> CViewList;
 
-		
-		
-		
 		class HLLIB_API CMapping
 		{
 		private:

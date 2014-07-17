@@ -191,7 +191,7 @@ hlULongLong CFileStream::GetStreamPointer() const
 	LARGE_INTEGER liPointer;
 	return SetFilePointerEx(this->hFile, liOffset, &liPointer, FILE_CURRENT) ? static_cast<hlULongLong>(liPointer.QuadPart) : 0;
 #else
-	 return static_cast<hlULongLong>(lseek(this->iFile, 0, SEEK_CUR));
+	 return (hlUInt)lseek(this->iFile, 0, SEEK_CUR);
 #endif
 }
 
@@ -237,7 +237,7 @@ hlULongLong CFileStream::Seek(hlLongLong iOffset, HLSeekMode eSeekMode)
 		break;
 	}
 
-	return static_cast<hlULongLong>(lseek(this->iFile, iOffset, iMode));
+	return (hlUInt)lseek(this->iFile, iOffset, iMode);
 #endif
 }
 
@@ -264,18 +264,18 @@ hlBool CFileStream::Read(hlChar &cChar)
 
 	return ulBytesRead == 1;
 #else
-	hlLongLong llBytesRead = read(this->iFile, &cChar, 1);
+	hlInt iBytesRead = read(this->iFile, &cChar, 1);
 
-	if(llBytesRead < 0)
+	if(iBytesRead < 0)
 	{
 		LastError.SetSystemErrorMessage("read() failed.");
 	}
 
-	return llBytesRead == 1;
+	return iBytesRead == 1;
 #endif
 }
 
-hlULongLong CFileStream::Read(hlVoid *lpData, hlULongLong ullBytes)
+hlUInt CFileStream::Read(hlVoid *lpData, hlUInt uiBytes)
 {
 	if(!this->GetOpened())
 	{
@@ -291,21 +291,21 @@ hlULongLong CFileStream::Read(hlVoid *lpData, hlULongLong ullBytes)
 #ifdef _WIN32
 	hlULong ulBytesRead = 0;
 
-	if(!ReadFile(this->hFile, lpData, ullBytes, &ulBytesRead, NULL))
+	if(!ReadFile(this->hFile, lpData, uiBytes, &ulBytesRead, NULL))
 	{
 		LastError.SetSystemErrorMessage("ReadFile() failed.");
 	}
 
-	return (hlULongLong)ulBytesRead;
+	return (hlUInt)ulBytesRead;
 #else
-	hlLongLong llBytesRead = read(this->iFile, lpData, ullBytes);
+	hlInt iBytesRead = read(this->iFile, lpData, uiBytes);
 
-	if(llBytesRead < 0)
+	if(iBytesRead < 0)
 	{
 		LastError.SetSystemErrorMessage("read() failed.");
 	}
 
-	return (hlULongLong)llBytesRead;
+	return (hlUInt)iBytesRead;
 #endif
 }
 
@@ -332,18 +332,18 @@ hlBool CFileStream::Write(hlChar cChar)
 
 	return ulBytesWritten == 1;
 #else
-	hlLongLong llBytesWritten = write(this->iFile, &cChar, 1);
+	hlInt iBytesWritten = write(this->iFile, &cChar, 1);
 
-	if(llBytesWritten < 0)
+	if(iBytesWritten < 0)
 	{
 		LastError.SetSystemErrorMessage("write() failed.");
 	}
 
-	return llBytesWritten == 1;
+	return iBytesWritten == 1;
 #endif
 }
 
-hlULongLong CFileStream::Write(const hlVoid *lpData, hlULongLong ullBytes)
+hlUInt CFileStream::Write(const hlVoid *lpData, hlUInt uiBytes)
 {
 	if(!this->GetOpened())
 	{
@@ -359,20 +359,20 @@ hlULongLong CFileStream::Write(const hlVoid *lpData, hlULongLong ullBytes)
 #ifdef _WIN32
 	hlULong ulBytesWritten = 0;
 
-	if(!WriteFile(this->hFile, lpData, ullBytes, &ulBytesWritten, NULL))
+	if(!WriteFile(this->hFile, lpData, uiBytes, &ulBytesWritten, NULL))
 	{
 		LastError.SetSystemErrorMessage("WriteFile() failed.");
 	}
 
-	return (hlULongLong)ulBytesWritten;
+	return (hlUInt)ulBytesWritten;
 #else
-	hlLongLong llBytesWritten = write(this->iFile, lpData, ullBytes);
+	hlInt iBytesWritten = write(this->iFile, lpData, uiBytes);
 
-	if(llBytesWritten < 0)
+	if(iBytesWritten < 0)
 	{
 		LastError.SetSystemErrorMessage("write() failed.");
 	}
 
-	return (hlULongLong)llBytesWritten;
+	return (hlUInt)iBytesWritten;
 #endif
 }
