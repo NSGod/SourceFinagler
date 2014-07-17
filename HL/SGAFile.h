@@ -277,15 +277,22 @@ namespace HLLib
 			hlVoid CreateFolder(CDirectoryFolder *pParent, hlUInt uiFolderIndex);
 		};
 
+		// this re-ordering seems to appease gcc
+		
+		friend class CSGADirectory4;
+		friend class CSGADirectory5;
+		friend class CSGADirectory6;
+		friend class CSGADirectory7;
+
 		typedef CSGADirectory<SGAHeader4, SGADirectoryHeader4, SGASection4, SGAFolder4, SGAFile4> CSGADirectory4;
 		typedef CSGADirectory<SGAHeader4, SGADirectoryHeader5, SGASection5, SGAFolder5, SGAFile4> CSGADirectory5;
 		typedef CSGADirectory<SGAHeader6, SGADirectoryHeader5, SGASection5, SGAFolder5, SGAFile6> CSGADirectory6;
 		typedef CSGADirectory<SGAHeader6, SGADirectoryHeader7, SGASection5, SGAFolder5, SGAFile7> CSGADirectory7;
 
-		friend CSGADirectory4;
-		friend CSGADirectory5;
-		friend CSGADirectory6;
-		friend CSGADirectory7;
+//		friend CSGADirectory4;
+//		friend CSGADirectory5;
+//		friend CSGADirectory6;
+//		friend CSGADirectory7;
 
 	private:
 		static const char *lpAttributeNames[];
