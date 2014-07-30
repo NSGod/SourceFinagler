@@ -38,6 +38,38 @@ using namespace HLLib;
 @synthesize sourceAddonGameID;
 
 
+- (BOOL)loadArchiveFileWithMode:(HLFileMode)permission showInvisibleItems:(BOOL)showInvisibleItems sortDescriptors:(NSArray *)sortDescriptors error:(NSError **)outError {
+#if HK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	_privateData = new CVPKFile();
+	
+	if (_privateData) {
+		if (static_cast<CVPKFile *>(_privateData)->Open((const hlChar *)[filePath fileSystemRepresentation], permission)) {
+			const CDirectoryFolder *rootFolder = static_cast<CVPKFile *>(_privateData)->GetRoot();
+			if (rootFolder) {
+				items = [[HKFolder alloc] initWithParent:nil directoryFolder:rootFolder showInvisibleItems:showInvisibleItems sortDescriptors:sortDescriptors container:self];
+				
+				HLAttribute archiveVersionAttr;
+				HLAttribute archiveCountAttr;
+				
+				if (static_cast<CVPKFile *>(_privateData)->GetAttribute(HL_VPK_PACKAGE_Version, archiveVersionAttr)) {
+					archiveVersion = (NSUInteger)archiveVersionAttr.Value.UnsignedInteger.uiValue;
+					version = [[NSString stringWithFormat:@"%lu", (unsigned long)archiveVersion] retain];
+				}
+				
+				if (static_cast<CVPKFile *>(_privateData)->GetAttribute(HL_VPK_PACKAGE_Archives, archiveCountAttr)) {
+					archiveCount = (NSUInteger)archiveCountAttr.Value.UnsignedInteger.uiValue;
+				}
+				
+				return YES;
+			}
+		}
+	}
+	return NO;
+}
+
+
 - (id)initWithContentsOfFile:(NSString *)aPath mode:(HLFileMode)permission showInvisibleItems:(BOOL)showInvisibleItems sortDescriptors:(NSArray *)sortDescriptors error:(NSError **)outError {
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -45,33 +77,14 @@ using namespace HLLib;
 	if ((self = [super initWithContentsOfFile:aPath mode:permission showInvisibleItems:showInvisibleItems sortDescriptors:sortDescriptors error:outError])) {
 		archiveFileType = HKArchiveFileVPKType;
 		
-		_privateData = new CVPKFile();
-		
-		if (_privateData) {
-			if (static_cast<CVPKFile *>(_privateData)->Open((const hlChar *)[filePath fileSystemRepresentation], permission)) {
-				const CDirectoryFolder *rootFolder = static_cast<CVPKFile *>(_privateData)->GetRoot();
-				if (rootFolder) {
-					items = [[HKFolder alloc] initWithParent:nil directoryFolder:rootFolder showInvisibleItems:showInvisibleItems sortDescriptors:sortDescriptors container:self];
-					
-					HLAttribute archiveVersionAttr;
-					HLAttribute archiveCountAttr;
-					
-					if (static_cast<CVPKFile *>(_privateData)->GetAttribute(HL_VPK_PACKAGE_Version, archiveVersionAttr)) {
-						archiveVersion = (NSUInteger)archiveVersionAttr.Value.UnsignedInteger.uiValue;
-						version = [[NSString stringWithFormat:@"%lu", (unsigned long)archiveVersion] retain];
-					}
-					
-					if (static_cast<CVPKFile *>(_privateData)->GetAttribute(HL_VPK_PACKAGE_Archives, archiveCountAttr)) {
-						archiveCount = (NSUInteger)archiveCountAttr.Value.UnsignedInteger.uiValue;
-					}
-				}
-			}
-		}
+		vpkArchiveType = HKVPKUnknownArchiveType;
 		
 		NSString *fileName = [filePath lastPathComponent];
 		NSString *baseName = [fileName stringByDeletingPathExtension];
 		
 		if ([baseName hasSuffix:@"_dir"]) {
+			
+			[self loadArchiveFileWithMode:permission showInvisibleItems:showInvisibleItems sortDescriptors:sortDescriptors error:outError];
 			
 			vpkArchiveType = HKVPKDirectoryArchiveType;
 			archiveDirectoryFilePath = [filePath retain];
@@ -91,6 +104,8 @@ using namespace HLLib;
 					last3String = [last3String stringByTrimmingCharactersInSet:numCharSet];
 					
 					if (last3String.length == 0) {
+						// don't create a CVPKFile for this
+						
 						vpkArchiveType = HKVPKMultipartArchiveType;
 						sourceAddonStatus = HKSourceAddonNotAnAddonFile;
 						
@@ -111,6 +126,10 @@ using namespace HLLib;
 			
 			if (vpkArchiveType == HKVPKUnknownArchiveType) {
 				
+				[self loadArchiveFileWithMode:permission showInvisibleItems:showInvisibleItems sortDescriptors:sortDescriptors error:outError];
+				
+				vpkArchiveType = HKVPKSourceAddonFileArchiveType;
+				
 				HKItem *addonInfoItem = [self itemAtPath:HKSourceAddonInfoNameKey];
 				
 #if HK_DEBUG
@@ -120,7 +139,6 @@ using namespace HLLib;
 				if (addonInfoItem == nil || ![addonInfoItem isKindOfClass:[HKFile class]] || addonInfoItem.fileType != HKFileTypeText) {
 					NSLog(@"[%@ %@] item at path (%@) does not appear to contain a valid addoninfo.txt file!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), filePath);
 					
-					vpkArchiveType = HKVPKSourceAddonFileArchiveType;
 					sourceAddonStatus = HKSourceAddonNoAddonInfoFound;
 					
 					return self;
@@ -133,7 +151,6 @@ using namespace HLLib;
 				if (stringValue == nil) {
 					NSLog(@"[%@ %@] could not determine string encoding of addoninfo.txt file!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 					
-					vpkArchiveType = HKVPKSourceAddonFileArchiveType;
 					sourceAddonStatus = HKSourceAddonAddonInfoUnreadable;
 					
 					return self;
@@ -158,7 +175,6 @@ using namespace HLLib;
 					NSLog(@"[%@ %@] failed to find '%@' key and/or value in addoninfo.txt in (%@)!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), HKSourceAddonSteamAppIDKey, filePath);
 					NSLog(@"[%@ %@] stringValue == '%@'", NSStringFromClass([self class]), NSStringFromSelector(_cmd), stringValue);
 					
-					vpkArchiveType = HKVPKSourceAddonFileArchiveType;
 					sourceAddonStatus = HKSourceAddonNoGameIDFoundInAddonInfo;
 					
 					return self;
@@ -170,16 +186,13 @@ using namespace HLLib;
 				
 				addonSteamAppIDString = [addonSteamAppIDString stringByReplacingOccurrencesOfString:@"\"" withString:@""];
 				
-				
 				sourceAddonGameID = [addonSteamAppIDString integerValue];
 				
 #if HK_DEBUG
 				NSLog(@"[%@ %@] addonSteamAppIDString == %@, sourceAddonGameID == %ld", NSStringFromClass([self class]), NSStringFromSelector(_cmd), addonSteamAppIDString, (long)sourceAddonGameID);
 #endif
 				
-				vpkArchiveType = HKVPKSourceAddonFileArchiveType;
 				sourceAddonStatus = HKSourceAddonValidAddon;
-				
 			}
 		}
 	}
@@ -207,6 +220,25 @@ using namespace HLLib;
 	[description appendFormat:@"\tarchiveDirectoryFilePath == %@\n", archiveDirectoryFilePath];
 	[description appendFormat:@"\tarchiveVersion == %lu\n", (unsigned long)archiveVersion];
 	[description appendFormat:@"\tarchiveCount== %lu\n", (unsigned long)archiveCount];
+	
+	static const NSString * const HKVPKArchiveTypeDescriptions[] = {
+		@"HKVPKUnknownArchiveType",
+		@"HKVPKSourceAddonFileArchiveType",
+		@"HKVPKDirectoryArchiveType",	// blah_dir.vpk
+		@"HKVPKMultipartArchiveType",	// blah_001.vpk
+	};
+	
+	static const NSString * const HKSourceAddonStatusDescriptions[] = {
+		@"HKSourceAddonStatusUnknown",
+		@"HKSourceAddonNotAnAddonFile",
+		@"HKSourceAddonNoAddonInfoFound",
+		@"HKSourceAddonAddonInfoUnreadable",
+		@"HKSourceAddonNoGameIDFoundInAddonInfo",
+		@"HKSourceAddonValidAddon",
+	};
+	
+	[description appendFormat:@"\tvpkArchiveType == %@\n", HKVPKArchiveTypeDescriptions[vpkArchiveType]];
+	[description appendFormat:@"\tsourceAddonStatus == %@\n", HKSourceAddonStatusDescriptions[sourceAddonStatus]];
 	
 	if (sourceAddonGameID) [description appendFormat:@"\tsourceAddonGameID == %lu\n\n", (unsigned long)sourceAddonGameID];
 	return [NSString stringWithFormat:@"%@", description];
