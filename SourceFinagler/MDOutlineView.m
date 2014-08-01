@@ -46,8 +46,9 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
+	static BOOL initialized = NO;
+	
 	@synchronized(self) {
-		static BOOL initialized = NO;
 		
 		if (initialized == NO) {
 			

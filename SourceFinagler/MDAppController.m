@@ -100,6 +100,8 @@ static NSArray *appClassNames = nil;
 		MDPlaySoundEffects = NO;
 		
 		NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsLeopardKey forAppIdentifier:MDSystemSoundEffectsLeopardBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
+		// cause MDHLDocument's +initialize method to be called, which will in turn make sure MDOutlineView's and MDBrowser's default values are set up
+		[MDHLDocument class];
 		
 		/*	enabled is an NSNumber, not a YES or NO value. If enabled is nil, we assume the default sound effect setting, which is enabled. Only if enabled is non-nil do we have an actual YES or NO answer to examine	*/
 		

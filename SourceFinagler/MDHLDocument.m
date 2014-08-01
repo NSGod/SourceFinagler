@@ -126,6 +126,25 @@ static NSInteger copyTag = 0;
 @dynamic searchPredicate;
 
 
++ (void)initialize {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	static BOOL initialized = NO;
+	
+	@synchronized(self) {
+		if (initialized == NO) {
+			
+			// cause MDOutlineView's and MDBrowser's +initialize methods to be called to initialize user defaults
+			[MDOutlineView class];
+			[MDBrowser class];
+			
+			initialized = YES;
+		}
+	}
+}
+
+
 - (id)init {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
