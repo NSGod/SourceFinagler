@@ -113,7 +113,7 @@ static NSArray *appClassNames = nil;
 		
 		NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
 		
-		[defaultValues setObject:[NSNumber numberWithInteger:MDListViewMode] forKey:MDDocumentViewModeKey];
+		[defaultValues setObject:[NSNumber numberWithInteger:MDHLDocumentListViewMode] forKey:MDDocumentViewModeKey];
 		
 		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowInvisibleItemsKey];
 		

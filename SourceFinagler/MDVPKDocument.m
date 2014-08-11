@@ -44,6 +44,8 @@
 	
 	if (vpkFile.vpkArchiveType == HKVPKMultipartArchiveType) {
 		
+		viewMode = MDHLDocumentNoViewMode;
+		
 		[outlineViewMenuHelpMenuItem retain];
 		[outlineViewMenuShowInspectorMenuItem retain];
 		[outlineViewMenuShowViewOptionsMenuItem retain];
@@ -95,9 +97,8 @@
 		
 		NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile:[[self fileURL] path]];
 		[icon setSize:NSMakeSize(128.0, 128.0)];
-		[self setImage:icon];
-		[self setVersion:[file version]];
-		
+		image = [icon retain];
+		version = [[file version] retain];
 		
 		for (NSUInteger i = 0; i < viewSwitcherControl.segmentCount; i++) {
 			[viewSwitcherControl setEnabled:NO forSegment:i];

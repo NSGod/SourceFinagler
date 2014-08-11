@@ -101,7 +101,7 @@ NSString * const MDViewNameKey										= @"MDViewName";
 - (void)setSearchResults:(NSMutableArray *)theSearchResults;
 - (NSDictionary *)simplifiedItemsAndPathsForItems:(NSArray *)items resultingNames:(NSArray **)resultingNames;
 
-- (NSArray *)selectedItems;
+- (void)reloadOutlineViewData;
 
 - (NSArray *)namesOfPromisedFilesForItems:(NSArray *)selectedItems droppedAtDestination:(NSURL *)dropDestination;
 - (BOOL)writeItems:(NSArray *)theItems toPasteboard:(NSPasteboard *)pboard;
@@ -118,12 +118,12 @@ static NSInteger copyTag = 0;
 @synthesize file;
 @synthesize image;
 @synthesize kind;
-@synthesize outlineViewIsReloadingData;
 @synthesize version;
-@synthesize isSearching;
 
-@dynamic shouldShowInvisibleItems;
+@synthesize viewMode;
+
 @dynamic searchPredicate;
+@dynamic selectedItems;
 
 
 + (void)initialize {
@@ -156,7 +156,6 @@ static NSInteger copyTag = 0;
 		
 		shouldShowInvisibleItems = [[[NSUserDefaults standardUserDefaults] objectForKey:MDShouldShowInvisibleItemsKey] boolValue];
 		
-		[self setSearching:NO];
 		
 		searchResults = [[NSMutableArray alloc] init];
 				
@@ -196,54 +195,54 @@ static NSInteger copyTag = 0;
 	switch (archiveFileType) {
 			
 		case (HKArchiveFileGCFType) : {
-			[self setKind:NSLocalizedString(@"Steam Cache file", @"")];
+			kind = [NSLocalizedString(@"Steam Cache file", @"") retain];
 			file = [[HKGCFFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 			
 		case (HKArchiveFileVPKType) : {
-			[self setKind:NSLocalizedString(@"Source Valve Package file", @"")];
+			kind = [NSLocalizedString(@"Source Valve Package file", @"") retain];
 			file = [[HKVPKFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 			
 		case (HKArchiveFileSGAType) : {
-			[self setKind:NSLocalizedString(@"Source Game Archive", @"")];
+			kind = [NSLocalizedString(@"Source Game Archive", @"") retain];
 			file = [[HKSGAFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 			
 		case (HKArchiveFileNCFType) : {
-			[self setKind:NSLocalizedString(@"Steam Non-Cache file", @"")];
+			kind = [NSLocalizedString(@"Steam Non-Cache file", @"") retain];
 			file = [[HKNCFFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 			
 		case (HKArchiveFileBSPType) : {
-			[self setKind:NSLocalizedString(@"Source Level", @"")];
+			kind = [NSLocalizedString(@"Source Level", @"") retain];
 			file = [[HKBSPFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 		case (HKArchiveFilePAKType) : {
-			[self setKind:NSLocalizedString(@"Source Package file", @"")];
+			kind = [NSLocalizedString(@"Source Package file", @"") retain];
 			file = [[HKPAKFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 			
 		case (HKArchiveFileWADType) : {
-			[self setKind:NSLocalizedString(@"Source Texture Package file", @"")];
+			kind = [NSLocalizedString(@"Source Texture Package file", @"") retain];
 			file = [[HKWADFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 			
 		case (HKArchiveFileXZPType) : {
-			[self setKind:NSLocalizedString(@"Source Xbox Package file", @"")];
+			kind = [NSLocalizedString(@"Source Xbox Package file", @"") retain];
 			file = [[HKXZPFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
 			
 		default : {
-			[self setKind:NSLocalizedString(@"Steam Cache file", @"")];
+			kind = [NSLocalizedString(@"Steam Cache file", @"") retain];
 			file = [[HKGCFFile alloc] initWithContentsOfFile:[url path] showInvisibleItems:shouldShowInvisibleItems sortDescriptors:nil error:outError];
 			break;
 		}
@@ -381,10 +380,10 @@ static NSInteger copyTag = 0;
 	
 	/*	First swap in the appropriate view (outlineViewView or browserView) into the mainContentView, then set the window's size (frame) */
 	
-	if (viewMode == MDListViewMode) {
+	if (viewMode == MDHLDocumentListViewMode) {
 		[mainBox setContentView:outlineViewView];
 		[hlWindow makeFirstResponder:outlineView];
-	} else if (viewMode == MDColumnViewMode) {
+	} else if (viewMode == MDHLDocumentColumnViewMode) {
 		[mainBox setContentView:browserView];
 		[hlWindow makeFirstResponder:browser];
 	}
@@ -419,14 +418,11 @@ static NSInteger copyTag = 0;
 	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDShouldShowInvisibleItemsKey]
 																 options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 	
-	[[file items] setSortDescriptors:(viewMode == MDListViewMode ? [outlineView sortDescriptors] : [browser sortDescriptors]) recursively:YES];
+	[[file items] setSortDescriptors:(viewMode == MDHLDocumentListViewMode ? [outlineView sortDescriptors] : [browser sortDescriptors]) recursively:YES];
 	[[file items] recursiveSortChildren];
 	
-	if (viewMode == MDListViewMode) {
-		outlineViewIsReloadingData = YES;
-		[outlineView reloadData];
-		outlineViewIsReloadingData = NO;
-		
+	if (viewMode == MDHLDocumentListViewMode) {
+		[self reloadOutlineViewData];
 	} else {
 		[browser reloadData];
 	}
@@ -434,8 +430,8 @@ static NSInteger copyTag = 0;
 	
 	NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile:[[self fileURL] path]];
 	[icon setSize:NSMakeSize(128.0, 128.0)];
-	[self setImage:icon];
-	[self setVersion:[file version]];
+	image = [icon retain];
+	version = [[file version] retain];
 	
 	[progressIndicator setUsesThreadedAnimation:YES];
 	
@@ -476,11 +472,9 @@ static NSInteger copyTag = 0;
 #endif
 	shouldShowInvisibleItems = value;
 	[[file items] setShowInvisibleItems:shouldShowInvisibleItems];
-	if (viewMode == MDListViewMode) {
-		outlineViewIsReloadingData = YES;
-		[outlineView reloadData];
-		outlineViewIsReloadingData = NO;
-	} else if (viewMode == MDColumnViewMode) {
+	if (viewMode == MDHLDocumentListViewMode) {
+		[self reloadOutlineViewData];
+	} else if (viewMode == MDHLDocumentColumnViewMode) {
 		[browser reloadData];
 	}
 	[self updateCount];
@@ -584,11 +578,11 @@ static NSInteger copyTag = 0;
 #if MD_DEBUG
 //	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (viewMode == MDListViewMode) {
+	if (viewMode == MDHLDocumentListViewMode) {
 		
 		return [outlineView itemsAtRowIndexes:[outlineView selectedRowIndexes]];
 		
-	} else if (viewMode == MDColumnViewMode) {
+	} else if (viewMode == MDHLDocumentColumnViewMode) {
 		
 		NSInteger selectedColumn = [browser selectedColumn];
 		if (selectedColumn != -1) {
@@ -600,18 +594,20 @@ static NSInteger copyTag = 0;
 
 
 - (void)updateCount {
+#if MD_DEBUG
+//	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	
 	NSIndexSet *selectedIndexes = nil;
 	NSNumber *totalCount = nil;
 	
-	if (viewMode == MDListViewMode || isSearching) {
+	if (viewMode == MDHLDocumentListViewMode || isSearching) {
 		
 		selectedIndexes = [outlineView selectedRowIndexes];
 		totalCount = [NSNumber numberWithUnsignedInteger:outlineViewItemCount];
 		
-	} else if (viewMode == MDColumnViewMode) {
-//		NSArray *selectionIndexPaths = [browser selectionIndexPaths];
-//		NSLog(@" \"%@\" [%@ %@] selectionIndexPaths == %@", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), selectionIndexPaths);
+	} else if (viewMode == MDHLDocumentColumnViewMode) {
+		
 		NSInteger targetColumn = -1;
 		
 		NSInteger selectedColumn = [browser selectedColumn];
@@ -676,7 +672,7 @@ static NSInteger copyTag = 0;
 		
 		[progressIndicator startAnimation:nil];
 		
-		[viewSwitcherControl selectSegmentWithTag:MDListViewMode];
+		[viewSwitcherControl selectSegmentWithTag:MDHLDocumentListViewMode];
 		[viewSwitcherControl setEnabled:NO forSegment:1];
 		
 		isSearching	= YES;
@@ -780,7 +776,7 @@ static NSInteger copyTag = 0;
 			
 			[progressIndicator startAnimation:nil];
 			
-			[viewSwitcherControl selectSegmentWithTag:MDListViewMode];
+			[viewSwitcherControl selectSegmentWithTag:MDHLDocumentListViewMode];
 			[viewSwitcherControl setEnabled:NO forSegment:1];
 			
 			isSearching	= YES;
@@ -818,10 +814,10 @@ static NSInteger copyTag = 0;
 		
 		[progressIndicator stopAnimation:nil];
 		
-		if (viewMode == MDListViewMode) {
+		if (viewMode == MDHLDocumentListViewMode) {
 			[mainBox setContentView:outlineViewView];
 			[outlineView deselectAll:self];
-		} else if (viewMode == MDColumnViewMode) {
+		} else if (viewMode == MDHLDocumentColumnViewMode) {
 			[mainBox setContentView:browserView];
 			
 		}
@@ -833,10 +829,8 @@ static NSInteger copyTag = 0;
 		
 		outlineViewItemCount = 0;
 		
-		if (viewMode == MDListViewMode) {
-			outlineViewIsReloadingData = YES;
-			[outlineView reloadData];
-			outlineViewIsReloadingData = NO;
+		if (viewMode == MDHLDocumentListViewMode) {
+			[self reloadOutlineViewData];
 		}
 		[self updateCount];
 		
@@ -1025,11 +1019,22 @@ static NSInteger copyTag = 0;
 	return [self namesOfPromisedFilesForItems:[browser itemsAtRowIndexes:rowIndexes inColumn:columnIndex] droppedAtDestination:dropDestination];
 }
 
+
 #pragma mark NSBrowser <NSDraggingSource> END
-
-
 #pragma mark -
-#pragma mark <NSOutlineViewDataSource>
+
+
+- (void)reloadOutlineViewData {
+#if MD_DEBUG
+	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	outlineViewIsReloadingData = YES;
+	[outlineView reloadData];
+	outlineViewIsReloadingData = NO;
+}
+
+
+#pragma mark - <NSOutlineViewDataSource>
 
 
 - (NSInteger)outlineView:(NSOutlineView *)anOutlineView numberOfChildrenOfItem:(id)item {
@@ -1160,9 +1165,7 @@ static NSInteger copyTag = 0;
 		
 		[[file items] setSortDescriptors:newDescriptors recursively:YES];
 		[[file items] recursiveSortChildren];
-		outlineViewIsReloadingData = YES;
-		[anOutlineView reloadData];
-		outlineViewIsReloadingData = NO;
+		[self reloadOutlineViewData];
 		
 		[outlineView selectRowIndexes:[outlineView rowIndexesForItems:selectedItems] byExtendingSelection:NO];
 	}
@@ -1220,7 +1223,7 @@ static NSInteger copyTag = 0;
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)aNotification {
 	
-	if (viewMode == MDListViewMode || isSearching) {
+	if (viewMode == MDHLDocumentListViewMode || isSearching) {
 		[self updateCount];
 		
 		if ([[outlineView window] isMainWindow]) {
@@ -1396,15 +1399,12 @@ static NSInteger copyTag = 0;
 			NSDictionary *itemsAndPaths = [copyOperation itemsAndPaths];
 			NSArray *allItems = [itemsAndPaths allValues];
 			
-			
 			unsigned long long totalBytes = 0;
 			unsigned long long currentBytes = 0;
-			
 			
 #if MD_DEBUG
 			NSDate *startDate = [NSDate date];
 #endif
-			
 			
 			for (HKItem *item in allItems) {
 				if ([item isLeaf]) {
@@ -1414,7 +1414,6 @@ static NSInteger copyTag = 0;
 			
 #if MD_DEBUG
 			NSTimeInterval elapsedTime = fabs([startDate timeIntervalSinceNow]);
-			
 			NSLog(@"[%@ %@] elapsed time to size %lu items == %.7f sec / %.4f ms", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)[allItems count], elapsedTime, elapsedTime * 1000.0);
 #endif
 			
@@ -1674,10 +1673,6 @@ static NSInteger copyTag = 0;
 		}
 	}
 	
-#if MD_DEBUG
-//	NSLog(@"[%@ %@] rootItems == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), rootItems);
-#endif
-	
 	for (HKItem *item in rootItems) {
 		
 		[allItemsAndPaths setObject:item forKey:[item pathRelativeToItem:(HKItem *)[item parent]]];
@@ -1687,11 +1682,6 @@ static NSInteger copyTag = 0;
 			if (descendentsAndPaths) [allItemsAndPaths addEntriesFromDictionary:descendentsAndPaths];
 		}
 	}
-	
-#if MD_DEBUG
-//	NSLog(@"[%@ %@] allItemsAndPaths == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), allItemsAndPaths);
-#endif
-	
 	
 	if (resultingNames) {
 		NSArray *relativeDestinationPaths = [allItemsAndPaths allKeys];
@@ -1723,7 +1713,6 @@ static NSInteger copyTag = 0;
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	
 	if ([pathControl clickedPathComponentCell]) {
 		NSURL *originalURL = nil;
 		originalURL = [[pathControl clickedPathComponentCell] URL];
@@ -1825,11 +1814,12 @@ static NSInteger copyTag = 0;
 #pragma mark END <NSWindowDelegate>
 #pragma mark -
 
-
 - (IBAction)switchViewMode:(id)sender {
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
+	
+// TODO: try to preserve selection and navigation level when switching view mode
 	
 	NSInteger tag = -1;
 	
@@ -1845,98 +1835,94 @@ static NSInteger copyTag = 0;
 	}
 	
 	if (tag != viewMode) {
+		
+		if (tag == MDHLDocumentListViewMode) {
 			
-			if (tag == MDListViewMode) {
-				
-				/* get current browser selection, select items in outline view, then switch view to outline view, then deselect items in browser */
-				
+			/* get current browser selection, select items in outline view, then switch view to outline view, then deselect items in browser */
+			
 #if MD_DEBUG
-				NSArray *selectionIndexPaths = [browser selectionIndexPaths];
-				NSLog(@"[%@ %@] selectionIndexPaths == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), selectionIndexPaths);
+			NSArray *selectionIndexPaths = [browser selectionIndexPaths];
+			NSLog(@"[%@ %@] selectionIndexPaths == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), selectionIndexPaths);
 #endif
+			
+			[[file items] setSortDescriptors:[outlineView sortDescriptors]];
+			[[file items] recursiveSortChildren];
 				
-				[[file items] setSortDescriptors:[outlineView sortDescriptors]];
-				[[file items] recursiveSortChildren];
-				
-//				NSIndexSet *selectedRowIndexes = [browser selectedRowIndexesInColumn:0];
-//				NSArray *selectedFonts = [[self filteredItems] objectsAtIndexes:selectedRowIndexes];
+//			NSIndexSet *selectedRowIndexes = [browser selectedRowIndexesInColumn:0];
+//			NSArray *selectedItems = [[self filteredItems] objectsAtIndexes:selectedRowIndexes];
+//			
+//			[[self filteredItems] sortUsingDescriptors:[outlineView sortDescriptors]];
+			
+			/* change the view mode earlier, so that when I issue the deselectAll: command below, we won't care about it */
+			
+			viewMode = tag;
+			
+//			if ([selectedItems count] > 0) {
+//				NSMutableIndexSet *newSelectedRowIndexes = [NSMutableIndexSet indexSet];
+//				NSEnumerator *enumerator = [selectedItems objectEnumerator];
+//				HKItem *item;
 //				
-//				[[self filteredItems] sortUsingDescriptors:[outlineView sortDescriptors]];
-				
-				/* change the view mode earlier, so that when I issue the deselectAll: command below, we won't care about it */
-				
-				viewMode = tag;
-				
-//				if ([selectedFonts count] > 0) {
-//					NSMutableIndexSet *newSelectedRowIndexes = [NSMutableIndexSet indexSet];
-//					NSEnumerator *enumerator = [selectedFonts objectEnumerator];
-//					HKFile *font;
-//					
-//					while (font = [enumerator nextObject]) {
-//						[newSelectedRowIndexes addIndex:[[self filteredItems] indexOfObject:font]];
-//					}
-//					
-//					[outlineView selectRowIndexes:newSelectedRowIndexes byExtendingSelection:NO];
+//				while (item = [enumerator nextObject]) {
+//					[newSelectedRowIndexes addIndex:[[self filteredItems] indexOfObject:item]];
 //				}
-				
-				[viewSwitcherControl selectSegmentWithTag:tag];
-				
-				/* I'll always need to reloadData, since I've just sorted the [file items] array differently */
-				outlineViewIsReloadingData = YES;
-				[outlineView reloadData];
-				outlineViewIsReloadingData = NO;
-
-				[hlWindow makeFirstResponder:outlineView];
-				[mainBox setContentView:outlineViewView];
-				[browser deselectAll:nil];
-				
-			} else if (tag == MDColumnViewMode) {
-				
-				/* get current outline view selection, select items in browser, then swtich view to browser, then deselect items in outline view */
-				
-				[[file items] setSortDescriptors:[browser sortDescriptors]];
-				[[file items] recursiveSortChildren];
-				
-				
-//				NSIndexSet *selectedRowIndexes = [outlineView selectedRowIndexes];
-//				NSArray *selectedFonts = [[self filteredItems] objectsAtIndexes:selectedRowIndexes];
 //				
-//				[[self filteredItems] sortUsingDescriptors:browserSortDescriptors];
+//				[outlineView selectRowIndexes:newSelectedRowIndexes byExtendingSelection:NO];
+//			}
 				
-				/* change the view mode earlier, so that when I issue the deselectAll: command below, we won't care about it */
-				
-				viewMode = tag;
-				
-//				[browser reloadDataPreservingSelection:NO];
-				
-//				if ([selectedFonts count] > 0) {
-//					NSMutableIndexSet *newSelectedRowIndexes = [NSMutableIndexSet indexSet];
-//					NSEnumerator *enumerator = [selectedFonts objectEnumerator];
-//					HKFile *font;
-//					
-//					while (font = [enumerator nextObject]) {
-//						[newSelectedRowIndexes addIndex:[[self filteredItems] indexOfObject:font]];
-//					}
-//					
-//					[browser selectRowIndexes:newSelectedRowIndexes inColumn:0];
+			[viewSwitcherControl selectSegmentWithTag:tag];
+			
+			/* I'll always need to reloadData, since I've just sorted the [file items] array differently */
+			[self reloadOutlineViewData];
+			
+			[hlWindow makeFirstResponder:outlineView];
+			[mainBox setContentView:outlineViewView];
+			[browser deselectAll:nil];
+			
+		} else if (tag == MDHLDocumentColumnViewMode) {
+			
+			/* get current outline view selection, select items in browser, then swtich view to browser, then deselect items in outline view */
+			
+			[[file items] setSortDescriptors:[browser sortDescriptors]];
+			[[file items] recursiveSortChildren];
+			
+			
+//			NSIndexSet *selectedRowIndexes = [outlineView selectedRowIndexes];
+//			NSArray *selectedItems = [[self filteredItems] objectsAtIndexes:selectedRowIndexes];
+//			
+//			[[self filteredItems] sortUsingDescriptors:browserSortDescriptors];
+			
+			/* change the view mode earlier, so that when I issue the deselectAll: command below, we won't care about it */
+			
+			viewMode = tag;
+			
+//			[browser reloadDataPreservingSelection:NO];
+			
+//			if ([selectedItems count] > 0) {
+//				NSMutableIndexSet *newSelectedRowIndexes = [NSMutableIndexSet indexSet];
+//				NSEnumerator *enumerator = [selectedItems objectEnumerator];
+//				HKItem *item;
+//				
+//				while (item = [enumerator nextObject]) {
+//					[newSelectedRowIndexes addIndex:[[self filteredItems] indexOfObject:item]];
 //				}
-				
-				[viewSwitcherControl selectSegmentWithTag:tag];
-				
-				
-				/* I'll always need to reloadData, since I've just sorted the [file items] array differently */
-				
-				[hlWindow makeFirstResponder:browser];
-
-				[mainBox setContentView:browserView];
-				[outlineView deselectAll:nil];
-			}
+//				
+//				[browser selectRowIndexes:newSelectedRowIndexes inColumn:0];
+//			}
+			
+			[viewSwitcherControl selectSegmentWithTag:tag];
+			
+			
+			/* I'll always need to reloadData, since I've just sorted the [file items] array differently */
 			
 			[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:viewMode] forKey:MDDocumentViewModeKey];
 			[[NSNotificationCenter defaultCenter] postNotificationName:MDDocumentViewModeDidChangeNotification
 																object:self
 															  userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:viewMode] forKey:MDDocumentViewModeKey]];
+			[hlWindow makeFirstResponder:browser];
 			
+			[mainBox setContentView:browserView];
+			[outlineView deselectAll:nil];
+		}
 		[self updateCount];
 	}
 }
@@ -2104,9 +2090,9 @@ static NSInteger copyTag = 0;
 	
 	NSInteger selectedCount = -1;
 	
-	if (viewMode == MDListViewMode) {
+	if (viewMode == MDHLDocumentListViewMode) {
 		selectedCount = [outlineView numberOfSelectedRows];
-	} else if (viewMode == MDColumnViewMode) {
+	} else if (viewMode == MDHLDocumentColumnViewMode) {
 		NSInteger selectedColumn = [browser selectedColumn];
 		if (selectedColumn == -1) {
 			selectedCount = 0;
@@ -2197,7 +2183,7 @@ static NSInteger copyTag = 0;
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
 #if MD_DEBUG
-//	NSLog(@" \"%@\" [%@ %@] %@", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), menuItem);
+//	NSLog(@" \"%@\" [%@ %@] menuItem == %@, action == %@", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), menuItem, NSStringFromSelector([menuItem action]));
 #endif
 	
 	SEL action = [menuItem action];
@@ -2205,18 +2191,18 @@ static NSInteger copyTag = 0;
 	
 	if (action == @selector(switchViewMode:)) {
 		if (isSearching) {
-			if (tag == MDListViewMode) {
+			if (tag == MDHLDocumentListViewMode) {
 				[menuItem setState:NSOnState];
 				return YES;
-			} else if (tag == MDColumnViewMode) {
+			} else if (tag == MDHLDocumentColumnViewMode) {
 				[menuItem setState:NSOffState];
 				return NO;
 			}
 		} else {
-			if (tag == MDListViewMode) {
-				[menuItem setState:(viewMode == MDListViewMode ?  NSOnState : NSOffState)];
-			} else if (tag == MDColumnViewMode) {
-				[menuItem setState:(viewMode == MDColumnViewMode ?  NSOnState : NSOffState)];
+			if (tag == MDHLDocumentListViewMode) {
+				[menuItem setState:(viewMode == MDHLDocumentListViewMode ?  NSOnState : NSOffState)];
+			} else if (tag == MDHLDocumentColumnViewMode) {
+				[menuItem setState:(viewMode == MDHLDocumentColumnViewMode ?  NSOnState : NSOffState)];
 			}
 		}
 		
@@ -2242,9 +2228,9 @@ static NSInteger copyTag = 0;
 			NSInteger numberOfSelectedRows = -1;
 			NSInteger selectedColumn = -1;
 			
-			if (viewMode == MDListViewMode) {
+			if (viewMode == MDHLDocumentListViewMode) {
 				numberOfSelectedRows = [outlineView numberOfSelectedRows];
-			} else if (viewMode == MDColumnViewMode) {
+			} else if (viewMode == MDHLDocumentColumnViewMode) {
 				selectedColumn = [browser selectedColumn];
 				if (selectedColumn == -1) {
 					numberOfSelectedRows = 0;
@@ -2262,11 +2248,11 @@ static NSInteger copyTag = 0;
 			} else if (numberOfSelectedRows == 1) {
 				HKItem *selectedItem = nil;
 				
-				if (viewMode == MDListViewMode) {
+				if (viewMode == MDHLDocumentListViewMode) {
 					
 					selectedItem = [outlineView itemAtRow:[outlineView selectedRow]];
 					
-				} else if (viewMode == MDColumnViewMode) {
+				} else if (viewMode == MDHLDocumentColumnViewMode) {
 
 					selectedItem = [browser itemAtRow:[[browser selectedRowIndexesInColumn:selectedColumn] firstIndex] inColumn:selectedColumn];
 				}
@@ -2331,9 +2317,20 @@ static NSInteger copyTag = 0;
 
 - (NSString *)description {
 #if MD_DEBUG
-	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
+	static const NSString * const MDHLDocumentViewModeDescriptions[] = {
+		@"MDHLDocumentNoViewMode",
+		@"MDHLDocumentListViewMode",
+		@"MDHLDocumentColumnViewMode",
+	};
+	
+	NSMutableString *description = [NSMutableString stringWithFormat:@"%@ '%@'", [super description], [self displayName]];
+	[description appendFormat:@", %@", MDHLDocumentViewModeDescriptions[viewMode]];
+	return description;
+	
+#else
 	return [NSString stringWithFormat:@"%@ '%@'", [super description], [self displayName]];
+#endif
+	
 }
 
 

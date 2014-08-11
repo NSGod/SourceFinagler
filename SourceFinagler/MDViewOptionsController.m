@@ -106,11 +106,11 @@ NSString * const MDShouldShowViewOptionsDidChangeNotification	= @"MDShouldShowVi
 			
 			if (documentViewMode == 0) {
 	
-			} else if (documentViewMode == MDListViewMode) {
+			} else if (documentViewMode == MDHLDocumentListViewMode) {
 			
 				[contentBox setContentView:listViewOptionsView];
 			
-			} else if (documentViewMode == MDColumnViewMode) {
+			} else if (documentViewMode == MDHLDocumentColumnViewMode) {
 				
 				[contentBox setContentView:browserViewOptionsView];
 				
@@ -119,9 +119,9 @@ NSString * const MDShouldShowViewOptionsDidChangeNotification	= @"MDShouldShowVi
 		
 	} else {
 		NSInteger viewMode = [[[NSUserDefaults standardUserDefaults] objectForKey:MDDocumentViewModeKey] integerValue];
-		if (viewMode == MDListViewMode) {
+		if (viewMode == MDHLDocumentListViewMode) {
 			[contentBox setContentView:listViewOptionsView];
-		} else if (viewMode == MDColumnViewMode) {
+		} else if (viewMode == MDHLDocumentColumnViewMode) {
 			[contentBox setContentView:browserViewOptionsView];
 	}
 }

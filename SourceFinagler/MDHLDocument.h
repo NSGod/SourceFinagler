@@ -16,13 +16,11 @@ MDPreviewViewController, MDPathControlView, MDInspectorView;
 @class HKItem, HKFile, HKArchiveFile;
 
 
-extern int CoreDockSetTrashFull(int full) __attribute__((weak_import));
-
-
-enum {
-	MDListViewMode		= 1,
-	MDColumnViewMode	= 2,
-};
+typedef enum MDHLDocumentViewMode {
+	MDHLDocumentNoViewMode			= 0,
+	MDHLDocumentListViewMode		= 1,
+	MDHLDocumentColumnViewMode		= 2,
+} MDHLDocumentViewMode;
 
 
 extern NSString * const MDHLDocumentErrorDomain;
@@ -96,45 +94,45 @@ extern NSString * const MDHLDocumentURLKey;
 	
 	NSMutableDictionary								*copyOperationsAndTags;
 	
-	NSInteger					viewMode;
+	MDHLDocumentViewMode							viewMode;
 		
-	NSMutableArray				*searchResults;
-	NSPredicate					*searchPredicate;
-    NSUInteger					searchPredicateEditorRowCount;
+	NSMutableArray									*searchResults;
+	NSPredicate										*searchPredicate;
+    NSUInteger										searchPredicateEditorRowCount;
 	
 		
+	NSUInteger										outlineViewItemCount;
 	
-	NSUInteger					outlineViewItemCount;
-	
-	NSImage						*image;
-	
-	
-	NSString					*version;
-	
-	NSString					*kind;
+	NSImage											*image;
+	NSString										*version;
+	NSString										*kind;
 	
 	
-	BOOL						shouldShowInvisibleItems;
-	BOOL						isSearching;
-	BOOL						outlineViewIsReloadingData;
-	BOOL						outlineViewIsSettingUpInitialColumns;
+	BOOL											shouldShowInvisibleItems;
+	BOOL											isSearching;
+	BOOL											outlineViewIsReloadingData;
+	BOOL											outlineViewIsSettingUpInitialColumns;
 	
 }
 
-@property (assign) BOOL shouldShowInvisibleItems;
+@property (readonly, nonatomic, retain) HKArchiveFile *file;
 
 
-@property (nonatomic, readonly, retain) HKArchiveFile *file;
+@property (readonly, nonatomic, retain) NSImage *image;
+@property (readonly, nonatomic, retain) NSString *version;
+@property (readonly, nonatomic, retain) NSString *kind;
+
+@property (readonly, nonatomic, assign) MDHLDocumentViewMode viewMode;
+
+@property (readonly, nonatomic, retain) NSArray *selectedItems;
 
 
-@property (nonatomic, retain) NSImage *image;
-@property (assign) BOOL outlineViewIsReloadingData;
-
-@property (nonatomic, retain) NSString *version;
-@property (assign, setter=setSearching:) BOOL isSearching;
-@property (nonatomic, retain) NSString *kind;
+- (NSDate *)fileCreationDate;
+- (NSNumber *)fileSize;
 
 @property (nonatomic, retain) NSPredicate *searchPredicate;
+
+
 
 - (IBAction)installSourceAddon:(id)sender;
 
@@ -156,9 +154,6 @@ extern NSString * const MDHLDocumentURLKey;
 // we define this method and intercept it so that our validateMenuItem: can properly update the menu item as long as a document is open.
 - (IBAction)toggleShowQuickLook:(id)sender;
 - (IBAction)toggleShowPathBar:(id)sender;
-
-- (NSDate *)fileCreationDate;
-- (NSNumber *)fileSize;
 
 - (void)windowWillClose:(NSNotification *)notification;
 
