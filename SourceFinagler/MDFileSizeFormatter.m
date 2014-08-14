@@ -288,6 +288,7 @@ NSString * const MDFileSizeFormatterUnitsTypeKey	= @"MDFileSizeFormatterUnitsTyp
 		}
 		return (style == MDFileSizeFormatterFullStyle ? NSLocalizedString(@"Zero KB (Zero bytes)", @"") : NSLocalizedString(@"Zero KB", @""));
 	}
+	NSLog(@"[%@ %@] WARNING: class of object == %@, returning nil...", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromClass([anObject class]));
 	return nil;
 }
 

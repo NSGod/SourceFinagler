@@ -73,6 +73,9 @@ static SInt32 MDSystemVersion = MDUndeterminedVersion;
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
+	
+	NSParameterAssert(aFreeSpace != nil);
+	
 	[anIndexSet retain];
 	[selectedIndexes release];
 	selectedIndexes = anIndexSet;
