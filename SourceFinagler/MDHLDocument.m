@@ -47,61 +47,48 @@
 
 
 
-NSString * const MDHLDocumentErrorDomain			= @"MDHLDocumentErrorDomain";
-NSString * const MDHLDocumentURLKey					= @"MDHLDocumentURL";
+NSString * const MDHLDocumentErrorDomain									= @"MDHLDocumentErrorDomain";
+NSString * const MDHLDocumentURLKey											= @"MDHLDocumentURL";
+
+
+static NSString * const MDHLDocumentWindowSavedFrameKey						= @"MDHLDocumentWindowSavedFrame";
+
+
+NSString * const MDHLDocumentShouldShowInvisibleItemsKey					= @"MDHLDocumentShouldShowInvisibleItems";
+
+NSString * const MDHLDocumentViewModeDidChangeNotification					= @"MDHLDocumentViewModeDidChange";
+NSString * const MDHLDocumentViewModeKey									= @"MDHLDocumentViewMode";
+
+NSString * const MDHLDocumentShouldShowViewOptionsKey						= @"MDHLDocumentShouldShowViewOptions";
+NSString * const MDHLDocumentShouldShowViewOptionsDidChangeNotification		= @"MDHLDocumentShouldShowViewOptionsDidChange";
+
+NSString * const MDHLDocumentShouldShowInspectorKey							= @"MDHLDocumentShouldShowInspector";
+NSString * const MDHLDocumentShouldShowInspectorDidChangeNotification		= @"MDHLDocumentShouldShowInspectorDidChange";
+
+NSString * const MDHLDocumentShouldShowQuickLookKey							= @"MDHLDocumentShouldShowQuickLook";
+NSString * const MDHLDocumentShouldShowQuickLookDidChangeNotification		= @"MDHLDocumentShouldShowQuickLookDidChange";
+
+NSString * const MDHLDocumentShouldShowPathBarKey							= @"MDHLDocumentShouldShowPathBar";
+NSString * const MDHLDocumentShouldShowPathBarDidChangeNotification			= @"MDHLDocumentShouldShowPathBarDidChange";
+
+NSString * const MDHLDocumentSelectedItemsDidChangeNotification				= @"MDHLDocumentSelectedItemsDidChange";
+
+
+NSString * const MDSystemSoundEffectsBundleIdentifierKey					= @"com.apple.systemsound";
+NSString * const MDSystemSoundEffectsEnabledKey								= @"com.apple.sound.uiaudio.enabled";
+
+
+NSString * const MDHLDocumentWillCloseNotification							= @"MDHLDocumentWillClose";
 
 
 
-NSString * const MDDocumentWindowSavedFrameKey						= @"MDDocumentWindowSavedFrame";
+@interface MDHLDocument ()
 
-
-NSString * const MDShouldShowInvisibleItemsKey						= @"MDShouldShowInvisibleItems";
-
-NSString * const MDDocumentViewModeDidChangeNotification			= @"MDDocumentViewModeDidChange";
-NSString * const MDDocumentViewModeKey								= @"MDDocumentViewMode";
-
-NSString * const MDDocumentNameKey									= @"MDDocumentName";
-NSString * const MDDidSwitchDocumentNotification					= @"MDDidSwitchDocument";
-
-NSString * const MDShouldShowInspectorKey							= @"MDShouldShowInspector";
-NSString * const MDShouldShowInspectorDidChangeNotification			= @"MDShouldShowInspectorDidChange";
-
-NSString * const MDShouldShowQuickLookKey							= @"MDShouldShowQuickLook";
-NSString * const MDShouldShowQuickLookDidChangeNotification			= @"MDShouldShowQuickLookDidChange";
-
-NSString * const MDShouldShowPathBarKey								= @"MDShouldShowPathBar";
-NSString * const MDShouldShowPathBarDidChangeNotification			= @"MDShouldShowPathBarDidChange";
-
-
-NSString * const MDSelectedItemsDidChangeNotification				= @"MDSelectedItemsDidChange";
-NSString * const MDSelectedItemsKey									= @"MDSelectedItems";
-NSString * const MDSelectedItemsDocumentKey							= @"MDSelectedItemsDocument";
-
-
-NSString * const MDSystemSoundEffectsLeopardBundleIdentifierKey		= @"com.apple.systemsound";
-NSString * const MDSystemSoundEffectsLeopardKey						= @"com.apple.sound.uiaudio.enabled";
-
-
-NSString * const MDShowBrowserPreviewInspectorPaneKey				= @"MDShowBrowserPreviewInspectorPane";
-
-NSString * const MDDraggedItemsPboardType							= @"MDDraggedItemsPboardType";
-NSString * const MDCopiedItemsPboardType							= @"MDCopiedItemsPboardType";
-
-
-NSString * const MDViewKey											= @"MDView";
-
-
-NSString * const MDWillSwitchViewNotification						= @"MDWillSwitchView";
-NSString * const MDViewNameKey										= @"MDViewName";
-
-
-
-@interface MDHLDocument (MDPrivate)
 - (void)updateCount;
-- (void)setSearchResults:(NSMutableArray *)theSearchResults;
-- (NSDictionary *)simplifiedItemsAndPathsForItems:(NSArray *)items resultingNames:(NSArray **)resultingNames;
 
 - (void)reloadOutlineViewData;
+
+- (NSDictionary *)simplifiedItemsAndPathsForItems:(NSArray *)items resultingNames:(NSArray **)resultingNames;
 
 - (NSArray *)namesOfPromisedFilesForItems:(NSArray *)selectedItems droppedAtDestination:(NSURL *)dropDestination;
 - (BOOL)writeItems:(NSArray *)theItems toPasteboard:(NSPasteboard *)pboard;
@@ -111,6 +98,7 @@ NSString * const MDViewNameKey										= @"MDViewName";
 
 static NSInteger copyTag = 0;
 
+static NSRecursiveLock *orderedDocumentsLock = nil;
 
 
 @implementation MDHLDocument
@@ -119,7 +107,6 @@ static NSInteger copyTag = 0;
 @synthesize image;
 @synthesize kind;
 @synthesize version;
-
 @synthesize viewMode;
 
 @dynamic searchPredicate;
@@ -134,6 +121,8 @@ static NSInteger copyTag = 0;
 	
 	@synchronized(self) {
 		if (initialized == NO) {
+			
+			orderedDocumentsLock = [[NSRecursiveLock alloc] init];
 			
 			// cause MDOutlineView's and MDBrowser's +initialize methods to be called to initialize user defaults
 			[MDOutlineView class];
@@ -154,15 +143,14 @@ static NSInteger copyTag = 0;
 		
 		outlineViewIsSettingUpInitialColumns = YES;
 		
-		shouldShowInvisibleItems = [[[NSUserDefaults standardUserDefaults] objectForKey:MDShouldShowInvisibleItemsKey] boolValue];
-		
+		shouldShowInvisibleItems = [[[NSUserDefaults standardUserDefaults] objectForKey:MDHLDocumentShouldShowInvisibleItemsKey] boolValue];
 		
 		searchResults = [[NSMutableArray alloc] init];
 				
 		copyOperationsAndTags = [[NSMutableDictionary alloc] init];
 		
 		if (MDGetSystemVersion() >= MDLeopard) {
-			NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsLeopardKey forAppIdentifier:MDSystemSoundEffectsLeopardBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
+			NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsEnabledKey forAppIdentifier:MDSystemSoundEffectsBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
 			
 			/*	enabled is an NSNumber, not a YES or NO value. If enabled is nil, we assume the default sound effect setting, which is enabled. Only if enabled is non-nil do we have an actual YES or NO answer to examine	*/
 			
@@ -323,7 +311,6 @@ static NSInteger copyTag = 0;
 	
 	[outlineView setTarget:self];
 	[outlineView setDoubleAction:@selector(toggleShowQuickLook:)];
-	[outlineView registerForDraggedTypes:[NSArray arrayWithObjects:MDDraggedItemsPboardType, NSFilenamesPboardType, nil]];
 	
 	
 	[browser setDoubleAction:@selector(toggleShowQuickLook:)];
@@ -365,7 +352,7 @@ static NSInteger copyTag = 0;
 	[searchInspectorView setInitiallyShown:NO];
 	[searchInspectorView setShown:NO];
 	
-	MDShouldShowPathBar = [[[NSUserDefaults standardUserDefaults] objectForKey:MDShouldShowPathBarKey] boolValue];
+	MDShouldShowPathBar = [[[NSUserDefaults standardUserDefaults] objectForKey:MDHLDocumentShouldShowPathBarKey] boolValue];
 	
 	[pathControlInspectorView setInitiallyShown:NO];
 	
@@ -376,7 +363,7 @@ static NSInteger copyTag = 0;
 		
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
-	viewMode = [[userDefaults objectForKey:MDDocumentViewModeKey] integerValue];
+	viewMode = [[userDefaults objectForKey:MDHLDocumentViewModeKey] integerValue];
 	
 	/*	First swap in the appropriate view (outlineViewView or browserView) into the mainContentView, then set the window's size (frame) */
 	
@@ -392,7 +379,7 @@ static NSInteger copyTag = 0;
 		[viewSwitcherControl selectSegmentWithTag:viewMode];
 	}
 	
-	NSString *savedFrame = [userDefaults objectForKey:MDDocumentWindowSavedFrameKey];
+	NSString *savedFrame = [userDefaults objectForKey:MDHLDocumentWindowSavedFrameKey];
 	if (savedFrame) [hlWindow setFrameFromString:savedFrame];
 	
 	if (file) {
@@ -406,16 +393,16 @@ static NSInteger copyTag = 0;
 //	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outlineViewColumnDidMove:) name:NSOutlineViewColumnDidMoveNotification object:outlineView];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(browserSelectionDidChange:) name:MDBrowserSelectionDidChangeNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowViewOptionsDidChange:) name:MDShouldShowViewOptionsDidChangeNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowInspectorDidChange:) name:MDShouldShowInspectorDidChangeNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowQuickLookDidChange:) name:MDShouldShowQuickLookDidChangeNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowPathBarDidChange:) name:MDShouldShowPathBarDidChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowViewOptionsDidChange:) name:MDHLDocumentShouldShowViewOptionsDidChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowInspectorDidChange:) name:MDHLDocumentShouldShowInspectorDidChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowQuickLookDidChange:) name:MDHLDocumentShouldShowQuickLookDidChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowPathBarDidChange:) name:MDHLDocumentShouldShowPathBarDidChangeNotification object:nil];
 	
 #if MD_DEBUG_TABLE_COLUMNS
 	NSLog(@"[%@ %@] [outlineView sortDescriptors] == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [outlineView sortDescriptors]);
 #endif
 	
-	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDShouldShowInvisibleItemsKey]
+	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDHLDocumentShouldShowInvisibleItemsKey]
 																 options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 	
 	[[file items] setSortDescriptors:(viewMode == MDHLDocumentListViewMode ? [outlineView sortDescriptors] : [browser sortDescriptors]) recursively:YES];
@@ -492,8 +479,8 @@ static NSInteger copyTag = 0;
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDShouldShowInvisibleItemsKey]]) {
-		[self setShouldShowInvisibleItems:[[[NSUserDefaults standardUserDefaults] objectForKey:MDShouldShowInvisibleItemsKey] boolValue]];
+	if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDHLDocumentShouldShowInvisibleItemsKey]]) {
+		[self setShouldShowInvisibleItems:[[[NSUserDefaults standardUserDefaults] objectForKey:MDHLDocumentShouldShowInvisibleItemsKey] boolValue]];
 		
 	} else {
 		if ([super respondsToSelector:@selector(observeValueForKeyPath:ofObject:change:context:)]) {
@@ -505,53 +492,96 @@ static NSInteger copyTag = 0;
 }
 
 
-- (void)shouldShowViewOptionsDidChange:(NSNotification *)notification {
++ (NSArray *)orderedDocuments {
+	
+	NSArray *orderedDocuments = nil;
+	
+	[orderedDocumentsLock lock];
+	orderedDocuments = [[[NSApp orderedDocuments] copy] autorelease];
+	[orderedDocumentsLock unlock];
+	
 #if MD_DEBUG
-//	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	printf("\n\n");
+	NSLog(@"[%@ %@] orderedDocuments == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), orderedDocuments);
+	NSDocument *currentDocument = [[NSDocumentController sharedDocumentController] currentDocument];
+	NSLog(@"[%@ %@] currentDocument == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), currentDocument);
+	printf("\n\n");
 #endif
 	
-	if (MDShouldShowViewOptions && [hlWindow isMainWindow]) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:MDWillSwitchViewNotification
-															object:self
-														  userInfo:[NSDictionary dictionaryWithObjectsAndKeys:MDViewKey,MDViewNameKey, [NSNumber numberWithInteger:viewMode],MDDocumentViewModeKey, [self displayName],MDDocumentNameKey, nil]];
+	NSMutableArray *orderedMDHLDocuments = [NSMutableArray array];
+	
+	for (NSDocument *document in orderedDocuments) {
+		if ([document isKindOfClass:[MDHLDocument class]]) {
+			[orderedMDHLDocuments addObject:document];
+		}
+	}
+	
+	return [[orderedMDHLDocuments copy] autorelease];
+}
+
+
+- (BOOL)isFrontmostMDHLDocument {
+#if MD_DEBUG
+	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	
+	/* If our window is the main window, then we know without a doubt that we are the 
+	 frontmost document, regardless of what the NSApp's orderedDocuments method returns 
+	 (it sometimes appears to be out of order). */
+	
+	if ([hlWindow isMainWindow]) {
+#if MD_DEBUG
+		NSLog(@" \"%@\" [%@ %@] ***** WE'RE the MAIN WINDOW *******", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+		return YES;
+	}
+	
+	NSArray *orderedDocuments = [[self class] orderedDocuments];
+	
+	if (orderedDocuments.count) {
+		return ([orderedDocuments objectAtIndex:0] == self);
+	}
+	return NO;
+}
+
+
+#pragma mark - should show Notifications
+
+
+- (void)shouldShowViewOptionsDidChange:(NSNotification *)notification {
+#if MD_DEBUG
+	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (MDShouldShowViewOptions && [self isFrontmostMDHLDocument]) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentViewModeDidChangeNotification object:self userInfo:nil];
 	}
 }
 
 
-
 - (void)shouldShowInspectorDidChange:(NSNotification *)notification {
 #if MD_DEBUG
-//	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	
-	if (MDShouldShowInspector && [hlWindow isMainWindow]) {
-		
-		[[NSNotificationCenter defaultCenter] postNotificationName:MDSelectedItemsDidChangeNotification
-															object:self
-														  userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[self selectedItems],MDSelectedItemsKey, self,MDSelectedItemsDocumentKey, nil]];
+	if (MDShouldShowInspector && [self isFrontmostMDHLDocument]) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentSelectedItemsDidChangeNotification object:self userInfo:nil];
 	}
 }
 
 
 - (void)shouldShowQuickLookDidChange:(NSNotification *)notification {
 #if MD_DEBUG
-//	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	
-	if (MDShouldShowQuickLook && [hlWindow isMainWindow]) {
-		
-		[[NSNotificationCenter defaultCenter] postNotificationName:MDSelectedItemsDidChangeNotification
-															object:self
-														  userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[self selectedItems],MDSelectedItemsKey, self,MDSelectedItemsDocumentKey, nil]];
+	if (MDShouldShowQuickLook && [self isFrontmostMDHLDocument]) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentSelectedItemsDidChangeNotification object:self userInfo:nil];
 	}
 }
 
 
 - (void)shouldShowPathBarDidChange:(NSNotification *)notification {
 #if MD_DEBUG
-//	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	
 	[pathControlInspectorView setShown:MDShouldShowPathBar];
 }
 
@@ -899,11 +929,8 @@ static NSInteger copyTag = 0;
 		
 		[self updateCount];
 		
-		if ([[browser window] isMainWindow]) {
-			
-			[[NSNotificationCenter defaultCenter] postNotificationName:MDSelectedItemsDidChangeNotification
-																object:self
-															  userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[self selectedItems],MDSelectedItemsKey, self,MDSelectedItemsDocumentKey, nil]];
+		if ([self isFrontmostMDHLDocument]) {
+			[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentSelectedItemsDidChangeNotification object:self userInfo:nil];
 		}
 	}
 }
@@ -1106,9 +1133,7 @@ static NSInteger copyTag = 0;
 }
 
 - (id)outlineView:(NSOutlineView *)anOutlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item {
-	id objectValue = nil;
-	objectValue = [item valueForKey:[tableColumn identifier]];
-	return objectValue;
+	return [item valueForKey:[tableColumn identifier]];
 }
 
 
@@ -1226,11 +1251,8 @@ static NSInteger copyTag = 0;
 	if (viewMode == MDHLDocumentListViewMode || isSearching) {
 		[self updateCount];
 		
-		if ([[outlineView window] isMainWindow]) {
-			[[NSNotificationCenter defaultCenter] postNotificationName:MDSelectedItemsDidChangeNotification
-																object:self
-															  userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[self selectedItems],MDSelectedItemsKey, self,MDSelectedItemsDocumentKey, nil]];
-			
+		if ([self isFrontmostMDHLDocument]) {
+			[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentSelectedItemsDidChangeNotification object:self userInfo:nil];
 		}
 	}
 }
@@ -1742,14 +1764,15 @@ static NSInteger copyTag = 0;
 	
 	if ([notification object] == hlWindow) {
 		
+#if MD_DEBUG
+		NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+		[[self class] orderedDocuments];
+#endif
+		
 		/*	this is for the viewOptionsController, so it can do its switching	*/
 		
-		[[NSNotificationCenter defaultCenter] postNotificationName:MDWillSwitchViewNotification object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:MDViewKey,MDViewNameKey, [NSNumber numberWithInteger:viewMode],MDDocumentViewModeKey, [self displayName],MDDocumentNameKey, nil]];
-		
-		/*	this is for the appController, so it'll know to swap the view menu items for the document rather than the main window	*/
-		
-		[[NSNotificationCenter defaultCenter] postNotificationName:MDDidSwitchDocumentNotification object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:viewMode],MDDocumentViewModeKey, [self displayName],MDDocumentNameKey, nil]];
-		
+		[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentViewModeDidChangeNotification object:self userInfo:nil];
+
 		[self updateCount];
 		
 		if (pathControl) {
@@ -1758,16 +1781,19 @@ static NSInteger copyTag = 0;
 		
 		/* this is for the Inspector Controller and Quick Look Controller */
 		
-		[[NSNotificationCenter defaultCenter] postNotificationName:MDSelectedItemsDidChangeNotification
-															object:self
-														  userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[self selectedItems],MDSelectedItemsKey, self,MDSelectedItemsDocumentKey, nil]];
+		[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentSelectedItemsDidChangeNotification object:self userInfo:nil];
 		
 	}
 }
 
 
 - (void)windowDidResignMain:(NSNotification *)notification {
+	
 	if ([notification object] == hlWindow) {
+#if MD_DEBUG
+		NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+		
 		if (pathControl) {
 			[pathControl setBackgroundColor:[NSColor colorWithCalibratedRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1.0]];
 		}
@@ -1776,36 +1802,20 @@ static NSInteger copyTag = 0;
 
 
 - (void)windowWillClose:(NSNotification *)notification {
-#if MD_DEBUG
-	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	
 	if ([notification object] == hlWindow) {
 #if MD_DEBUG
-		NSLog(@" \"%@\" [%@ %@] our window", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+		NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-		NSString *savedFrame = [hlWindow stringWithSavedFrame];
-		[[NSUserDefaults standardUserDefaults] setObject:savedFrame forKey:MDDocumentWindowSavedFrameKey];
+		[[NSUserDefaults standardUserDefaults] setObject:[hlWindow stringWithSavedFrame] forKey:MDHLDocumentWindowSavedFrameKey];
 		
-		[[self undoManager] removeAllActionsWithTarget:self];
-		
-		[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDShouldShowInvisibleItemsKey]];
+		[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDHLDocumentShouldShowInvisibleItemsKey]];
 		
 //		[browserPreviewViewController cleanup];
 		[browserPreviewViewController release];
 		browserPreviewViewController = nil;
 		
-		
-		if ([[NSApp orderedDocuments] count] == 1) {
-			
-			[[NSNotificationCenter defaultCenter] postNotificationName:MDLastWindowDidCloseNotification
-																object:self
-															  userInfo:nil];
-		}
-		
-		[[NSNotificationCenter defaultCenter] postNotificationName:MDSelectedItemsDidChangeNotification
-															object:self
-														  userInfo:nil];
+		[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentWillCloseNotification object:self userInfo:nil];
 		
 		[[NSNotificationCenter defaultCenter] removeObserver:self];
 	}	
@@ -1914,15 +1924,18 @@ static NSInteger copyTag = 0;
 			
 			/* I'll always need to reloadData, since I've just sorted the [file items] array differently */
 			
-			[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:viewMode] forKey:MDDocumentViewModeKey];
-			[[NSNotificationCenter defaultCenter] postNotificationName:MDDocumentViewModeDidChangeNotification
-																object:self
-															  userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:viewMode] forKey:MDDocumentViewModeKey]];
 			[hlWindow makeFirstResponder:browser];
 			
 			[mainBox setContentView:browserView];
 			[outlineView deselectAll:nil];
 		}
+		
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:viewMode] forKey:MDHLDocumentViewModeKey];
+		
+		if ([self isFrontmostMDHLDocument]) {
+			[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentViewModeDidChangeNotification object:self userInfo:nil];
+		}
+		
 		[self updateCount];
 	}
 }
@@ -2074,10 +2087,9 @@ static NSInteger copyTag = 0;
 #if MD_DEBUG
 //	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	
 	MDShouldShowPathBar = !MDShouldShowPathBar;
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowPathBar] forKey:MDShouldShowPathBarKey];
-	[[NSNotificationCenter defaultCenter] postNotificationName:MDShouldShowPathBarDidChangeNotification object:self userInfo:nil];
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowPathBar] forKey:MDHLDocumentShouldShowPathBarKey];
+	[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentShouldShowPathBarDidChangeNotification object:self userInfo:nil];
 }
 
 

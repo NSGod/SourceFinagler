@@ -38,7 +38,6 @@ static NSString * const MDSpotlightImporterBundleIdentifierKey		= @"com.markdoum
 NSString * const MDLaunchTimeActionKey								= @"MDLaunchTimeAction";
 
 static NSString * const MDQuitAfterAllWindowsClosedKey				= @"MDQuitAfterAllWindowsClosed";
-NSString * const MDLastWindowDidCloseNotification					= @"MDLastWindowDidClose";
 
 
 /*************		websites & email addresses	*************/
@@ -99,7 +98,7 @@ static NSArray *appClassNames = nil;
 		
 		MDPlaySoundEffects = NO;
 		
-		NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsLeopardKey forAppIdentifier:MDSystemSoundEffectsLeopardBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
+		NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsEnabledKey forAppIdentifier:MDSystemSoundEffectsBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
 		// cause MDHLDocument's +initialize method to be called, which will in turn make sure MDOutlineView's and MDBrowser's default values are set up
 		[MDHLDocument class];
 		
@@ -113,12 +112,12 @@ static NSArray *appClassNames = nil;
 		
 		NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
 		
-		[defaultValues setObject:[NSNumber numberWithInteger:MDHLDocumentListViewMode] forKey:MDDocumentViewModeKey];
+		[defaultValues setObject:[NSNumber numberWithInteger:MDHLDocumentListViewMode] forKey:MDHLDocumentViewModeKey];
 		
-		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowInvisibleItemsKey];
+		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDHLDocumentShouldShowInvisibleItemsKey];
 		
-		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowInspectorKey];
-		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowQuickLookKey];
+		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDHLDocumentShouldShowInspectorKey];
+		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDHLDocumentShouldShowQuickLookKey];
 		
 		[defaultValues setObject:[NSNumber numberWithUnsignedInteger:MDLaunchTimeActionOpenMainWindow] forKey:MDLaunchTimeActionKey];
 		
@@ -138,7 +137,7 @@ static NSArray *appClassNames = nil;
 		
 		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDQuitAfterAllWindowsClosedKey];
 		
-		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDShouldShowViewOptionsKey];
+		[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:MDHLDocumentShouldShowViewOptionsKey];
 		
 		[defaultValues setObject:[NSNumber numberWithUnsignedInteger:0] forKey:MDCurrentViewIndexKey];
 		
@@ -150,11 +149,10 @@ static NSArray *appClassNames = nil;
 
 - (id)init {
 	if ((self = [super init])) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lastWindowDidClose:) name:MDLastWindowDidCloseNotification object:nil];
-
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowViewOptionsDidChange:) name:MDShouldShowViewOptionsDidChangeNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowInspectorDidChange:) name:MDShouldShowInspectorDidChangeNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowQuickLookDidChange:) name:MDShouldShowQuickLookDidChangeNotification object:nil];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowViewOptionsDidChange:) name:MDHLDocumentShouldShowViewOptionsDidChangeNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowInspectorDidChange:) name:MDHLDocumentShouldShowInspectorDidChangeNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowQuickLookDidChange:) name:MDHLDocumentShouldShowQuickLookDidChangeNotification object:nil];
 		
 		viewControllers = [[NSMutableArray alloc] init];
 		
@@ -182,12 +180,9 @@ static NSArray *appClassNames = nil;
 	
 	[prefsController release];
 	
-	[viewToggleToolbarShownMenuItem release];
-	[viewCustomizeToolbarMenuItem release];
-	[viewOptionsMenuItem release];
-	
 	[super dealloc];
 }
+
 
 - (void)awakeFromNib {
 #if MD_DEBUG
@@ -205,23 +200,10 @@ static NSArray *appClassNames = nil;
 	
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
-	[viewModeAsListMenuItem retain];
-	
 	if (MDGetSystemVersion() < MDSnowLeopard) {
-		[viewMenu removeItem:viewModeAsColumnsMenuItem];
+		[[viewModeAsColumnsMenuItem menu] removeItem:viewModeAsColumnsMenuItem];
 		viewModeAsColumnsMenuItem = nil;
-	} else {
-		[viewModeAsColumnsMenuItem retain];
 	}
-	
-	
-	[viewTogglePathBarMenuItem retain];
-	
-	[viewToggleToolbarShownMenuItem retain];
-	[viewCustomizeToolbarMenuItem retain];
-	[viewOptionsMenuItem retain];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSwitchToDocument:) name:MDDidSwitchDocumentNotification object:nil];
 	
 	// from setupUI, since it only needs to be done once
 	
@@ -244,9 +226,9 @@ static NSArray *appClassNames = nil;
 		[webpageMenuItem setImage:webAppImage];
 	}
 	
-	MDShouldShowInspector = [[userDefaults objectForKey:MDShouldShowInspectorKey] boolValue];
-	MDShouldShowViewOptions = [[userDefaults objectForKey:MDShouldShowViewOptionsKey] boolValue];
-	MDShouldShowQuickLook = [[userDefaults objectForKey:MDShouldShowQuickLookKey] boolValue];
+	MDShouldShowInspector = [[userDefaults objectForKey:MDHLDocumentShouldShowInspectorKey] boolValue];
+	MDShouldShowViewOptions = [[userDefaults objectForKey:MDHLDocumentShouldShowViewOptionsKey] boolValue];
+	MDShouldShowQuickLook = [[userDefaults objectForKey:MDHLDocumentShouldShowQuickLookKey] boolValue];
 	
 	
 	if (MDShouldShowViewOptions) {
@@ -372,22 +354,6 @@ static NSArray *appClassNames = nil;
 }
 
 
-// this method is used
-- (void)didSwitchToDocument:(NSNotification *)notification {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	
-	if (MDGetSystemVersion() == MDLeopard) {
-		[viewMenu setItemArray:[NSArray arrayWithObjects:viewModeAsListMenuItem,[NSMenuItem separatorItem], viewTogglePathBarMenuItem, [NSMenuItem separatorItem], viewToggleToolbarShownMenuItem,viewCustomizeToolbarMenuItem,[NSMenuItem separatorItem],viewOptionsMenuItem, nil]];
-		
-	} else if (MDGetSystemVersion() >= MDSnowLeopard) {
-		[viewMenu setItemArray:[NSArray arrayWithObjects:viewModeAsListMenuItem,viewModeAsColumnsMenuItem,[NSMenuItem separatorItem], viewTogglePathBarMenuItem, [NSMenuItem separatorItem], viewToggleToolbarShownMenuItem,viewCustomizeToolbarMenuItem,[NSMenuItem separatorItem],viewOptionsMenuItem, nil]];
-		
-	}
-	
-}
-
 
 - (IBAction)switchView:(id)sender {
 #if MD_DEBUG
@@ -431,15 +397,6 @@ static NSArray *appClassNames = nil;
 	
 }
 
-
-- (void)lastWindowDidClose:(NSNotification *)notification {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	
-	[viewMenu setItemArray:[NSArray arrayWithObjects:viewTogglePathBarMenuItem, [NSMenuItem separatorItem], viewToggleToolbarShownMenuItem, viewCustomizeToolbarMenuItem, [NSMenuItem separatorItem], viewOptionsMenuItem, nil]];
-	
-}
 
 
 - (IBAction)toggleShowInspector:(id)sender {
@@ -518,8 +475,9 @@ static NSArray *appClassNames = nil;
 	}
 }
 
+
 - (IBAction)showMainWindow:(id)sender {
-	if (![window isVisible]) [window makeKeyAndOrderFront:nil];
+	[window makeKeyAndOrderFront:nil];
 }
 
 
@@ -548,29 +506,30 @@ static NSArray *appClassNames = nil;
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
 #if MD_DEBUG
-//	NSLog(@"[%@ %@] menuItem == %@, action == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), menuItem, NSStringFromSelector(menuItem.action));
+	NSLog(@"[%@ %@] menuItem == %@, action == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), menuItem, NSStringFromSelector(menuItem.action));
 #endif
 	
 	SEL action = [menuItem action];
 	
 	if (action == @selector(switchView:)) {
+		
 	} else if (action == @selector(showPrefsWindow:)) {
 		return YES;
+		
 	} else if (action == @selector(toggleShowViewOptions:)) {
 		[menuItem setTitle:(MDShouldShowViewOptions ? NSLocalizedString(@"Hide View Options", @"") : NSLocalizedString(@"Show View Options", @""))];
 		return YES;
+
 	} else if (action == @selector(toggleShowInspector:)) {
 		[menuItem setTitle:(MDShouldShowInspector ? NSLocalizedString(@"Hide Inspector", @"") : NSLocalizedString(@"Show Inspector", @""))];
-		
 		return YES;
 		
 	} else if (action == @selector(toggleShowQuickLook:)) {
 		[menuItem setTitle:(MDShouldShowQuickLook ? NSLocalizedString(@"Close Quick Look", @"") : NSLocalizedString(@"Quick Look", @""))];
-		
 		return YES;
+		
 	} else if (action == @selector(showMainWindow:)) {
 		[menuItem setState:(NSInteger)([window isVisible] && [window isMainWindow])];
-		
 		return YES;
 		
 	}

@@ -27,7 +27,6 @@ typedef NSUInteger MDLaunchTimeActionType;
 
 extern NSString * const MDLaunchTimeActionKey;
 
-extern NSString * const MDLastWindowDidCloseNotification;
 
 
 extern BOOL			MDShouldShowViewOptions;
@@ -44,19 +43,7 @@ extern BOOL			MDPlaySoundEffects;
 @interface MDAppController : NSObject <NSApplicationDelegate, NSOpenSavePanelDelegate, NSToolbarDelegate, NSSoundDelegate, NSMenuDelegate> {
     IBOutlet NSWindow					*window;
 	
-	IBOutlet NSMenuItem					*toggleInspectorMenuItem;
-	IBOutlet NSMenuItem					*toggleQuickLookMenuItem;
-	
-	IBOutlet NSMenu						*viewMenu;
-	IBOutlet NSMenuItem					*viewModeAsListMenuItem;
 	IBOutlet NSMenuItem					*viewModeAsColumnsMenuItem;
-	
-	IBOutlet NSMenuItem					*viewTogglePathBarMenuItem;
-	
-	IBOutlet NSMenuItem					*viewToggleToolbarShownMenuItem;
-	IBOutlet NSMenuItem					*viewCustomizeToolbarMenuItem;
-	
-	IBOutlet NSMenuItem					*viewOptionsMenuItem;
 	
 	IBOutlet NSMenuItem					*debugMenuItem;
 	

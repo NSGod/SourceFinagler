@@ -155,52 +155,38 @@ extern NSString * const MDHLDocumentURLKey;
 - (IBAction)toggleShowQuickLook:(id)sender;
 - (IBAction)toggleShowPathBar:(id)sender;
 
-- (void)windowWillClose:(NSNotification *)notification;
+
++ (NSArray *)orderedDocuments;
 
 @end
 
 
 
-	
-extern NSString * const MDDocumentWindowSavedFrameKey;
+extern NSString * const MDHLDocumentShouldShowInvisibleItemsKey;
 
-extern NSString * const MDShouldShowInvisibleItemsKey;
-
-extern NSString * const MDDocumentViewModeDidChangeNotification;
-extern NSString * const MDDocumentViewModeKey;
-
-extern NSString * const MDDocumentNameKey;
-extern NSString * const MDDidSwitchDocumentNotification;
-
-extern NSString * const MDShouldShowInspectorKey;
-extern NSString * const MDShouldShowInspectorDidChangeNotification;
-
-extern NSString * const MDShouldShowQuickLookKey;
-extern NSString * const MDShouldShowQuickLookDidChangeNotification;
-
-extern NSString * const MDShouldShowPathBarKey;
-extern NSString * const MDShouldShowPathBarDidChangeNotification;
+extern NSString * const MDHLDocumentViewModeDidChangeNotification;
+extern NSString * const MDHLDocumentViewModeKey;
 
 
-extern NSString * const MDSelectedItemsDidChangeNotification;
-extern NSString * const MDSelectedItemsKey;
-extern NSString * const MDSelectedItemsDocumentKey;
+extern NSString * const MDSystemSoundEffectsBundleIdentifierKey;
+extern NSString * const MDSystemSoundEffectsEnabledKey;
 
 
-extern NSString * const MDSystemSoundEffectsLeopardBundleIdentifierKey;
-extern NSString * const MDSystemSoundEffectsLeopardKey; // NSNumber (int)
+extern NSString * const MDHLDocumentShouldShowViewOptionsKey;
+extern NSString * const MDHLDocumentShouldShowViewOptionsDidChangeNotification;
+
+extern NSString * const MDHLDocumentShouldShowInspectorKey;
+extern NSString * const MDHLDocumentShouldShowInspectorDidChangeNotification;
+
+extern NSString * const MDHLDocumentShouldShowQuickLookKey;
+extern NSString * const MDHLDocumentShouldShowQuickLookDidChangeNotification;
+
+extern NSString * const MDHLDocumentShouldShowPathBarKey;
+extern NSString * const MDHLDocumentShouldShowPathBarDidChangeNotification;
 
 
-extern NSString * const MDShowBrowserPreviewInspectorPaneKey;
+extern NSString * const MDHLDocumentSelectedItemsDidChangeNotification;
 
-extern NSString * const MDDraggedItemsPboardType;
-extern NSString * const MDCopiedItemsPboardType;
+extern NSString * const MDHLDocumentWillCloseNotification;
 
 
-extern NSString * const MDViewKey;
-
-extern NSString * const MDWillSwitchViewNotification;
-
-extern NSString * const MDViewNameKey;
-
-	

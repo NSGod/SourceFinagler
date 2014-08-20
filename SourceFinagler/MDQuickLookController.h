@@ -11,13 +11,9 @@
 @class MDHLDocument, MDQuickLookPreviewViewController;
 
 
-extern NSString * const MDQuickLookStartFrameKey;
-extern NSString * const MDQuickLookEndFrameKey;
-
 
 @interface MDQuickLookController : NSWindowController {
 	IBOutlet MDQuickLookPreviewViewController	*previewViewController;
-	
 	
 	IBOutlet NSView								*controlsView;
 	
@@ -41,8 +37,6 @@ extern NSString * const MDQuickLookEndFrameKey;
 
 - (void)showWindowByAnimatingFromStartFrame:(NSRect)startFrame toEndFrame:(NSRect)endFrame;
 
-
-- (void)loadItemAtIndex:(NSInteger)anIndex;
 
 @end
 
