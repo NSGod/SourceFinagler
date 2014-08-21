@@ -29,15 +29,7 @@ extern NSString * const MDLaunchTimeActionKey;
 
 
 
-extern BOOL			MDShouldShowViewOptions;
-extern BOOL			MDShouldShowInspector;
-extern BOOL			MDShouldShowQuickLook;
-
 extern BOOL			TKShouldShowImageInspector;
-
-extern BOOL			MDShouldShowPathBar;
-
-extern BOOL			MDPlaySoundEffects;
 
 
 @interface MDAppController : NSObject <NSApplicationDelegate, NSOpenSavePanelDelegate, NSToolbarDelegate, NSSoundDelegate, NSMenuDelegate> {

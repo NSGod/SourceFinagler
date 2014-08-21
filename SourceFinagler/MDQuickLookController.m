@@ -7,11 +7,8 @@
 //
 
 #import "MDQuickLookController.h"
-#import "MDAppController.h"
 #import "MDHLDocument.h"
-
 #import <HLKit/HLKit.h>
-
 #import <CoreServices/CoreServices.h>
 #import "MDQuickLookPreviewViewController.h"
 #import "MDAppKitAdditions.h"
@@ -192,7 +189,7 @@ static MDQuickLookController *sharedQuickLookController = nil;
 	
 	// if we're not showing Quick Look, ignore the notification
 	
-	if (MDShouldShowQuickLook == NO) return;
+	if ([MDHLDocument shouldShowQuickLook] == NO) return;
 	
 	self.document = [notification object];
 	self.items = document.selectedItems;
@@ -256,9 +253,8 @@ static MDQuickLookController *sharedQuickLookController = nil;
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	MDShouldShowQuickLook = YES;
 	[[self window] orderFront:nil];
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowQuickLook] forKey:MDHLDocumentShouldShowQuickLookKey];
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[MDHLDocument shouldShowQuickLook]] forKey:MDHLDocumentShouldShowQuickLookKey];
 	[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentShouldShowQuickLookDidChangeNotification object:self userInfo:nil];
 }
 
@@ -269,8 +265,8 @@ static MDQuickLookController *sharedQuickLookController = nil;
 #if MD_DEBUG
 		NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-		MDShouldShowQuickLook = NO;
-		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowQuickLook] forKey:MDHLDocumentShouldShowQuickLookKey];
+		[MDHLDocument setShouldShowQuickLook:NO];
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[MDHLDocument shouldShowQuickLook]] forKey:MDHLDocumentShouldShowQuickLookKey];
 		[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentShouldShowQuickLookDidChangeNotification object:self userInfo:nil];
 	}
 }
@@ -278,6 +274,4 @@ static MDQuickLookController *sharedQuickLookController = nil;
 
 
 @end
-
-
 

@@ -8,7 +8,6 @@
 
 
 #import "MDViewOptionsController.h"
-#import "MDAppController.h"
 #import "MDOutlineView.h"
 #import "MDBrowser.h"
 #import "MDAppKitAdditions.h"
@@ -137,7 +136,7 @@
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[[self window] orderFront:nil];
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowViewOptions] forKey:MDHLDocumentShouldShowViewOptionsKey];
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[MDHLDocument shouldShowViewOptions]] forKey:MDHLDocumentShouldShowViewOptionsKey];
 	[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentShouldShowViewOptionsDidChangeNotification object:self userInfo:nil];
 }
 
@@ -148,8 +147,8 @@
 #if MD_DEBUG
 		NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-		MDShouldShowViewOptions = NO;
-		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowViewOptions] forKey:MDHLDocumentShouldShowViewOptionsKey];
+		[MDHLDocument setShouldShowViewOptions:NO];
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[MDHLDocument shouldShowViewOptions]] forKey:MDHLDocumentShouldShowViewOptionsKey];
 		[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentShouldShowViewOptionsDidChangeNotification object:self userInfo:nil];
 	}
 }

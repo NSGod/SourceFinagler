@@ -15,7 +15,6 @@
 #import <SteamKit/SteamKit.h>
 #import <CoreServices/CoreServices.h>
 #import "MDBottomBar.h"
-#import "MDAppController.h"
 
 
 
@@ -207,7 +206,7 @@
 			
 		} else if (action == @selector(toggleShowPathBar:)) {
 			// override super to return NO if this is a multipart archive
-			[menuItem setTitle:(MDShouldShowPathBar ? NSLocalizedString(@"Hide Path Bar", @"") : NSLocalizedString(@"Show Path Bar", @""))];
+			[menuItem setTitle:([[self class] shouldShowPathBar] ? NSLocalizedString(@"Hide Path Bar", @"") : NSLocalizedString(@"Show Path Bar", @""))];
 			return NO;
 			
 		}

@@ -158,6 +158,20 @@ extern NSString * const MDHLDocumentURLKey;
 
 + (NSArray *)orderedDocuments;
 
+
++ (BOOL)shouldShowViewOptions;
++ (void)setShouldShowViewOptions:(BOOL)shouldShow;
+
++ (BOOL)shouldShowInspector;
++ (void)setShouldShowInspector:(BOOL)shouldShow;
+
++ (BOOL)shouldShowQuickLook;
++ (void)setShouldShowQuickLook:(BOOL)shouldShow;
+
++ (BOOL)shouldShowPathBar;
++ (void)setShouldShowPathBar:(BOOL)shouldShow;
+
+
 @end
 
 
@@ -166,10 +180,6 @@ extern NSString * const MDHLDocumentShouldShowInvisibleItemsKey;
 
 extern NSString * const MDHLDocumentViewModeDidChangeNotification;
 extern NSString * const MDHLDocumentViewModeKey;
-
-
-extern NSString * const MDSystemSoundEffectsBundleIdentifierKey;
-extern NSString * const MDSystemSoundEffectsEnabledKey;
 
 
 extern NSString * const MDHLDocumentShouldShowViewOptionsKey;

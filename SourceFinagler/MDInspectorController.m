@@ -9,7 +9,6 @@
 
 
 #import "MDInspectorController.h"
-#import "MDAppController.h"
 #import "MDHLDocument.h"
 #import "MDAppKitAdditions.h"
 #import <HLKit/HLKit.h>
@@ -215,9 +214,8 @@
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	MDShouldShowInspector = YES;
 	[[self window] orderFront:nil];
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowInspector] forKey:MDHLDocumentShouldShowInspectorKey];
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[MDHLDocument shouldShowInspector]] forKey:MDHLDocumentShouldShowInspectorKey];
 	[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentShouldShowInspectorDidChangeNotification object:self userInfo:nil];
 }
 
@@ -228,8 +226,8 @@
 #if MD_DEBUG
 		NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-		MDShouldShowInspector = NO;
-		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowInspector] forKey:MDHLDocumentShouldShowInspectorKey];
+		[MDHLDocument setShouldShowInspector:NO];
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[MDHLDocument shouldShowInspector]] forKey:MDHLDocumentShouldShowInspectorKey];
 		[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentShouldShowInspectorDidChangeNotification object:self userInfo:nil];
 	}
 }

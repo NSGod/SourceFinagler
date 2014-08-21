@@ -74,8 +74,8 @@ NSString * const MDHLDocumentShouldShowPathBarDidChangeNotification			= @"MDHLDo
 NSString * const MDHLDocumentSelectedItemsDidChangeNotification				= @"MDHLDocumentSelectedItemsDidChange";
 
 
-NSString * const MDSystemSoundEffectsBundleIdentifierKey					= @"com.apple.systemsound";
-NSString * const MDSystemSoundEffectsEnabledKey								= @"com.apple.sound.uiaudio.enabled";
+static NSString * const MDSystemSoundEffectsBundleIdentifierKey				= @"com.apple.systemsound";
+static NSString * const MDSystemSoundEffectsEnabledKey						= @"com.apple.sound.uiaudio.enabled";
 
 
 NSString * const MDHLDocumentWillCloseNotification							= @"MDHLDocumentWillClose";
@@ -83,6 +83,11 @@ NSString * const MDHLDocumentWillCloseNotification							= @"MDHLDocumentWillClo
 
 
 @interface MDHLDocument ()
+
+
++ (BOOL)shouldPlaySoundEffects;
++ (void)updateShouldPlaySoundEffects;
+
 
 - (void)updateCount;
 
@@ -99,6 +104,22 @@ NSString * const MDHLDocumentWillCloseNotification							= @"MDHLDocumentWillClo
 static NSInteger copyTag = 0;
 
 static NSRecursiveLock *orderedDocumentsLock = nil;
+
+
+// the following all used to be global variables in MDAppController
+
+static BOOL shouldShowViewOptions = NO;
+static BOOL shouldShowInspector = NO;
+static BOOL shouldShowQuickLook = NO;
+static BOOL shouldShowPathBar = NO;
+static BOOL shouldPlaySoundEffects = NO;
+
+static NSRecursiveLock *shouldShowViewOptionsLock = nil;
+static NSRecursiveLock *shouldShowInspectorLock = nil;
+static NSRecursiveLock *shouldShowQuickLookLock = nil;
+static NSRecursiveLock *shouldShowPathBarLock = nil;
+static NSRecursiveLock *shouldPlaySoundEffectsLock = nil;
+
 
 
 @implementation MDHLDocument
@@ -124,14 +145,164 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 			
 			orderedDocumentsLock = [[NSRecursiveLock alloc] init];
 			
+			shouldShowViewOptionsLock = [[NSRecursiveLock alloc] init];
+			shouldShowInspectorLock = [[NSRecursiveLock alloc] init];
+			shouldShowQuickLookLock = [[NSRecursiveLock alloc] init];
+			shouldShowPathBarLock = [[NSRecursiveLock alloc] init];
+			shouldPlaySoundEffectsLock = [[NSRecursiveLock alloc] init];
+			
+			
 			// cause MDOutlineView's and MDBrowser's +initialize methods to be called to initialize user defaults
 			[MDOutlineView class];
 			[MDBrowser class];
+			
+			[self updateShouldPlaySoundEffects];
+			
+			NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+			
+			[defaults setObject:[NSNumber numberWithBool:NO] forKey:MDHLDocumentShouldShowViewOptionsKey];
+			[defaults setObject:[NSNumber numberWithBool:NO] forKey:MDHLDocumentShouldShowInspectorKey];
+			[defaults setObject:[NSNumber numberWithBool:NO] forKey:MDHLDocumentShouldShowQuickLookKey];
+			[defaults setObject:[NSNumber numberWithBool:NO] forKey:MDHLDocumentShouldShowPathBarKey];
+			
+			[defaults setObject:[NSNumber numberWithBool:NO] forKey:MDHLDocumentShouldShowInvisibleItemsKey];
+			
+			[defaults setObject:[NSNumber numberWithInteger:MDHLDocumentListViewMode] forKey:MDHLDocumentViewModeKey];
+			
+			[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+			[[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaults];
+			
+			
+			[self setShouldShowInspector:[[[NSUserDefaults standardUserDefaults] objectForKey:MDHLDocumentShouldShowInspectorKey] boolValue]];
+			[self setShouldShowViewOptions:[[[NSUserDefaults standardUserDefaults] objectForKey:MDHLDocumentShouldShowViewOptionsKey] boolValue]];
+			[self setShouldShowQuickLook:[[[NSUserDefaults standardUserDefaults] objectForKey:MDHLDocumentShouldShowQuickLookKey] boolValue]];
+			
 			
 			initialized = YES;
 		}
 	}
 }
+
+
+#pragma mark - "should show" Class methods
+
++ (BOOL)shouldPlaySoundEffects {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	BOOL shouldPlay = NO;
+	[shouldPlaySoundEffectsLock lock];
+	shouldPlay = shouldPlaySoundEffects;
+	[shouldPlaySoundEffectsLock unlock];
+	return shouldPlay;
+}
+
+
++ (void)updateShouldPlaySoundEffects {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (MDGetSystemVersion() >= MDLeopard) {
+		NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsEnabledKey forAppIdentifier:MDSystemSoundEffectsBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
+		
+		/*	enabled is an NSNumber, not a YES or NO value. If enabled is nil, we assume the default sound effect setting, which is enabled. Only if enabled is non-nil do we have an actual YES or NO answer to examine	*/
+		
+		[shouldPlaySoundEffectsLock lock];
+		
+		if (enabled) {
+			shouldPlaySoundEffects = (BOOL)[enabled intValue];
+		} else {
+			shouldPlaySoundEffects = YES;
+		}
+		[shouldPlaySoundEffectsLock unlock];
+	}
+}
+
+
++ (BOOL)shouldShowViewOptions {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	BOOL shouldShow = NO;
+	[shouldShowViewOptionsLock lock];
+	shouldShow = shouldShowViewOptions;
+	[shouldShowViewOptionsLock unlock];
+	return shouldShow;
+}
+
++ (void)setShouldShowViewOptions:(BOOL)shouldShow {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	[shouldShowViewOptionsLock lock];
+	shouldShowViewOptions = shouldShow;
+	[shouldShowViewOptionsLock unlock];
+}
+
+
++ (BOOL)shouldShowInspector {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	BOOL shouldShow = NO;
+	[shouldShowInspectorLock lock];
+	shouldShow = shouldShowInspector;
+	[shouldShowInspectorLock unlock];
+	return shouldShow;
+}
+
++ (void)setShouldShowInspector:(BOOL)shouldShow {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	[shouldShowInspectorLock lock];
+	shouldShowInspector = shouldShow;
+	[shouldShowInspectorLock unlock];
+}
+
+
++ (BOOL)shouldShowQuickLook {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	BOOL shouldShow = NO;
+	[shouldShowQuickLookLock lock];
+	shouldShow = shouldShowQuickLook;
+	[shouldShowQuickLookLock unlock];
+	return shouldShow;
+}
+
++ (void)setShouldShowQuickLook:(BOOL)shouldShow {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	[shouldShowQuickLookLock lock];
+	shouldShowQuickLook = shouldShow;
+	[shouldShowQuickLookLock unlock];
+}
+
+
++ (BOOL)shouldShowPathBar {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	BOOL shouldShow = NO;
+	[shouldShowPathBarLock lock];
+	shouldShow = shouldShowPathBar;
+	[shouldShowPathBarLock unlock];
+	return shouldShow;
+}
+
++ (void)setShouldShowPathBar:(BOOL)shouldShow {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	[shouldShowPathBarLock lock];
+	shouldShowPathBar = shouldShow;
+	[shouldShowPathBarLock unlock];
+}
+
+#pragma mark -
 
 
 - (id)init {
@@ -149,17 +320,7 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 				
 		copyOperationsAndTags = [[NSMutableDictionary alloc] init];
 		
-		if (MDGetSystemVersion() >= MDLeopard) {
-			NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsEnabledKey forAppIdentifier:MDSystemSoundEffectsBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
-			
-			/*	enabled is an NSNumber, not a YES or NO value. If enabled is nil, we assume the default sound effect setting, which is enabled. Only if enabled is non-nil do we have an actual YES or NO answer to examine	*/
-			
-			if (enabled) {
-				MDPlaySoundEffects = (BOOL)[enabled intValue];
-			} else {
-				MDPlaySoundEffects = YES;
-			}
-		}
+		[[self class] updateShouldPlaySoundEffects];
 		
     } else {
 		[self release];
@@ -352,14 +513,14 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 	[searchInspectorView setInitiallyShown:NO];
 	[searchInspectorView setShown:NO];
 	
-	MDShouldShowPathBar = [[[NSUserDefaults standardUserDefaults] objectForKey:MDHLDocumentShouldShowPathBarKey] boolValue];
+	[[self class] setShouldShowPathBar:[[[NSUserDefaults standardUserDefaults] objectForKey:MDHLDocumentShouldShowPathBarKey] boolValue]];
 	
 	[pathControlInspectorView setInitiallyShown:NO];
 	
 	[pathControl setURL:[self fileURL]];
 	[pathControl setTarget:self];
 	[pathControl setDoubleAction:@selector(revealInFinder:)];
-	[pathControlInspectorView setShown:MDShouldShowPathBar];
+	[pathControlInspectorView setShown:[[self class] shouldShowPathBar]];
 		
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
@@ -552,7 +713,7 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (MDShouldShowViewOptions && [self isFrontmostMDHLDocument]) {
+	if ([[self class] shouldShowViewOptions] && [self isFrontmostMDHLDocument]) {
 		[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentViewModeDidChangeNotification object:self userInfo:nil];
 	}
 }
@@ -562,7 +723,7 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (MDShouldShowInspector && [self isFrontmostMDHLDocument]) {
+	if ([[self class] shouldShowInspector] && [self isFrontmostMDHLDocument]) {
 		[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentSelectedItemsDidChangeNotification object:self userInfo:nil];
 	}
 }
@@ -572,7 +733,7 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (MDShouldShowQuickLook && [self isFrontmostMDHLDocument]) {
+	if ([[self class] shouldShowQuickLook] && [self isFrontmostMDHLDocument]) {
 		[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentSelectedItemsDidChangeNotification object:self userInfo:nil];
 	}
 }
@@ -582,7 +743,7 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	[pathControlInspectorView setShown:MDShouldShowPathBar];
+	[pathControlInspectorView setShown:[[self class] shouldShowPathBar]];
 }
 
 
@@ -1645,9 +1806,7 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 			
 			[[MDCopyOperationController sharedController] endOperation:copyOperation];
 			
-			if (MDPlaySoundEffects) {
-				[(NSSound *)[NSSound soundNamed:@"copy"] play];
-			}
+			if ([[self class] shouldPlaySoundEffects]) [(NSSound *)[NSSound soundNamed:@"copy"] play];
 			
 			@synchronized(copyOperationsAndTags) {
 				[copyOperationsAndTags removeObjectForKey:[NSNumber numberWithInteger:[copyOperation tag]]];
@@ -1659,9 +1818,7 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 			
 			[[MDCopyOperationController sharedController] endOperation:copyOperation];
 			
-			if (MDPlaySoundEffects) {
-				[(NSSound *)[NSSound soundNamed:@"copy"] play];
-			}
+			if ([[self class] shouldPlaySoundEffects]) [(NSSound *)[NSSound soundNamed:@"copy"] play];
 			
 			@synchronized(copyOperationsAndTags) {
 				[copyOperationsAndTags removeObjectForKey:[NSNumber numberWithInteger:[copyOperation tag]]];
@@ -1788,7 +1945,6 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 
 
 - (void)windowDidResignMain:(NSNotification *)notification {
-	
 	if ([notification object] == hlWindow) {
 #if MD_DEBUG
 		NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -2087,8 +2243,8 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 #if MD_DEBUG
 //	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	MDShouldShowPathBar = !MDShouldShowPathBar;
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowPathBar] forKey:MDHLDocumentShouldShowPathBarKey];
+	[[self class] setShouldShowPathBar:![[self class] shouldShowPathBar]];
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[[self class] shouldShowPathBar]] forKey:MDHLDocumentShouldShowPathBarKey];
 	[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentShouldShowPathBarDidChangeNotification object:self userInfo:nil];
 }
 
@@ -2137,9 +2293,9 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 		}
 		
 		
-		[actionButtonShowViewOptionsMenuItem setTitle:(MDShouldShowViewOptions ? NSLocalizedString(@"Hide View Options",@"") : NSLocalizedString(@"Show View Options", @""))];
+		[actionButtonShowViewOptionsMenuItem setTitle:([[self class] shouldShowViewOptions] ? NSLocalizedString(@"Hide View Options",@"") : NSLocalizedString(@"Show View Options", @""))];
 		
-		[actionButtonShowInspectorMenuItem setTitle:(MDShouldShowInspector ? NSLocalizedString(@"Hide Inspector", @"") : NSLocalizedString(@"Show Inspector", @""))];
+		[actionButtonShowInspectorMenuItem setTitle:([[self class] shouldShowInspector] ? NSLocalizedString(@"Hide Inspector", @"") : NSLocalizedString(@"Show Inspector", @""))];
 		
 		
 	} else if (menu == outlineViewMenu) {
@@ -2158,9 +2314,9 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 		}
 		
 		
-		[outlineViewMenuShowViewOptionsMenuItem setTitle:(MDShouldShowViewOptions ? NSLocalizedString(@"Hide View Options", @"") : NSLocalizedString(@"Show View Options", @""))];
+		[outlineViewMenuShowViewOptionsMenuItem setTitle:([[self class] shouldShowViewOptions] ? NSLocalizedString(@"Hide View Options", @"") : NSLocalizedString(@"Show View Options", @""))];
 		
-		[outlineViewMenuShowInspectorMenuItem setTitle:(MDShouldShowInspector ? NSLocalizedString(@"Hide Inspector", @"") : NSLocalizedString(@"Show Inspector", @""))];
+		[outlineViewMenuShowInspectorMenuItem setTitle:([[self class] shouldShowInspector] ? NSLocalizedString(@"Hide Inspector", @"") : NSLocalizedString(@"Show Inspector", @""))];
 		
 		
 	} else if (menu == browserMenu) {
@@ -2178,9 +2334,9 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 									   browserMenuShowViewOptionsMenuItem, nil]];
 		}
 		
-		[browserMenuShowViewOptionsMenuItem setTitle:(MDShouldShowViewOptions ? NSLocalizedString(@"Hide View Options", @"") : NSLocalizedString(@"Show View Options", @""))];
+		[browserMenuShowViewOptionsMenuItem setTitle:([[self class] shouldShowViewOptions] ? NSLocalizedString(@"Hide View Options", @"") : NSLocalizedString(@"Show View Options", @""))];
 		
-		[browserMenuShowInspectorMenuItem setTitle:(MDShouldShowInspector ? NSLocalizedString(@"Hide Inspector", @"") : NSLocalizedString(@"Show Inspector", @""))];
+		[browserMenuShowInspectorMenuItem setTitle:([[self class] shouldShowInspector] ? NSLocalizedString(@"Hide Inspector", @"") : NSLocalizedString(@"Show Inspector", @""))];
 		
 	} else if (menu == pathControlMenu) {
 
@@ -2222,7 +2378,7 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 		return YES;
 		
 	} else if (action == @selector(toggleShowPathBar:)) {
-		[menuItem setTitle:(MDShouldShowPathBar ? NSLocalizedString(@"Hide Path Bar", @"") : NSLocalizedString(@"Show Path Bar", @""))];
+		[menuItem setTitle:([[self class] shouldShowPathBar] ? NSLocalizedString(@"Hide Path Bar", @"") : NSLocalizedString(@"Show Path Bar", @""))];
 		return YES;
 		
 	} else if (action == @selector(copy:)) {
@@ -2233,7 +2389,7 @@ static NSRecursiveLock *orderedDocumentsLock = nil;
 		return YES;
 		
 	} else if (action == @selector(toggleShowQuickLook:)) {
-		if (MDShouldShowQuickLook) {
+		if ([[self class] shouldShowQuickLook]) {
 			[menuItem setTitle:NSLocalizedString(@"Close Quick Look", @"")];
 			return YES;
 		} else {
