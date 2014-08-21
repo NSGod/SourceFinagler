@@ -23,6 +23,10 @@
 	IBOutlet NSView				*browserViewOptionsView;
 	
 	MDHLDocumentViewMode		viewMode;
+	
+	
+	BOOL						appIsTerminating;
+	
 }
 
 - (IBAction)changeListViewIconSize:(id)sender;

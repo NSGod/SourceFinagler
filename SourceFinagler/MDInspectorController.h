@@ -25,6 +25,8 @@
 	
 	IBOutlet MDPreviewViewController	*previewViewController;
 	
+	BOOL								appIsTerminating;
+	
 }
 
 @end

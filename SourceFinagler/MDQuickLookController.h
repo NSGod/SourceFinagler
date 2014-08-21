@@ -24,6 +24,7 @@
 	NSInteger									currentItemIndex;
 	BOOL										isPlaying;
 	
+	BOOL										appIsTerminating;
 }
 
 + (MDQuickLookController *)sharedQuickLookController;

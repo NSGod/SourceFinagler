@@ -34,6 +34,7 @@
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedItemsDidChange:) name:MDHLDocumentSelectedItemsDidChangeNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(documentWillClose:) name:MDHLDocumentWillCloseNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
 		
 	} else {
 		[NSBundle runFailedNibLoadAlert:@"MDInspector"];
@@ -209,6 +210,13 @@
 }
 
 
+- (void)applicationWillTerminate:(NSNotification *)notification {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	appIsTerminating = YES;
+}
+
 
 - (IBAction)showWindow:(id)sender {
 #if MD_DEBUG
@@ -222,7 +230,7 @@
 
 - (void)windowWillClose:(NSNotification *)notification {
 	
-	if ([notification object] == [self window]) {
+	if ([notification object] == [self window] && appIsTerminating == NO) {
 #if MD_DEBUG
 		NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
