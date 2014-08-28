@@ -9,11 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 
-extern NSString * const MDShouldShowKindColumnKey;
-extern NSString * const MDShouldShowSizeColumnKey;
-extern NSString * const MDListViewIconSizeKey;
-extern NSString * const MDListViewFontSizeKey;
-	
+extern NSString * const MDOutlineViewShouldShowKindColumnKey;
+extern NSString * const MDOutlineViewShouldShowSizeColumnKey;
+extern NSString * const MDOutlineViewIconSizeKey;
+extern NSString * const MDOutlineViewFontSizeKey;
+
 
 @interface MDOutlineView : NSOutlineView {
     IBOutlet NSTableColumn		*nameColumn;
