@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
   <data>
     <int key="IBDocument.SystemTarget">1050</int>
-    <string key="IBDocument.SystemVersion">13C1021</string>
+    <string key="IBDocument.SystemVersion">13F34</string>
     <string key="IBDocument.InterfaceBuilderVersion">851</string>
-    <string key="IBDocument.AppKitVersion">1265.19</string>
-    <string key="IBDocument.HIToolboxVersion">697.40</string>
+    <string key="IBDocument.AppKitVersion">1265.21</string>
+    <string key="IBDocument.HIToolboxVersion">698.00</string>
     <object class="NSMutableDictionary" key="IBDocument.PluginVersions">
       <string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
       <string key="NS.object.0">851</string>
@@ -2293,7 +2293,7 @@
                         <object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
                           <string key="NSKey">name</string>
                           <bool key="NSAscending">YES</bool>
-                          <string key="NSSelector">caseInsensitiveNumericalCompare:</string>
+                          <string key="NSSelector">md__caseInsensitiveNumericalCompare:</string>
                         </object>
                       </object>
                       <object class="NSTableColumn" id="903643803">
@@ -2382,11 +2382,6 @@
                     <reference key="NSDataSource"/>
                     <string key="NSAutosaveName">outlineView</string>
                     <array key="NSSortDescriptors">
-                      <object class="NSSortDescriptor">
-                        <string key="NSKey">name</string>
-                        <bool key="NSAscending">YES</bool>
-                        <string key="NSSelector">caseInsensitiveNumericalCompare:</string>
-                      </object>
                       <reference ref="1025424280"/>
                     </array>
                     <int key="NSColumnAutoresizingStyle">4</int>
@@ -4078,15 +4073,7 @@
             <string key="debugMenuItem">NSMenuItem</string>
             <string key="emailMenuItem">NSMenuItem</string>
             <string key="sparkleUpdater">SUUpdater</string>
-            <string key="toggleInspectorMenuItem">NSMenuItem</string>
-            <string key="toggleQuickLookMenuItem">NSMenuItem</string>
-            <string key="viewCustomizeToolbarMenuItem">NSMenuItem</string>
-            <string key="viewMenu">NSMenu</string>
             <string key="viewModeAsColumnsMenuItem">NSMenuItem</string>
-            <string key="viewModeAsListMenuItem">NSMenuItem</string>
-            <string key="viewOptionsMenuItem">NSMenuItem</string>
-            <string key="viewTogglePathBarMenuItem">NSMenuItem</string>
-            <string key="viewToggleToolbarShownMenuItem">NSMenuItem</string>
             <string key="webpageMenuItem">NSMenuItem</string>
             <string key="window">NSWindow</string>
           </dictionary>
@@ -4107,40 +4094,8 @@
               <string key="name">sparkleUpdater</string>
               <string key="candidateClassName">SUUpdater</string>
             </object>
-            <object class="IBToOneOutletInfo" key="toggleInspectorMenuItem">
-              <string key="name">toggleInspectorMenuItem</string>
-              <string key="candidateClassName">NSMenuItem</string>
-            </object>
-            <object class="IBToOneOutletInfo" key="toggleQuickLookMenuItem">
-              <string key="name">toggleQuickLookMenuItem</string>
-              <string key="candidateClassName">NSMenuItem</string>
-            </object>
-            <object class="IBToOneOutletInfo" key="viewCustomizeToolbarMenuItem">
-              <string key="name">viewCustomizeToolbarMenuItem</string>
-              <string key="candidateClassName">NSMenuItem</string>
-            </object>
-            <object class="IBToOneOutletInfo" key="viewMenu">
-              <string key="name">viewMenu</string>
-              <string key="candidateClassName">NSMenu</string>
-            </object>
             <object class="IBToOneOutletInfo" key="viewModeAsColumnsMenuItem">
               <string key="name">viewModeAsColumnsMenuItem</string>
-              <string key="candidateClassName">NSMenuItem</string>
-            </object>
-            <object class="IBToOneOutletInfo" key="viewModeAsListMenuItem">
-              <string key="name">viewModeAsListMenuItem</string>
-              <string key="candidateClassName">NSMenuItem</string>
-            </object>
-            <object class="IBToOneOutletInfo" key="viewOptionsMenuItem">
-              <string key="name">viewOptionsMenuItem</string>
-              <string key="candidateClassName">NSMenuItem</string>
-            </object>
-            <object class="IBToOneOutletInfo" key="viewTogglePathBarMenuItem">
-              <string key="name">viewTogglePathBarMenuItem</string>
-              <string key="candidateClassName">NSMenuItem</string>
-            </object>
-            <object class="IBToOneOutletInfo" key="viewToggleToolbarShownMenuItem">
-              <string key="name">viewToggleToolbarShownMenuItem</string>
               <string key="candidateClassName">NSMenuItem</string>
             </object>
             <object class="IBToOneOutletInfo" key="webpageMenuItem">
@@ -4631,10 +4586,6 @@
         </object>
         <object class="IBPartialClassDescription">
           <string key="className">NSView</string>
-          <reference key="sourceIdentifier" ref="650955531"/>
-        </object>
-        <object class="IBPartialClassDescription">
-          <string key="className">NSView</string>
           <string key="superclassName">NSResponder</string>
           <object class="IBClassDescriptionSource" key="sourceIdentifier">
             <string key="majorKey">IBUserSource</string>
@@ -4966,13 +4917,6 @@
           <string key="className">NSObject</string>
           <object class="IBClassDescriptionSource" key="sourceIdentifier">
             <string key="majorKey">IBFrameworkSource</string>
-            <string key="minorKey">CoreImage.framework/Headers/CIImageProvider.h</string>
-          </object>
-        </object>
-        <object class="IBPartialClassDescription">
-          <string key="className">NSObject</string>
-          <object class="IBClassDescriptionSource" key="sourceIdentifier">
-            <string key="majorKey">IBFrameworkSource</string>
             <string key="minorKey">Foundation.framework/Headers/NSArchiver.h</string>
           </object>
         </object>
@@ -5219,6 +5163,13 @@
           <object class="IBClassDescriptionSource" key="sourceIdentifier">
             <string key="majorKey">IBFrameworkSource</string>
             <string key="minorKey">QuartzCore.framework/Headers/CALayer.h</string>
+          </object>
+        </object>
+        <object class="IBPartialClassDescription">
+          <string key="className">NSObject</string>
+          <object class="IBClassDescriptionSource" key="sourceIdentifier">
+            <string key="majorKey">IBFrameworkSource</string>
+            <string key="minorKey">QuartzCore.framework/Headers/CIImageProvider.h</string>
           </object>
         </object>
         <object class="IBPartialClassDescription">

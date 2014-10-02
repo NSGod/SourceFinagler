@@ -38,7 +38,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 
 + (void)initialize {
 	NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
-	NSArray *sortDescriptors = [NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"displayName" ascending:YES selector:@selector(caseInsensitiveNumericalCompare:)] autorelease]];
+	NSArray *sortDescriptors = [NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"displayName" ascending:YES selector:@selector(md__caseInsensitiveNumericalCompare:)] autorelease]];
     [defaults setSortDescriptors:sortDescriptors forKey:MDOtherAppsHelperSortDescriptorsKey];
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }

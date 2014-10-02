@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
   <data>
     <int key="IBDocument.SystemTarget">1060</int>
-    <string key="IBDocument.SystemVersion">13C1021</string>
+    <string key="IBDocument.SystemVersion">13F34</string>
     <string key="IBDocument.InterfaceBuilderVersion">851</string>
-    <string key="IBDocument.AppKitVersion">1265.19</string>
-    <string key="IBDocument.HIToolboxVersion">697.40</string>
+    <string key="IBDocument.AppKitVersion">1265.21</string>
+    <string key="IBDocument.HIToolboxVersion">698.00</string>
     <object class="NSMutableDictionary" key="IBDocument.PluginVersions">
       <string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
       <string key="NS.object.0">851</string>
@@ -2725,7 +2725,7 @@
                         <object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
                           <string key="NSKey">name</string>
                           <bool key="NSAscending">YES</bool>
-                          <string key="NSSelector">caseInsensitiveNumericalCompare:</string>
+                          <string key="NSSelector">md__caseInsensitiveNumericalCompare:</string>
                         </object>
                       </object>
                       <object class="NSTableColumn" id="540053236">
@@ -2815,11 +2815,6 @@
                     <string key="NSAutosaveName">outlineView</string>
                     <object class="NSArray" key="NSSortDescriptors">
                       <bool key="EncodedWithXMLCoder">YES</bool>
-                      <object class="NSSortDescriptor">
-                        <string key="NSKey">name</string>
-                        <bool key="NSAscending">YES</bool>
-                        <string key="NSSelector">caseInsensitiveNumericalCompare:</string>
-                      </object>
                       <reference ref="85128031"/>
                     </object>
                     <int key="NSColumnAutoresizingStyle">4</int>
@@ -5189,15 +5184,7 @@
               <string>debugMenuItem</string>
               <string>emailMenuItem</string>
               <string>sparkleUpdater</string>
-              <string>toggleInspectorMenuItem</string>
-              <string>toggleQuickLookMenuItem</string>
-              <string>viewCustomizeToolbarMenuItem</string>
-              <string>viewMenu</string>
               <string>viewModeAsColumnsMenuItem</string>
-              <string>viewModeAsListMenuItem</string>
-              <string>viewOptionsMenuItem</string>
-              <string>viewTogglePathBarMenuItem</string>
-              <string>viewToggleToolbarShownMenuItem</string>
               <string>webpageMenuItem</string>
               <string>window</string>
             </object>
@@ -5207,14 +5194,6 @@
               <string>NSMenuItem</string>
               <string>NSMenuItem</string>
               <string>SUUpdater</string>
-              <string>NSMenuItem</string>
-              <string>NSMenuItem</string>
-              <string>NSMenuItem</string>
-              <string>NSMenu</string>
-              <string>NSMenuItem</string>
-              <string>NSMenuItem</string>
-              <string>NSMenuItem</string>
-              <string>NSMenuItem</string>
               <string>NSMenuItem</string>
               <string>NSMenuItem</string>
               <string>NSWindow</string>
@@ -5228,15 +5207,7 @@
               <string>debugMenuItem</string>
               <string>emailMenuItem</string>
               <string>sparkleUpdater</string>
-              <string>toggleInspectorMenuItem</string>
-              <string>toggleQuickLookMenuItem</string>
-              <string>viewCustomizeToolbarMenuItem</string>
-              <string>viewMenu</string>
               <string>viewModeAsColumnsMenuItem</string>
-              <string>viewModeAsListMenuItem</string>
-              <string>viewOptionsMenuItem</string>
-              <string>viewTogglePathBarMenuItem</string>
-              <string>viewToggleToolbarShownMenuItem</string>
               <string>webpageMenuItem</string>
               <string>window</string>
             </object>
@@ -5259,39 +5230,7 @@
                 <string key="candidateClassName">SUUpdater</string>
               </object>
               <object class="IBToOneOutletInfo">
-                <string key="name">toggleInspectorMenuItem</string>
-                <string key="candidateClassName">NSMenuItem</string>
-              </object>
-              <object class="IBToOneOutletInfo">
-                <string key="name">toggleQuickLookMenuItem</string>
-                <string key="candidateClassName">NSMenuItem</string>
-              </object>
-              <object class="IBToOneOutletInfo">
-                <string key="name">viewCustomizeToolbarMenuItem</string>
-                <string key="candidateClassName">NSMenuItem</string>
-              </object>
-              <object class="IBToOneOutletInfo">
-                <string key="name">viewMenu</string>
-                <string key="candidateClassName">NSMenu</string>
-              </object>
-              <object class="IBToOneOutletInfo">
                 <string key="name">viewModeAsColumnsMenuItem</string>
-                <string key="candidateClassName">NSMenuItem</string>
-              </object>
-              <object class="IBToOneOutletInfo">
-                <string key="name">viewModeAsListMenuItem</string>
-                <string key="candidateClassName">NSMenuItem</string>
-              </object>
-              <object class="IBToOneOutletInfo">
-                <string key="name">viewOptionsMenuItem</string>
-                <string key="candidateClassName">NSMenuItem</string>
-              </object>
-              <object class="IBToOneOutletInfo">
-                <string key="name">viewTogglePathBarMenuItem</string>
-                <string key="candidateClassName">NSMenuItem</string>
-              </object>
-              <object class="IBToOneOutletInfo">
-                <string key="name">viewToggleToolbarShownMenuItem</string>
                 <string key="candidateClassName">NSMenuItem</string>
               </object>
               <object class="IBToOneOutletInfo">
@@ -5930,10 +5869,6 @@
         </object>
         <object class="IBPartialClassDescription">
           <string key="className">NSView</string>
-          <reference key="sourceIdentifier" ref="812112598"/>
-        </object>
-        <object class="IBPartialClassDescription">
-          <string key="className">NSView</string>
           <string key="superclassName">NSResponder</string>
           <object class="IBClassDescriptionSource" key="sourceIdentifier">
             <string key="majorKey">IBUserSource</string>
@@ -6308,13 +6243,6 @@
           <string key="className">NSObject</string>
           <object class="IBClassDescriptionSource" key="sourceIdentifier">
             <string key="majorKey">IBFrameworkSource</string>
-            <string key="minorKey">CoreImage.framework/Headers/CIImageProvider.h</string>
-          </object>
-        </object>
-        <object class="IBPartialClassDescription">
-          <string key="className">NSObject</string>
-          <object class="IBClassDescriptionSource" key="sourceIdentifier">
-            <string key="majorKey">IBFrameworkSource</string>
             <string key="minorKey">Foundation.framework/Headers/NSArchiver.h</string>
           </object>
         </object>
@@ -6561,6 +6489,13 @@
           <object class="IBClassDescriptionSource" key="sourceIdentifier">
             <string key="majorKey">IBFrameworkSource</string>
             <string key="minorKey">QuartzCore.framework/Headers/CALayer.h</string>
+          </object>
+        </object>
+        <object class="IBPartialClassDescription">
+          <string key="className">NSObject</string>
+          <object class="IBClassDescriptionSource" key="sourceIdentifier">
+            <string key="majorKey">IBFrameworkSource</string>
+            <string key="minorKey">QuartzCore.framework/Headers/CIImageProvider.h</string>
           </object>
         </object>
         <object class="IBPartialClassDescription">

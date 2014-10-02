@@ -162,14 +162,14 @@ NSString *NSStringForAppleScriptListFromPaths(NSArray *paths) {
 	return CFStringGetPascalString((CFStringRef)self, aBuffer, aLength, kCFStringEncodingMacRoman);
 }
 
-- (NSComparisonResult)caseInsensitiveNumericalCompare:(NSString *)string {
+- (NSComparisonResult)md__caseInsensitiveNumericalCompare:(NSString *)string {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return [self compare:string options: NSLiteralSearch | NSCaseInsensitiveSearch | NSNumericSearch];
 }
 
-- (NSComparisonResult)localizedCaseInsensitiveNumericalCompare:(NSString *)string {
+- (NSComparisonResult)md__localizedCaseInsensitiveNumericalCompare:(NSString *)string {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif

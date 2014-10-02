@@ -32,7 +32,7 @@ typedef struct MDBrowserSortOptionMapping {
 } MDBrowserSortOptionMapping;
 
 static MDBrowserSortOptionMapping MDBrowserSortOptionMappingTable[] = {
-	{ MDBrowserSortByName, @"name", @"caseInsensitiveNumericalCompare:" },
+	{ MDBrowserSortByName, @"name", @"md__caseInsensitiveNumericalCompare:" },
 	{ MDBrowserSortBySize, @"size", @"compare:" },
 	{ MDBrowserSortByKind, @"kind", @"caseInsensitiveCompare:" }
 };

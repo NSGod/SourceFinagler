@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
   <data>
     <int key="IBDocument.SystemTarget">1050</int>
-    <string key="IBDocument.SystemVersion">13D65</string>
+    <string key="IBDocument.SystemVersion">13F34</string>
     <string key="IBDocument.InterfaceBuilderVersion">851</string>
-    <string key="IBDocument.AppKitVersion">1265.20</string>
+    <string key="IBDocument.AppKitVersion">1265.21</string>
     <string key="IBDocument.HIToolboxVersion">698.00</string>
     <object class="NSMutableDictionary" key="IBDocument.PluginVersions">
       <string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -13,10 +13,10 @@
     <array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
       <integer value="1103"/>
       <integer value="368"/>
-      <integer value="1078"/>
       <integer value="917"/>
-      <integer value="963"/>
       <integer value="945"/>
+      <integer value="963"/>
+      <integer value="1078"/>
     </array>
     <array key="IBDocument.PluginDependencies">
       <string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -837,7 +837,7 @@
                         <object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
                           <string key="NSKey">fileName</string>
                           <bool key="NSAscending">YES</bool>
-                          <string key="NSSelector">localizedCaseInsensitiveNumericalCompare:</string>
+                          <string key="NSSelector">md__localizedCaseInsensitiveNumericalCompare:</string>
                         </object>
                       </object>
                       <object class="NSTableColumn" id="889134713">
@@ -878,7 +878,7 @@
                         <object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
                           <string key="NSKey">game.displayName</string>
                           <bool key="NSAscending">YES</bool>
-                          <string key="NSSelector">localizedCaseInsensitiveNumericalCompare:</string>
+                          <string key="NSSelector">md__localizedCaseInsensitiveNumericalCompare:</string>
                         </object>
                       </object>
                     </array>
@@ -1054,7 +1054,7 @@
                         <object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
                           <string key="NSKey">fileName</string>
                           <bool key="NSAscending">YES</bool>
-                          <string key="NSSelector">localizedCaseInsensitiveNumericalCompare:</string>
+                          <string key="NSSelector">md__localizedCaseInsensitiveNumericalCompare:</string>
                         </object>
                       </object>
                       <object class="NSTableColumn" id="377637930">
@@ -1085,7 +1085,7 @@
                         <object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
                           <string key="NSKey">game.displayName</string>
                           <bool key="NSAscending">YES</bool>
-                          <string key="NSSelector">localizedCaseInsensitiveNumericalCompare:</string>
+                          <string key="NSSelector">md__localizedCaseInsensitiveNumericalCompare:</string>
                         </object>
                       </object>
                     </array>
@@ -1252,7 +1252,7 @@
                         <object class="NSSortDescriptor" key="NSSortDescriptorPrototype">
                           <string key="NSKey">fileName</string>
                           <bool key="NSAscending">YES</bool>
-                          <string key="NSSelector">localizedCaseInsensitiveNumericalCompare:</string>
+                          <string key="NSSelector">md__localizedCaseInsensitiveNumericalCompare:</string>
                         </object>
                       </object>
                       <object class="NSTableColumn" id="1064996592">
@@ -3305,10 +3305,6 @@
           <reference key="sourceIdentifier" ref="427119643"/>
         </object>
         <object class="IBPartialClassDescription">
-          <string key="className">NSView</string>
-          <reference key="sourceIdentifier" ref="427119643"/>
-        </object>
-        <object class="IBPartialClassDescription">
           <string key="className">NSWindow</string>
           <reference key="sourceIdentifier" ref="427119643"/>
         </object>
@@ -3803,13 +3799,6 @@
           <string key="className">NSObject</string>
           <object class="IBClassDescriptionSource" key="sourceIdentifier">
             <string key="majorKey">IBFrameworkSource</string>
-            <string key="minorKey">CoreImage.framework/Headers/CIImageProvider.h</string>
-          </object>
-        </object>
-        <object class="IBPartialClassDescription">
-          <string key="className">NSObject</string>
-          <object class="IBClassDescriptionSource" key="sourceIdentifier">
-            <string key="majorKey">IBFrameworkSource</string>
             <string key="minorKey">Foundation.framework/Headers/NSArchiver.h</string>
           </object>
         </object>
@@ -4056,6 +4045,13 @@
           <object class="IBClassDescriptionSource" key="sourceIdentifier">
             <string key="majorKey">IBFrameworkSource</string>
             <string key="minorKey">QuartzCore.framework/Headers/CALayer.h</string>
+          </object>
+        </object>
+        <object class="IBPartialClassDescription">
+          <string key="className">NSObject</string>
+          <object class="IBClassDescriptionSource" key="sourceIdentifier">
+            <string key="majorKey">IBFrameworkSource</string>
+            <string key="minorKey">QuartzCore.framework/Headers/CIImageProvider.h</string>
           </object>
         </object>
         <object class="IBPartialClassDescription">

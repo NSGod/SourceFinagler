@@ -61,8 +61,8 @@ MDFOUNDATION_EXTERN NSString *NSStringForAppleScriptListFromPaths(NSArray *paths
 + (NSString *)stringWithPascalString:(ConstStr255Param)aPStr;
 - (BOOL)pascalString:(StringPtr)aBuffer length:(SInt16)aLength;
 
-- (NSComparisonResult)caseInsensitiveNumericalCompare:(NSString *)string;
-- (NSComparisonResult)localizedCaseInsensitiveNumericalCompare:(NSString *)string;
+- (NSComparisonResult)md__caseInsensitiveNumericalCompare:(NSString *)string;
+- (NSComparisonResult)md__localizedCaseInsensitiveNumericalCompare:(NSString *)string;
 
 - (NSString *)stringByReplacing:(NSString *)value with:(NSString *)newValue;
 - (NSString *)slashToColon;
