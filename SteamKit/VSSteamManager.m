@@ -478,7 +478,7 @@ static NSUInteger locateSteamAppsCount = 0;
 					NSString *sourceVersionString = [sourceBundle objectForInfoDictionaryKey:(id)kCFBundleVersionKey];
 					
 					/* Because of NSBundle's caching mechanism, we can't use NSBundle to accurately inquire for info 
-					 about a bundle if we've modified that bundle externaly on the file system.
+					 about a bundle if we've modified that bundle externally on the file system.
 					 
 					 For example, let's say we create an NSBundle for the installed SourceFinaglerAgent.app bundle, to
 					 check its CFBundleVersion to see whether we need to update it to the current version. If we find

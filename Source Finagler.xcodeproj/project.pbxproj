@@ -166,7 +166,6 @@
 		C140E72813889BD800027DD6 /* com.valvesoftware.games.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1A1096C11D4F149008BBABD /* com.valvesoftware.games.plist */; };
 		C140E72913889BDA00027DD6 /* VSGame.h in Headers */ = {isa = PBXBuildFile; fileRef = C103563611C5AF930054740E /* VSGame.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C140E72A13889BDC00027DD6 /* VSGame.m in Sources */ = {isa = PBXBuildFile; fileRef = C103563711C5AF930054740E /* VSGame.m */; };
-		C140E72B13889BDD00027DD6 /* hl2_osx.app in Resources */ = {isa = PBXBuildFile; fileRef = C139C68E137CCEBB00DDA21B /* hl2_osx.app */; };
 		C140E72C13889BF000027DD6 /* MDResourceFile.m in Sources */ = {isa = PBXBuildFile; fileRef = C12A944911C9CDED001D8E90 /* MDResourceFile.m */; };
 		C140E72D13889BF100027DD6 /* MDResourceFile.h in Headers */ = {isa = PBXBuildFile; fileRef = C12A944811C9CDED001D8E90 /* MDResourceFile.h */; settings = {ATTRIBUTES = (); }; };
 		C140E72E13889BF200027DD6 /* MDResource.h in Headers */ = {isa = PBXBuildFile; fileRef = C1A10A6311D516A7008BBABD /* MDResource.h */; settings = {ATTRIBUTES = (); }; };
@@ -285,6 +284,12 @@
 		C191BB1918C7AE6000CEE633 /* Hash.h in Headers */ = {isa = PBXBuildFile; fileRef = C191BA8518C79BDD00CEE633 /* Hash.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1968A0414F560BB00ACFD02 /* SourceImage.qlgenerator in Copy QuickLook generator */ = {isa = PBXBuildFile; fileRef = C1C2C661127CBEF7003B24F6 /* SourceImage.qlgenerator */; };
 		C1968A0614F560E400ACFD02 /* Source.mdimporter in Copy Spotlight importer */ = {isa = PBXBuildFile; fileRef = C1C2C63D127CBED1003B24F6 /* Source.mdimporter */; };
+		C1A128C71C9733F4000C56C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C1A128B91C973340000C56C5 /* main.m */; };
+		C1A128C81C9733F6000C56C5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1A128BC1C973362000C56C5 /* MainMenu.xib */; };
+		C1A128C91C9733F7000C56C5 /* MDAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1A128BB1C973340000C56C5 /* MDAppController.m */; };
+		C1A128E21C973CA9000C56C5 /* usbOverdriveNote.png in Resources */ = {isa = PBXBuildFile; fileRef = C1594EA11384F247009CE606 /* usbOverdriveNote.png */; };
+		C1A128E91C973D32000C56C5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CA27D913A2E1F900235C98 /* Cocoa.framework */; };
+		C1A128EB1C973D69000C56C5 /* hl2_osx.app in Resources */ = {isa = PBXBuildFile; fileRef = C1A128791C9731F9000C56C5 /* hl2_osx.app */; };
 		C1A92F8C14393D2300AFAF4F /* viewFaceBrowserCapsuleStyle.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C1A92F8B14393D2300AFAF4F /* viewFaceBrowserCapsuleStyle.pdf */; };
 		C1B2C1751843CF2B000F715F /* isRunning.png in Resources */ = {isa = PBXBuildFile; fileRef = C1B2C1741843CF2B000F715F /* isRunning.png */; };
 		C1B2C1761843CF2B000F715F /* isRunning.png in Resources */ = {isa = PBXBuildFile; fileRef = C1B2C1741843CF2B000F715F /* isRunning.png */; };
@@ -761,6 +766,13 @@
 			remoteGlobalIDString = C191BA9618C79E7D00CEE633;
 			remoteInfo = NVThread;
 		};
+		C1A128E61C973D09000C56C5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C1A128781C9731F9000C56C5;
+			remoteInfo = hl2_osx;
+		};
 		C1C2C4D9127CBCA0003B24F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -1062,7 +1074,6 @@
 		C13757D9185BCD6A00CDDC95 /* MDVPKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDVPKViewController.m; path = SourceFinagler/MDVPKViewController.m; sourceTree = "<group>"; };
 		C13757DE185BCD9B00CDDC95 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MDVPKViewController.xib; sourceTree = "<group>"; };
 		C138042118BC18960098AD2D /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = TextureKit/en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		C139C68E137CCEBB00DDA21B /* hl2_osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper; name = hl2_osx.app; path = SteamKit/hl2_osx.app; sourceTree = "<group>"; };
 		C140E63D13889A9400027DD6 /* SteamKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SteamKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C140E63E13889A9400027DD6 /* SteamKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "SteamKit-Info.plist"; path = "SteamKit/SteamKit-Info.plist"; sourceTree = "<group>"; };
 		C140E71A13889B1100027DD6 /* SteamKit_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SteamKit_Prefix.pch; path = SteamKit/SteamKit_Prefix.pch; sourceTree = "<group>"; };
@@ -1240,6 +1251,12 @@
 		C1A112E511D66720008BBABD /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		C1A117DC11D695EA008BBABD /* MDTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDTableView.h; path = SourceFinagler/MDTableView.h; sourceTree = "<group>"; };
 		C1A117DD11D695EA008BBABD /* MDTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDTableView.m; path = SourceFinagler/MDTableView.m; sourceTree = "<group>"; };
+		C1A128791C9731F9000C56C5 /* hl2_osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hl2_osx.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1A128B81C973340000C56C5 /* hl2_osx_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hl2_osx_Prefix.pch; path = hl2_osx/hl2_osx_Prefix.pch; sourceTree = "<group>"; };
+		C1A128B91C973340000C56C5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = hl2_osx/main.m; sourceTree = "<group>"; };
+		C1A128BA1C973340000C56C5 /* MDAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDAppController.h; path = hl2_osx/MDAppController.h; sourceTree = "<group>"; };
+		C1A128BB1C973340000C56C5 /* MDAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDAppController.m; path = hl2_osx/MDAppController.m; sourceTree = "<group>"; };
+		C1A128BD1C973362000C56C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = hl2_osx/en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		C1A16F5511C5351B008E5361 /* MDSteamAppsRelocatorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDSteamAppsRelocatorController.h; path = SourceFinagler/MDSteamAppsRelocatorController.h; sourceTree = "<group>"; };
 		C1A16F5611C5351B008E5361 /* MDSteamAppsRelocatorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDSteamAppsRelocatorController.m; path = SourceFinagler/MDSteamAppsRelocatorController.m; sourceTree = "<group>"; };
 		C1A16F5C11C53539008E5361 /* MDOtherAppsHelperController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDOtherAppsHelperController.h; path = SourceFinagler/MDOtherAppsHelperController.h; sourceTree = "<group>"; };
@@ -1743,6 +1760,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C1A128771C9731F9000C56C5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C1A128E91C973D32000C56C5 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C1B95273124E73B200E83451 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1875,6 +1900,7 @@
 				C1FEAB31125F633100CA78FF /* Source Addon Finagler.app */,
 				C1224BEC13B06B9A009AA0F4 /* SourceFinaglerAgent.app */,
 				C140E63D13889A9400027DD6 /* SteamKit.framework */,
+				C1A128791C9731F9000C56C5 /* hl2_osx.app */,
 				C1580F10139634DA00D5D4D8 /* HLKit.framework */,
 				C1C12634123A54F0004674B4 /* HL.framework */,
 				C17319B21298D11400C29732 /* TextureKit.framework */,
@@ -2225,7 +2251,7 @@
 				C1A1096C11D4F149008BBABD /* com.valvesoftware.games.plist */,
 				C11D81221948C4BF003EDCC8 /* addoninfo.txt */,
 				C1E6DE6F12BC8CA1009D8AD6 /* packageIDs.txt */,
-				C139C68E137CCEBB00DDA21B /* hl2_osx.app */,
+				C1A128A91C97323F000C56C5 /* hl2_osx */,
 				C1CB158613BC20A000FCCC7E /* private classes */,
 			);
 			name = "SteamKit framework";
@@ -2503,6 +2529,18 @@
 				C11F471E1898342C00B84757 /* TKTextFieldCell.m */,
 			);
 			name = TKBlueBackgroundView;
+			sourceTree = "<group>";
+		};
+		C1A128A91C97323F000C56C5 /* hl2_osx */ = {
+			isa = PBXGroup;
+			children = (
+				C1A128BA1C973340000C56C5 /* MDAppController.h */,
+				C1A128BB1C973340000C56C5 /* MDAppController.m */,
+				C1A128BC1C973362000C56C5 /* MainMenu.xib */,
+				C1A128B91C973340000C56C5 /* main.m */,
+				C1A128B81C973340000C56C5 /* hl2_osx_Prefix.pch */,
+			);
+			name = hl2_osx;
 			sourceTree = "<group>";
 		};
 		C1A2DDC213D3B7E4001ABB83 /* model */ = {
@@ -3826,6 +3864,7 @@
 			);
 			dependencies = (
 				C161433B139974870042B91B /* PBXTargetDependency */,
+				C1A128E71C973D09000C56C5 /* PBXTargetDependency */,
 			);
 			name = SteamKit;
 			productName = SteamKit;
@@ -3889,6 +3928,23 @@
 			productName = NVThread;
 			productReference = C180E37914728E1B0001C07F /* NVThread.framework */;
 			productType = "com.apple.product-type.framework";
+		};
+		C1A128781C9731F9000C56C5 /* hl2_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C1A1287E1C9731F9000C56C5 /* Build configuration list for PBXNativeTarget "hl2_osx" */;
+			buildPhases = (
+				C1A128751C9731F9000C56C5 /* Resources */,
+				C1A128761C9731F9000C56C5 /* Sources */,
+				C1A128771C9731F9000C56C5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = hl2_osx;
+			productName = hl2_osx;
+			productReference = C1A128791C9731F9000C56C5 /* hl2_osx.app */;
+			productType = "com.apple.product-type.application";
 		};
 		C1B95274124E73B200E83451 /* VTF */ = {
 			isa = PBXNativeTarget;
@@ -4114,6 +4170,7 @@
 				C1224BEB13B06B9A009AA0F4 /* SourceFinaglerAgent */,
 				C1FEAB30125F633100CA78FF /* Source Addon Finagler */,
 				C140E63C13889A9400027DD6 /* SteamKit */,
+				C1A128781C9731F9000C56C5 /* hl2_osx */,
 				C1580F0F139634DA00D5D4D8 /* HLKit */,
 				C1C12633123A54F0004674B4 /* HL */,
 				C17319B11298D11400C29732 /* TextureKit */,
@@ -4145,7 +4202,7 @@
 			files = (
 				C140E72813889BD800027DD6 /* com.valvesoftware.games.plist in Resources */,
 				C12823CC1880219400452421 /* Localizable.strings in Resources */,
-				C140E72B13889BDD00027DD6 /* hl2_osx.app in Resources */,
+				C1A128EB1C973D69000C56C5 /* hl2_osx.app in Resources */,
 				C1B2C1761843CF2B000F715F /* isRunning.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4164,6 +4221,15 @@
 			files = (
 				C12CE52B1912D9B20067DA65 /* Linear Grayscale Profile.icc in Resources */,
 				C138042218BC18960098AD2D /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C1A128751C9731F9000C56C5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C1A128C81C9733F6000C56C5 /* MainMenu.xib in Resources */,
+				C1A128E21C973CA9000C56C5 /* usbOverdriveNote.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4442,6 +4508,15 @@
 				C191BB0918C7A4D900CEE633 /* Thread.cpp in Sources */,
 				C191BB0B18C7A4D900CEE633 /* ThreadPool.cpp in Sources */,
 				C191BB0C18C7A4F200CEE633 /* nvthread.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C1A128761C9731F9000C56C5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C1A128C71C9733F4000C56C5 /* main.m in Sources */,
+				C1A128C91C9733F7000C56C5 /* MDAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4774,6 +4849,11 @@
 			target = C191BA9618C79E7D00CEE633 /* NVThread */;
 			targetProxy = C191BB0D18C7A51D00CEE633 /* PBXContainerItemProxy */;
 		};
+		C1A128E71C973D09000C56C5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C1A128781C9731F9000C56C5 /* hl2_osx */;
+			targetProxy = C1A128E61C973D09000C56C5 /* PBXContainerItemProxy */;
+		};
 		C1C2C4D8127CBCA0003B24F6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C1C12633123A54F0004674B4 /* HL */;
@@ -4961,6 +5041,14 @@
 				C1559F20186A41460052F595 /* en */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		C1A128BC1C973362000C56C5 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C1A128BD1C973362000C56C5 /* en */,
+			);
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 		C1C124B1123A0A0C004674B4 /* MDHLDocumentLeopard.xib */ = {
@@ -5296,6 +5384,40 @@
 				INFOPLIST_FILE = "NVTextureTools/NVThread-Info.plist";
 				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = NVThread;
+			};
+			name = Release;
+		};
+		C1A1287C1C9731F9000C56C5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "Don't Code Sign";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = hl2_osx/hl2_osx_Prefix.pch;
+				GENERATE_PKGINFO_FILE = NO;
+				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				PRODUCT_NAME = hl2_osx;
+			};
+			name = Debug;
+		};
+		C1A1287D1C9731F9000C56C5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "Don't Code Sign";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = hl2_osx/hl2_osx_Prefix.pch;
+				GENERATE_PKGINFO_FILE = NO;
+				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				PRODUCT_NAME = hl2_osx;
 			};
 			name = Release;
 		};
@@ -5710,6 +5832,15 @@
 			buildConfigurations = (
 				C191BAB718C79E7D00CEE633 /* Debug */,
 				C191BAB818C79E7D00CEE633 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C1A1287E1C9731F9000C56C5 /* Build configuration list for PBXNativeTarget "hl2_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C1A1287C1C9731F9000C56C5 /* Debug */,
+				C1A1287D1C9731F9000C56C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
