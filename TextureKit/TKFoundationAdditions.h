@@ -18,20 +18,36 @@
 
 
 enum {
-	TKUndeterminedVersion	= 0,
-	TKCheetah				= 0x1000,
-	TKPuma					= 0x1010,
-	TKJaguar				= 0x1020,
-	TKPanther				= 0x1030,
-	TKTiger					= 0x1040,
-	TKLeopard				= 0x1050,
-	TKSnowLeopard			= 0x1060,
-	TKLion					= 0x1070,
-	TKMountainLion			= 0x1080,
-	TKMavericks				= 0x1090,
-	TKUnknownVersion		= 0x1100
+	TKCheetah				= 0,
+	TKPuma					= 1,
+	TKJaguar				= 2,
+	TKPanther				= 3,
+	TKTiger					= 4,
+	TKLeopard				= 5,
+	TKSnowLeopard			= 6,
+	TKLion					= 7,
+	TKMountainLion			= 8,
+	TKMavericks				= 9,
+	TKYosemite				= 10,
+	TKElCapitan				= 11,
+	TKUnknownVersion		= 12,
 };
 
-TEXTUREKIT_EXTERN SInt32 TKGetSystemVersion();
+typedef struct {
+    NSInteger majorVersion;
+    NSInteger minorVersion;
+    NSInteger patchVersion;
+} TKOperatingSystemVersion;
 
-	
+
+TEXTUREKIT_EXTERN BOOL TKOperatingSystemVersionLessThan(TKOperatingSystemVersion osVersion, TKOperatingSystemVersion referenceVersion);
+TEXTUREKIT_EXTERN BOOL TKOperatingSystemVersionGreaterThanOrEqual(TKOperatingSystemVersion osVersion, TKOperatingSystemVersion referenceVersion);
+
+
+@interface NSProcessInfo (TKAdditions)
+
+- (TKOperatingSystemVersion)tk__operatingSystemVersion;
+
+@end
+
+

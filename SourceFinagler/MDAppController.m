@@ -160,7 +160,7 @@ static NSArray *appClassNames = nil;
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (MDGetSystemVersion() <= MDLeopard) {
+	if ([[NSProcessInfo processInfo] md__operatingSystemVersion].minorVersion <= MDLeopard) {
 		[sparkleUpdater setFeedURL:[NSURL URLWithString:MDSUFeedURLLeopard]];
 	}
 }
@@ -172,7 +172,7 @@ static NSArray *appClassNames = nil;
 	
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
-	if (MDGetSystemVersion() < MDSnowLeopard) {
+	if ([[NSProcessInfo processInfo] md__operatingSystemVersion].minorVersion < MDSnowLeopard) {
 		[[viewModeAsColumnsMenuItem menu] removeItem:viewModeAsColumnsMenuItem];
 		viewModeAsColumnsMenuItem = nil;
 	}

@@ -57,7 +57,7 @@
 		[outlineViewMenuShowInspectorMenuItem retain];
 		[outlineViewMenuShowViewOptionsMenuItem retain];
 		
-		if (MDGetSystemVersion() >= MDSnowLeopard) {
+		if ([[NSProcessInfo processInfo] md__operatingSystemVersion].minorVersion >= MDSnowLeopard) {
 			[browserMenuShowInspectorMenuItem retain];
 			[browserMenuShowViewOptionsMenuItem retain];
 		}

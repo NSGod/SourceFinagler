@@ -202,7 +202,7 @@ static NSRecursiveLock *shouldPlaySoundEffectsLock = nil;
 #if MD_DEBUG
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (MDGetSystemVersion() >= MDLeopard) {
+	if ([[NSProcessInfo processInfo] md__operatingSystemVersion].minorVersion >= MDLeopard) {
 		NSNumber *enabled = [[MDUserDefaults standardUserDefaults] objectForKey:MDSystemSoundEffectsEnabledKey forAppIdentifier:MDSystemSoundEffectsBundleIdentifierKey inDomain:MDUserDefaultsUserDomain];
 		
 		/*	enabled is an NSNumber, not a YES or NO value. If enabled is nil, we assume the default sound effect setting, which is enabled. Only if enabled is non-nil do we have an actual YES or NO answer to examine	*/
@@ -454,7 +454,7 @@ static NSRecursiveLock *shouldPlaySoundEffectsLock = nil;
 
 
 - (NSString *)windowNibName {
-	if (MDGetSystemVersion() >= MDSnowLeopard) {
+	if ([[NSProcessInfo processInfo] md__operatingSystemVersion].minorVersion >= MDSnowLeopard) {
 		return @"MDHLDocumentSnowLeopard";
 	}
 	return @"MDHLDocumentLeopard";
@@ -485,7 +485,7 @@ static NSRecursiveLock *shouldPlaySoundEffectsLock = nil;
 	[outlineViewMenuShowViewOptionsMenuItem retain];
 	
 
-	if (MDGetSystemVersion() >= MDSnowLeopard) {
+	if ([[NSProcessInfo processInfo] md__operatingSystemVersion].minorVersion >= MDSnowLeopard) {
 		browserMenuShowQuickLookMenuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Quick Look", @"") action:@selector(toggleShowQuickLook:) keyEquivalent:@""];
 		[browserMenuShowInspectorMenuItem retain];
 		[browserMenuShowViewOptionsMenuItem retain];

@@ -9,26 +9,10 @@
 
 #import "MDFileSizeFormatter.h"
 #import <CoreServices/CoreServices.h>
+#import "MDFoundationAdditions.h"
 
-
-enum {
-	MDUndeterminedVersion	= -1,
-	MDCheetah				= 0x1000,
-	MDPuma					= 0x1010,
-	MDJaguar				= 0x1020,
-	MDPanther				= 0x1030,
-	MDTiger					= 0x1040,
-	MDLeopard				= 0x1050,
-	MDSnowLeopard			= 0x1060,
-	MDLion					= 0x1070,
-	MDMountainLion			= 0x1080,
-	MDUnknownKitty			= 0x1090,
-	MDUnknownVersion		= 0x1100
-};
 
 #define MD_DEBUG 0
-
-static SInt32 MDSystemVersion = MDUndeterminedVersion;
 
 
 unsigned long long		MDNumberOfBytesInKB = 1000;
@@ -124,12 +108,10 @@ NSString * const MDFileSizeFormatterUnitsTypeKey	= @"MDFileSizeFormatterUnitsTyp
 #endif
 	unitsType = aUnitsType;
 	if (unitsType == MDFileSizeFormatterAutomaticUnitsType) {
-		MDSystemVersion = MDUndeterminedVersion;
-		SInt32 fullSystemVersion = 0;
-		Gestalt(gestaltSystemVersion, &fullSystemVersion);
-		MDSystemVersion = fullSystemVersion & 0xfffffff0;
-		MDNumberOfBytesInKB			= (MDSystemVersion < MDSnowLeopard ? 1024 : 1000);
-		MDFloatNumberOfBytesInKB	= (MDSystemVersion < MDSnowLeopard ? 1024.0 : 1000.0);
+		MDOperatingSystemVersion systemVersion = [[NSProcessInfo processInfo] md__operatingSystemVersion];
+		
+		MDNumberOfBytesInKB			= (systemVersion.minorVersion < MDSnowLeopard ? 1024 : 1000);
+		MDFloatNumberOfBytesInKB	= (systemVersion.minorVersion < MDSnowLeopard ? 1024.0 : 1000.0);
 		
 	} else if (unitsType == MDFileSizeFormatter1000BytesInKBUnitsType) {
 		MDNumberOfBytesInKB			= 1000;

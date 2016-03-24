@@ -8,6 +8,8 @@
 
 #import "MDBottomBar.h"
 #import "MDFileSizeFormatter.h"
+#import "MDFoundationAdditions.h"
+
 
 #define MD_DISABLED_OPACITY 0.1
 
@@ -17,22 +19,8 @@
 #define MD_DEBUG_DRAW 0
 
 
-enum {
-	MDUndeterminedVersion	= 0,
-	MDCheetah				= 0x1000,
-	MDPuma					= 0x1010,
-	MDJaguar				= 0x1020,
-	MDPanther				= 0x1030,
-	MDTiger					= 0x1040,
-	MDLeopard				= 0x1050,
-	MDSnowLeopard			= 0x1060,
-	MDLion					= 0x1070,
-	MDMountainLion			= 0x1080,
-	MDMavericks				= 0x1090,
-	MDUnknownVersion		= 0x1100
-};
+static MDOperatingSystemVersion systemVersion;
 
-static SInt32 MDSystemVersion = MDUndeterminedVersion;
 
 @implementation MDBottomBar
 
@@ -40,10 +28,22 @@ static SInt32 MDSystemVersion = MDUndeterminedVersion;
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (MDSystemVersion == MDUndeterminedVersion) {
-		SInt32 MDFullSystemVersion = 0;
-		Gestalt(gestaltSystemVersion, &MDFullSystemVersion);
-		MDSystemVersion = MDFullSystemVersion & 0xfffffff0;
+	
+	/* This `initialized` flag is used to guard against the rare cases where Cocoa bindings
+	 may cause `+initialize` to be called twice: once for this class, and once for the isa-swizzled class: 
+	 
+	 `[NSKVONotifying_MDClassName initialize]`
+	 
+	 */
+	
+	@synchronized(self) {
+		static BOOL initialized = NO;
+		
+		if (initialized == NO) {
+			systemVersion = [[NSProcessInfo processInfo] md__operatingSystemVersion];
+			
+			initialized = YES;
+		}
 	}
 }
 
@@ -97,7 +97,7 @@ static SInt32 MDSystemVersion = MDUndeterminedVersion;
 	BOOL isMainWindow = [[self window] isMainWindow];
 	
 	
-	if (MDSystemVersion == MDLeopard) {
+	if (systemVersion.minorVersion == MDLeopard) {
 		
 		if (isMainWindow) {
 			[NSBezierPath setDefaultLineWidth:2.0];
@@ -186,7 +186,7 @@ static SInt32 MDSystemVersion = MDUndeterminedVersion;
 	
 	NSColor *textColor = nil;
 	
-	if (MDSystemVersion == MDLeopard) {
+	if (systemVersion.minorVersion == MDLeopard) {
 		if (isMainWindow) {
 			textColor = [NSColor controlTextColor];
 		} else {
@@ -194,7 +194,7 @@ static SInt32 MDSystemVersion = MDUndeterminedVersion;
 			textColor = [NSColor colorWithCalibratedRed:47.0/255.0 green:47.0/255.0 blue:47.0/255.0 alpha:1.0];
 		}
 		
-	} else if (MDSystemVersion >= MDSnowLeopard) {
+	} else if (systemVersion.minorVersion >= MDSnowLeopard) {
 		if (isMainWindow) {
 			textColor = [NSColor controlTextColor];
 		} else {
@@ -212,11 +212,11 @@ static SInt32 MDSystemVersion = MDUndeterminedVersion;
 	richTextRect.size = [richText size];
 	richTextRect.origin.x = ceil( (rect.size.width - richTextRect.size.width)/2.0);
 	
-	if (MDSystemVersion == MDLeopard) {
+	if (systemVersion.minorVersion == MDLeopard) {
 		
 		richTextRect.origin.y = ceil( (rect.size.height - richTextRect.size.height)/2.0);
 		
-	} else if (MDSystemVersion >= MDSnowLeopard) {
+	} else if (systemVersion.minorVersion >= MDSnowLeopard) {
 		richTextRect.origin.y = ceil( (rect.size.height - richTextRect.size.height)/2.0);
 		
 	}

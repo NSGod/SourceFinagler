@@ -106,7 +106,7 @@ BOOL MDGetMetadataFromImageAtPath(NSString *filePath, NSString *contentTypeUTI, 
 		[attributes setObject:[NSNumber numberWithUnsignedInteger:imageSize.height] forKey:(id)kMDItemPixelHeight];
 		
 		// `kMDItemPixelCount` is only available in OS X 10.6 and later
-		if (TKGetSystemVersion() >= TKSnowLeopard) {
+		if ([[NSProcessInfo processInfo] tk__operatingSystemVersion].minorVersion >= TKSnowLeopard) {
 			[attributes setObject:[NSNumber numberWithUnsignedInteger:imageSize.width * imageSize.height] forKey:(id)kMDItemPixelCount];
 		}
 		
@@ -152,7 +152,7 @@ BOOL MDGetMetadataFromImageAtPath(NSString *filePath, NSString *contentTypeUTI, 
 		[attributes setObject:[NSNumber numberWithUnsignedInteger:file.GetHeight()] forKey:(NSString *)kMDItemPixelHeight];
 		
 		// `kMDItemPixelCount` is only available in OS X 10.6 and later
-		if (TKGetSystemVersion() >= TKSnowLeopard) {
+		if ([[NSProcessInfo processInfo] tk__operatingSystemVersion].minorVersion >= TKSnowLeopard) {
 			[attributes setObject:[NSNumber numberWithUnsignedInteger:file.GetWidth() * file.GetHeight()] forKey:(NSString *)kMDItemPixelCount];
 		}
 		
@@ -206,7 +206,7 @@ BOOL MDGetMetadataFromImageAtPath(NSString *filePath, NSString *contentTypeUTI, 
 		[attributes setObject:[NSNumber numberWithUnsignedInteger:dds.height()] forKey:(NSString *)kMDItemPixelHeight];
 		
 		// `kMDItemPixelCount` is only available in OS X 10.6 and later
-		if (TKGetSystemVersion() >= TKSnowLeopard) {
+		if ([[NSProcessInfo processInfo] tk__operatingSystemVersion].minorVersion >= TKSnowLeopard) {
 			[attributes setObject:[NSNumber numberWithUnsignedInteger:dds.width() * dds.height()] forKey:(id)kMDItemPixelCount];
 		}
 		

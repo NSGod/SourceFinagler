@@ -9,6 +9,7 @@
 #import "MDLaunchManager.h"
 #import "MDFolderManager.h"
 #import <ServiceManagement/ServiceManagement.h>
+#import "MDFoundationAdditions.h"
 
 
 #define MD_DEBUG 0
@@ -17,23 +18,6 @@
 - (BOOL)loadJobWithPath:(NSString *)path inDomain:(MDLaunchDomain)domain error:(NSError **)outError;
 - (BOOL)unloadJobWithLabel:(NSString *)label inDomain:(MDLaunchDomain)domain error:(NSError **)outError;
 @end
-
-enum {
-	MDUndeterminedVersion	= 0,
-	MDCheetah				= 0x1000,
-	MDPuma					= 0x1010,
-	MDJaguar				= 0x1020,
-	MDPanther				= 0x1030,
-	MDTiger					= 0x1040,
-	MDLeopard				= 0x1050,
-	MDSnowLeopard			= 0x1060,
-	MDLion					= 0x1070,
-	MDMountainLion			= 0x1080,
-	MDMavericks				= 0x1090,
-	MDUnknownVersion		= 0x1100
-};
-
-static SInt32 MDSystemVersion = MDUndeterminedVersion;
 
 
 static BOOL useServiceManagement = NO;
@@ -69,11 +53,7 @@ static MDLaunchManager *sharedManager = nil;
 
 - (id)init {
 	if ((self = [super init])) {
-		SInt32 MDFullSystemVersion = 0;
-		Gestalt(gestaltSystemVersion, &MDFullSystemVersion);
-		MDSystemVersion = MDFullSystemVersion & 0xfffffff0;
-		
-		useServiceManagement = (MDSystemVersion >= MDSnowLeopard);
+		useServiceManagement = ([[NSProcessInfo processInfo] md__operatingSystemVersion].minorVersion >= MDSnowLeopard);
 	}
 	return self;
 }
