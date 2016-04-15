@@ -30,7 +30,7 @@ static MDQuickLookController *sharedQuickLookController = nil;
 
 
 @synthesize items;
-@synthesize document;
+@synthesize hlDocument;
 
 
 + (MDQuickLookController *)sharedQuickLookController {
@@ -111,7 +111,7 @@ static MDQuickLookController *sharedQuickLookController = nil;
 //    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	if (document == nil) {
+	if (hlDocument == nil) {
 		[[self window] setTitle:@""];
 		
 		[previewViewController setRepresentedObject:nil];
@@ -120,9 +120,9 @@ static MDQuickLookController *sharedQuickLookController = nil;
 	} else {
 		
 		if (items.count == 0) {
-			[[self window] setTitle:[document displayName]];
+			[[self window] setTitle:[hlDocument displayName]];
 			
-			[previewViewController setRepresentedObject:document];
+			[previewViewController setRepresentedObject:hlDocument];
 			[controlsView setHidden:YES];
 			
 		} else {
@@ -192,8 +192,8 @@ static MDQuickLookController *sharedQuickLookController = nil;
 	
 	if ([MDHLDocument shouldShowQuickLook] == NO) return;
 	
-	self.document = [notification object];
-	self.items = document.selectedItems;
+	self.hlDocument = [notification object];
+	self.items = hlDocument.selectedItems;
 	
 	currentItemIndex = 0;
 	
@@ -216,7 +216,7 @@ static MDQuickLookController *sharedQuickLookController = nil;
 	
 	MDHLDocument *closingDocument = [notification object];
 	
-	if (document == closingDocument) {
+	if (hlDocument == closingDocument) {
 		
 		/* If a document is closing, and it's the document we're currently showing data for,
 		 find the next appropriate document to show data for. This is intended for instances where 
@@ -232,13 +232,13 @@ static MDQuickLookController *sharedQuickLookController = nil;
 		[orderedDocuments removeObject:closingDocument];
 		
 		if (orderedDocuments.count) {
-			self.document = [orderedDocuments objectAtIndex:0];
-			self.items = document.selectedItems;
+			self.hlDocument = [orderedDocuments objectAtIndex:0];
+			self.items = hlDocument.selectedItems;
 			
 		} else {
 			// no documents left
 			// let go!
-			self.document = nil;
+			self.hlDocument = nil;
 			self.items = nil;
 			
 		}

@@ -19,7 +19,7 @@
 	
 	
 	NSArray										*items;			// CANNOT BE A weak (non-retained) reference
-	MDHLDocument								*document;		// CANNOT BE A weak (non-retained) reference
+	MDHLDocument								*hlDocument;	// CANNOT BE A weak (non-retained) reference
 	
 	NSInteger									currentItemIndex;
 	BOOL										isPlaying;
@@ -30,7 +30,7 @@
 + (MDQuickLookController *)sharedQuickLookController;
 
 @property (retain) NSArray *items;
-@property (retain) MDHLDocument *document;
+@property (retain) MDHLDocument *hlDocument;
 
 - (IBAction)showPreviousItem:(id)sender;
 - (IBAction)showNextItem:(id)sender;
