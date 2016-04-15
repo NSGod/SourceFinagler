@@ -662,11 +662,11 @@ static NSRecursiveLock *shouldPlaySoundEffectsLock = nil;
 	[orderedDocumentsLock unlock];
 	
 #if MD_DEBUG
-	printf("\n\n");
-	NSLog(@"[%@ %@] orderedDocuments == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), orderedDocuments);
-	NSDocument *currentDocument = [[NSDocumentController sharedDocumentController] currentDocument];
-	NSLog(@"[%@ %@] currentDocument == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), currentDocument);
-	printf("\n\n");
+//	printf("\n\n");
+//	NSLog(@"[%@ %@] orderedDocuments == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), orderedDocuments);
+//	NSDocument *currentDocument = [[NSDocumentController sharedDocumentController] currentDocument];
+//	NSLog(@"[%@ %@] currentDocument == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), currentDocument);
+//	printf("\n\n");
 #endif
 	
 	NSMutableArray *orderedMDHLDocuments = [NSMutableArray array];
@@ -683,7 +683,7 @@ static NSRecursiveLock *shouldPlaySoundEffectsLock = nil;
 
 - (BOOL)isFrontmostMDHLDocument {
 #if MD_DEBUG
-	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
 	/* If our window is the main window, then we know without a doubt that we are the 
@@ -692,7 +692,7 @@ static NSRecursiveLock *shouldPlaySoundEffectsLock = nil;
 	
 	if ([hlWindow isMainWindow]) {
 #if MD_DEBUG
-		NSLog(@" \"%@\" [%@ %@] ***** WE'RE the MAIN WINDOW *******", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//		NSLog(@" \"%@\" [%@ %@] ***** WE'RE the MAIN WINDOW *******", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 		return YES;
 	}
@@ -2234,7 +2234,7 @@ static NSRecursiveLock *shouldPlaySoundEffectsLock = nil;
 #if MD_DEBUG
 //	NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	return [[NSApp delegate] toggleShowQuickLook:sender];
+	return [(MDAppController *)[NSApp delegate] toggleShowQuickLook:sender];
 }
 
 
