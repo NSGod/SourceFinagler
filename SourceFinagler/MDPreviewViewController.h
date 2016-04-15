@@ -14,6 +14,13 @@
 @class MDInspectorView;
 
 
+enum {
+	MDSoundNone,
+	MDSoundPaused,
+	MDSoundPlaying,
+};
+typedef NSUInteger MDSoundStatus;
+
 
 @interface MDPreviewViewController : NSViewController <NSSoundDelegate> {
 	IBOutlet NSBox				*box;
@@ -35,14 +42,14 @@
 	
 	IBOutlet NSTextField		*sizeField;
 	
-	BOOL						isPlayingSound;
 	NSSound						*sound;
+	MDSoundStatus				soundStatus;
 	
 	BOOL						isQuickLookPanel;
 }
 
 @property (retain) NSSound *sound;
-@property (assign, setter=setPlayingSound:) BOOL isPlayingSound;
+@property (assign) MDSoundStatus soundStatus;
 @property (assign, setter=setQuickLookPanel:) BOOL isQuickLookPanel;
 
 - (IBAction)togglePlaySound:(id)sender;
