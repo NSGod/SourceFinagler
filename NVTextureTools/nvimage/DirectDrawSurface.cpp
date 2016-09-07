@@ -30,6 +30,7 @@
 #include "nvcore/Debug.h"
 #include "nvcore/Utils.h" // max
 #include "nvcore/StdStream.h"
+#include "nvmath/Vector.inl"
 
 #include <string.h> // memset
 
@@ -180,6 +181,38 @@ namespace
             CASE(B5G5R5A1_UNORM);
             CASE(B8G8R8A8_UNORM);
             CASE(B8G8R8X8_UNORM);
+			
+			CASE(R10G10B10_XR_BIAS_A2_UNORM);
+			CASE(B8G8R8A8_TYPELESS);
+			CASE(B8G8R8A8_UNORM_SRGB);
+			CASE(B8G8R8X8_TYPELESS);
+			CASE(B8G8R8X8_UNORM_SRGB);
+			
+			CASE(BC6H_TYPELESS);
+			CASE(BC6H_UF16);
+			CASE(BC6H_SF16);
+			
+			CASE(BC7_TYPELESS);
+			CASE(BC7_UNORM);
+			CASE(BC7_UNORM_SRGB);
+			
+			CASE(AYUV);
+			CASE(Y410);
+			CASE(Y416);
+			CASE(NV12);
+			CASE(P010);
+			CASE(P016);
+			CASE(420_OPAQUE);
+			CASE(YUY2);
+			
+			CASE(Y210);
+			CASE(Y216);
+			CASE(NV11);
+			CASE(AI44);
+			CASE(IA44);
+			CASE(P8);
+			CASE(A8P8);
+			CASE(B4G4R4A4_UNORM);
 
         default: 
             return "UNKNOWN";
@@ -201,34 +234,65 @@ namespace
     }
 
     static uint pixelSize(D3DFORMAT format) {
-        if (format == D3DFMT_R16F) return 8*2;
-        if (format == D3DFMT_G16R16F) return 8*4;
-        if (format == D3DFMT_A16B16G16R16F) return 8*8;
-        if (format == D3DFMT_R32F) return 8*4;
-        if (format == D3DFMT_G32R32F) return 8*8;
-        if (format == D3DFMT_A32B32G32R32F) return 8*16;
-
-        if (format == D3DFMT_R8G8B8) return 8*3;
-        if (format == D3DFMT_A8R8G8B8) return 8*4;
-        if (format == D3DFMT_X8R8G8B8) return 8*4;
-        if (format == D3DFMT_R5G6B5) return 8*2;
-        if (format == D3DFMT_X1R5G5B5) return 8*2;
-        if (format == D3DFMT_A1R5G5B5) return 8*2;
-        if (format == D3DFMT_A4R4G4B4) return 8*2;
-        if (format == D3DFMT_R3G3B2) return 8*1;
-        if (format == D3DFMT_A8) return 8*1;
-        if (format == D3DFMT_A8R3G3B2) return 8*2;
-        if (format == D3DFMT_X4R4G4B4) return 8*2;
-        if (format == D3DFMT_A2B10G10R10) return 8*4;
-        if (format == D3DFMT_A8B8G8R8) return 8*4;
-        if (format == D3DFMT_X8B8G8R8) return 8*4;
-        if (format == D3DFMT_G16R16) return 8*4;
-        if (format == D3DFMT_A2R10G10B10) return 8*4;
-        if (format == D3DFMT_A2B10G10R10) return 8*4;
-
-        if (format == D3DFMT_L8) return 8*1;
-        if (format == D3DFMT_L16) return 8*2;
-
+		switch (format) {
+			case D3DFMT_A32B32G32R32F:
+				return 8*16;
+				
+			case D3DFMT_G32R32F:
+			case D3DFMT_A16B16G16R16F:
+			case D3DFMT_A16B16G16R16:
+				
+			case D3DFMT_Q16W16V16U16:
+				return 8*8;
+				
+				
+			case D3DFMT_A8R8G8B8:
+			case D3DFMT_X8R8G8B8:
+			case D3DFMT_A2B10G10R10:
+			case D3DFMT_A8B8G8R8:
+			case D3DFMT_X8B8G8R8:
+			case D3DFMT_G16R16:
+			case D3DFMT_A2R10G10B10:
+				
+			case D3DFMT_R32F:
+			case D3DFMT_G16R16F:
+				
+			case D3DFMT_X8L8V8U8:
+			case D3DFMT_Q8W8V8U8:
+			case D3DFMT_V16U16:
+			case D3DFMT_A2W10V10U10:
+				return 8*4;
+				
+				
+			case D3DFMT_R8G8B8:
+				return 8*3;
+				
+			case D3DFMT_R5G6B5:
+			case D3DFMT_X1R5G5B5:
+			case D3DFMT_A1R5G5B5:
+			case D3DFMT_A4R4G4B4:
+			case D3DFMT_A8R3G3B2:
+			case D3DFMT_X4R4G4B4:
+			case D3DFMT_A8P8:
+			case D3DFMT_A8L8:
+			case D3DFMT_L16:
+			case D3DFMT_R16F:
+				
+			case D3DFMT_L6V5U5:
+			case D3DFMT_V8U8:
+				return 8*2;
+				
+			case D3DFMT_R3G3B2:
+			case D3DFMT_A8:
+			case D3DFMT_P8:
+			case D3DFMT_L8:
+			case D3DFMT_A4L4:
+				return 8*1;
+				
+			case D3DFMT_UNKNOWN:
+			default:
+				return 0;
+		}
         return 0;
     }
 
@@ -343,6 +407,10 @@ namespace
             case DXGI_FORMAT_B8G8R8X8_TYPELESS:
             case DXGI_FORMAT_B8G8R8X8_UNORM_SRGB:
                 return 8*4;
+                
+			case DXGI_FORMAT_B4G4R4A4_UNORM:
+				return 8*2;
+				
             default:
                 return 0;
         }
@@ -420,61 +488,81 @@ namespace nv
 
 } // nv namespace
 
+
+
 namespace
 {
     struct FormatDescriptor
     {
-		const char *name;
         uint format;
+		uint pixelFormatFlags;
         uint bitcount;
         uint rmask;
         uint gmask;
         uint bmask;
         uint amask;
     };
-
+	
     static const FormatDescriptor s_d3d9Formats[] =
-    {
-		{ "RGB888", D3DFMT_R8G8B8, 24, 0xFF0000, 0xFF00, 0xFF, 0 },
-		{ "ARGB888", D3DFMT_A8R8G8B8, 32, 0xFF0000, 0xFF00, 0xFF, 0xFF000000 },                           // DXGI_FORMAT_B8G8R8A8_UNORM
-		{ "XRGB8888", D3DFMT_X8R8G8B8, 32, 0xFF0000, 0xFF00, 0xFF, 0 },                                    // DXGI_FORMAT_B8G8R8X8_UNORM
-		{ "RGB565", D3DFMT_R5G6B5, 16, 0xF800, 0x7E0, 0x1F, 0 },                                             // DXGI_FORMAT_B5G6R5_UNORM
-		{ "XRGB1555", D3DFMT_X1R5G5B5, 16, 0x7C00, 0x3E0, 0x1F, 0 },
-		{ "ARGB1555", D3DFMT_A1R5G5B5, 16, 0x7C00, 0x3E0, 0x1F, 0x8000 },                                  // DXGI_FORMAT_B5G5R5A1_UNORM
-		{ "ARGB4444", D3DFMT_A4R4G4B4, 16, 0xF00, 0xF0, 0xF, 0xF000 },
-		{ "RGB332",D3DFMT_R3G3B2, 8, 0xE0, 0x1C, 0x3, 0 },
-		{ "A8", D3DFMT_A8, 8, 0, 0, 0, 8 },                                                              // DXGI_FORMAT_A8_UNORM
-		{ "ARGB8332", D3DFMT_A8R3G3B2, 16, 0xE0, 0x1C, 0x3, 0xFF00 },
-		{ "XRGB4444", D3DFMT_X4R4G4B4, 16, 0xF00, 0xF0, 0xF, 0 },
-		{ "ABGR2101010", D3DFMT_A2B10G10R10, 32, 0x3FF, 0xFFC00, 0x3FF00000, 0xC0000000 },            // DXGI_FORMAT_R10G10B10A2
-		{ "ABGR8888", D3DFMT_A8B8G8R8, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000 },                           // DXGI_FORMAT_R8G8B8A8_UNORM
-		{ "XBGR8888", D3DFMT_X8B8G8R8, 32, 0xFF, 0xFF00, 0xFF0000, 0 },
-		{ "G16R16", D3DFMT_G16R16, 32, 0xFFFF, 0xFFFF0000, 0, 0 },                                       // DXGI_FORMAT_R16G16_UNORM
-		{ "ARGB2101010", D3DFMT_A2R10G10B10, 32, 0x3FF00000, 0xFFC00, 0x3FF, 0xC0000000 },
-		{ "ABGR2101010", D3DFMT_A2B10G10R10, 32, 0x3FF, 0xFFC00, 0x3FF00000, 0xC0000000 },
+	{
+		{ D3DFMT_R8G8B8,		DDPF_RGB,				24,	0x00FF0000,		0x0000FF00,		0x000000FF,		0			},
+		{ D3DFMT_A8R8G8B8,		DDPF_RGBA,				32,	0x00FF0000,		0x0000FF00,		0x000000FF,		0xFF000000	},	// DXGI_FORMAT_B8G8R8A8_UNORM
+		{ D3DFMT_X8R8G8B8,		DDPF_RGB,				32,	0x00FF0000,		0x0000FF00,		0x000000FF,		0			},	// DXGI_FORMAT_B8G8R8X8_UNORM
+	
+		{ D3DFMT_R5G6B5,		DDPF_RGB,				16,	0x0000F800,		0x000007E0,		0x0000001F,		0			},	// DXGI_FORMAT_B5G6R5_UNORM
+		{ D3DFMT_X1R5G5B5,		DDPF_RGB,				16,	0x00007C00,		0x000003E0,		0x0000001F,		0			},
+		{ D3DFMT_A1R5G5B5,		DDPF_RGBA,				16,	0x00007C00,		0x000003E0,		0x0000001F,		0x00008000	},	// DXGI_FORMAT_B5G5R5A1_UNORM
+		{ D3DFMT_A4R4G4B4,		DDPF_RGBA,				16,	0x00000F00,		0x000000F0,		0x0000000F,		0x0000F000	},	// DXGI_FORMAT_B4G4R4A4_UNORM
+	
+		{ D3DFMT_R3G3B2,		DDPF_RGB,				8,	0x000000E0,		0x0000001C,		0x00000003,		0			},
+	
+		{ D3DFMT_A8,			DDPF_ALPHA,				8,	0,				0,				0,				0x000000FF	},	// DXGI_FORMAT_A8_UNORM
+	
+		{ D3DFMT_A8R3G3B2,		DDPF_RGBA,				16,	0x000000E0,		0x0000001C,		0x00000003,		0x0000FF00	},
+		{ D3DFMT_X4R4G4B4,		DDPF_RGB,				16,	0x00000F00,		0x000000F0,		0x0000000F,		0			},
+		{ D3DFMT_A2B10G10R10,	DDPF_RGBA,				32,	0x000003FF,		0x000FFC00,		0x3FF00000,		0xC0000000	},	// DXGI_FORMAT_R10G10B10A2_UNORM
+	
+		{ D3DFMT_A8B8G8R8,		DDPF_RGBA,				32,	0x000000FF,		0x0000FF00,		0x00FF0000,		0xFF000000	},	// DXGI_FORMAT_R8G8B8A8_UNORM
+		{ D3DFMT_X8B8G8R8,		DDPF_RGB,				32,	0x000000FF,		0x0000FF00,		0x00FF0000,		0			},
+	
+		{ D3DFMT_G16R16,		DDPF_RGB,				32,	0x0000FFFF,		0xFFFF0000,		0,				0			},	// DXGI_FORMAT_R16G16_UNORM
+		{ D3DFMT_A2R10G10B10,	DDPF_RGBA,				32,	0x3FF00000,		0x000FFC00,		0x000003FF,		0xC0000000	},
+//		{ D3DFMT_A2B10G10R10,	DDPF_RGBA,				32,	0x000003FF,		0x000FFC00,		0x3FF00000,		0xC0000000	},
 
-		{ "L8", D3DFMT_L8, 8, 8, 0, 0, 0 },                                                          // DXGI_FORMAT_R8_UNORM
-		{ "L16", D3DFMT_L16, 16, 16, 0, 0, 0 },                                                       // DXGI_FORMAT_R16_UNORM
+		{ D3DFMT_L8,			DDPF_LUMINANCE,			8,	0x000000FF,		0,				0,				0			},	// DXGI_FORMAT_R8_UNORM 
+		{ D3DFMT_L16,			DDPF_LUMINANCE,			16,	0x0000FFFF,		0,				0,				0			},	// DXGI_FORMAT_R16_UNORM
+		{ D3DFMT_A8L8,			DDPF_LA,				16,	0x000000FF,		0,				0,				0x0000FF00	},	// DXGI_FORMAT_R8G8_UNORM?
+	
+		{ D3DFMT_A4L4,			DDPF_LA,				8,	0x0000000F,		0,				0,				0x000000F0	},	// none?
+		
+	
+		{ D3DFMT_L6V5U5,		DDPF_BUMP_LUMINANCE,	16,	0x0000001F,		0x000003E0,		0x0000FC00,		0			},	// none?
+		{ D3DFMT_V8U8,			DDPF_BUMP_DUDV,			16,	0x000000FF,		0x0000FF00,		0,				0			},	// none?
+	
+	
+		{ D3DFMT_X8L8V8U8,		DDPF_BUMP_LUMINANCE,	32,	0x000000FF,		0x0000FF00,		0x00FF0000,		0			},	// same masks as D3DFMT_X8B8G8R8; none?
+		{ D3DFMT_Q8W8V8U8,		DDPF_BUMP_DUDV,			32,	0x000000FF,		0x0000FF00,		0x00FF0000,		0xFF000000	},	// same masks as D3DFMT_A8B8G8R8; none?
+	
+		{ D3DFMT_V16U16,		DDPF_BUMP_DUDV,			32,	0x0000FFFF,		0xFFFF0000,		0,				0			},	// same masks as D3DFMT_G16R16; none?
+		{ D3DFMT_A2W10V10U10,	DDPF_BUMP_DUDV_A,		32,	0x3FF00000,		0x000FFC00,		0x000003FF,		0xC0000000	},	// same masks as D3DFMT_A2R10G10B10; none?
+	
     };
 
     static const uint s_d3d9FormatCount = NV_ARRAY_SIZE(s_d3d9Formats);
-
-	static const char *findD3D9FormatString(uint bitcount, uint rmask, uint gmask, uint bmask, uint amask) {
-		for (int i = 0; i < s_d3d9FormatCount; i++) {
-			if (s_d3d9Formats[i].bitcount == bitcount &&
-				s_d3d9Formats[i].rmask == rmask &&
-				s_d3d9Formats[i].gmask == gmask &&
-				s_d3d9Formats[i].bmask == bmask &&
-				s_d3d9Formats[i].amask == amask) {
-				return s_d3d9Formats[i].name;
-			}
-		}
-
-		return 0;
-	}
+	
+	
+	static const FormatDescriptor s_DXGIFormats[] = {
+		{ DXGI_FORMAT_B5G6R5_UNORM,		0,	16,	0x0000F800,		0x000007E0,		0x0000001F,		0			},
+		{ DXGI_FORMAT_B5G5R5A1_UNORM,	0,	16,	0x00007C00,		0x000003E0,		0x0000001F,		0x00008000	},
+		{ DXGI_FORMAT_B4G4R4A4_UNORM,	0,	16,	0x00000F00,		0x000000F0,		0x0000000F,		0x0000F000	},
+	};
+	
+	static const uint s_DXGIFormatCount = NV_ARRAY_SIZE(s_DXGIFormats);
+	
+	
 } // namespace
 
-uint nv::findD3D9Format(uint bitcount, uint rmask, uint gmask, uint bmask, uint amask)
+uint nv::findD3D9Format(uint pixelFormatFlags, uint bitcount, uint rmask, uint gmask, uint bmask, uint amask)
 {
     for (int i = 0; i < s_d3d9FormatCount; i++)
     {
@@ -482,13 +570,28 @@ uint nv::findD3D9Format(uint bitcount, uint rmask, uint gmask, uint bmask, uint 
             s_d3d9Formats[i].rmask == rmask &&
             s_d3d9Formats[i].gmask == gmask &&
             s_d3d9Formats[i].bmask == bmask &&
-            s_d3d9Formats[i].amask == amask)
+            s_d3d9Formats[i].amask == amask &&
+			(s_d3d9Formats[i].pixelFormatFlags & pixelFormatFlags) == pixelFormatFlags)
         {
             return s_d3d9Formats[i].format;
         }
     }
 
     return 0;
+}
+
+static void findDXGIBitcountsAndMasks(DXGI_FORMAT dxgiFormat, uint &bitcount, uint &rmask, uint &gmask, uint &bmask, uint &amask) {
+	for (int i = 0; i < s_DXGIFormatCount; i++) {
+		if (s_DXGIFormats[i].format == dxgiFormat) {
+			bitcount = s_DXGIFormats[i].bitcount;
+			rmask = s_DXGIFormats[i].rmask;
+			gmask = s_DXGIFormats[i].gmask;
+			bmask = s_DXGIFormats[i].bmask;
+			amask = s_DXGIFormats[i].amask;
+			return;
+		}
+	}
+	bitcount = rmask = gmask = bmask = amask = 0;
 }
 
 
@@ -810,50 +913,9 @@ uint DDSHeader::d3d9Format() const
         return pf.fourcc;
     }
     else {
-        return findD3D9Format(pf.bitcount, pf.rmask, pf.gmask, pf.bmask, pf.amask);
+        return findD3D9Format(pf.flags, pf.bitcount, pf.rmask, pf.gmask, pf.bmask, pf.amask);
     }
 }
-
-
-const char *DDSHeader::d3d9FormatString() const {
-	if (pf.flags & DDPF_FOURCC) {
-		uint fourcc = pf.fourcc;
-		if (fourcc == FOURCC_DXT1) {
-			return "DXT1";
-		} else if (fourcc == FOURCC_DXT2) {
-			return "DXT2";
-			
-		} else if (fourcc == FOURCC_DXT3) {
-			return "DXT3";
-			
-		} else if (fourcc == FOURCC_DXT4) {
-			return "DXT4";
-			
-		} else if (fourcc == FOURCC_DXT5) {
-			return "DXT5";
-			
-		} else if (fourcc == FOURCC_RXGB) {
-			return "RXGB";
-			
-		} else if (fourcc == FOURCC_ATI1) {
-			return "ATI1";
-			
-		} else if (fourcc == FOURCC_ATI2) {
-			return "ATI2";
-			
-		} else if (fourcc == FOURCC_A2XY) {
-			return "A2XY";
-			
-		} else if (fourcc == FOURCC_DX10) {
-			return "DX10";
-		}
-	}
-	return findD3D9FormatString(pf.bitcount, pf.rmask, pf.gmask, pf.bmask, pf.amask);
-}
-
-
-
-
 
 uint DDSHeader::pixelSize() const
 {
@@ -877,6 +939,7 @@ uint DDSHeader::blockSize() const
     {
     case FOURCC_DXT1:
     case FOURCC_ATI1:
+	case FOURCC_BC4U:
         return 8;
     case FOURCC_DXT2:
     case FOURCC_DXT3:
@@ -884,6 +947,7 @@ uint DDSHeader::blockSize() const
     case FOURCC_DXT5:
     case FOURCC_RXGB:
     case FOURCC_ATI2:
+	case FOURCC_BC5U:
         return 16;
     case FOURCC_DX10:
         switch(header10.dxgiFormat)
@@ -1008,7 +1072,9 @@ bool DirectDrawSurface::isSupported() const
             header.header10.dxgiFormat == DXGI_FORMAT_BC2_UNORM ||
             header.header10.dxgiFormat == DXGI_FORMAT_BC3_UNORM ||
             header.header10.dxgiFormat == DXGI_FORMAT_BC4_UNORM ||
-            header.header10.dxgiFormat == DXGI_FORMAT_BC5_UNORM)
+            header.header10.dxgiFormat == DXGI_FORMAT_BC5_UNORM ||
+			header.header10.dxgiFormat == DXGI_FORMAT_BC6H_UF16 ||
+			header.header10.dxgiFormat == DXGI_FORMAT_BC7_UNORM)
         {
             return true;
         }
@@ -1026,7 +1092,9 @@ bool DirectDrawSurface::isSupported() const
                 header.pf.fourcc != FOURCC_DXT5 &&
                 header.pf.fourcc != FOURCC_RXGB &&
                 header.pf.fourcc != FOURCC_ATI1 &&
-                header.pf.fourcc != FOURCC_ATI2)
+                header.pf.fourcc != FOURCC_ATI2 &&
+				header.pf.fourcc != FOURCC_BC4U &&
+				header.pf.fourcc != FOURCC_BC5U)
             {
                 // Unknown fourcc code.
                 return false;
@@ -1063,7 +1131,46 @@ bool DirectDrawSurface::hasAlpha() const
         return 
             header.header10.dxgiFormat == DXGI_FORMAT_BC1_UNORM ||
             header.header10.dxgiFormat == DXGI_FORMAT_BC2_UNORM ||
-            header.header10.dxgiFormat == DXGI_FORMAT_BC3_UNORM;
+            header.header10.dxgiFormat == DXGI_FORMAT_BC3_UNORM ||
+	
+			header.header10.dxgiFormat == DXGI_FORMAT_R32G32B32A32_TYPELESS ||
+			header.header10.dxgiFormat == DXGI_FORMAT_R32G32B32A32_FLOAT ||
+			header.header10.dxgiFormat == DXGI_FORMAT_R32G32B32A32_UINT ||
+			header.header10.dxgiFormat == DXGI_FORMAT_R32G32B32A32_SINT ||
+	
+			header.header10.dxgiFormat == DXGI_FORMAT_R16G16B16A16_TYPELESS ||
+			header.header10.dxgiFormat == DXGI_FORMAT_R16G16B16A16_FLOAT ||
+			header.header10.dxgiFormat == DXGI_FORMAT_R16G16B16A16_UNORM ||
+			header.header10.dxgiFormat == DXGI_FORMAT_R16G16B16A16_UINT ||
+			header.header10.dxgiFormat == DXGI_FORMAT_R16G16B16A16_SNORM ||
+			header.header10.dxgiFormat == DXGI_FORMAT_R16G16B16A16_SINT ||
+	
+			header.header10.dxgiFormat == DXGI_FORMAT_R10G10B10A2_TYPELESS ||
+			header.header10.dxgiFormat == DXGI_FORMAT_R10G10B10A2_UNORM ||
+			header.header10.dxgiFormat == DXGI_FORMAT_R10G10B10A2_UINT ||
+	
+			header.header10.dxgiFormat == DXGI_FORMAT_R8G8B8A8_TYPELESS ||
+			header.header10.dxgiFormat == DXGI_FORMAT_R8G8B8A8_UNORM ||
+			header.header10.dxgiFormat == DXGI_FORMAT_R8G8B8A8_UNORM_SRGB ||
+			header.header10.dxgiFormat == DXGI_FORMAT_R8G8B8A8_UINT ||
+			header.header10.dxgiFormat == DXGI_FORMAT_R8G8B8A8_SNORM ||
+			header.header10.dxgiFormat == DXGI_FORMAT_R8G8B8A8_SINT ||
+	
+			header.header10.dxgiFormat == DXGI_FORMAT_A8_UNORM ||
+	
+			header.header10.dxgiFormat == DXGI_FORMAT_B5G5R5A1_UNORM ||
+			header.header10.dxgiFormat == DXGI_FORMAT_B8G8R8A8_UNORM ||
+	
+			header.header10.dxgiFormat == DXGI_FORMAT_R10G10B10_XR_BIAS_A2_UNORM ||
+	
+			header.header10.dxgiFormat == DXGI_FORMAT_B8G8R8A8_TYPELESS ||
+			header.header10.dxgiFormat == DXGI_FORMAT_B8G8R8A8_UNORM_SRGB ||
+	
+			header.header10.dxgiFormat == DXGI_FORMAT_BC7_TYPELESS ||
+			header.header10.dxgiFormat == DXGI_FORMAT_BC7_UNORM ||
+			header.header10.dxgiFormat == DXGI_FORMAT_BC7_UNORM_SRGB ||
+	
+			header.header10.dxgiFormat == DXGI_FORMAT_B4G4R4A4_UNORM;
     }
     else
     {
@@ -1076,6 +1183,8 @@ bool DirectDrawSurface::hasAlpha() const
             if (header.pf.fourcc == FOURCC_RXGB ||
                 header.pf.fourcc == FOURCC_ATI1 ||
                 header.pf.fourcc == FOURCC_ATI2 ||
+				header.pf.fourcc == FOURCC_BC4U ||
+				header.pf.fourcc == FOURCC_BC5U ||
                 header.pf.flags & DDPF_NORMAL)
             {
                 return false;
@@ -1211,8 +1320,19 @@ void DirectDrawSurface::mipmap(Image * img, uint face, uint mipmap)
 
     if (header.hasDX10Header())
     {
-        // So far only block formats supported.
-        readBlockImage(img);
+	
+		switch (header.header10.dxgiFormat) {
+				
+			case DXGI_FORMAT_B5G6R5_UNORM:
+			case DXGI_FORMAT_B5G5R5A1_UNORM:
+			case DXGI_FORMAT_B4G4R4A4_UNORM:
+				readLinearImage(img);
+				break;
+				
+			default:
+				// So far only block formats supported.
+				readBlockImage(img);
+		}
     }
     else
     {
@@ -1304,20 +1424,42 @@ void DirectDrawSurface::readLinearImage(Image * img)
     const uint w = img->width();
     const uint h = img->height();
     const uint d = img->depth();
-
-    uint rshift, rsize;
-    PixelFormat::maskShiftAndSize(header.pf.rmask, &rshift, &rsize);
-
-    uint gshift, gsize;
-    PixelFormat::maskShiftAndSize(header.pf.gmask, &gshift, &gsize);
-
-    uint bshift, bsize;
-    PixelFormat::maskShiftAndSize(header.pf.bmask, &bshift, &bsize);
-
-    uint ashift, asize;
-    PixelFormat::maskShiftAndSize(header.pf.amask, &ashift, &asize);
-
-    uint byteCount = (header.pf.bitcount + 7) / 8;
+	
+	
+    uint rmask, rshift, rsize;
+    uint gmask, gshift, gsize;
+    uint bmask, bshift, bsize;
+    uint amask, ashift, asize;
+	
+    uint byteCount = 0;
+	
+	if (header.hasDX10Header()) {
+		uint bitcount;
+		
+		::findDXGIBitcountsAndMasks((DXGI_FORMAT)header.header10.dxgiFormat, bitcount, rmask, gmask, bmask, amask);
+		
+		PixelFormat::maskShiftAndSize(rmask, &rshift, &rsize);
+		PixelFormat::maskShiftAndSize(gmask, &gshift, &gsize);
+		PixelFormat::maskShiftAndSize(bmask, &bshift, &bsize);
+		PixelFormat::maskShiftAndSize(amask, &ashift, &asize);
+		
+		byteCount = (bitcount + 7) / 8;
+		
+		
+	} else {
+		rmask = header.pf.rmask;
+		gmask = header.pf.gmask;
+		bmask = header.pf.bmask;
+		amask = header.pf.amask;
+		
+		PixelFormat::maskShiftAndSize(header.pf.rmask, &rshift, &rsize);
+		PixelFormat::maskShiftAndSize(header.pf.gmask, &gshift, &gsize);
+		PixelFormat::maskShiftAndSize(header.pf.bmask, &bshift, &bsize);
+		PixelFormat::maskShiftAndSize(header.pf.amask, &ashift, &asize);
+		
+		byteCount = (header.pf.bitcount + 7) / 8;
+		
+	}
 
 #pragma NV_MESSAGE("TODO: Support floating point linear images and other FOURCC codes.")
 
@@ -1332,10 +1474,10 @@ void DirectDrawSurface::readLinearImage(Image * img)
                 stream->serialize(&c, byteCount);
 
                 Color32 pixel(0, 0, 0, 0xFF);
-                pixel.r = PixelFormat::convert((c & header.pf.rmask) >> rshift, rsize, 8);
-                pixel.g = PixelFormat::convert((c & header.pf.gmask) >> gshift, gsize, 8);
-                pixel.b = PixelFormat::convert((c & header.pf.bmask) >> bshift, bsize, 8);
-                pixel.a = PixelFormat::convert((c & header.pf.amask) >> ashift, asize, 8);
+                pixel.r = PixelFormat::convert((c & rmask) >> rshift, rsize, 8);
+                pixel.g = PixelFormat::convert((c & gmask) >> gshift, gsize, 8);
+                pixel.b = PixelFormat::convert((c & bmask) >> bshift, bsize, 8);
+                pixel.a = PixelFormat::convert((c & amask) >> ashift, asize, 8);
 
                 img->pixel(x, y, z) = pixel;
             }
@@ -1398,12 +1540,14 @@ void DirectDrawSurface::readBlock(ColorBlock * rgba)
     if (header.hasDX10Header())
     {
         if (header.header10.dxgiFormat == DXGI_FORMAT_BC1_UNORM) fourcc = FOURCC_DXT1;
-        if (header.header10.dxgiFormat == DXGI_FORMAT_BC2_UNORM) fourcc = FOURCC_DXT3;
-        if (header.header10.dxgiFormat == DXGI_FORMAT_BC3_UNORM) fourcc = FOURCC_DXT5;
-        if (header.header10.dxgiFormat == DXGI_FORMAT_BC4_UNORM) fourcc = FOURCC_ATI1;
-        if (header.header10.dxgiFormat == DXGI_FORMAT_BC5_UNORM) fourcc = FOURCC_ATI2;
+        else if (header.header10.dxgiFormat == DXGI_FORMAT_BC2_UNORM) fourcc = FOURCC_DXT3;
+        else if (header.header10.dxgiFormat == DXGI_FORMAT_BC3_UNORM) fourcc = FOURCC_DXT5;
+        else if (header.header10.dxgiFormat == DXGI_FORMAT_BC4_UNORM) fourcc = FOURCC_ATI1;
+        else if (header.header10.dxgiFormat == DXGI_FORMAT_BC5_UNORM) fourcc = FOURCC_ATI2;
     }
-
+	
+	if (fourcc == FOURCC_BC4U) fourcc = FOURCC_ATI1;
+	else if (fourcc == FOURCC_BC5U) fourcc = FOURCC_ATI2;
 
     if (fourcc == FOURCC_DXT1)
     {
@@ -1447,6 +1591,37 @@ void DirectDrawSurface::readBlock(ColorBlock * rgba)
         *stream << block;
         block.decodeBlock(rgba);
     }
+	else if (header.hasDX10Header() && header.header10.dxgiFormat == DXGI_FORMAT_BC6H_UF16)
+	{
+		BlockBC6 block;
+		*stream << block;
+		ColorSet set;
+		block.decodeBlock(&set);
+
+		// Clamp to [0, 1] and round to 8-bit
+		for (int y = 0; y < 4; ++y)
+		{
+			for (int x = 0; x < 4; ++x)
+			{
+				Vector4 px = set.colors[y*4 + x];
+				rgba->color(x, y).setRGBA(
+									uint8(clamp(px.x, 0.0f, 1.0f) * 255.0f + 0.5f),
+									uint8(clamp(px.y, 0.0f, 1.0f) * 255.0f + 0.5f),
+									uint8(clamp(px.z, 0.0f, 1.0f) * 255.0f + 0.5f),
+									uint8(clamp(px.w, 0.0f, 1.0f) * 255.0f + 0.5f));
+			}
+		}
+	}
+    else if (header.hasDX10Header() && header.header10.dxgiFormat == DXGI_FORMAT_BC7_UNORM)
+    {
+        BlockBC7 block;
+        *stream << block;
+        block.decodeBlock(rgba);
+    }
+	else
+	{
+		nvDebugCheck(false);
+	}
 
     // If normal flag set, convert to normal.
     if (header.pf.flags & DDPF_NORMAL)
@@ -1504,7 +1679,7 @@ uint DirectDrawSurface::surfaceSize(uint mipmap) const
 
     if (blockSize == 0) {
         uint bitCount = header.pixelSize();
-        uint pitch = computeBytePitch(w, bitCount, 1); // Asuming 1 byte alignment, which is the same D3DX expects.
+        uint pitch = computeBytePitch(w, bitCount, 1); // Assuming 1 byte alignment, which is the same D3DX expects.
         return pitch * h * d;
     }
     else {
@@ -1553,40 +1728,42 @@ uint DirectDrawSurface::offset(const uint face, const uint mipmap)
 
 void DirectDrawSurface::printInfo() const
 {
-    printf("Flags: 0x%.8X\n", header.flags);
-    if (header.flags & DDSD_CAPS) printf("\tDDSD_CAPS\n");
-    if (header.flags & DDSD_PIXELFORMAT) printf("\tDDSD_PIXELFORMAT\n");
-    if (header.flags & DDSD_WIDTH) printf("\tDDSD_WIDTH\n");
-    if (header.flags & DDSD_HEIGHT) printf("\tDDSD_HEIGHT\n");
-    if (header.flags & DDSD_DEPTH) printf("\tDDSD_DEPTH\n");
-    if (header.flags & DDSD_PITCH) printf("\tDDSD_PITCH\n");
-    if (header.flags & DDSD_LINEARSIZE) printf("\tDDSD_LINEARSIZE\n");
-    if (header.flags & DDSD_MIPMAPCOUNT) printf("\tDDSD_MIPMAPCOUNT\n");
+    printf("\tFlags: 0x%.8X\n", header.flags);
+    if (header.flags & DDSD_CAPS) printf("\t\tDDSD_CAPS\n");
+    if (header.flags & DDSD_PIXELFORMAT) printf("\t\tDDSD_PIXELFORMAT\n");
+    if (header.flags & DDSD_WIDTH) printf("\t\tDDSD_WIDTH\n");
+    if (header.flags & DDSD_HEIGHT) printf("\t\tDDSD_HEIGHT\n");
+    if (header.flags & DDSD_DEPTH) printf("\t\tDDSD_DEPTH\n");
+    if (header.flags & DDSD_PITCH) printf("\t\tDDSD_PITCH\n");
+    if (header.flags & DDSD_LINEARSIZE) printf("\t\tDDSD_LINEARSIZE\n");
+    if (header.flags & DDSD_MIPMAPCOUNT) printf("\t\tDDSD_MIPMAPCOUNT\n");
 
-    printf("Height: %d\n", header.height);
-    printf("Width: %d\n", header.width);
-    printf("Depth: %d\n", header.depth);
-    if (header.flags & DDSD_PITCH) printf("Pitch: %d\n", header.pitch);
-    else if (header.flags & DDSD_LINEARSIZE) printf("Linear size: %d\n", header.pitch);
-    printf("Mipmap count: %d\n", header.mipmapcount);
+    printf("\tHeight: %d\n", header.height);
+    printf("\tWidth: %d\n", header.width);
+    printf("\tDepth: %d\n", header.depth);
+    if (header.flags & DDSD_PITCH) printf("\tPitch: %d\n", header.pitch);
+    else if (header.flags & DDSD_LINEARSIZE) printf("\tLinear size: %d\n", header.pitch);
+    printf("\tMipmap count: %d\n", header.mipmapcount);
 
-    printf("Pixel Format:\n");
-    printf("\tFlags: 0x%.8X\n", header.pf.flags);
-    if (header.pf.flags & DDPF_RGB) printf("\t\tDDPF_RGB\n");
-    if (header.pf.flags & DDPF_LUMINANCE) printf("\t\tDDPF_LUMINANCE\n");
-    if (header.pf.flags & DDPF_FOURCC) printf("\t\tDDPF_FOURCC\n");
-    if (header.pf.flags & DDPF_ALPHAPIXELS) printf("\t\tDDPF_ALPHAPIXELS\n");
-    if (header.pf.flags & DDPF_ALPHA) printf("\t\tDDPF_ALPHA\n");
-    if (header.pf.flags & DDPF_PALETTEINDEXED1) printf("\t\tDDPF_PALETTEINDEXED1\n");
-    if (header.pf.flags & DDPF_PALETTEINDEXED2) printf("\t\tDDPF_PALETTEINDEXED2\n");
-    if (header.pf.flags & DDPF_PALETTEINDEXED4) printf("\t\tDDPF_PALETTEINDEXED4\n");
-    if (header.pf.flags & DDPF_PALETTEINDEXED8) printf("\t\tDDPF_PALETTEINDEXED8\n");
-    if (header.pf.flags & DDPF_ALPHAPREMULT) printf("\t\tDDPF_ALPHAPREMULT\n");
-    if (header.pf.flags & DDPF_NORMAL) printf("\t\tDDPF_NORMAL\n");
+    printf("\tPixel Format:\n");
+    printf("\t\tFlags: 0x%.8X\n", header.pf.flags);
+    if (header.pf.flags & DDPF_RGB) printf("\t\t\tDDPF_RGB\n");
+    if (header.pf.flags & DDPF_LUMINANCE) printf("\t\t\tDDPF_LUMINANCE\n");
+    if (header.pf.flags & DDPF_BUMP_LUMINANCE) printf("\t\t\tDDPF_BUMP_LUMINANCE\n");
+    if (header.pf.flags & DDPF_BUMP_DUDV) printf("\t\t\tDDPF_BUMP_DUDV\n");
+    if (header.pf.flags & DDPF_FOURCC) printf("\t\t\tDDPF_FOURCC\n");
+    if (header.pf.flags & DDPF_ALPHAPIXELS) printf("\t\t\tDDPF_ALPHAPIXELS\n");
+    if (header.pf.flags & DDPF_ALPHA) printf("\t\t\tDDPF_ALPHA\n");
+    if (header.pf.flags & DDPF_PALETTEINDEXED1) printf("\t\t\tDDPF_PALETTEINDEXED1\n");
+    if (header.pf.flags & DDPF_PALETTEINDEXED2) printf("\t\t\tDDPF_PALETTEINDEXED2\n");
+    if (header.pf.flags & DDPF_PALETTEINDEXED4) printf("\t\t\tDDPF_PALETTEINDEXED4\n");
+    if (header.pf.flags & DDPF_PALETTEINDEXED8) printf("\t\t\tDDPF_PALETTEINDEXED8\n");
+    if (header.pf.flags & DDPF_ALPHAPREMULT) printf("\t\t\tDDPF_ALPHAPREMULT\n");
+    if (header.pf.flags & DDPF_NORMAL) printf("\t\t\tDDPF_NORMAL\n");
 
     if (header.pf.fourcc != 0) { 
         // Display fourcc code even when DDPF_FOURCC flag not set.
-        printf("\tFourCC: '%c%c%c%c' (0x%.8X)\n",
+        printf("\t\tFourCC: '%c%c%c%c' (0x%.8X)\n",
             ((header.pf.fourcc >> 0) & 0xFF),
             ((header.pf.fourcc >> 8) & 0xFF),
             ((header.pf.fourcc >> 16) & 0xFF),
@@ -1596,7 +1773,7 @@ void DirectDrawSurface::printInfo() const
 
     if ((header.pf.flags & DDPF_FOURCC) && (header.pf.bitcount != 0))
     {
-        printf("\tSwizzle: '%c%c%c%c' (0x%.8X)\n", 
+        printf("\t\tSwizzle: '%c%c%c%c' (0x%.8X)\n", 
             (header.pf.bitcount >> 0) & 0xFF,
             (header.pf.bitcount >> 8) & 0xFF,
             (header.pf.bitcount >> 16) & 0xFF,
@@ -1605,46 +1782,46 @@ void DirectDrawSurface::printInfo() const
     }
     else
     {
-        printf("\tBit count: %d\n", header.pf.bitcount);
+        printf("\t\tBit count: %d\n", header.pf.bitcount);
     }
 
-    printf("\tRed mask:   0x%.8X\n", header.pf.rmask);
-    printf("\tGreen mask: 0x%.8X\n", header.pf.gmask);
-    printf("\tBlue mask:  0x%.8X\n", header.pf.bmask);
-    printf("\tAlpha mask: 0x%.8X\n", header.pf.amask);
+    printf("\t\tRed mask:   0x%.8X\n", header.pf.rmask);
+    printf("\t\tGreen mask: 0x%.8X\n", header.pf.gmask);
+    printf("\t\tBlue mask:  0x%.8X\n", header.pf.bmask);
+    printf("\t\tAlpha mask: 0x%.8X\n", header.pf.amask);
 
-    printf("Caps:\n");
-    printf("\tCaps 1: 0x%.8X\n", header.caps.caps1);
-    if (header.caps.caps1 & DDSCAPS_COMPLEX) printf("\t\tDDSCAPS_COMPLEX\n");
-    if (header.caps.caps1 & DDSCAPS_TEXTURE) printf("\t\tDDSCAPS_TEXTURE\n");
-    if (header.caps.caps1 & DDSCAPS_MIPMAP) printf("\t\tDDSCAPS_MIPMAP\n");
+    printf("\tCaps:\n");
+    printf("\t\tCaps 1: 0x%.8X\n", header.caps.caps1);
+    if (header.caps.caps1 & DDSCAPS_COMPLEX) printf("\t\t\tDDSCAPS_COMPLEX\n");
+    if (header.caps.caps1 & DDSCAPS_TEXTURE) printf("\t\t\tDDSCAPS_TEXTURE\n");
+    if (header.caps.caps1 & DDSCAPS_MIPMAP) printf("\t\t\tDDSCAPS_MIPMAP\n");
 
-    printf("\tCaps 2: 0x%.8X\n", header.caps.caps2);
-    if (header.caps.caps2 & DDSCAPS2_VOLUME) printf("\t\tDDSCAPS2_VOLUME\n");
+    printf("\t\tCaps 2: 0x%.8X\n", header.caps.caps2);
+    if (header.caps.caps2 & DDSCAPS2_VOLUME) printf("\t\t\tDDSCAPS2_VOLUME\n");
     else if (header.caps.caps2 & DDSCAPS2_CUBEMAP)
     {
-        printf("\t\tDDSCAPS2_CUBEMAP\n");
-        if ((header.caps.caps2 & DDSCAPS2_CUBEMAP_ALL_FACES) == DDSCAPS2_CUBEMAP_ALL_FACES) printf("\t\tDDSCAPS2_CUBEMAP_ALL_FACES\n");
+        printf("\t\t\tDDSCAPS2_CUBEMAP\n");
+        if ((header.caps.caps2 & DDSCAPS2_CUBEMAP_ALL_FACES) == DDSCAPS2_CUBEMAP_ALL_FACES) printf("\t\t\tDDSCAPS2_CUBEMAP_ALL_FACES\n");
         else {
-            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEX) printf("\t\tDDSCAPS2_CUBEMAP_POSITIVEX\n");
-            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEX) printf("\t\tDDSCAPS2_CUBEMAP_NEGATIVEX\n");
-            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEY) printf("\t\tDDSCAPS2_CUBEMAP_POSITIVEY\n");
-            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEY) printf("\t\tDDSCAPS2_CUBEMAP_NEGATIVEY\n");
-            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEZ) printf("\t\tDDSCAPS2_CUBEMAP_POSITIVEZ\n");
-            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEZ) printf("\t\tDDSCAPS2_CUBEMAP_NEGATIVEZ\n");
+            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEX) printf("\t\t\tDDSCAPS2_CUBEMAP_POSITIVEX\n");
+            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEX) printf("\t\t\tDDSCAPS2_CUBEMAP_NEGATIVEX\n");
+            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEY) printf("\t\t\tDDSCAPS2_CUBEMAP_POSITIVEY\n");
+            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEY) printf("\t\t\tDDSCAPS2_CUBEMAP_NEGATIVEY\n");
+            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEZ) printf("\t\t\tDDSCAPS2_CUBEMAP_POSITIVEZ\n");
+            if (header.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEZ) printf("\t\t\tDDSCAPS2_CUBEMAP_NEGATIVEZ\n");
         }
     }
 
-    printf("\tCaps 3: 0x%.8X\n", header.caps.caps3);
-    printf("\tCaps 4: 0x%.8X\n", header.caps.caps4);
+    printf("\t\tCaps 3: 0x%.8X\n", header.caps.caps3);
+    printf("\t\tCaps 4: 0x%.8X\n", header.caps.caps4);
 
     if (header.hasDX10Header())
     {
-        printf("DX10 Header:\n");
-        printf("\tDXGI Format: %u (%s)\n", header.header10.dxgiFormat, getDxgiFormatString((DXGI_FORMAT)header.header10.dxgiFormat));
-        printf("\tResource dimension: %u (%s)\n", header.header10.resourceDimension, getD3d10ResourceDimensionString((DDS_DIMENSION)header.header10.resourceDimension));
-        printf("\tMisc flag: %u\n", header.header10.miscFlag);
-        printf("\tArray size: %u\n", header.header10.arraySize);
+        printf("\tDX10 Header:\n");
+        printf("\t\tDXGI Format: %u (%s)\n", header.header10.dxgiFormat, getDxgiFormatString((DXGI_FORMAT)header.header10.dxgiFormat));
+        printf("\t\tResource dimension: %u (%s)\n", header.header10.resourceDimension, getD3d10ResourceDimensionString((DDS_DIMENSION)header.header10.resourceDimension));
+        printf("\t\tMisc flag: %u\n", header.header10.miscFlag);
+        printf("\t\tArray size: %u\n", header.header10.arraySize);
     }
 
     if (header.reserved[9] == FOURCC_NVTT)
@@ -1653,13 +1830,13 @@ void DirectDrawSurface::printInfo() const
         int minor = (header.reserved[10] >> 8) & 0xFF;
         int revision= header.reserved[10] & 0xFF;
 
-        printf("Version:\n");
-        printf("\tNVIDIA Texture Tools %d.%d.%d\n", major, minor, revision);
+        printf("\tVersion:\n");
+        printf("\t\tNVIDIA Texture Tools %d.%d.%d\n", major, minor, revision);
     }
 
     if (header.reserved[7] == FOURCC_UVER)
     {
-        printf("User Version: %d\n", header.reserved[8]);
+        printf("\tUser Version: %d\n", header.reserved[8]);
     }
 }
 

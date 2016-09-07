@@ -73,12 +73,14 @@ vlVoid CError::Set(const vlChar *cErrorMessage, vlBool bSystemError)
 		sprintf(cBuffer, "Error:\n%s", cErrorMessage); 
 	}
 #else
-	vlUInt error = errno;
-	vlChar *message = strerror(error);
-	
-	if (message != NULL)
-	{
-		strcpy(cBuffer, message);
+	if (bSystemError) {
+		vlUInt error = errno;
+		vlChar *message = strerror(error);
+		
+		if (message) strcpy(cBuffer, message);
+		
+	} else {
+		sprintf(cBuffer, "Error:\n%s", cErrorMessage);
 	}
 #endif
 	this->cErrorMessage = new vlChar[strlen(cBuffer) + 1];

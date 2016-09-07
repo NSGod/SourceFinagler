@@ -268,6 +268,9 @@ bool Compressor::Private::compress(const InputOptions::Private & inputOptions, c
         if (!img.isNormalMap()) {
             img.toLinear(inputOptions.inputGamma);
         }
+        else {
+            img.expandNormals();
+        }
 
         // Resize input.
         img.resize(w, h, d, ResizeFilter_Box);
@@ -275,6 +278,9 @@ bool Compressor::Private::compress(const InputOptions::Private & inputOptions, c
         nvtt::Surface tmp = img;
         if (!img.isNormalMap()) {
             tmp.toGamma(inputOptions.outputGamma);
+        }
+        else {
+            tmp.packNormals();
         }
 
         quantize(tmp, compressionOptions);
@@ -304,6 +310,9 @@ bool Compressor::Private::compress(const InputOptions::Private & inputOptions, c
                 if (!img.isNormalMap()) {
                     img.toLinear(inputOptions.inputGamma);
                 }
+                else {
+                    img.expandNormals();
+                }
             }
             else {
                 if (inputOptions.mipmapFilter == MipmapFilter_Kaiser) {
@@ -323,6 +332,7 @@ bool Compressor::Private::compress(const InputOptions::Private & inputOptions, c
                     img.normalizeNormalMap();
                 }
                 tmp = img;
+                tmp.packNormals();
             }
             else {
                 tmp = img;
@@ -451,21 +461,21 @@ bool Compressor::Private::outputHeader(nvtt::TextureType textureType, int w, int
                 {
                     if (compressionOptions.rsize == 16)
                     {
-                        header.setDX10Format(56); // R16_UNORM
+                        header.setDX10Format(56); // DXGI_FORMAT_R16_UNORM
                     }
                     else
                     {
-                        // B5G6R5_UNORM
-                        // B5G5R5A1_UNORM
+                        // DXGI_FORMAT_B5G6R5_UNORM
+                        // DXGI_FORMAT_B5G5R5A1_UNORM
                         supported = false;
                     }
                 }
                 else if (bitcount == 32)
                 {
-                    // B8G8R8A8_UNORM
-                    // B8G8R8X8_UNORM
-                    // R8G8B8A8_UNORM
-                    // R10G10B10A2_UNORM
+                    // DXGI_FORMAT_B8G8R8A8_UNORM
+                    // DXGI_FORMAT_B8G8R8X8_UNORM
+                    // DXGI_FORMAT_R8G8B8A8_UNORM
+                    // DXGI_FORMAT_R10G10B10A2_UNORM
                     supported = false;
                 }
                 else {
@@ -475,32 +485,32 @@ bool Compressor::Private::outputHeader(nvtt::TextureType textureType, int w, int
             else
             {
                 if (compressionOptions.format == Format_DXT1 || compressionOptions.format == Format_DXT1a || compressionOptions.format == Format_DXT1n) {
-                    header.setDX10Format(70); // DXGI_FORMAT_BC1_TYPELESS
+                    header.setDX10Format(DXGI_FORMAT_BC1_UNORM);
                     if (compressionOptions.format == Format_DXT1a) header.setHasAlphaFlag(true);
                     if (isNormalMap) header.setNormalFlag(true);
                 }
                 else if (compressionOptions.format == Format_DXT3) {
-                    header.setDX10Format(73); // DXGI_FORMAT_BC2_TYPELESS
+                    header.setDX10Format(DXGI_FORMAT_BC2_UNORM);
                 }
                 else if (compressionOptions.format == Format_DXT5) {
-                    header.setDX10Format(76); // DXGI_FORMAT_BC3_TYPELESS
+                    header.setDX10Format(DXGI_FORMAT_BC3_UNORM);
                 }
                 else if (compressionOptions.format == Format_DXT5n) {
-                    header.setDX10Format(76); // DXGI_FORMAT_BC3_TYPELESS
+                    header.setDX10Format(DXGI_FORMAT_BC3_UNORM);
                     if (isNormalMap) header.setNormalFlag(true);
                 }
                 else if (compressionOptions.format == Format_BC4) {
-                    header.setDX10Format(79); // DXGI_FORMAT_BC4_TYPELESS
+                    header.setDX10Format(DXGI_FORMAT_BC4_UNORM);
                 }
                 else if (compressionOptions.format == Format_BC5) {
-                    header.setDX10Format(82); // DXGI_FORMAT_BC5_TYPELESS
+                    header.setDX10Format(DXGI_FORMAT_BC5_UNORM);
                     if (isNormalMap) header.setNormalFlag(true);
                 }
                 else if (compressionOptions.format == Format_BC6) {
-                    header.setDX10Format(94); // DXGI_FORMAT_BC6H_TYPELESS
+                    header.setDX10Format(DXGI_FORMAT_BC6H_UF16);
                 }
                 else if (compressionOptions.format == Format_BC7) {
-                    header.setDX10Format(97); // DXGI_FORMAT_BC7_TYPELESS
+                    header.setDX10Format(DXGI_FORMAT_BC7_UNORM);
                     if (isNormalMap) header.setNormalFlag(true);
                 }
                 else {
@@ -761,11 +771,11 @@ CompressorInterface * Compressor::Private::chooseCpuCompressor(const Compression
     }
     else if (compressionOptions.format == Format_BC6)
     {
-        // Not supported.
+        return new CompressorBC6;
     }
     else if (compressionOptions.format == Format_BC7)
     {
-        // Not supported.
+        return new CompressorBC7;
     }
 
     return NULL;

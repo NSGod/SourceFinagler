@@ -1,5 +1,5 @@
 //
-//  MDMouseAppHelperController.m
+//  MDOtherAppsHelperController.m
 //  Source Finagler
 //
 //  Created by Mark Douma on 6/13/2010.
@@ -12,17 +12,16 @@
 #import "MDOtherAppsHelperController.h"
 #import "MDAppKitAdditions.h"
 #import "MDProcessManager.h"
-#import "MDTableView.h"
 
 
 
 //#define VS_DEBUG 0
 #define VS_DEBUG 1
 
+static NSString * const MDUSBOverdriveHelperBundleIdentifierKey		= @"com.montalcini.usboverdrivehelper";
+static NSString * const MDSteerMouseBundleIdentifierKey				= @"jp.plentycom.boa.SteerMouse";
+static NSString * const MDLogitechBundleIdentifierKey				= @"com.Logitech.Control Center.Daemon";
 
-NSString * const MDUSBOverdriveHelperBundleIdentifierKey		= @"com.montalcini.usboverdrivehelper";
-NSString * const MDSteerMouseBundleIdentifierKey				= @"jp.plentycom.boa.SteerMouse";
-NSString * const MDLogitechBundleIdentifierKey					= @"com.Logitech.Control Center.Daemon";
 
 
 static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelperSortDescriptors";
@@ -39,7 +38,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 
 + (void)initialize {
 	NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
-	NSArray *sortDescriptors = [NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES selector:@selector(caseInsensitiveNumericalCompare:)], nil];
+	NSArray *sortDescriptors = [NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"displayName" ascending:YES selector:@selector(caseInsensitiveNumericalCompare:)] autorelease]];
     [defaults setSortDescriptors:sortDescriptors forKey:MDOtherAppsHelperSortDescriptorsKey];
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
@@ -107,7 +106,6 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	[usbOverdriveView setHidden:!(mouseSoftware & MDUSBOverdrive)];
 	
 	if (mouseSoftware & MDUSBOverdrive) {
-//		NSLog(@"[%@ %@] usbInfo == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), usbInfo);
 		NSString *bundlePath = [usbInfo objectForKey:@"BundlePath"];
 		if (bundlePath) {
 			NSImage *usbIcon = [[NSWorkspace sharedWorkspace] iconForFile:bundlePath];
@@ -115,9 +113,9 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 		}
 	}
 	
-	[self refresh:self];
+	[self refresh:nil];
 	
-	[VSSteamManager	setDefaultPersistentOptions:VSGameLaunchDefault];
+	[VSSteamManager	setDefaultPersistentOptions:VSGameOptionsDefault];
 	[steamManager setMonitoringGames:YES];
 	
 }
@@ -158,9 +156,13 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	NSError *outError = nil;
 	
 	if (enableSourceFinaglerAgent) {
-		[steamManager installSourceFinaglerLaunchAgentWithError:&outError];
+		if (![steamManager installSourceFinaglerLaunchAgentWithError:&outError]) {
+			NSLog(@"[%@ %@] ERROR: failed to install Source Finagler Launch Agent!; error == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), outError);
+		}
 	} else {
-		[steamManager uninstallSourceFinaglerLaunchAgentWithError:&outError];
+		if (![steamManager uninstallSourceFinaglerLaunchAgentWithError:&outError]) {
+			NSLog(@"[%@ %@] ERROR: failed to uninstall Source Finagler Launch Agent!; error == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), outError);
+		}
 	}
 }
 
@@ -179,17 +181,14 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 //	NSLog(@"[%@ %@] rowIndexes == %@ ", NSStringFromClass([self class]), NSStringFromSelector(_cmd), rowIndexes);
 #endif
 	NSIndexSet *selectionIndexes = [gamesController selectionIndexes];
-//	NSLog(@"[%@ %@] selectionIndexes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), selectionIndexes);
 	
 	if (![selectionIndexes isEqualToIndexSet:rowIndexes]) {
 		[gamesController setSelectionIndexes:rowIndexes];
 	}
 	
-	
 	NSArray *selectedGames = [gamesController selectedObjects];
 	if ([selectedGames count] == 0) {
 		NSInteger clickedRow = [aTableView clickedRow];
-//		NSLog(@"[%@ %@] clickedRow == %ld", NSStringFromClass([self class]), NSStringFromSelector(_cmd), clickedRow);
 		if (clickedRow >= 0) {
 			[gamesController setSelectionIndexes:[NSIndexSet indexSetWithIndex:clickedRow]];
 		}
@@ -199,7 +198,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	
 	if (selectedGames && [selectedGames count] == 1) {
 		[pboard declareTypes:[NSArray arrayWithObject:NSFilenamesPboardType] owner:self];
-		NSString *filePath = [[(VSGame *)[selectedGames objectAtIndex:0] executableURL] path];
+		NSString *filePath = [(VSGame *)[selectedGames objectAtIndex:0] executableURL].path;
 		if (filePath) {
 			[pboard setPropertyList:[NSArray arrayWithObject:filePath] forType:NSFilenamesPboardType];
 			return YES;
@@ -252,7 +251,7 @@ static NSString * const MDOtherAppsHelperSortDescriptorsKey		= @"MDOtherAppsHelp
 	NSError *error = nil;
 	
 	if (selectedGames && [selectedGames count] == 1) {
-		if (![steamManager launchGame:[selectedGames objectAtIndex:0] options:VSGameLaunchDefault error:&error]) {
+		if (![steamManager launchGame:[selectedGames objectAtIndex:0] options:VSGameOptionsHelpGame error:&error]) {
 			NSLog(@"[%@ %@] failed to launch game, error == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), error);
 		}
 	}

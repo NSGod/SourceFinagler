@@ -15,7 +15,7 @@
 
 
 
-#define TK_DEBUG 0
+#define TK_DEBUG 1
 
 
 @implementation TKAnimationImageView
@@ -73,16 +73,13 @@
 #define TK_TIME_INTERVAL_PER_FRAME 1.0
 
 
-- (void)loadAnimationImageReps {
+- (void)startAnimating {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
+	if (isAnimating) return;
 	
-#if TK_DEBUG
-//		NSLog(@"[%@ %@] animationImageReps == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), animationImageReps);
-#endif
-	
-	if ([animationImageReps count]) {
+	if (animationImageReps.count) {
 		
 		NSMutableArray *imageRefs = [NSMutableArray array];
 		
@@ -111,24 +108,6 @@
 		[CATransaction commit];
 		
 	}
-}
-
-
-- (void)unloadAnimationImageReps {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	[animationImageLayer removeAnimationForKey:@"animation"];
-}
-
-
-- (void)startAnimating {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	if (isAnimating) return;
-	
-	[self loadAnimationImageReps];
 	
 	isAnimating = YES;
 }
@@ -140,7 +119,7 @@
 #endif
 	if (isAnimating == NO) return;
 	
-	[self unloadAnimationImageReps];
+	[animationImageLayer removeAnimationForKey:@"animation"];
 	
 	isAnimating = NO;
 }
@@ -156,7 +135,7 @@
 	NSLog(@"[%@ %@] newSuperview == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), newSuperview);
 #endif
 	if (newSuperview == imageView) {
-		self.frame = NSMakeRect(0.0, 0.0, newSuperview.bounds.size.width, newSuperview.bounds.size.height);
+//		self.frame = NSMakeRect(0.0, 0.0, newSuperview.bounds.size.width, newSuperview.bounds.size.height);
 	}
 }
 

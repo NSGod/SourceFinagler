@@ -11,7 +11,9 @@
 
 @class MDPreviewViewController;
 
+
 @interface MDInspectorController : NSWindowController {
+	
 	IBOutlet NSImageView				*iconImageView;
 	IBOutlet NSTextField				*nameField;
 	IBOutlet NSTextField				*headerSizeField;

@@ -1,13 +1,13 @@
 //
 //  TKImageView.m
-//  Texture Kit
+//  Source Finagler
 //
 //  Created by Mark Douma on 11/15/2010.
 //  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
 //
 
 #import "TKImageView.h"
-#import <TextureKit/TKImageRep.h>
+#import <TextureKit/TextureKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "TKAnimationImageView.h"
 #import "TKImageViewPrivateInterfaces.h"
@@ -69,16 +69,23 @@ static inline CGFloat TKNextZoomFactorForZoomFactorAndOperation(CGFloat currentZ
 }
 
 
-static TKImageRep *checkerboardImageRep = nil;
-
-
 CGPatternRef TKCreatePatternWithImage(CGImageRef imageRef);
 CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 
 
 
+static TKImageRep *checkerboardImageRep = nil;
+
+@interface TKImageView ()
+
+@property (nonatomic, retain) TKAnimationImageView *animationImageView;
+
+@end
+
+
 @implementation TKImageView
 
+@synthesize animationImageView = _TK__private;
 
 @dynamic animationImageReps;
 
@@ -102,8 +109,8 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	animationImageView.imageView = nil;
-	[animationImageView release];
+	self.animationImageView.imageView = nil;
+	[_TK__private release];
 	delegate = nil;
 	CGImageRelease(image);
 	[previewImageRep release];
@@ -127,17 +134,6 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 	
 #endif
 
-}
-
-- (void)loadAnimationImageViewIfNeeded {
-#if TK_DEBUG
-    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	if (animationImageView) return;
-	animationImageView = [[TKAnimationImageView alloc] initWithFrame:NSMakeRect(0.0, 0.0, self.bounds.size.width, self.bounds.size.height)];
-	animationImageView.imageView = self;
-	animationImageView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-	animationImageView.layer.backgroundColor = self.layer.backgroundColor;
 }
 
 
@@ -175,6 +171,21 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 
 
 
+- (TKAnimationImageView *)animationImageView {
+#if TK_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if (_TK__private == nil) {
+		_TK__private = [[TKAnimationImageView alloc] initWithFrame:NSMakeRect(0.0, 0.0, self.bounds.size.width, self.bounds.size.height)];
+		[(TKAnimationImageView *)_TK__private setImageView:self];
+		[(TKAnimationImageView *)_TK__private setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+		[[(TKAnimationImageView *)_TK__private layer] setBackgroundColor:self.layer.backgroundColor];
+	}
+	return _TK__private;
+}
+
+
+
 - (BOOL)showsImageBackground {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -197,7 +208,7 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 		CGImageRef checkerboardImageRef = CGImageRetain([checkerboardImageRep CGImage]);
 		CGColorRef patternColorRef = TKCreatePatternColorWithImage(checkerboardImageRef);
 		self.layer.backgroundColor = patternColorRef;
-		animationImageView.layer.backgroundColor = patternColorRef;
+		self.animationImageView.layer.backgroundColor = patternColorRef;
 		CGColorRelease(patternColorRef);
 		CGImageRelease(checkerboardImageRef);
 		
@@ -205,7 +216,7 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 		CGColorRef grayBackgroundColorRef = TKCreateGrayBackgroundColor();
 		
 		self.layer.backgroundColor = grayBackgroundColorRef;
-		animationImageView.layer.backgroundColor = grayBackgroundColorRef;
+		self.animationImageView.layer.backgroundColor = grayBackgroundColorRef;
 		
 		CGColorRelease(grayBackgroundColorRef);
 	}
@@ -220,13 +231,11 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 
 
 - (void)setAnimationImageReps:(NSArray *)animationImageReps {
-	[self loadAnimationImageViewIfNeeded];
-	animationImageView.animationImageReps = animationImageReps;
+	self.animationImageView.animationImageReps = animationImageReps;
 }
 
 - (NSArray *)animationImageReps {
-	[self loadAnimationImageViewIfNeeded];
-	return animationImageView.animationImageReps;
+	return self.animationImageView.animationImageReps;
 }
 
 
@@ -237,13 +246,9 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 	
 	if (self.isAnimating) return;
 	
-	[self loadAnimationImageViewIfNeeded];
-	
-	if ([animationImageView.animationImageReps count]) {
-		
-		[animationImageView startAnimating];
-		
-		[self addSubview:animationImageView];
+	if (self.animationImageView.animationImageReps.count) {
+		[self.animationImageView startAnimating];
+		[self addSubview:self.animationImageView];
 	}
 }
 
@@ -254,16 +259,14 @@ CGColorRef TKCreatePatternColorWithImage(CGImageRef imageRef);
 #endif
 	if (self.isAnimating == NO) return;
 	
-	[animationImageView removeFromSuperview];
-	
-	[animationImageView stopAnimating];
+	[self.animationImageView removeFromSuperview];
+	[self.animationImageView stopAnimating];
 	
 }
 
 
 - (BOOL)isAnimating {
-	[self loadAnimationImageViewIfNeeded];
-	return animationImageView.isAnimating;
+	return self.animationImageView.isAnimating;
 }
 
 

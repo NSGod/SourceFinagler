@@ -51,7 +51,6 @@ MDFOUNDATION_EXTERN SInt32 MDGetSystemVersion();
 
 @interface NSString (MDFoundationAdditions)
 
-
 + (NSString *)stringWithFSRef:(const FSRef *)anFSRef;
 - (BOOL)getFSRef:(FSRef *)anFSRef error:(NSError **)anError;
 
@@ -100,8 +99,12 @@ MDFOUNDATION_EXTERN SInt32 MDGetSystemVersion();
 
 
 @interface NSData (MDDescriptionAdditions)
+
 - (NSString *)stringRepresentation;
 - (NSString *)enhancedDescription;
+
+- (NSString *)enhancedFloatDescriptionForComponentCount:(NSUInteger)numComponents; // R32F = 1, RGB32F = 3, RGBA32F = 4
+
 @end
 
 

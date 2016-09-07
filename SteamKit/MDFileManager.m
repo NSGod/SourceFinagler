@@ -66,7 +66,7 @@ static MDFileManager *sharedManager = nil;
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super init])) {
-#if MAC_OS_X_VERSION_10_5 <= MAC_OS_X_VERSION_MAX_ALLOWED
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 1050
 		fileManager = [[NSFileManager alloc] init];
 #else
 		fileManager = [[NSFileManager defaultManager] retain];
@@ -108,7 +108,7 @@ static MDFileManager *sharedManager = nil;
 	if (path == nil) return nil;
 	if (outError) *outError = nil;
 	
-#if MAC_OS_X_VERSION_10_5 <= MAC_OS_X_VERSION_MAX_ALLOWED
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 1050
 	NSDictionary *attributes = [fileManager attributesOfItemAtPath:path error:outError];
 #else
 	NSDictionary *attributes = [fileManager fileAttributesAtPath:path traverseLink:YES];
@@ -395,7 +395,7 @@ static MDFileManager *sharedManager = nil;
 	[normalAttributes removeObjectsForKeys:fileAttributeKeys];
 	
 	if ([normalAttributes count]) {
-#if MAC_OS_X_VERSION_10_5 <= MAC_OS_X_VERSION_MAX_ALLOWED
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 1050
 		if (![fileManager setAttributes:normalAttributes ofItemAtPath:path error:error]) {
 			[normalAttributes release];
 			return NO;
@@ -416,7 +416,7 @@ static MDFileManager *sharedManager = nil;
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-#if MAC_OS_X_VERSION_10_5 <= MAC_OS_X_VERSION_MAX_ALLOWED
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 1050
 	NSDictionary *attributes = [fileManager attributesOfItemAtPath:path error:NULL];
 #else
 	NSDictionary *attributes = [fileManager fileAttributesAtPath:path traverseLink:linkFlag];
@@ -449,7 +449,7 @@ static MDFileManager *sharedManager = nil;
 	
 	if (isDeletable) {
 		
-#if MAC_OS_X_VERSION_10_5 <= MAC_OS_X_VERSION_MAX_ALLOWED
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 1050
 		NSDictionary *attributes = [fileManager attributesOfItemAtPath:path error:NULL];
 #else
 		NSDictionary *attributes = [fileManager fileAttributesAtPath:path traverseLink:YES];

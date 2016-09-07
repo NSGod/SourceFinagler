@@ -9,7 +9,7 @@
 #import "TKImageKitAdditions.h"
 
 
-#define TK_DEBUG 1
+#define TK_DEBUG 0
 
 
 @implementation IKImageBrowserView (TKImageKitAdditions)
@@ -20,69 +20,73 @@
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	NSRect bounds = [self bounds];
-	NSUInteger numberOfColumns = [self numberOfColumns];
-	NSUInteger numberOfRows = [self numberOfRows];
-	
-	if (numberOfColumns == 0 && numberOfRows == 0) {
-		// if we have no content, then ideal width/height would be 0.0
-		return 0.0;
+	// `numberOfColumns` and `numberOfRows` are only available in OS X 10.6 and later. 
+	if ([self respondsToSelector:@selector(numberOfColumns)] && [self respondsToSelector:@selector(numberOfRows)]) {
+		NSUInteger numberOfColumns = [self numberOfColumns];
+		NSUInteger numberOfRows = [self numberOfRows];
 		
-	} else if (numberOfColumns && numberOfRows) {
-		NSRect itemFrame = [self itemFrameAtIndex:0];
+		if (numberOfColumns == 0 && numberOfRows == 0) {
+			// if we have no content, then ideal width/height would be 0.0
+			return 0.0;
+			
+		} else if (numberOfColumns && numberOfRows) {
 #if TK_DEBUG
-		NSLog(@"[%@ %@] itemFrame == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(itemFrame));
+			NSRect itemFrame = [self itemFrameAtIndex:0];
+			NSLog(@"[%@ %@] itemFrame == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(itemFrame));
 #endif
-		
-		NSRect rectOfColumn = [self rectOfColumn:0];
+			
+			NSRect rectOfColumn = [self rectOfColumn:0];
 #if TK_DEBUG
-		NSLog(@"[%@ %@] rectOfColumn == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(rectOfColumn));
+			NSLog(@"[%@ %@] rectOfColumn == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(rectOfColumn));
 #endif
-		
-		NSRect rectOfRow = [self rectOfRow:0];
+			
 #if TK_DEBUG
-		NSLog(@"[%@ %@] rectOfRow == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(rectOfRow));
+			NSRect rectOfRow = [self rectOfRow:0];
+			NSLog(@"[%@ %@] rectOfRow == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(rectOfRow));
 #endif
-		
-		return NSWidth(rectOfColumn);
+			
+			return NSWidth(rectOfColumn);
+		}
 	}
+	return NSWidth(self.bounds);
 	
-	return NSWidth(bounds);
 }
+
 
 /* this is likely being called for the frameBrowserView	*/
 - (CGFloat)idealViewHeight {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	NSRect bounds = [self bounds];
-	NSUInteger numberOfColumns = [self numberOfColumns];
-	NSUInteger numberOfRows = [self numberOfRows];
-	
-	if (numberOfColumns == 0 && numberOfRows == 0) {
-		// if we have no content, then ideal width/height would be 0
-		return 0.0;
+	// `numberOfColumns` and `numberOfRows` are only available in OS X 10.6 and later. 
+	if ([self respondsToSelector:@selector(numberOfColumns)] && [self respondsToSelector:@selector(numberOfRows)]) {
+		NSUInteger numberOfColumns = [self numberOfColumns];
+		NSUInteger numberOfRows = [self numberOfRows];
 		
-	} else if (numberOfColumns && numberOfRows) {
-		NSRect itemFrame = [self itemFrameAtIndex:0];
+		if (numberOfColumns == 0 && numberOfRows == 0) {
+			// if we have no content, then ideal width/height would be 0
+			return 0.0;
+			
+		} else if (numberOfColumns && numberOfRows) {
 #if TK_DEBUG
-		NSLog(@"[%@ %@] itemFrame == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(itemFrame));
+			NSRect itemFrame = [self itemFrameAtIndex:0];
+			NSLog(@"[%@ %@] itemFrame == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(itemFrame));
 #endif
-		
-		NSRect rectOfColumn = [self rectOfColumn:0];
+			
 #if TK_DEBUG
-		NSLog(@"[%@ %@] rectOfColumn == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(rectOfColumn));
+			NSRect rectOfColumn = [self rectOfColumn:0];
+			NSLog(@"[%@ %@] rectOfColumn == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(rectOfColumn));
 #endif
-		
-		NSRect rectOfRow = [self rectOfRow:0];
+			
+			NSRect rectOfRow = [self rectOfRow:0];
 #if TK_DEBUG
-		NSLog(@"[%@ %@] rectOfRow == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(rectOfRow));
+			NSLog(@"[%@ %@] rectOfRow == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromRect(rectOfRow));
 #endif
-		
-		return NSHeight(rectOfRow);
+			
+			return NSHeight(rectOfRow);
+		}
 	}
-	
-	return NSHeight(bounds);
+	return NSHeight(self.bounds);
 }
 
 

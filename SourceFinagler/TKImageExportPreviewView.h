@@ -22,9 +22,9 @@
 	BOOL											isHighlighted;
 }
 
-@property (assign) id <TKImageExportPreviewViewDelegate> delegate;
-@property (assign) TKImageExportPreviewViewController *viewController;
-@property (assign, setter=setHighlighted:) BOOL isHighlighted;
+@property (nonatomic, assign) id <TKImageExportPreviewViewDelegate> delegate;
+@property (nonatomic, assign) TKImageExportPreviewViewController *viewController;
+@property (nonatomic, assign, setter=setHighlighted:) BOOL isHighlighted;
 
 
 @end

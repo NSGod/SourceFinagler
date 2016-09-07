@@ -76,7 +76,7 @@
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	[self removeAllItems];
+	[self md__removeAllItems];
 	NSUInteger newCount = [newArray count];
 	NSUInteger i;
 	
@@ -87,7 +87,9 @@
 			[[self itemAtIndex:i] respondsToSelector:@selector(setHidden:)]) {
 			
 			if ([[self itemAtIndex:i] isHidden]) {
+#if MD_DEBUG
 				NSLog(@"[%@ %@] itemAtIndex %lu is hidden!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)i);
+#endif
 				[[self itemAtIndex:i] setHidden:NO];
 			}
 		}
@@ -95,19 +97,23 @@
 }
 
 
-//- (void)removeAllItems {
-//#if MD_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	NSArray *currentArray = [self itemArray];
-//	NSUInteger currentCount = [currentArray count];
-//	NSUInteger i;
-//	
-//	for (i = 0; i < currentCount; i++) {
-//		[self removeItemAtIndex:0];
-//	}
-//}
-
+- (void)md__removeAllItems {
+#if MD_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	if ([self respondsToSelector:@selector(removeAllItems)]) {
+		[self removeAllItems];
+		
+	} else {
+		NSArray *currentArray = [self itemArray];
+		NSUInteger currentCount = [currentArray count];
+		NSUInteger i;
+		
+		for (i = 0; i < currentCount; i++) {
+			[self removeItemAtIndex:0];
+		}
+	}
+}
 
 @end
 

@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">13B42</string>
-		<string key="IBDocument.InterfaceBuilderVersion">5037.3</string>
-		<string key="IBDocument.AppKitVersion">1265</string>
-		<string key="IBDocument.HIToolboxVersion">696.00</string>
+		<string key="IBDocument.SystemVersion">13D65</string>
+		<string key="IBDocument.InterfaceBuilderVersion">5056</string>
+		<string key="IBDocument.AppKitVersion">1265.20</string>
+		<string key="IBDocument.HIToolboxVersion">698.00</string>
 		<dictionary class="NSMutableDictionary" key="IBDocument.PluginVersions">
-			<string key="com.apple.InterfaceBuilder.CocoaPlugin">5037.3</string>
-			<string key="com.apple.imagekit.ibplugin">5037.3</string>
+			<string key="com.apple.InterfaceBuilder.CocoaPlugin">5056</string>
+			<string key="com.apple.imagekit.ibplugin">5056</string>
 		</dictionary>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBCustomFormatter</string>
@@ -192,6 +192,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">imageFileSizeField</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="808329094"/>
+					</object>
+					<string key="id">awu-y4-eo0</string>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">viewController</string>
 						<reference key="source" ref="1005"/>
 						<reference key="destination" ref="1001"/>
@@ -324,6 +332,7 @@
 						<string key="id">9</string>
 						<reference key="object" ref="319542629"/>
 						<reference key="parent" ref="1005"/>
+						<string key="objectName">imageView</string>
 					</object>
 					<object class="IBObjectRecord">
 						<string key="id">5</string>
@@ -332,6 +341,7 @@
 							<reference ref="366332432"/>
 						</array>
 						<reference key="parent" ref="1005"/>
+						<string key="objectName">imageFileSizeField</string>
 					</object>
 					<object class="IBObjectRecord">
 						<string key="id">24</string>
@@ -342,14 +352,15 @@
 						<reference key="parent" ref="808329094"/>
 					</object>
 					<object class="IBObjectRecord">
-						<string key="id">25</string>
-						<reference key="object" ref="842860035"/>
-						<reference key="parent" ref="366332432"/>
-					</object>
-					<object class="IBObjectRecord">
 						<string key="id">4</string>
 						<reference key="object" ref="144619299"/>
 						<reference key="parent" ref="1005"/>
+						<string key="objectName">progressIndicator</string>
+					</object>
+					<object class="IBObjectRecord">
+						<string key="id">25</string>
+						<reference key="object" ref="842860035"/>
+						<reference key="parent" ref="366332432"/>
 					</object>
 				</array>
 			</object>
@@ -451,10 +462,15 @@
 					<string key="className">TKImageExportPreviewViewController</string>
 					<string key="superclassName">NSViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="imageFileSizeField">TKImageExportTextField</string>
 						<string key="imageView">TKImageView</string>
 						<string key="progressIndicator">NSProgressIndicator</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="imageFileSizeField">
+							<string key="name">imageFileSizeField</string>
+							<string key="candidateClassName">TKImageExportTextField</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="imageView">
 							<string key="name">imageView</string>
 							<string key="candidateClassName">TKImageView</string>

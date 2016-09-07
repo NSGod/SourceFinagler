@@ -44,7 +44,12 @@
 	
 	IBOutlet NSWindow				*copyProgressWindow;
 	IBOutlet NSProgressIndicator	*progressIndicator;
-
+	IBOutlet NSTextField			*progressField;
+	
+	
+	NSMutableArray					*sourceAddonURLs;		// mutable array of NSMutableSets
+	NSRecursiveLock					*sourceAddonURLsLock;
+	
 }
 
 @property (retain) NSMutableArray *addons;

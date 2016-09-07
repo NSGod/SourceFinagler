@@ -13,7 +13,8 @@
 
 @implementation TKImageExportPreviewView
 
-@synthesize delegate, viewController;
+@synthesize delegate;
+@synthesize viewController;
 
 @dynamic isHighlighted;
 

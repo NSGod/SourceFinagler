@@ -12,13 +12,13 @@ Title:
 VTFLib
 
 Date:
-August 1st, 2010
+July 25th, 2011
 
 Authors:
 Neil Jedrzejewski & Ryan Gregg
 
 Build:
-1.3.1
+1.3.2
 
 Email:
 jed@wunderboy.org (Neil Jedrzejewski)
@@ -124,6 +124,9 @@ http://www.wunderboy.org/3d_games/utils/vtflib_docs.php
 Library Changelog:
 ==================
 
+  v1.3.2
+  - Improved support for version 7.5 of the VTF format.
+
   v1.3.1
   - Added support for version 7.5 of the VTF format.
 
@@ -200,6 +203,9 @@ VTFCmd Changelog:
 =================
 
   v1.1.1
+  - Improved support for version 7.5 of the VTF format.
+
+  v1.1.1
   - Added support for version 7.5 of the VTF format.
 
   v1.1.0
@@ -246,6 +252,13 @@ VTFCmd Changelog:
 ==================
 VTFEdit Changelog:
 ==================
+
+  v1.3.3
+  - Updated to HLLib v2.4.2.
+  - Improved support for version 7.5 of the VTF format.
+
+  v1.3.2
+  - Updated to HLLib v2.4.0.
 
   v1.3.1
   - Added support for version 7.5 of the VTF format.

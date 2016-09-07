@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">13B42</string>
-		<string key="IBDocument.InterfaceBuilderVersion">4514</string>
-		<string key="IBDocument.AppKitVersion">1265</string>
-		<string key="IBDocument.HIToolboxVersion">696.00</string>
+		<string key="IBDocument.SystemVersion">13D65</string>
+		<string key="IBDocument.InterfaceBuilderVersion">5056</string>
+		<string key="IBDocument.AppKitVersion">1265.20</string>
+		<string key="IBDocument.HIToolboxVersion">698.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">4514</string>
+			<string key="NS.object.0">5056</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSCustomObject</string>
@@ -904,50 +904,6 @@
 									<reference key="NSOnImage" ref="209810473"/>
 									<reference key="NSMixedImage" ref="182510173"/>
 								</object>
-								<object class="NSMenuItem" id="619351753">
-									<reference key="NSMenu" ref="232619710"/>
-									<string key="NSTitle">Sidebar</string>
-									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="209810473"/>
-									<reference key="NSMixedImage" ref="182510173"/>
-									<string key="NSAction">submenuAction:</string>
-									<reference key="NSTarget" ref="458393555"/>
-									<object class="NSMenu" key="NSSubmenu" id="458393555">
-										<string key="NSTitle">Sidebar</string>
-										<array class="NSMutableArray" key="NSMenuItems">
-											<object class="NSMenuItem" id="838634462">
-												<reference key="NSMenu" ref="458393555"/>
-												<string key="NSTitle">Show Sidebar</string>
-												<string key="NSKeyEquiv">D</string>
-												<int key="NSKeyEquivModMask">1048576</int>
-												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="209810473"/>
-												<reference key="NSMixedImage" ref="182510173"/>
-											</object>
-											<object class="NSMenuItem" id="805268652">
-												<reference key="NSMenu" ref="458393555"/>
-												<bool key="NSIsDisabled">YES</bool>
-												<bool key="NSIsSeparator">YES</bool>
-												<string key="NSTitle"/>
-												<string key="NSKeyEquiv"/>
-												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="209810473"/>
-												<reference key="NSMixedImage" ref="182510173"/>
-											</object>
-										</array>
-									</object>
-								</object>
-								<object class="NSMenuItem" id="178005323">
-									<reference key="NSMenu" ref="232619710"/>
-									<bool key="NSIsDisabled">YES</bool>
-									<bool key="NSIsSeparator">YES</bool>
-									<string key="NSTitle"/>
-									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="209810473"/>
-									<reference key="NSMixedImage" ref="182510173"/>
-								</object>
 								<object class="NSMenuItem" id="336522965">
 									<reference key="NSMenu" ref="232619710"/>
 									<string key="NSTitle">as List</string>
@@ -1369,7 +1325,7 @@
 			<object class="NSWindowTemplate" id="448212702">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{249, 648}, {634, 397}}</string>
+				<string key="NSWindowRect">{{477, 670}, {634, 397}}</string>
 				<int key="NSWTFlags">1886912512</int>
 				<string key="NSWindowTitle">Source Finagler</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -2006,14 +1962,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">toggleShowSidebar:</string>
-						<reference key="source" ref="215001777"/>
-						<reference key="destination" ref="838634462"/>
-					</object>
-					<string key="id">1053</string>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">switchViewMode:</string>
 						<reference key="source" ref="215001777"/>
 						<reference key="destination" ref="336522965"/>
@@ -2363,14 +2311,6 @@
 						<reference key="destination" ref="448212702"/>
 					</object>
 					<string key="id">532</string>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="984842757"/>
-						<reference key="destination" ref="574377701"/>
-					</object>
-					<string key="id">1116</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -2974,8 +2914,6 @@
 							<reference ref="514415946"/>
 							<reference ref="495195329"/>
 							<reference ref="818640249"/>
-							<reference ref="619351753"/>
-							<reference ref="178005323"/>
 							<reference ref="336522965"/>
 							<reference ref="780877195"/>
 							<reference ref="445893790"/>
@@ -3046,38 +2984,6 @@
 					<object class="IBObjectRecord">
 						<string key="id">1042</string>
 						<reference key="object" ref="818640249"/>
-						<reference key="parent" ref="232619710"/>
-					</object>
-					<object class="IBObjectRecord">
-						<string key="id">1044</string>
-						<reference key="object" ref="619351753"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="458393555"/>
-						</array>
-						<reference key="parent" ref="232619710"/>
-					</object>
-					<object class="IBObjectRecord">
-						<string key="id">1045</string>
-						<reference key="object" ref="458393555"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="838634462"/>
-							<reference ref="805268652"/>
-						</array>
-						<reference key="parent" ref="619351753"/>
-					</object>
-					<object class="IBObjectRecord">
-						<string key="id">1046</string>
-						<reference key="object" ref="838634462"/>
-						<reference key="parent" ref="458393555"/>
-					</object>
-					<object class="IBObjectRecord">
-						<string key="id">1047</string>
-						<reference key="object" ref="805268652"/>
-						<reference key="parent" ref="458393555"/>
-					</object>
-					<object class="IBObjectRecord">
-						<string key="id">1036</string>
-						<reference key="object" ref="178005323"/>
 						<reference key="parent" ref="232619710"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -3468,8 +3374,6 @@
 				<boolean value="NO" key="1033.showNotes"/>
 				<string key="1035.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="1035.showNotes"/>
-				<string key="1036.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="NO" key="1036.showNotes"/>
 				<string key="1037.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="1037.showNotes"/>
 				<string key="1038.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3482,14 +3386,6 @@
 				<boolean value="NO" key="1041.showNotes"/>
 				<string key="1042.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="1042.showNotes"/>
-				<string key="1044.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="NO" key="1044.showNotes"/>
-				<string key="1045.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="NO" key="1045.showNotes"/>
-				<string key="1046.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="NO" key="1046.showNotes"/>
-				<string key="1047.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="NO" key="1047.showNotes"/>
 				<string key="1054.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="1054.showNotes"/>
 				<string key="1057.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5033,10 +4929,6 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<bool key="IBDocument.previouslyAttemptedUpgradeToXcode5">YES</bool>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
-			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<real value="1060" key="NS.object.0"/>
-		</object>
-		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<real value="1060" key="NS.object.0"/>
 		</object>

@@ -89,18 +89,20 @@
 		</class>
 	</suite>
 	<suite name="Source Finagler Suite" code="H2Oƒ" description="Classes and commands specific to Source Finagler.">
-		<enumeration name="saveable file format" code="savf">
-			<enumerator name="Font Suitcase" code="FFIL" description="Font Suitcase"/>
-			<enumerator name="Datafork TrueType font" code="dfon" description="Datafork TrueType font"/>
-		</enumeration>
 		<value-type hidden="yes" name="file" code="file">
 			<cocoa class="NSURL"/>
 		</value-type>
-		<class name="Steam cache file" code="GCFf" description="A Steam Cache File document." plural="Steam cache files" inherits="document">
+		<class name="Steam cache file" code="GCFƒ" description="A Steam Cache file document." plural="Steam cache files" inherits="document">
 			<cocoa class="MDGCFDocument"/>
 		</class>
-		<class name="Steam non-cache file" code="NCFƒ" description="A Steam Non-Cache File document." plural="Steam non-cache files" inherits="document">
+		<class name="Steam non-cache file" code="NCFƒ" description="A Steam Non-Cache file document." plural="Steam non-cache files" inherits="document">
 			<cocoa class="MDNCFDocument"/>
+		</class>
+		<class name="Source Valve package file" code="VPKƒ" description="A Source Valve package file document." plural="Valve package files" inherits="document">
+			<cocoa class="MDVPKDocument"/>
+		</class>
+		<class name="Source game archive" code="SGAƒ" description="A Source Game Archive document." plural="Source game archives" inherits="document">
+			<cocoa class="MDSGADocument"/>
 		</class>
 		<class name="Source level" code="BSPƒ" description="A Source Level document." plural="Source levels" inherits="document">
 			<cocoa class="MDBSPDocument"/>
@@ -108,13 +110,10 @@
 		<class name="Source package file" code="PAKƒ" description="A Source package file document." plural="Source package files" inherits="document">
 			<cocoa class="MDPAKDocument"/>
 		</class>
-		<class name="Valve package file" code="VPKƒ" description="A Valve package file document." plural="Valve package files" inherits="document">
-			<cocoa class="MDVPKDocument"/>
-		</class>
-		<class name="Source texture package file" code="WADƒ" description="A Source Texture Package File document." plural="Source texture package files" inherits="document">
+		<class name="Source texture package file" code="WADƒ" description="A Source Texture Package file document." plural="Source texture package files" inherits="document">
 			<cocoa class="MDWADDocument"/>
 		</class>
-		<class name="Xbox package file" code="XZPƒ" description="An Xbox Package File document." plural="Xbox package files" inherits="document">
+		<class name="Source Xbox package file" code="XZPƒ" description="A Source Xbox Package file document." plural="Xbox package files" inherits="document">
 			<cocoa class="MDXZPDocument"/>
 		</class>
 		<command name="close" code="coreclos" description="Close a document.">
@@ -171,12 +170,8 @@
 		</command>
 		<command name="save" code="coresave" description="Save a document.">
 			<direct-parameter description="The document(s) or window(s) to save." type="specifier"/>
-			<parameter name="in" code="kfil" description="The file in which to save the document." type="file" optional="yes">
-				<cocoa key="File"/>
-			</parameter>
-			<parameter name="as" code="fltp" description="The file format to use." type="saveable file format" optional="yes">
-				<cocoa key="FileType"/>
-			</parameter>
+			<parameter name="in" code="kfil" description="The file in which to save the document." type="text" optional="yes"/>
+			<parameter name="as" code="fltp" description="The file type in which to save the data." type="text" optional="yes"/>
 		</command>
 	</suite>
 </dictionary>

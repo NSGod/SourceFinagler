@@ -14,10 +14,14 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-CGImageRef MDCGImageCreateCopyWithSize(CGImageRef imageRef, CGSize size);
+	
+	
+extern NSString * const MDSourceQuickLookBundleIdentifier;
+	
+extern CGImageRef MDCGImageCreateFromURL(NSURL *URL, NSString *contentTypeUTI, NSError **outError) CF_RETURNS_RETAINED;
+	
 	
 #ifdef __cplusplus
 }
 #endif
-	
+

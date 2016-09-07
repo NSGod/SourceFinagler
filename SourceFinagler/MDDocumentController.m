@@ -1,6 +1,6 @@
 //
 //  MDDocumentController.m
-//  Texture Kit
+//  Source Finagler
 //
 //  Created by Mark Douma on 3/16/2009.
 //  Copyright (c) 2009-2012 Mark Douma. All rights reserved.
@@ -17,13 +17,13 @@
 
 
 
-#define MD_DEBUG 1
+#define MD_DEBUG 0
 
-
+static NSMutableDictionary *nativeImageTypeIdentifiersAndDisplayNames = nil;
 
 static NSSet *nonImageUTTypes = nil;
 
-NSString * const MDApplicationBundleIdentifier = @"com.markdouma.SourceFinagler";
+static NSString * const MDApplicationBundleIdentifier = @"com.markdouma.SourceFinagler";
 
 
 @implementation MDDocumentController
@@ -31,6 +31,8 @@ NSString * const MDApplicationBundleIdentifier = @"com.markdouma.SourceFinagler"
 
 + (void)initialize {
 	if (nonImageUTTypes == nil) {
+		if (nativeImageTypeIdentifiersAndDisplayNames == nil) nativeImageTypeIdentifiersAndDisplayNames = [[NSMutableDictionary alloc] init];
+		
 		NSMutableArray *supportedDocTypes = [NSMutableArray array];
 		NSArray *docTypes = [[NSBundle bundleWithIdentifier:MDApplicationBundleIdentifier] objectForInfoDictionaryKey:@"CFBundleDocumentTypes"];
 //		NSLog(@"[%@ %@] docTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), docTypes);
@@ -43,6 +45,12 @@ NSString * const MDApplicationBundleIdentifier = @"com.markdouma.SourceFinagler"
 					NSString *utiType = [contentTypes objectAtIndex:0];
 					if (![utiType isEqualToString:(NSString *)kUTTypeImage]) {
 						[supportedDocTypes addObject:utiType];
+						if ([docClass isEqualToString:@"TKImageDocument"]) {
+							NSString *displayName = [docType objectForKey:@"CFBundleTypeName"];
+							if (displayName) {
+								[nativeImageTypeIdentifiersAndDisplayNames setObject:displayName forKey:utiType];
+							}
+						}
 					}
 				}
 			}
@@ -142,7 +150,6 @@ NSString * const MDApplicationBundleIdentifier = @"com.markdouma.SourceFinagler"
 	if ([nonImageUTTypes containsObject:typeName]) {
 		return [super documentClassForType:typeName];
 	}
-	
     return [[NSBundle mainBundle] classNamed:@"TKImageDocument"];
 }
 
@@ -154,6 +161,13 @@ NSString * const MDApplicationBundleIdentifier = @"com.markdouma.SourceFinagler"
 //	NSLog(@"[%@ %@] typeName == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), typeName);
 	
 	if ([nonImageUTTypes containsObject:typeName]) {
+//		NSLog(@"[%@ %@] typeName == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), typeName);
+		NSString *displayName = [super displayNameForType:typeName];
+		if (displayName == nil) {
+			NSLog(@"[%@ %@] displayName == nil!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+			displayName = [nativeImageTypeIdentifiersAndDisplayNames objectForKey:typeName];
+			return displayName;
+		}
 		return [super displayNameForType:typeName];
 	}
     return TKImageIOLocalizedString(typeName);

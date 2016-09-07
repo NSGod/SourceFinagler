@@ -28,7 +28,7 @@ namespace VTFLib
 	{
 		//! VTFLib Error handling class
 		/*!
-			The Error handling class allows you to aceess a text description 
+			The Error handling class allows you to access a text description 
 			for the last error encountered.
 		*/
 		class CError

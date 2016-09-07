@@ -1,14 +1,24 @@
 //
 //  VSPrivateInterfaces.h
-//  Steam Kit
+//  SteamKit
 //
 //  Created by Mark Douma on 6/1/2011.
-//  Copyright (c) 2011 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2014 Mark Douma LLC. All rights reserved.
 //
 
 #import <SteamKit/SteamKitDefines.h>
 #import <SteamKit/VSGame.h>
 #import <SteamKit/VSSourceAddon.h>
+
+
+
+STEAMKIT_PRIVATE_EXTERN NSString * const VSGameIDKey;
+STEAMKIT_PRIVATE_EXTERN NSString * const VSGameNameKey;
+STEAMKIT_PRIVATE_EXTERN NSString * const VSGameShortNameKey;
+STEAMKIT_PRIVATE_EXTERN NSString * const VSGameLongNameKey;
+
+STEAMKIT_PRIVATE_EXTERN NSString * const VSGameIconNamesKey;
+
 
 
 @interface VSGame ()
@@ -56,9 +66,26 @@
 
 @interface VSSourceAddon ()
 
-@property (nonatomic, retain) NSURL *URL;
+@property (retain) NSURL *URL;
 
-@property (nonatomic, assign, getter=isInstalled) BOOL installed;
+@property (assign, getter=isInstalled) BOOL installed;
 
 
 @end
+
+
+@class VSSourceAddonInstallOperation;
+
+
+@interface VSSteamManager ()
+
+- (void)beginProcessingSourceAddonInstallOperationOnMainThread:(VSSourceAddonInstallOperation *)operation;
+- (void)finishProcessingSourceAddonInstallOperationOnMainThread:(VSSourceAddonInstallOperation *)operation;
+
+@end
+
+
+
+
+
+

@@ -10,15 +10,14 @@
 
 #import "MDInspectorController.h"
 #import "MDAppController.h"
-
 #import "MDHLDocument.h"
-
 #import "MDAppKitAdditions.h"
-
 #import <HLKit/HLKit.h>
+#import "MDDateFormatter.h"
+#import "MDFileSizeFormatter.h"
 
 
-//#define MD_DEBUG 1
+
 #define MD_DEBUG 0
 
 
@@ -46,6 +45,14 @@
 
 
 - (void)awakeFromNib {
+	[headerSizeField setFormatter:[[[MDFileSizeFormatter alloc] initWithUnitsType:MDFileSizeFormatterAutomaticUnitsType
+																			style:MDFileSizeFormatterPhysicalStyle] autorelease]];
+	[sizeField setFormatter:[[[MDFileSizeFormatter alloc] initWithUnitsType:MDFileSizeFormatterAutomaticUnitsType
+																	  style:MDFileSizeFormatterFullStyle] autorelease]];
+	
+	[dateModifiedField setFormatter:[[[MDDateFormatter alloc] initWithStyle:MDDateFormatterMediumStyle
+																 isRelative:YES] autorelease]];
+	
 	[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedItemsDidChange:) name:MDSelectedItemsDidChangeNotification object:nil];
 }
@@ -53,7 +60,7 @@
 
 - (void)selectedItemsDidChange:(NSNotification *)notification {
 #if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"[%@ %@] notification == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), notification);
 #endif
 	
 	NSArray *newSelectedItems = [[notification userInfo] objectForKey:MDSelectedItemsKey];

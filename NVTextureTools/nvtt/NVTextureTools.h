@@ -32,9 +32,9 @@
 #include <NVCore/Array.h>
 #endif
 
-#ifndef NV_CORE_ARRAY_INL
-#include <NVCore/Array.inl>
-#endif
+//#ifndef NV_CORE_ARRAY_INL
+//#include <NVCore/Array.inl>
+//#endif
 
 #ifndef NV_CORE_DEBUG_H
 #include <NVCore/Debug.h>
@@ -95,7 +95,7 @@
 // ---------------
 
 #ifndef NV_MATH_H
-#include <NVMath/NVMath.h>
+#include <NVMath/nvmath.h>
 #endif
 
 #ifndef NV_MATH_BOX_H
@@ -126,9 +126,9 @@
 #include <NVMath/Matrix.h>
 #endif
 
-#ifndef NV_MATH_MATRIX_INL
-#include <NVMath/Matrix.inl>
-#endif
+//#ifndef NV_MATH_MATRIX_INL
+//#include <NVMath/Matrix.inl>
+//#endif
 
 #ifndef NV_MATH_PLANE_H
 #include <NVMath/Plane.h>
@@ -154,7 +154,7 @@
 
 
 #ifndef NV_IMAGE_H
-#include <NVImage/NVImage.h>
+#include <NVImage/nvimage.h>
 #endif
 
 #ifndef NV_IMAGE_BLOCKDXT_H
@@ -198,9 +198,40 @@
 #endif
 
 
+
+
 // ---------------
+#ifndef NV_THREAD_H
+#include <NVThread/nvthread.h>
+#endif
+
+#ifndef NV_THREAD_ATOMIC_H
+#include <NVThread/Atomic.h>
+#endif
+
+#ifndef NV_THREAD_EVENT_H
+#include <NVThread/Event.h>
+#endif
+
+#ifndef NV_THREAD_MUTEX_H
+#include <NVThread/Mutex.h>
+#endif
+
+#ifndef NV_THREAD_PARALLELFOR_H
+#include <NVThread/ParallelFor.h>
+#endif
+
+#ifndef NV_THREAD_THREAD_H
+#include <NVThread/Thread.h>
+#endif
+
+#ifndef NV_THREAD_THREADPOOL_H
+#include <NVThread/ThreadPool.h>
+#endif
 
 
+
+// ---------------
 #ifndef NVTT_H
 #include <NVTextureTools/nvtt.h>
 #endif
@@ -213,12 +244,12 @@
 #include <NVTextureTools/ClusterFit.h>
 #endif
 
-#ifndef NV_TT_COMPRESSIONOPTIONS_H
-#include <NVTextureTools/CompressionOptions.h>
-#endif
-
 #ifndef NVTT_COMPRESSOR_H
 #include <NVTextureTools/Compressor.h>
+#endif
+
+#ifndef NVTT_BLOCKCOMPRESSOR_H
+#include <NVTextureTools/BlockCompressor.h>
 #endif
 
 #ifndef NVTT_COMPRESSORDX9_H
@@ -229,39 +260,40 @@
 #include <NVTextureTools/CompressorDX10.h>
 #endif
 
-//#ifndef NVTT_COMPRESSORDX11_H
-//#include <NVTextureTools/CompressorDX11.h>
-//#endif
-
-#ifndef NVTT_COMPRESSORDXT_H
-#include <NVTextureTools/CompressorDXT.h>
+#ifndef NVTT_COMPRESSORDX11_H
+#include <NVTextureTools/CompressorDX11.h>
 #endif
 
 #ifndef NVTT_COMPRESSORRGB_H
 #include <NVTextureTools/CompressorRGB.h>
 #endif
 
-#ifndef NV_TT_CONTEXT_H
-#include <NVTextureTools/Context.h>
-#endif
+//#ifndef NV_TT_CONTEXT_H
+//#include <NVTextureTools/Context.h>
+//#endif
 
-#ifndef NVTT_INPUTOPTIONS_H
-#include <NVTextureTools/InputOptions.h>
+#ifndef NV_TT_QUICKCOMPRESSDXT_H
+#include <NVTextureTools/QuickCompressDXT.h>
 #endif
 
 #ifndef NV_TT_OPTIMALCOMPRESSDXT_H
 #include <NVTextureTools/OptimalCompressDXT.h>
 #endif
 
+#include <NVTextureTools/SingleColorLookup.h>
+
+#ifndef NV_TT_COMPRESSIONOPTIONS_H
+#include <NVTextureTools/CompressionOptions.h>
+#endif
+
+#ifndef NVTT_INPUTOPTIONS_H
+#include <NVTextureTools/InputOptions.h>
+#endif
+
 #ifndef NV_TT_OUTPUTOPTIONS_H
 #include <NVTextureTools/OutputOptions.h>
 #endif
 
-#ifndef NV_TT_QUICKCOMPRESSDXT_H
-#include <NVTextureTools/QuickCompressDXT.h>
-#endif
-
-#include <NVTextureTools/SingleColorLookup.h>
 
 #ifndef NVTT_TASK_DISPATCHER_H
 #include <NVTextureTools/TaskDispatcher.h>

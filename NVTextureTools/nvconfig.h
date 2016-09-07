@@ -8,7 +8,7 @@
 //#define HAVE_MALLOC_H
 
 //#define HAVE_OPENMP
-#define HAVE_DISPATCH_H
+//#define HAVE_DISPATCH_H
 
 // #define HAVE_STBIMAGE
 //#define HAVE_PNG

@@ -24,8 +24,6 @@ SInt32 MDGetSystemVersion() {
 	}
 	return MDSystemVersion;
 }
-	
-	
 
 
 @implementation NSString (MDFoundationAdditions)
@@ -152,7 +150,7 @@ SInt32 MDGetSystemVersion() {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	return [self compare:string options:NSLiteralSearch | NSCaseInsensitiveSearch | NSNumericSearch range:NSMakeRange(0, [string length]) locale:[NSLocale currentLocale]];
+	return [self compare:string options:NSLiteralSearch | NSCaseInsensitiveSearch | NSNumericSearch range:NSMakeRange(0, [self length]) locale:[NSLocale currentLocale]];
 }
 
 
@@ -348,6 +346,30 @@ SInt32 MDGetSystemVersion() {
 	}
 	return string;
 }
+
+
+- (NSString *)enhancedFloatDescriptionForComponentCount:(NSUInteger)numComponents {
+	NSParameterAssert(self.length % sizeof(float) == 0);
+	
+	NSMutableString *string = [NSMutableString stringWithString:@"\n"];
+	
+	NSUInteger floatCount = self.length / sizeof(float);
+	
+	float *floatBytes = (float *)[self bytes];
+	
+	for (NSUInteger i = 0; i < floatCount; i++) {
+		
+		[string appendFormat:@"%0.4f  ", floatBytes[i]];
+		
+		if (((i + 1) % numComponents) == 0) {
+			[string appendFormat:@"\n"];
+		}
+		
+	}
+	
+	return string;
+}
+
 
 
 @end

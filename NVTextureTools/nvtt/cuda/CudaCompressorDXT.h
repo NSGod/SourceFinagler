@@ -25,8 +25,6 @@
 #ifndef NV_TT_CUDACOMPRESSORDXT_H
 #define NV_TT_CUDACOMPRESSORDXT_H
 
-//#include "nvtt/nvtt.h"
-//#include "nvtt/Compressor.h" // CompressorInterface
 #include "nvtt.h"
 #include "Compressor.h" // CompressorInterface
 

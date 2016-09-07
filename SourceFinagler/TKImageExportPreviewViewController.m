@@ -1,6 +1,6 @@
 //
 //  TKImageExportPreviewViewController.m
-//  Texture Kit
+//  Source Finagler
 //
 //  Created by Mark Douma on 12/13/2010.
 //  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
@@ -14,6 +14,9 @@
 #import "TKImageExportPreview.h"
 #import "TKImageDocument.h"
 #import "MDAppKitAdditions.h"
+#import "MDFileSizeFormatter.h"
+#import "TKImageExportTextField.h"
+
 
 
 #define TK_DEBUG 1
@@ -57,6 +60,8 @@
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
+	[imageFileSizeField setFormatter:[[[MDFileSizeFormatter alloc] initWithUnitsType:MDFileSizeFormatterAutomaticUnitsType
+																			   style:MDFileSizeFormatterLogicalStyle] autorelease]];
 	[progressIndicator setUsesThreadedAnimation:YES];
 	[imageView setImage:NULL imageProperties:nil];
 }

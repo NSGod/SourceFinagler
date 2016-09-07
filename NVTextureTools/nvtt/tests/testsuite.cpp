@@ -187,6 +187,8 @@ enum Mode {
     Mode_BC5_Normal_Paraboloid,
     Mode_BC5_Normal_Quartic,
     //Mode_BC5_Normal_DualParaboloid,
+	Mode_BC6,
+	Mode_BC7,
     Mode_Count
 };
 static const char * s_modeNames[] = {
@@ -205,6 +207,8 @@ static const char * s_modeNames[] = {
     "BC5-Normal-Paraboloid",        // Mode_BC5_Normal_Paraboloid,
     "BC5-Normal-Quartic",           // Mode_BC5_Normal_Quartic,
     //"BC5-Normal-DualParaboloid",    // Mode_BC5_Normal_DualParaboloid,
+	"BC6",			// Mode_BC6,
+	"BC7",			// Mode_BC7,
 };
 nvStaticCheck(NV_ARRAY_SIZE(s_modeNames) == Mode_Count);
 
@@ -214,11 +218,14 @@ struct Test {
     Mode modes[6];
 };
 static Test s_imageTests[] = {
-    {"Color", 3, {Mode_BC1, Mode_BC3_YCoCg, Mode_BC3_RGBM, Mode_BC3_LUVW}},
+    {"Color", 3, {Mode_BC1, Mode_BC3_YCoCg, Mode_BC3_RGBM, /*Mode_BC3_LUVW*/}},
     {"Alpha", 3, {Mode_BC1_Alpha, Mode_BC2_Alpha, Mode_BC3_Alpha}},
     //{"Normal", 3, {Mode_BC1_Normal, Mode_BC3_Normal, Mode_BC5_Normal}},
     {"Normal", 4, {Mode_BC5_Normal, Mode_BC5_Normal_Stereographic, Mode_BC5_Normal_Paraboloid, Mode_BC5_Normal_Quartic}},
     {"Lightmap", 4, {Mode_BC1, Mode_BC3_YCoCg, Mode_BC3_RGBM, Mode_BC3_RGBS}},
+	{"HDR", 2, {Mode_BC3_RGBM, Mode_BC6}},
+	{"BC6", 1, {Mode_BC6}},
+	{"BC7", 1, {Mode_BC7}},
 };
 const int s_imageTestCount = ARRAY_SIZE(s_imageTests);
 
@@ -247,8 +254,9 @@ static ImageSet s_imageSets[] = {
     {"Witness",     "witness",      s_witnessImageSet,      ARRAY_SIZE(s_witnessImageSet),      ImageType_RGB},     // 6
     {"Lightmap",    "lightmap",     s_witnessLmapImageSet,  ARRAY_SIZE(s_witnessLmapImageSet),  ImageType_HDR},     // 7
     {"Normal",      "id_tnmap",     s_normalMapImageSet,    ARRAY_SIZE(s_normalMapImageSet),    ImageType_Normal},  // 8
+	// !!!UNDONE: more HDR image sets
 };
-const int s_imageSetCount = sizeof(s_imageSets)/sizeof(s_imageSets[0]);
+const int s_imageSetCount = ARRAY_SIZE(s_imageSets);
 
 
 struct MyOutputHandler : public nvtt::OutputHandler
@@ -396,6 +404,10 @@ int main(int argc, char *argv[])
                 i++;
             }
         }
+		else
+		{
+			printf("Warning: unrecognized option \"%s\"\n", argv[i]);
+		}
     }
 
     // Validate inputs.
@@ -419,7 +431,7 @@ int main(int argc, char *argv[])
         for (int i = 0; i < s_imageSetCount; i++) {
             printf("    %i:           \t%s.\n", i, s_imageSets[i].name);
         }
-        printf("  -test [0:%d]    \tCompression tests to run.", s_imageTestCount);
+        printf("  -test [0:%d]    \tCompression tests to run.\n", s_imageTestCount);
         for (int i = 0; i < s_imageTestCount; i++) {
             printf("    %i:           \t%s.\n", i, s_imageTests[i].name);
         }
@@ -551,7 +563,7 @@ int main(int argc, char *argv[])
         if (t != test.count-1) graphWriter << ",";
     }
 
-    // Leyends.
+    // Legends.
     graphWriter << "&chdl=";
     for (int t = 0; t < test.count; t++)
     {
@@ -584,7 +596,7 @@ int main(int argc, char *argv[])
 
     for (int t = 0; t < test.count; t++)
     {
-        float totalTime = 0;
+        float totalCompressionTime = 0;
         float totalError = 0;
 
         Mode mode = test.modes[t];
@@ -602,6 +614,18 @@ int main(int argc, char *argv[])
         else if (mode == Mode_BC5_Normal || mode == Mode_BC5_Normal_Stereographic || mode == Mode_BC5_Normal_Paraboloid || mode == Mode_BC5_Normal_Quartic) {
             format = nvtt::Format_BC5;
         }
+		else if (mode == Mode_BC6)
+		{
+			format = nvtt::Format_BC6;
+		}
+		else if (mode == Mode_BC7)
+		{
+			format = nvtt::Format_BC7;
+		}
+		else
+		{
+			nvDebugCheck(false);
+		}
         
         compressionOptions.setFormat(format);
 
@@ -633,12 +657,12 @@ int main(int argc, char *argv[])
             if (img.isNormalMap()) {
                 img.normalizeNormalMap();
             }
-            if (set.type == ImageType_HDR) {
+            /*if (set.type == ImageType_HDR) {
                 img.scaleBias(0, 1.0f/4.0f, 0.0f); img.clamp(0);
                 img.scaleBias(1, 1.0f/4.0f, 0.0f); img.clamp(1);
                 img.scaleBias(2, 1.0f/4.0f, 0.0f); img.clamp(2);
                 img.toGamma(2);
-            }
+            }*/
 
             nvtt::Surface tmp = img;
             if (mode == Mode_BC1) {
@@ -672,7 +696,9 @@ int main(int argc, char *argv[])
             else if (mode == Mode_BC3_RGBM) {
                 tmp.setAlphaMode(nvtt::AlphaMode_None);
                 if (set.type == ImageType_HDR) {
-                    tmp.toRGBM(/*4*/);
+					// Transform to gamma-2.0 space before applying RGBM - helps a lot with banding in the darks.
+					tmp.toGamma(2.0f);
+                    tmp.toRGBM(3.0f);	// range of 3.0 in gamma-2.0 space == range of 9.0 in linear space
                 }
                 else {
                     tmp.toRGBM();
@@ -681,7 +707,7 @@ int main(int argc, char *argv[])
             else if (mode == Mode_BC3_LUVW) {
                 tmp.setAlphaMode(nvtt::AlphaMode_None);
                 if (set.type == ImageType_HDR) {
-                    tmp.toLUVW(/*4*/);
+                    tmp.toLUVW(8.0f);
                 }
                 else {
                     tmp.toLUVW();
@@ -725,7 +751,7 @@ int main(int argc, char *argv[])
 
             timer.stop();
             printf("  Time:  \t%.3f sec\n", timer.elapsed());
-            totalTime += timer.elapsed();
+            totalCompressionTime += timer.elapsed();
 
             nvtt::Surface img_out = outputHandler.decompress(mode, format, decoder);
             img_out.setAlphaMode(img.alphaMode());
@@ -757,7 +783,8 @@ int main(int argc, char *argv[])
             }
             else if (mode == Mode_BC3_RGBM) {
                 if (set.type == ImageType_HDR) {
-                    img_out.fromRGBM(/*4*/);
+                    img_out.fromRGBM(3.0f);
+					img_out.toLinear(2.0f);
                 }
                 else {
                     img_out.fromRGBM();
@@ -765,7 +792,7 @@ int main(int argc, char *argv[])
             }
             else if (mode == Mode_BC3_LUVW) {
                 if (set.type == ImageType_HDR) {
-                    img_out.fromLUVW(/*4*/);
+                    img_out.fromLUVW(8.0f);
                 }
                 else {
                     img_out.fromLUVW();
@@ -837,7 +864,7 @@ int main(int argc, char *argv[])
                 img_out.addChannel(residual_out, 2, 2, -1.0f); img_out.clamp(2);
             }
 
-            if (set.type == ImageType_HDR)
+            /*if (set.type == ImageType_HDR)
             {
                 Path outputFileName;
                 outputFileName.format("%s/%s", outPath, set.fileNames[i]);
@@ -848,7 +875,7 @@ int main(int argc, char *argv[])
                 {
                     printf("Error saving file '%s'.\n", outputFileName.str());
                 }
-            }
+            }*/
 
             // Output compressed image.
             Path outputFileName;
@@ -856,7 +883,7 @@ int main(int argc, char *argv[])
             outputFileName.stripExtension();
             if (set.type == ImageType_HDR) outputFileName.append(".dds");
             else outputFileName.append(".tga");
-            if (!img_out.save(outputFileName.str()))
+            if (!img_out.save(outputFileName.str(), set.type == ImageType_RGBA, set.type == ImageType_HDR))
             {
                 printf("Error saving file '%s'.\n", outputFileName.str());
             }
@@ -865,7 +892,6 @@ int main(int argc, char *argv[])
             float error;
             if (errorMode == ErrorMode_RMSE) {
                 error = nvtt::rmsError(img, img_out);
-                if (set.type == ImageType_HDR) error *= 4;
             }
             else if (errorMode == ErrorMode_CieLab) {
                 error = nvtt::cieLabError(img, img_out);
@@ -932,7 +958,7 @@ int main(int argc, char *argv[])
         totalError /= set.fileCount;
 
         printf("Total Results:\n");
-        printf("  Total Time:            \t%.3f sec\n", totalTime);
+        printf("  Total Compression Time:\t%.3f sec\n", totalCompressionTime);
         printf("  Average Error:         \t%.4f\n", totalError);
 
         if (t != test.count-1) graphWriter << "|";

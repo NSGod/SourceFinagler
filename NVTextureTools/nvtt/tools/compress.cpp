@@ -261,6 +261,14 @@ int main(int argc, char *argv[])
         {
             format = nvtt::Format_BC5;
         }
+        else if (strcmp("-bc6", argv[i]) == 0)
+        {
+            format = nvtt::Format_BC6;
+        }
+        else if (strcmp("-bc7", argv[i]) == 0)
+        {
+            format = nvtt::Format_BC7;
+        }
 
         // Undocumented option. Mainly used for testing.
         else if (strcmp("-ext", argv[i]) == 0)
@@ -302,6 +310,10 @@ int main(int argc, char *argv[])
 
             break;
         }
+		else
+		{
+			printf("Warning: unrecognized option \"%s\"\n", argv[i]);
+		}
     }
 
     const uint version = nvtt::version();
@@ -314,7 +326,7 @@ int main(int argc, char *argv[])
 
     if (input.isNull())
     {
-        printf("usage: nvcompress [options] infile [outfile]\n\n");
+        printf("usage: nvcompress [options] infile [outfile.dds]\n\n");
 
         printf("Input options:\n");
         printf("  -color     \tThe input image is a color map (default).\n");
@@ -340,11 +352,13 @@ int main(int argc, char *argv[])
         printf("  -bc3     \tBC3 format (DXT5)\n");
         printf("  -bc3n    \tBC3 normal map format (DXT5nm)\n");
         printf("  -bc4     \tBC4 format (ATI1)\n");
-        printf("  -bc5     \tBC5 format (3Dc/ATI2)\n\n");
+        printf("  -bc5     \tBC5 format (3Dc/ATI2)\n");
+        printf("  -bc6     \tBC6 format\n");
+        printf("  -bc7     \tBC7 format\n\n");
 
         printf("Output options:\n");
         printf("  -silent  \tDo not output progress messages\n");
-        printf("  -dds10   \tUse DirectX 10 DDS format\n\n");
+        printf("  -dds10   \tUse DirectX 10 DDS format (enabled by default for BC6/7)\n\n");
 
         return EXIT_FAILURE;
     }
@@ -369,7 +383,7 @@ int main(int argc, char *argv[])
             return EXIT_FAILURE;
         }
 
-        if (!dds.isSupported() || dds.isTexture3D())
+        if (!dds.isSupported())
         {
             fprintf(stderr, "The file '%s' is not a supported DDS file.\n", input.str());
             return EXIT_FAILURE;
@@ -380,6 +394,13 @@ int main(int argc, char *argv[])
         {
             inputOptions.setTextureLayout(nvtt::TextureType_2D, dds.width(), dds.height());
             faceCount = 1;
+        }
+        else if (dds.isTexture3D())
+        {
+            inputOptions.setTextureLayout(nvtt::TextureType_3D, dds.width(), dds.height(), dds.depth());
+            faceCount = 1;
+
+            nvDebugBreak();
         }
         else 
         {
@@ -398,7 +419,7 @@ int main(int argc, char *argv[])
             {
                 dds.mipmap(&mipmap, f, m); // @@ Load as float.
 
-                inputOptions.setMipmapData(mipmap.pixels(), mipmap.width(), mipmap.height(), 1, f, m);
+                inputOptions.setMipmapData(mipmap.pixels(), mipmap.width(), mipmap.height(), mipmap.depth(), f, m);
             }
         }
     }
@@ -549,7 +570,7 @@ int main(int argc, char *argv[])
     MyOutputHandler outputHandler(output.str());
     if (outputHandler.stream->isError())
     {
-        fprintf(stderr, "Error opening '%s' for writting\n", output.str());
+        fprintf(stderr, "Error opening '%s' for writing\n", output.str());
         return EXIT_FAILURE;
     }
 
@@ -573,6 +594,12 @@ int main(int argc, char *argv[])
     //outputOptions.setFileName(output);
     outputOptions.setOutputHandler(&outputHandler);
     outputOptions.setErrorHandler(&errorHandler);
+
+	// Automatically use dds10 if compressing to BC6 or BC7
+	if (format == nvtt::Format_BC6 || format == nvtt::Format_BC7)
+	{
+		dds10 = true;
+	}
 
     if (dds10)
     {

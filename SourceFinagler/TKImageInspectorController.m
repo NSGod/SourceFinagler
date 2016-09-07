@@ -165,7 +165,7 @@ static TKImageInspectorController *sharedController = nil;
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if (aTableView == tableView) {
-		if ([[tableColumn identifier] isEqual:@"name"]) {
+		if ([[tableColumn identifier] isEqualToString:@"name"]) {
 			TKImageChannel *imageChannel = [dataSource imageChannelAtIndex:rowIndex];
 			[(TKImageChannelCell *)cell setImage:[imageChannel image]];
 		}
@@ -178,7 +178,7 @@ static TKImageInspectorController *sharedController = nil;
 	NSLog(@"[%@ %@] object == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), object);
 #endif
 	if (aTableView == tableView) {
-		if ([[tableColumn identifier] isEqual:@"enabled"]) {
+		if ([[tableColumn identifier] isEqualToString:@"enabled"]) {
 			TKImageChannel *imageChannel = [dataSource imageChannelAtIndex:rowIndex];
 			[imageChannel setEnabled:[object boolValue]];
 			

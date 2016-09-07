@@ -1,9 +1,9 @@
 //
 //  VSSourceAddon.h
-//  Steam Kit
+//  SteamKit
 //
 //  Created by Mark Douma on 11/15/2010.
-//  Copyright © 2010-2014 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2014 Mark Douma LLC. All rights reserved.
 //
 
 #import <Foundation/NSObject.h>
@@ -27,7 +27,10 @@ typedef NSUInteger VSSourceAddonStatus;
 
 
 @interface VSSourceAddon : NSObject {
-	NSURL					*URL;
+	NSURL					*URL;			// can change if source addon is installed
+	NSURL					*originalURL;
+	
+	NSNumber				*fileSize;
 	
 	NSString				*fileName;
 	NSImage					*fileIcon;
@@ -47,18 +50,22 @@ typedef NSUInteger VSSourceAddonStatus;
 
 
 
-@property (nonatomic, readonly, retain) NSURL *URL;
+@property (readonly, retain) NSURL *URL;	// can change if source addon is installed
 
-@property (nonatomic, readonly, retain) NSString *fileName;
-@property (nonatomic, readonly, retain) NSImage *fileIcon;
+@property (readonly, retain) NSURL *originalURL;
 
-@property (nonatomic, readonly, retain) VSGame *game;
+@property (readonly, retain) NSNumber *fileSize;
 
-@property (nonatomic, readonly, assign) VSGameID sourceAddonGameID;
+@property (readonly, retain) NSString *fileName;
+@property (readonly, retain) NSImage *fileIcon;
 
-@property (nonatomic, readonly, assign) VSSourceAddonStatus sourceAddonStatus;
+@property (readonly, retain) VSGame *game;
 
-@property (nonatomic, readonly, assign, getter=isInstalled) BOOL installed;
+@property (readonly, assign) VSGameID sourceAddonGameID;
+
+@property (readonly, assign) VSSourceAddonStatus sourceAddonStatus;
+
+@property (readonly, assign, getter=isInstalled) BOOL installed;
 
 
 @end

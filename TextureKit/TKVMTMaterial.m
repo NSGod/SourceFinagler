@@ -628,7 +628,7 @@ typedef NSUInteger TKTokenType;
 					while ([tokenizer peek].type == TKTokenString) {
 						token = [tokenizer next];
 						
-						if (![mString isEqual:@""]) {
+						if (![mString isEqualToString:@""]) {
 							[mString appendString:@" "];
 						}
 						

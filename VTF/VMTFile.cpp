@@ -317,7 +317,7 @@ public:
 		return this->CurrentToken;
 	}
 
-	// Get the curret token.
+	// Get the current token.
 	CToken *Peek()
 	{
 		return this->NextToken;

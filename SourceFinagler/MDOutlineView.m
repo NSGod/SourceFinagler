@@ -8,6 +8,7 @@
 
 #import "MDOutlineView.h"
 #import "MDHLDocument.h"
+#import "MDFileSizeFormatter.h"
 #import "MDUserDefaults.h"
 
 
@@ -108,10 +109,13 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 #if MD_DEBUG
 //    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
+
+	[[sizeColumn dataCell] setFormatter:[[[MDFileSizeFormatter alloc] initWithUnitsType:MDFileSizeFormatterAutomaticUnitsType
+																				  style:MDFileSizeFormatterPhysicalStyle] autorelease]];
 	
 	/* The following code is a hack to workaround a bug (or at least what seems to be a bug to me)
 	 in OS X 10.9 that causes outline view columns to be restored in incorrect order. */
-	
+
 	NSArray *tableColumns = self.tableColumns;
 	NSArray *sortDescriptors = self.sortDescriptors;
 	

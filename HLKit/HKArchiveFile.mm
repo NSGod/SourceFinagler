@@ -46,10 +46,12 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 
 
 @synthesize filePath;
+@synthesize fileSize;
 @synthesize archiveFileType;
 @synthesize haveGatheredAllItems;
 @synthesize isReadOnly;
 @synthesize version;
+
 
 
 + (HKArchiveFileType)archiveFileTypeForContentsOfFile:(NSString *)aPath {
@@ -106,6 +108,7 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 	
 	if ((self = [super init])) {
 		filePath = [aPath retain];
+		fileSize = [[[[[[NSFileManager alloc] init] autorelease] attributesOfItemAtPath:filePath error:NULL] objectForKey:NSFileSize] retain];
 		isReadOnly = !(permission & HL_MODE_WRITE);
 	}
 	return self;
@@ -116,6 +119,7 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[filePath release];
+	[fileSize release];
 	[items release];
 	[allItems release];
 	[version release];
@@ -142,13 +146,12 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 
 
 - (NSArray *)allItems {
-#if HK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	
 	if (!haveGatheredAllItems) {
 		
+#if HK_DEBUG
 		NSDate *startDate = [[NSDate date] retain];
+#endif
 		
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
@@ -174,10 +177,9 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 		
 #if HK_DEBUG
 		NSLog(@"[%@ %@] ****** TIME to gather allItems == %.7f sec, gatheredItems count == %lu, allItems count == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), fabs([startDate timeIntervalSinceNow]), (unsigned long)[gatheredItems count], (unsigned long)[allItems count]);
+		[startDate release];
 #endif
 		
-		[startDate release];
-		startDate = nil;
 	}
 	return allItems;
 }

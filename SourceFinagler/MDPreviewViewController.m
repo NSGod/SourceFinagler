@@ -11,10 +11,12 @@
 #import <QTKit/QTKit.h>
 #import "MDTransparentView.h"
 #import "MDHLDocument.h"
-
 #import <HLKit/HLKit.h>
+#import "MDFileSizeFormatter.h"
+#import "MDInspectorView.h"
 
-//#define MD_DEBUG 1
+
+
 #define MD_DEBUG 0
 
 
@@ -35,8 +37,13 @@
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
+	[inspectorView setInitiallyShown:YES];
 	isQuickLookPanel = NO;
 	[textView setFont:[NSFont userFixedPitchFontOfSize:[NSFont smallSystemFontSize]]];
+	
+	MDFileSizeFormatter *formatter = [[[MDFileSizeFormatter alloc] initWithUnitsType:MDFileSizeFormatterAutomaticUnitsType
+																			   style:MDFileSizeFormatterPhysicalStyle] autorelease];
+	[sizeField setFormatter:formatter];
 }
 
 

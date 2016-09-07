@@ -11,6 +11,8 @@
 @class WebView;
 @class QTMovieView;
 @class MDTransparentView;
+@class MDInspectorView;
+
 
 
 @interface MDPreviewViewController : NSViewController <NSSoundDelegate> {
@@ -28,6 +30,10 @@
 	
 	IBOutlet MDTransparentView	*soundViewView;
 	IBOutlet NSButton			*soundButton;
+	
+	IBOutlet MDInspectorView	*inspectorView;
+	
+	IBOutlet NSTextField		*sizeField;
 	
 	BOOL						isPlayingSound;
 	NSSound						*sound;

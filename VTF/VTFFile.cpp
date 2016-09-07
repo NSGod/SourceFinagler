@@ -15,15 +15,7 @@
 #include "VTFDXTn.h"
 #include "VTFMathlib.h"
 
-
-//#include <assert.h>
-
-
-#include <AssertMacros.h>
-
-
-
-#define MD_DEBUG 0
+#define MD_DEBUG 1
 
 
 // Note: VTF creation requires nvDXTLib and has been
@@ -71,11 +63,12 @@
 
 #ifdef USE_NVTT
 
-#	include <NVTextureTools/NVTextureTools.h>
-//#	include <NVMath/NVMath.h>
+#include <NVTextureTools/NVTextureTools.h>
 
 using namespace nv;
 using namespace nvtt;
+
+#include <assert.h>
 
 #endif
 
@@ -102,11 +95,13 @@ public:
 	VTFImageFormat ImageFormat;
 
 public:
+	// used for compressing DXTn data
 	SNVCompressionUserData(vlVoid *lpData, VTFImageFormat ImageFormat) : lpData(lpData), pVTFFile(0), ImageFormat(ImageFormat)
 	{
 
 	}
-
+	
+	// used for generating mipmaps
 	SNVCompressionUserData(CVTFFile *pVTFFile, vlUInt uiFrame, vlUInt uiFace, vlUInt uiSlice, VTFImageFormat ImageFormat) : lpData(0), pVTFFile(pVTFFile), uiFrame(uiFrame), uiFace(uiFace), uiSlice(uiSlice), ImageFormat(ImageFormat)
 	{
 
@@ -197,16 +192,16 @@ public:
 	vlUInt mipmapWidth;
 	vlUInt mipmapHeight;
 	
-	vlByte *currentData;
+	vlByte *mipmapData;
 	vlUInt currentOffset;
-	vlUInt currentLength;
+	vlUInt mipmapLength;
 	
 	SNVCompressionUserData *userData;
 	
 public:
 	
-	NVOutputHandler(SNVCompressionUserData *aUserData) : userData(aUserData), mipmapIndex(0), currentData(0), currentOffset(0), currentLength(0) {
-		nvAssert(userData != 0);
+	NVOutputHandler(SNVCompressionUserData *aUserData) : userData(aUserData), mipmapIndex(0), mipmapData(0), currentOffset(0), mipmapLength(0) {
+		assert(userData != 0);
 	}
 	
 	virtual ~NVOutputHandler() {
@@ -214,61 +209,59 @@ public:
 	}
 	
     virtual void beginImage(int aSize, int aWidth, int aHeight, int aDepth, int aFace, int aMiplevel) {
-//		printf("NVOutputHandler::beginImage()\n");
+#if MD_DEBUG
+		printf("NVOutputHandler::beginImage()\n");
+#endif
 		
 		this->mipmapIndex = aMiplevel;
 		this->mipmapWidth = aWidth;
 		this->mipmapHeight = aHeight;
 		
-		this->currentLength = aSize;
+		this->mipmapLength = aSize;
 		this->currentOffset = 0;
-		delete [] this->currentData;
-		this->currentData = new vlByte[this->currentLength];
-		memset(this->currentData, 0, this->currentLength);
-
+		
+		delete [] this->mipmapData;
+		this->mipmapData = new vlByte[this->mipmapLength]();
+		
 #if MD_DEBUG
-		printf("NVOutputHandler::beginImage() aDepth == %d, aFace == %d, this->mipmapIndex == %u, this->mipmapWidth == %u, this->mipmapHeight == %u, this->currentLength == %u, this->currentOffset == %u\n", aDepth, aFace, this->mipmapIndex, this->mipmapWidth, this->mipmapHeight, this->currentLength, this->currentOffset);
+		printf("NVOutputHandler::beginImage() aDepth == %d, aFace == %d, mipmapIndex == %u, mipmapWidth == %u, mipmapHeight == %u, mipmapLength == %u, currentOffset == %u\n", aDepth, aFace, this->mipmapIndex, this->mipmapWidth, this->mipmapHeight, this->mipmapLength, this->currentOffset);
 #endif
 		
-        // ignore?
     }
 	
+	
     virtual bool writeData(const void * data, int aSize) {
+#if MD_DEBUG
 //		printf("NVOutputHandler::writeData()\n");
-		__Require(this->userData != 0, bail);
-//		__assert(this->userData != 0);
+#endif
 		
-//		nvAssert(this->userData != 0);
+		assert(this->userData != 0);
 		
-		if (this->currentOffset + aSize <= this->currentLength) {
-			memcpy(this->currentData + this->currentOffset, (vlByte *)data, aSize);
+		if (this->currentOffset + aSize <= this->mipmapLength) {
+			
+			memcpy(this->mipmapData + this->currentOffset, (vlByte *)data, aSize);
 			this->currentOffset += aSize;
 			
 #if MD_DEBUG
-			printf("NVOutputHandler::writeData() this->mipmapIndex == %u, this->currentLength == %u, this->currentOffset == %u\n", this->mipmapIndex, this->currentLength, this->currentOffset);
+			printf("NVOutputHandler::writeData() mipmapIndex == %u, mipmapLength == %u, currentOffset == %u\n", this->mipmapIndex, this->mipmapLength, this->currentOffset);
 #endif
 
-			if (this->currentOffset == this->currentLength) {
+			if (this->currentOffset == this->mipmapLength) {
+				// finished writing all the scanlines
+				
 				if (this->userData->pVTFFile != 0) {
 
-#if MD_DEBUG
-					vlUInt computedImageSize = CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, 1, this->userData->ImageFormat);
-					
-					printf("*** COMPUTING: CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, 1, this->userData->ImageFormat) == %u\n", computedImageSize);
-					
-					
-					printf("NVOutputHandler::writeData() size == %d, computedImageSize == %u\n\n", aSize, CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, 1, this->userData->ImageFormat));
-#endif
-					
 					if (this->userData->pVTFFile->GetFormat() == this->userData->ImageFormat) {
-						this->userData->pVTFFile->SetData(this->userData->uiFrame, this->userData->uiFace, this->userData->uiSlice, this->mipmapIndex, this->currentData);
+						
+						this->userData->pVTFFile->SetData(this->userData->uiFrame, this->userData->uiFace, this->userData->uiSlice, this->mipmapIndex, this->mipmapData);
+						
 					} else {
-						nvAssert(this->userData->pVTFFile->GetFormat() != IMAGE_FORMAT_DXT1 &&
+						assert(this->userData->pVTFFile->GetFormat() != IMAGE_FORMAT_DXT1 &&
 							   this->userData->pVTFFile->GetFormat() != IMAGE_FORMAT_DXT1_ONEBITALPHA &&
 							   this->userData->pVTFFile->GetFormat() != IMAGE_FORMAT_DXT3 &&
 							   this->userData->pVTFFile->GetFormat() != IMAGE_FORMAT_DXT5);
 						
-						CVTFFile::ConvertFromRGBA8888(this->currentData,
+						CVTFFile::ConvertFromRGBA8888(this->mipmapData,
 													  this->userData->pVTFFile->GetData(this->userData->uiFrame, this->userData->uiFace, this->userData->uiSlice, this->mipmapIndex),
 													  this->mipmapWidth,
 													  this->mipmapHeight,
@@ -288,7 +281,7 @@ public:
 					printf("size == %d, computedImageSize == %u\n\n", aSize, CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, 1, this->userData->ImageFormat));
 					
 #endif
-					memcpy(this->userData->lpData, this->currentData, CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, 1, userData->ImageFormat));
+					memcpy(this->userData->lpData, this->mipmapData, CVTFFile::ComputeImageSize(this->mipmapWidth, this->mipmapHeight, 1, userData->ImageFormat));
 					
 				} else {
 					return false;
@@ -297,26 +290,33 @@ public:
 			}
 			
 		}
-bail:
-		
 		
         return true;
     }
 	
 	virtual void endImage() {
-		
+#if MD_DEBUG
+		printf("NVOutputHandler::endImage()\n");
+#endif
+		delete [] mipmapData;
+		mipmapData = 0;
 	}
 	
 };
 
 		
-
-struct NVErrorHandler : public nvtt::ErrorHandler
-{
-    virtual void error(nvtt::Error error)
-    {
-        printf("Error: '%s'\n", nvtt::errorString(error));
-    }
+struct NVErrorHandler : public ErrorHandler {
+	
+	void error(Error e) {
+		m_error = e;
+	}
+	
+	Error getError() const {
+		return m_error;
+	}
+	
+private:
+	Error m_error;
 };
 
 
@@ -432,8 +432,10 @@ CVTFFile::CVTFFile(const CVTFFile &VTFFile, VTFImageFormat ImageFormat)
 			vlUInt uiFaces = VTFFile.GetFaceCount();
 			vlUInt uiMipmaps = VTFFile.GetMipmapCount();
 			vlUInt uiSlices = VTFFile.GetDepth();
-
-			this->uiImageBufferSize = this->ComputeImageSize(this->Header->Width, this->Header->Height, uiMipmaps, this->Header->ImageFormat) * uiFrames * uiFaces;
+			
+		// BUG:
+//			this->uiImageBufferSize = this->ComputeImageSize(this->Header->Width, this->Header->Height, uiMipmaps, this->Header->ImageFormat) * uiFrames * uiFaces;
+			this->uiImageBufferSize = this->ComputeImageSize(this->Header->Width, this->Header->Height, uiSlices, uiMipmaps, this->Header->ImageFormat) * uiFrames * uiFaces;
 			this->lpImageData = new vlByte[this->uiImageBufferSize];
 
 			//vlByte *lpImageData = new vlByte[this->ComputeImageSize(this->Header->Width, this->Header->Height, 1, IMAGE_FORMAT_RGBA8888)];
@@ -526,7 +528,7 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 	// Check if height is valid (power of 2 and fits in a short).
 	if(!this->IsPowerOfTwo(uiSlices) || uiSlices > 0xffff)
 	{
-		if(uiHeight == 0)
+		if(uiSlices == 0)
 		{
 			LastError.Set("Invalid image depth.  Depth must be nonzero.");
 		}
@@ -825,8 +827,8 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 				break;
 			}
 
-			nvAssert((uiNewWidth & (uiNewWidth - 1)) == 0);
-			nvAssert((uiNewHeight & (uiNewHeight - 1)) == 0);
+			assert((uiNewWidth & (uiNewWidth - 1)) == 0);
+			assert((uiNewHeight & (uiNewHeight - 1)) == 0);
 
 			// Resize the input.
 			if(uiWidth != uiNewWidth || uiHeight != uiNewHeight)
@@ -1068,7 +1070,6 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 					for (vlUInt sliceIndex = 0; sliceIndex < uiSlices; sliceIndex++) {
 						
 						
-						SNVCompressionUserData userData = SNVCompressionUserData(this, frameIndex, faceIndex, sliceIndex, mipmapImageFormat);
 						
 						InputOptions inputOptions;
 						inputOptions.setTextureLayout(TextureType_2D, uiWidth, uiHeight);
@@ -1084,19 +1085,19 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 						
 						if (!ConvertRGBA8888toBGRA8888(rgbaBytes, bgraBytes, this->Header->Width * this->Header->Height)) {
 							printf("\nConvertRGBA8888toBGRA8888() failed!\n\n");
+							delete [] bgraBytes;
 							continue;
 						}
 						
 						inputOptions.setMipmapData(bgraBytes, this->Header->Width, this->Header->Height);
 						
 						inputOptions.setWrapMode(WrapMode_Clamp);
-						inputOptions.setRoundMode(RoundMode_ToNearestPowerOfTwo);
+						inputOptions.setRoundMode(RoundMode_None);
 						
 						inputOptions.setNormalMap(false);
 						inputOptions.setConvertToNormalMap(false);
 						inputOptions.setGamma(2.2f, 2.2f);
 						inputOptions.setMipmapGeneration(true);
-//						inputOptions.setMipmapGeneration(false);
 						inputOptions.setMipmapFilter((MipmapFilter)VTFCreateOptions.MipmapFilter);
 						inputOptions.setNormalizeMipmaps(true);
 						
@@ -1112,31 +1113,50 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 						}
 						
 						switch (mipmapImageFormat) {
-							case IMAGE_FORMAT_DXT1:		compressionOptions.setFormat(Format_DXT1); break;
-							case IMAGE_FORMAT_DXT1_ONEBITALPHA:
+							case IMAGE_FORMAT_DXT1:		compressionOptions.setFormat(Format_DXT1);
+								break;
+							case IMAGE_FORMAT_DXT1_ONEBITALPHA: {
 								compressionOptions.setFormat(Format_DXT1a); // Binary alpha when using BC1a.
-								compressionOptions.setQuantization(false, true, true, 127); break;
-							case IMAGE_FORMAT_DXT3:
+								compressionOptions.setQuantization(false, true, true, 127);
+								break;
+							}
+							case IMAGE_FORMAT_DXT3: {
 								compressionOptions.setFormat(Format_DXT3); // Dither alpha when using BC2. 
-								compressionOptions.setQuantization(false, true, false); break;
-							case IMAGE_FORMAT_DXT5:		compressionOptions.setFormat(Format_DXT5); break;
-							case IMAGE_FORMAT_RGBA8888: compressionOptions.setFormat(Format_RGBA); break;
+								compressionOptions.setQuantization(false, true, false);
+								break;
+							}
+							case IMAGE_FORMAT_DXT5:		compressionOptions.setFormat(Format_DXT5);
+								break;
+							case IMAGE_FORMAT_RGBA8888: compressionOptions.setFormat(Format_RGBA);
+								break;
 						}
 						
 						
 						Context context;
 						context.enableCudaAcceleration(false);
 						
+//						SNVCompressionUserData userData = SNVCompressionUserData(this, frameIndex, faceIndex, sliceIndex, mipmapImageFormat);
+						
+						SNVCompressionUserData userData = SNVCompressionUserData(this, faceIndex, frameIndex, sliceIndex, mipmapImageFormat);
+						
 						NVOutputHandler outputHandler(&userData);
 						NVErrorHandler errorHandler;
 						
 						OutputOptions outputOptions;
-						outputOptions.setOutputHandler(&outputHandler);
 						outputOptions.setOutputHeader(false);
+						outputOptions.setOutputHandler(&outputHandler);
 						outputOptions.setErrorHandler(&errorHandler);
+						
 						if (!context.process(inputOptions, compressionOptions, outputOptions)) {
+							LastError.SetFormatted("%s\n", errorString(errorHandler.getError()));
+							delete [] bgraBytes;
 							throw 0;
+//							return vlFalse;
 						}
+						
+//						if (!context.process(inputOptions, compressionOptions, outputOptions)) {
+//							throw 0;
+//						}
 						delete [] bgraBytes;
 					}
 				}
@@ -1246,7 +1266,7 @@ vlBool CVTFFile::Create(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiFrames, vlUInt
 
 //
 // Destroy()
-// Frees all resources associated with the curret image.
+// Frees all resources associated with the current image.
 //
 vlVoid CVTFFile::Destroy()
 {
@@ -1596,7 +1616,7 @@ vlBool CVTFFile::Load(IO::Readers::IReader *Reader, vlBool bHeaderOnly)
 
 //
 // Save()
-// Saves the curret image.  Basic format checking is done.
+// Saves the current image.  Basic format checking is done.
 //
 vlBool CVTFFile::Save(IO::Writers::IWriter *Writer) const
 {
@@ -2490,9 +2510,9 @@ vlBool CVTFFile::GenerateMipmaps(vlUInt uiFace, vlUInt uiFrame, VTFMipmapFilter 
 		return vlFalse;
 	}
 
-	nvAssert(MipmapFilter >= 0 && MipmapFilter < MIPMAP_FILTER_COUNT);
+	assert(MipmapFilter >= 0 && MipmapFilter < MIPMAP_FILTER_COUNT);
 
-	nvAssert(SharpenFilter >= 0 && SharpenFilter < SHARPEN_FILTER_COUNT);
+	assert(SharpenFilter >= 0 && SharpenFilter < SHARPEN_FILTER_COUNT);
 
 	if(this->Header->MipCount == 1)
 	{
@@ -2525,7 +2545,14 @@ vlBool CVTFFile::GenerateMipmaps(vlUInt uiFace, vlUInt uiFrame, VTFMipmapFilter 
 	}
 
 	nvCompressionOptions Options = nvCompressionOptions();
-#pragma mark --BUG
+	
+#pragma mark --BUG?
+	/* SNVCompressionUserData() constructor is defined as:
+	 
+	 SNVCompressionUserData(CVTFFile *pVTFFile, vlUInt uiFrame, vlUInt uiFace, vlUInt uiSlice, VTFImageFormat ImageFormat)
+	 
+	 In other words, `uiFrame` second, `uiFace` third, yet the following code is passing in `uiFace` second and `uiFrame` third... */
+	
 	SNVCompressionUserData UserData = SNVCompressionUserData(this, uiFace, uiFrame, 0, MipmapImageFormat);
 
 	// Don't generate mipmaps.	// MD ??
@@ -2645,10 +2672,6 @@ vlBool CVTFFile::GenerateMipmaps(vlUInt uiFace, vlUInt uiFrame, VTFMipmapFilter 
 			break;
 	}
 	
-//	SNVCompressionUserData userData = SNVCompressionUserData(this, uiFrame, uiFace, 0, mipmapImageFormat);
-	
-	SNVCompressionUserData userData = SNVCompressionUserData(this, uiFace, uiFrame, 0, mipmapImageFormat);
-	
 	InputOptions inputOptions;
 	inputOptions.setTextureLayout(TextureType_2D, this->Header->Width, this->Header->Height);
 	inputOptions.setFormat(InputFormat_BGRA_8UB);
@@ -2660,18 +2683,15 @@ vlBool CVTFFile::GenerateMipmaps(vlUInt uiFace, vlUInt uiFrame, VTFMipmapFilter 
 		return vlFalse;
 	}
 	
-	
 	inputOptions.setMipmapData(theImageData, this->Header->Width, this->Header->Height);
 	
-	
 	inputOptions.setWrapMode(WrapMode_Clamp);
-	inputOptions.setRoundMode(RoundMode_ToNearestPowerOfTwo);
+	inputOptions.setRoundMode(RoundMode_None);
 	
 	inputOptions.setNormalMap(false);
 	inputOptions.setConvertToNormalMap(false);
 	inputOptions.setGamma(2.2f, 2.2f);
 	inputOptions.setMipmapGeneration(true);
-//	inputOptions.setMipmapGeneration(false);
 	inputOptions.setNormalizeMipmaps(true);
 	inputOptions.setMipmapFilter((nvtt::MipmapFilter)MipmapFilter);
 	
@@ -2687,28 +2707,41 @@ vlBool CVTFFile::GenerateMipmaps(vlUInt uiFace, vlUInt uiFrame, VTFMipmapFilter 
 	}
 	
 	switch (mipmapImageFormat) {
-		case IMAGE_FORMAT_DXT1:		compressionOptions.setFormat(Format_DXT1); break;
-		case IMAGE_FORMAT_DXT1_ONEBITALPHA:
+		case IMAGE_FORMAT_DXT1:		compressionOptions.setFormat(Format_DXT1);
+			break;
+		case IMAGE_FORMAT_DXT1_ONEBITALPHA: {
 			compressionOptions.setFormat(Format_DXT1a); // Binary alpha when using BC1a.
-			compressionOptions.setQuantization(false, true, true, 127); break;
-		case IMAGE_FORMAT_DXT3:
+			compressionOptions.setQuantization(false, true, true, 127);
+			break;
+		}
+		case IMAGE_FORMAT_DXT3: {
 			compressionOptions.setFormat(Format_DXT3); // Dither alpha when using BC2. 
-			compressionOptions.setQuantization(false, true, false); break;
-		case IMAGE_FORMAT_DXT5:		compressionOptions.setFormat(Format_DXT5); break;
-		case IMAGE_FORMAT_RGBA8888: compressionOptions.setFormat(Format_RGBA); break;
+			compressionOptions.setQuantization(false, true, false);
+			break;
+		}
+		case IMAGE_FORMAT_DXT5:		compressionOptions.setFormat(Format_DXT5);
+			break;
+		case IMAGE_FORMAT_RGBA8888: compressionOptions.setFormat(Format_RGBA);
+			break;
 	}
 	
 	Context context;
 	context.enableCudaAcceleration(false);
 	
+//	SNVCompressionUserData userData = SNVCompressionUserData(this, uiFrame, uiFace, 0, mipmapImageFormat);
+	
+	SNVCompressionUserData userData = SNVCompressionUserData(this, uiFace, uiFrame, 0, mipmapImageFormat);
+	
 	NVOutputHandler outputHandler(&userData);
 	NVErrorHandler errorHandler;
 	
 	OutputOptions outputOptions;
+	outputOptions.setOutputHeader(false);
 	outputOptions.setOutputHandler(&outputHandler);
 	outputOptions.setErrorHandler(&errorHandler);
 	
 	if (!context.process(inputOptions, compressionOptions, outputOptions)) {
+		LastError.SetFormatted("%s\n", errorString(errorHandler.getError()));
 		delete [] theImageData;
 		return vlFalse;
 	}
@@ -3188,6 +3221,11 @@ vlBool CVTFFile::ComputeReflectivity()
 	return vlTrue;
 }
 
+
+#pragma mark -
+#pragma mark static (Class) methods
+
+
 // Array which holds information about our image format
 // (taken from imageloader.cpp, Valve Source SDK)
 //------------------------------------------------------
@@ -3251,7 +3289,7 @@ static SVTFImageFormatInfo VTFImageFormatInfo[] =
 
 SVTFImageFormatInfo const &CVTFFile::GetImageFormatInfo(VTFImageFormat ImageFormat)
 {
-	nvAssert(ImageFormat >= 0 && ImageFormat < IMAGE_FORMAT_COUNT);
+	assert(ImageFormat >= 0 && ImageFormat < IMAGE_FORMAT_COUNT);
 
 	return VTFImageFormatInfo[ImageFormat];
 }
@@ -3299,7 +3337,7 @@ vlUInt CVTFFile::ComputeImageSize(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiDept
 {
 	vlUInt uiImageSize = 0;
 
-	nvAssert(uiWidth != 0 && uiHeight != 0 && uiDepth != 0);
+	assert(uiWidth != 0 && uiHeight != 0 && uiDepth != 0);
 
 	for(vlUInt i = 0; i < uiMipmaps; i++)
 	{
@@ -3331,7 +3369,7 @@ vlUInt CVTFFile::ComputeMipmapCount(vlUInt uiWidth, vlUInt uiHeight, vlUInt uiDe
 {
 	vlUInt uiCount = 0;
 
-	nvAssert(uiWidth != 0 && uiHeight != 0 && uiDepth != 0);
+	assert(uiWidth != 0 && uiHeight != 0 && uiDepth != 0);
 
 	while(vlTrue)
 	{
@@ -3447,7 +3485,7 @@ vlUInt CVTFFile::ComputeDataOffset(vlUInt uiFrame, vlUInt uiFace, vlUInt uiSlice
 	uiOffset += uiTemp1 * uiFace * uiSliceCount;
 	uiOffset += uiTemp2 * uiSlice;
 
-	nvAssert(uiOffset < this->uiImageBufferSize);
+	assert(uiOffset < this->uiImageBufferSize);
 	
 	return uiOffset;
 }
@@ -3456,7 +3494,7 @@ vlUInt CVTFFile::ComputeDataOffset(vlUInt uiFrame, vlUInt uiFace, vlUInt uiSlice
 // ConvertToRGBA8888( vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt uiHeight, VTFImageFormat SourceFormat )
 //
 // Converts data from the source format to RGBA8888 format. Data is read from *src
-// and written to *dst. Width and height are needed to it knows how much data to process
+// and written to *dst. Width and height are needed so it knows how much data to process
 //-----------------------------------------------------------------------------------------------------
 vlBool CVTFFile::ConvertToRGBA8888(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, vlUInt uiHeight, VTFImageFormat SourceFormat)
 {
@@ -3471,7 +3509,7 @@ vlBool CVTFFile::ConvertToRGBA8888(vlByte *lpSource, vlByte *lpDest, vlUInt uiWi
 // DecompressDXT1(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt uiHeight)
 //
 // Converts data from the DXT1 to RGBA8888 format. Data is read from *src
-// and written to *dst. Width and height are needed to it knows how much data to process
+// and written to *dst. Width and height are needed so it knows how much data to process
 //-----------------------------------------------------------------------------------------------------
 vlBool CVTFFile::DecompressDXT1(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt uiHeight)
 {
@@ -3566,7 +3604,7 @@ vlBool CVTFFile::DecompressDXT1(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt
 // DecompressDXT3(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt uiHeight)
 //
 // Converts data from the DXT3 to RGBA8888 format. Data is read from *src
-// and written to *dst. Width and height are needed to it knows how much data to process
+// and written to *dst. Width and height are needed so it knows how much data to process
 //-----------------------------------------------------------------------------------------------------
 vlBool CVTFFile::DecompressDXT3(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt uiHeight)
 {
@@ -3661,7 +3699,7 @@ vlBool CVTFFile::DecompressDXT3(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt
 // DecompressDXT5(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt uiHeight)
 //
 // Converts data from the DXT5 to RGBA8888 format. Data is read from *src
-// and written to *dst. Width and height are needed to it knows how much data to process
+// and written to *dst. Width and height are needed so it knows how much data to process
 //-----------------------------------------------------------------------------------------------------
 vlBool CVTFFile::DecompressDXT5(vlByte *src, vlByte *dst, vlUInt uiWidth, vlUInt uiHeight)
 {
@@ -3891,8 +3929,6 @@ vlBool CVTFFile::CompressDXTn(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, 
 	return nvDXTCompressWrapper(lpSource, uiWidth, uiHeight, &Options, NVWriteCallback);
 #elif defined(USE_NVTT) 
 	
-	SNVCompressionUserData userData = SNVCompressionUserData(lpDest, DestFormat);
-	
 	InputOptions inputOptions;
 	inputOptions.setTextureLayout(TextureType_2D, uiWidth, uiHeight);
 	inputOptions.setFormat(InputFormat_BGRA_8UB);
@@ -3902,11 +3938,12 @@ vlBool CVTFFile::CompressDXTn(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, 
 	vlByte *bgraBytes = new vlByte[byteLength];
 	
 	if (bgraBytes == 0) {
-	return vlFalse;
+		return vlFalse;
 	}
 	
 	if (!ConvertRGBA8888toBGRA8888(rgbaBytes, bgraBytes, uiWidth * uiHeight)) {
 		printf("ConvertRGBA8888toBGRA8888() failed!\n");
+		delete [] bgraBytes;
 		return vlFalse;
 	}
 //	inputOptions.setMipmapData(lpSource, uiWidth, uiHeight);
@@ -3914,15 +3951,13 @@ vlBool CVTFFile::CompressDXTn(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, 
 	inputOptions.setMipmapData(bgraBytes, uiWidth, uiHeight);
 	
 	inputOptions.setWrapMode(WrapMode_Clamp);
-	inputOptions.setRoundMode(RoundMode_ToNearestPowerOfTwo);
-	
+//	inputOptions.setRoundMode(RoundMode_ToNearestPowerOfTwo);
+	inputOptions.setRoundMode(RoundMode_None);
 	
 	inputOptions.setNormalMap(false);
 	inputOptions.setConvertToNormalMap(false);
 	inputOptions.setGamma(2.2f, 2.2f);
-	
 	inputOptions.setMipmapGeneration(false);
-//	inputOptions.setMipmapGeneration(true);
 	inputOptions.setNormalizeMipmaps(true);
 	
 	
@@ -3938,32 +3973,47 @@ vlBool CVTFFile::CompressDXTn(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, 
 	
 	
 	switch (DestFormat) {
-		case IMAGE_FORMAT_DXT1:		compressionOptions.setFormat(Format_DXT1); break;
-		case IMAGE_FORMAT_DXT1_ONEBITALPHA:
+		case IMAGE_FORMAT_DXT1:		compressionOptions.setFormat(Format_DXT1);
+			break;
+		case IMAGE_FORMAT_DXT1_ONEBITALPHA: {
 			compressionOptions.setFormat(Format_DXT1a); // Binary alpha when using BC1a.
-			compressionOptions.setQuantization(false, true, true, 127); break;
-		case IMAGE_FORMAT_DXT3:
+			compressionOptions.setQuantization(false, true, true, 127);
+			break;
+		}
+		case IMAGE_FORMAT_DXT3: {
 			compressionOptions.setFormat(Format_DXT3); // Dither alpha when using BC2. 
-			compressionOptions.setQuantization(false, true, false); break;
-		case IMAGE_FORMAT_DXT5:		compressionOptions.setFormat(Format_DXT5); break;
-		case IMAGE_FORMAT_RGBA8888: compressionOptions.setFormat(Format_RGBA); break;
+			compressionOptions.setQuantization(false, true, false);
+			break;
+		}
+		case IMAGE_FORMAT_DXT5:		compressionOptions.setFormat(Format_DXT5);
+			break;
 		default:
 			LastError.Set("Destination image format not supported.");
+			delete [] bgraBytes;
 			return vlFalse;
 	}
 	
 	Context context;
 	context.enableCudaAcceleration(false);
 	
+	SNVCompressionUserData userData = SNVCompressionUserData(lpDest, DestFormat);
+	
 	NVOutputHandler outputHandler(&userData);
 	NVErrorHandler errorHandler;
 	
 	OutputOptions outputOptions;
+	outputOptions.setOutputHeader(false);
 	outputOptions.setOutputHandler(&outputHandler);
 	outputOptions.setErrorHandler(&errorHandler);
-	outputOptions.setOutputHeader(false);
 	
-	return context.process(inputOptions, compressionOptions, outputOptions);
+	if (!context.process(inputOptions, compressionOptions, outputOptions)) {
+		LastError.SetFormatted("%s\n", errorString(errorHandler.getError()));
+		delete [] bgraBytes;
+		return vlFalse;
+	}
+	
+	delete [] bgraBytes;
+	return vlTrue;
 	
 #endif
 	LastError.Set("NVDXT or NVTT support required for DXTn compression).");
@@ -3987,6 +4037,8 @@ vlBool CVTFFile::ConvertRGBA8888toBGRA8888(vlByte *sourceBytes, vlByte *destByte
 #if MD_DEBUG
 	printf("\nCVTFFile::ConvertRGBA8888toBGRA8888()\n\n");
 #endif
+	assert(sourceBytes != 0);
+	
 	if (sourceBytes == 0 || destBytes == 0 || pixelCount == 0) {
 		LastError.Set("Invalid parameters to CVTFFile::ConvertRGBA8888toBGRA8888()");
 		return vlFalse;
@@ -4127,7 +4179,10 @@ static SVTFImageConvertInfo VTFImageConvertInfo[] =
 	{ 	  8,  1,  0,  0,  0,  8,	-1,	-1,	-1,	 0, vlFalse,  vlTrue,	NULL,	NULL,		IMAGE_FORMAT_A8},
 	{ 	 24,  3,  8,  8,  8,  8,	 0,	 1,	 2,	-1, vlFalse,  vlTrue,	ToBlueScreen,	FromBlueScreen,	IMAGE_FORMAT_RGB888_BLUESCREEN},
 	{ 	 24,  3,  8,  8,  8,  8,	 2,	 1,	 0,	-1, vlFalse,  vlTrue,	ToBlueScreen,	FromBlueScreen,	IMAGE_FORMAT_BGR888_BLUESCREEN},
+	
+//	{ 	 32,  4,  8,  8,  8,  8,	 3,	 0,	 1,	 2, vlFalse,  vlTrue,	NULL,	NULL,		IMAGE_FORMAT_ARGB8888},	// BUG
 	{ 	 32,  4,  8,  8,  8,  8,	 3,	 0,	 1,	 2, vlFalse,  vlTrue,	NULL,	NULL,		IMAGE_FORMAT_ARGB8888},
+	
 	{ 	 32,  4,  8,  8,  8,  8,	 2,	 1,	 0,	 3, vlFalse,  vlTrue,	NULL,	NULL,		IMAGE_FORMAT_BGRA8888},
 	{ 	  4,  0,  0,  0,  0,  0,	-1,	-1,	-1,	-1,  vlTrue,  vlTrue,	NULL,	NULL,		IMAGE_FORMAT_DXT1},
 	{ 	  8,  0,  0,  0,  0,  8,	-1,	-1,	-1,	-1,  vlTrue,  vlTrue,	NULL,	NULL,		IMAGE_FORMAT_DXT3},
@@ -4416,18 +4471,17 @@ vlBool ConvertTemplated(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, vlUInt
 
 vlBool CVTFFile::Convert(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, vlUInt uiHeight, VTFImageFormat SourceFormat, VTFImageFormat DestFormat)
 {
-	nvAssert(lpSource != 0);
-	nvAssert(lpDest != 0);
+	assert(lpSource != 0);
+	assert(lpDest != 0);
 
-	nvAssert(SourceFormat >= 0 && SourceFormat < IMAGE_FORMAT_COUNT);
-	nvAssert(DestFormat >= 0 && DestFormat < IMAGE_FORMAT_COUNT);
+	assert(SourceFormat >= 0 && SourceFormat < IMAGE_FORMAT_COUNT);
+	assert(DestFormat >= 0 && DestFormat < IMAGE_FORMAT_COUNT);
 
 	const SVTFImageConvertInfo& SourceInfo = VTFImageConvertInfo[SourceFormat];
 	const SVTFImageConvertInfo& DestInfo = VTFImageConvertInfo[DestFormat];
 
 	if(!SourceInfo.bIsSupported || !DestInfo.bIsSupported)
 	{
-		printf("Image format conversion not supported.");
 		LastError.Set("Image format conversion not supported.");
 
 		return vlFalse;
@@ -4587,9 +4641,9 @@ vlBool CVTFFile::Convert(vlByte *lpSource, vlByte *lpDest, vlUInt uiWidth, vlUIn
 
 vlBool CVTFFile::ConvertToNormalMap(vlByte *lpSourceRGBA8888, vlByte *lpDestRGBA8888, vlUInt uiWidth, vlUInt uiHeight, VTFKernelFilter KernelFilter, VTFHeightConversionMethod HeightConversionMethod, VTFNormalAlphaResult NormalAlphaResult, vlByte bMinimumZ, vlSingle sScale, vlBool bWrap, vlBool bInvertX, vlBool bInvertY, vlBool bInvertZ)
 {
-	nvAssert(KernelFilter >= 0 && KernelFilter < KERNEL_FILTER_COUNT);
-	nvAssert(HeightConversionMethod >= 0 && HeightConversionMethod < HEIGHT_CONVERSION_METHOD_COUNT);
-	nvAssert(NormalAlphaResult >= 0 && NormalAlphaResult < NORMAL_ALPHA_RESULT_COUNT);
+	assert(KernelFilter >= 0 && KernelFilter < KERNEL_FILTER_COUNT);
+	assert(HeightConversionMethod >= 0 && HeightConversionMethod < HEIGHT_CONVERSION_METHOD_COUNT);
+	assert(NormalAlphaResult >= 0 && NormalAlphaResult < NORMAL_ALPHA_RESULT_COUNT);
 
 #ifdef USE_NVDXT
 	nvCompressionOptions Options = nvCompressionOptions();
@@ -4665,8 +4719,8 @@ vlBool CVTFFile::ConvertToNormalMap(vlByte *lpSourceRGBA8888, vlByte *lpDestRGBA
 
 vlBool CVTFFile::Resize(vlByte *lpSourceRGBA8888, vlByte *lpDestRGBA8888, vlUInt uiSourceWidth, vlUInt uiSourceHeight, vlUInt uiDestWidth, vlUInt uiDestHeight, VTFMipmapFilter ResizeFilter, VTFSharpenFilter SharpenFilter)
 {
-	nvAssert(ResizeFilter >= 0 && ResizeFilter < MIPMAP_FILTER_COUNT);
-	nvAssert(SharpenFilter >= 0 && SharpenFilter < SHARPEN_FILTER_COUNT);
+	assert(ResizeFilter >= 0 && ResizeFilter < MIPMAP_FILTER_COUNT);
+	assert(SharpenFilter >= 0 && SharpenFilter < SHARPEN_FILTER_COUNT);
 
 #ifdef USE_NVDXT
 	nvCompressionOptions Options = nvCompressionOptions();
@@ -4708,8 +4762,9 @@ vlBool CVTFFile::Resize(vlByte *lpSourceRGBA8888, vlByte *lpDestRGBA8888, vlUInt
 	
 #elif defined(USE_NVTT)
 	
-	SNVCompressionUserData userData = SNVCompressionUserData(lpDestRGBA8888, IMAGE_FORMAT_RGBA8888);
-	
+//	SNVCompressionUserData userData = SNVCompressionUserData(lpDestRGBA8888, IMAGE_FORMAT_RGBA8888);
+	LastError.Set("CVTFFile::Resize() is not yet implemented using NVTT.");
+	return vlFalse;
 	
 	
 #endif

@@ -2,6 +2,7 @@
 #include <QuickLook/QuickLook.h>
 #import <Cocoa/Cocoa.h>
 #import <TextureKit/TextureKit.h>
+#import "MDCGImage.h"
 
 
 /* -----------------------------------------------------------------------------
@@ -9,129 +10,87 @@
 
    This function's job is to create preview for designated file
    ----------------------------------------------------------------------------- */
-#ifdef __cplusplus
-extern "C" {
-#endif
-	
-	
-#define MD_DEBUG 0
-	
-	
-OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options) {
+
+
+#define MD_DEBUG 1
+
+
+OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview, CFURLRef URL, CFStringRef contentTypeUTI, CFDictionaryRef options) {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+#if MD_DEBUG
+	NSLog(@"%@; %s(): file == \"%@\")", MDSourceQuickLookBundleIdentifier, __FUNCTION__, [(NSURL *)URL path]);
+#endif
 	
 	if (![(NSString *)contentTypeUTI isEqualToString:TKVTFType] &&
 		![(NSString *)contentTypeUTI isEqualToString:TKDDSType] &&
 		![(NSString *)contentTypeUTI isEqualToString:TKSFTextureImageType]) {
-		
-		
-		NSLog(@"SourceImage.qlgenerator; GeneratePreviewForURL(): contentTypeUTI != VTF or DDS or SFTI; (contentTypeUTI == %@)", contentTypeUTI);
+		NSLog(@"%@; %s(): contentTypeUTI != VTF or DDS or SFTI; (contentTypeUTI == \"%@\"), file == \"%@\"", MDSourceQuickLookBundleIdentifier, __FUNCTION__, (NSString *)contentTypeUTI, [(NSURL *)URL path]);
 		[pool release];
 		return noErr;
 	}
 	
-#if MD_DEBUG
-	NSLog(@"GeneratePreviewForURL(): %@", [(NSURL *)url path]);
-#endif
+	NSError *outError = nil;
 	
-	NSData *fileData = [NSData dataWithContentsOfURL:(NSURL *)url];
-	if (fileData == nil) {
-		NSLog(@"SourceImage.qlgenerator; GeneratePreviewForURL(): fileData == nil for url == %@", url);
-		[pool release];
-		return noErr;
-	}
-	CGImageRef imageRef = NULL;
+	TKImage *image = [[TKImage alloc] initWithContentsOfURL:(NSURL *)URL error:&outError];
 	
-	if ([(NSString *)contentTypeUTI isEqualToString:TKVTFType]) {
-		
-		imageRef = [[TKVTFImageRep imageRepWithData:fileData] CGImage];
-		
-	} else if ([(NSString *)contentTypeUTI isEqualToString:TKDDSType]) {
-		
-		imageRef = [[TKDDSImageRep imageRepWithData:fileData] CGImage];
-		
-	} else if ([(NSString *)contentTypeUTI isEqualToString:TKSFTextureImageType]) {
-		
-		TKImage *tkImage = [[TKImage alloc] initWithData:fileData firstRepresentationOnly:NO];
-		
-		if (tkImage) {
-			
-			TKImageRep *tkImageRep = nil;
-			
-			if ([tkImage sliceCount]) {
-				
-				
-			} else if ([tkImage faceCount] && [tkImage frameCount]) {
-				
-				NSArray *aTKImageReps = [tkImage representationsForFaceIndexes:[tkImage firstFaceIndexSet]
-																  frameIndexes:[tkImage firstFrameIndexSet]
-																 mipmapIndexes:[tkImage firstMipmapIndexSet]];
-				
-				if ([aTKImageReps count]) tkImageRep = [aTKImageReps objectAtIndex:0];
-				
-			} else if ([tkImage faceCount]) {
-				
-				NSArray *aTKImageReps = [tkImage representationsForFaceIndexes:[tkImage firstFaceIndexSet]
-																 mipmapIndexes:[tkImage firstMipmapIndexSet]];
-				
-				if ([aTKImageReps count]) tkImageRep = [aTKImageReps objectAtIndex:0];
-				
-				
-			} else if ([tkImage frameCount]) {
-				
-				NSArray *aTKImageReps = [tkImage representationsForFrameIndexes:[tkImage firstFrameIndexSet]
-																  mipmapIndexes:[tkImage firstMipmapIndexSet]];
-				
-				if ([aTKImageReps count]) tkImageRep = [aTKImageReps objectAtIndex:0];
-				
-			} else {
-				if ([tkImage mipmapCount]) {
-					tkImageRep = [tkImage representationForMipmapIndex:0];
-				}
-			}
-			
-			imageRef = [tkImageRep CGImage];
-			
-			[tkImage release];
-		}
-		
-	}
-	
-	if (imageRef == NULL) {
-		NSLog(@"SourceImage.qlgenerator; GeneratePreviewForURL(): MDCGImageCreateWithContentsOfFile() returned NULL for file %@", [(NSURL *)url path]);
+	if (image == nil) {
+		NSLog(@"%@; TKImage returned nil for file \"%@\". error == %@", MDSourceQuickLookBundleIdentifier, [(NSURL *)URL path], outError);
 		[pool release];
 		return noErr;
 	}
 	
-#if MD_DEBUG
-	NSLog(@"GeneratePreviewForURL(): created imageRef");
-#endif
+	NSSize imageSize = (image.isEnvironmentMap ? image.environmentMapSize : image.size);
 	
-	CGContextRef cgContext = QLPreviewRequestCreateContext(preview, CGSizeMake(CGImageGetWidth(imageRef), CGImageGetHeight(imageRef)), true, NULL);
-	if (cgContext) {
-		CGContextSaveGState(cgContext);
-		CGContextDrawImage(cgContext, CGRectMake(0.0, 0.0, CGImageGetWidth(imageRef), CGImageGetHeight(imageRef)), imageRef);
-		CGContextRestoreGState(cgContext);
-		QLPreviewRequestFlushContext(preview, cgContext);
+	CGContextRef cgContext = QLPreviewRequestCreateContext(preview, NSSizeToCGSize(imageSize), true, NULL);
+	
+	if (cgContext == NULL) {
+		NSLog(@"%@; QLPreviewRequestCreateContext() returned NULL for file \"%@\".", MDSourceQuickLookBundleIdentifier, [(NSURL *)URL path]);
+		[image release];
+		[pool release];
+		return noErr;
+	}
+	
+	NSGraphicsContext *context = [NSGraphicsContext graphicsContextWithGraphicsPort:(void *)cgContext flipped:NO];
+	
+	if (context == nil) {
+		NSLog(@"%@; failed to create NSGraphicsContext for file \"%@\".", MDSourceQuickLookBundleIdentifier, [(NSURL *)URL path]);
 		CGContextRelease(cgContext);
+		[image release];
+		[pool release];
+		return noErr;
 	}
 	
-#if MD_DEBUG
-	NSLog(@"GeneratePreviewForURL(): drew preview request");
-#endif
+	[NSGraphicsContext saveGraphicsState];
+	[NSGraphicsContext setCurrentContext:context];
+	
+	// draw image
+	
+	[context saveGraphicsState];
+	
+	if (image.isEnvironmentMap) {
+		[image drawEnvironmentMapInRect:NSMakeRect(0.0, 0.0, imageSize.width, imageSize.height)];
+		
+	} else {
+		[image drawInRect:NSMakeRect(0.0, 0.0, imageSize.width, imageSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+		
+	}
+	
+	[context restoreGraphicsState];
+	
+	[NSGraphicsContext restoreGraphicsState];
+	
+	QLPreviewRequestFlushContext(preview, cgContext);
+	CGContextRelease(cgContext);
+	[image release];
+	
 	[pool release];
 	return noErr;
-	
 }
-	
+
+
 void CancelPreviewGeneration(void* thisInterface, QLPreviewRequestRef preview) {
-//	NSLog(@"SourceImage.qlgenerator; CancelPreviewGeneration()");
-	
     // implement only if supported
 }
 
-
-#ifdef __cplusplus
-}
-#endif
 

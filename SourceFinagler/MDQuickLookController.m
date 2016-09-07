@@ -80,14 +80,6 @@ static MDQuickLookController *sharedQuickLookController = nil;
 }
 
 
-//- (void)dealloc {
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//	[[NSNotificationCenter defaultCenter] removeObserver:self];
-//	[super dealloc];
-//}
-
-
-
 - (void)windowDidLoad {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -140,21 +132,12 @@ static MDQuickLookController *sharedQuickLookController = nil;
 }
 
 
-//- (void)showWindow:(id)sender {
-//	NSEvent *currentEvent = [NSApp currentEvent];
-//	NSLog(@"[%@ %@] currentEvent == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), currentEvent);
-//	
-//	NSViewAnimation *viewAnimation;
-//	
-//}
-
-
 - (void)selectedItemsDidChange:(NSNotification *)notification {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	// We need to check this notification to see if it is being sent by a suitcase document that 
+	// We need to check this notification to see if it is being sent by a document that 
 	// is being closed. When a document is closed, it posts this notification, with itself
 	// as the object, and -- this is unique to a "document-that-is-closing" -- a nil userInfo dictionary.
 	// If the notification's object is the same document as our currently retained document, and
@@ -258,7 +241,6 @@ static MDQuickLookController *sharedQuickLookController = nil;
 			}
 		} else {
 			
-//			[[self window] setRepresentedFilename:@""];
 			[[self window] setTitle:@""];
 			
 			[previewViewController setRepresentedObject:nil];

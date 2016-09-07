@@ -1,6 +1,6 @@
 //
 //  TKImageExportPreviewViewController.h
-//  Texture Kit
+//  Source Finagler
 //
 //  Created by Mark Douma on 12/13/2010.
 //  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
@@ -9,12 +9,17 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class TKImageView, TKImageExportPreset, TKImageExportController;
+@class TKImageView;
+@class TKImageExportPreset;
+@class TKImageExportController;
+@class TKImageExportTextField;
+
 
 
 @interface TKImageExportPreviewViewController : NSViewController {
-	IBOutlet TKImageView			*imageView;
-	IBOutlet NSProgressIndicator	*progressIndicator;
+	IBOutlet TKImageView				*imageView;
+	IBOutlet NSProgressIndicator		*progressIndicator;
+	IBOutlet TKImageExportTextField		*imageFileSizeField;
 	
 	// representedObject is a TKImageExportPreview
 }
@@ -23,7 +28,7 @@
 - (id)initWithExportController:(TKImageExportController *)controller preset:(TKImageExportPreset *)preset tag:(NSInteger)tag;
 
 
-@property (assign) IBOutlet TKImageView *imageView;
+@property (nonatomic, assign) IBOutlet TKImageView *imageView;
 
 @end
 

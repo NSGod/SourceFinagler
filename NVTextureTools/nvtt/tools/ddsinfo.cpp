@@ -21,12 +21,11 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 
-#include <NVCore/StrLib.h>
-#include <NVCore/StdStream.h>
+#include <nvcore/StrLib.h>
+#include <nvcore/StdStream.h>
 
-#include <NVImage/Image.h>
-
-#include <NVImage/DirectDrawSurface.h>
+#include <nvimage/Image.h>
+#include <nvimage/DirectDrawSurface.h>
 
 #include "cmdline.h"
 
@@ -36,23 +35,28 @@ int main(int argc, char *argv[])
 	MyAssertHandler assertHandler;
 	MyMessageHandler messageHandler;
 
-	if (argc != 2)
+	if (argc < 2)
 	{
 		printf("NVIDIA Texture Tools - Copyright NVIDIA Corporation 2007\n\n");
 		printf("usage: nvddsinfo ddsfile\n\n");
 		return 1;
 	}
-
-	// Load surface.
-	nv::DirectDrawSurface dds(argv[1]);
-	if (!dds.isValid())
-	{
-		printf("The file '%s' is not a valid DDS file.\n", argv[1]);
-		return 1;
-	}
 	
-	dds.printInfo();
-
+	for (int i = 0; i < (argc - 1); i++) {
+		printf("%s :\n\n", argv[1 + i]);
+		
+		// Load surface.
+		nv::DirectDrawSurface dds(argv[1 + i]);
+		
+		if (dds.isValid()) {
+			dds.printInfo();
+			
+		} else {
+			printf("The file '%s' is not a valid DDS file.\n", argv[1 + i]);
+			
+		}
+		printf("\n\n");
+	}
 	return 0;
 }
 

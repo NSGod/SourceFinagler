@@ -23,10 +23,10 @@
 
 #ifdef __cplusplus
 #define HLKIT_EXTERN		extern "C"
-#define HLKIT_PRIVATE_EXTERN	__private_extern__
+#define HLKIT_PRIVATE_EXTERN	__attribute__((visibility("hidden"))) extern "C"
 #else
 #define HLKIT_EXTERN				extern
-#define HLKIT_PRIVATE_EXTERN	__private_extern__
+#define HLKIT_PRIVATE_EXTERN	__attribute__((visibility("hidden"))) extern
 #endif
 
 #if !defined(HLKIT_INLINE)

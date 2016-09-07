@@ -2,12 +2,10 @@
 # Texture Finagler
 #
 # Created by Mark Douma on 3/9/2011.
-# Copyright 2011 Mark Douma LLC. All rights reserved.
+# Copyright (c) 2011-2014 Mark Douma LLC. All rights reserved.
 
 .objc_class_name_TKImage
-
 .objc_class_name_TKImageRep
-
 .objc_class_name_TKDDSImageRep
 .objc_class_name_TKVTFImageRep
 
@@ -15,6 +13,7 @@
 .objc_class_name_TKVMTMaterial
 .objc_class_name_TKVMTNode
 
+_TKErrorDomain
 
 _TKSFTextureImageType
 _TKSFTextureImageFileType
@@ -22,31 +21,27 @@ _TKSFTextureImagePboardType
 _TKSFTextureImageMagicData
 
 
-_NSStringFromDXTCompressionQuality
-_TKDXTCompressionQualityFromString
+_TKImageMipmapGenerationKey
+_TKImageWrapModeKey
+_TKImageResizeModeKey
+_TKImageResizeFilterKey
 
+_TKImagePropertyVersion
 
-_NSStringFromDDSFormat
-_TKDDSFormatFromString
 
 _TKDDSType
 _TKDDSFileType
 _TKDDSPboardType
+_TKDDSUnsupportedFormatException
+_TKDDSUnsupportedContainerAndFormatCombinationException
 
-
-_NSStringFromVTFFormat
-_TKVTFFormatFromString
 
 _TKVTFType
 _TKVTFFileType
 _TKVTFPboardType
+_TKVTFUnsupportedFormatException
 
 
-_TKImageMipmapGenerationKey
-_TKImageWrapModeKey
-_TKImageRoundModeKey
+_TKGetSystemVersion
 
-
-_TKYES
-_TKNO
 

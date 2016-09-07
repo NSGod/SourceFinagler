@@ -1,6 +1,6 @@
 //
 //  TKImageDocument.h
-//  Texture Kit
+//  Source Finagler
 //
 //  Created by Mark Douma on 10/15/2010.
 //  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
@@ -81,6 +81,7 @@ TEXTUREKIT_EXTERN NSString *TKImageIOLocalizedString(NSString *key);
 	
 	TKImageExportPreset							*exportPreset;
 	
+	
 	CGFloat										faceBrowserWidth;
 	CGFloat										frameBrowserHeight;
 	CGFloat										mipmapBrowserWidth;
@@ -120,39 +121,39 @@ TEXTUREKIT_EXTERN NSString *TKImageIOLocalizedString(NSString *key);
 	IKImageBrowserView							*currentMenuBrowserView;
 }
 
-@property (retain) TKImage *image;
+@property (nonatomic, retain) TKImage *image;
 
-@property (retain) NSString *dimensions;
+@property (nonatomic, retain) NSString *dimensions;
 
-@property (retain) TKImageExportPreset *exportPreset;
+@property (nonatomic, retain) TKImageExportPreset *exportPreset;
+
+@property (nonatomic, assign) BOOL shouldShowFaceBrowserView;
+@property (nonatomic, assign) BOOL shouldShowFrameBrowserView;
+@property (nonatomic, assign) BOOL shouldShowMipmapBrowserView;
 
 
-@property (assign) BOOL shouldShowFaceBrowserView;
-@property (assign) BOOL shouldShowFrameBrowserView;
-@property (assign) BOOL shouldShowMipmapBrowserView;
 
+@property (nonatomic, assign) CGFloat redScale;
+@property (nonatomic, assign) CGFloat greenScale;
+@property (nonatomic, assign) CGFloat blueScale;
+@property (nonatomic, assign) CGFloat alphaScale;
 
-@property (assign) CGFloat redScale;
-@property (assign) CGFloat greenScale;
-@property (assign) CGFloat blueScale;
-@property (assign) CGFloat alphaScale;
+@property (nonatomic, assign) CGFloat small;
+@property (nonatomic, assign) CGFloat medium;
+@property (nonatomic, assign) CGFloat big;
+@property (nonatomic, assign) CGFloat large;
 
-@property (assign) CGFloat small;
-@property (assign) CGFloat medium;
-@property (assign) CGFloat big;
-@property (assign) CGFloat large;
+@property (nonatomic, assign) TKWrapMode normalMapWrapMode;
 
-@property (assign) TKWrapMode normalMapWrapMode;
+@property (nonatomic, assign) BOOL normalizeMipmaps;
 
-@property (assign) BOOL normalizeMipmaps;
+@property (nonatomic, retain) TKGrayscaleFilter *grayscaleFilter;
 
-@property (retain) TKGrayscaleFilter *grayscaleFilter;
+@property (nonatomic, assign) TKImageInspectorController *imageInspectorController;
 
-@property (assign) TKImageInspectorController *imageInspectorController;
+@property (nonatomic, retain) NSArray *draggedFilenames;
 
-@property (retain) NSArray *draggedFilenames;
-
-@property (assign) IKImageBrowserView *currentMenuBrowserView;
+@property (nonatomic, assign) IKImageBrowserView *currentMenuBrowserView;
 
 
 - (IBAction)cancel:(id)sender;

@@ -12,6 +12,8 @@
 @class MDPrefsController;
 @class TKImageInspectorController;
 
+@class SUUpdater;
+
 @class MDViewOptionsController;
 @class MDInspectorController;
 @class MDQuickLookController;
@@ -40,7 +42,7 @@ extern BOOL			MDShouldShowPathBar;
 extern BOOL			MDPlaySoundEffects;
 
 
-@interface MDAppController : NSObject <NSApplicationDelegate, NSOpenSavePanelDelegate, NSToolbarDelegate, NSSoundDelegate> {
+@interface MDAppController : NSObject <NSApplicationDelegate, NSOpenSavePanelDelegate, NSToolbarDelegate, NSSoundDelegate, NSMenuDelegate> {
     IBOutlet NSWindow					*window;
 	
 	IBOutlet NSMenuItem					*toggleInspectorMenuItem;
@@ -69,14 +71,14 @@ extern BOOL			MDPlaySoundEffects;
 	MDQuickLookController				*quickLookController;
 	
 	MDPrefsController					*prefsController;
-	
-	
-	NSUndoManager						*globalUndoManager;
+		
+	IBOutlet SUUpdater					*sparkleUpdater;
 	
 	
 	NSMutableArray						*viewControllers;
 	
 	NSUInteger							currentViewIndex;
+	
 	
 	TKImageInspectorController			*imageInspectorController;
 	

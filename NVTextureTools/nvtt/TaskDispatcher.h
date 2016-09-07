@@ -2,9 +2,6 @@
 #ifndef NVTT_TASK_DISPATCHER_H
 #define NVTT_TASK_DISPATCHER_H
 
-
-
-
 #include "nvtt.h"
 
 // OpenMP
@@ -154,6 +151,6 @@ namespace nvtt {
 
 } // namespace nvtt
 
-#endif // NVTT_TASK_DISPATCHER_H
 
+#endif // NVTT_TASK_DISPATCHER_H
 

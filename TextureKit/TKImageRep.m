@@ -3,23 +3,23 @@
 //  Texture Kit
 //
 //  Created by Mark Douma on 11/5/2010.
-//  Copyright (c) 2010-2013 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2014 Mark Douma LLC. All rights reserved.
 //
 
 #import <TextureKit/TKImageRep.h>
 #import <CoreServices/CoreServices.h>
-
+#import <Cocoa/Cocoa.h>
 #import <TextureKit/TKDDSImageRep.h>
 #import <TextureKit/TKVTFImageRep.h>
+#import <TextureKit/TKError.h>
 
-#import <Accelerate/Accelerate.h>
-
+#import "TKFoundationAdditions.h"
 #import "TKPrivateInterfaces.h"
 #import "MDFoundationAdditions.h"
 
 
 
-#define TK_DEBUG 1
+#define TK_DEBUG 0
 
 
 static NSString * const TKImageRepSliceIndexKey			= @"TKImageRepSliceIndex";
@@ -28,6 +28,7 @@ static NSString * const TKImageRepFrameIndexKey			= @"TKImageRepFrameIndex";
 static NSString * const TKImageRepMipmapIndexKey		= @"TKImageRepMipmapIndex";
 
 static NSString * const TKImageRepBitmapInfoKey			= @"TKImageRepBitmapInfo";
+static NSString * const TKImageRepAlphaInfoKey			= @"TKImageRepAlphaInfo";
 static NSString * const TKImageRepPixelFormatKey		= @"TKImageRepPixelFormat";
 
 static NSString * const TKImageRepImagePropertiesKey	= @"TKImageRepImageProperties";
@@ -35,130 +36,23 @@ static NSString * const TKImageRepImagePropertiesKey	= @"TKImageRepImageProperti
 
 NSString * const TKImageMipmapGenerationKey				= @"TKImageMipmapGeneration";
 NSString * const TKImageWrapModeKey						= @"TKImageWrapMode";
-NSString * const TKImageRoundModeKey					= @"TKImageRoundMode";
+NSString * const TKImageResizeModeKey					= @"TKImageResizeMode";
+NSString * const TKImageResizeFilterKey					= @"TKImageResizeFilter";
 
+NSString * const TKImagePropertyVersion					= @"TKImagePropertyVersion";
 
-//typedef struct TKPixelFormatInfo {
-//	TKPixelFormat			pixelFormat;
-//	NSUInteger				bitsPerComponent;
-//	NSUInteger				bitsPerPixel;
-//	CGBitmapInfo			bitmapInfo;
-//	CGColorSpaceModel		colorSpaceModel;
-//	CGColorRenderingIntent	renderingIntent;
-//} TKPixelFormatInfo;
-//
-//static const TKPixelFormatInfo TKPixelFormatInfoTable[] = {
-//	{TKPixelFormatXRGB1555,			5, 16, kCGImageAlphaNoneSkipFirst, kCGColorSpaceModelRGB,	kCGRenderingIntentDefault},
-//	{TKPixelFormatL,				8, 8,  kCGImageAlphaNone,	kCGColorSpaceModelMonochrome,	kCGRenderingIntentDefault},
-//	{TKPixelFormatLA,				8, 16, kCGImageAlphaPremultipliedLast, kCGColorSpaceModelMonochrome,	 kCGRenderingIntentDefault},
-//	{TKPixelFormatA,				8, 8,  kCGImageAlphaOnly, kCGColorSpaceModelUnknown, kCGRenderingIntentDefault},
-//	{TKPixelFormatRGB,				8, 24, kCGImageAlphaNone, kCGColorSpaceModelRGB,	kCGRenderingIntentDefault},
-//	{TKPixelFormatXRGB,				8, 32, kCGImageAlphaNoneSkipFirst, kCGColorSpaceModelRGB,	kCGRenderingIntentDefault},
-//	{TKPixelFormatRGBX,				8, 32, kCGImageAlphaNoneSkipLast, kCGColorSpaceModelRGB,	kCGRenderingIntentDefault},
-//	{TKPixelFormatARGB,				8, 32, kCGImageAlphaPremultipliedFirst, kCGColorSpaceModelRGB,	kCGRenderingIntentDefault},
-//	{TKPixelFormatRGBA,				8, 32, kCGImageAlphaPremultipliedLast, kCGColorSpaceModelRGB,	kCGRenderingIntentDefault},
-//	{TKPixelFormatRGB161616,		16, 48, kCGImageAlphaNone | kCGBitmapByteOrder16Host, kCGColorSpaceModelRGB, kCGRenderingIntentDefault},
-//	{TKPixelFormatRGBA16161616,		16, 64, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder16Host, kCGColorSpaceModelRGB,	kCGRenderingIntentDefault},
-//	{TKPixelFormatRGBA16161616F,	16, 64, kCGImageAlphaPremultipliedLast | kCGBitmapFloatComponents | kCGBitmapByteOrder16Host, kCGColorSpaceModelRGB,	kCGRenderingIntentDefault},
-//	{TKPixelFormatL32F,				32, 32, kCGImageAlphaNone | kCGBitmapFloatComponents | kCGBitmapByteOrder32Host, kCGColorSpaceModelMonochrome, kCGRenderingIntentDefault},
-//	{TKPixelFormatRGB323232F,		32, 96, kCGImageAlphaNone | kCGBitmapFloatComponents | kCGBitmapByteOrder32Host, kCGColorSpaceModelRGB,	kCGRenderingIntentDefault},
-//	{TKPixelFormatRGBA32323232F,	32, 128, kCGImageAlphaPremultipliedLast | kCGBitmapFloatComponents | kCGBitmapByteOrder32Host, kCGColorSpaceModelRGB, kCGRenderingIntentDefault},
-//	{TKPixelFormatRGB565,			5, 16, kCGImageAlphaNoneSkipFirst, kCGColorSpaceModelRGB,	kCGRenderingIntentDefault},
-//	{TKPixelFormatBGR565,			5, 16, kCGImageAlphaNoneSkipFirst, kCGColorSpaceModelRGB,	kCGRenderingIntentDefault},
-//	{TKPixelFormatBGRX5551,			5, 16, kCGImageAlphaNoneSkipLast, kCGColorSpaceModelRGB,	kCGRenderingIntentDefault},
-//	{TKPixelFormatBGRA5551,			5, 16, kCGImageAlphaNoneSkipFirst, kCGColorSpaceModelRGB,	kCGRenderingIntentDefault},
-//	{TKPixelFormatBGRA,				8, 32, kCGImageAlphaPremultipliedLast, kCGColorSpaceModelRGB,	kCGRenderingIntentDefault},
-//};
-//static const NSUInteger TKPixelFormatInfoTableCount = sizeof(TKPixelFormatInfoTable)/sizeof(TKPixelFormatInfoTable[0]);
-//
-//
-//static inline TKPixelFormat TKPixelFormatFromCGImage(CGImageRef imageRef) {
-//	NSCParameterAssert(imageRef != NULL);
-//	size_t bitsPerPixel = CGImageGetBitsPerPixel(imageRef);
-//	CGBitmapInfo bitmapInfo = CGImageGetBitmapInfo(imageRef);
-//	for (NSUInteger i = 0; i < TKPixelFormatInfoTableCount; i++) {
-//		if (TKPixelFormatInfoTable[i].bitsPerPixel == bitsPerPixel && TKPixelFormatInfoTable[i].bitmapInfo == bitmapInfo) {
-//			return TKPixelFormatInfoTable[i].pixelFormat;
-//		}
-//	}
-//	return TKPixelFormatUnknown;
-//}
-//
-//static inline TKPixelFormatInfo TKPixelFormatInfoFromPixelFormat(TKPixelFormat aPixelFormat) {
-//	NSCParameterAssert(aPixelFormat < TKPixelFormatInfoTableCount);
-//	for (NSUInteger i = 0; i < TKPixelFormatInfoTableCount; i++) {
-//		if (TKPixelFormatInfoTable[i].pixelFormat == aPixelFormat) {
-//			TKPixelFormatInfo pixelFormatInfo = {TKPixelFormatInfoTable[i].pixelFormat,
-//				                                 TKPixelFormatInfoTable[i].bitsPerComponent,
-//				                                 TKPixelFormatInfoTable[i].bitsPerPixel,
-//				                                 TKPixelFormatInfoTable[i].bitmapInfo,
-//												 TKPixelFormatInfoTable[i].colorSpaceModel,
-//												 TKPixelFormatInfoTable[i].renderingIntent,
-//												 };
-//			return pixelFormatInfo;
-//		}
-//	}
-//	TKPixelFormatInfo pixelFormatInfo = {0, 0, 0, 0, kCGColorSpaceModelUnknown, kCGRenderingIntentDefault};
-//	return pixelFormatInfo;
-//}
-
-typedef struct TKDXTCompressionQualityDescription {
-	TKDXTCompressionQuality		compressionQuality;
-	NSString					*description;
-} TKDXTCompressionQualityDescription;
-
-static const TKDXTCompressionQualityDescription TKDXTCompressionQualityDescriptionTable[] = {
-	{ TKDXTCompressionLowQuality, @"Low" },
-	{ TKDXTCompressionMediumQuality, @"Medium" },
-	{ TKDXTCompressionHighQuality, @"High" },
-	{ TKDXTCompressionHighestQuality, @"Highest" },
-	{ TKDXTCompressionDefaultQuality, @"Default" },
-	{ TKDXTCompressionNotApplicable, @"N/A" }
-};
-static const NSUInteger TKDXTCompressionQualityDescriptionTableCount = sizeof(TKDXTCompressionQualityDescriptionTable)/sizeof(TKDXTCompressionQualityDescription);
-
-NSString *NSStringFromDXTCompressionQuality(TKDXTCompressionQuality aQuality) {
-	for (NSUInteger i = 0; i < TKDXTCompressionQualityDescriptionTableCount; i++) {
-		if (TKDXTCompressionQualityDescriptionTable[i].compressionQuality == aQuality) {
-			return TKDXTCompressionQualityDescriptionTable[i].description;
-		}
-	}
-	return @"<Unknown>";
-}
-
-TKDXTCompressionQuality TKDXTCompressionQualityFromString(NSString *aQuality) {
-	for (NSUInteger i = 0; i < TKDXTCompressionQualityDescriptionTableCount; i++) {
-		if ([TKDXTCompressionQualityDescriptionTable[i].description isEqualToString:aQuality]) {
-			return TKDXTCompressionQualityDescriptionTable[i].compressionQuality;
-		}
-	}
-	return TKDXTCompressionDefaultQuality;
-}
-
-
-@interface TKImageRep ()
-
-@property (nonatomic, assign) NSUInteger sliceIndex;
-@property (nonatomic, assign) TKFace face;
-@property (nonatomic, assign) NSUInteger frameIndex;
-@property (nonatomic, assign) NSUInteger mipmapIndex;
-
-@property (nonatomic, assign) TKPixelFormat pixelFormat;
-@property (nonatomic, assign) CGBitmapInfo bitmapInfo;
-@property (nonatomic, assign) CGImageAlphaInfo alphaInfo;
-
-
-@end
 
 
 @interface TKImageRep (TKPrivate)
 
-+ (NSArray *)imageRepsWithData:(NSData *)aData firstRepresentationOnly:(BOOL)firstRepOnly;
 - (void)getBitmapInfoAndPixelFormatIfNecessary;
+
 @end
 
-static NSArray *handledUTITypes = nil;
-static NSArray *handledFileTypes = nil;
+
+static NSArray *imageUnfilteredTypes = nil;
+static NSArray *imageUnfilteredFileTypes = nil;
+
 
 static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDefaultQuality;
 
@@ -176,78 +70,69 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 
 @synthesize imageProperties;
 
+@dynamic hasDimensionsThatArePowerOfTwo;
+
 
 /* Implemented by subclassers to indicate what UTI-identified data types they can deal with. */
 + (NSArray *)imageUnfilteredTypes {
+	@synchronized(self) {
+		if (imageUnfilteredTypes == nil) {
+			imageUnfilteredTypes = (NSArray *)CGImageSourceCopyTypeIdentifiers();
 #if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//			NSArray *superTypes = [super imageUnfilteredTypes];
+//			NSLog(@"[%@ %@] super's %@ == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromSelector(_cmd), superTypes);
+//			NSLog(@"[%@ %@] *** FINAL *** imageUnfilteredTypes (CGImageSourceCopyTypeIdentifiers()) == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), imageUnfilteredTypes);
 #endif
-#if TK_DEBUG
-//	NSArray *superTypes = [super imageUnfilteredTypes];
-//	NSLog(@"[%@ %@] super's imageUnfilteredTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), superTypes);
-#endif
-	
-	if (handledUTITypes == nil) {
-		handledUTITypes = (NSArray *)CGImageSourceCopyTypeIdentifiers();
-#if TK_DEBUG
-//		NSLog(@"[%@ %@] CGImageSourceCopyTypeIdentifiers() == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), handledUTITypes);
-#endif
+		}
 	}
-	return handledUTITypes;
+	return imageUnfilteredTypes;
 }
 
 
 
 + (NSArray *)imageUnfilteredFileTypes {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-//	NSArray *superTypes = [super imageUnfilteredFileTypes];
-//	NSLog(@"[%@ %@] super's imageUnfilteredFileTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), superTypes);
-	
-	if (handledFileTypes == nil) {
-		NSMutableArray *mFileTypes = [NSMutableArray array];
-		
-		NSArray *utiTypes = [(NSArray *)CGImageSourceCopyTypeIdentifiers() autorelease];
-		if (utiTypes && [utiTypes count]) {
-			for (NSString *utiType in utiTypes) {
-				NSDictionary *utiDeclarations = [(NSDictionary *)UTTypeCopyDeclaration((CFStringRef)utiType) autorelease];
-				NSDictionary *utiSpec = [utiDeclarations objectForKey:(NSString *)kUTTypeTagSpecificationKey];
-				if (utiSpec) {
-					id extensions = [utiSpec objectForKey:(NSString *)kUTTagClassFilenameExtension];
-					if ([extensions isKindOfClass:[NSString class]]) {
-						[mFileTypes addObject:extensions];
-					} else {
-						[mFileTypes addObjectsFromArray:extensions];
+	@synchronized(self) {
+		if (imageUnfilteredFileTypes == nil) {
+			NSMutableArray *mFileTypes = [NSMutableArray array];
+			
+			NSArray *utiTypes = [(NSArray *)CGImageSourceCopyTypeIdentifiers() autorelease];
+			if (utiTypes && [utiTypes count]) {
+				for (NSString *utiType in utiTypes) {
+					NSDictionary *utiDeclarations = [(NSDictionary *)UTTypeCopyDeclaration((CFStringRef)utiType) autorelease];
+					NSDictionary *utiSpec = [utiDeclarations objectForKey:(NSString *)kUTTypeTagSpecificationKey];
+					if (utiSpec) {
+						id extensions = [utiSpec objectForKey:(NSString *)kUTTagClassFilenameExtension];
+						if ([extensions isKindOfClass:[NSString class]]) {
+							[mFileTypes addObject:extensions];
+						} else {
+							[mFileTypes addObjectsFromArray:extensions];
+						}
 					}
 				}
 			}
+			imageUnfilteredFileTypes = [mFileTypes copy];
+#if TK_DEBUG
+//			NSArray *superTypes = [super imageUnfilteredFileTypes];
+//			NSLog(@"[%@ %@] super's %@ == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromSelector(_cmd), superTypes);
+//			NSLog(@"[%@ %@] CGImageSourceCopyTypeIdentifiers() == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), utiTypes);
+//			NSLog(@"[%@ %@] *** FINAL *** imageUnfilteredFileTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), imageUnfilteredFileTypes);
+#endif
 		}
-		
-//		NSLog(@"[%@ %@] utiTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), utiTypes);
-//		NSLog(@"[%@ %@] fileTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), fileTypes);
-		
-		handledFileTypes = [mFileTypes copy];
-		
 	}
-//	NSLog(@"[%@ %@] handledFileTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), handledFileTypes);
-	
-	return handledFileTypes;
+	return imageUnfilteredFileTypes;
 }
 
 
 + (NSArray *)imageUnfilteredPasteboardTypes {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	static NSArray *imageUnfilteredPasteboardTypes = nil;
 	
-	if (imageUnfilteredPasteboardTypes == nil) {
-		NSArray *types = [super imageUnfilteredPasteboardTypes];
+	@synchronized(self) {
+		if (imageUnfilteredPasteboardTypes == nil) {
+			imageUnfilteredPasteboardTypes = [[super imageUnfilteredPasteboardTypes] retain];
 #if TK_DEBUG
-//		NSLog(@"[%@ %@] super's imageUnfilteredPasteboardTypes == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), types);
+//			NSLog(@"[%@ %@] super's %@ == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), NSStringFromSelector(_cmd), imageUnfilteredPasteboardTypes);
 #endif
-		imageUnfilteredPasteboardTypes = [types retain];
+		}
 	}
 	return imageUnfilteredPasteboardTypes;
 }
@@ -267,13 +152,13 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 	}
 	return YES;
 }
-	
+
 
 + (Class)imageRepClassForType:(NSString *)aType {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if ([handledUTITypes containsObject:aType]) {
+	if ([imageUnfilteredTypes containsObject:aType]) {
 		return [self class];
 	}
 	return [super imageRepClassForType:aType];
@@ -283,10 +168,24 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if ([handledFileTypes containsObject:fileType]) {
+	if ([imageUnfilteredFileTypes containsObject:fileType]) {
 		return [self class];
 	}
 	return [super imageRepClassForFileType:fileType];
+}
+
+
++ (NSString *)localizedNameOfCompressionQuality:(TKDXTCompressionQuality)compressionQuality {
+	NSParameterAssert(compressionQuality <= TKDXTCompressionNotApplicable);
+	switch (compressionQuality) {
+		case TKDXTCompressionLowQuality : return NSLocalizedString(@"Low", @"Low Compression Quality");
+		case TKDXTCompressionMediumQuality: return NSLocalizedString(@"Medium", @"Medium Compression Quality");
+		case TKDXTCompressionHighQuality: return NSLocalizedString(@"High", @"High Compression Quality");
+		case TKDXTCompressionHighestQuality: return NSLocalizedString(@"Highest", @"Highest Compression Quality");
+		case TKDXTCompressionNotApplicable:
+		default:
+			return NSLocalizedString(@"N/A", @"Compression quality doesn't apply");
+	}
 }
 
 
@@ -306,12 +205,31 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 }
 
 
-+ (NSArray *)imageRepsWithData:(NSData *)aData firstRepresentationOnly:(BOOL)firstRepOnly {
+
+#pragma mark - reading
+
++ (NSArray *)imageRepsWithData:(NSData *)containerData {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	return [[self class] imageRepsWithData:containerData error:NULL];
+}
+
+
++ (NSArray *)imageRepsWithData:(NSData *)containerData error:(NSError **)outError {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	return [[self class] imageRepsWithData:containerData firstRepresentationOnly:NO error:outError];
+}
+
+
++ (NSArray *)imageRepsWithData:(NSData *)containerData firstRepresentationOnly:(BOOL)firstRepOnly error:(NSError **)outError {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	CGImageSourceRef source = CGImageSourceCreateWithData((CFDataRef)aData, NULL);
+	CGImageSourceRef source = CGImageSourceCreateWithData((CFDataRef)containerData, NULL);
 	if (source == NULL) {
 		NSLog(@"[%@ %@] CGImageSourceCreateWithData() failed!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 		return nil;
@@ -322,6 +240,34 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 	NSLog(@"[%@ %@] imageCount == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)imageCount);
 #endif
 	
+	if (imageCount == 0) {
+		CGImageSourceStatus status = CGImageSourceGetStatus(source);
+		
+		NSLog(@"[%@ %@] CGImageSourceGetCount() == 0; CGImageSourceGetStatus() == %ld", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (long)status);
+		
+		if (outError) {
+			
+			NSInteger code = 0;
+			
+			switch (status) {
+				case kCGImageStatusUnexpectedEOF: code = TKErrorCGImageSourceUnexpectedEOF;
+					break;
+				case kCGImageStatusInvalidData: code = TKErrorCGImageSourceInvalidData;
+					break;
+				case kCGImageStatusUnknownType: code = TKErrorCGImageSourceUnknownType;
+					break;
+				default:
+					code = TKErrorUnknown;
+					break;
+			}
+			
+			NSString *description = TKLocalizedStringFromImageSourceStatus(status);
+			
+			*outError = [NSError errorWithDomain:TKErrorDomain code:code userInfo:(description == nil ? nil : [NSDictionary dictionaryWithObjectsAndKeys:description,NSLocalizedDescriptionKey, nil])];
+		}
+		CFRelease(source);
+		return nil;
+	}
 	
 	// build options dictionary for image creation that specifies: 
 	//
@@ -340,69 +286,94 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 	for (NSUInteger i = 0; i < imageCount; i++) {
 		CGImageRef imageRef = CGImageSourceCreateImageAtIndex(source, i, (CFDictionaryRef)options);
 		
-		if (imageRef) {
-			// Assign user preferred default profiles if image is not tagged with a profile
-			//		imageRef = CGImageCreateCopyWithDefaultSpace(image);
+		if (imageRef == NULL) {
+			CGImageSourceStatus status = CGImageSourceGetStatus(source);
+			CGImageSourceStatus indexStatus = CGImageSourceGetStatusAtIndex(source, i);
 			
+			NSLog(@"[%@ %@] CGImageSourceCreateImageAtIndex() returned NULL; CGImageSourceGetStatus() == %ld, CGImageSourceGetStatusAtIndex() == %ld", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (long)status, (long)indexStatus);
 			
-//#if TK_DEBUG
-//			NSDictionary *metadata = [(NSDictionary *)CGImageSourceCopyPropertiesAtIndex(source, i, (CFDictionaryRef)options) autorelease];
-//			NSLog(@"[%@ %@] metadata == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), metadata);
-//#endif
-			
-			NSDictionary *properties = [(NSDictionary *)CGImageSourceCopyPropertiesAtIndex(source, i, (CFDictionaryRef)options) autorelease];
-			
-			TKImageRep *imageRep = [[TKImageRep alloc] initWithCGImage:imageRef
-															sliceIndex:TKSliceIndexNone
-																  face:TKFaceNone
-															frameIndex:TKFrameIndexNone
-														   mipmapIndex:i];
-			
-			if (imageRep) {
-				[imageRep setImageProperties:properties];
+			if (outError) {
 				
-				[imageReps addObject:imageRep];
-				[imageRep release];
+				NSInteger code = 0;
+				
+				switch (indexStatus) {
+					case kCGImageStatusUnexpectedEOF: code = TKErrorCGImageSourceUnexpectedEOF;
+						break;
+					case kCGImageStatusInvalidData: code = TKErrorCGImageSourceInvalidData;
+						break;
+					case kCGImageStatusUnknownType: code = TKErrorCGImageSourceUnknownType;
+						break;
+					default:
+						code = TKErrorUnknown;
+						break;
+				}
+				
+				NSString *description = TKLocalizedStringFromImageSourceStatus(indexStatus);
+				
+				*outError = [NSError errorWithDomain:TKErrorDomain code:code userInfo:(description == nil ? nil : [NSDictionary dictionaryWithObjectsAndKeys:description,NSLocalizedDescriptionKey, nil])];
 			}
-			CGImageRelease(imageRef);
+			CFRelease(source);
+			return nil;
 		}
+		
+		NSDictionary *properties = [(NSDictionary *)CGImageSourceCopyPropertiesAtIndex(source, i, (CFDictionaryRef)options) autorelease];
+		
+		TKImageRep *imageRep = [[TKImageRep alloc] initWithCGImage:imageRef
+														sliceIndex:TKSliceIndexNone
+															  face:TKFaceNone
+														frameIndex:TKFrameIndexNone
+													   mipmapIndex:i];
+		
+		if (imageRep) {
+			[imageRep setImageProperties:properties];
+			
+			[imageReps addObject:imageRep];
+			[imageRep release];
+		}
+		CGImageRelease(imageRef);
 		
 		if (firstRepOnly && i == 0) {
 			CFRelease(source);
 			return [[imageReps copy] autorelease];
 		}
 	}
-	
 	CFRelease(source);
-
 	return [[imageReps copy] autorelease];
 }
 
 
-
-+ (NSArray *)imageRepsWithData:(NSData *)aData {
++ (id)imageRepWithData:(NSData *)containerData {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	return [[self class] imageRepsWithData:aData firstRepresentationOnly:NO];
+	return [[self class] imageRepWithData:containerData error:NULL];
 }
 
-+ (id)imageRepWithData:(NSData *)aData {
+
++ (id)imageRepWithData:(NSData *)containerData error:(NSError **)outError {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	NSArray *imageReps = [[self class] imageRepsWithData:aData firstRepresentationOnly:YES];
+	NSArray *imageReps = [[self class] imageRepsWithData:containerData firstRepresentationOnly:YES error:outError];
 	if ([imageReps count]) return [imageReps objectAtIndex:0];
 	return nil;
 }
 
 
-- (id)initWithData:(NSData *)aData {
+- (id)initWithData:(NSData *)containerData {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	NSArray *imageReps = [[self class] imageRepsWithData:aData firstRepresentationOnly:YES];
-	if ((imageReps == nil) || !([imageReps count] > 0)) {
+	return [self initWithData:containerData error:NULL];
+}
+
+
+- (id)initWithData:(NSData *)containerData error:(NSError **)outError {
+#if TK_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	NSArray *imageReps = [[self class] imageRepsWithData:containerData firstRepresentationOnly:YES error:outError];
+	if ((imageReps == nil) || imageReps.count == 0) {
 		[self release];
 		return nil;
 	}
@@ -429,7 +400,6 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 
 
 /* create TKImageRep(s) from NSBitmapImageRep(s) */
-
 + (id)imageRepWithImageRep:(NSBitmapImageRep *)aBitmapImageRep {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -473,14 +443,54 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super initWithCGImage:cgImage])) {
-		[self setFrameIndex:aFrame];
-		[self setMipmapIndex:aMipmap];
-		[self setFace:aFace];
-		[self setSliceIndex:aSlice];
-		[self setBitmapInfo:CGImageGetBitmapInfo(cgImage)];
-		[self setAlphaInfo:CGImageGetAlphaInfo(cgImage)];
-		[self setPixelFormat:TKPixelFormatFromCGImage(cgImage)];
+		frameIndex = aFrame;
+		mipmapIndex = aMipmap;
+		face = aFace;
+		sliceIndex = aSlice;
+		bitmapInfo = CGImageGetBitmapInfo(cgImage);
+		alphaInfo = CGImageGetAlphaInfo(cgImage);
+		pixelFormat = TKPixelFormatFromCGImage(cgImage);
 	}
+	return self;
+}
+
+
+
+- (id)initWithPixelData:(NSData *)pixelData pixelFormat:(TKPixelFormat)aPixelFormat pixelsWide:(NSInteger)width pixelsHigh:(NSInteger)height sliceIndex:(NSUInteger)aSliceIndex face:(TKFace)aFace frameIndex:(NSUInteger)aFrameIndex mipmapIndex:(NSUInteger)aMipmapIndex {
+#if TK_DEBUG
+//    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	TKPixelFormatInfo formatInfo = TKPixelFormatInfoFromPixelFormat(aPixelFormat);
+	
+	CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)pixelData);
+//	CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName((CFStringRef)formatInfo.colorSpaceName);
+	CGColorSpaceRef colorSpace = TKCreateColorSpaceFromColorSpace(formatInfo.colorSpace);
+	
+	CGImageRef imageRef = CGImageCreate(width,
+										height,
+										formatInfo.bitsPerComponent,
+										formatInfo.bitsPerPixel,
+										((formatInfo.bitsPerPixel + 7) / 8) * width,
+										colorSpace,
+										formatInfo.bitmapInfo,
+										provider,
+										NULL,
+										false,
+										kCGRenderingIntentDefault);
+	
+	CGColorSpaceRelease(colorSpace);
+	CGDataProviderRelease(provider);
+	
+	if (imageRef == NULL) {
+		NSLog(@"[%@ %@] *** ERROR: CGImageCreate() failed!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+		[self release];
+		return nil;
+	}
+	
+	if ((self = [self initWithCGImage:imageRef sliceIndex:aSliceIndex face:aFace frameIndex:aFrameIndex mipmapIndex:aMipmapIndex])) {
+		
+	}
+	CGImageRelease(imageRef);
 	return self;
 }
 
@@ -491,15 +501,18 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 //	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	if ((self = [super initWithCoder:coder])) {
-		[self setSliceIndex:[[coder decodeObjectForKey:TKImageRepSliceIndexKey] unsignedIntegerValue]];
-		[self setFace:[[coder decodeObjectForKey:TKImageRepFaceKey] unsignedIntegerValue]];
-		[self setFrameIndex:[[coder decodeObjectForKey:TKImageRepFrameIndexKey] unsignedIntegerValue]];
-		[self setMipmapIndex:[[coder decodeObjectForKey:TKImageRepMipmapIndexKey] unsignedIntegerValue]];
 		
-		[self setBitmapInfo:[[coder decodeObjectForKey:TKImageRepBitmapInfoKey] unsignedIntValue]];
-		[self setPixelFormat:[[coder decodeObjectForKey:TKImageRepPixelFormatKey] unsignedIntegerValue]];
+		sliceIndex = [[coder decodeObjectForKey:TKImageRepSliceIndexKey] unsignedIntegerValue];
+		face = [[coder decodeObjectForKey:TKImageRepFaceKey] unsignedIntegerValue];
+		frameIndex = [[coder decodeObjectForKey:TKImageRepFrameIndexKey] unsignedIntegerValue];
+		mipmapIndex = [[coder decodeObjectForKey:TKImageRepMipmapIndexKey] unsignedIntegerValue];
 		
-		[self setImageProperties:[coder decodeObjectForKey:TKImageRepImagePropertiesKey]];
+		bitmapInfo = [[coder decodeObjectForKey:TKImageRepBitmapInfoKey] unsignedIntValue];
+		alphaInfo = [[coder decodeObjectForKey:TKImageRepAlphaInfoKey] unsignedIntValue];
+		pixelFormat = [[coder decodeObjectForKey:TKImageRepPixelFormatKey] unsignedIntegerValue];
+		
+		imageProperties = [[coder decodeObjectForKey:TKImageRepImagePropertiesKey] retain];
+		
 	}
 	return self;
 }
@@ -516,6 +529,7 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 	[coder encodeObject:[NSNumber numberWithUnsignedInteger:mipmapIndex] forKey:TKImageRepMipmapIndexKey];
 	
 	[coder encodeObject:[NSNumber numberWithUnsignedInt:bitmapInfo] forKey:TKImageRepBitmapInfoKey];
+	[coder encodeObject:[NSNumber numberWithUnsignedInt:alphaInfo] forKey:TKImageRepAlphaInfoKey];
 	[coder encodeObject:[NSNumber numberWithUnsignedInteger:pixelFormat] forKey:TKImageRepPixelFormatKey];
 	
 	[coder encodeObject:imageProperties forKey:TKImageRepImagePropertiesKey];
@@ -524,17 +538,16 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 
 
 - (id)copyWithZone:(NSZone *)zone {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	TKImageRep *copy = (TKImageRep *)[super copyWithZone:zone];
-#if TK_DEBUG
-//	NSLog(@"[%@ %@] copy == %@, class == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), copy, NSStringFromClass([copy class]));
-#endif
 	copy->imageProperties = nil;
 	[copy setImageProperties:imageProperties];
+#if TK_DEBUG
+	NSLog(@"[%@ %@] copy == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), copy);
+#endif
 	return copy;
 }
+
+#pragma mark -
 
 
 - (void)dealloc {
@@ -545,52 +558,25 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 
 - (NSData *)data {
 #if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[self getBitmapInfoAndPixelFormatIfNecessary];
 	CGImageRef imageRef = [self CGImage];
 	NSData *imageData = (NSData *)CGDataProviderCopyData(CGImageGetDataProvider(imageRef));
 	return [imageData autorelease];
-//	return [(NSData *)CGDataProviderCopyData(CGImageGetDataProvider(imageRef)) autorelease];
 }
 
 
-//- (void)setAlpha:(BOOL)flag {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@] *************** flag == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (flag == YES ? @"YES" : @"NO"));
-//#endif
-//	[super setAlpha:flag];
-//}
-//
-//
-//- (BOOL)hasAlpha {
-//	BOOL supersHasAlpha = [super hasAlpha];
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@] *************** supersHasAlpha == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (supersHasAlpha == YES ? @"YES" : @"NO"));
-//#endif
-//	return supersHasAlpha;
-//}
-
-
 - (void)getBitmapInfoAndPixelFormatIfNecessary {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	if (bitmapInfo == UINT_MAX) {
-#if TK_DEBUG
-//		NSLog(@"[%@ %@] bitmapInfo == UINT_MAX", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
+	if (bitmapInfo == (CGBitmapInfo)UINT_MAX) {
 		CGImageRef imageRef = [self CGImage];
 		[self setBitmapInfo:CGImageGetBitmapInfo(imageRef)];
 	}
-	if (alphaInfo == UINT_MAX) {
+	if (alphaInfo == (CGImageAlphaInfo)UINT_MAX) {
 		CGImageRef imageRef = [self CGImage];
 		[self setAlphaInfo:CGImageGetAlphaInfo(imageRef)];
 	}
 	if (pixelFormat == TKPixelFormatUnknown) {
-#if TK_DEBUG
-//		NSLog(@"[%@ %@] pixelFormat == TKPixelFormatUnknown", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 		CGImageRef imageRef = [self CGImage];
 		[self setPixelFormat:TKPixelFormatFromCGImage(imageRef)];
 	}
@@ -599,313 +585,124 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 
 
 - (CGBitmapInfo)bitmapInfo {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	[self getBitmapInfoAndPixelFormatIfNecessary];
 	return bitmapInfo;
 }
 
 - (void)setBitmapInfo:(CGBitmapInfo)aBitmapInfo {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	bitmapInfo = aBitmapInfo;
 }
 
 
 - (CGImageAlphaInfo)alphaInfo {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	[self getBitmapInfoAndPixelFormatIfNecessary];
 	return alphaInfo;
 }
 
 - (void)setAlphaInfo:(CGImageAlphaInfo)info {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	alphaInfo = info;
 }
 
 
 - (TKPixelFormat)pixelFormat {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	[self getBitmapInfoAndPixelFormatIfNecessary];
 	return pixelFormat;
 }
 
 - (void)setPixelFormat:(TKPixelFormat)aFormat {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	pixelFormat = aFormat;
 }
 
 
-- (NSData *)representationUsingPixelFormat:(TKPixelFormat)aPixelFormat {
+- (BOOL)hasDimensionsThatArePowerOfTwo {
+	return TKIsPowerOfTwo(self.pixelsWide) && TKIsPowerOfTwo(self.pixelsHigh);
+}
+
+
+- (NSData *)dataByConvertingToPixelFormat:(TKPixelFormat)aPixelFormat options:(TKPixelFormatConversionOptions)options {
 #if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@] aPixelFormat == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), TKStringFromPixelFormat(aPixelFormat));
 #endif
-	[self getBitmapInfoAndPixelFormatIfNecessary];
+	if (aPixelFormat == self.pixelFormat) return [self data];
+	NSData *convertedData = [TKDDSImageRep dataByConvertingData:[self data] inFormat:self.pixelFormat toFormat:aPixelFormat pixelCount:self.pixelsWide * self.pixelsHigh options:options];
+	return convertedData;
+}
+
+
+#pragma mark - writing
+
+- (NSData *)representationUsingImageType:(NSString *)utiType properties:(NSDictionary *)properties {
+#if TK_DEBUG
+	NSLog(@"[%@ %@] utiType == %@, properties == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), utiType, properties);
+#endif
+	return [[self class] representationOfImageRepsInArray:[NSArray arrayWithObject:self] usingImageType:utiType properties:properties];
+}
+
+
++ (NSData *)representationOfImageRepsInArray:(NSArray *)imageReps usingImageType:(NSString *)utiType properties:(NSDictionary *)properties {
+#if TK_DEBUG
+	NSLog(@"[%@ %@] utiType == %@, properties == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), utiType, properties);
+#endif
 	
-	if (aPixelFormat == pixelFormat) return [self data];
+	NSMutableDictionary *mProperties = (properties == nil ? [NSMutableDictionary dictionary] : [[properties deepMutableCopy] autorelease]);
 	
-	CGImageRef imageRef = [self CGImage];
-	TKPixelFormatInfo pixelFormatInfo = TKPixelFormatInfoFromPixelFormat(aPixelFormat);
+//	[mProperties setObject:(id)kCGImagePropertyColorModelRGB forKey:(id)kCGImagePropertyColorModel];
+	NSMutableDictionary *TIFFDictionary = [mProperties objectForKey:(id)kCGImagePropertyTIFFDictionary];
+	if (TIFFDictionary == nil) {
+		TIFFDictionary = [NSMutableDictionary dictionary];
+		[mProperties setObject:TIFFDictionary forKey:(id)kCGImagePropertyTIFFDictionary];
+	}
+	
+	[TIFFDictionary setObject:[NSString stringWithFormat:@"%@ %@ (%@)",
+							   [[NSBundle mainBundle] objectForInfoDictionaryKey:(id)kCFBundleExecutableKey],
+							   [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
+							   [[NSBundle mainBundle] objectForInfoDictionaryKey:(id)kCFBundleVersionKey]]
+	 
+					   forKey:(id)kCGImagePropertyTIFFSoftware];
 	
 	
+	NSMutableData *imageData = [NSMutableData data];
 	
-	
-//	if (pixelFormatInfo == NULL) return nil;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	size_t newLength = CGImageGetWidth(imageRef) * (pixelFormatInfo.bitsPerPixel / 8) * CGImageGetHeight(imageRef);
-	
-	if (newLength == 0) return nil;
-	
-	void *bitmapData = malloc(newLength);
-	if (bitmapData == NULL) {
-		NSLog(@"[%@ %@] malloc(%llu) failed!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long long)newLength);
+	CGImageDestinationRef imageDest = CGImageDestinationCreateWithData((CFMutableDataRef)imageData , (CFStringRef)utiType, imageReps.count, NULL);
+	if (imageDest == NULL) {
+		NSLog(@"[%@ %@] ERROR: CGImageDestinationCreateWithData() returned NULL", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 		return nil;
 	}
 	
-	size_t imageWidth = CGImageGetWidth(imageRef);
-	size_t imageHeight = CGImageGetHeight(imageRef);
-	
-	size_t bitsPerComponent = pixelFormatInfo.bitsPerPixel/4;
-	size_t bytesPerRow = CGImageGetWidth(imageRef) * (pixelFormatInfo.bitsPerPixel / 8);
-	
-	CGColorSpaceRef colorspace = CGImageGetColorSpace(imageRef);
-	if (colorspace == NULL) {
-		NSLog(@"[%@ %@] CGImageGetColorSpace(imageRef) returned NULL", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//		colorspace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
-		colorspace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-	} else {
-		CGColorSpaceRetain(colorspace);
+	for (TKImageRep *imageRep in imageReps) {
+		CGImageRef imageRef = [imageRep CGImage];
+		CGImageDestinationAddImage(imageDest, imageRef, (CFDictionaryRef)mProperties);
 	}
 	
-	CGContextRef bitmapContext = CGBitmapContextCreate(bitmapData,
-													   imageWidth,
-													   imageHeight,
-													   bitsPerComponent,
-													   bytesPerRow,
-													   colorspace,
-													   pixelFormatInfo.bitmapInfo);
-	if (bitmapContext == NULL) {
-		NSLog(@"[%@ %@] CGBitmapContextCreate() returned NULL!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-		CGColorSpaceRelease(colorspace);
-		free(bitmapData);
-		return nil;
+	if (!CGImageDestinationFinalize(imageDest)) {
+		NSLog(@"[%@ %@] NOTICE: CGImageDestinationFinalize() returned false", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 	}
 	
-	CGContextDrawImage(bitmapContext, CGRectMake(0.0, 0.0, CGImageGetWidth(imageRef), CGImageGetHeight(imageRef)), imageRef);
-	NSData *repData = [NSData dataWithBytes:bitmapData length:newLength];
-	CGContextRelease(bitmapContext);
-	CGColorSpaceRelease(colorspace);
-	free(bitmapData);
-	return repData;
+	CFRelease(imageDest);
+	return [[imageData copy] autorelease];
 }
 
 
-void TKInitBuffer(vImage_Buffer *result, int height, int width, size_t bytesPerPixel) {
-	size_t rowBytes = width * bytesPerPixel;
-	
-	//Widen rowBytes out to a integer multiple of 16 bytes
-	rowBytes = (rowBytes + 15) & ~15;
-	
-	//Make sure we are not an even power of 2 wide. 
-	//Will loop a few times for rowBytes <= 16.
-	
-	while (0 == (rowBytes & (rowBytes - 1)))
-		rowBytes += 16;	//grow rowBytes
-	
-	//Set up the buffer
-	result->height = height;
-	result->width = width;
-	result->rowBytes = rowBytes;
-	result->data = malloc(rowBytes * height); 
-}
+#pragma mark -
 
-void TKFreeBuffer(vImage_Buffer *buffer) {
-	if (buffer && buffer->data)
-		free(buffer->data);
+
+
+/* Creates an autoreleased copy of the receiver that has been resized using the specified resize mode and filter. */
+- (TKImageRep *)imageRepByResizingUsingResizeMode:(TKResizeMode)resizeMode resizeFilter:(TKResizeFilter)resizeFilter {
+#if TK_DEBUG
+//    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	TKImageRep *resizedImageRep = [TKDDSImageRep imageRepByResizingImageRep:self usingResizeMode:resizeMode resizeFilter:resizeFilter];
+	return resizedImageRep;
 }
 
 
-+ (NSData *)dataRepresentationOfData:(NSData *)data inPixelFormat:(TKPixelFormat)sourcePixelFormat size:(NSSize)size usingPixelFormat:(TKPixelFormat)destPixelFormat {
-	NSParameterAssert(data != nil);
-	if (sourcePixelFormat == destPixelFormat) return data;
-//#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-	
-	if (sourcePixelFormat == TKPixelFormatRGBA16161616F && destPixelFormat == TKPixelFormatRGBA32323232F) {
-		UInt16 *sourceRGBAHalfBytes = (UInt16 *)[data bytes];
-//		UInt16 *planarARGBHalfBytes = calloc([data length], sizeof(UInt16));
-		UInt16 *planarARGBHalfBytes = malloc([data length]);
-		
-		NSUInteger pixelCount = size.width * size.height;
-		
-		NSUInteger pA, pR, pG, pB, sR, sG, sB, sA = 0;
-		
-		
-		for (NSUInteger i = 0; i < pixelCount; i++) {
-			pA = i * sizeof(UInt16)  + 0 * pixelCount * sizeof(UInt16);
-			pR = i * sizeof(UInt16)  + 1 * pixelCount * sizeof(UInt16);
-			pG = i * sizeof(UInt16)  + 2 * pixelCount * sizeof(UInt16);
-			pB = i * sizeof(UInt16)  + 3 * pixelCount * sizeof(UInt16);
-			
-			sR = i * sizeof(UInt16) + 3 * sizeof(UInt16);
-			sG = i * sizeof(UInt16) + 0 * sizeof(UInt16);
-			sB = i * sizeof(UInt16) + 1 * sizeof(UInt16);
-			sA = i * sizeof(UInt16) + 2 * sizeof(UInt16);
-			
-			// alpha
-			planarARGBHalfBytes[i * sizeof(UInt16)  + 0 * pixelCount * sizeof(UInt16)] = sourceRGBAHalfBytes[i * sizeof(UInt16) + 3 * sizeof(UInt16)];
-			planarARGBHalfBytes[i * sizeof(UInt16)  + 1 * pixelCount * sizeof(UInt16)] = sourceRGBAHalfBytes[i * sizeof(UInt16) + 0 * sizeof(UInt16)];
-			planarARGBHalfBytes[i * sizeof(UInt16)  + 2 * pixelCount * sizeof(UInt16)] = sourceRGBAHalfBytes[i * sizeof(UInt16) + 1 * sizeof(UInt16)];
-			planarARGBHalfBytes[i * sizeof(UInt16)  + 3 * pixelCount * sizeof(UInt16)] = sourceRGBAHalfBytes[i * sizeof(UInt16) + 2 * sizeof(UInt16)];
-		}
-		
-		vImage_Buffer sourceBuffer;
-		sourceBuffer.data = planarARGBHalfBytes;
-		sourceBuffer.height = size.height;
-		sourceBuffer.width = size.width;
-		sourceBuffer.rowBytes = size.width * sizeof(UInt16) * 4;
-		
-		vImage_Buffer destBuffer;
-		TKInitBuffer(&destBuffer, size.height, size.width, 16);
-		
-		vImage_Error error = vImageConvert_Planar16FtoPlanarF(&sourceBuffer, &destBuffer, kvImageNoFlags);
-		
-		if (error != kvImageNoError) {
-			NSLog(@"[%@ %@] vImageConvert_Planar16FtoPlanarF() returned %d", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned int)error);
-			
-		}
-		
-//		NSData *dataRepresentation = [NSData dataWithBytesNoCopy:destBuffer.data length:size.width * size.height * sizeof(float) * 4 freeWhenDone:YES];
-		
-		NSData *dataRepresentation = [NSData dataWithBytes:destBuffer.data length:size.width * size.height * sizeof(float) * 4];
-		return dataRepresentation;
-		
-		
-	}
-	
-	
-	return nil;
-}
-
-
-+ (NSData *)representationUsingPixelFormat:(TKPixelFormat)destPixelFormat ofData:(NSData *)aData inPixelFormat:(TKPixelFormat)sourcePixelFormat {
-	NSParameterAssert(aData != nil);
-	if (sourcePixelFormat == destPixelFormat) return aData;
-	
-	if (sourcePixelFormat == TKPixelFormatRGBA16161616F && destPixelFormat == TKPixelFormatRGBA32323232F) {
-		
-		
-	}
-	
-	
-	return nil;
-}
-
-
-//- (NSData *)representationUsingPixelFormat:(TKPixelFormat)aPixelFormat {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//#endif
-//	[self getBitmapInfoAndPixelFormatIfNecessary];
-//	
-//	if (aPixelFormat == pixelFormat) return [self data];
-//	
-//	CGImageRef imageRef = [self CGImage];
-//	TKPixelFormatInfo *pixelFormatInfo = TKPixelFormatInfoFromPixelFormat(aPixelFormat);
-//	if (pixelFormatInfo == NULL) return nil;
-//	
-//	size_t newLength = CGImageGetWidth(imageRef) * (pixelFormatInfo->bitsPerPixel / 8) * CGImageGetHeight(imageRef);
-//	
-//	
-//	void *bitmapData = malloc(newLength);
-//	if (bitmapData == NULL) {
-//		NSLog(@"[%@ %@] malloc(%llu) failed!", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long long)newLength);
-//		return nil;
-//	}
-//	
-//	size_t imageWidth = CGImageGetWidth(imageRef);
-//	size_t imageHeight = CGImageGetHeight(imageRef);
-//	
-//	size_t bitsPerComponent = pixelFormatInfo->bitsPerPixel/4;
-//	size_t bytesPerRow = CGImageGetWidth(imageRef) * (pixelFormatInfo->bitsPerPixel / 8);
-//	
-//	CGColorSpaceRef colorspace = CGImageGetColorSpace(imageRef);
-//	if (colorspace == NULL) {
-//		NSLog(@"[%@ %@] CGImageGetColorSpace(imageRef) returned NULL", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-////		colorspace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
-//		colorspace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-//	} else {
-//		CGColorSpaceRetain(colorspace);
-//	}
-//	
-//	CGContextRef bitmapContext = CGBitmapContextCreate(bitmapData,
-//													   imageWidth,
-//													   imageHeight,
-//													   bitsPerComponent,
-//													   bytesPerRow,
-//													   colorspace,
-//													   pixelFormatInfo->bitmapInfo);
-//	if (bitmapContext == NULL) {
-//		NSLog(@"[%@ %@] CGBitmapContextCreate() returned NULL!", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-//		CGColorSpaceRelease(colorspace);
-//		free(bitmapData);
-//		return nil;
-//	}
-//	
-//	CGContextDrawImage(bitmapContext, CGRectMake(0.0, 0.0, CGImageGetWidth(imageRef), CGImageGetHeight(imageRef)), imageRef);
-//	NSData *repData = [NSData dataWithBytes:bitmapData length:newLength];
-//	CGContextRelease(bitmapContext);
-//	CGColorSpaceRelease(colorspace);
-//	free(bitmapData);
-//	return repData;
-//}
-
-
-//- (NSData *)representationForType:(NSString *)utiType {
-//#if TK_DEBUG
-//	NSLog(@"[%@ %@] utiType == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), utiType);
-//#endif
-//	NSMutableData *imageData = [NSMutableData data];
-//	
-//	CGImageDestinationRef imageDest = CGImageDestinationCreateWithData((CFMutableDataRef)imageData , (CFStringRef)utiType, 1, NULL);
-//	if (imageDest == NULL) {
-//		return nil;
-//	}
-//	
-//	CGImageRef imageRef = [self CGImage];
-//	CGImageDestinationAddImage(imageDest, imageRef, NULL);
-//	CGImageDestinationFinalize(imageDest);
-//	CFRelease(imageDest);
-//	
-//	return [[imageData copy] autorelease];
-//}
-
-
-
-- (void)setSliceIndex:(NSUInteger)aSliceIndex face:(TKFace)aFace frameIndex:(NSUInteger)aFrameIndex mipmapIndex:(NSUInteger)aMipmapIndex {
-	[self setSliceIndex:aSliceIndex];
-	[self setFace:aFace];
-	[self setFrameIndex:aFrameIndex];
-	[self setMipmapIndex:aMipmapIndex];
+- (NSArray *)mipmapImageRepsUsingFilter:(TKMipmapGenerationType)filterType {
+#if TK_DEBUG
+//    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	NSArray *mipmapImageReps = [TKDDSImageRep mipmapImageRepsOfImageRep:self usingFilter:filterType];
+	return mipmapImageReps;
 }
 
 
@@ -927,12 +724,11 @@ void TKFreeBuffer(vImage_Buffer *buffer) {
 
 
 
-- (NSArray *)mipmapImageRepsUsingFilter:(TKMipmapGenerationType)filterType {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	TKDDSImageRep *ddsImageRep = [TKDDSImageRep imageRepWithImageRep:self];
-	return [ddsImageRep mipmapImageRepsUsingFilter:filterType];
+- (void)setSliceIndex:(NSUInteger)aSliceIndex face:(TKFace)aFace frameIndex:(NSUInteger)aFrameIndex mipmapIndex:(NSUInteger)aMipmapIndex {
+	[self setSliceIndex:aSliceIndex];
+	[self setFace:aFace];
+	[self setFrameIndex:aFrameIndex];
+	[self setMipmapIndex:aMipmapIndex];
 }
 
 
@@ -944,11 +740,7 @@ void TKFreeBuffer(vImage_Buffer *buffer) {
 }
 
 
-
 - (NSComparisonResult)compare:(TKImageRep *)anImageRep {
-#if TK_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	NSSize ourSize = [self size];
 	NSSize theirSize = [anImageRep size];
 	
@@ -996,14 +788,13 @@ void TKFreeBuffer(vImage_Buffer *buffer) {
 }
 
 
-
 - (BOOL)isEqual:(id)object {
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 //	if ([object isKindOfClass:[self class]]) {
 	if ([object isKindOfClass:[TKImageRep class]]) {
-		if (MDGetSystemVersion() <= MDLeopard) {
+		if (TKGetSystemVersion() <= TKLeopard) {
 #if TK_DEBUG
 			NSLog(@"[%@ %@] (TKImageRepLeopardIsEqualCompatability)", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
@@ -1031,47 +822,125 @@ void TKFreeBuffer(vImage_Buffer *buffer) {
 }
 
 
-- (NSString *)description {
-	NSMutableString *description = [NSMutableString string];
-	[description appendFormat:@"%@ sliceIndex == %lu, ", [super description], (unsigned long)sliceIndex];
-	[description appendFormat:@"face == %lu, ", (unsigned long)face];
-	[description appendFormat:@"frameIndex == %lu, ", (unsigned long)frameIndex];
-	[description appendFormat:@"mipmapIndex == %lu, ", (unsigned long)mipmapIndex];
-	[description appendFormat:@"bitmapInfo == %lu, ", (unsigned long)[self bitmapInfo]];
-	[description appendFormat:@"alphaInfo == %lu, ", (unsigned long)[self alphaInfo]];
-	[description appendFormat:@"bitmapFormat == %lu, ", (unsigned long)[self bitmapFormat]];
-	[description appendFormat:@"imageProperties == %@", [self imageProperties]];
-	return description;
-}
-
-
-@end
-
-
-@implementation TKImageRep (TKLargestRepresentationAdditions)
-
 + (TKImageRep *)largestRepresentationInArray:(NSArray *)imageReps {
-#if TK_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	if (imageReps == nil) return nil;
+	NSParameterAssert(imageReps != nil);
+	if (imageReps.count == 0) return nil;
 	
-	NSUInteger repCount = [imageReps count];
+	NSUInteger repCount = imageReps.count;
 	if (repCount == 1) return [imageReps objectAtIndex:0];
 	
-	NSDate *theStartDate = [NSDate date];
 	NSArray *sortedImageReps = [imageReps sortedArrayUsingSelector:@selector(compare:)];
-	NSTimeInterval elapsedTime = fabs([theStartDate timeIntervalSinceNow]);
-#if TK_DEBUG
-	NSLog(@"[%@ %@] elapsed time to sort %lu TKImageReps == %.7f sec / %.4f ms", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)repCount, elapsedTime, elapsedTime * 1000.0);
-#endif
 	
 	return [sortedImageReps objectAtIndex:0];
 }
 
 
++ (BOOL)sizeIsPowerOfTwo:(NSSize)aSize {
+	NSSize integralSize = NSIntegralRect(NSMakeRect(0, 0, aSize.width, aSize.height)).size;
+	return (TKIsPowerOfTwo((NSUInteger)integralSize.width) && TKIsPowerOfTwo((NSUInteger)integralSize.height));
+}
+
+
++ (NSSize)powerOfTwoSizeForSize:(NSSize)aSize usingResizeMode:(TKResizeMode)resizeMode {
+	NSParameterAssert(resizeMode <= TKResizeModePreviousPowerOfTwo);
+	NSSize integralSize = NSIntegralRect(NSMakeRect(0, 0, aSize.width, aSize.height)).size;
+	
+	if ([[self class] sizeIsPowerOfTwo:integralSize]) return integralSize;
+	
+	if (resizeMode == TKResizeModeNextPowerOfTwo) {
+		return NSMakeSize((CGFloat)TKNextPowerOfTwo((NSUInteger)aSize.width), (CGFloat)TKNextPowerOfTwo((NSUInteger)aSize.height));
+		
+	} else if (resizeMode == TKResizeModeNearestPowerOfTwo) {
+		return NSMakeSize((CGFloat)TKNearestPowerOfTwo((NSUInteger)aSize.width), (CGFloat)TKNearestPowerOfTwo((NSUInteger)aSize.height));
+		
+	} else if (resizeMode == TKResizeModePreviousPowerOfTwo) {
+		return NSMakeSize((CGFloat)TKPreviousPowerOfTwo((NSUInteger)aSize.width), (CGFloat)TKPreviousPowerOfTwo((NSUInteger)aSize.height));
+		
+	}
+	return integralSize;
+}
+
+
+typedef struct TKFaceInfo {
+	TKFace				face;
+	NSUInteger			xFactor;
+	NSUInteger			yFactor;
+	NSString	* const	description;
+} TKFaceInfo;
+
+static const TKFaceInfo TKFaceInfoTable[] = {
+	{ TKFaceRight,		2, 1,	@"TKFaceRight" },
+	{ TKFaceLeft,		0, 1,	@"TKFaceLeft" },
+	{ TKFaceBack,		1, 2,	@"TKFaceBack" },
+	{ TKFaceFront,		1, 0,	@"TKFaceFront" },
+	{ TKFaceUp,			1, 1,	@"TKFaceUp" },
+	{ TKFaceDown,		3, 1,	@"TKFaceDown" },
+	{ TKFaceSphereMap,	0, 0,	@"TKFaceSphereMap" },
+};
+
++ (NSRect)rectForFace:(TKFace)face inEnvironmentMapRect:(NSRect)environmentMapRect {
+	NSParameterAssert(face < TKFaceSphereMap);
+	CGFloat width = NSWidth(environmentMapRect) / 4.0;
+	CGFloat height = NSHeight(environmentMapRect) / 3.0;
+	
+	TKFaceInfo faceInfo = TKFaceInfoTable[face];
+	
+	return NSMakeRect(0.0 + width * faceInfo.xFactor, 0.0 + height * faceInfo.yFactor, width, height);
+}
+
+
+
+#define TK_DEBUG_DATA 1
+#define TK_DEBUG_DATA_NUM_PIXELS 8
+
+
+
+- (NSString *)description {
+	NSMutableString *description = [NSMutableString string];
+	[description appendFormat:@"%@ sliceIndex == %@, ", [super description], (sliceIndex == TKSliceIndexNone ? @"TKSliceIndexNone" : [NSNumber numberWithUnsignedInteger:sliceIndex])];
+	[description appendFormat:@"face == %@, ", (face == TKFaceNone ? @"TKFaceNone" : TKFaceInfoTable[face].description)];
+	[description appendFormat:@"frameIndex == %@, ", (frameIndex == TKFrameIndexNone ? @"TKFrameIndexNone" : [NSNumber numberWithUnsignedInteger:frameIndex])];
+	[description appendFormat:@"mipmapIndex == %@, ", (mipmapIndex == TKMipmapIndexNone ? @"TKMipmapIndexNone" : [NSNumber numberWithUnsignedInteger:mipmapIndex])];
+	
+	[description appendFormat:@"pixelFormat == %@, ", TKStringFromPixelFormat([self pixelFormat])];
+	[description appendFormat:@"bitmapInfo == %@, ", TKStringFromCGBitmapInfo([self bitmapInfo])];
+	[description appendFormat:@"alphaInfo == %@, ", TKStringFromCGBitmapInfo([self alphaInfo])];
+	
+	[description appendFormat:@"bitmapFormat == %lu, ", (unsigned long)[self bitmapFormat]];
+	[description appendFormat:@"imageProperties == %@, \n", imageProperties];
+	
+	
+#if TK_DEBUG_DATA
+	
+	if (mipmapIndex == 0 && self.pixelsWide >= TK_DEBUG_DATA_NUM_PIXELS) {
+		NSData *imageRepData = self.data;
+		
+		if (imageRepData.length >= TK_DEBUG_DATA_NUM_PIXELS * ((self.bitsPerPixel + 7) / 8)) {
+			NSData *sampleData = [imageRepData subdataWithRange:NSMakeRange(0, TK_DEBUG_DATA_NUM_PIXELS * ((self.bitsPerPixel + 7) / 8) )];
+			
+			if (self.pixelFormat == TKPixelFormatR32F) {
+				[description appendFormat:@"\n sampleData == %@", [sampleData enhancedFloatDescriptionForComponentCount:1]];
+				[description appendFormat:@"\n sampleData == %@", [sampleData enhancedDescription]];
+				
+			} else if (self.pixelFormat == TKPixelFormatRGB323232F) {
+				[description appendFormat:@"\n sampleData == %@", [sampleData enhancedFloatDescriptionForComponentCount:3]];
+				[description appendFormat:@"\n sampleData == %@", [sampleData enhancedDescription]];
+				
+			} else if (self.pixelFormat == TKPixelFormatRGBA32323232F) {
+				[description appendFormat:@"\n sampleData == %@", [sampleData enhancedFloatDescriptionForComponentCount:4]];
+				[description appendFormat:@"\n sampleData == %@", [sampleData enhancedDescription]];
+				
+			} else {
+				[description appendFormat:@"\n sampleData == %@", [sampleData enhancedDescription]];
+			}
+		}
+	}
+	
+#endif
+	
+	return description;
+}
+
 @end
-
-
 
 

@@ -62,7 +62,6 @@ vlBool CFileReader::Open()
 		return vlFalse;
 	}
 #else
-	
 	this->iFile = open(this->cFileName, O_RDONLY);
 	
 	if (this->iFile < 0)

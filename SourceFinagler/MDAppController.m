@@ -24,6 +24,7 @@
 
 #import "TKImageDocument.h"
 #import "TKImageInspectorController.h"
+#import <Sparkle/Sparkle.h>
 
 
 
@@ -54,6 +55,7 @@ static NSString * const MDEmailDynamicURLString		= @"mailto:mark@markdouma.com?s
 static NSString * const MDEmailAddress					= @"mark@markdouma.com";
 static NSString * const MDiChatURLString				= @"aim:goim?screenname=MarkDouma46&message=Type+your+message+here.";
 
+static NSString * const MDSUFeedURLLeopard		= @"http://www.markdouma.com/sourcefinagler/versionLeopard.xml";
 
 BOOL	MDShouldShowViewOptions = NO;
 BOOL	MDShouldShowInspector = NO;
@@ -171,6 +173,9 @@ static NSArray *appClassNames = nil;
 }
 
 - (void)dealloc {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	[viewControllers release];
@@ -189,8 +194,6 @@ static NSArray *appClassNames = nil;
 	[viewCustomizeToolbarMenuItem release];
 	[viewOptionsMenuItem release];
 	
-	[globalUndoManager release];
-	
 	[super dealloc];
 }
 
@@ -198,7 +201,9 @@ static NSArray *appClassNames = nil;
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	
+	if (MDGetSystemVersion() <= MDLeopard) {
+		[sparkleUpdater setFeedURL:[NSURL URLWithString:MDSUFeedURLLeopard]];
+	}
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
@@ -325,7 +330,7 @@ static NSArray *appClassNames = nil;
 
 - (void)forceSpotlightReimport:(id)sender {
 //#if MD_DEBUG
-//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 //#endif
 	NSString *spotlightImporterPath = [NSString pathWithComponents:[NSArray arrayWithObjects:[[NSBundle mainBundle] bundlePath], @"Contents", @"Library", @"Spotlight", @"Source.mdimporter", nil]];
 	
@@ -581,8 +586,13 @@ static NSArray *appClassNames = nil;
 }
 
 
+
+#pragma mark - <NSMenuDelegate>
+
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
-//	NSLog(@"[%@ %@] %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), menuItem);
+#if MD_DEBUG
+//	NSLog(@"[%@ %@] menuItem == %@, action == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), menuItem, NSStringFromSelector(menuItem.action));
+#endif
 	
 	SEL action = [menuItem action];
 	

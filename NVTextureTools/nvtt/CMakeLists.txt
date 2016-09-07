@@ -1,18 +1,18 @@
 PROJECT(nvtt)
 
 ADD_SUBDIRECTORY(squish)
-#ADD_SUBDIRECTORY(bc6h)
-#ADD_SUBDIRECTORY(bc7)
+ADD_SUBDIRECTORY(bc6h)
+ADD_SUBDIRECTORY(bc7)
 
 SET(NVTT_SRCS
     nvtt.h nvtt.cpp
     nvtt_wrapper.h nvtt_wrapper.cpp
     ClusterFit.h ClusterFit.cpp
     Compressor.h
-    CompressorDXT.h CompressorDXT.cpp
+    BlockCompressor.h BlockCompressor.cpp
     CompressorDX9.h CompressorDX9.cpp
     CompressorDX10.h CompressorDX10.cpp
-#    CompressorDX11.h CompressorDX11.cpp
+    CompressorDX11.h CompressorDX11.cpp
     CompressorRGB.h CompressorRGB.cpp
     Context.h Context.cpp
     QuickCompressDXT.h QuickCompressDXT.cpp
@@ -47,7 +47,7 @@ ELSE(NVTT_SHARED)
     ADD_LIBRARY(nvtt ${NVTT_SRCS})
 ENDIF(NVTT_SHARED)
 
-TARGET_LINK_LIBRARIES(nvtt ${LIBS} nvcore nvmath nvimage nvthread squish)
+TARGET_LINK_LIBRARIES(nvtt ${LIBS} nvcore nvmath nvimage nvthread squish bc6h bc7)
 
 INSTALL(TARGETS nvtt 
     RUNTIME DESTINATION bin

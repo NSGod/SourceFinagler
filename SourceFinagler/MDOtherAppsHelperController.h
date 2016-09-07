@@ -1,5 +1,5 @@
 //
-//  MDMouseAppHelperController.h
+//  MDOtherAppsHelperController.h
 //  Source Finagler
 //
 //  Created by Mark Douma on 6/13/2010.
@@ -16,9 +16,9 @@
 
 enum {
 	MDNoMouseSoftware	= 0,
-	MDUSBOverdrive		= 1 << 1,
-	MDSteerMouse		= 1 << 2,
-	MDLogitech			= 1 << 3
+	MDUSBOverdrive		= 1UL << 0,
+	MDSteerMouse		= 1UL << 1,
+	MDLogitech			= 1UL << 2,
 };
 typedef NSUInteger MDMouseSoftware;
 

@@ -796,12 +796,12 @@ static bool savePNG(Stream & s, const Image * img, const char ** tags/*=NULL*/)
         while(tags[2 * count] != NULL) count++;
 
         text = new png_text[count];
-        memset(text, 0, count * sizeof(png_text);
+        memset(text, 0, count * sizeof(png_text));
 
         for (int i = 0; i < count; i++) {
             text[i].compression = PNG_TEXT_COMPRESSION_NONE;
-            text[i].key = tags[2 * i + 0];
-            text[i].text = tags[2 * i + 1];
+            text[i].key = (png_charp)tags[2 * i + 0];
+            text[i].text = (png_charp)tags[2 * i + 1];
         }
 
         png_set_text(png_ptr, info_ptr, text, count);
@@ -1027,7 +1027,7 @@ static FloatImage * loadFloatTIFF(const char * fileName, Stream & s)
     AutoPtr<FloatImage> fimage(new FloatImage());
     fimage->allocate(spp, width, height);
 
-    int linesize = TIFFScanlineSize(tif);
+    tmsize_t linesize = TIFFScanlineSize(tif);
     tdata_t buf = malloc<uint8>(linesize);
 
     for (uint y = 0; y < height; y++)
@@ -1036,7 +1036,7 @@ static FloatImage * loadFloatTIFF(const char * fileName, Stream & s)
 
 	for (uint c=0; c<spp; c++ )
 	{
-	    float * dst = fimage->scanline(y, c);
+	    float * dst = fimage->scanline(y, c, 0);
 
 	    for(uint x = 0; x < width; x++)
 	    {
@@ -1112,7 +1112,7 @@ static bool saveFloatTIFF(const char * fileName, const FloatImage * fimage, uint
     {
         for (int c = 0; c < iC; c++)
         {
-            const float * src = fimage->scanline(y, base_component + c);
+            const float * src = fimage->scanline(y, base_component + c, 0);
             for (int x = 0; x < iW; x++) scanline[x * iC + c] = src[x];
         }
         if (TIFFWriteScanline(image, scanline, y, 0)==-1)
@@ -1918,8 +1918,9 @@ bool nv::ImageIO::saveFloat(const char * fileName, const FloatImage * fimage, ui
     if (baseComponent + componentCount < fimage->componentCount()) {
         return false;
     }
-
-//    const char * extension = Path::extension(fileName);
+#if (defined(HAVE_OPENEXR) || defined(HAVE_TIFF))
+    const char * extension = Path::extension(fileName);
+#endif
 
 #if defined(HAVE_OPENEXR)
     if (strCaseCmp(extension, ".exr") == 0) {

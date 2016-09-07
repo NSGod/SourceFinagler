@@ -32,6 +32,8 @@ typedef NSUInteger HKArchiveFileType;
 	
 	NSString				*filePath;
 	
+	NSNumber				*fileSize;
+	
 	HKFolder				*items;
 	NSMutableArray			*allItems;
 	
@@ -56,6 +58,8 @@ typedef NSUInteger HKArchiveFileType;
 
 
 @property (nonatomic, readonly, retain) NSString *filePath;
+
+@property (nonatomic, readonly, retain) NSNumber *fileSize;
 
 @property (nonatomic, readonly, assign) HKArchiveFileType archiveFileType;
 

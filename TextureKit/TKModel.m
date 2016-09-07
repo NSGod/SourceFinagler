@@ -665,7 +665,7 @@ typedef struct {
 	
 	currentOffset += sizeof(TKModelHeader);
 	
-	if (![[NSString stringWithCString:header.fileIdentifier encoding:NSASCIIStringEncoding] isEqual:TKAppleOpenGLDemoIdentifier]) {
+	if (![[NSString stringWithCString:header.fileIdentifier encoding:NSASCIIStringEncoding] isEqualToString:TKAppleOpenGLDemoIdentifier]) {
 		NSLog(@"[%@ %@] fileIdentifier != %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), TKAppleOpenGLDemoIdentifier);
 		return NO;
 	}

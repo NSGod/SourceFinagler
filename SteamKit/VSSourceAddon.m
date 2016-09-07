@@ -1,9 +1,9 @@
 //
 //  VSSourceAddon.m
-//  Steam Kit
+//  SteamKit
 //
 //  Created by Mark Douma on 11/15/2010.
-//  Copyright © 2010-2014 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2014 Mark Douma LLC. All rights reserved.
 //
 
 #import "VSSourceAddon.h"
@@ -21,6 +21,8 @@
 @implementation VSSourceAddon
 
 @synthesize URL;
+@synthesize originalURL;
+@synthesize fileSize;
 @synthesize fileName;
 @synthesize fileIcon;
 @synthesize game;
@@ -40,6 +42,7 @@
 		if (outError) *outError = nil;
 		
 		URL = [aURL retain];
+		originalURL = [URL retain];
 		
 		fileName = [[URL.path lastPathComponent] retain];
 		
@@ -70,6 +73,8 @@
 				break;
 		}
 		
+		fileSize = [file.fileSize retain];
+		
 		sourceAddonGameID = file.sourceAddonGameID;
 		
 		if (sourceAddonStatus == VSSourceAddonValidAddon) {
@@ -77,7 +82,7 @@
 			
 			if (game) {
 				
-				if ([[URL URLByDeletingLastPathComponent] isEqual:game.sourceAddonsFolderURL]) {
+				if ([[URL.path stringByDeletingLastPathComponent] isEqualToString:game.sourceAddonsFolderURL.path]) {
 					installed = YES;
 					sourceAddonStatus = VSSourceAddonAlreadyInstalled;
 				}
@@ -93,6 +98,8 @@
 
 - (void)dealloc {
 	[URL release];
+	[originalURL release];
+	[fileSize release];
 	[fileName release];
 	[fileIcon release];
 	[game release];

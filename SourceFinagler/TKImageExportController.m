@@ -1,6 +1,6 @@
 //
 //  TKImageExportController.m
-//  Texture Kit
+//  Source Finagler
 //
 //  Created by Mark Douma on 12/11/2010.
 //  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
@@ -57,9 +57,14 @@ enum {
 
 @implementation TKImageExportController
 
-@synthesize image, document, selectedTag, previewViewZoomFactor;
+@synthesize image;
+@synthesize document;
+@synthesize selectedTag;
+@synthesize previewViewZoomFactor;
 
-@dynamic preset, previewMode;
+@dynamic preset;
+@dynamic previewMode;
+
 
 + (void)initialize {
 #if TK_DEBUG
@@ -535,10 +540,10 @@ enum {
 		}
 		
 		if (hasTitle == NO) {
-			[preset setCompressionFormat:NSStringFromVTFFormat(vtfFormat)];
+			[preset setCompressionFormat:[TKVTFImageRep localizedNameOfFormat:vtfFormat]];
 		}
 		
-		vtfFormat = TKVTFFormatFromString([preset compressionFormat]);
+//		vtfFormat = TKVTFFormatFromString([preset compressionFormat]);
 		
 	} else if ([[[preset fileType] lowercaseString] isEqualToString:TKDDSFileType]) {
 		
@@ -556,10 +561,10 @@ enum {
 		}
 		
 		if (hasTitle == NO) {
-			[preset setCompressionFormat:NSStringFromDDSFormat(ddsFormat)];
+			[preset setCompressionFormat:[TKDDSImageRep localizedNameOfFormat:ddsFormat]];
 		}
 		
-		ddsFormat = TKDDSFormatFromString([preset compressionFormat]);
+//		ddsFormat = TKDDSFormatFromString([preset compressionFormat]);
 	}
 	
 	if ([preset isEqualToPreset:[TKImageExportPreset originalImagePreset]]) {

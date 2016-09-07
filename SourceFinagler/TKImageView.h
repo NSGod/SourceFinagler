@@ -1,6 +1,6 @@
 //
 //  TKImageView.h
-//  Texture Kit
+//  Source Finagler
 //
 //  Created by Mark Douma on 11/15/2010.
 //  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
@@ -24,16 +24,13 @@ enum {
 @end
 
 
-@class TKAnimationImageView;
-
-
 @interface TKImageView : IKImageView {
+	@private
+	id	_TK__private;
 	
 	id <TKImageViewDelegate>					delegate;		// non-retained
 	
-	TKAnimationImageView						*animationImageView;
-	
-	
+
 	CGImageRef									image;
 	
 	TKImageRep									*previewImageRep;
@@ -45,7 +42,7 @@ enum {
 }
 
 
-@property (copy) NSArray *animationImageReps;
+@property (nonatomic, copy) NSArray *animationImageReps;
 
 
 - (void)startAnimating;
@@ -56,12 +53,12 @@ enum {
 
 @property (assign) IBOutlet id <TKImageViewDelegate> delegate;
 
-@property (retain) TKImageRep *previewImageRep;
+@property (nonatomic, retain) TKImageRep *previewImageRep;
 
 @property (assign, getter=isPreviewing) BOOL previewing;
 
 
-@property (assign) BOOL showsImageBackground;
+@property (nonatomic, assign) BOOL showsImageBackground;
 
 
 
@@ -71,4 +68,5 @@ enum {
 
 
 @end
+
 

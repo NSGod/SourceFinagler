@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import "MDInspectorView.h"
 
-//@class MDInspectorView;
 
 @interface MDSelfExpandingTextField : NSTextField <MDInspectorViewDelegate> {
 	IBOutlet MDInspectorView *inspectorView;

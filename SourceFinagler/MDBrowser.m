@@ -121,7 +121,6 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	
 	if ((self = [super initWithCoder:coder])) {
 		[self finishSetup];
 	}
@@ -344,14 +343,10 @@ enum {
 - (void)rightMouseDown:(NSEvent *)event {
 #if MD_DEBUG
 	NSLog(@" \"%@\" [%@ %@]", [[[[self window] windowController] document] displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	NSInteger clickedColumn = [self clickedColumn];
 	NSInteger clickedRow = [self clickedRow];
-	
-#if MD_DEBUG
 	NSLog(@"[%@ %@] clickedColumn == %ld, clickedRow == %ld", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (long)clickedColumn, (long)clickedRow);
 #endif
-	
 	[super rightMouseDown:event];
 }
 
@@ -365,13 +360,11 @@ enum {
 	if (modifierFlags & NSAlternateKeyMask || modifierFlags & NSCommandKeyMask) {
 		return [super mouseDown:event];
 	} else if (modifierFlags & NSControlKeyMask) {
+#if MD_DEBUG
 		NSInteger clickedColumn = [self clickedColumn];
 		NSInteger clickedRow = [self clickedRow];
-		
-#if MD_DEBUG
 		NSLog(@"[%@ %@] clickedColumn == %ld, clickedRow == %ld", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (long)clickedColumn, (long)clickedRow);
 #endif
-		
 	}
 	[super mouseDown:event];
 }

@@ -42,7 +42,7 @@
 
 
 
-#define MD_DEBUG 0
+#define MD_DEBUG 1
 #define MD_DEBUG_TABLE_COLUMNS 1
 
 
@@ -50,8 +50,6 @@
 NSString * const MDHLDocumentErrorDomain			= @"MDHLDocumentErrorDomain";
 NSString * const MDHLDocumentURLKey					= @"MDHLDocumentURL";
 
-
-/************** 1.5 - for font suitcase  and more ************/
 
 
 NSString * const MDDocumentWindowSavedFrameKey						= @"MDDocumentWindowSavedFrame";
@@ -346,10 +344,12 @@ static NSInteger copyTag = 0;
 		[searchToolbarItem setMaxSize:NSMakeSize(230.0,22.0)];
 	}
 	
-		
+	[searchInspectorView setInitiallyShown:NO];
 	[searchInspectorView setShown:NO];
 	
 	MDShouldShowPathBar = [[[NSUserDefaults standardUserDefaults] objectForKey:MDShouldShowPathBarKey] boolValue];
+	
+	[pathControlInspectorView setInitiallyShown:NO];
 	
 	[pathControl setURL:[self fileURL]];
 	[pathControl setTarget:self];
@@ -1301,18 +1301,16 @@ static NSInteger copyTag = 0;
 	
 	if (items && [items count]) {
 		
-		NSDate *startDate = [NSDate date];
-		
 #if MD_DEBUG
-//		NSUInteger dragEventModifiers = [[NSApp currentEvent] modifierFlags];
-//		NSLog(@" \"%@\" [%@ %@] dragEventModifiers == %lu", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)dragEventModifiers);
+		NSDate *startDate = [NSDate date];
 #endif
 		
 		NSDictionary *simplifiedItemsAndPaths = [self simplifiedItemsAndPathsForItems:items resultingNames:&resultingNames];
+		
+#if MD_DEBUG
 		NSTimeInterval elapsedTime = fabs([startDate timeIntervalSinceNow]);
-		
-		NSLog(@"[%@ %@] elapsed time to gather %lu items == %.7f sec / %.4f ms", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)[simplifiedItemsAndPaths count], elapsedTime, elapsedTime * 1000.0);
-		
+		NSLog(@"[%@ %@] elapsed time to gather %lu item(s) == %.7f sec / %.4f ms", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)[simplifiedItemsAndPaths count], elapsedTime, elapsedTime * 1000.0);
+#endif
 		
 		if (simplifiedItemsAndPaths == nil) {
 			return nil;
@@ -1384,7 +1382,9 @@ static NSInteger copyTag = 0;
 			unsigned long long currentBytes = 0;
 			
 			
+#if MD_DEBUG
 			NSDate *startDate = [NSDate date];
+#endif
 			
 			
 			for (HKItem *item in allItems) {
@@ -1393,9 +1393,11 @@ static NSInteger copyTag = 0;
 				}
 			}
 			
+#if MD_DEBUG
 			NSTimeInterval elapsedTime = fabs([startDate timeIntervalSinceNow]);
 			
 			NSLog(@"[%@ %@] elapsed time to size %lu items == %.7f sec / %.4f ms", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (unsigned long)[allItems count], elapsedTime, elapsedTime * 1000.0);
+#endif
 			
 			NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
 										copyOperation,MDCopyOperationKey,
@@ -1562,10 +1564,10 @@ static NSInteger copyTag = 0;
 			NSUInteger totalItemCount = [[dictionary objectForKey:MDCopyOperationTotalItemCountKey] unsignedIntegerValue];
 			
 			if (totalItemCount == 1) {
-				[copyOperation setInformativeText:[NSString stringWithFormat:NSLocalizedString(@"Preparing to copy %lu item", @""), totalItemCount]];
+				[copyOperation setInformativeText:[NSString stringWithFormat:NSLocalizedString(@"Preparing to copy %lu item", @""), (unsigned long)totalItemCount]];
 				
 			} else {
-				[copyOperation setInformativeText:[NSString stringWithFormat:NSLocalizedString(@"Preparing to copy %lu items", @""), totalItemCount]];
+				[copyOperation setInformativeText:[NSString stringWithFormat:NSLocalizedString(@"Preparing to copy %lu items", @""), (unsigned long)totalItemCount]];
 			}
 			
 			
@@ -1588,9 +1590,9 @@ static NSInteger copyTag = 0;
 			NSNumber *currentBytes = [dictionary objectForKey:MDCopyOperationCurrentBytesKey];
 			
 			if (totalItemCount == 1) {
-				[copyOperation setMessageText:[NSString stringWithFormat:NSLocalizedString(@"Copying %lu item to \"%@\"", @""), totalItemCount - currentItemIndex, destination]];
+				[copyOperation setMessageText:[NSString stringWithFormat:NSLocalizedString(@"Copying %lu item to \"%@\"", @""), (unsigned long)(totalItemCount - currentItemIndex), destination]];
 			} else {
-				[copyOperation setMessageText:[NSString stringWithFormat:NSLocalizedString(@"Copying %lu items to \"%@\"", @""), totalItemCount - currentItemIndex, destination]];
+				[copyOperation setMessageText:[NSString stringWithFormat:NSLocalizedString(@"Copying %lu items to \"%@\"", @""), (unsigned long)(totalItemCount - currentItemIndex), destination]];
 			}
 			
 			[copyOperation setInformativeText:[NSString stringWithFormat:NSLocalizedString(@"%@ of %@", @""), [fileSizeFormatter stringForObjectValue:currentBytes],
@@ -1829,8 +1831,10 @@ static NSInteger copyTag = 0;
 				
 				/* get current browser selection, select items in outline view, then switch view to outline view, then deselect items in browser */
 				
+#if MD_DEBUG
 				NSArray *selectionIndexPaths = [browser selectionIndexPaths];
 				NSLog(@"[%@ %@] selectionIndexPaths == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), selectionIndexPaths);
+#endif
 				
 				[[file items] setSortDescriptors:[outlineView sortDescriptors]];
 				[[file items] recursiveSortChildren];
@@ -2097,7 +2101,7 @@ static NSInteger copyTag = 0;
 	}
 	
 	if (menu == [actionButton menu]) {
-			
+		
 		if (selectedCount == 0) {
 			[actionButton setItemArray:[NSArray arrayWithObjects:
 										actionButtonActionImageItem,

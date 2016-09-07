@@ -5,6 +5,9 @@
 //  Created by Mark Douma on 1/31/2008.
 //  Copyright © 2008 Mark Douma. All rights reserved.
 //  
+
+//	Based, in part, on "FileSystemBrowserCell":
+
 /*
      File: FileSystemBrowserCell.h
  Abstract: A cell that can draw an image/icon and a label color.

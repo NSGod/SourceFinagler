@@ -9,6 +9,11 @@
 #import "VSGameAdditions.h"
 
 
+
+#define VS_DEBUG 0
+
+
+
 @implementation VSGame (VSAdditions)
 
 
@@ -32,7 +37,9 @@
 
 
 + (NSSet *)keyPathsForValuesAffectingRunningStateImage {
+#if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
 	return [NSSet setWithObjects:@"isRunning", nil];
 }
 

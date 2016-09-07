@@ -1,6 +1,6 @@
 //
 //  TKImageExportPreset.m
-//  Texture Kit
+//  Source Finagler
 //
 //  Created by Mark Douma on 12/11/2010.
 //  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
@@ -336,10 +336,11 @@ static NSMutableArray *imagePresets = nil;
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	return [[self class] DDSRepresentationOfImageRepsInArray:tkImageReps
-												 usingFormat:TKDDSFormatFromString([preset compressionFormat])
-													 quality:TKDXTCompressionQualityFromString([preset compressionQuality])
-													 options:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:[preset mipmapGeneration]],TKImageMipmapGenerationKey, nil]];
+//	return [[self class] DDSRepresentationOfImageRepsInArray:tkImageReps
+//												 usingFormat:TKDDSFormatFromString([preset compressionFormat])
+//													 quality:TKDXTCompressionQualityFromString([preset compressionQuality])
+//													 options:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:[preset mipmapGeneration]],TKImageMipmapGenerationKey, nil]];
+	return nil;
 }
 
 @end
@@ -351,11 +352,11 @@ static NSMutableArray *imagePresets = nil;
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	
-	return [[self class] VTFRepresentationOfImageRepsInArray:tkImageReps
-												 usingFormat:TKVTFFormatFromString([preset compressionFormat])
-													 quality:TKDXTCompressionQualityFromString([preset compressionQuality])
-													 options:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:[preset mipmapGeneration]],TKImageMipmapGenerationKey, nil]];
+//	return [[self class] VTFRepresentationOfImageRepsInArray:tkImageReps
+//												 usingFormat:TKVTFFormatFromString([preset compressionFormat])
+//													 quality:TKDXTCompressionQualityFromString([preset compressionQuality])
+//													 options:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:[preset mipmapGeneration]],TKImageMipmapGenerationKey, nil]];
+	return nil;
 }
 
 @end

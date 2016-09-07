@@ -17,6 +17,8 @@ See the License for the specific language governing permissions and limitations 
 
 #include <string.h> // memcpy
 
+using namespace ZOH;
+
 
 bool ZOH::isone(const char *block)
 {
@@ -29,8 +31,8 @@ void ZOH::compress(const Tile &t, char *block)
 {
 	char oneblock[ZOH::BLOCKSIZE], twoblock[ZOH::BLOCKSIZE];
 
-	double mseone = ZOH::compressone(t, oneblock);
-	double msetwo = ZOH::compresstwo(t, twoblock);
+	float mseone = ZOH::compressone(t, oneblock);
+	float msetwo = ZOH::compresstwo(t, twoblock);
 
 	if (mseone <= msetwo)
 		memcpy(block, oneblock, ZOH::BLOCKSIZE);
@@ -130,7 +132,7 @@ static void stats(char block[ZOH::BLOCKSIZE])
 {
 	char mode = block[0] & 0x1F; if ((mode & 0x3) == 0) mode = 0; if ((mode & 0x3) == 1) mode = 1; modehist[mode]++;
 	int prec = mode_to_prec[mode];
-	assert (prec != -1);
+	nvAssert (prec != -1);
 	if (!ZOH::isone(block))
 	{
 		tworegions++;

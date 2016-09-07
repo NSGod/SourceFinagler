@@ -1,6 +1,6 @@
 //
 //  TKImageExportController.h
-//  Texture Kit
+//  Source Finagler
 //
 //  Created by Mark Douma on 12/11/2010.
 //  Copyright (c) 2010-2012 Mark Douma LLC. All rights reserved.
@@ -11,7 +11,7 @@
 #import "TKImageView.h"
 #import <TextureKit/TextureKit.h>
 
-@class TKImage, TKImageExportPreviewViewController, TKImageDocument, TKImageExportPreset, TKImageExportPreview;
+@class TKImageExportPreviewViewController, TKImageDocument, TKImageExportPreset, TKImageExportPreview;
 
 
 
@@ -89,17 +89,17 @@
 - (void)cleanup;
 
 
-@property (assign) CGFloat previewViewZoomFactor;
+@property (nonatomic, assign) CGFloat previewViewZoomFactor;
 
-@property (assign) TKImageDocument *document;
+@property (nonatomic, assign) TKImageDocument *document;
 
-@property (retain) TKImageExportPreset *preset;
+@property (nonatomic, retain) TKImageExportPreset *preset;
 
-@property (assign) NSInteger previewMode;
+@property (nonatomic, assign) NSInteger previewMode;
 
-@property (assign) NSInteger selectedTag;
+@property (nonatomic, assign) NSInteger selectedTag;
 
-@property (retain) TKImage *image;
+@property (nonatomic, retain) TKImage *image;
 
 
 

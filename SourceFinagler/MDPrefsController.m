@@ -12,7 +12,7 @@
 
 
 
-#define MD_DEBUG 1
+#define MD_DEBUG 0
 
 
 static NSString * const MDPrefsCurrentViewIndexKey			= @"MDPrefsCurrentViewIndex";

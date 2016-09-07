@@ -167,9 +167,6 @@ extern NSString * const MDHLDocumentURLKey;
 
 
 	
-/************** 1.5 - for document  ************/
-
-
 extern NSString * const MDDocumentWindowSavedFrameKey;
 
 extern NSString * const MDShouldShowInvisibleItemsKey;

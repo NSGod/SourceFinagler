@@ -44,7 +44,6 @@ static NSMutableDictionary	*placeholderImageBrowserItemsAndSizes = nil;
 #if TK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-//	NSMutableArray *faceBrowserItems = [NSMutableArray array];
 	
 	TKImageRep *largestImageRep = [TKImageRep largestRepresentationInArray:imageReps];
 	
@@ -77,20 +76,6 @@ static NSMutableDictionary	*placeholderImageBrowserItemsAndSizes = nil;
 	return [NSArray arrayWithObjects:placeholderItem, backFaceItem, placeholderItem, placeholderItem,
 									leftFaceItem, upFaceItem, rightFaceItem, downFaceItem,
 									placeholderItem, frontFaceItem, placeholderItem, placeholderItem, nil];
-	
-	
-//	TKImageRep *faceRight = [TKImageRep imageRepForFace:TKFaceRight ofImageRepsInArray:imageReps];
-//	TKImageRep *faceLeft = [TKImageRep imageRepForFace:TKFaceLeft ofImageRepsInArray:imageReps];
-//	TKImageRep *faceBack = [TKImageRep imageRepForFace:TKFaceBack ofImageRepsInArray:imageReps];
-//	TKImageRep *faceFront = [TKImageRep imageRepForFace:TKFaceFront ofImageRepsInArray:imageReps];
-//	TKImageRep *faceUp = [TKImageRep imageRepForFace:TKFaceUp ofImageRepsInArray:imageReps];
-//	TKImageRep *faceDown = [TKImageRep imageRepForFace:TKFaceDown ofImageRepsInArray:imageReps];
-//	
-//	TKImageRep *placeholderImageRep = [TKImageRep 
-//	
-//	
-//	
-//	return [[faceBrowserItems copy] autorelease];
 }
 
 
@@ -175,18 +160,16 @@ static NSMutableDictionary	*placeholderImageBrowserItemsAndSizes = nil;
 
 - (NSString *)imageTitle {
 	switch (type) {
+			
 		case TKPlaceholderBrowserItemType :
-			return nil;
-//			break;
 		case TKFaceBrowserItemType :
 			return nil;
-//			break;
+			
 		case TKFrameBrowserItemType :
 			return [NSString stringWithFormat:@"%lu", (unsigned long)[imageRep frameIndex] + 1];
-//			break;
+			
 		default:
 			return nil;
-			break;
 	}
 	return nil;
 }

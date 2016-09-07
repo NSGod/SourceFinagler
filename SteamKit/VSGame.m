@@ -1,9 +1,9 @@
 //
 //  VSGame.m
-//  Steam Kit
+//  SteamKit
 //
 //  Created by Mark Douma on 6/13/2010.
-//  Copyright © 2010-2014 Mark Douma LLC. All rights reserved.
+//  Copyright (c) 2010-2014 Mark Douma LLC. All rights reserved.
 //
 
 
@@ -22,8 +22,9 @@ static NSString * const VSGameInfoPlistKey			= @"VSGameInfoPlist";
 
 
 static NSString * const VSResourceNameKey			= @"resource";
-NSString * const VSGameIconNameKey					= @"VSGameIconName";
+NSString * const VSGameIconNamesKey					= @"VSGameIconNames";
 
+static NSString * const VSGameSourceAddonFolderName	= @"addons";
 
 
 #define VS_DEBUG 0
@@ -62,18 +63,31 @@ NSString * const VSGameIconNameKey					= @"VSGameIconName";
 		displayName = [[infoDictionary objectForKey:(NSString *)kCFBundleNameKey] retain];
 		
 		NSString *shortFolderName = [anInfoPlist objectForKey:VSGameShortNameKey];
-		NSString *iconFilename = [anInfoPlist objectForKey:VSGameIconNameKey];
+		NSArray *iconFilenames = [anInfoPlist objectForKey:VSGameIconNamesKey];
+		
+		NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+		BOOL isDir;
 		
 		if (shortFolderName) {
 			
-			self.iconURL = [[[[executableURL URLByDeletingLastPathComponent]
-							  URLByAppendingPathComponent:shortFolderName]
-							 URLByAppendingPathComponent:VSResourceNameKey]
-							URLByAppendingPathComponent:iconFilename];
-			
+			for (NSString *iconFilename in iconFilenames) {
+				NSString *possibleIconPath = [NSString pathWithComponents:
+											  [NSArray arrayWithObjects:[executableURL.path stringByDeletingLastPathComponent],
+											   shortFolderName,
+											   VSResourceNameKey,
+											   iconFilename, nil]];
+				
+				if ([fileManager fileExistsAtPath:possibleIconPath isDirectory:&isDir] && !isDir) {
+					
+					self.iconURL = [NSURL fileURLWithPath:[NSString pathWithComponents:
+														   [NSArray arrayWithObjects:[executableURL.path stringByDeletingLastPathComponent],
+															shortFolderName,
+															VSResourceNameKey,
+															iconFilename, nil]]];
+					break;
+				}
+			}
 		}
-		NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
-		BOOL isDir;
 		
 		self.icon = [[[NSImage alloc] initByReferencingURL:iconURL] autorelease];
 		
@@ -82,9 +96,10 @@ NSString * const VSGameIconNameKey					= @"VSGameIconName";
 		}
 		
 		if ([[anInfoPlist objectForKey:VSGameSupportsAddonsKey] boolValue]) {
-			NSURL *addonsURL = [[[executableURL URLByDeletingLastPathComponent]
-								URLByAppendingPathComponent:shortFolderName]
-							   URLByAppendingPathComponent:VSSourceAddonFolderNameKey];
+			NSURL *addonsURL = [NSURL fileURLWithPath:[NSString pathWithComponents:
+													   [NSArray arrayWithObjects:[executableURL.path stringByDeletingLastPathComponent],
+														shortFolderName,
+														VSGameSourceAddonFolderName, nil]]];
 			
 			if ([fileManager fileExistsAtPath:addonsURL.path isDirectory:&isDir] && isDir) {
 				self.sourceAddonsFolderURL = addonsURL;
@@ -97,9 +112,7 @@ NSString * const VSGameIconNameKey					= @"VSGameIconName";
 
 
 - (id)copyWithZone:(NSZone *)zone {
-#if VS_DEBUG
 	NSLog(@"[%@ %@] why is this being called?", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	VSGame *copy = (VSGame *)[[[self class] allocWithZone:zone] init];
 	copy.gameID = gameID;
 	copy.creatorCode = creatorCode;
@@ -165,13 +178,13 @@ NSString * const VSGameIconNameKey					= @"VSGameIconName";
 	NSMutableString *description = [NSMutableString stringWithFormat:@"%@ -", [super description]];
 	
 	[description appendFormat:@" %@", displayName];
-	[description appendFormat:@", gameID == %lu", gameID];
+	[description appendFormat:@", gameID == %lu",  (unsigned long)gameID];
 //	[description appendFormat:@", iconPath == %@", iconPath];
 //	[description appendFormat:@", path == %@", path];
 	[description appendFormat:@", isHelped == %@", (helped ? @"YES" : @"NO")];
 	[description appendFormat:@", isRunning == %@", (running ? @"YES" : @"NO")];
 	[description appendFormat:@", hasUpgradedLocation == %@", (self.hasUpgradedLocation ? @"YES" : @"NO")];
-	[description appendFormat:@", addonsFolderURL == %@", sourceAddonsFolderURL];
+	[description appendFormat:@", sourceAddonsFolderURL == %@", sourceAddonsFolderURL];
 	return description;
 }
 
@@ -180,7 +193,8 @@ NSString * const VSGameIconNameKey					= @"VSGameIconName";
 	if ([anObject isKindOfClass:[self class]]) {
 		return [self isEqualToGame:anObject];
 	}
-	return NO;
+//	return NO;
+	return [super isEqual:anObject];
 }
 
 

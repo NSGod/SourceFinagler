@@ -160,8 +160,8 @@ namespace HLLib
 		typedef CSGADirectory<SGADirectoryHeader4, SGASection4, SGAFolder4, SGAFile, SGAFileHeader> CSGADirectory4;
 		typedef CSGADirectory<SGADirectoryHeader5, SGASection5, SGAFolder5, SGAFile, SGAFileHeader> CSGADirectory5;
 
-		friend CSGADirectory4;
-		friend CSGADirectory5;
+//		friend class CSGADirectory4;
+//		friend CSGADirectory5;
 
 	private:
 		static const char *lpAttributeNames[];

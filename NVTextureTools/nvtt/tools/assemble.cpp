@@ -59,13 +59,13 @@ int main(int argc, char *argv[])
 			assembleVolume = false;
 			assembleTextureArray = false;
 		}
-		/*if (strcmp("-volume", argv[i]) == 0)
+		if (strcmp("-volume", argv[i]) == 0)
 		{
 			assembleCubeMap = false;
 			assembleVolume = true;
 			assembleTextureArray = false;
 		}
-		if (strcmp("-array", argv[i]) == 0)
+		/*if (strcmp("-array", argv[i]) == 0)
 		{
 			assembleCubeMap = false;
 			assembleVolume = false;
@@ -82,6 +82,10 @@ int main(int argc, char *argv[])
 		else if (argv[i][0] != '-')
 		{
 			files.append(argv[i]);
+		}
+		else
+		{
+			printf("Warning: unrecognized option \"%s\"\n", argv[i]);
 		}
 	}
 	

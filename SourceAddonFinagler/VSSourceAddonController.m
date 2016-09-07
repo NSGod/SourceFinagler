@@ -21,6 +21,15 @@ static NSString * const VSSourceAddonProblemAddonsSortDescriptorsKey				= @"VSSo
 #define VS_DEBUG 0
 
 
+@interface VSSourceAddonController (VSPrivate)
+
+- (void)beginProcessingSourceAddonsAtURLs:(NSArray *)URLs;
+- (void)beginProcessingNextSetOfSourceAddonURLs;
+- (void)processSourceAddonsAtURLs:(NSArray *)URLs;
+- (void)finishInstallation;
+
+@end
+
 
 @implementation VSSourceAddonController
 
@@ -37,7 +46,7 @@ static NSString * const VSSourceAddonProblemAddonsSortDescriptorsKey				= @"VSSo
 + (void)initialize {
 	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
 	[defaultValues setObject:[NSNumber numberWithUnsignedInteger:VSSourceAddonInstallByMoving] forKey:VSSourceAddonInstallMethodKey];
-	NSArray *sortDescriptors = [NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"fileName" ascending:YES selector:@selector(localizedStandardCompare:)], nil];
+	NSArray *sortDescriptors = [NSArray arrayWithObjects:[[[NSSortDescriptor alloc] initWithKey:@"fileName" ascending:YES selector:@selector(localizedCaseInsensitiveNumericalCompare:)] autorelease], nil];
 	[defaultValues setSortDescriptors:sortDescriptors forKey:VSSourceAddonInstalledAddonsSortDescriptorsKey];
 	[defaultValues setSortDescriptors:sortDescriptors forKey:VSSourceAddonAlreadyInstalledAddonsSortDescriptorsKey];
 	[defaultValues setSortDescriptors:sortDescriptors forKey:VSSourceAddonProblemAddonsSortDescriptorsKey];
@@ -55,6 +64,8 @@ static NSString * const VSSourceAddonProblemAddonsSortDescriptorsKey				= @"VSSo
 		
 		[[VSSteamManager defaultManager] setDelegate:self];
 		
+		sourceAddonURLs = [[NSMutableArray alloc] init];
+		sourceAddonURLsLock = [[NSRecursiveLock alloc] init];
 	}
 	return self;
 }
@@ -65,6 +76,8 @@ static NSString * const VSSourceAddonProblemAddonsSortDescriptorsKey				= @"VSSo
 	[alreadyInstalledAddons release];
 	[problemAddons release];
 	[[VSSteamManager defaultManager] setDelegate:nil];
+	[sourceAddonURLs release];
+	[sourceAddonURLsLock release];
 	[super dealloc];
 }
 
@@ -86,17 +99,32 @@ static NSString * const VSSourceAddonProblemAddonsSortDescriptorsKey				= @"VSSo
 }
 
 
+- (void)applicationWillTerminate:(NSNotification *)notification {
+#if VS_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	[[NSUserDefaults standardUserDefaults] setSortDescriptors:[self installedAddonsSortDescriptors] forKey:VSSourceAddonInstalledAddonsSortDescriptorsKey];
+	[[NSUserDefaults standardUserDefaults] setSortDescriptors:[self alreadyInstalledAddonsSortDescriptors] forKey:VSSourceAddonAlreadyInstalledAddonsSortDescriptorsKey];
+	[[NSUserDefaults standardUserDefaults] setSortDescriptors:[self problemAddonsSortDescriptors] forKey:VSSourceAddonProblemAddonsSortDescriptorsKey];
+}
+
+
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
+	return YES;
+}
+
+
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filePaths {
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	NSMutableArray *sourceAddonURLs = [NSMutableArray array];
+	NSMutableArray *URLs = [NSMutableArray array];
 	for (NSString *filePath in filePaths) {
 		NSURL *sourceAddonURL = [NSURL fileURLWithPath:filePath];
-		if (sourceAddonURL) [sourceAddonURLs addObject:sourceAddonURL];
+		if (sourceAddonURL) [URLs addObject:sourceAddonURL];
 	}
-	[self processSourceAddonsAtURLs:sourceAddonURLs];
+	[self beginProcessingSourceAddonsAtURLs:URLs];
 }
 
 
@@ -104,84 +132,196 @@ static NSString * const VSSourceAddonProblemAddonsSortDescriptorsKey				= @"VSSo
 #if VS_DEBUG
 	NSLog(@"[%@ %@] pboard == %@, pboard.types == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), pboard, pboard.types);
 #endif
-	NSArray *sourceAddonURLs = [pboard readObjectsForClasses:[NSArray arrayWithObject:[NSURL class]]
+	NSArray *URLs = [pboard readObjectsForClasses:[NSArray arrayWithObject:[NSURL class]]
 													 options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:NSPasteboardURLReadingFileURLsOnlyKey]];
 	
 #if VS_DEBUG
-	NSLog(@"[%@ %@] sourceAddonURLs == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sourceAddonURLs);
+	NSLog(@"[%@ %@] URLs == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), URLs);
 #endif
 	
-	[self processSourceAddonsAtURLs:sourceAddonURLs];
+	[self beginProcessingSourceAddonsAtURLs:URLs];
 }
-	
 
-- (void)processSourceAddonsAtURLs:(NSArray *)sourceAddonURLs {
+
+
+- (NSUInteger)synchronizedSourceAddonURLsCount {
+	NSUInteger sourceAddonURLsCount = 0;
+	[sourceAddonURLsLock lock];
+	sourceAddonURLsCount = sourceAddonURLs.count;
+	[sourceAddonURLsLock unlock];
+	return sourceAddonURLsCount;
+}
+
+
+
+- (void)beginProcessingSourceAddonsAtURLs:(NSArray *)URLs {
+#if VS_DEBUG
+	NSLog(@"[%@ %@] URLs == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), URLs);
+#endif
+	
+	NSMutableSet *mURLs = [NSMutableSet setWithArray:URLs];
+	
+	[sourceAddonURLsLock lock];
+	[sourceAddonURLs addObject:mURLs];
+	[sourceAddonURLsLock unlock];
+	
+	if ([self synchronizedSourceAddonURLsCount] == 1) {
+		[self beginProcessingNextSetOfSourceAddonURLs];
+	}
+}
+
+#define VS_NEXT_SET_INTERVAL 1.0
+
+
+- (void)beginProcessingNextSetOfSourceAddonURLs {
 #if VS_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	VSSourceAddonInstallMethod installMethod = [[[NSUserDefaults standardUserDefaults] objectForKey:VSSourceAddonInstallMethodKey] unsignedIntegerValue];
+	NSMutableSet *mURLs = nil;
 	
+	[sourceAddonURLsLock lock];
+	if (sourceAddonURLs.count) {
+		mURLs = [[[sourceAddonURLs objectAtIndex:0] retain] autorelease];
+	}
+	[sourceAddonURLsLock unlock];
+	
+	[self processSourceAddonsAtURLs:[mURLs allObjects]];
+}
+
+
+- (void)processSourceAddonsAtURLs:(NSArray *)URLs {
+#if VS_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	
+	[progressIndicator setIndeterminate:YES];
 	[progressIndicator startAnimation:nil];
 	
-	if (![copyProgressWindow isVisible]) {
+	if (!copyProgressWindow.isVisible) {
 		[copyProgressWindow center];
 		[copyProgressWindow makeKeyAndOrderFront:nil];
 	}
 	
-	for (NSURL *sourceAddonURL in sourceAddonURLs) {
+	NSMutableArray *addonsToInstall = [NSMutableArray array];
+	
+	
+	for (NSURL *sourceAddonURL in URLs) {
 		VSSourceAddon *addon = [VSSourceAddon sourceAddonWithContentsOfURL:sourceAddonURL error:NULL];
-		if (addon) [addons addObject:addon];
+		if (addon) {
+			[addons addObject:addon];
+			[addonsToInstall addObject:addon];
+		}
 	}
 	
-	for (VSSourceAddon *addon in addons) {
+	unsigned long long totalFileSize = 0;
+	
+	for (VSSourceAddon *addon in addonsToInstall) totalFileSize += [addon.fileSize unsignedLongLongValue];
+	
+	// keep the progress indicator indeterminate until we've installed the first addon
+	
+	[progressIndicator setMaxValue:(double)totalFileSize];
+	[progressIndicator setDoubleValue:0.0];
+	
+	
+	VSSourceAddonInstallMethod installMethod = [[[NSUserDefaults standardUserDefaults] objectForKey:VSSourceAddonInstallMethodKey] unsignedIntegerValue];
+	
+	for (VSSourceAddon *addon in addonsToInstall) {
 		[[VSSteamManager defaultManager] installSourceAddon:addon usingMethod:installMethod];
 	}
 	
-	[progressIndicator setMaxValue:addons.count];
-	
-	[progressIndicator setDoubleValue:0.0];
-	[progressIndicator setIndeterminate:NO];
 }
+
+
+- (void)updateProgressForSourceAddon:(VSSourceAddon *)sourceAddon {
+#if VS_DEBUG
+	NSLog(@"[%@ %@]  %@  ", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sourceAddon.fileName);
+#endif
+	
+	if (progressIndicator.isIndeterminate) [progressIndicator setIndeterminate:NO];
+
+	[progressIndicator setDoubleValue:[progressIndicator doubleValue] + (double)[sourceAddon.fileSize unsignedLongLongValue]];
+	[progressIndicator display];
+	
+	
+	NSURL *originalURL = sourceAddon.originalURL;
+	
+	
+	NSMutableSet *setToRemove = nil;
+	
+	[sourceAddonURLsLock lock];
+	
+	for (NSMutableSet *URLs in sourceAddonURLs) {
+		if ([URLs containsObject:originalURL]) {
+			[URLs removeObject:originalURL];
+			if (URLs.count == 0) {
+				setToRemove = [[URLs retain] autorelease];
+				break;
+			}
+		}
+	}
+	
+	if (setToRemove) [sourceAddonURLs removeObject:setToRemove];
+	
+	[sourceAddonURLsLock unlock];
+	
+	
+	if (setToRemove) {
+		
+		
+#if VS_DEBUG
+		NSUInteger totalInstalledCount = self.installedAddons.count + self.alreadyInstalledAddons.count + self.problemAddons.count;
+		NSLog(@"[%@ %@]   %@   totalInstalledCount == %lu, addons.count == %lu", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sourceAddon.fileName, (unsigned long)totalInstalledCount, (unsigned long)self.addons.count);
+#endif
+		
+		[self finishInstallation];
+		
+	}
+}
+
 
 
 #pragma mark - <VSSteamManagerDelegate>
 
+- (void)willInstallSourceAddon:(VSSourceAddon *)sourceAddon {
+#if VS_DEBUG
+	NSLog(@"[%@ %@]   %@  ", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sourceAddon.fileName);
+#endif
+	
+	VSSourceAddonInstallMethod installMethod = [[[NSUserDefaults standardUserDefaults] objectForKey:VSSourceAddonInstallMethodKey] unsignedIntegerValue];
+	
+	[progressField setStringValue:[NSString stringWithFormat:(installMethod == VSSourceAddonInstallByMoving ? NSLocalizedString(@"Moving \"%@\"...", @"") : NSLocalizedString(@"Copying \"%@\"...", @"")), sourceAddon.fileName]];
+	
+}
+
+
 - (void)didInstallSourceAddon:(VSSourceAddon *)sourceAddon {
 #if VS_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"[%@ %@]   %@  ", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sourceAddon.fileName);
 #endif
 	
 	VSSourceAddonStatus sourceAddonStatus = sourceAddon.sourceAddonStatus;
 	
 	(sourceAddonStatus == VSSourceAddonValidAddon ? [installedAddonsController addObject:sourceAddon] : [alreadyInstalledAddonsController addObject:sourceAddon]);
 	
-	NSUInteger totalInstalledCount = self.installedAddons.count + self.alreadyInstalledAddons.count + self.problemAddons.count;
-	
-	[progressIndicator setDoubleValue:(double)totalInstalledCount];
-	[progressIndicator display];
-	
-	if (totalInstalledCount == self.addons.count) [self finishInstallation];
+	[self updateProgressForSourceAddon:sourceAddon];
 	
 }
 
 
 - (void)didFailToInstallSourceAddon:(VSSourceAddon *)sourceAddon {
 #if VS_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"[%@ %@]   %@  ", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sourceAddon.fileName);
 #endif
 	[problemAddonsController addObject:sourceAddon];
 	
-	NSUInteger totalInstalledCount = self.installedAddons.count + self.alreadyInstalledAddons.count + self.problemAddons.count;
+	[self updateProgressForSourceAddon:sourceAddon];
 	
-	[progressIndicator setDoubleValue:(double)totalInstalledCount];
-	[progressIndicator display];
-	
-	if (totalInstalledCount == self.addons.count) [self finishInstallation];
 }
 
 #pragma mark END <VSSteamManagerDelegate>
 #pragma mark -
+
 
 
 - (void)finishInstallation {
@@ -189,21 +329,21 @@ static NSString * const VSSourceAddonProblemAddonsSortDescriptorsKey				= @"VSSo
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	NSUInteger installedAddonsCount = installedAddons.count;
-	NSUInteger alreadyInstalledAddonsCount = alreadyInstalledAddons.count;
-	NSUInteger problemAddonsCount = problemAddons.count;
+	NSUInteger installedAddonsCount = self.installedAddons.count;
+	NSUInteger alreadyInstalledAddonsCount = self.alreadyInstalledAddons.count;
+	NSUInteger problemAddonsCount = self.problemAddons.count;
 	
 	if (installedAddonsCount > 0 && problemAddonsCount == 0) {
 		if (installedAddonsCount == 1) {
 			[resultsField setStringValue:NSLocalizedString(@"1 Source Addon was installed.", @"")];
 			
 		} else {
-			[resultsField setStringValue:[NSString stringWithFormat:NSLocalizedString(@"%lu Source Addons were installed.", @""), installedAddonsCount]];
+			[resultsField setStringValue:[NSString stringWithFormat:NSLocalizedString(@"%lu Source Addons were installed.", @""), (unsigned long)installedAddonsCount]];
 		}
 		
 	} else if (installedAddonsCount > 0 && problemAddonsCount > 0) {
 		
-		[resultsField setStringValue:[NSString stringWithFormat:NSLocalizedString(@"%lu of %lu Source Addons were installed.", @""), installedAddonsCount, installedAddonsCount + problemAddonsCount]];
+		[resultsField setStringValue:[NSString stringWithFormat:NSLocalizedString(@"%lu of %lu Source Addons were installed.", @""), (unsigned long)installedAddonsCount, (unsigned long)(installedAddonsCount + problemAddonsCount)]];
 		
 	} else if (installedAddonsCount == 0 && problemAddonsCount > 0) {
 		
@@ -211,48 +351,56 @@ static NSString * const VSSourceAddonProblemAddonsSortDescriptorsKey				= @"VSSo
 		
 	}
 	
-	[window center];
+	if (!window.isVisible) {
+		[window center];
+	}
 	
 	NSRect windowFrame = window.frame;
 	
-	// get count of split subviews correct
+	/*
+	 The subview arrangement should be:
+	 
+	 -------------------------
+	 |      installedView	 |
+	 -------------------------
+	 | alreadyInstalledView	 |
+	 -------------------------
+	 |	    problemView		 |
+	 -------------------------
+	 */
 	
-	NSMutableArray *subviews = [NSMutableArray arrayWithObjects:installedView, alreadyInstalledView, problemView, nil];
+	NSMutableArray *subviews = [NSMutableArray array];
 	
-	if (problemAddonsCount == 0) {
-		NSBox *box = [[splitView subviews] lastObject];
-		windowFrame.size.height -= NSHeight(box.frame);
-		[box removeFromSuperview];
-		[subviews removeObject:problemView];
+	if (installedAddonsCount) {
+		[subviews addObject:installedView];
+	} else {
+		// don't adjust window frame if window is already visible
+		if (!window.isVisible) windowFrame.size.height -= NSHeight([(NSView *)[[splitView subviews] lastObject] frame]);
 	}
 	
-	if (alreadyInstalledAddonsCount == 0) {
-		NSBox *box = [[splitView subviews] lastObject];
-		windowFrame.size.height -= NSHeight(box.frame);
-		[box removeFromSuperview];
-		[subviews removeObject:alreadyInstalledView];
+	if (alreadyInstalledAddonsCount) {
+		[subviews addObject:alreadyInstalledView];
+	} else {
+		// don't adjust window frame if window is already visible
+		if (!window.isVisible) windowFrame.size.height -= NSHeight([(NSView *)[[splitView subviews] lastObject] frame]);
 	}
 	
-	if (installedAddonsCount == 0) {
-		NSBox *box = [[splitView subviews] lastObject];
-		windowFrame.size.height -= NSHeight(box.frame);
-		[box removeFromSuperview];
-		[subviews removeObject:installedView];
+	if (problemAddonsCount) {
+		[subviews addObject:problemView];
+	} else {
+		// don't adjust window frame if window is already visible
+		if (!window.isVisible) windowFrame.size.height -= NSHeight([(NSView *)[[splitView subviews] lastObject] frame]);
 	}
+	
+	
+	[splitView setSubviews:subviews];
 	
 	[splitView adjustSubviews];
 	
-	[window setFrame:windowFrame display:YES];
-	[window center];
 	
-	
-	// now fill the boxes in with proper views
-	
-	NSUInteger i = 0;
-	
-	for (NSView *subview in subviews) {
-		[(NSBox *)[[splitView subviews] objectAtIndex:i] setContentView:subview];
-		i++;
+	if (!window.isVisible) {
+		[window setFrame:windowFrame display:YES];
+		[window center];
 	}
 	
 	if (installedAddonsCount) [[NSSound soundNamed:@"copy"] play];
@@ -261,14 +409,15 @@ static NSString * const VSSourceAddonProblemAddonsSortDescriptorsKey				= @"VSSo
 	[copyProgressWindow orderOut:nil];
 	[progressIndicator stopAnimation:nil];
 	
+	
+	if ([self synchronizedSourceAddonURLsCount]) {
+		[self performSelector:@selector(beginProcessingNextSetOfSourceAddonURLs) withObject:nil afterDelay:VS_NEXT_SET_INTERVAL];
+	}
+	
 	[window makeKeyAndOrderFront:nil];
 	
 }
 
-
-- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
-	return YES;
-}
 
 
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)rowIndex {

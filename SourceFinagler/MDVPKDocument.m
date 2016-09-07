@@ -204,12 +204,34 @@
 	
 	HKVPKFile *vpkFile = (HKVPKFile *)self.file;
 	
-	[[NSWorkspace sharedWorkspace] openURLs:[NSArray arrayWithObject:[NSURL fileURLWithPath:vpkFile.archiveDirectoryFilePath]]
-					withAppBundleIdentifier:[[NSBundle mainBundle] bundleIdentifier]
-									options:NSWorkspaceLaunchDefault
-			 additionalEventParamDescriptor:nil
-						  launchIdentifiers:NULL];
+	/* The following commented code seems susceptible to Launch Services Database oddities including preferring to launch every possible version of the app but the one we want. Since we know we want to open the document ourselves, drop into LaunchServices to be sure to specify ourselves as the target app. */
 	
+//	if ([[NSWorkspace sharedWorkspace] openURLs:[NSArray arrayWithObject:[NSURL fileURLWithPath:vpkFile.archiveDirectoryFilePath]]
+//						withAppBundleIdentifier:[[NSBundle mainBundle] bundleIdentifier]
+//										options:NSWorkspaceLaunchDefault
+//				 additionalEventParamDescriptor:nil
+//							  launchIdentifiers:NULL]) {
+//		
+//		[self close];
+//		
+//	}
+	
+	NSURL *bundleURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+	
+	LSLaunchURLSpec spec = {
+		.appURL = (CFURLRef)bundleURL,
+		.itemURLs = (CFArrayRef)[NSArray arrayWithObject:[NSURL fileURLWithPath:vpkFile.archiveDirectoryFilePath]],
+		.passThruParams = NULL,
+		.launchFlags = kLSLaunchDefaults,
+		.asyncRefCon = NULL,
+	};
+	
+	OSStatus status = LSOpenFromURLSpec(&spec, NULL);
+	
+	if (status) {
+		NSLog(@"[%@ %@] *** ERROR: LSOpenFromURLSpec() returned == %ld", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (long)status);
+		return;
+	}
 	[self close];
 }
 

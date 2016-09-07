@@ -5,7 +5,7 @@
 #define NV_IMAGE_COLORBLOCK_H
 
 #include "nvmath/Color.h"
-#include "nvmath/Vector.h"
+#include "nvmath/Vector.inl"
 
 namespace nv
 {
