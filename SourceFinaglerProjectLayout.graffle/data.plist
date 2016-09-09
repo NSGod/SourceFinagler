@@ -7,14 +7,14 @@
 	<key>ApplicationVersion</key>
 	<array>
 		<string>com.omnigroup.OmniGraffle6</string>
-		<string>156.5.0.200749</string>
+		<string>156.6.0.202882</string>
 	</array>
 	<key>AutoAdjust</key>
 	<true/>
 	<key>BackgroundGraphic</key>
 	<dict>
 		<key>Bounds</key>
-		<string>{{0, 0}, {1192, 880}}</string>
+		<string>{{0, 0}, {1299, 986}}</string>
 		<key>Class</key>
 		<string>SolidGraphic</string>
 		<key>FontInfo</key>
@@ -40,7 +40,7 @@
 	<key>CanvasOrigin</key>
 	<string>{0, 0}</string>
 	<key>CanvasSize</key>
-	<string>{1192, 880}</string>
+	<string>{1299, 986}</string>
 	<key>ColumnAlign</key>
 	<integer>0</integer>
 	<key>ColumnSpacing</key>
@@ -73,17 +73,17 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>1521</integer>
+				<integer>1867</integer>
 			</dict>
 			<key>ID</key>
-			<integer>1501</integer>
+			<integer>1851</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 			<key>Points</key>
 			<array>
-				<string>{872.35087261188119, 195.69283699999986}</string>
-				<string>{774, 389}</string>
-				<string>{681.49977193945404, 389.52524300245307}</string>
+				<string>{802.35087261188119, 115.69283699999986}</string>
+				<string>{704, 309}</string>
+				<string>{611.49977193945415, 309.52524300245307}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -100,7 +100,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>1433</integer>
+				<integer>1911</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -121,17 +121,17 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>1342</integer>
+				<integer>1869</integer>
 			</dict>
 			<key>ID</key>
-			<integer>1500</integer>
+			<integer>1852</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 			<key>Points</key>
 			<array>
-				<string>{873.4204426418803, 195.69283699999986}</string>
-				<string>{780.66671985777839, 449}</string>
-				<string>{637.66671999999994, 449.25223384120875}</string>
+				<string>{803.4204426418803, 115.69283699999986}</string>
+				<string>{710.66671985777839, 369}</string>
+				<string>{567.66671999999994, 369.25223384120875}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -148,7 +148,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>1433</integer>
+				<integer>1911</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -169,17 +169,17 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>1457</integer>
+				<integer>1858</integer>
 			</dict>
 			<key>ID</key>
-			<integer>1498</integer>
+			<integer>1853</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 			<key>Points</key>
 			<array>
-				<string>{874.23215311746844, 195.69283699999977}</string>
-				<string>{788, 530.00000299999999}</string>
-				<string>{666.00022000000013, 529.55350155253132}</string>
+				<string>{804.23215311746844, 115.69283699999977}</string>
+				<string>{718, 450.00000299999999}</string>
+				<string>{596.00022000000013, 449.55350155253137}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -196,7 +196,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>1433</integer>
+				<integer>1911</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -206,7 +206,7 @@
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{545.66672000000017, 501.83329800000001}, {175.66675000000001, 15}}</string>
+					<string>{{475.66672000000017, 421.83329800000001}, {175.66675000000001, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -221,7 +221,7 @@
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1357</integer>
+					<integer>1855</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -249,7 +249,7 @@
 						<key>Pad</key>
 						<integer>0</integer>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;\red156\green156\blue156;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
@@ -262,7 +262,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{521, 499.99999800000001}, {20, 20.000001999999999}}</string>
+					<string>{{451, 419.99999800000001}, {20, 20.000001999999999}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -278,7 +278,7 @@
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1358</integer>
+					<integer>1856</integer>
 					<key>ImageID</key>
 					<integer>10</integer>
 					<key>ManualSizeImage</key>
@@ -310,7 +310,7 @@
 				</dict>
 			</array>
 			<key>ID</key>
-			<integer>1356</integer>
+			<integer>1854</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 		</dict>
@@ -321,7 +321,7 @@
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{545.66672000000017, 521.83330000000001}, {120.33349999999996, 15}}</string>
+					<string>{{475.66672000000017, 441.83330000000001}, {120.33349999999996, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -329,7 +329,7 @@
 					<key>Flow</key>
 					<string>Resize</string>
 					<key>ID</key>
-					<integer>1457</integer>
+					<integer>1858</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -357,7 +357,7 @@
 						<key>Pad</key>
 						<integer>0</integer>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;\red156\green156\blue156;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
@@ -370,7 +370,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{521, 520}, {20, 20.000001999999999}}</string>
+					<string>{{451, 440}, {20, 20.000001999999999}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -386,7 +386,7 @@
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1458</integer>
+					<integer>1859</integer>
 					<key>ImageID</key>
 					<integer>10</integer>
 					<key>ManualSizeImage</key>
@@ -416,7 +416,7 @@
 				</dict>
 			</array>
 			<key>ID</key>
-			<integer>1456</integer>
+			<integer>1857</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 		</dict>
@@ -427,7 +427,7 @@
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{545.66672000000017, 541.83330199999989}, {120.33349999999996, 15}}</string>
+					<string>{{475.66672000000017, 461.83330199999989}, {120.33349999999996, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -435,7 +435,7 @@
 					<key>Flow</key>
 					<string>Resize</string>
 					<key>ID</key>
-					<integer>1460</integer>
+					<integer>1861</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -463,7 +463,7 @@
 						<key>Pad</key>
 						<integer>0</integer>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;\red156\green156\blue156;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
@@ -476,7 +476,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{521, 540.00000199999999}, {20, 20.000001999999999}}</string>
+					<string>{{451, 460.00000199999999}, {20, 20.000001999999999}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -492,7 +492,7 @@
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1461</integer>
+					<integer>1862</integer>
 					<key>ImageID</key>
 					<integer>10</integer>
 					<key>ManualSizeImage</key>
@@ -522,7 +522,7 @@
 				</dict>
 			</array>
 			<key>ID</key>
-			<integer>1459</integer>
+			<integer>1860</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 		</dict>
@@ -538,7 +538,7 @@
 					<array>
 						<dict>
 							<key>Bounds</key>
-							<string>{{545.66670999999997, 381.83336999999995}, {135.33306999999999, 15}}</string>
+							<string>{{475.66670999999997, 301.83336999999995}, {135.33306999999999, 15}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>FitText</key>
@@ -560,7 +560,7 @@
 								<real>12</real>
 							</dict>
 							<key>ID</key>
-							<integer>1519</integer>
+							<integer>1865</integer>
 							<key>Shape</key>
 							<string>Rectangle</string>
 							<key>Style</key>
@@ -588,7 +588,7 @@
 								<key>Pad</key>
 								<integer>0</integer>
 								<key>Text</key>
-								<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+								<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;\red156\green156\blue156;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
@@ -602,7 +602,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{521, 380}, {20, 20.000001999999999}}</string>
+							<string>{{451, 300}, {20, 20.000001999999999}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>FontInfo</key>
@@ -618,7 +618,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 								<real>12</real>
 							</dict>
 							<key>ID</key>
-							<integer>1520</integer>
+							<integer>1866</integer>
 							<key>ImageID</key>
 							<integer>10</integer>
 							<key>ManualSizeImage</key>
@@ -650,11 +650,11 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>1518</integer>
+					<integer>1864</integer>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{514.78107522790367, 372.50655199999994}, {166.21870477209632, 34.98689800000011}}</string>
+					<string>{{444.78107522790367, 292.50655199999994}, {166.21870477209632, 34.98689800000011}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -670,7 +670,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1521</integer>
+					<integer>1867</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -705,7 +705,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 			</array>
 			<key>ID</key>
-			<integer>1517</integer>
+			<integer>1863</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 		</dict>
@@ -716,7 +716,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{545.66671999999994, 441.83337199999994}, {92, 15}}</string>
+					<string>{{475.66671999999994, 361.83337199999994}, {92, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -724,7 +724,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 					<key>Flow</key>
 					<string>Resize</string>
 					<key>ID</key>
-					<integer>1342</integer>
+					<integer>1869</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -752,7 +752,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<key>Pad</key>
 						<integer>0</integer>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;\red156\green156\blue156;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
@@ -765,7 +765,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{521, 440.00000199999999}, {20, 20.000001999999999}}</string>
+					<string>{{451, 360.00000199999999}, {20, 20.000001999999999}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -781,7 +781,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1343</integer>
+					<integer>1870</integer>
 					<key>ImageID</key>
 					<integer>10</integer>
 					<key>ManualSizeImage</key>
@@ -811,7 +811,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 			</array>
 			<key>ID</key>
-			<integer>1341</integer>
+			<integer>1868</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 		</dict>
@@ -822,7 +822,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{172.6666899999999, 441.83336999999995}, {92, 15}}</string>
+					<string>{{102.6666899999999, 361.83336999999995}, {92, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -830,7 +830,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 					<key>Flow</key>
 					<string>Resize</string>
 					<key>ID</key>
-					<integer>1339</integer>
+					<integer>1872</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -858,7 +858,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<key>Pad</key>
 						<integer>0</integer>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;\red156\green156\blue156;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
@@ -871,7 +871,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{148, 440}, {20, 20.000001999999999}}</string>
+					<string>{{78, 360}, {20, 20.000001999999999}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -887,7 +887,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1340</integer>
+					<integer>1873</integer>
 					<key>ImageID</key>
 					<integer>10</integer>
 					<key>ManualSizeImage</key>
@@ -917,7 +917,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 			</array>
 			<key>ID</key>
-			<integer>1338</integer>
+			<integer>1871</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 		</dict>
@@ -933,7 +933,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 					<array>
 						<dict>
 							<key>Bounds</key>
-							<string>{{323.33321999999998, 331.84647199999984}, {116.66672, 15}}</string>
+							<string>{{253.33321999999998, 251.84647199999984}, {116.66672, 15}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>FitText</key>
@@ -941,7 +941,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 							<key>Flow</key>
 							<string>Resize</string>
 							<key>ID</key>
-							<integer>1514</integer>
+							<integer>1876</integer>
 							<key>Shape</key>
 							<string>Rectangle</string>
 							<key>Style</key>
@@ -969,7 +969,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 								<key>Pad</key>
 								<integer>0</integer>
 								<key>Text</key>
-								<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+								<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;\red156\green156\blue156;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
@@ -981,7 +981,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{298.66652999999997, 330.01310199999989}, {20, 20.000001999999999}}</string>
+							<string>{{228.66652999999997, 250.01310199999989}, {20, 20.000001999999999}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>FontInfo</key>
@@ -997,7 +997,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 								<real>12</real>
 							</dict>
 							<key>ID</key>
-							<integer>1515</integer>
+							<integer>1877</integer>
 							<key>ImageID</key>
 							<integer>10</integer>
 							<key>ManualSizeImage</key>
@@ -1027,11 +1027,11 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>1513</integer>
+					<integer>1875</integer>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{290.89060261395184, 322.51965399999983}, {166.21870477209632, 34.98689800000011}}</string>
+					<string>{{220.89060261395184, 242.51965399999983}, {166.21870477209632, 34.98689800000011}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -1047,7 +1047,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1516</integer>
+					<integer>1878</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -1084,7 +1084,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 			</array>
 			<key>ID</key>
-			<integer>1512</integer>
+			<integer>1874</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 		</dict>
@@ -1095,7 +1095,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{545.66672000000017, 561.83337399999994}, {120.33349999999996, 15}}</string>
+					<string>{{475.66672000000017, 481.83337399999994}, {120.33349999999996, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -1103,7 +1103,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 					<key>Flow</key>
 					<string>Resize</string>
 					<key>ID</key>
-					<integer>1463</integer>
+					<integer>1880</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -1131,7 +1131,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<key>Pad</key>
 						<integer>0</integer>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;\red156\green156\blue156;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
@@ -1144,7 +1144,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{521, 560.00000399999999}, {20, 20.000001999999999}}</string>
+					<string>{{451, 480.00000399999999}, {20, 20.000001999999999}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -1160,7 +1160,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1464</integer>
+					<integer>1881</integer>
 					<key>ImageID</key>
 					<integer>10</integer>
 					<key>ManualSizeImage</key>
@@ -1190,7 +1190,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 			</array>
 			<key>ID</key>
-			<integer>1462</integer>
+			<integer>1879</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 		</dict>
@@ -1201,7 +1201,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{289.66662985777839, 180.02608599999985}, {135.33325000000002, 15}}</string>
+					<string>{{219.66662985777839, 100.02608599999985}, {135.33325000000002, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -1216,7 +1216,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1416</integer>
+					<integer>1883</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -1244,7 +1244,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<key>Pad</key>
 						<integer>0</integer>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
@@ -1256,7 +1256,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{264.99987985777841, 178.19283599999983}, {20, 20.000001999999999}}</string>
+					<string>{{194.99987985777841, 98.192835999999829}, {20, 20.000001999999999}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -1272,9 +1272,9 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1417</integer>
+					<integer>1884</integer>
 					<key>ImageID</key>
-					<integer>9</integer>
+					<integer>12</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -1298,7 +1298,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 			</array>
 			<key>ID</key>
-			<integer>1415</integer>
+			<integer>1882</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 		</dict>
@@ -1309,7 +1309,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{465.33324999999991, 180.02608599999985}, {125.66674999999998, 15}}</string>
+					<string>{{395.33324999999991, 100.02608599999985}, {125.66674999999998, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -1324,7 +1324,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1413</integer>
+					<integer>1886</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -1352,7 +1352,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<key>Pad</key>
 						<integer>0</integer>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
@@ -1364,7 +1364,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{440.66649999999981, 178.19283599999983}, {20, 20.000001999999999}}</string>
+					<string>{{370.66649999999976, 98.192835999999829}, {20, 20.000001999999999}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -1380,9 +1380,9 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1414</integer>
+					<integer>1887</integer>
 					<key>ImageID</key>
-					<integer>9</integer>
+					<integer>12</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -1406,7 +1406,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 			</array>
 			<key>ID</key>
-			<integer>1412</integer>
+			<integer>1885</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 		</dict>
@@ -1417,7 +1417,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{134.33325000000002, 141.83324800000003}, {95.666749999999979, 15}}</string>
+					<string>{{64.333250000000021, 61.833248000000026}, {95.666749999999979, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -1432,7 +1432,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1410</integer>
+					<integer>1889</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -1460,7 +1460,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<key>Pad</key>
 						<integer>0</integer>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
@@ -1472,7 +1472,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{109.66650000000004, 139.99999800000001}, {20, 20.000001999999999}}</string>
+					<string>{{39.666500000000042, 59.999998000000005}, {20, 20.000001999999999}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -1488,9 +1488,9 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1411</integer>
+					<integer>1890</integer>
 					<key>ImageID</key>
-					<integer>9</integer>
+					<integer>12</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -1514,7 +1514,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 			</array>
 			<key>ID</key>
-			<integer>1409</integer>
+			<integer>1888</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 		</dict>
@@ -1530,7 +1530,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 					<array>
 						<dict>
 							<key>Bounds</key>
-							<string>{{322.66660000000002, 271.83336999999995}, {127.3334, 15}}</string>
+							<string>{{252.66660000000002, 191.83336999999995}, {127.3334, 15}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>FitText</key>
@@ -1538,7 +1538,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 							<key>Flow</key>
 							<string>Resize</string>
 							<key>ID</key>
-							<integer>1509</integer>
+							<integer>1893</integer>
 							<key>Shape</key>
 							<string>Rectangle</string>
 							<key>Style</key>
@@ -1566,7 +1566,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 								<key>Pad</key>
 								<integer>0</integer>
 								<key>Text</key>
-								<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+								<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;\red156\green156\blue156;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
@@ -1579,7 +1579,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{297.99991, 270}, {20, 20.000001999999999}}</string>
+							<string>{{227.99991, 190}, {20, 20.000001999999999}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>FontInfo</key>
@@ -1595,7 +1595,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 								<real>12</real>
 							</dict>
 							<key>ID</key>
-							<integer>1510</integer>
+							<integer>1894</integer>
 							<key>ImageID</key>
 							<integer>10</integer>
 							<key>ManualSizeImage</key>
@@ -1627,11 +1627,11 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>1508</integer>
+					<integer>1892</integer>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{290.89060261395184, 262.50655199999994}, {166.21870477209632, 34.98689800000011}}</string>
+					<string>{{220.89060261395184, 182.50655199999994}, {166.21870477209632, 34.98689800000011}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -1647,7 +1647,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1511</integer>
+					<integer>1895</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -1682,7 +1682,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 			</array>
 			<key>ID</key>
-			<integer>1507</integer>
+			<integer>1891</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 		</dict>
@@ -1704,16 +1704,16 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>1519</integer>
+				<integer>1865</integer>
 			</dict>
 			<key>ID</key>
-			<integer>1328</integer>
+			<integer>1896</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 			<key>Points</key>
 			<array>
-				<string>{632.23966548332771, 501.83329800000001}</string>
-				<string>{614.59366435003585, 396.83337}</string>
+				<string>{562.23966611874289, 421.83329800000007}</string>
+				<string>{544.59367388125725, 316.83336999999995}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1730,7 +1730,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>1357</integer>
+				<integer>1855</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1751,16 +1751,16 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>1342</integer>
+				<integer>1869</integer>
 			</dict>
 			<key>ID</key>
-			<integer>1362</integer>
+			<integer>1897</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 			<key>Points</key>
 			<array>
-				<string>{596.00331106883175, 407.99072181099064}</string>
-				<string>{592.45342411469858, 441.83337199999994}</string>
+				<string>{526.00331106883175, 327.99072181099064}</string>
+				<string>{522.45342411469858, 361.83337199999994}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1777,7 +1777,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>1521</integer>
+				<integer>1867</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1798,16 +1798,16 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>1339</integer>
+				<integer>1872</integer>
 			</dict>
 			<key>ID</key>
-			<integer>1361</integer>
+			<integer>1898</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 			<key>Points</key>
 			<array>
-				<string>{348.73460894730476, 357.79431925350514}</string>
-				<string>{229.3234466972736, 441.83336999999995}</string>
+				<string>{278.73460894730476, 277.79431925350514}</string>
+				<string>{159.3234466972736, 361.83336999999995}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1824,7 +1824,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>1516</integer>
+				<integer>1878</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1845,16 +1845,16 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>1521</integer>
+				<integer>1867</integer>
 			</dict>
 			<key>ID</key>
-			<integer>1360</integer>
+			<integer>1899</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 			<key>Points</key>
 			<array>
-				<string>{452.16552228579343, 357.58967310471309}</string>
-				<string>{518.82678498919302, 372.57934691966869}</string>
+				<string>{382.52294678806362, 277.54453582667833}</string>
+				<string>{449.36743582588832, 292.46856817332161}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1871,7 +1871,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>1516</integer>
+				<integer>1878</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1892,16 +1892,16 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>1516</integer>
+				<integer>1878</integer>
 			</dict>
 			<key>ID</key>
-			<integer>1359</integer>
+			<integer>1900</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 			<key>Points</key>
 			<array>
-				<string>{374.01133064835585, 297.99344990007751}</string>
-				<string>{374.02652026858277, 322.01965454492756}</string>
+				<string>{303.99993723740641, 217.99345000000005}</string>
+				<string>{303.99993723740641, 242.01965399999983}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1918,7 +1918,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>1511</integer>
+				<integer>1895</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1939,17 +1939,17 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>1521</integer>
+				<integer>1867</integer>
 			</dict>
 			<key>ID</key>
-			<integer>1502</integer>
+			<integer>1901</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 			<key>Points</key>
 			<array>
-				<string>{180.8503847408156, 156.83324800000003}</string>
-				<string>{143, 372.50655199999994}</string>
-				<string>{514.28144454202879, 386.78470036379531}</string>
+				<string>{110.8503847408156, 76.833247999999998}</string>
+				<string>{73, 292.50655199999994}</string>
+				<string>{444.28144454202885, 306.78470036379531}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -1966,7 +1966,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>1410</integer>
+				<integer>1889</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -1987,17 +1987,17 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>1516</integer>
+				<integer>1878</integer>
 			</dict>
 			<key>ID</key>
-			<integer>1445</integer>
+			<integer>1902</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 			<key>Points</key>
 			<array>
-				<string>{182.19940634459437, 156.83324800000003}</string>
-				<string>{183, 340}</string>
-				<string>{290.39060261512839, 340.00736722197689}</string>
+				<string>{112.19940634459438, 76.833247999999998}</string>
+				<string>{113, 260}</string>
+				<string>{220.39060261512844, 260.00736722197689}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -2014,7 +2014,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>1410</integer>
+				<integer>1889</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -2035,65 +2035,16 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>1511</integer>
+				<integer>1895</integer>
 			</dict>
 			<key>ID</key>
-			<integer>1504</integer>
+			<integer>1903</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 			<key>Points</key>
 			<array>
-				<string>{193.17745823513977, 156.83324800000003}</string>
-				<string>{347.90436616107547, 262.22507300204228}</string>
-			</array>
-			<key>Style</key>
-			<dict>
-				<key>stroke</key>
-				<dict>
-					<key>HeadArrow</key>
-					<string>0</string>
-					<key>Legacy</key>
-					<true/>
-					<key>LineType</key>
-					<integer>1</integer>
-					<key>TailArrow</key>
-					<string>0</string>
-				</dict>
-			</dict>
-			<key>Tail</key>
-			<dict>
-				<key>ID</key>
-				<integer>1410</integer>
-			</dict>
-		</dict>
-		<dict>
-			<key>Class</key>
-			<string>LineGraphic</string>
-			<key>FontInfo</key>
-			<dict>
-				<key>Color</key>
-				<dict>
-					<key>w</key>
-					<string>0</string>
-				</dict>
-				<key>Font</key>
-				<string>Helvetica</string>
-				<key>Size</key>
-				<real>12</real>
-			</dict>
-			<key>Head</key>
-			<dict>
-				<key>ID</key>
-				<integer>1511</integer>
-			</dict>
-			<key>ID</key>
-			<integer>1506</integer>
-			<key>Layer</key>
-			<integer>0</integer>
-			<key>Points</key>
-			<array>
-				<string>{358.68498515012641, 195.02608599999988}</string>
-				<string>{370.7583507493577, 262.01448043550931}</string>
+				<string>{123.17745937039263, 76.83324800000004}</string>
+				<string>{277.90438306433509, 182.22507287613718}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -2112,7 +2063,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>1416</integer>
+				<integer>1889</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -2133,16 +2084,16 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>1511</integer>
+				<integer>1895</integer>
 			</dict>
 			<key>ID</key>
-			<integer>1505</integer>
+			<integer>1904</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 			<key>Points</key>
 			<array>
-				<string>{515.66307730926371, 195.02608599999985}</string>
-				<string>{403.592495477824, 262.24935610905465}</string>
+				<string>{288.6849901127058, 115.02608599999986}</string>
+				<string>{300.75839999420924, 182.01448020011793}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -2161,7 +2112,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>1413</integer>
+				<integer>1883</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -2182,16 +2133,16 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>1521</integer>
+				<integer>1895</integer>
 			</dict>
 			<key>ID</key>
-			<integer>1441</integer>
+			<integer>1905</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 			<key>Points</key>
 			<array>
-				<string>{700.69842200601772, 195.69283699999983}</string>
-				<string>{607.38005453213714, 372.06460114894287}</string>
+				<string>{445.66309873532299, 115.02608599999985}</string>
+				<string>{333.59270667321363, 182.24935747345259}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -2210,7 +2161,56 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>1437</integer>
+				<integer>1886</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>Class</key>
+			<string>LineGraphic</string>
+			<key>FontInfo</key>
+			<dict>
+				<key>Color</key>
+				<dict>
+					<key>w</key>
+					<string>0</string>
+				</dict>
+				<key>Font</key>
+				<string>Helvetica</string>
+				<key>Size</key>
+				<real>12</real>
+			</dict>
+			<key>Head</key>
+			<dict>
+				<key>ID</key>
+				<integer>1867</integer>
+			</dict>
+			<key>ID</key>
+			<integer>1906</integer>
+			<key>Layer</key>
+			<integer>0</integer>
+			<key>Points</key>
+			<array>
+				<string>{630.6984220046304, 115.69283699999983}</string>
+				<string>{537.38005449830928, 292.06460114859647}</string>
+			</array>
+			<key>Style</key>
+			<dict>
+				<key>stroke</key>
+				<dict>
+					<key>HeadArrow</key>
+					<string>0</string>
+					<key>Legacy</key>
+					<true/>
+					<key>LineType</key>
+					<integer>1</integer>
+					<key>TailArrow</key>
+					<string>0</string>
+				</dict>
+			</dict>
+			<key>Tail</key>
+			<dict>
+				<key>ID</key>
+				<integer>1909</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -2220,7 +2220,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{606.66662014222129, 180.19283699999983}, {16, 16}}</string>
+					<string>{{536.66662014222129, 100.19283699999983}, {16, 16}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -2236,7 +2236,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1436</integer>
+					<integer>1908</integer>
 					<key>ImageID</key>
 					<integer>11</integer>
 					<key>ManualSizeImage</key>
@@ -2264,7 +2264,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{628.66662985777839, 180.69283699999983}, {152.00009, 15}}</string>
+					<string>{{558.66662985777839, 100.69283699999983}, {152.00009, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -2279,7 +2279,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1437</integer>
+					<integer>1909</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -2307,7 +2307,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<key>Pad</key>
 						<integer>0</integer>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;\red156\green156\blue156;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
@@ -2320,7 +2320,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 			</array>
 			<key>ID</key>
-			<integer>1435</integer>
+			<integer>1907</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 		</dict>
@@ -2331,7 +2331,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{818.33334971555689, 180.69283699999983}, {115.66674999999987, 15}}</string>
+					<string>{{748.33334971555689, 100.69283699999983}, {115.66674999999987, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -2346,7 +2346,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1433</integer>
+					<integer>1911</integer>
 					<key>Shape</key>
 					<string>Rectangle</string>
 					<key>Style</key>
@@ -2374,7 +2374,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<key>Pad</key>
 						<integer>0</integer>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;\red156\green156\blue156;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
@@ -2387,7 +2387,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{796.33333999999979, 180.19283699999983}, {16, 16}}</string>
+					<string>{{726.33333999999979, 100.19283699999983}, {16, 16}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -2403,7 +2403,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 						<real>12</real>
 					</dict>
 					<key>ID</key>
-					<integer>1434</integer>
+					<integer>1912</integer>
 					<key>ImageID</key>
 					<integer>11</integer>
 					<key>ManualSizeImage</key>
@@ -2431,13 +2431,13 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				</dict>
 			</array>
 			<key>ID</key>
-			<integer>1432</integer>
+			<integer>1910</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{859, 305}, {150, 40}}</string>
+			<string>{{789, 225}, {150, 40}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -2457,7 +2457,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				<real>24</real>
 			</dict>
 			<key>ID</key>
-			<integer>1369</integer>
+			<integer>1913</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 			<key>Shape</key>
@@ -2496,7 +2496,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;}
 \deftab720
@@ -2507,7 +2507,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{929, 490.00000299999999}, {80, 40}}</string>
+			<string>{{859, 410.00000299999999}, {80, 40}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -2527,7 +2527,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				<real>24</real>
 			</dict>
 			<key>ID</key>
-			<integer>1368</integer>
+			<integer>1914</integer>
 			<key>Layer</key>
 			<integer>0</integer>
 			<key>Shape</key>
@@ -2553,7 +2553,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\ansi\ansicpg1252\cocoartf1265
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;}
 \deftab720
@@ -2564,7 +2564,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{90, 100}, {991, 320}}</string>
+			<string>{{20, 20}, {991, 320}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FontInfo</key>
@@ -2580,9 +2580,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				<real>12</real>
 			</dict>
 			<key>ID</key>
-			<integer>1366</integer>
-			<key>IsLocked</key>
-			<string>YES</string>
+			<integer>1915</integer>
 			<key>Layer</key>
 			<integer>1</integer>
 			<key>Shape</key>
@@ -2617,7 +2615,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{90, 420}, {991, 180.00000199999999}}</string>
+			<string>{{20, 340}, {991, 180.00000199999999}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FontInfo</key>
@@ -2633,7 +2631,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 				<real>12</real>
 			</dict>
 			<key>ID</key>
-			<integer>1364</integer>
+			<integer>1916</integer>
 			<key>Layer</key>
 			<integer>1</integer>
 			<key>Shape</key>
@@ -2673,8 +2671,6 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 		<real>10</real>
 		<key>MajorGridSpacing</key>
 		<integer>1</integer>
-		<key>ShowsGrid</key>
-		<string>YES</string>
 	</dict>
 	<key>GuidesLocked</key>
 	<string>NO</string>
@@ -2683,7 +2679,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 	<key>HPages</key>
 	<integer>1</integer>
 	<key>ImageCounter</key>
-	<integer>12</integer>
+	<integer>13</integer>
 	<key>ImageLinkBack</key>
 	<array>
 		<dict/>
@@ -2692,9 +2688,9 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 	</array>
 	<key>ImageList</key>
 	<array>
+		<string>image12.png</string>
 		<string>image11.png</string>
 		<string>image10.png</string>
-		<string>image9.tiff</string>
 	</array>
 	<key>KeepToScale</key>
 	<false/>
@@ -2712,7 +2708,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 		</dict>
 		<dict>
 			<key>Lock</key>
-			<string>YES</string>
+			<string>NO</string>
 			<key>Name</key>
 			<string>background shapes</string>
 			<key>Print</key>
@@ -2731,8 +2727,8 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 		<dict>
 			<key>Max</key>
 			<array>
-				<integer>1409</integer>
-				<integer>1415</integer>
+				<integer>1888</integer>
+				<integer>1882</integer>
 			</array>
 		</dict>
 		<key>circoMinDist</key>
@@ -2755,7 +2751,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2014-02-13 22:45:17 +0000</string>
+	<string>2014-09-04 16:42:54 +0000</string>
 	<key>Modifier</key>
 	<string>Mark Douma</string>
 	<key>NotesVisible</key>
@@ -2793,7 +2789,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 		<key>NSPaperName</key>
 		<array>
 			<string>string</string>
-			<string>C2257164-5DC0-4F45-8C1A-7259180B9399</string>
+			<string>8EBCF806-9777-4C18-AFBF-4DA57A50DD48</string>
 		</array>
 		<key>NSPaperSize</key>
 		<array>
@@ -2839,7 +2835,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 	<key>WindowInfo</key>
 	<dict>
 		<key>BottomSlabHeight</key>
-		<real>636</real>
+		<real>784</real>
 		<key>CurrentSheet</key>
 		<integer>0</integer>
 		<key>Expanded_Canvases</key>
@@ -2847,7 +2843,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 			<string>Canvas 1</string>
 		</array>
 		<key>Frame</key>
-		<string>{{-0, 141}, {1788, 1037}}</string>
+		<string>{{13, 35}, {1895, 1143}}</string>
 		<key>ShowInfo</key>
 		<true/>
 		<key>ShowRuler</key>
@@ -2859,7 +2855,7 @@ TextureKit\cf2 \expnd0\expndtw0\kerning0
 		<key>SmallIcons</key>
 		<true/>
 		<key>VisibleRegion</key>
-		<string>{{0, 0}, {1192, 880}}</string>
+		<string>{{0, 0}, {1299, 986}}</string>
 		<key>Zoom</key>
 		<real>1</real>
 		<key>ZoomValues</key>

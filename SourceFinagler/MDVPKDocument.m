@@ -21,6 +21,13 @@
 #define MD_DEBUG 0
 
 
+@interface MDHLDocument ()
+
+- (void)updateCount;
+- (void)windowWillClose:(NSNotification *)notification;
+
+@end
+
 
 @implementation MDVPKDocument
 
@@ -44,11 +51,13 @@
 	
 	if (vpkFile.vpkArchiveType == HKVPKMultipartArchiveType) {
 		
+		viewMode = MDHLDocumentNoViewMode;
+		
 		[outlineViewMenuHelpMenuItem retain];
 		[outlineViewMenuShowInspectorMenuItem retain];
 		[outlineViewMenuShowViewOptionsMenuItem retain];
 		
-		if (MDGetSystemVersion() >= MDSnowLeopard) {
+		if ([[NSProcessInfo processInfo] md__operatingSystemVersion].minorVersion >= MDSnowLeopard) {
 			[browserMenuShowInspectorMenuItem retain];
 			[browserMenuShowViewOptionsMenuItem retain];
 		}
@@ -73,6 +82,9 @@
 			statusImageViewTag2 = [statusImageView2 addToolTipRect:[statusImageView2 visibleRect] owner:self userData:nil];
 		}
 		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowViewOptionsDidChange:) name:MDHLDocumentShouldShowViewOptionsDidChangeNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowInspectorDidChange:) name:MDHLDocumentShouldShowInspectorDidChangeNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldShowQuickLookDidChange:) name:MDHLDocumentShouldShowQuickLookDidChangeNotification object:nil];
 		
 		if (viewController == nil) {
 			viewController = [[MDVPKViewController alloc] init];
@@ -92,12 +104,12 @@
 		// set min size
 		[hlWindow setMinSize:[hlWindow contentRectForFrameRect:hlWindow.frame].size];
 		
+		[self updateCount];
 		
 		NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile:[[self fileURL] path]];
 		[icon setSize:NSMakeSize(128.0, 128.0)];
-		[self setImage:icon];
-		[self setVersion:[file version]];
-		
+		image = [icon retain];
+		version = [[file version] retain];
 		
 		for (NSUInteger i = 0; i < viewSwitcherControl.segmentCount; i++) {
 			[viewSwitcherControl setEnabled:NO forSegment:i];
@@ -133,17 +145,15 @@
 - (void)windowWillClose:(NSNotification *)notification {
 	
 	if ([notification object] == hlWindow) {
-#if MD_DEBUG
-		NSLog(@" \"%@\" [%@ %@] our window", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-		
 		HKVPKFile *vpkFile = (HKVPKFile *)self.file;
 		
 		if (vpkFile.vpkArchiveType == HKVPKMultipartArchiveType) {
 			
-			[[NSNotificationCenter defaultCenter] postNotificationName:MDSelectedItemsDidChangeNotification
-																object:self
-															  userInfo:nil];
+#if MD_DEBUG
+			NSLog(@" \"%@\" [%@ %@]", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+			
+			[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentWillCloseNotification object:self userInfo:nil];
 			
 			[[NSNotificationCenter defaultCenter] removeObserver:self];
 			
@@ -180,16 +190,25 @@
 
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
-	
 	HKVPKFile *vpkFile = (HKVPKFile *)self.file;
 	
 	if (vpkFile.vpkArchiveType == HKVPKMultipartArchiveType) {
+		
+#if MD_DEBUG
+		NSLog(@" \"%@\" [%@ %@] menuItem == %@, action == %@", [self displayName], NSStringFromClass([self class]), NSStringFromSelector(_cmd), menuItem, NSStringFromSelector([menuItem action]));
+#endif
 		
 		SEL action = menuItem.action;
 		
 		if (action == @selector(switchViewMode:)) {
 			[menuItem setState:NSOffState];
 			return NO;
+			
+		} else if (action == @selector(toggleShowPathBar:)) {
+			// override super to return NO if this is a multipart archive
+			[menuItem setTitle:([[self class] shouldShowPathBar] ? NSLocalizedString(@"Hide Path Bar", @"") : NSLocalizedString(@"Show Path Bar", @""))];
+			return NO;
+			
 		}
 	}
 	return [super validateMenuItem:menuItem];
@@ -204,7 +223,7 @@
 	
 	HKVPKFile *vpkFile = (HKVPKFile *)self.file;
 	
-	/* The following commented code seems susceptible to Launch Services Database oddities including preferring to launch every possible version of the app but the one we want. Since we know we want to open the document ourselves, drop into LaunchServices to be sure to specify ourselves as the target app. */
+	/* The following commented code seems susceptible to Launch Services Database oddities including preferring to launch every possible version of the app but the one we want. Since we know we want to open the document ourselves, drop down into LaunchServices to be sure to specify ourselves as the target app. */
 	
 //	if ([[NSWorkspace sharedWorkspace] openURLs:[NSArray arrayWithObject:[NSURL fileURLWithPath:vpkFile.archiveDirectoryFilePath]]
 //						withAppBundleIdentifier:[[NSBundle mainBundle] bundleIdentifier]

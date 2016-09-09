@@ -11,29 +11,26 @@
 @class MDHLDocument, MDQuickLookPreviewViewController;
 
 
-extern NSString * const MDQuickLookStartFrameKey;
-extern NSString * const MDQuickLookEndFrameKey;
-
 
 @interface MDQuickLookController : NSWindowController {
 	IBOutlet MDQuickLookPreviewViewController	*previewViewController;
-	
 	
 	IBOutlet NSView								*controlsView;
 	
 	
 	NSArray										*items;			// CANNOT BE A weak (non-retained) reference
-	MDHLDocument								*document;		// CANNOT BE A weak (non-retained) reference
+	MDHLDocument								*hlDocument;	// CANNOT BE A weak (non-retained) reference
 	
 	NSInteger									currentItemIndex;
 	BOOL										isPlaying;
 	
+	BOOL										appIsTerminating;
 }
 
 + (MDQuickLookController *)sharedQuickLookController;
 
 @property (retain) NSArray *items;
-@property (retain) MDHLDocument *document;
+@property (retain) MDHLDocument *hlDocument;
 
 - (IBAction)showPreviousItem:(id)sender;
 - (IBAction)showNextItem:(id)sender;
@@ -41,8 +38,6 @@ extern NSString * const MDQuickLookEndFrameKey;
 
 - (void)showWindowByAnimatingFromStartFrame:(NSRect)startFrame toEndFrame:(NSRect)endFrame;
 
-
-- (void)loadItemAtIndex:(NSInteger)anIndex;
 
 @end
 

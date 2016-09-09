@@ -7,23 +7,19 @@
 //
 
 #import "MDQuickLookController.h"
-#import "MDAppController.h"
 #import "MDHLDocument.h"
-
 #import <HLKit/HLKit.h>
-
 #import <CoreServices/CoreServices.h>
 #import "MDQuickLookPreviewViewController.h"
 #import "MDAppKitAdditions.h"
 
 
-//#define MD_DEBUG 1
 #define MD_DEBUG 0
 
 
-NSString * const MDQuickLookStartFrameKey	= @"MDQuickLookStartFrame";
-NSString * const MDQuickLookEndFrameKey		= @"MDQuickLookEndFrame";
-
+@interface MDQuickLookController (MDPrivate)
+- (void)updateUI;
+@end
 
 
 
@@ -33,12 +29,15 @@ static MDQuickLookController *sharedQuickLookController = nil;
 @implementation MDQuickLookController
 
 
-@synthesize items, document;
+@synthesize items;
+@synthesize hlDocument;
 
 
 + (MDQuickLookController *)sharedQuickLookController {
-	if (sharedQuickLookController == nil) {
-		sharedQuickLookController = [[super allocWithZone:NULL] init];
+	@synchronized(self) {
+		if (sharedQuickLookController == nil) {
+			sharedQuickLookController = [[super allocWithZone:NULL] init];
+		}
 	}
 	return sharedQuickLookController;
 }
@@ -57,6 +56,10 @@ static MDQuickLookController *sharedQuickLookController = nil;
 #endif
 	if ((self = [super initWithWindowNibName:@"MDQuickLook"])) {
 		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedItemsDidChange:) name:MDHLDocumentSelectedItemsDidChangeNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(documentWillClose:) name:MDHLDocumentWillCloseNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
+	
 	} else {
 		[NSBundle runFailedNibLoadAlert:@"MDQuickLoook"];
 	}
@@ -82,15 +85,9 @@ static MDQuickLookController *sharedQuickLookController = nil;
 
 - (void)windowDidLoad {
 #if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	
-#if MD_DEBUG
 	BOOL floats = [[self window] isFloatingPanel];
 	NSLog(@"[%@ %@] isFloatingPanel == %d", NSStringFromClass([self class]), NSStringFromSelector(_cmd), floats);
 #endif
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedItemsDidChange:) name:MDSelectedItemsDidChangeNotification object:nil];
 	
 }
 
@@ -109,77 +106,36 @@ static MDQuickLookController *sharedQuickLookController = nil;
 }
 
 
-- (IBAction)showWindow:(id)sender {
+- (void)updateUI {
 #if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	MDShouldShowQuickLook = YES;
-	[[self window] orderFront:nil];
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowQuickLook] forKey:MDShouldShowQuickLookKey];
-	[[NSNotificationCenter defaultCenter] postNotificationName:MDShouldShowQuickLookDidChangeNotification object:self userInfo:nil];
-}
-
-
-- (void)windowWillClose:(NSNotification *)notification {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	if ([notification object] == [self window]) {
-		MDShouldShowQuickLook = NO;
-		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowQuickLook] forKey:MDShouldShowQuickLookKey];
-		[[NSNotificationCenter defaultCenter] postNotificationName:MDShouldShowQuickLookDidChangeNotification object:self userInfo:nil];
-	}
-}
-
-
-- (void)selectedItemsDidChange:(NSNotification *)notification {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	// We need to check this notification to see if it is being sent by a document that 
-	// is being closed. When a document is closed, it posts this notification, with itself
-	// as the object, and -- this is unique to a "document-that-is-closing" -- a nil userInfo dictionary.
-	// If the notification's object is the same document as our currently retained document, and
-	// the userInfo dictionary == nil, then we should be sure to release our document, 
-	// as well as the selected items, so that that document can be properly deallocated. 
-	
-	NSArray *newSelectedItems = [[notification userInfo] objectForKey:MDSelectedItemsKey];
-	MDHLDocument *newDocument = [notification object];
-	
-	if (document == newDocument && newSelectedItems == nil) {
-		// let go!
-		
-		[document release];
-		document = nil;
-		
-		[items release];
-		items = nil;
+	if (hlDocument == nil) {
+		[[self window] setTitle:@""];
 		
 		[previewViewController setRepresentedObject:nil];
+		[controlsView setHidden:YES];
 		
 	} else {
-		[self setItems:newSelectedItems];
-		[self setDocument:newDocument];
-	}
-	
-	if (newDocument && newSelectedItems) {
 		
-		if ([newSelectedItems count] == 0) {
-			[self loadItemAtIndex:-1];
-		} else if ([newSelectedItems count] == 1) {
-			currentItemIndex = 0;
-			[self loadItemAtIndex:currentItemIndex];
-		} else if ([newSelectedItems count] > 1) {
-			currentItemIndex = 0;
-			[self loadItemAtIndex:currentItemIndex];
+		if (items.count == 0) {
+			[[self window] setTitle:[hlDocument displayName]];
+			
+			[previewViewController setRepresentedObject:hlDocument];
+			[controlsView setHidden:YES];
+			
+		} else {
+			HKItem *item = [items objectAtIndex:currentItemIndex];
+			[[self window] setTitle:[item name]];
+			[previewViewController setRepresentedObject:item];
+			
+			[controlsView setHidden:(items.count == 1)];
+			
 		}
-		
-	} else {
-		[self loadItemAtIndex:-1];
 	}
-
 }
+
 
 
 - (IBAction)showPreviousItem:(id)sender {
@@ -192,8 +148,7 @@ static MDQuickLookController *sharedQuickLookController = nil;
 	} else {
 		currentItemIndex--;
 	}
-	
-	[self loadItemAtIndex:currentItemIndex];
+	[self updateUI];
 }
 
 
@@ -207,8 +162,7 @@ static MDQuickLookController *sharedQuickLookController = nil;
 	} else {
 		currentItemIndex++;
 	}
-	
-	[self loadItemAtIndex:currentItemIndex];
+	[self updateUI];
 }
 
 
@@ -227,51 +181,106 @@ static MDQuickLookController *sharedQuickLookController = nil;
 }
 
 
-- (void)loadItemAtIndex:(NSInteger)anIndex {
+
+- (void)selectedItemsDidChange:(NSNotification *)notification {
 #if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"[%@ %@] notification == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), notification);
 #endif
-	if (anIndex == -1) {
-		if (document && items) {
-			if ([items count] == 0) {
-				[[self window] setTitle:[document displayName]];
-				
-				[previewViewController setRepresentedObject:document];
-				[controlsView setHidden:YES];
-			}
+	
+	// if we're not showing Quick Look, ignore the notification
+	
+	if ([MDHLDocument shouldShowQuickLook] == NO) return;
+	
+	self.hlDocument = [notification object];
+	self.items = hlDocument.selectedItems;
+	
+	currentItemIndex = 0;
+	
+	[self updateUI];
+}
+
+
+
+- (void)documentWillClose:(NSNotification *)notification {
+#if MD_DEBUG
+//    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"[%@ %@] notification == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), notification);
+#endif
+	
+	/*
+	 When an MDHLDocument is closed, it posts this notification with itself as the object.
+	 If the notification's object is the same document as our currently retained document, 
+	 then we need to make sure to release our document, as well as the selected items,
+	 so that the document can be properly deallocated. */
+	
+	MDHLDocument *closingDocument = [notification object];
+	
+	if (hlDocument == closingDocument) {
+		
+		/* If a document is closing, and it's the document we're currently showing data for,
+		 find the next appropriate document to show data for. This is intended for instances where 
+		 an MDHLDocument is closed in the background while another non-document window is currently
+		 the main window -- in which case there may be no other MDHLDocument that will become 
+		 the main window (which is how we get notifications that the user has switched documents). */
+		
+		/* It's possible that orderedDocuments might be in the wrong order, so we'll remove
+		 the closing document from the array, and then use the first of the remaining documents
+		 that is found. */
+		
+		NSMutableArray *orderedDocuments = [[[MDHLDocument orderedDocuments] mutableCopy] autorelease];
+		[orderedDocuments removeObject:closingDocument];
+		
+		if (orderedDocuments.count) {
+			self.hlDocument = [orderedDocuments objectAtIndex:0];
+			self.items = hlDocument.selectedItems;
+			
 		} else {
+			// no documents left
+			// let go!
+			self.hlDocument = nil;
+			self.items = nil;
 			
-			[[self window] setTitle:@""];
-			
-			[previewViewController setRepresentedObject:nil];
-			[controlsView setHidden:YES];
 		}
 		
-	} else if (anIndex >= 0) {
-		if (document && items) {
-			
-			if ([items count] == 0) {
-				
-				
-			} else if ([items count] == 1) {
-				HKItem *item = [items objectAtIndex:anIndex];
-				[[self window] setTitle:[item name]];
-				[previewViewController setRepresentedObject:item];
-				[controlsView setHidden:YES];
-				
-			} else if ([items count] > 1) {
-				HKItem *item = [items objectAtIndex:anIndex];
-				[[self window] setTitle:[item name]];
-				[previewViewController setRepresentedObject:item];
-				[controlsView setHidden:NO];
-
-			}
-		}
+		currentItemIndex = 0;
+		[self updateUI];
 	}
 }
 
 
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	appIsTerminating = YES;
+}
+
+
+- (IBAction)showWindow:(id)sender {
+#if MD_DEBUG
+	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	[[self window] orderFront:nil];
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[MDHLDocument shouldShowQuickLook]] forKey:MDHLDocumentShouldShowQuickLookKey];
+	[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentShouldShowQuickLookDidChangeNotification object:self userInfo:nil];
+}
+
+
+- (void)windowWillClose:(NSNotification *)notification {
+	
+	if ([notification object] == [self window] && appIsTerminating == NO) {
+#if MD_DEBUG
+		NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+		[MDHLDocument setShouldShowQuickLook:NO];
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[MDHLDocument shouldShowQuickLook]] forKey:MDHLDocumentShouldShowQuickLookKey];
+		[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentShouldShowQuickLookDidChangeNotification object:self userInfo:nil];
+	}
+}
+
+
+
 @end
-
-
 

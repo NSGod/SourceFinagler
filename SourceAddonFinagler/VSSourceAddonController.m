@@ -46,7 +46,7 @@ static NSString * const VSSourceAddonProblemAddonsSortDescriptorsKey				= @"VSSo
 + (void)initialize {
 	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
 	[defaultValues setObject:[NSNumber numberWithUnsignedInteger:VSSourceAddonInstallByMoving] forKey:VSSourceAddonInstallMethodKey];
-	NSArray *sortDescriptors = [NSArray arrayWithObjects:[[[NSSortDescriptor alloc] initWithKey:@"fileName" ascending:YES selector:@selector(localizedCaseInsensitiveNumericalCompare:)] autorelease], nil];
+	NSArray *sortDescriptors = [NSArray arrayWithObjects:[[[NSSortDescriptor alloc] initWithKey:@"fileName" ascending:YES selector:@selector(md__localizedCaseInsensitiveNumericalCompare:)] autorelease], nil];
 	[defaultValues setSortDescriptors:sortDescriptors forKey:VSSourceAddonInstalledAddonsSortDescriptorsKey];
 	[defaultValues setSortDescriptors:sortDescriptors forKey:VSSourceAddonAlreadyInstalledAddonsSortDescriptorsKey];
 	[defaultValues setSortDescriptors:sortDescriptors forKey:VSSourceAddonProblemAddonsSortDescriptorsKey];

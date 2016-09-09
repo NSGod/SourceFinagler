@@ -106,18 +106,59 @@
 
 
 
-
-SInt32 TKGetSystemVersion() {
-	static SInt32 TKSystemVersion = TKUndeterminedVersion;
-	
-	if (TKSystemVersion == TKUndeterminedVersion) {
-		SInt32 fullVersion = 0;
-		Gestalt(gestaltSystemVersion, &fullVersion);
-		TKSystemVersion = fullVersion & 0xfffffff0;
+BOOL TKOperatingSystemVersionLessThan(TKOperatingSystemVersion osVersion, TKOperatingSystemVersion referenceVersion) {
+	if (osVersion.majorVersion != referenceVersion.majorVersion) {
+		return osVersion.majorVersion < referenceVersion.majorVersion;
 	}
-	return TKSystemVersion;
+	if (osVersion.minorVersion != referenceVersion.minorVersion) {
+		return osVersion.minorVersion < referenceVersion.minorVersion;
+	}
+	return osVersion.patchVersion < referenceVersion.patchVersion;
+}
+
+
+BOOL TKOperatingSystemVersionGreaterThanOrEqual(TKOperatingSystemVersion osVersion, TKOperatingSystemVersion referenceVersion) {
+	if (osVersion.majorVersion != referenceVersion.majorVersion) {
+		return osVersion.majorVersion > referenceVersion.majorVersion;
+	}
+	if (osVersion.minorVersion != referenceVersion.minorVersion) {
+		return osVersion.minorVersion > referenceVersion.minorVersion;
+	}
+	return osVersion.patchVersion >= referenceVersion.patchVersion;
 }
 
 
 
+@implementation NSProcessInfo (TKAdditions)
+
+
+- (TKOperatingSystemVersion)tk__operatingSystemVersion {
+	static BOOL initialized = NO;
+	static TKOperatingSystemVersion operatingSystemVersion = {0, 0, 0};
+	
+	if (initialized == NO) {
+		SInt32 majorVersion = 0;
+		SInt32 minorVersion = 0;
+		SInt32 patchVersion = 0;
+		
+		OSErr err = Gestalt(gestaltSystemVersionMajor, &majorVersion);
+		err |= Gestalt(gestaltSystemVersionMinor, &minorVersion);
+		err |= Gestalt(gestaltSystemVersionBugFix, &patchVersion);
+		
+		if (err) {
+			NSLog(@"[%@ %@] Gestalt() returned == %d", NSStringFromClass([self class]), NSStringFromSelector(_cmd), (int)err);
+		}
+		
+		operatingSystemVersion.majorVersion = majorVersion;
+		operatingSystemVersion.minorVersion = minorVersion;
+		operatingSystemVersion.patchVersion = patchVersion;
+		
+		initialized = YES;
+	}
+	
+	return operatingSystemVersion;
+}
+
+
+@end
 

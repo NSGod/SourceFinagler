@@ -15,7 +15,7 @@
 
 - (id)initWithFrame:(NSRect)frame {
     if ((self = [super initWithFrame:frame])) {
-
+		
     }
     return self;
 }
@@ -34,10 +34,19 @@
 	return NO;
 }
 
-- (void)drawRect:(NSRect)frame {
+- (void)setImage:(NSImage *)anImage {
+	[anImage retain];
+	[image release];
+	image = anImage;
+	[self setNeedsDisplay:YES];
+}
+
+
+- (void)drawRect:(NSRect)dirtyRect {
 	if (image == nil) {
-		return [super drawRect:frame];
+		return [super drawRect:dirtyRect];
 	}
+	NSRect frame = [self frame];
 	[image setSize:NSMakeSize(frame.size.width, frame.size.height)];
     [image drawAtPoint:NSMakePoint(0.0, 0.0) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 }

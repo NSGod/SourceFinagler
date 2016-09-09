@@ -153,23 +153,23 @@ hlBool CProcStream::Read(hlChar &cChar)
 		return hlFalse;
 	}
 
-	if (pReadProc == 0)
+	if(pReadProc == 0)
 	{
 		LastError.SetErrorMessage("pReadProc not set.");
 		return hlFalse;
 	}
 
-	hlULongLong ullBytesRead = pReadProc(&cChar, 1, this->pUserData);
-	
-	if(ullBytesRead == 0)
+	hlUInt uiBytesRead = pReadProc(&cChar, 1, this->pUserData);
+
+	if(uiBytesRead == 0)
 	{
 		LastError.SetErrorMessage("pReadProc() failed.");
 	}
 
-	return ullBytesRead == 1;
+	return uiBytesRead == 1;
 }
 
-hlULongLong CProcStream::Read(hlVoid *lpData, hlULongLong ullBytes)
+hlUInt CProcStream::Read(hlVoid *lpData, hlUInt uiBytes)
 {
 	if(!this->bOpened)
 	{
@@ -188,14 +188,14 @@ hlULongLong CProcStream::Read(hlVoid *lpData, hlULongLong ullBytes)
 		return 0;
 	}
 
-	hlULongLong ullBytesRead = pReadProc(lpData, ullBytes, this->pUserData);
+	hlUInt uiBytesRead = pReadProc(lpData, uiBytes, this->pUserData);
 
-	if(ullBytesRead == 0)
+	if(uiBytesRead == 0)
 	{
 		LastError.SetErrorMessage("pReadProc() failed.");
 	}
 
-	return ullBytesRead;
+	return uiBytesRead;
 }
 
 hlBool CProcStream::Write(hlChar cChar)
@@ -217,17 +217,17 @@ hlBool CProcStream::Write(hlChar cChar)
 		return hlFalse;
 	}
 
-	hlULongLong ullBytesWritten = pWriteProc(&cChar, 1, this->pUserData);
+	hlUInt uiBytesWritten = pWriteProc(&cChar, 1, this->pUserData);
 
-	if(ullBytesWritten == 0)
+	if(uiBytesWritten == 0)
 	{
 		LastError.SetErrorMessage("pWriteProc() failed.");
 	}
 
-	return ullBytesWritten == 1;
+	return uiBytesWritten == 1;
 }
 
-hlULongLong CProcStream::Write(const hlVoid *lpData, hlULongLong ullBytes)
+hlUInt CProcStream::Write(const hlVoid *lpData, hlUInt uiBytes)
 {
 	if(!this->bOpened)
 	{
@@ -246,12 +246,12 @@ hlULongLong CProcStream::Write(const hlVoid *lpData, hlULongLong ullBytes)
 		return 0;
 	}
 
-	hlULongLong ullBytesWritten = pWriteProc(lpData, ullBytes, this->pUserData);
+	hlUInt uiBytesWritten = pWriteProc(lpData, uiBytes, this->pUserData);
 
-	if(ullBytesWritten == 0)
+	if(uiBytesWritten == 0)
 	{
 		LastError.SetErrorMessage("pWriteProc() failed.");
 	}
 
-	return ullBytesWritten;
+	return uiBytesWritten;
 }

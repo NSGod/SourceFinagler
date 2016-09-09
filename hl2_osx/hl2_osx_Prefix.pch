@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'hl2_osx' target in the 'hl2_osx' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

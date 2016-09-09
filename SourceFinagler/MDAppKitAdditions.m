@@ -251,7 +251,7 @@ static NSView *blankView() {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	if (MDGetSystemVersion() >= MDSnowLeopard) {
+	if ([[NSProcessInfo processInfo] md__operatingSystemVersion].minorVersion >= MDSnowLeopard) {
 		NSMutableArray *URLs = [NSMutableArray array];
 		for (NSString *path in filePaths) {
 			NSURL *URL = [NSURL fileURLWithPath:path];

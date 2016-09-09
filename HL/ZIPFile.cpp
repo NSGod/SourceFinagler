@@ -393,9 +393,13 @@ hlBool CZIPFile::GetItemAttributeInternal(const CDirectoryItem *pItem, HLPackage
 					delete []lpComment;
 					return hlTrue;
 				}
+				default:
+					break;
 			}
 			break;
 		}
+		default:
+			break;
 	}
 
 	return hlFalse;
@@ -467,7 +471,10 @@ hlBool CZIPFile::GetFileValidationInternal(const CDirectoryFile *pFile, HLValida
 		delete pStream;
 	}
 
-	eValidation = (hlULong)pDirectoryItem->uiCRC32 == uiChecksum ? HL_VALIDATES_OK : HL_VALIDATES_CORRUPT;
+	if(eValidation == HL_VALIDATES_ASSUMED_OK)
+	{
+		eValidation = (hlULong)pDirectoryItem->uiCRC32 == uiChecksum ? HL_VALIDATES_OK : HL_VALIDATES_CORRUPT;
+	}
 
 	return hlTrue;
 }

@@ -8,8 +8,6 @@
 
 
 #import "MDViewOptionsController.h"
-#import "MDAppController.h"
-#import "MDHLDocument.h"
 #import "MDOutlineView.h"
 #import "MDBrowser.h"
 #import "MDAppKitAdditions.h"
@@ -19,12 +17,9 @@
 #define MD_DEBUG 0
 
 
-NSString * const MDShouldShowViewOptionsKey						= @"MDShouldShowViewOptions";
-NSString * const MDShouldShowViewOptionsDidChangeNotification	= @"MDShouldShowViewOptionsDidChange";
-
 
 @interface MDViewOptionsController (MDPrivate)
-- (void)switchToView:(NSDictionary *)anIdentifier;
+- (void)updateUIWithDocument:(MDHLDocument *)document;
 @end
 
 
@@ -33,9 +28,9 @@ NSString * const MDShouldShowViewOptionsDidChangeNotification	= @"MDShouldShowVi
 - (id)init {
 	if ((self = [super initWithWindowNibName:@"MDViewOptions"])) {
 		
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willSwitchView:) name:MDWillSwitchViewNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(documentViewModeDidChange:) name:MDDocumentViewModeDidChangeNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedItemsDidChange:) name:MDSelectedItemsDidChangeNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewModeDidChange:) name:MDHLDocumentViewModeDidChangeNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(documentWillClose:) name:MDHLDocumentWillCloseNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
 
 	} else {
 		[NSBundle runFailedNibLoadAlert:@"MDViewOptions"];
@@ -54,113 +49,115 @@ NSString * const MDShouldShowViewOptionsDidChangeNotification	= @"MDShouldShowVi
 
 
 - (void)awakeFromNib {
-	documentViewMode = [[[NSUserDefaults standardUserDefaults] objectForKey:MDDocumentViewModeKey] integerValue];
+	viewMode = [[[NSUserDefaults standardUserDefaults] objectForKey:MDHLDocumentViewModeKey] integerValue];
 	
 	[[[self window] standardWindowButton:NSWindowZoomButton] setHidden:YES];
 	[[[self window] standardWindowButton:NSWindowMiniaturizeButton] setHidden:YES];
 	[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
 	
-	[self switchToView:nil];
-	
+	[self updateUIWithDocument:nil];
 }
 
-- (void)selectedItemsDidChange:(NSNotification *)notification {
+
+- (void)updateUIWithDocument:(MDHLDocument *)document {
 #if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+//    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	MDHLDocument *newDocument = [[notification userInfo] objectForKey:MDSelectedItemsDocumentKey];
-	if (newDocument == nil) {
-		/* a document is being closed, so set stuff to an intermediary "--" */
+	
+	if (document == nil) {
 		[[self window] setTitle:NSLocalizedString(@"View Options", @"")];
 		[noViewOptionsField setStringValue:NSLocalizedString(@"No document", @"")];
 		[contentBox setContentView:noViewOptionsView];
-	}
-}
-
-
-- (void)willSwitchView:(NSNotification *)notification {
-#if MD_DEBUG
-	NSLog(@"[%@ %@] userInfo == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [notification userInfo]);
-#endif
-
-	NSDictionary *userInfo = [notification userInfo];
-	[self switchToView:userInfo];
-}
-
-
-- (void)switchToView:(NSDictionary *)userInfo {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
-	
-	if (userInfo) {
-		NSString *viewIdentifier = [userInfo objectForKey:MDViewNameKey];
-		if ([viewIdentifier isEqualToString:MDViewKey]) {
-			
-			NSString *documentName = [userInfo objectForKey:MDDocumentNameKey];
-			if (documentName) {
-				[[self window] setTitle:documentName];
-			}
-			
-			documentViewMode = [[userInfo objectForKey:MDDocumentViewModeKey] integerValue];
-			
-			if (documentViewMode == 0) {
-	
-			} else if (documentViewMode == MDListViewMode) {
-			
-				[contentBox setContentView:listViewOptionsView];
-			
-			} else if (documentViewMode == MDColumnViewMode) {
-				
-				[contentBox setContentView:browserViewOptionsView];
-				
-			}
-		}
 		
 	} else {
-		NSInteger viewMode = [[[NSUserDefaults standardUserDefaults] objectForKey:MDDocumentViewModeKey] integerValue];
-		if (viewMode == MDListViewMode) {
+		viewMode = document.viewMode;
+		
+		if (viewMode == MDHLDocumentNoViewMode) {
+			[noViewOptionsField setStringValue:NSLocalizedString(@"There are no view options for this document.", @"")];
+			[contentBox setContentView:noViewOptionsView];
+		} else if (viewMode == MDHLDocumentListViewMode) {
 			[contentBox setContentView:listViewOptionsView];
-		} else if (viewMode == MDColumnViewMode) {
+		} else if (viewMode == MDHLDocumentColumnViewMode) {
 			[contentBox setContentView:browserViewOptionsView];
+		}
+		
+		if (document.displayName) {
+			[[self window] setTitle:document.displayName];
+		} else {
+			[[self window] setTitle:NSLocalizedString(@"View Options", @"")];
+		}
 	}
 }
-}
 
 
-- (void)documentViewModeDidChange:(NSNotification *)notification {
+- (void)viewModeDidChange:(NSNotification *)notification {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-
-	documentViewMode = [[[notification userInfo] objectForKey:MDDocumentViewModeKey] integerValue];
 	
-	if (documentViewMode == 1) {
-		[contentBox setContentView:listViewOptionsView];
-	} else if (documentViewMode == 2) {
-		[contentBox setContentView:browserViewOptionsView];
-	}
+	[self updateUIWithDocument:[notification object]];
 }
+
+
+- (void)documentWillClose:(NSNotification *)notification {
+#if MD_DEBUG
+//    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"[%@ %@] notification == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), notification);
+#endif
+	
+	MDHLDocument *closingDocument = [notification object];
+	
+	/* If a document is closing, and it's the document we're currently showing data for,
+	 find the next appropriate document to show data for. This is intended for instances where 
+	 an MDHLDocument is closed in the background while another non-document window is currently
+	 the main window -- in which case there may be no other MDHLDocument that will become 
+	 the main window (which is how we get notifications that the user has switched documents). */
+	
+	/* It's possible that orderedDocuments might be in the wrong order, so we'll remove
+	 the closing document from the array, and then use the first of the remaining documents
+	 that is found. */
+	
+	NSMutableArray *orderedDocuments = [[[MDHLDocument orderedDocuments] mutableCopy] autorelease];
+	[orderedDocuments removeObject:closingDocument];
+	
+	if (orderedDocuments.count) {
+		[self updateUIWithDocument:[orderedDocuments objectAtIndex:0]];
+		
+	} else {
+		// no documents left
+		[self updateUIWithDocument:nil];
+	}
+	
+}
+
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	appIsTerminating = YES;
+}
+
 
 - (IBAction)showWindow:(id)sender {
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[[self window] orderFront:nil];
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowViewOptions] forKey:MDShouldShowViewOptionsKey];
-	[[NSNotificationCenter defaultCenter] postNotificationName:MDShouldShowViewOptionsDidChangeNotification object:self userInfo:nil];
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[MDHLDocument shouldShowViewOptions]] forKey:MDHLDocumentShouldShowViewOptionsKey];
+	[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentShouldShowViewOptionsDidChangeNotification object:self userInfo:nil];
 }
 
 
 - (void)windowWillClose:(NSNotification *)notification {
 	
-	if ([notification object] == [self window]) {
+	if ([notification object] == [self window] && appIsTerminating == NO) {
 #if MD_DEBUG
 		NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-		MDShouldShowViewOptions = NO;
-		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowViewOptions] forKey:MDShouldShowViewOptionsKey];
-		[[NSNotificationCenter defaultCenter] postNotificationName:MDShouldShowViewOptionsDidChangeNotification object:self userInfo:nil];
+		[MDHLDocument setShouldShowViewOptions:NO];
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[MDHLDocument shouldShowViewOptions]] forKey:MDHLDocumentShouldShowViewOptionsKey];
+		[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentShouldShowViewOptionsDidChangeNotification object:self userInfo:nil];
 	}
 }
 
@@ -170,7 +167,7 @@ NSString * const MDShouldShowViewOptionsDidChangeNotification	= @"MDShouldShowVi
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:[sender tag]] forKey:MDListViewIconSizeKey];
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:[sender tag]] forKey:MDOutlineViewIconSizeKey];
 }
 
 

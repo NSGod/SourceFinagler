@@ -7,11 +7,8 @@
 //
 
 
-
 #import <Cocoa/Cocoa.h>
-
-extern NSString * const MDShouldShowViewOptionsKey;	// BOOL/NSNumber
-extern NSString * const MDShouldShowViewOptionsDidChangeNotification;
+#import "MDHLDocument.h"
 
 
 @interface MDViewOptionsController : NSWindowController {
@@ -25,7 +22,11 @@ extern NSString * const MDShouldShowViewOptionsDidChangeNotification;
 	
 	IBOutlet NSView				*browserViewOptionsView;
 	
-	NSInteger					documentViewMode;
+	MDHLDocumentViewMode		viewMode;
+	
+	
+	BOOL						appIsTerminating;
+	
 }
 
 - (IBAction)changeListViewIconSize:(id)sender;

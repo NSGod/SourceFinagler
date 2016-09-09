@@ -16,11 +16,11 @@
 static NSString * const MDFinderBundleIdentifierKey					= @"com.apple.finder";
 
 
-NSString * const MDShouldShowKindColumnKey							= @"MDShouldShowKindColumn";
-NSString * const MDShouldShowSizeColumnKey							= @"MDShouldShowSizeColumn";
+NSString * const MDOutlineViewShouldShowKindColumnKey				= @"MDOutlineViewShouldShowKindColumn";
+NSString * const MDOutlineViewShouldShowSizeColumnKey				= @"MDOutlineViewShouldShowSizeColumn";
 
-NSString * const MDListViewIconSizeKey								= @"MDListViewIconSize";
-NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
+NSString * const MDOutlineViewIconSizeKey							= @"MDOutlineViewIconSize";
+NSString * const MDOutlineViewFontSizeKey							= @"MDOutlineViewFontSize";
 
 
 
@@ -30,7 +30,7 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 
 
 #define MD_DEBUG 0
-#define MD_DEBUG_TABLE_COLUMNS 1
+#define MD_DEBUG_TABLE_COLUMNS 0
 
 
 #define MD_DEFAULT_FONT_SIZE 12
@@ -46,14 +46,15 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
     NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
+	static BOOL initialized = NO;
+	
 	@synchronized(self) {
-		static BOOL initialized = NO;
 		
 		if (initialized == NO) {
 			
 			NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
-			[defaults setObject:[NSNumber numberWithBool:YES] forKey:MDShouldShowKindColumnKey];
-			[defaults setObject:[NSNumber numberWithBool:YES] forKey:MDShouldShowSizeColumnKey];
+			[defaults setObject:[NSNumber numberWithBool:YES] forKey:MDOutlineViewShouldShowKindColumnKey];
+			[defaults setObject:[NSNumber numberWithBool:YES] forKey:MDOutlineViewShouldShowSizeColumnKey];
 			
 			MDUserDefaults *userDefaults = [MDUserDefaults standardUserDefaults];
 			
@@ -61,15 +62,15 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 			NSNumber *finderListViewIconSize = [[[userDefaults objectForKey:@"StandardViewOptions" forAppIdentifier:MDFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ListViewOptions"] objectForKey:@"IconSize"];
 			
 			if (finderListViewFontSize) {
-				[defaults setObject:finderListViewFontSize forKey:MDListViewFontSizeKey];
+				[defaults setObject:finderListViewFontSize forKey:MDOutlineViewFontSizeKey];
 			} else {
-				[defaults setObject:[NSNumber numberWithInteger:MD_DEFAULT_FONT_SIZE] forKey:MDListViewFontSizeKey];
+				[defaults setObject:[NSNumber numberWithInteger:MD_DEFAULT_FONT_SIZE] forKey:MDOutlineViewFontSizeKey];
 			}
 			
 			if (finderListViewIconSize) {
-				[defaults setObject:finderListViewIconSize forKey:MDListViewIconSizeKey];
+				[defaults setObject:finderListViewIconSize forKey:MDOutlineViewIconSizeKey];
 			} else {
-				[defaults setObject:[NSNumber numberWithInteger:MD_DEFAULT_ICON_SIZE] forKey:MDListViewIconSizeKey];
+				[defaults setObject:[NSNumber numberWithInteger:MD_DEFAULT_ICON_SIZE] forKey:MDOutlineViewIconSizeKey];
 			}
 			
 			[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
@@ -96,10 +97,10 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 	[kindColumn release];
 	[sizeColumn release];
 	
-	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDListViewFontSizeKey]];
-	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDListViewIconSizeKey]];
-	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDShouldShowKindColumnKey]];
-	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDShouldShowSizeColumnKey]];
+	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDOutlineViewFontSizeKey]];
+	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDOutlineViewIconSizeKey]];
+	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDOutlineViewShouldShowKindColumnKey]];
+	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDOutlineViewShouldShowSizeColumnKey]];
 	
 	[super dealloc];
 }
@@ -117,10 +118,10 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 	 in OS X 10.9 that causes outline view columns to be restored in incorrect order. */
 
 	NSArray *tableColumns = self.tableColumns;
-	NSArray *sortDescriptors = self.sortDescriptors;
 	
 #if MD_DEBUG_TABLE_COLUMNS
 	NSLog(@"[%@ %@] (OPENING) tableColumns == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), tableColumns);
+	NSArray *sortDescriptors = self.sortDescriptors;
 	NSLog(@"[%@ %@] (OPENING) sortDescriptors == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), sortDescriptors);
 #endif
 	
@@ -137,8 +138,8 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 	// from controllers
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
-	fontSize = [[userDefaults objectForKey:MDListViewFontSizeKey] integerValue];
-	iconSize = [[userDefaults objectForKey:MDListViewIconSizeKey] integerValue];
+	fontSize = [[userDefaults objectForKey:MDOutlineViewFontSizeKey] integerValue];
+	iconSize = [[userDefaults objectForKey:MDOutlineViewIconSizeKey] integerValue];
 	[self calculateRowHeight];
 	
 	[[nameColumn dataCell] setFont:[NSFont systemFontOfSize:(CGFloat)fontSize]];
@@ -148,25 +149,25 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 	[kindColumn retain];
 	[sizeColumn retain];
 
-	shouldShowKindColumn = [[userDefaults objectForKey:MDShouldShowKindColumnKey] boolValue];
+	shouldShowKindColumn = [[userDefaults objectForKey:MDOutlineViewShouldShowKindColumnKey] boolValue];
 	if (!shouldShowKindColumn) [self removeTableColumn:kindColumn];
 	
-	shouldShowSizeColumn = [[userDefaults objectForKey:MDShouldShowSizeColumnKey] boolValue];
+	shouldShowSizeColumn = [[userDefaults objectForKey:MDOutlineViewShouldShowSizeColumnKey] boolValue];
 	if (!shouldShowSizeColumn) [self removeTableColumn:sizeColumn];
 	
 	[self setVerticalMotionCanBeginDrag:NO];
 	
 	
-	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDListViewFontSizeKey]
+	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDOutlineViewFontSizeKey]
 																 options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 	
-	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDListViewIconSizeKey]
+	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDOutlineViewIconSizeKey]
 																 options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 	
-	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDShouldShowKindColumnKey]
+	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDOutlineViewShouldShowKindColumnKey]
 																 options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 	
-	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDShouldShowSizeColumnKey]
+	[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[NSString stringWithFormat:@"defaults.%@", MDOutlineViewShouldShowSizeColumnKey]
 																 options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 	
 }
@@ -177,9 +178,9 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 	NSLog(@"[%@ %@] keyPath == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), keyPath);
 #endif
 	
-	if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDListViewFontSizeKey]]) {
+	if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDOutlineViewFontSizeKey]]) {
 		
-		fontSize = [[[NSUserDefaults standardUserDefaults] objectForKey:MDListViewFontSizeKey] integerValue];
+		fontSize = [[[NSUserDefaults standardUserDefaults] objectForKey:MDOutlineViewFontSizeKey] integerValue];
 		[self calculateRowHeight];
 		
 		[[nameColumn dataCell] setFont:[NSFont systemFontOfSize:(CGFloat)fontSize]];
@@ -188,21 +189,21 @@ NSString * const MDListViewFontSizeKey								= @"MDListViewFontSize";
 		
 		[self reloadData];
 		
-	} else if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDListViewIconSizeKey]]) {
+	} else if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDOutlineViewIconSizeKey]]) {
 		
-		iconSize = [[[NSUserDefaults standardUserDefaults] objectForKey:MDListViewIconSizeKey] integerValue];
+		iconSize = [[[NSUserDefaults standardUserDefaults] objectForKey:MDOutlineViewIconSizeKey] integerValue];
 		[self calculateRowHeight];
 		[self reloadData];
 		
-	} else if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDShouldShowKindColumnKey]]) {
+	} else if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDOutlineViewShouldShowKindColumnKey]]) {
 		
-		shouldShowKindColumn = [[[NSUserDefaults standardUserDefaults] objectForKey:MDShouldShowKindColumnKey] boolValue];
+		shouldShowKindColumn = [[[NSUserDefaults standardUserDefaults] objectForKey:MDOutlineViewShouldShowKindColumnKey] boolValue];
 		(shouldShowKindColumn ? [self addTableColumn:kindColumn] : [self removeTableColumn:kindColumn]);
 		[self reloadData];
 		
-	} else if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDShouldShowSizeColumnKey]]) {
+	} else if ([keyPath isEqualToString:[NSString stringWithFormat:@"defaults.%@", MDOutlineViewShouldShowSizeColumnKey]]) {
 		
-		shouldShowSizeColumn = [[[NSUserDefaults standardUserDefaults] objectForKey:MDShouldShowSizeColumnKey] boolValue];
+		shouldShowSizeColumn = [[[NSUserDefaults standardUserDefaults] objectForKey:MDOutlineViewShouldShowSizeColumnKey] boolValue];
 		(shouldShowSizeColumn ? [self addTableColumn:sizeColumn] : [self removeTableColumn:sizeColumn]);
 		[self reloadData];
 		

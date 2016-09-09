@@ -29,23 +29,40 @@
 #endif
 
 
+MDFOUNDATION_EXTERN NSString *NSStringForAppleScriptListFromPaths(NSArray *paths);
+
 enum {
-	MDUndeterminedVersion	= 0,
-	MDCheetah				= 0x1000,
-	MDPuma					= 0x1010,
-	MDJaguar				= 0x1020,
-	MDPanther				= 0x1030,
-	MDTiger					= 0x1040,
-	MDLeopard				= 0x1050,
-	MDSnowLeopard			= 0x1060,
-	MDLion					= 0x1070,
-	MDMountainLion			= 0x1080,
-	MDMavericks				= 0x1090,
-	MDUnknownVersion		= 0x1100
+	MDCheetah				= 0,
+	MDPuma					= 1,
+	MDJaguar				= 2,
+	MDPanther				= 3,
+	MDTiger					= 4,
+	MDLeopard				= 5,
+	MDSnowLeopard			= 6,
+	MDLion					= 7,
+	MDMountainLion			= 8,
+	MDMavericks				= 9,
+	MDYosemite				= 10,
+	MDElCapitan				= 11,
+	MDUnknownVersion		= 12,
 };
 
-MDFOUNDATION_EXTERN SInt32 MDGetSystemVersion();
+typedef struct {
+    NSInteger majorVersion;
+    NSInteger minorVersion;
+    NSInteger patchVersion;
+} MDOperatingSystemVersion;
 
+
+MDFOUNDATION_EXTERN BOOL MDOperatingSystemVersionLessThan(MDOperatingSystemVersion osVersion, MDOperatingSystemVersion referenceVersion);
+MDFOUNDATION_EXTERN BOOL MDOperatingSystemVersionGreaterThanOrEqual(MDOperatingSystemVersion osVersion, MDOperatingSystemVersion referenceVersion);
+
+
+@interface NSProcessInfo (MDAdditions)
+
+- (MDOperatingSystemVersion)md__operatingSystemVersion;
+
+@end
 
 
 
@@ -59,8 +76,8 @@ MDFOUNDATION_EXTERN SInt32 MDGetSystemVersion();
 + (NSString *)stringWithPascalString:(ConstStr255Param)aPStr;
 - (BOOL)pascalString:(StringPtr)aBuffer length:(SInt16)aLength;
 
-- (NSComparisonResult)caseInsensitiveNumericalCompare:(NSString *)string;
-- (NSComparisonResult)localizedCaseInsensitiveNumericalCompare:(NSString *)string;
+- (NSComparisonResult)md__caseInsensitiveNumericalCompare:(NSString *)string;
+- (NSComparisonResult)md__localizedCaseInsensitiveNumericalCompare:(NSString *)string;
 
 - (NSString *)stringByReplacing:(NSString *)value with:(NSString *)newValue;
 - (NSString *)slashToColon;

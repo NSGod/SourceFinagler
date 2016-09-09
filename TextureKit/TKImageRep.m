@@ -794,7 +794,7 @@ static TKDXTCompressionQuality defaultDXTCompressionQuality = TKDXTCompressionDe
 #endif
 //	if ([object isKindOfClass:[self class]]) {
 	if ([object isKindOfClass:[TKImageRep class]]) {
-		if (TKGetSystemVersion() <= TKLeopard) {
+		if ([[NSProcessInfo processInfo] tk__operatingSystemVersion].minorVersion <= TKLeopard) {
 #if TK_DEBUG
 			NSLog(@"[%@ %@] (TKImageRepLeopardIsEqualCompatability)", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif

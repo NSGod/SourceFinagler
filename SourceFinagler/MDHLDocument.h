@@ -16,13 +16,11 @@ MDPreviewViewController, MDPathControlView, MDInspectorView;
 @class HKItem, HKFile, HKArchiveFile;
 
 
-extern int CoreDockSetTrashFull(int full) __attribute__((weak_import));
-
-
-enum {
-	MDListViewMode		= 1,
-	MDColumnViewMode	= 2,
-};
+typedef enum MDHLDocumentViewMode {
+	MDHLDocumentNoViewMode			= 0,
+	MDHLDocumentListViewMode		= 1,
+	MDHLDocumentColumnViewMode		= 2,
+} MDHLDocumentViewMode;
 
 
 extern NSString * const MDHLDocumentErrorDomain;
@@ -96,45 +94,45 @@ extern NSString * const MDHLDocumentURLKey;
 	
 	NSMutableDictionary								*copyOperationsAndTags;
 	
-	NSInteger					viewMode;
+	MDHLDocumentViewMode							viewMode;
 		
-	NSMutableArray				*searchResults;
-	NSPredicate					*searchPredicate;
-    NSUInteger					searchPredicateEditorRowCount;
+	NSMutableArray									*searchResults;
+	NSPredicate										*searchPredicate;
+    NSUInteger										searchPredicateEditorRowCount;
 	
 		
+	NSUInteger										outlineViewItemCount;
 	
-	NSUInteger					outlineViewItemCount;
-	
-	NSImage						*image;
-	
-	
-	NSString					*version;
-	
-	NSString					*kind;
+	NSImage											*image;
+	NSString										*version;
+	NSString										*kind;
 	
 	
-	BOOL						shouldShowInvisibleItems;
-	BOOL						isSearching;
-	BOOL						outlineViewIsReloadingData;
-	BOOL						outlineViewIsSettingUpInitialColumns;
+	BOOL											shouldShowInvisibleItems;
+	BOOL											isSearching;
+	BOOL											outlineViewIsReloadingData;
+	BOOL											outlineViewIsSettingUpInitialColumns;
 	
 }
 
-@property (assign) BOOL shouldShowInvisibleItems;
+@property (readonly, nonatomic, retain) HKArchiveFile *file;
 
 
-@property (nonatomic, readonly, retain) HKArchiveFile *file;
+@property (readonly, nonatomic, retain) NSImage *image;
+@property (readonly, nonatomic, retain) NSString *version;
+@property (readonly, nonatomic, retain) NSString *kind;
+
+@property (readonly, nonatomic, assign) MDHLDocumentViewMode viewMode;
+
+@property (readonly, nonatomic, retain) NSArray *selectedItems;
 
 
-@property (nonatomic, retain) NSImage *image;
-@property (assign) BOOL outlineViewIsReloadingData;
-
-@property (nonatomic, retain) NSString *version;
-@property (assign, setter=setSearching:) BOOL isSearching;
-@property (nonatomic, retain) NSString *kind;
+- (NSDate *)fileCreationDate;
+- (NSNumber *)fileSize;
 
 @property (nonatomic, retain) NSPredicate *searchPredicate;
+
+
 
 - (IBAction)installSourceAddon:(id)sender;
 
@@ -157,55 +155,48 @@ extern NSString * const MDHLDocumentURLKey;
 - (IBAction)toggleShowQuickLook:(id)sender;
 - (IBAction)toggleShowPathBar:(id)sender;
 
-- (NSDate *)fileCreationDate;
-- (NSNumber *)fileSize;
 
-- (void)windowWillClose:(NSNotification *)notification;
++ (NSArray *)orderedDocuments;
+
+
++ (BOOL)shouldShowViewOptions;
++ (void)setShouldShowViewOptions:(BOOL)shouldShow;
+
++ (BOOL)shouldShowInspector;
++ (void)setShouldShowInspector:(BOOL)shouldShow;
+
++ (BOOL)shouldShowQuickLook;
++ (void)setShouldShowQuickLook:(BOOL)shouldShow;
+
++ (BOOL)shouldShowPathBar;
++ (void)setShouldShowPathBar:(BOOL)shouldShow;
+
 
 @end
 
 
 
-	
-extern NSString * const MDDocumentWindowSavedFrameKey;
+extern NSString * const MDHLDocumentShouldShowInvisibleItemsKey;
 
-extern NSString * const MDShouldShowInvisibleItemsKey;
-
-extern NSString * const MDDocumentViewModeDidChangeNotification;
-extern NSString * const MDDocumentViewModeKey;
-
-extern NSString * const MDDocumentNameKey;
-extern NSString * const MDDidSwitchDocumentNotification;
-
-extern NSString * const MDShouldShowInspectorKey;
-extern NSString * const MDShouldShowInspectorDidChangeNotification;
-
-extern NSString * const MDShouldShowQuickLookKey;
-extern NSString * const MDShouldShowQuickLookDidChangeNotification;
-
-extern NSString * const MDShouldShowPathBarKey;
-extern NSString * const MDShouldShowPathBarDidChangeNotification;
+extern NSString * const MDHLDocumentViewModeDidChangeNotification;
+extern NSString * const MDHLDocumentViewModeKey;
 
 
-extern NSString * const MDSelectedItemsDidChangeNotification;
-extern NSString * const MDSelectedItemsKey;
-extern NSString * const MDSelectedItemsDocumentKey;
+extern NSString * const MDHLDocumentShouldShowViewOptionsKey;
+extern NSString * const MDHLDocumentShouldShowViewOptionsDidChangeNotification;
+
+extern NSString * const MDHLDocumentShouldShowInspectorKey;
+extern NSString * const MDHLDocumentShouldShowInspectorDidChangeNotification;
+
+extern NSString * const MDHLDocumentShouldShowQuickLookKey;
+extern NSString * const MDHLDocumentShouldShowQuickLookDidChangeNotification;
+
+extern NSString * const MDHLDocumentShouldShowPathBarKey;
+extern NSString * const MDHLDocumentShouldShowPathBarDidChangeNotification;
 
 
-extern NSString * const MDSystemSoundEffectsLeopardBundleIdentifierKey;
-extern NSString * const MDSystemSoundEffectsLeopardKey; // NSNumber (int)
+extern NSString * const MDHLDocumentSelectedItemsDidChangeNotification;
+
+extern NSString * const MDHLDocumentWillCloseNotification;
 
 
-extern NSString * const MDShowBrowserPreviewInspectorPaneKey;
-
-extern NSString * const MDDraggedItemsPboardType;
-extern NSString * const MDCopiedItemsPboardType;
-
-
-extern NSString * const MDViewKey;
-
-extern NSString * const MDWillSwitchViewNotification;
-
-extern NSString * const MDViewNameKey;
-
-	

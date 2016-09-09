@@ -9,34 +9,35 @@
 
 
 #import "MDMetalBevelView.h"
+#import "MDFoundationAdditions.h"
 
 
 #define MD_DEBUG 0
 
-enum {
-	MDUndeterminedVersion	= -1,
-	MDCheetah				= 0x1000,
-	MDPuma					= 0x1010,
-	MDJaguar				= 0x1020,
-	MDPanther				= 0x1030,
-	MDTiger					= 0x1040,
-	MDLeopard				= 0x1050,
-	MDSnowLeopard			= 0x1060,
-	MDLion					= 0x1070,
-	MDMountainLion			= 0x1080,
-	MDUnknownKitty			= 0x1090,
-	MDUnknownVersion		= 0x1100
-};
 
+static MDOperatingSystemVersion systemVersion;
 
-static SInt32 MDMetalBevelViewSystemVersion = 0;
 
 @implementation MDMetalBevelView
 
 + (void)initialize {
-	SInt32 MDFullSystemVersion = 0;
-	Gestalt(gestaltSystemVersion, &MDFullSystemVersion);
-	MDMetalBevelViewSystemVersion = MDFullSystemVersion & 0xfffffff0;
+	
+	/* This `initialized` flag is used to guard against the rare cases where Cocoa bindings
+	 may cause `+initialize` to be called twice: once for this class, and once for the isa-swizzled class: 
+	 
+	 `[NSKVONotifying_MDClassName initialize]`
+	 
+	 */
+	
+	@synchronized(self) {
+		static BOOL initialized = NO;
+		
+		if (initialized == NO) {
+			systemVersion = [[NSProcessInfo processInfo] md__operatingSystemVersion];
+			
+			initialized = YES;
+		}
+	}
 }
 
 
@@ -62,7 +63,7 @@ static SInt32 MDMetalBevelViewSystemVersion = 0;
 	
 	BOOL isMain = [[self window] isMainWindow];
 	
-	if (MDMetalBevelViewSystemVersion == MDLeopard) {
+	if (systemVersion.minorVersion == MDLeopard) {
 		
 		if (drawsBackground) {
 			if (isMain) {
@@ -82,7 +83,7 @@ static SInt32 MDMetalBevelViewSystemVersion = 0;
 			
 		}
 		
-	} else if (MDMetalBevelViewSystemVersion >= MDSnowLeopard) {
+	} else if (systemVersion.minorVersion >= MDSnowLeopard) {
 		
 		if (drawsBackground) {
 			if (isMain) {
@@ -105,8 +106,6 @@ static SInt32 MDMetalBevelViewSystemVersion = 0;
 }
 
 
-
-
 - (BOOL)drawsBackground {
     return drawsBackground;
 }
@@ -117,15 +116,5 @@ static SInt32 MDMetalBevelViewSystemVersion = 0;
 }
 
 
-
-
 @end
-
-
-
-
-
-
-
-
 

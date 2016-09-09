@@ -15,7 +15,7 @@
 using namespace HLLib;
 using namespace HLLib::Streams;
 
-CGCFStream::CGCFStream(const CGCFFile &GCFFile, hlUInt uiFileID) : bOpened(hlFalse), uiMode(HL_MODE_INVALID), GCFFile(GCFFile), uiFileID(uiFileID), pView(0), ullPointer(0), ullLength(0)
+CGCFStream::CGCFStream(const CGCFFile &GCFFile, hlUInt uiFileID) : bOpened(hlFalse), uiMode(HL_MODE_INVALID), GCFFile(GCFFile), uiFileID(uiFileID), pView(0), uiPointer(0), uiLength(0)
 {
 
 }
@@ -78,16 +78,16 @@ hlBool CGCFStream::Open(hlUInt uiMode)
 		return hlFalse;
 	}
 
-	this->ullPointer = 0;
-	this->ullLength = (uiMode & HL_MODE_READ) ? this->GCFFile.lpDirectoryEntries[this->uiFileID].uiItemSize : 0;
+	this->uiPointer = 0;
+	this->uiLength = (uiMode & HL_MODE_READ) ? this->GCFFile.lpDirectoryEntries[this->uiFileID].uiItemSize : 0;
 
 	this->bOpened = hlTrue;
 	this->uiMode = uiMode;
 
 	this->uiBlockEntryIndex = this->GCFFile.lpDirectoryMapEntries[this->uiFileID].uiFirstBlockIndex;
-	this->ullBlockEntryOffset = 0;
+	this->uiBlockEntryOffset = 0;
 	this->uiDataBlockIndex = this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFirstDataBlockIndex;
-	this->ullDataBlockOffset = 0;
+	this->uiDataBlockOffset = 0;
 
 	return hlTrue;
 }
@@ -99,18 +99,18 @@ hlVoid CGCFStream::Close()
 
 	this->GCFFile.pMapping->Unmap(this->pView);
 
-	this->ullPointer = 0;
-	this->ullLength = 0;
+	this->uiPointer = 0;
+	this->uiLength = 0;
 }
 
 hlULongLong CGCFStream::GetStreamSize() const
 {
-	return this->ullLength;
+	return this->uiLength;
 }
 
 hlULongLong CGCFStream::GetStreamPointer() const
 {
-	return this->ullPointer;
+	return this->uiPointer;
 }
 
 hlULongLong CGCFStream::Seek(hlLongLong iOffset, HLSeekMode eSeekMode)
@@ -123,30 +123,30 @@ hlULongLong CGCFStream::Seek(hlLongLong iOffset, HLSeekMode eSeekMode)
 	switch(eSeekMode)
 	{
 		case HL_SEEK_BEGINNING:
-			this->ullPointer = 0;
+			this->uiPointer = 0;
 			break;
 		case HL_SEEK_CURRENT:
 
 			break;
 		case HL_SEEK_END:
-			this->ullPointer = this->ullLength;
+			this->uiPointer = this->uiLength;
 			break;
 	}
 
-	hlLongLong llPointer = static_cast<hlLongLong>(this->ullPointer) + iOffset;
+	hlLongLong iPointer = static_cast<hlLongLong>(this->uiPointer) + iOffset;
 
-	if(llPointer < 0)
+	if(iPointer < 0)
 	{
-		llPointer = 0;
+		iPointer = 0;
 	}
-	else if(llPointer > static_cast<hlLongLong>(this->ullLength))
+	else if(iPointer > static_cast<hlLongLong>(this->uiLength))
 	{
-		llPointer = static_cast<hlLongLong>(this->ullLength);
+		iPointer = static_cast<hlLongLong>(this->uiLength);
 	}
 
-	this->ullPointer = static_cast<hlULongLong>(llPointer);
+	this->uiPointer = static_cast<hlULongLong>(iPointer);
 
-	return this->ullPointer;
+	return this->uiPointer;
 }
 
 hlBool CGCFStream::Read(hlChar &cChar)
@@ -162,20 +162,20 @@ hlBool CGCFStream::Read(hlChar &cChar)
 		return 0;
 	}
 
-	if(this->ullPointer < this->ullLength)
+	if(this->uiPointer < this->uiLength)
 	{
-		if(!this->Map(this->ullPointer))
+		if(!this->Map(this->uiPointer))
 		{
 			return 0;
 		}
 
-		hlULongLong ullViewPointer = this->ullPointer - (this->ullBlockEntryOffset + this->ullDataBlockOffset);
-		hlULongLong ullViewBytes = this->pView->GetLength() - ullViewPointer;
+		hlULongLong uiViewPointer = this->uiPointer - (this->uiBlockEntryOffset + this->uiDataBlockOffset);
+		hlULongLong uiViewBytes = this->pView->GetLength() - uiViewPointer;
 
-		if(ullViewBytes >= 1)
+		if(uiViewBytes >= 1)
 		{
-			cChar = *(static_cast<const hlChar *>(this->pView->GetView()) + ullViewPointer);
-			this->ullPointer++;
+			cChar = *(static_cast<const hlChar *>(this->pView->GetView()) + uiViewPointer);
+			this->uiPointer++;
 			return 1;
 		}
 	}
@@ -183,7 +183,7 @@ hlBool CGCFStream::Read(hlChar &cChar)
 	return 0;
 }
 
-hlULongLong CGCFStream::Read(hlVoid *lpData, hlULongLong ullBytes)
+hlUInt CGCFStream::Read(hlVoid *lpData, hlUInt uiBytes)
 {
 	if(!this->bOpened)
 	{
@@ -196,40 +196,40 @@ hlULongLong CGCFStream::Read(hlVoid *lpData, hlULongLong ullBytes)
 		return 0;
 	}
 
-	if(this->ullPointer == this->ullLength)
+	if(this->uiPointer == this->uiLength)
 	{
 		return 0;
 	}
 	else
 	{
-		hlULongLong ullOffset = 0;
-		while(ullBytes && this->ullPointer < this->ullLength)
+		hlULongLong uiOffset = 0;
+		while(uiBytes && this->uiPointer < this->uiLength)
 		{
-			if(!this->Map(this->ullPointer))
+			if(!this->Map(this->uiPointer))
 			{
 				break;
 			}
 
-			hlULongLong ullViewPointer = this->ullPointer - (this->ullBlockEntryOffset + this->ullDataBlockOffset);
-			hlULongLong ullViewBytes = this->pView->GetLength() - ullViewPointer;
+			hlULongLong uiViewPointer = this->uiPointer - (this->uiBlockEntryOffset + this->uiDataBlockOffset);
+			hlULongLong uiViewBytes = this->pView->GetLength() - uiViewPointer;
 
-			if(ullViewBytes >= static_cast<hlULongLong>(ullBytes))
+			if(uiViewBytes >= static_cast<hlULongLong>(uiBytes))
 			{
-				memcpy(static_cast<hlByte *>(lpData) + ullOffset, static_cast<const hlByte *>(this->pView->GetView()) + ullViewPointer, ullBytes);
-				this->ullPointer += static_cast<hlULongLong>(ullBytes);
-				ullOffset += ullBytes;
+				memcpy(static_cast<hlByte *>(lpData) + uiOffset, static_cast<const hlByte *>(this->pView->GetView()) + uiViewPointer, uiBytes);
+				this->uiPointer += static_cast<hlULongLong>(uiBytes);
+				uiOffset += uiBytes;
 				break;
 			}
 			else
 			{
-				memcpy(static_cast<hlByte *>(lpData) + ullOffset, static_cast<const hlByte *>(this->pView->GetView()) + ullViewPointer, static_cast<size_t>(ullViewBytes));
-				this->ullPointer += ullViewBytes;
-				ullOffset += ullViewBytes;
-				ullBytes -= static_cast<hlUInt>(ullViewBytes);
+				memcpy(static_cast<hlByte *>(lpData) + uiOffset, static_cast<const hlByte *>(this->pView->GetView()) + uiViewPointer, static_cast<size_t>(uiViewBytes));
+				this->uiPointer += uiViewBytes;
+				uiOffset += uiViewBytes;
+				uiBytes -= static_cast<hlUInt>(uiViewBytes);
 			}
 		}
 
-		return static_cast<hlULongLong>(ullOffset);
+		return static_cast<hlUInt>(uiOffset);
 	}
 }
 
@@ -246,24 +246,24 @@ hlBool CGCFStream::Write(hlChar cChar)
 		return 0;
 	}
 
-	if(this->ullPointer < this->GCFFile.lpDirectoryEntries[this->uiFileID].uiItemSize)
+	if(this->uiPointer < this->GCFFile.lpDirectoryEntries[this->uiFileID].uiItemSize)
 	{
-		if(!this->Map(this->ullPointer))
+		if(!this->Map(this->uiPointer))
 		{
 			return 0;
 		}
 
-		hlULongLong ullViewPointer = this->ullPointer - (this->ullBlockEntryOffset + this->ullDataBlockOffset);
-		hlULongLong ullViewBytes = this->pView->GetLength() - ullViewPointer;
+		hlULongLong uiViewPointer = this->uiPointer - (this->uiBlockEntryOffset + this->uiDataBlockOffset);
+		hlULongLong uiViewBytes = this->pView->GetLength() - uiViewPointer;
 
-		if(ullViewBytes >= 1)
+		if(uiViewBytes >= 1)
 		{
-			*(static_cast<hlChar *>(const_cast<hlVoid *>(this->pView->GetView())) + ullViewPointer) = cChar;
-			this->ullPointer++;
+			*(static_cast<hlChar *>(const_cast<hlVoid *>(this->pView->GetView())) + uiViewPointer) = cChar;
+			this->uiPointer++;
 
-			if(this->ullPointer > this->ullLength)
+			if(this->uiPointer > this->uiLength)
 			{
-				this->ullLength = this->ullPointer;
+				this->uiLength = this->uiPointer;
 			}
 
 			return 1;
@@ -273,7 +273,7 @@ hlBool CGCFStream::Write(hlChar cChar)
 	return 0;
 }
 
-hlULongLong CGCFStream::Write(const hlVoid *lpData, hlULongLong ullBytes)
+hlUInt CGCFStream::Write(const hlVoid *lpData, hlUInt uiBytes)
 {
 	if(!this->bOpened)
 	{
@@ -286,98 +286,98 @@ hlULongLong CGCFStream::Write(const hlVoid *lpData, hlULongLong ullBytes)
 		return 0;
 	}
 
-	if(this->ullPointer == this->GCFFile.lpDirectoryEntries[this->uiFileID].uiItemSize)
+	if(this->uiPointer == this->GCFFile.lpDirectoryEntries[this->uiFileID].uiItemSize)
 	{
 		return 0;
 	}
 	else
 	{
-		hlULongLong ullOffset = 0;
-		while(ullBytes && this->ullPointer < this->GCFFile.lpDirectoryEntries[this->uiFileID].uiItemSize)
+		hlULongLong uiOffset = 0;
+		while(uiBytes && this->uiPointer < this->GCFFile.lpDirectoryEntries[this->uiFileID].uiItemSize)
 		{
-			if(!this->Map(this->ullPointer))
+			if(!this->Map(this->uiPointer))
 			{
 				break;
 			}
 
-			hlULongLong ullViewPointer = this->ullPointer - (this->ullBlockEntryOffset + this->ullDataBlockOffset);
-			hlULongLong ullViewBytes = this->pView->GetLength() - ullViewPointer;
+			hlULongLong uiViewPointer = this->uiPointer - (this->uiBlockEntryOffset + this->uiDataBlockOffset);
+			hlULongLong uiViewBytes = this->pView->GetLength() - uiViewPointer;
 
-			if(ullViewBytes >= ullBytes)
+			if(uiViewBytes >= uiBytes)
 			{
-				memcpy(static_cast<hlByte *>(const_cast<hlVoid *>(this->pView->GetView())) + ullViewPointer, static_cast<const hlByte *>(lpData) + ullOffset, ullBytes);
-				this->ullPointer += static_cast<hlULongLong>(ullBytes);
-				ullOffset += ullBytes;
+				memcpy(static_cast<hlByte *>(const_cast<hlVoid *>(this->pView->GetView())) + uiViewPointer, static_cast<const hlByte *>(lpData) + uiOffset, uiBytes);
+				this->uiPointer += static_cast<hlULongLong>(uiBytes);
+				uiOffset += uiBytes;
 				break;
 			}
 			else
 			{
-				memcpy(static_cast<hlByte *>(const_cast<hlVoid *>(this->pView->GetView())) + ullViewPointer, static_cast<const hlByte *>(lpData) + ullOffset, static_cast<size_t>(ullViewBytes));
-				this->ullPointer += ullViewBytes;
-				ullOffset += ullViewBytes;
-				ullBytes -= static_cast<hlUInt>(ullViewBytes);
+				memcpy(static_cast<hlByte *>(const_cast<hlVoid *>(this->pView->GetView())) + uiViewPointer, static_cast<const hlByte *>(lpData) + uiOffset, static_cast<size_t>(uiViewBytes));
+				this->uiPointer += uiViewBytes;
+				uiOffset += uiViewBytes;
+				uiBytes -= static_cast<hlUInt>(uiViewBytes);
 			}
 		}
 
-		if(this->ullPointer > this->ullLength)
+		if(this->uiPointer > this->uiLength)
 		{
-			this->ullLength = this->ullPointer;
+			this->uiLength = this->uiPointer;
 		}
 
-		return static_cast<hlULongLong>(ullOffset);
+		return static_cast<hlUInt>(uiOffset);
 	}
 }
 
-hlBool CGCFStream::Map(hlULongLong ullPointer)
+hlBool CGCFStream::Map(hlULongLong uiPointer)
 {
-	if(ullPointer < this->ullBlockEntryOffset + this->ullDataBlockOffset)
+	if(uiPointer < this->uiBlockEntryOffset + this->uiDataBlockOffset)
 	{
 		this->uiBlockEntryIndex = this->GCFFile.lpDirectoryMapEntries[this->uiFileID].uiFirstBlockIndex;
-		this->ullBlockEntryOffset = 0;
+		this->uiBlockEntryOffset = 0;
 		this->uiDataBlockIndex = this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFirstDataBlockIndex;
-		this->ullDataBlockOffset = 0;
+		this->uiDataBlockOffset = 0;
 	}
 
-	hlULongLong ullLength = this->ullDataBlockOffset + this->GCFFile.pDataBlockHeader->uiBlockSize > this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize ? this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize - this->ullDataBlockOffset : this->GCFFile.pDataBlockHeader->uiBlockSize;
+	hlULongLong uiLength = this->uiDataBlockOffset + this->GCFFile.pDataBlockHeader->uiBlockSize > this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize ? this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize - this->uiDataBlockOffset : this->GCFFile.pDataBlockHeader->uiBlockSize;
 	//hlUInt uiDataBlockTerminator = this->pDataBlockHeader->uiBlockCount >= 0x0000ffff ? 0xffffffff : 0x0000ffff;
 	hlUInt uiDataBlockTerminator = this->GCFFile.pFragmentationMapHeader->uiTerminator == 0 ? 0x0000ffff : 0xffffffff;
 
-	while((ullPointer >= this->ullBlockEntryOffset + this->ullDataBlockOffset + ullLength) && (this->uiBlockEntryIndex != this->GCFFile.pDataBlockHeader->uiBlockCount))
+	while((uiPointer >= this->uiBlockEntryOffset + this->uiDataBlockOffset + uiLength) && (this->uiBlockEntryIndex != this->GCFFile.pDataBlockHeader->uiBlockCount))
 	{
 		// Loop through each data block fragment.
-		while((ullPointer >= this->ullBlockEntryOffset + this->ullDataBlockOffset + ullLength) && (this->uiDataBlockIndex < uiDataBlockTerminator && this->ullDataBlockOffset < this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize))
+		while((uiPointer >= this->uiBlockEntryOffset + this->uiDataBlockOffset + uiLength) && (this->uiDataBlockIndex < uiDataBlockTerminator && this->uiDataBlockOffset < this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize))
 		{
 			// Get the next data block fragment.
 			this->uiDataBlockIndex = this->GCFFile.lpFragmentationMap[this->uiDataBlockIndex].uiNextDataBlockIndex;
-			this->ullDataBlockOffset += static_cast<hlULongLong>(this->GCFFile.pDataBlockHeader->uiBlockSize);
+			this->uiDataBlockOffset += static_cast<hlULongLong>(this->GCFFile.pDataBlockHeader->uiBlockSize);
 
-			ullLength = this->ullDataBlockOffset + this->GCFFile.pDataBlockHeader->uiBlockSize > this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize ? static_cast<hlULongLong>(this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize) - this->ullDataBlockOffset : static_cast<hlULongLong>(this->GCFFile.pDataBlockHeader->uiBlockSize);
+			uiLength = this->uiDataBlockOffset + this->GCFFile.pDataBlockHeader->uiBlockSize > this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize ? static_cast<hlULongLong>(this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize) - this->uiDataBlockOffset : static_cast<hlULongLong>(this->GCFFile.pDataBlockHeader->uiBlockSize);
 		}
 
-		if(this->ullDataBlockOffset >= static_cast<hlULongLong>(this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize))
+		if(this->uiDataBlockOffset >= static_cast<hlULongLong>(this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize))
 		{
 			// Get the next data block.
-			this->ullBlockEntryOffset += static_cast<hlULongLong>(this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize);
+			this->uiBlockEntryOffset += static_cast<hlULongLong>(this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize);
 			this->uiBlockEntryIndex = this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiNextBlockEntryIndex;
 
-			this->ullDataBlockOffset = 0;
+			this->uiDataBlockOffset = 0;
 			if(this->uiBlockEntryIndex != this->GCFFile.pDataBlockHeader->uiBlockCount)
 			{
 				this->uiDataBlockIndex = this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFirstDataBlockIndex;
 			}
 
-			ullLength = this->ullDataBlockOffset + this->GCFFile.pDataBlockHeader->uiBlockSize > this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize ? static_cast<hlULongLong>(this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize) - this->ullDataBlockOffset : static_cast<hlULongLong>(this->GCFFile.pDataBlockHeader->uiBlockSize);
+			uiLength = this->uiDataBlockOffset + this->GCFFile.pDataBlockHeader->uiBlockSize > this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize ? static_cast<hlULongLong>(this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize) - this->uiDataBlockOffset : static_cast<hlULongLong>(this->GCFFile.pDataBlockHeader->uiBlockSize);
 		}
 	}
 
 	if(this->uiBlockEntryIndex == this->GCFFile.pDataBlockHeader->uiBlockCount || this->uiDataBlockIndex >= uiDataBlockTerminator)
 	{
-		if(this->ullBlockEntryOffset + this->ullDataBlockOffset < static_cast<hlULongLong>(this->GCFFile.lpDirectoryEntries[this->uiFileID].uiItemSize))
+		if(this->uiBlockEntryOffset + this->uiDataBlockOffset < static_cast<hlULongLong>(this->GCFFile.lpDirectoryEntries[this->uiFileID].uiItemSize))
 		{
 #ifdef _WIN32
-			LastError.SetErrorMessageFormated("Unexpected end of GCF stream (%I64u B of %u B).  Has the GCF file been completely acquired?", this->ullBlockEntryOffset + this->ullDataBlockOffset, this->GCFFile.lpDirectoryEntries[this->uiFileID].uiItemSize);
+			LastError.SetErrorMessageFormated("Unexpected end of GCF stream (%I64u B of %u B).  Has the GCF file been completely acquired?", this->uiBlockEntryOffset + this->uiDataBlockOffset, this->GCFFile.lpDirectoryEntries[this->uiFileID].uiItemSize);
 #else
-			LastError.SetErrorMessageFormated("Unexpected end of GCF stream (%llu B of %u B).  Has the GCF file been completely acquired?", this->ullBlockEntryOffset + this->ullDataBlockOffset, this->GCFFile.lpDirectoryEntries[this->uiFileID].uiItemSize);
+			LastError.SetErrorMessageFormated("Unexpected end of GCF stream (%llu B of %u B).  Has the GCF file been completely acquired?", this->uiBlockEntryOffset + this->uiDataBlockOffset, this->GCFFile.lpDirectoryEntries[this->uiFileID].uiItemSize);
 #endif
 		}
 
@@ -392,7 +392,6 @@ hlBool CGCFStream::Map(hlULongLong ullPointer)
 			return hlTrue;
 		}
 	}
-	//uiLength = this->uiDataBlockOffset + this->GCFFile.pDataBlockHeader->uiBlockSize > this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize ? this->GCFFile.lpBlockEntries[this->uiBlockEntryIndex].uiFileDataSize - this->uiDataBlockOffset : this->GCFFile.pDataBlockHeader->uiBlockSize;
 
-	return this->GCFFile.pMapping->Map(this->pView, static_cast<hlULongLong>(this->GCFFile.pDataBlockHeader->uiFirstBlockOffset) + static_cast<hlULongLong>(this->uiDataBlockIndex) * static_cast<hlULongLong>(this->GCFFile.pDataBlockHeader->uiBlockSize), ullLength);
+	return this->GCFFile.pMapping->Map(this->pView, static_cast<hlULongLong>(this->GCFFile.pDataBlockHeader->uiFirstBlockOffset) + static_cast<hlULongLong>(this->uiDataBlockIndex) * static_cast<hlULongLong>(this->GCFFile.pDataBlockHeader->uiBlockSize), uiLength);
 }

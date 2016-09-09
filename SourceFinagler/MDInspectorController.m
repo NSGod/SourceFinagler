@@ -9,7 +9,6 @@
 
 
 #import "MDInspectorController.h"
-#import "MDAppController.h"
 #import "MDHLDocument.h"
 #import "MDAppKitAdditions.h"
 #import <HLKit/HLKit.h>
@@ -21,11 +20,21 @@
 #define MD_DEBUG 0
 
 
+@interface MDInspectorController (MDPrivate)
+- (void)updateUIWithDocument:(MDHLDocument *)document;
+@end
+
+
+
 @implementation MDInspectorController
 
 
 - (id)init {
 	if ((self = [super initWithWindowNibName:@"MDInspector"])) {
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedItemsDidChange:) name:MDHLDocumentSelectedItemsDidChangeNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(documentWillClose:) name:MDHLDocumentWillCloseNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
 		
 	} else {
 		[NSBundle runFailedNibLoadAlert:@"MDInspector"];
@@ -43,7 +52,6 @@
 }
 
 
-
 - (void)awakeFromNib {
 	[headerSizeField setFormatter:[[[MDFileSizeFormatter alloc] initWithUnitsType:MDFileSizeFormatterAutomaticUnitsType
 																			style:MDFileSizeFormatterPhysicalStyle] autorelease]];
@@ -54,38 +62,57 @@
 																 isRelative:YES] autorelease]];
 	
 	[(NSPanel *)[self window] setBecomesKeyOnlyIfNeeded:YES];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedItemsDidChange:) name:MDSelectedItemsDidChangeNotification object:nil];
+	
+	[self updateUIWithDocument:nil];
 }
 
 
-- (void)selectedItemsDidChange:(NSNotification *)notification {
+- (void)updateUIWithDocument:(MDHLDocument *)document {
 #if MD_DEBUG
-	NSLog(@"[%@ %@] notification == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), notification);
+//    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	
-	NSArray *newSelectedItems = [[notification userInfo] objectForKey:MDSelectedItemsKey];
-	MDHLDocument *newDocument = [[notification userInfo] objectForKey:MDSelectedItemsDocumentKey];
-	
-	if (newDocument && newSelectedItems) {
+	if (document == nil) {
+		/* a document is being closed, so set stuff to an intermediary "--" */
+		
+		[[self window] setRepresentedFilename:@""];
+		
+		[[self window] setTitle:NSLocalizedString(@"Info", @"")];
+		
+		[previewViewController setRepresentedObject:nil];
+		
+		[iconImageView setImage:[NSImage imageNamed:@"genericDocument32"]];
+		
+		[nameField setStringValue:NSLocalizedString(@"--", @"")];
+		[headerSizeField setStringValue:NSLocalizedString(@"--", @"")];
+		[dateModifiedField setStringValue:NSLocalizedString(@"--", @"")];
+		
+		[kindField setStringValue:NSLocalizedString(@"--", @"")];
+		[sizeField setStringValue:NSLocalizedString(@"--", @"")];
+		[whereField setStringValue:NSLocalizedString(@"--", @"")];
+		
+	} else {
+		
+		NSArray *newSelectedItems = document.selectedItems;
 		
 		if ([newSelectedItems count] == 0) {
-			[[self window] setRepresentedFilename:[[newDocument fileURL] path]];
-			[[self window] setTitle:[[newDocument displayName] stringByAppendingString:NSLocalizedString(@" Info", @"")]];
+			[[self window] setRepresentedFilename:[[document fileURL] path]];
+			[[self window] setTitle:[[document displayName] stringByAppendingString:NSLocalizedString(@" Info", @"")]];
 			
-			[previewViewController setRepresentedObject:newDocument];
+			[previewViewController setRepresentedObject:document];
 			
-			[nameField setStringValue:[newDocument displayName]];
-			[whereField setStringValue:[[newDocument fileURL] path]];
+			[nameField setStringValue:[document displayName]];
+			[whereField setStringValue:[[document fileURL] path]];
 			
-			NSImage *fileIcon = [[NSWorkspace sharedWorkspace] iconForFile:[[newDocument fileURL] path]];
+			NSImage *fileIcon = [[NSWorkspace sharedWorkspace] iconForFile:[[document fileURL] path]];
 			[iconImageView setImage:fileIcon];
 			
-			[headerSizeField setObjectValue:[newDocument fileSize]];
-			[dateModifiedField setObjectValue:[newDocument fileModificationDate]];
+			[headerSizeField setObjectValue:[document fileSize]];
+			[dateModifiedField setObjectValue:[document fileModificationDate]];
 			
 			
-			[kindField setStringValue:[newDocument kind]];
-			[sizeField setObjectValue:[newDocument fileSize]];
+			[kindField setStringValue:[document kind]];
+			[sizeField setObjectValue:[document fileSize]];
 			
 			
 		} else if ([newSelectedItems count] == 1) {
@@ -105,10 +132,10 @@
 			[iconImageView setImage:image];
 			
 			[nameField setStringValue:[item name]];
-			[whereField setStringValue:[[[newDocument fileURL] path] stringByAppendingPathComponent:[[item path] stringByDeletingLastPathComponent]]];
+			[whereField setStringValue:[[[document fileURL] path] stringByAppendingPathComponent:[[item path] stringByDeletingLastPathComponent]]];
 			
 			[headerSizeField setObjectValue:[item size]];
-			[dateModifiedField setObjectValue:[newDocument fileModificationDate]];
+			[dateModifiedField setObjectValue:[document fileModificationDate]];
 			[sizeField setObjectValue:[item size]];
 			
 		} else if ([newSelectedItems count] > 1) {
@@ -118,7 +145,7 @@
 			
 			[previewViewController setRepresentedObject:nil];
 			
-			[whereField setStringValue:[[newDocument fileURL] path]];
+			[whereField setStringValue:[[document fileURL] path]];
 						
 			[nameField setStringValue:[NSString stringWithFormat:NSLocalizedString(@"%lu items", @""), (unsigned long)[newSelectedItems count]]];
 			
@@ -135,32 +162,59 @@
 			
 			[iconImageView setImage:[NSImage imageNamed:@"multipleItems"]];
 			
-			[dateModifiedField setObjectValue:[newDocument fileModificationDate]];
+			[dateModifiedField setObjectValue:[document fileModificationDate]];
 			
 		}
+	}
+}
+
+
+- (void)selectedItemsDidChange:(NSNotification *)notification {
+#if MD_DEBUG
+	NSLog(@"[%@ %@] notification == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), notification);
+#endif
+	
+	[self updateUIWithDocument:[notification object]];
+}
+
+
+- (void)documentWillClose:(NSNotification *)notification {
+#if MD_DEBUG
+//    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	NSLog(@"[%@ %@] notification == %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), notification);
+#endif
+	
+	MDHLDocument *closingDocument = [notification object];
+	
+	/* If a document is closing, and it's the document we're currently showing data for,
+	 find the next appropriate document to show data for. This is intended for instances where 
+	 an MDHLDocument is closed in the background while another non-document window is currently
+	 the main window -- in which case there may be no other MDHLDocument that will become 
+	 the main window (which is how we get notifications that the user has switched documents). */
+	
+	/* It's possible that orderedDocuments might be in the wrong order, so we'll remove
+	 the closing document from the array, and then use the first of the remaining documents
+	 that is found. */
+	
+	NSMutableArray *orderedDocuments = [[[MDHLDocument orderedDocuments] mutableCopy] autorelease];
+	[orderedDocuments removeObject:closingDocument];
+	
+	if (orderedDocuments.count) {
+		[self updateUIWithDocument:[orderedDocuments objectAtIndex:0]];
 		
 	} else {
-		/* a document is being closed, so set stuff to an intermediary "--" */
-		
-		[[self window] setRepresentedFilename:@""];
-		
-		[[self window] setTitle:NSLocalizedString(@"Info", @"")];
-		
-		[previewViewController setRepresentedObject:nil];
-		
-		[iconImageView setImage:[NSImage imageNamed:@"genericDocument32"]];
-		
-		[nameField setStringValue:NSLocalizedString(@"--", @"")];
-		[headerSizeField setStringValue:NSLocalizedString(@"--", @"")];
-		[dateModifiedField setStringValue:NSLocalizedString(@"--", @"")];
-		
-		[kindField setStringValue:NSLocalizedString(@"--", @"")];
-		[sizeField setStringValue:NSLocalizedString(@"--", @"")];
-		[whereField setStringValue:NSLocalizedString(@"--", @"")];
-		
-		
+		// no documents left
+		[self updateUIWithDocument:nil];
 	}
 	
+}
+
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+#if MD_DEBUG
+    NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+	appIsTerminating = YES;
 }
 
 
@@ -168,22 +222,21 @@
 #if MD_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-	MDShouldShowInspector = YES;
 	[[self window] orderFront:nil];
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowInspector] forKey:MDShouldShowInspectorKey];
-	[[NSNotificationCenter defaultCenter] postNotificationName:MDShouldShowInspectorDidChangeNotification object:self userInfo:nil];
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[MDHLDocument shouldShowInspector]] forKey:MDHLDocumentShouldShowInspectorKey];
+	[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentShouldShowInspectorDidChangeNotification object:self userInfo:nil];
 }
 
 
 - (void)windowWillClose:(NSNotification *)notification {
-#if MD_DEBUG
-	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
 	
-	if ([notification object] == [self window]) {
-		MDShouldShowInspector = NO;
-		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:MDShouldShowInspector] forKey:MDShouldShowInspectorKey];
-		[[NSNotificationCenter defaultCenter] postNotificationName:MDShouldShowInspectorDidChangeNotification object:self userInfo:nil];
+	if ([notification object] == [self window] && appIsTerminating == NO) {
+#if MD_DEBUG
+		NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
+		[MDHLDocument setShouldShowInspector:NO];
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[MDHLDocument shouldShowInspector]] forKey:MDHLDocumentShouldShowInspectorKey];
+		[[NSNotificationCenter defaultCenter] postNotificationName:MDHLDocumentShouldShowInspectorDidChangeNotification object:self userInfo:nil];
 	}
 }
 

@@ -32,7 +32,7 @@ typedef struct MDBrowserSortOptionMapping {
 } MDBrowserSortOptionMapping;
 
 static MDBrowserSortOptionMapping MDBrowserSortOptionMappingTable[] = {
-	{ MDBrowserSortByName, @"name", @"caseInsensitiveNumericalCompare:" },
+	{ MDBrowserSortByName, @"name", @"md__caseInsensitiveNumericalCompare:" },
 	{ MDBrowserSortBySize, @"size", @"compare:" },
 	{ MDBrowserSortByKind, @"kind", @"caseInsensitiveCompare:" }
 };
@@ -82,26 +82,28 @@ static inline NSArray *MDSortDescriptorsFromSortOption(NSInteger sortOption) {
 	
 	static BOOL initialized = NO;
 	
-	if (initialized == NO) {
-		NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
-		
-		NSNumber *finderColumnViewFontAndIconSize = [[[[MDUserDefaults standardUserDefaults] objectForKey:@"StandardViewOptions" forAppIdentifier:MDFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ColumnViewOptions"] objectForKey:@"FontSize"];
-		
-		if (finderColumnViewFontAndIconSize) {
-			[defaults setObject:finderColumnViewFontAndIconSize forKey:MDBrowserFontAndIconSizeKey];
-		} else {
-			[defaults setObject:[NSNumber numberWithInteger:MD_DEFAULT_BROWSER_FONT_AND_ICON_SIZE] forKey:MDBrowserFontAndIconSizeKey];
+	@synchronized(self) {
+		if (initialized == NO) {
+			NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+			
+			NSNumber *finderColumnViewFontAndIconSize = [[[[MDUserDefaults standardUserDefaults] objectForKey:@"StandardViewOptions" forAppIdentifier:MDFinderBundleIdentifierKey inDomain:MDUserDefaultsUserDomain] objectForKey:@"ColumnViewOptions"] objectForKey:@"FontSize"];
+			
+			if (finderColumnViewFontAndIconSize) {
+				[defaults setObject:finderColumnViewFontAndIconSize forKey:MDBrowserFontAndIconSizeKey];
+			} else {
+				[defaults setObject:[NSNumber numberWithInteger:MD_DEFAULT_BROWSER_FONT_AND_ICON_SIZE] forKey:MDBrowserFontAndIconSizeKey];
+			}
+			
+			[defaults setObject:[NSNumber numberWithBool:YES] forKey:MDBrowserShouldShowIconsKey];
+			[defaults setObject:[NSNumber numberWithBool:YES] forKey:MDBrowserShouldShowPreviewKey];
+			
+			[defaults setObject:[NSNumber numberWithInteger:MDBrowserSortByName] forKey:MDBrowserSortByKey];
+			
+			[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+			[[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaults];
+			
+			initialized = YES;
 		}
-		
-		[defaults setObject:[NSNumber numberWithBool:YES] forKey:MDBrowserShouldShowIconsKey];
-		[defaults setObject:[NSNumber numberWithBool:YES] forKey:MDBrowserShouldShowPreviewKey];
-		
-		[defaults setObject:[NSNumber numberWithInteger:MDBrowserSortByName] forKey:MDBrowserSortByKey];
-		
-		[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
-		[[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaults];
-		
-		initialized = YES;
 	}
 }
 

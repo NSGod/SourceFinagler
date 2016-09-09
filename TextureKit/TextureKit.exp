@@ -42,6 +42,7 @@ _TKVTFPboardType
 _TKVTFUnsupportedFormatException
 
 
-_TKGetSystemVersion
+_TKOperatingSystemVersionLessThan
+_TKOperatingSystemVersionGreaterThanOrEqual
 
 

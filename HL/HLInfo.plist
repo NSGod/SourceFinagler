@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>HL.framework 2.4.4, © 2010-2014 Mark Douma. HLLib 2.4.4 © 2006-2014 Ryan Gregg.</string>
+	<string>HL.framework 2.4.5, © 2010-2016 Mark Douma. HLLib 2.4.5 © 2006-2016 Ryan Gregg.</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.markdouma.HL.framework</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -17,12 +17,12 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.4.4</string>
+	<string>2.4.5</string>
 	<key>CFBundleSignature</key>
 	<string>HLFƒ</string>
 	<key>CFBundleVersion</key>
-	<string>244</string>
+	<string>245</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2010-2014 Mark Douma. HLLib 2.4.4 © 2006-2014 Ryan Gregg.</string>
+	<string>Copyright © 2010-2016 Mark Douma. HLLib 2.4.5 © 2006-2016 Ryan Gregg.</string>
 </dict>
 </plist>

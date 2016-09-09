@@ -47,10 +47,10 @@ namespace HLLib
 			virtual hlULongLong Seek(hlLongLong iOffset, HLSeekMode eSeekMode);
 
 			virtual hlBool Read(hlChar &cChar);
-			virtual hlULongLong Read(hlVoid *lpData, hlULongLong ullBytes);
+			virtual hlUInt Read(hlVoid *lpData, hlUInt uiBytes);
 
 			virtual hlBool Write(hlChar cChar);
-			virtual hlULongLong Write(const hlVoid *lpData, hlULongLong ullBytes);
+			virtual hlUInt Write(const hlVoid *lpData, hlUInt uiBytes);
 		};
 	}
 }

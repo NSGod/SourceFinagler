@@ -83,16 +83,16 @@ static HKArchiveFileTest HKArchiveFileTestTable[] = {
 
 
 - (id)initWithContentsOfFile:(NSString *)aPath {
-//	return [self initWithContentsOfFile:aPath mode:HL_MODE_READ | HL_MODE_VOLATILE | HL_MODE_QUICK_FILEMAPPING showInvisibleItems:YES sortDescriptors:nil error:NULL];
-	return [self initWithContentsOfFile:aPath mode:HL_MODE_READ | HL_MODE_VOLATILE showInvisibleItems:YES sortDescriptors:nil error:NULL];
+//	return [self initWithContentsOfFile:aPath mode:(HLFileMode)(HL_MODE_READ | HL_MODE_VOLATILE | HL_MODE_QUICK_FILEMAPPING) showInvisibleItems:YES sortDescriptors:nil error:NULL];
+	return [self initWithContentsOfFile:aPath mode:(HLFileMode)(HL_MODE_READ | HL_MODE_VOLATILE) showInvisibleItems:YES sortDescriptors:nil error:NULL];
 }
 
 - (id)initWithContentsOfFile:(NSString *)aPath showInvisibleItems:(BOOL)showInvisibleItems sortDescriptors:(NSArray *)sortDescriptors  error:(NSError **)outError {
 #if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
-//	return [self initWithContentsOfFile:aPath mode:HL_MODE_READ | HL_MODE_VOLATILE | HL_MODE_QUICK_FILEMAPPING showInvisibleItems:showInvisibleItems sortDescriptors:sortDescriptors error:outError];
-	return [self initWithContentsOfFile:aPath mode:HL_MODE_READ | HL_MODE_VOLATILE showInvisibleItems:showInvisibleItems sortDescriptors:sortDescriptors error:outError];
+//	return [self initWithContentsOfFile:aPath mode:(HLFileMode)(HL_MODE_READ | HL_MODE_VOLATILE | HL_MODE_QUICK_FILEMAPPING) showInvisibleItems:showInvisibleItems sortDescriptors:sortDescriptors error:outError];
+	return [self initWithContentsOfFile:aPath mode:(HLFileMode)(HL_MODE_READ | HL_MODE_VOLATILE) showInvisibleItems:showInvisibleItems sortDescriptors:sortDescriptors error:outError];
 }
 
 

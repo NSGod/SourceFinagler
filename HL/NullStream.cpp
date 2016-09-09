@@ -69,7 +69,7 @@ hlULongLong CNullStream::GetStreamPointer() const
 	return 0;
 }
 
-hlULongLong CNullStream::Seek(hlLongLong llOffset, HLSeekMode eSeekMode)
+hlULongLong CNullStream::Seek(hlLongLong iOffset, HLSeekMode eSeekMode)
 {
 	return 0;
 }
@@ -79,7 +79,7 @@ hlBool CNullStream::Read(hlChar &cChar)
 	return hlFalse;
 }
 
-hlULongLong CNullStream::Read(hlVoid *lpData, hlULongLong ullBytes)
+hlUInt CNullStream::Read(hlVoid *lpData, hlUInt uiBytes)
 {
 	return 0;
 }
@@ -89,7 +89,7 @@ hlBool CNullStream::Write(hlChar cChar)
 	return hlFalse;
 }
 
-hlULongLong CNullStream::Write(const hlVoid *lpData, hlULongLong ullBytes)
+hlUInt CNullStream::Write(const hlVoid *lpData, hlUInt uiBytes)
 {
 	return 0;
 }

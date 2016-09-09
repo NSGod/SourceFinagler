@@ -46,15 +46,10 @@ int main(int argc, char *argv[]) {
 
 
 int main(int argc, char *argv[]) {
-	SInt32 MDFullSystemVersion = 0;
-	SInt32 MDSystemVersion = 0;
-
-	Gestalt(gestaltSystemVersion, &MDFullSystemVersion);
-	MDSystemVersion = MDFullSystemVersion & 0xfffffff0;
 	
-	if (MDSystemVersion < MDSnowLeopard) {
-		
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	if ([[NSProcessInfo processInfo] md__operatingSystemVersion].minorVersion < MDSnowLeopard) {
 		
 		[NSApplication sharedApplication];
 
@@ -68,10 +63,10 @@ int main(int argc, char *argv[]) {
 		
 		[pool release];
 		return 0;
-		
-	} else {
-		return NSApplicationMain(argc, (const char **)argv);
 	}
+	
+	[pool release];
+	return NSApplicationMain(argc, (const char **)argv);
 }
 #endif
 

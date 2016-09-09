@@ -59,31 +59,31 @@ namespace HLLib
 		}
 	}
 
-	hlVoid hlExtractFileProgress(const HLDirectoryItem *pFile, hlULongLong ullBytesExtracted, hlULongLong ullBytesTotal, hlBool *pCancel)
+	hlVoid hlExtractFileProgress(const HLDirectoryItem *pFile, hlULongLong uiBytesExtracted, hlULongLong uiBytesTotal, hlBool *pCancel)
 	{
 		if(pExtractFileProgressProc)
 		{
-			pExtractFileProgressProc(pFile, static_cast<hlUInt>(ullBytesExtracted), static_cast<hlUInt>(ullBytesTotal), pCancel);
+			pExtractFileProgressProc(pFile, static_cast<hlUInt>(uiBytesExtracted), static_cast<hlUInt>(uiBytesTotal), pCancel);
 		}
 	}
 
-	hlVoid hlValidateFileProgress(const HLDirectoryItem *pFile, hlULongLong ullBytesValidated, hlULongLong ullBytesTotal, hlBool *pCancel)
+	hlVoid hlValidateFileProgress(const HLDirectoryItem *pFile, hlULongLong uiBytesValidated, hlULongLong uiBytesTotal, hlBool *pCancel)
 	{
 		if(pValidateFileProgressProc)
 		{
-			pValidateFileProgressProc(pFile, static_cast<hlUInt>(ullBytesValidated), static_cast<hlUInt>(ullBytesTotal), pCancel);
+			pValidateFileProgressProc(pFile, static_cast<hlUInt>(uiBytesValidated), static_cast<hlUInt>(uiBytesTotal), pCancel);
 		}
 	}
 
-	hlVoid hlDefragmentProgress(const HLDirectoryItem *pFile, hlUInt uiFilesDefragmented, hlUInt uiFilesTotal, hlULongLong ullBytesDefragmented, hlULongLong ullBytesTotal, hlBool *pCancel)
+	hlVoid hlDefragmentProgress(const HLDirectoryItem *pFile, hlUInt uiFilesDefragmented, hlUInt uiFilesTotal, hlULongLong uiBytesDefragmented, hlULongLong uiBytesTotal, hlBool *pCancel)
 	{
 		if(pDefragmentProgressProc)
 		{
-			pDefragmentProgressProc(pFile, uiFilesDefragmented, uiFilesTotal, static_cast<hlUInt>(ullBytesDefragmented), static_cast<hlUInt>(ullBytesTotal), pCancel);
+			pDefragmentProgressProc(pFile, uiFilesDefragmented, uiFilesTotal, static_cast<hlUInt>(uiBytesDefragmented), static_cast<hlUInt>(uiBytesTotal), pCancel);
 		}
 		if(pDefragmentProgressExProc)
 		{
-			pDefragmentProgressExProc(pFile, uiFilesDefragmented, uiFilesTotal, ullBytesDefragmented, ullBytesTotal, pCancel);
+			pDefragmentProgressExProc(pFile, uiFilesDefragmented, uiFilesTotal, uiBytesDefragmented, uiBytesTotal, pCancel);
 		}
 	}
 }
@@ -153,6 +153,8 @@ HLLIB_API hlBool hlGetBooleanValidate(HLOption eOption, hlBool *pValue)
 	case HL_PACKAGE_BOUND:
 		*pValue = pPackage != 0;
 		return hlTrue;
+	default:
+		break;
 	}
 
 	return hlFalse;
@@ -170,6 +172,8 @@ HLLIB_API hlVoid hlSetBoolean(HLOption eOption, hlBool bValue)
 		break;
 	case HL_FORCE_DEFRAGMENT:
 		bForceDefragment = bValue;
+		break;
+	default:
 		break;
 	}
 }
@@ -225,7 +229,6 @@ HLLIB_API hlBool hlGetUnsignedIntegerValidate(HLOption eOption, hlUInt *pValue)
 			}
 		}
 		return hlTrue;
-		break;
 	case HL_PACKAGE_SIZE:
 		if(pPackage == 0 || !pPackage->GetOpened() || !pPackage->GetMapping())
 		{
@@ -234,7 +237,6 @@ HLLIB_API hlBool hlGetUnsignedIntegerValidate(HLOption eOption, hlUInt *pValue)
 
 		*pValue = static_cast<hlUInt>(pPackage->GetMapping()->GetMappingSize());
 		return hlTrue;
-		break;
 	case HL_PACKAGE_TOTAL_ALLOCATIONS:
 		if(pPackage == 0 || !pPackage->GetOpened() || !pPackage->GetMapping())
 		{
@@ -243,7 +245,6 @@ HLLIB_API hlBool hlGetUnsignedIntegerValidate(HLOption eOption, hlUInt *pValue)
 
 		*pValue = pPackage->GetMapping()->GetTotalAllocations();
 		return hlTrue;
-		break;
 	case HL_PACKAGE_TOTAL_MEMORY_ALLOCATED:
 		if(pPackage == 0 || !pPackage->GetOpened() || !pPackage->GetMapping())
 		{
@@ -252,7 +253,6 @@ HLLIB_API hlBool hlGetUnsignedIntegerValidate(HLOption eOption, hlUInt *pValue)
 
 		*pValue = static_cast<hlUInt>(pPackage->GetMapping()->GetTotalMemoryAllocated());
 		return hlTrue;
-		break;
 	case HL_PACKAGE_TOTAL_MEMORY_USED:
 		if(pPackage == 0 || !pPackage->GetOpened() || !pPackage->GetMapping())
 		{
@@ -261,7 +261,6 @@ HLLIB_API hlBool hlGetUnsignedIntegerValidate(HLOption eOption, hlUInt *pValue)
 
 		*pValue = static_cast<hlUInt>(pPackage->GetMapping()->GetTotalMemoryUsed());
 		return hlTrue;
-		break;
 	default:
 		return hlFalse;
 	}
@@ -317,7 +316,6 @@ HLLIB_API hlBool hlGetUnsignedLongLongValidate(HLOption eOption, hlULongLong *pV
 			}
 		}
 		return hlTrue;
-		break;
 	case HL_PACKAGE_SIZE:
 		if(pPackage == 0 || !pPackage->GetOpened() || !pPackage->GetMapping())
 		{
@@ -326,7 +324,6 @@ HLLIB_API hlBool hlGetUnsignedLongLongValidate(HLOption eOption, hlULongLong *pV
 
 		*pValue = pPackage->GetMapping()->GetMappingSize();
 		return hlTrue;
-		break;
 	case HL_PACKAGE_TOTAL_ALLOCATIONS:
 		if(pPackage == 0 || !pPackage->GetOpened() || !pPackage->GetMapping())
 		{
@@ -335,7 +332,6 @@ HLLIB_API hlBool hlGetUnsignedLongLongValidate(HLOption eOption, hlULongLong *pV
 
 		*pValue = static_cast<hlULongLong>(pPackage->GetMapping()->GetTotalAllocations());
 		return hlTrue;
-		break;
 	case HL_PACKAGE_TOTAL_MEMORY_ALLOCATED:
 		if(pPackage == 0 || !pPackage->GetOpened() || !pPackage->GetMapping())
 		{
@@ -344,7 +340,6 @@ HLLIB_API hlBool hlGetUnsignedLongLongValidate(HLOption eOption, hlULongLong *pV
 
 		*pValue = pPackage->GetMapping()->GetTotalMemoryAllocated();
 		return hlTrue;
-		break;
 	case HL_PACKAGE_TOTAL_MEMORY_USED:
 		if(pPackage == 0 || !pPackage->GetOpened() || !pPackage->GetMapping())
 		{
@@ -353,7 +348,6 @@ HLLIB_API hlBool hlGetUnsignedLongLongValidate(HLOption eOption, hlULongLong *pV
 
 		*pValue = pPackage->GetMapping()->GetTotalMemoryUsed();
 		return hlTrue;
-		break;
 	default:
 		return hlFalse;
 	}
@@ -532,6 +526,8 @@ HLLIB_API hlVoid hlSetVoid(HLOption eOption, const hlVoid *pValue)
 		break;
 	case HL_PROC_DEFRAGMENT_PROGRESS_EX:
 		pDefragmentProgressExProc = (PDefragmentProgressExProc)pValue;
+		break;
+	default:
 		break;
 	}
 }

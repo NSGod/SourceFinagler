@@ -8,7 +8,6 @@
 
 #import "HKFoundationAdditions.h"
 #import <sys/syslimits.h>
-#import <openssl/sha.h>
 
 #define HK_DEBUG 0
 
@@ -128,7 +127,7 @@
 
 
 - (NSString *)md_stringByReplacing:(NSString *)value with:(NSString *)newValue {
-#if MD_DEBUG
+#if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	NSMutableString *newString = [NSMutableString stringWithString:self];
@@ -138,14 +137,14 @@
 
 
 - (NSString *)md_slashToColon {
-#if MD_DEBUG
+#if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return [self md_stringByReplacing:@"/" with:@":"];
 }
 
 - (NSString *)md_colonToSlash {
-#if MD_DEBUG
+#if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	return [self md_stringByReplacing:@":" with:@"/"];
@@ -159,7 +158,7 @@
 @implementation NSMutableArray (HKAdditions)
 
 - (void)insertObjectsFromArray:(NSArray *)array atIndex:(NSUInteger)anIndex {
-#if MD_DEBUG
+#if HK_DEBUG
 	NSLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #endif
 	[self insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(anIndex, [array count])]];

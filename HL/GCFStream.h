@@ -31,13 +31,13 @@ namespace HLLib
 			hlUInt uiFileID;
 
 			Mapping::CView *pView;
-			hlUInt			uiBlockEntryIndex;
-			hlULongLong		ullBlockEntryOffset;
-			hlUInt			uiDataBlockIndex;
-			hlULongLong		ullDataBlockOffset;
+			hlUInt uiBlockEntryIndex;
+			hlULongLong uiBlockEntryOffset;
+			hlUInt uiDataBlockIndex;
+			hlULongLong uiDataBlockOffset;
 
-			hlULongLong		ullPointer;
-			hlULongLong		ullLength;
+			hlULongLong uiPointer;
+			hlULongLong uiLength;
 
 		public:
 			CGCFStream(const CGCFFile &GCFFile, hlUInt uiFileID);
@@ -60,13 +60,13 @@ namespace HLLib
 			virtual hlULongLong Seek(hlLongLong iOffset, HLSeekMode eSeekMode);
 
 			virtual hlBool Read(hlChar &cChar);
-			virtual hlULongLong Read(hlVoid *lpData, hlULongLong ullBytes);
+			virtual hlUInt Read(hlVoid *lpData, hlUInt uiBytes);
 
 			virtual hlBool Write(hlChar iChar);
-			virtual hlULongLong Write(const hlVoid *lpData, hlULongLong ullBytes);
+			virtual hlUInt Write(const hlVoid *lpData, hlUInt uiBytes);
 
 		private:
-			hlBool Map(hlULongLong mapUllPointer);
+			hlBool Map(hlULongLong uiPointer);
 		};
 	}
 }

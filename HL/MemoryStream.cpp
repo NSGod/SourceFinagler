@@ -15,7 +15,7 @@
 using namespace HLLib;
 using namespace HLLib::Streams;
 
-CMemoryStream::CMemoryStream(hlVoid *lpData, hlULongLong ullBufferSize) : bOpened(hlFalse), uiMode(HL_MODE_INVALID), lpData(lpData), ullBufferSize(ullBufferSize), ullPointer(0), ullLength(0)
+CMemoryStream::CMemoryStream(hlVoid *lpData, hlULongLong uiBufferSize) : bOpened(hlFalse), uiMode(HL_MODE_INVALID), lpData(lpData), uiBufferSize(uiBufferSize), uiPointer(0), uiLength(0)
 {
 
 }
@@ -37,7 +37,7 @@ const hlVoid *CMemoryStream::GetBuffer() const
 
 hlULongLong CMemoryStream::GetBufferSize() const
 {
-	return this->ullBufferSize;
+	return this->uiBufferSize;
 }
 
 const hlChar *CMemoryStream::GetFileName() const
@@ -57,7 +57,7 @@ hlUInt CMemoryStream::GetMode() const
 
 hlBool CMemoryStream::Open(hlUInt uiMode)
 {
-	if(this->ullBufferSize != 0 && this->lpData == 0)
+	if(this->uiBufferSize != 0 && this->lpData == 0)
 	{
 		LastError.SetErrorMessage("Memory stream is null.");
 		return hlFalse;
@@ -69,8 +69,8 @@ hlBool CMemoryStream::Open(hlUInt uiMode)
 		return hlFalse;
 	}
 
-	this->ullPointer = 0;
-	this->ullLength = (uiMode & HL_MODE_READ) ? this->ullBufferSize : 0;
+	this->uiPointer = 0;
+	this->uiLength = (uiMode & HL_MODE_READ) ? this->uiBufferSize : 0;
 
 	this->bOpened = hlTrue;
 	this->uiMode = uiMode;
@@ -82,21 +82,21 @@ hlVoid CMemoryStream::Close()
 {
 	this->bOpened = hlFalse;
 	this->uiMode = HL_MODE_INVALID;
-	this->ullPointer = 0;
-	this->ullLength = 0;
+	this->uiPointer = 0;
+	this->uiLength = 0;
 }
 
 hlULongLong CMemoryStream::GetStreamSize() const
 {
-	return this->ullLength;
+	return this->uiLength;
 }
 
 hlULongLong CMemoryStream::GetStreamPointer() const
 {
-	return this->ullPointer;
+	return this->uiPointer;
 }
 
-hlULongLong CMemoryStream::Seek(hlLongLong llOffset, HLSeekMode eSeekMode)
+hlULongLong CMemoryStream::Seek(hlLongLong iOffset, HLSeekMode eSeekMode)
 {
 	if(!this->bOpened)
 	{
@@ -106,30 +106,30 @@ hlULongLong CMemoryStream::Seek(hlLongLong llOffset, HLSeekMode eSeekMode)
 	switch(eSeekMode)
 	{
 		case HL_SEEK_BEGINNING:
-			this->ullPointer = 0;
+			this->uiPointer = 0;
 			break;
 		case HL_SEEK_CURRENT:
 
 			break;
 		case HL_SEEK_END:
-			this->ullPointer = this->ullLength;
+			this->uiPointer = this->uiLength;
 			break;
 	}
 
-	hlLongLong llPointer = static_cast<hlLongLong>(this->ullPointer) + llOffset;
+	hlLongLong iPointer = static_cast<hlLongLong>(this->uiPointer) + iOffset;
 
-	if(llPointer < 0)
+	if(iPointer < 0)
 	{
-		llPointer = 0;
+		iPointer = 0;
 	}
-	else if(llPointer > static_cast<hlLongLong>(this->ullLength))
+	else if(iPointer > static_cast<hlLongLong>(this->uiLength))
 	{
-		llPointer = static_cast<hlLongLong>(this->ullLength);
+		iPointer = static_cast<hlLongLong>(this->uiLength);
 	}
 
-	this->ullPointer = static_cast<hlULongLong>(llPointer);
+	this->uiPointer = static_cast<hlULongLong>(iPointer);
 
-	return this->ullPointer;
+	return this->uiPointer;
 }
 
 hlBool CMemoryStream::Read(hlChar &cChar)
@@ -145,19 +145,19 @@ hlBool CMemoryStream::Read(hlChar &cChar)
 		return hlFalse;
 	}
 
-	if(this->ullPointer == this->ullLength)
+	if(this->uiPointer == this->uiLength)
 	{
 		return hlFalse;
 	}
 	else
 	{
-		cChar = *((hlChar *)this->lpData + this->ullPointer++);
+		cChar = *((hlChar *)this->lpData + this->uiPointer++);
 
 		return hlTrue;
 	}
 }
 
-hlULongLong CMemoryStream::Read(hlVoid *lpData, hlULongLong ullBytes)
+hlUInt CMemoryStream::Read(hlVoid *lpData, hlUInt uiBytes)
 {
 	if(!this->bOpened)
 	{
@@ -170,27 +170,27 @@ hlULongLong CMemoryStream::Read(hlVoid *lpData, hlULongLong ullBytes)
 		return 0;
 	}
 
-	if(this->ullPointer == this->ullLength)
+	if(this->uiPointer == this->uiLength)
 	{
 		return 0;
 	}
-	else if(this->ullPointer + static_cast<hlULongLong>(ullBytes) > this->ullLength) // This right?
+	else if(this->uiPointer + static_cast<hlULongLong>(uiBytes) > this->uiLength) // This right?
 	{
-		ullBytes = static_cast<hlULongLong>(this->ullLength - this->ullPointer);
+		uiBytes = static_cast<hlUInt>(this->uiLength - this->uiPointer);
 
-		memcpy(lpData, (hlByte *)this->lpData + this->ullPointer, ullBytes);
+		memcpy(lpData, (hlByte *)this->lpData + this->uiPointer, uiBytes);
 
-		this->ullPointer = this->ullLength;
+		this->uiPointer = this->uiLength;
 
-		return ullBytes;
+		return uiBytes;
 	}
 	else
 	{
-		memcpy(lpData, (hlByte *)this->lpData + this->ullPointer, ullBytes);
+		memcpy(lpData, (hlByte *)this->lpData + this->uiPointer, uiBytes);
 
-		this->ullPointer += static_cast<hlULongLong>(ullBytes);
+		this->uiPointer += static_cast<hlULongLong>(uiBytes);
 
-		return ullBytes;
+		return uiBytes;
 	}
 }
 
@@ -207,24 +207,24 @@ hlBool CMemoryStream::Write(hlChar cChar)
 		return hlFalse;
 	}
 
-	if(this->ullPointer == this->ullBufferSize)
+	if(this->uiPointer == this->uiBufferSize)
 	{
 		return hlFalse;
 	}
 	else
 	{
-		*((hlChar *)this->lpData + this->ullPointer++) = cChar;
+		*((hlChar *)this->lpData + this->uiPointer++) = cChar;
 
-		if(this->ullPointer > this->ullLength)
+		if(this->uiPointer > this->uiLength)
 		{
-			this->ullLength = this->ullPointer;
+			this->uiLength = this->uiPointer;
 		}
 
 		return hlTrue;
 	}
 }
 
-hlULongLong CMemoryStream::Write(const hlVoid *lpData, hlULongLong ullBytes)
+hlUInt CMemoryStream::Write(const hlVoid *lpData, hlUInt uiBytes)
 {
 	if(!this->bOpened)
 	{
@@ -237,36 +237,36 @@ hlULongLong CMemoryStream::Write(const hlVoid *lpData, hlULongLong ullBytes)
 		return 0;
 	}
 
-	if(this->ullPointer == this->ullBufferSize)
+	if(this->uiPointer == this->uiBufferSize)
 	{
 		return 0;
 	}
-	else if(this->ullPointer + static_cast<hlULongLong>(ullBytes) > this->ullBufferSize)
+	else if(this->uiPointer + static_cast<hlULongLong>(uiBytes) > this->uiBufferSize)
 	{
-		ullBytes = static_cast<hlULongLong>(this->ullBufferSize - this->ullPointer);
+		uiBytes = static_cast<hlUInt>(this->uiBufferSize - this->uiPointer);
 
-		memcpy((hlByte *)this->lpData + this->ullPointer, lpData, ullBytes);
+		memcpy((hlByte *)this->lpData + this->uiPointer, lpData, uiBytes);
 
-		this->ullPointer = this->ullBufferSize;
+		this->uiPointer = this->uiBufferSize;
 
-		if(this->ullPointer > this->ullLength)
+		if(this->uiPointer > this->uiLength)
 		{
-			this->ullLength = this->ullPointer;
+			this->uiLength = this->uiPointer;
 		}
 
-		return ullBytes;
+		return uiBytes;
 	}
 	else
 	{
-		memcpy((hlByte *)this->lpData + this->ullPointer, lpData, ullBytes);
+		memcpy((hlByte *)this->lpData + this->uiPointer, lpData, uiBytes);
 
-		this->ullPointer += static_cast<hlULongLong>(ullBytes);
+		this->uiPointer += static_cast<hlULongLong>(uiBytes);
 
-		if(this->ullPointer > this->ullLength)
+		if(this->uiPointer > this->uiLength)
 		{
-			this->ullLength = this->ullPointer;
+			this->uiLength = this->uiPointer;
 		}
 
-		return ullBytes;
+		return uiBytes;
 	}
 }
