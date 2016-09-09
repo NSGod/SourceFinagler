@@ -333,7 +333,7 @@ NSString *TKImageIOLocalizedString(NSString *key) {
 
 
 - (NSString *)windowNibName {
-	if (MDGetSystemVersion() >= MDLion) {
+	if ([[NSProcessInfo processInfo] md__operatingSystemVersion].minorVersion >= MDLion) {
 		return @"TKImageDocumentLion";
 	}
     return @"TKImageDocument";
