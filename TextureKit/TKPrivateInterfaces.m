@@ -16,7 +16,7 @@
 CGColorSpaceRef TKCreateColorSpaceFromColorSpace(TKColorSpace colorSpace) {
 	switch (colorSpace) {
 		case TKColorSpaceGray : {
-			if (TKGetSystemVersion() <= TKLeopard) {
+			if ([[NSProcessInfo processInfo] tk__operatingSystemVersion].minorVersion <= TKLeopard) {
 				return CGColorSpaceCreateWithName(kCGColorSpaceGenericGray);
 			} else {
 				return CGColorSpaceCreateWithName(kCGColorSpaceGenericGrayGamma2_2);
